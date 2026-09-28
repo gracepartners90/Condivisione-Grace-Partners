@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -78,16 +78,17 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
 ### HM-1 · Hero — `Hero` variante `home`
 - **Scopo.** Far sentire il concetto (spazio fisico → spazio digitale → persone → imprese → territorio) nei primi secondi. La hero «respira».
 - **Contenuti** (copy deck; composizione della direzione visiva §5):
-  - occhiello;
+  - occhiello «ITnode — oltre i confini del Web tradizionale» (verdetto G4 §3.4);
   - H1 in due registri nello stesso `<h1>`;
-  - riga di posizionamento in `lead`, «Esperienze digitali immersive per imprese e territori.»: senza, l'H1 non dice che cosa fa ITnode e il test dei 5 secondi non si supera;
+  - riga di posizionamento in `lead`, «Esperienze digitali immersive per imprese e territori.», in un `<p>` subito dopo `</h1>` (I4, verdetto G4 §3.4): senza, l'H1 non dice che cosa fa ITnode e il test dei 5 secondi non si supera;
   - «orizzonte dei luoghi» (SVG con i luoghi reali);
   - didascalia dell'osservatore;
-  - «Scorri per esplorare».
-  - Nessuna CTA: «Parliamone» è nell'header.
+  - nessuna CTA: «Parliamone» è nell'header;
+  - **nessun invito allo scorrimento** (decisione del G4, DV 0.3 §5). «Scorri per esplorare» è tolto: con il movimento ridotto, o senza animazioni legate allo scroll, l'orizzonte non ruota e l'invito prometterebbe qualcosa che non succede. La rotazione resta una scoperta per chi scorre.
 - **Mobile.** H1 → riga di posizionamento → orizzonte. L'H1 è interamente visibile nel primo viewport, a 360 × 640 e a 390 × 844.
 - **Interazione e accessibilità.**
-  - L'orizzonte, con le etichette dei luoghi, è decorativo: SVG `aria-hidden`. «Scorri per esplorare» è `aria-hidden`.
+  - La riga di posizionamento è un paragrafo, fuori dal titolo. Ordine di lettura: occhiello → H1 → riga → didascalia (verificato in C14, anche a 320 px con le spaziature di 1.4.12).
+  - L'orizzonte, con le etichette dei luoghi, è decorativo: SVG `aria-hidden`.
   - Ruota solo con lo scroll, mai da solo, quindi il criterio 2.2.2 non si applica. Con reduce resta fermo.
   - L'H1 è il candidato LCP: l'SVG in linea deve restare leggero.
 
