@@ -2,10 +2,10 @@
 titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer]
-stato: bozza
-versione: 0.1
+stato: in revisione
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -19,6 +19,16 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativ
 Tutto il resto è tipografia e aria.
 
 **Come si usa questo documento.** Le scelte qui sono **decisioni**. Il `ui-designer` le traduce in token e componenti: può rinominare i token, ma per cambiare un valore passa da una review del creative-director. I valori in pixel sono misurati, non stimati (test del 2026-09-28).
+
+**Modifiche della versione 0.2 (gate G4, 2026-09-28).** Decisioni prese sul sito costruito, motivate nel verdetto `docs/review/2026-09-28-sito-verdetto-g4-creative-director.md`:
+- §1.4: regola sulla precisione delle coordinate.
+- §1.5: la cascata rientra di un passo per registro; negli statement dei capitoli l'arrivo scende a `display-m`.
+- §2: seconda eccezione alle sfumature, la dissolvenza ai bordi della finestra dell'Orizzonte.
+- §3.2: `display-m` a 600 ammesso come titolo di sezione o di voce; il preload di Schibsted resta (ADR 005).
+- §4.3: stato di DR3 e nuove maschere dei ritratti.
+- §4.5: variante «in pubblicazione» delle esperienze SIII senza nome e con i gradi.
+- §5: campo visivo di 200° anche su tablet, occhiello corto.
+- §7.3–7.8: statement dei capitoli, «10.000+» senza conferma, numeri con il solo «30+», porte di Puglia Digitale da ovest a est a tutte le larghezze, copertina del video senza orizzonte, nodi della 404.
 
 ---
 
@@ -112,6 +122,12 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
 
   L'associazione tra showcase SIII e comune è dedotta dall'indirizzo del portale (acquavivadigitale, cassanodigitale, monopolidigitale). `[DA VERIFICARE]`
 
+- **Precisione (regola del G4).** Le cifre mostrate sono quelle della fonte, mai completate con zeri.
+  - **Opzione principale:** tutti i luoghi dalla stessa fonte (nodo del centro del comune in OpenStreetMap, oppure Wikidata P625), con 4 decimali reali; la fonte si scrive in un commento accanto ai dati.
+  - **Ripiego:** se la fonte unica non è disponibile prima del lancio, 2 decimali per tutti i luoghi (circa 1 km: la precisione onesta del «centro di un comune»).
+  - Mai precisioni diverse nella stessa pagina.
+  - Nel sito costruito Monopoli (40.9500 · 17.3000), Caltanissetta (37.4900) e Cassano delle Murge (16.7700) sono arrotondati e mostrati con 4 decimali: vanno corretti. Una ricerca del 2026-09-28 restituisce per Monopoli valori diversi a seconda della fonte (40.9571 · 17.2905 e 40.9525 · 17.2986): per questo serve un'unica fonte dichiarata.
+
 - **Non si fa.** Pattern topografici decorativi, mappe del mondo a puntini, pin in stile Google, coordinate inventate o arrotondate per effetto.
 
 ### 1.5 Regola tipografica: Il Passaggio
@@ -129,10 +145,11 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   Il salto di riga è il confine che il sito supera.
 - **Regole.**
   - Rientro della seconda riga: 2 colonne su desktop, 1 su tablet, 1,2 em su mobile.
-  - Gli a capo sono d'autore: stanno nel contenuto come righe separate, non vengono dal browser.
-  - Massimo 2 registri; 3 solo per «Entra. / Esplora. / Interagisci.», a cascata.
+  - Gli a capo sono d'autore: stanno nel contenuto come righe separate, non vengono dal browser. Se una riga d'autore non entra nella colonna, va a capo bilanciata (`text-wrap: balance` su ogni riga, qualunque sia il tag).
+  - Massimo 2 registri; 3 solo per «Entra. / Esplora. / Interagisci.», a cascata: ogni registro rientra di un passo in più del precedente (desktop 2 e 4 colonne, tablet 1 e 2, mobile 1,2 em e 2,4 em; a 320 px nessun rientro).
   - Mai centrato.
   - La seconda riga può scendere di un gradino di scala (§3), mai salire.
+  - **Statement dei capitoli della Home:** partenza in `display-l` 600, arrivo in `display-m` 400, come il secondo registro della hero. In `display-l` pieno l'arrivo andava a capo per il browser fino a 6 righe (verifica UI, V4).
 
 ---
 
@@ -171,7 +188,9 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
 - **Il blu non fa mai da sfondo** di sezione, non entra in gradienti e non colora i titoli.
 - **Link nel testo.** Colore `inchiostro` con sottolineatura di 1 px in `blu-node-scuro`, che diventa 2 px all'hover; su scuro, `calce` con sottolineatura in `blu-node-chiaro`. Così il blu resta raro e il link non dipende solo dal colore.
 - **L'arancio va solo su scuro**: su chiaro si usa `terra`. Entrambi segnano esclusivamente luoghi e simboli numerici.
-- **Niente gradienti, ombre, bagliori, glassmorphism.** L'unica sfumatura ammessa è la maschera che fonde il ritratto con la carta (§4.3).
+- **Niente gradienti, ombre, bagliori, glassmorphism.** Le sfumature ammesse sono due, entrambe maschere di trasparenza e mai di colore:
+  - la maschera che fonde il ritratto con la carta (§4.3);
+  - la dissolvenza ai bordi della finestra dell'Orizzonte (G4, 2026-09-28): al massimo 2 rem per lato, solo su tacche ed etichette, mai sulla linea, che resta piena da bordo a bordo. È il bordo di un'inquadratura: dice che la striscia graduata continua oltre lo schermo. Senza, le etichette dei luoghi fuori campo vengono tagliate a metà parola («V» di Varese a 390 px).
 - **Il verde-acqua della trama del logo** vive solo come colore di selezione del testo: un dettaglio per chi lo scopre.
 
 **Rapporto con i marchi.** Colori campionati il 2026-09-28 (valori indicativi):
@@ -213,7 +232,7 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 | Token | Uso | `font-size` | 390 px | 1440 px | Peso | Interlinea | Tracking |
 |---|---|---|---|---|---|---|---|
 | `display-xxl` | Numeri giganti, «SIII», numerazione dei capitoli | `clamp(4.5rem, 18vw, 17.5rem)` | 72 | 259 | 600 | 0,82 | −0,045em |
-| `display-xl` | H1 delle hero | `clamp(3.25rem, 8vw, 9.375rem)` | 52 | 115 | 600 | 0,92 | −0,035em |
+| `display-xl` | H1 delle hero | `clamp(2.75rem, 1.79rem + 6vw, 9.375rem)` (G4: minimo di 44 px sotto i 390 px, per il reflow a 320 px) | 52 | 115 | 600 | 0,92 | −0,035em |
 | `display-l` | H2 di sezione, statement principali | `clamp(2.5rem, 6vw, 6.25rem)` | 40 | 86 | 600 | 0,98 | −0,03em |
 | `display-m` | Seconda riga del Passaggio, statement secondari, nomi dei capitoli | `clamp(1.75rem, 4.2vw, 4.75rem)` | 28 | 60 | 400 | 1,04 | −0,022em |
 | `display-s` | Titoli di voce: benefici, luoghi, tappe, step | `clamp(1.375rem, 2.2vw, 2.25rem)` | 22 | 32 | 600 | 1,1 | −0,015em |
@@ -228,13 +247,14 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 
 **Regole.**
 - **Pesi.** Due soli: 600 per i titoli e il grassetto nel testo, 400 per tutto il resto. Niente corsivi. Maiuscolo solo nelle etichette mono.
+  - `display-m` è a 400 quando fa da voce d'arrivo del Passaggio, descrittore, nome di capitolo o statement secondario. È ammesso a 600 quando è il titolo (H2 o H3) di una sezione o di una voce: il titolo del video, i nomi delle città, «Perché aderire a Puglia Digitale» (G4, suggerimento S4 della review UI).
 - **Scala tra sezioni.** Due titoli consecutivi non usano mai lo stesso gradino di scala (vedi la colonna «Titolo» in §7).
 - **Misura.** Il body sta al massimo a 66 caratteri, il lead a 42. I titoli si governano con colonne e a capo d'autore.
 - **A capo.** `text-wrap: balance` sui titoli, `text-wrap: pretty` sui paragrafi; nessuna sillabazione automatica nei titoli; `lang="it"` sul documento.
 - **Frecce delle CTA.** Sono SVG inline con tratto 1,5 px e terminazioni squadrate, mai glifi: → e ↗ **mancano** nei sottoinsiemi latini di entrambi i font (verificato).
 - **Coordinate.** Sempre in gradi decimali: ′ e ″ mancano in quasi tutti i sottoinsiemi latini.
 - **Numeri approssimati.** «~200.000» ha un testo accessibile «circa 200.000», perché i lettori di schermo pronuncerebbero «tilde».
-- **Caricamento.** Schibsted va in preload con `font-display: swap` e un font di ripiego con metriche corrette (`size-adjust`) per non generare CLS. Fragment Mono non va in preload. La validazione spetta a `web-performance-specialist`.
+- **Caricamento.** Schibsted va in preload con `font-display: swap` e un font di ripiego con metriche corrette (`size-adjust`) per non generare CLS. Fragment Mono non va in preload. Confermato al G4 dopo il confronto di Fase 5: il preload resta (ADR 005, con le condizioni per riaprire la decisione).
 
 ---
 
@@ -278,6 +298,11 @@ In Home la foto compare al massimo due volte, in ritagli con soggetti diversi.
 
 Le quattro foto hanno fondali con skyline di grattacieli e reti luminose: è l'estetica vietata dalle linee guida (§33), estranea al territorio (in Puglia non ci sono grattacieli) e con segni di generazione o ritocco con AI (brief consolidato, I7). Il brief consolidato registra la scelta come **DR3**: decide l'utente, sentito il creative-director.
 
+**Stato al G4 (2026-09-28).**
+- Il sito costruito applica (b), scelta della sessione principale in attesa della conferma dell'utente (ADR 002).
+- Nel frattempo la review di veridicità ha messo la stessa nota AI anche sotto la foto dell'evento (B4): il vantaggio di (a), «un documento invece di un ritratto», vale solo quando arriva l'originale dello scatto.
+- **Parere aggiornato: (b) per il lancio, con le maschere più strette qui sotto; (c) appena possibile.** Il ritratto reale resta il miglioramento più forte dell'intero sito: toglie le note AI, lo skyline e l'aria da ritratto aziendale.
+
 **Parere del creative-director: opzione (a) subito, (c) appena possibile.**
 - **(a)** La sezione del fondatore si chiude sulla foto reale: il ritaglio «Palco», con il fondatore sul palco davanti a una sala piena. Che sia lui lo dice la descrizione degli asset `[DA VERIFICARE: D6]`. È un documento, non un ritratto, ed è più forte di un ritratto da studio. In Contatti la sezione «Persona» diventa tipografica (§7.7).
 - **(c)** Uno shooting reale (§4.6, priorità 4) sostituisce o affianca il «Palco».
@@ -300,7 +325,11 @@ Con (b), sotto ogni ritratto va una nota mono: «Immagine elaborata con strument
 **Trattamento «inchiostro»** (testato), solo con (b):
 1. Luminanza pesata sul canale blu (0,15 R + 0,25 G + 0,6 B), con contrasto ×1,2 e −30: lo skyline azzurro si schiarisce quasi fino alla carta.
 2. Mappatura dei toni da `inchiostro` #141413 a `calce` #F3F1EC.
-3. Maschera CSS che fonde il lato destro nella carta, per assorbire ciò che resta dello skyline: `linear-gradient(to right, #000 62%, transparent 100%)`.
+3. Maschera CSS che fonde il lato destro nella carta, per assorbire ciò che resta dello skyline. Valori del G4, provati a 2× sui derivati (verifica UI, V6):
+   - Home, `fondatore-braccia-conserte`: `linear-gradient(to right, #000 40%, transparent 74%)`;
+   - Contatti, `fondatore-in-piedi` (figura più stretta): `linear-gradient(to right, #000 36%, transparent 68%)`.
+
+   Con questi valori grattacieli e linee a nodi quasi spariscono e la figura resta intera, con il bordo del braccio appena ammorbidito. Il valore iniziale (62% → 100%) e il successivo (48% → 86%) lasciavano leggibili skyline e «reti luminose».
 
 I derivati si generano con uno script sharp versionato nel repository; gli originali restano intatti. La sfumatura verso la carta presuppone che il ritratto stia su fondo `calce` (vedi §7).
 
@@ -333,6 +362,11 @@ I derivati si generano con uno script sharp versionato nel repository; gli origi
 - **luogo:** nome in `display-m`, coordinate e nodo su un filo d'orizzonte;
 - **esperienza SIII:** nome, luogo, e orizzonte con i nodi (lo «spazio esplorabile» astratto);
 - **poster del video:** superficie `notte`, titolo e pulsante di riproduzione.
+
+Precisazioni del G4, sul sito costruito (flag `PUBLIC_SLOT_MODE=publish`):
+- **Esperienze SIII: niente nome né luogo dentro il pannello**, né in Home né su `/siii/`: su `/siii/` li dicono l'H3 e la riga del luogo subito accanto. Un pannello scuro con un titolo e dei punti rischia di leggersi come una finta schermata. Nei pannelli larghi almeno 700 px, sotto le tacche lunghe vanno i gradi ogni 45° (V9 della verifica UI), come nel Confronto: senza, l'orizzonte si legge come un righello.
+- **Luoghi:** dentro la porta restano nome, nodo e rilevamento con la distanza (o «SEDE»). Le coordinate stanno già sotto l'H3 accanto e non si ripetono.
+- **Poster del video:** vale solo finché il file non è ospitato sul sito. Con il video pubblicato il poster è un fotogramma reale, scelto dal creative-director.
 
 **Mai:** riquadri grigi con icona «immagine», icone di immagine rotta, lorem ipsum, stock, immagini generate.
 
@@ -372,7 +406,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - «Terra» `pietra` in basso, che prosegue senza stacco nella sezione successiva.
   - Il confine tra i due campi è l'orizzonte.
 - **Testi.** Vengono dal copy deck della Home (`docs/contenuti/copy-deck/home.md`). Nessuna CTA nella hero: «Parliamone» è nell'header.
-- **Occhiello** (mono, `inchiostro-2`, colonne 1–7): «Oltre i confini del Web tradizionale».
+- **Occhiello** (mono, `inchiostro-2`, colonne 1–7): «ITnode — oltre i confini del Web tradizionale» (alternativa già nel copy deck della Home). Decisione del G4: l'occhiello porta il nome e il concetto delle linee guida (§02); che cosa fa ITnode lo dice la riga di posizionamento in `lead`, non l'occhiello (I4).
 - **H1, primo registro.**
   - «La tecnologia cambia.» in `display-xl`: a 1440 px misura 115 px di corpo e occupa circa 1117 px, l'83% della misura, lasciando margine contro gli a capo imprevisti.
   - La linea di base sta sopra l'orizzonte di una distanza pari alla profondità dei discendenti: la «g» di «tecnologia» tocca l'orizzonte senza attraversarlo.
@@ -380,6 +414,8 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - «La curiosità ci accompagna / da sempre.» in `display-m` a peso 400, dalla colonna 5, 48–72 px sotto l'orizzonte.
   - Due righe, con a capo d'autore.
 - **Riga di posizionamento** (`lead`, colonne 5–11, 24–32 px sotto il secondo registro): «Esperienze digitali immersive per imprese e territori.» È la riga che fa superare il test dei 5 secondi: l'H1 da solo non dice che cosa fa ITnode.
+  - È un `<p>` dopo l'`<h1>`, non dentro. La didascalia dell'osservatore (colonne 1–4) si allinea in basso con la riga.
+  - Provato in pagina al G4: a 1440 × 900 l'orizzonte scende al 57% dell'altezza (era il 62%) e la riga sta nella prima schermata; a 1024 × 768 la hero intera sta nella prima schermata.
 
 **Orizzonte e luoghi**
 - **Orizzonte.**
@@ -396,7 +432,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 ### Tablet (700–1023 px)
 
 - Stessa struttura.
-- Campo visivo di 150°.
+- Campo visivo di 200°, come su desktop (G4). Con 150° erano in vista solo Caltanissetta e due etichette tagliate dal bordo, tra cui «— 081° · 39 KM» senza il nome di Monopoli. Con 200°, da 768 a 1023 px, le tre etichette sono intere e nessun richiamo attraversa un'etichetta, a riposo e durante la rotazione. Tra 700 e 767 px il richiamo del gruppo murgiano tocca il frammento di «Varese» che entra dal bordo destro, dentro la dissolvenza (§2): residuo accettato. Vale per l'orizzonte della hero della Home; quello di Città Digitali resta a 150° su tablet, perché le sue tre città stanno già in vista.
 - Secondo registro dalla colonna 3 di 8.
 
 ### Mobile (< 700 px)
@@ -546,12 +582,14 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 2 | Manifesto | Statement su 10 colonne: «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.»; sotto, sfalsato (colonne 7–11), il `lead` di sintesi su Città Digitali e Puglia Digitale | pietra (la terra continua) | `display-l` | statement e poi lead, senza sfalsamento |
 | 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda; didascalia solo con data e luogo confermati (A4) | pietra | — (legenda) | ritaglio «Città» 4:5; legenda sotto |
 | 4 | Infrastruttura | Passaggio «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.»; in basso, marquee legato allo scroll: «spazio fisico → spazio digitale → persone → imprese → territorio →» (frecce SVG) | **notte** (primo ingresso nel digitale) | `display-l`, marquee in `display-m` | statement su 4 righe; marquee più lento |
-| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo con 3 nodi sulle colonne 8–12, testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m` | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
+| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo con 3 nodi sulle colonne 8–12, testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
 | 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`, agganciato alla tappa Leadstone con la sua attribuzione (registro N5: clienti delle aziende fondate prima di ITnode) e separato da «oggi» da almeno una tappa di spazio: mai vicino al logo o ai nomi dei prodotti ITnode. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sulla foto reale «Palco» (DR3-a; ritratto a inchiostro solo con DR3-b) e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
 | 7 | Chiusura | Passaggio, CTA «Parliamone» e contatti rapidi in mono (email, telefono) | notte | `display-xl` | CTA a tutta larghezza |
 | — | Footer | Vedi §7.8 | notte | — | colonne in pila |
 
 **Timeline.** È ordinale, non in scala: le date di IcommLab, Leadstone e ITnode sono `[DA FORNIRE]` e una scala in anni le inventerebbe. L'ordine delle tappe segue il brief consolidato (§6), che può ancora cambiare. Con `prefers-reduced-motion` diventa una griglia statica a 4 colonne.
+
+**«10.000+» al lancio (G4, review di veridicità I2).** Si pubblica solo se il cliente conferma il perimetro (quali aziende, quale periodo, clienti o utenti); l'etichetta diventa quella confermata. Senza conferma il numero si toglie e la tappa resta con titolo e data: la timeline regge anche senza un momento numerico, e la colonna vuota prima di «oggi» resta come tempo che passa.
 
 **Rapporto con il copy deck.** Il copy deck raggruppa le sezioni 2–4 in un'unica «Chi siamo» (ancora `#chi-siamo`). I testi sono gli stessi, distribuiti su tre composizioni: l'ancora va sulla sezione 2 e il marquee chiude la sezione 4.
 
@@ -573,8 +611,8 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 |---|---|---|---|---|---|
 | 1 | Hero | H1 «Puglia Digitale» con sottotitolo e CTA «Visita il portale →»; la costa pugliese è un'unica linea che attraversa la pagina e si disegna all'ingresso, con i nodi `terra` di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» | calce | `display-xl` | carta ritagliata sulla Terra di Bari, sotto il titolo |
 | 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Schermo» 4:5 in soglia sulle colonne 1–5 (persone che esplorano una piazza pugliese sul maxischermo), testo sul Destination Marketing sulle colonne 7–11; didascalia solo con data e luogo (A4) | pietra | `display-l` | foto a tutta larghezza, poi testo |
-| 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350) |
-| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →» | calce | `display-l` | pila ordinata **dalla costa all'entroterra**: Monopoli → Acquaviva → Gravina |
+| 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350). **Se al lancio resta solo «30+»** (riserva B3: gli altri due numeri non si pubblicano senza fonte): un solo numero in `display-xxl` dalla colonna 3, etichetta e nota con la data; il titolo si adatta al singolare (copywriter-brand). Se neanche «30+» è confermato, la sezione non si pubblica e il layout resta pronto |
+| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →» | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
 | 5 | Perché aderire | Elenco *scala*: le 4 voci rientrano ciascuna di una colonna rispetto alla precedente; numeri in `display-xl`, titoli in `display-s` | pietra | `display-m` | rientri di 16 px |
 | 6 | Chiusura | Passaggio «Porta la tua impresa / dentro Puglia Digitale.», CTA «Contattaci →», form su due colonne sotto lo statement; link secondario al portale | notte | `display-l` | form a una colonna |
 
@@ -583,7 +621,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
 | 1 | Hero | H1 «Città Digitali», Passaggio «Le attività del territorio, / online senza perdere radici.», sottotitolo, CTA «Visita il portale →»; nessuna immagine: la hero finisce su un orizzonte che si apre nel video | calce | `display-xl` | — |
-| 2 | Video | A tutta larghezza, altezza `min(100svh, 56.25vw)`; apertura dall'orizzonte; controlli minimi (un nodo play/pausa in basso a sinistra, audio, tempo in mono); poster sempre presente | notte | — (etichetta mono) | 16:9 a tutta larghezza; niente autoplay con Save-Data o reduced motion |
+| 2 | Video | A tutta larghezza, altezza `min(100svh, 56.25vw)`; apertura dall'orizzonte; controlli minimi (un nodo play/pausa in basso a sinistra, audio, tempo in mono); poster sempre presente: un fotogramma reale del video, scelto dal creative-director quando arriva il file. La copertina non ha un proprio orizzonte (G4, V10): a 768–1024 px sarebbe il secondo nella stessa schermata (§1.1), e il gesto dell'orizzonte che si apre nel video lo fa già quello di fine hero | notte | — (etichetta mono) | 16:9 a tutta larghezza; niente autoplay con Save-Data o reduced motion |
 | 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12) | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
 | 4 | Dal locale al nazionale | Elenco *sticky*: titolo e indicatore mono «01/05» fermi a sinistra, i 5 concetti scorrono a destra; spazio predisposto per dati documentati, nascosto finché non arrivano (linee guida §20) | calce | `display-l` | elenco numerato, niente sticky |
 | 5 | Chiusura | Passaggio «La tua azienda merita più di una presenza online. / Merita di essere esplorata.» in `display-xl`, CTA «Entra in Città Digitali →» e form sotto | notte | `display-xl` | form a una colonna |
@@ -611,6 +649,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 - **Breadcrumb** (sitemap UX §5). Sulle pagine interne sta sopra l'H1 della hero, in `label` mono, e prende il posto dell'occhiello: `inchiostro-2` su chiaro, `testo-notte-2` su scuro.
 - **Footer.** Blocchi e ordine della sitemap UX (§6), su `notte`. L'ultima riga, in mono, è la firma: «ITnode · Acquaviva delle Fonti · 40.8957° N · 16.8412° E».
 - **404.** Su calce: «404°» in `display-xxl`, perché su una bussola non esiste, come la pagina. Un orizzonte con i tre mondi come nodi a 000°, 120° e 240° porta alle pagine. Il copy è del copywriter.
+  - Precisazioni del G4: l'orizzonte ha le tacche (senza, a 390 px una linea con tre punti sembra uno slider). Ogni nodo sta dentro l'area del link del suo mondo, perché il blu è interazione (§1.3). Le tre colonne sono allineate in alto.
 - **Privacy e cookie.** Su calce, testo su 7 colonne, numeri di sezione in mono. Nessun dispositivo firma: pagine silenziose.
 
 ---
@@ -635,17 +674,17 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 
 ## Ipotesi da validare
 
-- **Font.** Schibsted Grotesk (47 KB, in preload) e Fragment Mono (25 KB, senza preload) stanno nel budget dei font: da confermare con `web-performance-specialist` in `docs/performance/budget.md`.
+- **Font.** Schibsted Grotesk (47 KB, in preload) e Fragment Mono (25 KB, senza preload) stanno nel budget dei font: confermato dalle misure di Fase 5. Il preload resta per decisione del G4 (ADR 005); il suo effetto su Safari iOS non è misurato.
 - **Motion.** CSS scroll-driven animations e view transition cross-document come miglioramento progressivo, senza polyfill.
   - Stato al 2026-09-28, da fonti web: supportate in Chromium e in Safari 26 (le view transition da Safari 18.2).
   - Su Firefox le fonti sono discordanti `[DA VERIFICARE]`: lì l'esperienza resta statica.
-- **Coordinate, rilevamenti e distanze** (§1.4): calcolati da coordinate pubbliche approssimate `[DA VERIFICARE]` prima della pubblicazione.
+- **Coordinate, rilevamenti e distanze** (§1.4): calcolati da coordinate pubbliche approssimate `[DA VERIFICARE]` prima della pubblicazione, con la regola di precisione del G4 (una sola fonte e 4 decimali reali, oppure 2 decimali per tutti).
 - **Dimensioni tipografiche** (§3.2 e §5): verificate su Chromium con i font reali, da riverificare su Safari iOS nei prototipi del `ui-designer`.
 - **Anteprima immersiva «Prova qui»** (iframe dell'esperienza SIII caricato solo al clic), in aggiunta all'apertura in nuova scheda chiesta dalle linee guida. Dipende da due verifiche:
   - se i portali permettono l'incorporamento (`X-Frame-Options`, `frame-ancestors`) `[DA VERIFICARE]`;
   - dalla gestione del consenso sui cookie dei portali, di competenza di `seo-technical` e dei riferimenti legali.
 
-  Finché non è validata, vale solo la nuova scheda.
+  Finché non è validata, vale solo la nuova scheda. Al G4 resta un lavoro per dopo il lancio: è la leva più forte per far provare l'immersione sul sito, ma può far cadere la premessa «nessun banner cookie» se i portali impostano cookie di terze parti.
 - **Carte.** Natural Earth 1:10m è in pubblico dominio. Se servisse il confine regionale ufficiale, i limiti amministrativi ISTAT richiedono l'attribuzione.
 
 ## Domande aperte
@@ -660,8 +699,9 @@ Le domande sui materiali e sui fatti sono già registrate nel brief consolidato 
 Da aggiungere, per la parte visiva:
 - **Foto evento.** La scena, oltre alla sovrimpressione, è stata ritoccata con strumenti generativi? Il simbolo ✦ lo fa sospettare.
 - **Colori.** Codici ufficiali (HEX o Pantone) di ITnode, Puglia Digitale e Città Digitali.
-- **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2).
+- **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2). Serve il file per scegliere il fotogramma del poster.
 - **Riferimento.** Screenshot di aprildunford.com (vedi `analisi-riferimento.md`).
+- **Persone nella foto dell'evento.** Ai partecipanti è stata data un'informativa sulle riprese? Senza, i ritagli si stringono sui due schermi e sul palco, escludendo i profili riconoscibili ai margini (§4.2).
 
 ## Decisioni richieste
 
@@ -675,6 +715,9 @@ Da aggiungere, per la parte visiva:
    - (b) Ritratti attuali con trattamento a inchiostro e nota di trasparenza. Pro: disponibili, volto in primo piano. Contro: obblighi di trasparenza (AI Act, art. 50), fondali generati attenuati ma non eliminati, risoluzione limitata, contraddizione con la promessa di autenticità del sito.
    - (c) Pro: autenticità piena. Contro: costo e tempi.
 
-   Le specifiche per (a) e (b) sono pronte (§4.3). Nota: l'incarico chiedeva di usare le foto del fondatore; DR3 e l'AI Act sono i motivi nuovi per cui il creative-director raccomanda (a).
-3. **Produzione fotografica dei luoghi** (6 località): budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
-4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Va approvato al gate G2 insieme a questa direzione visiva.
+   Le specifiche per (a) e (b) sono pronte (§4.3). Nota: l'incarico chiedeva di usare le foto del fondatore; DR3 e l'AI Act sono i motivi nuovi per cui il creative-director raccomandava (a).
+
+   **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
+3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
+4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
+5. **Approvazione di questa direzione visiva (versione 0.2)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
