@@ -3,9 +3,9 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, src/data/site.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, src/data/site.ts, src/components/ui/Horizon.astro]
 ---
 
 # Copy deck · Home
@@ -20,7 +20,7 @@ Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA
 - **verbatim**: frase del cliente. Non si modifica.
 - **A capo d’autore**: la barra rovesciata `\` a fine riga indica un a capo che sta nel contenuto (regola «Il Passaggio», direzione visiva § 1.5). Nel markup è un `<br>` oppure una riga separata.
 - **Frecce**: → ↓ ↗ indicano quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri: i font scelti non li contengono (direzione visiva, § 3).
-- **Gulpease**: calcolato con uno script il 2026-09-28 con la formula 89 + (300 × frasi − 10 × lettere) / parole. Titoli, statement, paragrafi, didascalie e citazione della pagina, nel complesso: 69.
+- **Gulpease**: calcolato con uno script il 2026-09-28 con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Titoli, statement, riga di posizionamento, paragrafi, legenda dei nodi, didascalie della timeline e citazione, esclusi occhielli, etichette mono, CTA e contatti: 72 nel complesso (348 parole). Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
 - **Riferimenti**: grafie, CTA e punteggiatura in `tone-of-voice.md`; testi alternativi in `alt-text.md` (copywriter-content); header, footer, form, marquee e 404 in `microcopy.md`; eventi `data-track` nella strategia di conversione, § 4.
 
 ## Metadati
@@ -60,29 +60,63 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.
 
 ## 1. Hero · «L’orizzonte dei luoghi»
 
-**Kicker** · p · mono · max 64 (62)
-> ITnode — esperienze digitali immersive per imprese e territori
+**Gerarchia di lettura**: occhiello → H1 in due registri → riga di posizionamento → didascalia dell’osservatore. È la decisione I4 del G4, opzione (a) (verdetto del creative-director, § 3.4). L’orizzonte, con le etichette dei luoghi, è decorativo e nascosto alle tecnologie assistive.
 
-Alternative: «ITnode — esperienze immersive per imprese e territori» (53) · «ITnode — oltre i confini del Web tradizionale» (45).
+**Occhiello** · p · mono · prop `eyebrow` · max 64 (45)
+> ITnode — oltre i confini del Web tradizionale
 
-**H1** · verbatim · due registri nello stesso `<h1>`, max 60 (59)
+Spazio unificatore (U+00A0) tra «del» e «Web».
+
+**H1** · verbatim · due registri nello stesso `<h1>` · max 60 (59)
 > La tecnologia cambia.\
 > La curiosità ci accompagna\
 > da sempre.
 
-**Didascalia dell’osservatore** · p · mono · testo della direzione visiva (§ 5)
-> Vista da Acquaviva delle Fonti — 40.8957° N · 16.8412° E
+**Riga di posizionamento** · p in `lead`, subito dopo `</h1>` e fuori dall’heading · prop `lead` · max 60 (54) · Gulpease 65
+> Esperienze digitali immersive per imprese e territori.
 
-**Etichette dei luoghi sull’orizzonte** · dentro l’SVG `aria-hidden` · generate dai dati della direzione visiva (§ 1.4)
-> Monopoli — 081°
+Spazio unificatore (U+00A0) tra «per» e «imprese».
 
-Formato: nome del luogo, trattino lungo, rilevamento. I luoghi vicini si raggruppano: «Altamura · Gravina · Cassano — 253–265°». Nel sorgente si scrivono con la maiuscola solo all’iniziale; il maiuscolo lo applica il CSS.
+**Didascalia dell’osservatore** · p · mono · tre righe · la riga delle coordinate è `aria-hidden`
+> Vista da Acquaviva delle Fonti\
+> 40.8957° N · 16.8412° E\
+> Distanze in linea d’aria
+
+**Etichette dei luoghi sull’orizzonte** · dentro l’orizzonte `aria-hidden` · generate da `Horizon.astro` con i dati di `src/data/site.ts`
+> Monopoli — 081° · 39 km
+
+Formato: nome, trattino lungo, rilevamento, distanza in linea d’aria. I luoghi a meno di 12° l’uno dall’altro si raggruppano, con i nomi brevi: «Altamura · Gravina · Cassano — 253–265° · 6–36 km». Sotto i 700 px l’etichetta va su due righe, nome e rilevamento, senza distanza. Sull’orizzonte ci sono anche i gradi ogni 45°, con i punti cardinali: «090° E», «180° S», «270° O». Nel sorgente la maiuscola va solo all’iniziale; il maiuscolo lo applica il CSS.
 
 Note:
-- Primo registro: «La tecnologia cambia.»; secondo registro: «La curiosità ci accompagna / da sempre.», con l’a capo d’autore prima di «da sempre». Su mobile valgono gli a capo della direzione visiva (§ 5).
-- Il kicker dice in cinque secondi che cosa fa ITnode e per chi: l’H1 del cliente, da solo, non lo dice. Il concept «superare i confini del Web tradizionale» (§ 02) lo porta l’orizzonte, per questo non serve anche nel testo.
-- Nessuna CTA e nessun invito allo scorrimento: la hero deve respirare (§ 07), e «Parliamone» è già nell’header.
-- Coordinate e rilevamenti sono dati di lavoro della direzione visiva `[DA VERIFICARE]`. Le coordinate usano il punto decimale: sono dati cartografici in etichette mono (tone of voice, § 7).
+- **Perché la riga di posizionamento sta in `lead`.** Il test dei cinque secondi si gioca su ciò che si legge subito dopo il titolo. Nell’occhiello, la frase che dice che cosa fa ITnode aveva il corpo più piccolo della pagina (12–13 px, mono) e a 1440 px stava 300 px sopra il titolo. In `lead` arriva dove l’occhio atterra dopo l’H1. Ha deciso il creative-director, sentiti copywriter-brand, cro-specialist (esperimento E1) e ui-designer. Il testo non cambia: cambia il suo posto nella gerarchia.
+- **Punteggiatura.** Ora che è una frase, la riga prende la maiuscola iniziale e il punto finale, come gli statement del sito (tone of voice, § 8). L’occhiello resta senza punto.
+- **L’occhiello porta il concetto.** «Oltre i confini del Web tradizionale» è il concetto centrale delle linee guida (§ 02: «Superare i confini del Web tradizionale»), nella forma già proposta come alternativa in questo copy deck. L’orizzonte lo mostra, l’occhiello lo nomina. Con il titolo del manifesto («un nuovo modo di abitare il Web») e quello della chiusura («Il Web si può abitare.») apre un filo che la pagina chiude in fondo. «Web» ha la maiuscola perché è un sostantivo (tone of voice, § 5).
+- **Coerenza con voce e brief.**
+  - Nessun fatto nuovo e nessuna parola da evitare.
+  - La riga usa le parole del § 35 («imprese e territori») e del title della pagina; l’occhiello riprende il § 02. Nessuna delle due presenta ITnode come chi realizza siti (§§ 02, 07).
+  - Test dello scambio: l’occhiello lo supera, perché nomina ITnode e il suo concetto. La riga lo supera di poco, grazie a «territori» e al contesto: per questo propongo le varianti per E1 qui sotto.
+- **A capo**, misurati con uno script da 320 a 1920 px il 2026-09-28, con DOM e CSS iniettati come nella prova del G4.
+  - Senza spazi unificatori, l’occhiello va a capo dopo «del» (da 320 a 1023 px) e la riga dopo «per» (da 360 a 414 px e da 700 a 900 px).
+  - Con i due spazi unificatori: «ITnode — oltre i confini / del Web tradizionale» ed «Esperienze digitali immersive / per imprese e territori.».
+  - Da 1024 px stanno entrambi su una riga; la riga di posizionamento anche a 600 px.
+- **Ordine di lettura per gli screen reader**: occhiello, H1, riga di posizionamento, «Vista da Acquaviva delle Fonti», «Distanze in linea d’aria». Coordinate, gradi ed etichette dei luoghi restano nascosti.
+- **Nessuna CTA e nessun invito allo scorrimento**: la hero deve respirare (§ 07) e «Parliamone» è già nell’header. La terza riga della didascalia, «Distanze in linea d’aria», viene dalla review di veridicità (S2).
+- **Coordinate e distanze** si calcolano dai dati di `src/data/site.ts` e seguono la regola della direzione visiva (§ 1.4; G4, N2): quattro decimali reali da un’unica fonte, oppure due per tutti i luoghi `[DA VERIFICARE]`. Il punto decimale è quello della notazione cartografica (tone of voice, § 7).
+- **H1**: primo registro «La tecnologia cambia.»; secondo registro «La curiosità ci accompagna / da sempre.», con l’a capo d’autore prima di «da sempre». Su mobile valgono gli a capo della direzione visiva (§ 5).
+
+**Varianti della riga di posizionamento per E1** · dopo il lancio, con cro-specialist · al lancio resta la variante A
+
+Il test dei cinque secondi con titolari di PMI (E1) dirà se la riga basta. Le varianti hanno la stessa posizione e la stessa scala.
+
+| Variante | Testo | Car. | Gulpease | A capo a 390 px |
+|---|---|---|---|---|
+| A · controllo, al lancio | Esperienze digitali immersive per imprese e territori. | 54 | 65 | Esperienze digitali immersive / per imprese e territori. |
+| B · il risultato, con un verbo | Rendiamo imprese e territori esplorabili sul Web. | 49 | 72 | Rendiamo imprese e territori / esplorabili sul Web. |
+| C · il risultato, senza verbo | Spazi di imprese e territori, da esplorare sul Web. | 51 | 77 | Spazi di imprese e territori, / da esplorare sul Web. |
+
+- **Perché provarle.** La prima cosa che il visitatore deve capire, per il § 35, è che «ITnode rende gli spazi esplorabili digitalmente». A dice la categoria, non il gesto; e «immersivo» può far pensare a visori o mostre immersive, che ITnode non fa (tone of voice, § 5) `[IPOTESI: da verificare con E1]`. B e C dicono che cosa succede: uno spazio reale diventa esplorabile sul Web, come chiede lo statement del cliente per il SIII («Non raccontare la tua azienda. Falla esplorare.», § 10).
+- **Nessun fatto nuovo.** B parla al «noi», come «ci accompagna» nell’H1; C ha il ritmo degli statement del sito.
+- **Spazi unificatori**: in B tra «sul» e «Web»; in C tra «da» ed «esplorare» e tra «sul» e «Web». Così vanno a capo come in tabella da 320 a 414 px e da 700 a 1023 px; a 600 px e da 1024 px stanno su una riga (misurato).
 
 ## 2. Manifesto
 
@@ -256,11 +290,11 @@ Note:
 | Timeline, tappa 3 | «Dal 2002» e «10.000+ clienti, prima di ITnode» | § 09, nella lettura più prudente | A quale tappa appartiene il 2002; perimetro e fonte di «10.000+» (N5) |
 | Documento, legenda e didascalia | I tre nodi e «Puglia Digitale, evento regionale» | Direzione visiva, § 4.2 | Città e piazza sugli schermi, chi parla, luogo, data e autore della foto (A4) |
 | Microdescrizioni dei capitoli | 01, 02 e 03 | §§ 10, 13, 17 e 18 | Le eventuali descrizioni originali dei tre progetti |
-| Testi scritti per la Home | Kicker, occhielli, «Un’impresa. Un territorio. Una rete di città.», chiusura | Headline, microcopy e CTA consentiti dal § 25 | Solo l’approvazione: non sostituiscono testi del cliente |
+| Testi scritti per la Home | Occhiello e riga di posizionamento della hero, altri occhielli, «Un’impresa. Un territorio. Una rete di città.», chiusura | Headline, microcopy e CTA consentiti dal § 25; l’occhiello della hero riprende il § 02 | Solo l’approvazione: non sostituiscono testi del cliente |
 
 ## Ipotesi da validare
 
-- Il kicker con categoria e pubblico («esperienze digitali immersive per imprese e territori») basta a far capire che cosa fa ITnode prima del manifesto.
+- La riga di posizionamento in `lead`, subito sotto l’H1, basta a far capire in cinque secondi che cosa fa ITnode e per chi. Si verifica dopo il lancio con E1 (cro-specialist), anche con le varianti B e C della sezione 1.
 - «Un’impresa. Un territorio. Una rete di città.» descrive bene la relazione tra i tre mondi (brief, 2.3 e I2).
 - Il 2002 appartiene a MyComm o alla prima azienda: in entrambi i casi «Dal 2002» sulla tappa 3 resta vero.
 - «10.000+ clienti» si riferisce alle aziende del percorso del fondatore prima di ITnode (brief, N5).

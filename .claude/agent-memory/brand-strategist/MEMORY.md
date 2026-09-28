@@ -20,3 +20,11 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Contenuti non visionabili (video su domini bloccati) possono contenere claim esclusi dal registro: segnalarli come da visionare prima del go-live.
 - Regola che funziona con la sessione principale: staging (non indicizzabile) con i testi del cliente e le domande allegate; go-live solo con conferma scritta oppure con il testo di riserva già scritto nella review.
 - Budget di circa 35 chiamate: leggere prima dati e pagine (`src/data`, `src/pages`), poi grep mirati su superlativi e JSON-LD in `dist/`, e guardare solo le immagini con persone o eventi.
+
+## Lezioni da ADR 002 v0.2 e coordinate (2026-09-28, G4)
+- Rete, oltre ai blocchi già noti: bloccati Wikidata (www, query), OSM (nominatim, overpass, api), Wikipedia (it, en), geohack, GeoNames, tuttitalia, comuni-italiani. Il README del proxy (`/root/.ccr/README.md`) vieta di aggirare un blocco di policy con mirror: leggerlo PRIMA di provare servizi alternativi, poi segnalare gli host e passare a WebSearch.
+- WebSearch dà un riassunto, non il testo: per i comuni restituisce il riquadro di Wikipedia (en), quasi sempre al primo d'arco (~1,8 km); i risultati «X - Wikidata» danno il QID. Non mettere valori ipotetici nella query: il riassunto li «corregge» ma inquina la lettura.
+- Precisione e rilevamenti: un'incertezza di 1 km su un luogo a 6–7 km vale circa ±10° di rilevamento. Per l'orizzonte servono fonti precise (nodi OSM), non coordinate al primo d'arco.
+- Niente Bash in questo ruolo: i calcoli si fanno a mano. Validare prima il metodo riproducendo i valori già pubblicati; vicino a x,5° serve la correzione sferica (−Δλ/2 · sin φm) o la formula esatta.
+- Un dato del sito può essere duplicato in più file (qui coordinate in site.ts, asset-slots.ts, generate-maps.mjs, og-card.html): cercarlo con grep su tutto il repository ed elencare ogni occorrenza quando si propone un cambio.
+- ADR sottoposti all'utente: citare file e righe del codice verificati e scrivere le riserve per esteso (testo esatto, trigger, stato nel codice). L'utente approva parole, non rimandi a una review.

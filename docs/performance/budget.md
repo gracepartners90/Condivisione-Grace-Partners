@@ -3,9 +3,9 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1)]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), fonti web elencate nel §6.8]
 ---
 
 # Budget di performance
@@ -43,7 +43,7 @@ Le soglie valgono per tutti i template:
 | Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1) |
 |---|---|---|---|
 | LCP | ≤ 2,5 s | ≤ 2,0 s | 1,67 s |
-| FCP | ≤ 1,8 s | ≤ 1,5 s | 1,34 s (1,51 s senza preload, vedi sotto) |
+| FCP | ≤ 1,8 s | ≤ 1,5 s | 1,34 s (con il preload del font, ADR 005) |
 | TBT | ≤ 200 ms | ≤ 100 ms | 0 ms |
 | CLS | ≤ 0,1 | ≤ 0,05 | 0 |
 | Speed Index | ≤ 3,4 s | ≤ 2,5 s | 1,34 s |
@@ -55,7 +55,10 @@ Le soglie valgono per tutti i template:
 - Sul sito costruito lo statement di `/siii/`, nascosto dal reveal, ha dato LCP − FCP = 935 ms con throttling applicato e 373 ms in quello simulato, dovuti al font (review del 2026-09-28).
 - Su tutte le pagine la hero è senza foto e l'LCP è testo: LCP e FCP devono quindi coincidere.
 
-**FCP simulato e font.** Il modello simulato (Lantern) tratta il font come una dipendenza dell'FCP, mentre con `font-display: swap` il testo si dipinge con il ripiego. Per questo, senza preload del font (§3), l'FCP simulato cresce di 0,23–0,33 s, mentre quello applicato scende di 0,15–0,27 s: in 20 corse su 20 l'FCP applicato precede l'arrivo del font. L'obiettivo di FCP resta 1,5 s. Lo scarto della home senza preload (1,51 s simulato) è motivato qui e nella rimisura del 2026-09-28, §4.
+**FCP simulato e font.** Il sito tiene il preload di Schibsted Grotesk (ADR 005, §3). Le misure del §7.1 sono fatte con il preload, e l'obiettivo di 1,5 s è rispettato su tutti i template. Se un giorno il preload verrà tolto (condizioni del §3), vale questa avvertenza:
+- il modello simulato (Lantern) tratta il font come una dipendenza dell'FCP, mentre con `font-display: swap` il testo si dipinge con il ripiego;
+- senza preload l'FCP simulato cresce di 0,23–0,33 s (home a 1,51 s, 0,01 s sopra l'obiettivo), mentre quello applicato scende di 0,15–0,27 s: in 20 corse su 20 l'FCP applicato precede l'arrivo del font (rimisura del 2026-09-28, §4.2);
+- in quel caso l'obiettivo di FCP si valuta con il throttling applicato.
 
 **Altre categorie di Lighthouse (mobile).** Sono obiettivi proposti; soglia e verdetto spettano agli owner.
 
@@ -82,11 +85,15 @@ Le soglie valgono per tutti i template:
 **Regole collegate**
 - **Font.**
   - Al massimo **2 file** per pagina: Schibsted Grotesk variabile, 45,9 KB, e Fragment Mono 400, 24,8 KB (misurati).
-  - **Nessun preload dei font.** Decisione del 2026-09-28, dopo il confronto sulle pagine vere previsto per la Fase 5 (rimisura, §4).
-    - Perché: in Chromium un preload di font nel `<head>` blocca il primo rendering. Il blocco dura fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dall'avvio della navigazione (sorgente di Chromium, consultato il 2026-09-28).
-    - Guadagno misurato, throttling applicato: LCP −151 ms sulla home e −177 ms su `/siii/`. Con throttling simulato: LCP pari sulla home e −145 ms su `/siii/`. CLS invariato (0–0,002).
-    - Costo: sulla prima pagina di una visita, con rete lenta, il carattere di ripiego resta visibile 0,4–0,5 s in più.
-    - La decisione attende l'assenso di creative-director, perché tocca l'identità. Fino alla modifica in `BaseLayout.astro`, o se l'assenso non arriva, è ammesso un solo preload: Schibsted Grotesk.
+  - **Un solo preload, in ogni pagina: il file di Schibsted Grotesk.** Fragment Mono e le immagini non vanno in preload. Decisione del creative-director al gate G4, sentito web-performance-specialist: `docs/decisioni/005-preload-del-font.md`.
+    - **Meccanismo.** In Chromium un preload di font nel `<head>` blocca il primo rendering fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dall'avvio della navigazione. Vale anche con `font-display: swap`. Fonte: costanti `kMaxFCPDelay` (`render_blocking_resource_manager.cc`) e `kMaxBlockingTimeForRenderBlockingFonts` (`document_loader.cc`) nel sorgente di Chromium, ricontrollate il 2026-09-28.
+    - **Costo**, rispetto alla variante senza preload (rimisura del 2026-09-28, §4): con throttling applicato l'LCP è più tardi di 151 ms sulla home e di 177 ms su `/siii/`, e resta 1,01–1,04 s; con throttling simulato è pari sulla home e più tardi di 145 ms su `/siii/`. CLS invariato (0–0,002).
+    - **Beneficio** (misure del creative-director, ADR 005): con la fibra il titolo compare subito in Schibsted, senza scambio di carattere; su 4G veloce la finestra del ripiego scende da 158–183 a 13–32 ms, su 4G lento da 626–694 a 184–234 ms.
+    - **Quando si riapre.** La decisione torna a web-performance-specialist, che può togliere il preload senza un nuovo assenso, se:
+      - i dati di campo (RUM `web-vitals` o CrUX) mostrano un LCP mobile al 75° percentile sopra 2,0 s;
+      - una nuova versione di Chromium cambia in modo misurabile il comportamento dei font in preload;
+      - la hero smette di essere tipografica.
+    - Come sorvegliare le prime due condizioni: nota in fondo a questo paragrafo.
   - Niente corsivi né altri pesi statici. Un terzo file richiede un'eccezione (§8).
 - **CSS.** Resta tutto inline finché sta entro 15 KB per pagina. Oltre, si torna a `inlineStylesheets: 'auto'` e si rimisura.
 - **JavaScript.**
@@ -95,6 +102,16 @@ Le soglie valgono per tutti i template:
 - **Terze parti.** Zero al caricamento, su tutte le pagine.
   - Questo vale anche per i domini dei portali, per railway.app e per i preconnect statici.
   - Ogni futura aggiunta (analytics, antispam del form) passa da un ADR con cro-specialist, con un proprio budget di peso e di INP.
+
+**Nota di web-performance-specialist sull'ADR 005.** Condivido la decisione: con o senza preload tutte le metriche restano nella stessa classe, e la scelta tra circa 150 ms di LCP in laboratorio e l'assenza dello scambio di carattere è una scelta d'identità, quindi del creative-director. Le misure su fibra e 4G colmano un limite della mia rimisura, che valutava solo la rete lenta. Tre osservazioni, che non cambiano la decisione:
+1. **Due numeri dell'ADR da precisare**, ricalcolati sulla sua tabella:
+   - su 4G il primo paint con il preload arriva più tardi di **72–280 ms**, non di 100–280 ms: il valore più basso è `/siii/` su 4G veloce (228 contro 156 ms). Con la fibra la differenza è nulla (±8 ms);
+   - senza preload la finestra del ripiego è **da 2,7 a 14 volte** più lunga, non «3–6 volte»: 2,7–3,8 volte su 4G lento, 4,9–14 volte su 4G veloce.
+2. **L'FCP simulato della home senza preload (1,51 s) non è un contro dell'opzione A.** È un limite del modello Lantern (§2): con throttling applicato l'FCP scende. Non incide sulla decisione presa.
+3. **Le prime due condizioni di riapertura oggi non sono sorvegliate.**
+   - Al lancio il piano CRO non prevede script di misura, e CrUX è improbabile con il traffico del sito (§6.7): senza RUM la condizione «LCP mobile p75 sopra 2,0 s» non può scattare. Serve il RUM `web-vitals` senza cookie, decisione ancora aperta con cro-specialist.
+   - Per la seconda condizione propongo un confronto A/B su `/` e `/siii/` a ogni aggiornamento maggiore del Chromium di misura, e comunque ogni tre mesi. Metodo: stessa build, sola riga del preload tolta, 3 corse per variante con throttling applicato, alternate.
+   - Soglia proposta: si riapre se il ritardo dell'LCP dovuto al preload supera 300 ms (oggi 151–177 ms), oppure se cambiano le due costanti del sorgente citate sopra.
 
 ## 4. Budget per componente e media
 
@@ -146,7 +163,7 @@ Si verifica in Fase 5 e, durante lo sviluppo, a ogni modifica che tocca media, f
   - 3 con throttling applicato (`--throttling-method=devtools`), per la riga LCP − FCP e per il CLS dei font.
 - **Dati da annotare:** `benchmarkIndex` (1950–2420 in questo ambiente il 2026-09-28) e il commit misurato.
 - **Limiti noti del laboratorio:**
-  - il server locale va in HTTP/1.1, e il TTFB comprende la compressione Brotli q11 fatta a ogni richiesta (65–234 ms);
+  - il server di misura è locale: HTTP/1.1 senza TLS e senza rete vera, TTFB di circa 1 ms con `scripts/serve.mjs` (65–234 ms con il server di riserva del §6.6, che comprime a ogni richiesta). Compressione, cache, protocollo e latenza dell'host reale si verificano sull'host (§6.8);
   - l'ambiente non ha Arial, Roboto né Helvetica, ma ha **Liberation Sans**, che la faccia di ripiego intercetta con le metriche di Arial (verificato il 2026-09-28). Il CLS dello swap misurato qui rappresenta quindi un ripiego con metriche di Arial: non è sovrastimato. Resta da verificare su Android (Roboto) e iPhone (Helvetica).
 
 ### 6.2 Procedura
