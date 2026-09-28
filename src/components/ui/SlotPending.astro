@@ -65,7 +65,6 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
     --sky: 62%;
   }
 
-  /* 1 px thread with ticks below it: short ones every 4cqi, longer ones every third. */
   /* 1 px thread with ticks below it: short ones, and a longer one every third. */
   .slot-pub__horizon {
     --long: 12cqi;
@@ -166,12 +165,12 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
     justify-items: start;
   }
 
-  /* Narrow doors (phones under ~350 px): the name too is already in the text beside the door. */
   /* Doors: the coordinates are already under the H3 beside the door (G4 verdict, N9). */
   .slot-pub--place .slot-pub__meta > span + span {
     display: none;
   }
 
+  /* Narrow doors (phones under ~350 px): the name too is already in the text beside the door. */
   @container (max-width: 7rem) {
     .slot-pub--place .slot-pub__name {
       display: none;

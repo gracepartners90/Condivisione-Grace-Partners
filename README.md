@@ -72,7 +72,7 @@ Il repository è pronto per Railway ([ADR 004](docs/decisioni/004-anteprima-su-r
 
 | Variabile | Effetto |
 |---|---|
-| `PREVIEW_AUTH=utente:password` | **Obbligatoria per l'anteprima**: su Railway, senza questa variabile (e senza `INDEXING=on`) ogni pagina risponde 503. L'anteprima contiene testi e dati ancora da confermare (ADR 002, review di veridicità) |
+| `PREVIEW_AUTH` | **Obbligatoria per l'anteprima** su Railway (senza, e senza `INDEXING=on`, ogni pagina risponde 503): `utente:password` la protegge; `off` la apre a chiunque abbia il link, sempre fuori dai motori di ricerca. Dal 2026-09-28 l'anteprima è aperta (`off`) per decisione dell'utente (ADR 004) |
 | `PUBLIC_SLOT_MODE=publish` | Variante «in pubblicazione» al posto dei segnaposto degli asset |
 | `PUBLIC_FORM_ENDPOINT` | Indirizzo che riceve il modulo, quando esiste |
 | `INDEXING=on` | Solo in produzione: toglie l'intestazione `X-Robots-Tag: noindex, nofollow`, presente di default |

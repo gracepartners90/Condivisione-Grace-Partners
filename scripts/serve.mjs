@@ -5,9 +5,9 @@
  * - trailing slashes (trailingSlash: 'always'), directory index, 404.html with status 404;
  * - brotli or gzip for text, compressed once at start-up; ETag and 304; byte ranges for media.
  * Preview safety: `X-Robots-Tag: noindex` unless INDEXING=on; Basic auth with
- * PREVIEW_AUTH=user:password. On Railway a preview (no INDEXING=on) is never public: without
- * PREVIEW_AUTH every page answers 503 (texts and data still to be confirmed, ADR 002 and the
- * veracity review). /healthz answers without auth for the platform health check.
+ * PREVIEW_AUTH=user:password. On Railway a preview (no INDEXING=on) needs PREVIEW_AUTH: without
+ * it every page answers 503. PREVIEW_AUTH=off opens the preview to anyone with the link, still
+ * noindex (user's decision of 2026-09-28, ADR 004). /healthz always answers without auth.
  * No dependencies. Usage: `npm start` (PORT from the environment, DIST_DIR to serve another build).
  */
 import { createServer } from 'node:http';
@@ -20,9 +20,11 @@ import { createHash, timingSafeEqual } from 'node:crypto';
 const root = process.env.DIST_DIR ?? fileURLToPath(new URL('../dist/', import.meta.url));
 const port = Number(process.env.PORT) || 8080;
 const indexing = process.env.INDEXING === 'on';
-const auth = process.env.PREVIEW_AUTH ? Buffer.from(`Basic ${Buffer.from(process.env.PREVIEW_AUTH).toString('base64')}`) : null;
+const publicPreview = process.env.PREVIEW_AUTH === 'off';
+const auth =
+  process.env.PREVIEW_AUTH && !publicPreview ? Buffer.from(`Basic ${Buffer.from(process.env.PREVIEW_AUTH).toString('base64')}`) : null;
 const onRailway = Boolean(process.env.RAILWAY_PROJECT_ID || process.env.RAILWAY_ENVIRONMENT_NAME || process.env.RAILWAY_ENVIRONMENT);
-const locked = onRailway && !indexing && !auth;
+const locked = onRailway && !indexing && !auth && !publicPreview;
 
 if (!existsSync(join(root, 'index.html'))) {
   console.error(`serve: no build in ${root}. Run \`npm run build\` first.`);
@@ -165,7 +167,7 @@ const server = createServer((req, res) => {
   }
   if (locked) {
     res.writeHead(503, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' });
-    return res.end('Anteprima non ancora aperta: imposta la variabile PREVIEW_AUTH=utente:password nel servizio Railway (README, «Anteprima su Railway»).');
+    return res.end('Anteprima non ancora aperta: imposta la variabile PREVIEW_AUTH nel servizio Railway, utente:password oppure off (README, «Anteprima su Railway»).');
   }
   if (auth) {
     const given = Buffer.from(String(req.headers.authorization ?? ''));
@@ -196,8 +198,8 @@ const server = createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`serve: ${files.size} files from ${root} on port ${port}${indexing ? '' : ' (noindex)'}${auth ? ' (auth)' : ''}`);
-  if (locked) console.warn('serve: preview locked (503) until PREVIEW_AUTH=user:password is set.');
+  console.log(`serve: ${files.size} files from ${root} on port ${port}${indexing ? '' : ' (noindex)'}${auth ? ' (auth)' : ''}${publicPreview ? ' (public preview)' : ''}`);
+  if (locked) console.warn('serve: preview locked (503) until PREVIEW_AUTH is set (user:password, or off).');
 });
 
 // Railway stops containers with SIGTERM: finish the open requests, then exit.

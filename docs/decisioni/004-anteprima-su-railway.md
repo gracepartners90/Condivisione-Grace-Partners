@@ -43,7 +43,8 @@ Per il server su Railway:
 - Anteprima su Railway con il repository collegato: build `npm run build`, avvio `npm start`, controllo di salute su `/healthz` (`railway.json`); Node 22 (`.node-version`).
 - Il server applica `_headers` e `_redirects`, gestisce la barra finale (`trailingSlash: 'always'`) e serve `404.html` con stato 404.
 - Anteprima fuori dai motori di ricerca: `X-Robots-Tag: noindex, nofollow` di default, tolto solo con `INDEXING=on`.
-- Accesso protetto da password con `PREVIEW_AUTH=utente:password`. Su Railway l'anteprima senza password non si apre (503): è la prima condizione del brand-strategist per lo staging (review di veridicità §4, «non indicizzabile e con accesso protetto»). In locale il server resta aperto, perché è anche il server di misura della performance (`budget.md` §6).
+- Accesso protetto da password con `PREVIEW_AUTH=utente:password`. Su Railway l'anteprima senza la variabile non si apre (503): è la prima condizione del brand-strategist per lo staging (review di veridicità §4, «non indicizzabile e con accesso protetto»). In locale il server resta aperto, perché è anche il server di misura della performance (`budget.md` §6).
+- **Aggiornamento del 2026-09-28: password tolta per decisione dell'utente.** Con `PREVIEW_AUTH=off` l'anteprima è aperta a chiunque abbia il link e resta fuori dai motori di ricerca (`X-Robots-Tag: noindex, nofollow`). La condizione di accesso protetto della review di veridicità non è più rispettata: è una scelta dell'utente, registrata qui. Conseguenze da tenere presenti: chi riceve il link vede testi e dati non ancora confermati come se fossero definitivi; il modulo non invia nulla ma prepara email vere a info@itnode.it. Per richiudere l'anteprima basta rimettere `utente:password`.
 
 ## Conseguenze
 - Le istruzioni per l'utente sono nel README, sezione «Anteprima su Railway».

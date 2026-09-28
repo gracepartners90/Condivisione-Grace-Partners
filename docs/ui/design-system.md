@@ -367,7 +367,7 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 
 | | Header | MobileMenu |
 |---|---|---|
-| **Anatomia** | skip link · logo (link a `/`) · 4 voci testuali · «Parliamone» pillola · «Menu» (< 1024) | «Chiudi» nella posizione di «Menu» · voci «01 SIII», «02 Puglia Digitale», «03 Città Digitali», «Contatti» (solo il numero in mono `aria-hidden`, senza rilevamento; nomi `display-l`, descrittori `small` `--fg-2`) · «Parliamone» pillola calce · telefono ed email in mono, l'indirizzo email con `t-as-is` (minuscolo, V12, applicato) |
+| **Anatomia** | skip link · logo (link a `/`) · 4 voci testuali · «Parliamone» pillola · «Menu» (< 1024) | «Chiudi» nella posizione di «Menu» · voci «01 SIII», «02 Puglia Digitale», «03 Città Digitali», «Contatti» (solo il numero in mono `aria-hidden`, senza rilevamento; nomi `display-l` nella direzione, nella build un corpo proprio `clamp(2rem, 1.2rem + 4vw, 3.25rem)`, 35 px a 390 e 50 a 768, da riportare su un token con S5 dopo il lancio; descrittori `small` `--fg-2`) · «Parliamone» pillola calce · telefono ed email in mono, l'indirizzo email con `t-as-is` (minuscolo, V12, applicato) |
 | **Superficie** | `top`: trasparente sul tema della hero (SIII su notte); `scrolled`: fondo pieno e filetto `--line`, stessa altezza | notte, a tutto schermo (`100dvh`) |
 | **Stati** | voce: hover sottolineatura 1 px; corrente: punto del Nodo 8 px + `aria-current`; CTA: hover inversione a contorno; focus 2 px | voci alte ≥ 48 px; corrente con punto; apertura 250 ms, voci a cascata ≤ 300 ms |
 | **Misure** | altezza 64 / 76 px; logo 24 / 28 px; controlli ≥ 44 px | — |
@@ -431,7 +431,7 @@ Stati: hover/focus sulla città → il suo nodo si accende (anello ×1,4). Nome 
 
 | Variante | Anatomia | Stati |
 |---|---|---|
-| `document` (foto evento, Home §3) | soglia Panorama 2,27:1 (mobile: ritaglio «Città» 4:5) · ≤ 3 nodi numerati calce (§2.3) · legenda numerata sempre visibile · didascalia mono solo con data e luogo confermati · nota AI sotto la foto finché non arriva l'originale. Nodi in percentuale del ritaglio: 1 schermo sinistro (13,3%, 18%; nel ritaglio «Città» 37,7%, 18%); 2 palco, oggi (44%, 30%) sul busto dell'oratore, proposta N7 sul leggio (36%, 31%), solo Panorama; 3 schermo destro (85%, 16%), solo Panorama | nodo: default, hover/focus (cresce solo l'anello, opzione A di ux-designer), aperto (Esc chiude) |
+| `document` (foto evento, Home §3) | soglia Panorama 2,27:1 (mobile: ritaglio «Città» 4:5) · ≤ 3 nodi numerati calce (§2.3) · legenda numerata sempre visibile · didascalia mono solo con data e luogo confermati · nota AI sotto la foto finché non arriva l'originale. Nodi in percentuale del ritaglio: 1 schermo sinistro (13,3%, 18%; nel ritaglio «Città» 37,7%, 18%); 2 palco, oggi (44%, 30%) sul busto dell'oratore, proposta N7 sul leggio (36%, 31%), solo Panorama; 3 schermo destro (85%, 16%), solo Panorama | nodo: default; hover/focus: cresce solo l'anello (opzione A di ux-designer, WCAG 1.4.13); aperto con clic, Invio o Spazio: etichetta (Esc chiude) |
 | `compare` (SIII §3) | una soglia Schermo 16:10 · interruttore a due stati «Tour 360° — guardi» / «SIII — agisci» · tabella di 3 righe sotto | stato 1: solo orizzonte; stato 2: compaiono i nodi (prodotto, video, informazioni, prenotazione); cambio in `opacity`/`transform` |
 | `facade` (anteprima SIII) | poster (schermata) · «Avvia l'anteprima» (pillola, nome «Avvia l'anteprima di {nome}») · nota «L'anteprima carica contenuti da {dominio}.» · «Entra nell'esperienza ↗» sempre visibile | poster → caricamento («Caricamento…» in `role="status"`, pulsante `aria-disabled`, nessuna animazione in loop) → caricata (iframe con `title`, poi «Chiudi l'anteprima» e «Schermo intero») → errore (messaggio e link esterno) |
 
@@ -441,7 +441,7 @@ Stati: hover/focus sulla città → il suo nodo si accende (anello ×1,4). Nome 
 
 ### 3.10 FounderTimeline
 
-- **Anatomia:** Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» · orizzonte del tempo (tappe = tacche; periodo in mono, titolo `display-s`, dettaglio ≤ 120 caratteri `small`; una data mancante non mostra nulla, la tacca basta) · momento numerico «10.000+ clienti» in `display-l` agganciato a Leadstone, con attribuzione (N5) e lontano almeno una tappa da «oggi» · «oggi» è l'unico nodo (punto Ø 10 più anello di 1 px, scostamento 7 px, sul filo), con tre link (ITnode, Puglia Digitale, Città Digitali) · chiusura: ritratto a inchiostro 1:1 (DR3-b, ≤ 400 px, su calce, con nota di trasparenza) + citazione `display-m` in `<blockquote>` + firma mono + «Giacomo Lenoci su LinkedIn ↗» `[DA VERIFICARE: F7]`.
+- **Anatomia:** Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» (arrivo `display-m` 400) · orizzonte del tempo (tappe = tacche; periodo in mono, titolo `display-s`, dettaglio ≤ 120 caratteri `small`; una data mancante non mostra nulla, la tacca basta) · momento numerico «10.000+ clienti» in `display-l` agganciato a Leadstone, con attribuzione (N5) e lontano almeno una tappa da «oggi», **solo con la conferma del perimetro** (quali aziende, quale periodo, clienti o utenti) e con l'etichetta confermata; senza conferma il numero si toglie, la tappa resta con titolo e data e la colonna vuota prima di «oggi» resta come tempo che passa (direzione §7.3, I2) · «oggi» è l'unico nodo (punto Ø 10 più anello di 1 px, scostamento 7 px, sul filo), con tre link (ITnode, Puglia Digitale, Città Digitali) · chiusura: ritratto a inchiostro 1:1 (DR3 (b), in attesa della conferma dell'utente; ≤ 400 px, su calce, con nota di trasparenza) + citazione `display-m` in `<blockquote>` + firma mono + «Giacomo Lenoci su LinkedIn ↗» `[DA VERIFICARE: F7]`.
 - **Distanza tra «10.000+» e «oggi»:** su desktop una colonna vuota del filo (`--stages` = tappe + 1, «oggi» in `grid-column: -2 / -1`); su mobile 64 px di filo in più. Il margine del mobile non vale su desktop: lì «oggi» sta sul filo come le altre tappe (V1, applicato).
 - **Desktop:** orizzontale e sticky solo se tutte le tappe stanno nel viewport; nessun elemento focalizzabile sul binario che trasla (problema 13 di `accessibilita.md`).
 - **Mobile:** linea verticale a sinistra, tappe in pila, niente sticky. **Reduced motion:** griglia statica a 4 colonne.
@@ -462,14 +462,17 @@ Stati: hover/focus sulla città → il suo nodo si accende (anello ×1,4). Nome 
 ### 3.12 Stats
 
 - **Anatomia:** per numero: valore `display-xxl` (simbolo + ~ % in `--place`: arancio su notte, terra su chiaro) · etichetta mono sotto (≤ 60 caratteri) · nota mono in fondo «Dati ITnode, aggiornati a [mese anno]» `[DA FORNIRE]`.
-- **Desktop:** scalinata, ogni numero sfalsato di 2 colonne verso destra e verso il basso. **Mobile:** in pila, allineati a sinistra (con il minimo proposto in §7, n. 1, «~200.000» sta nella colonna anche a 320 px).
+- **Desktop:** scalinata, ogni numero sfalsato di 2 colonne verso destra e verso il basso. **Mobile:** in pila, allineati a sinistra (con il minimo di §7, n. 1, «~200.000» sta nella colonna anche a 320 px).
+- **Un solo numero** (riserva B3 del G4, direzione §7.5): se al lancio resta solo «30+», un solo valore in `display-xxl` dalla colonna 3, con etichetta e nota con la data; titolo al singolare (copywriter-brand). Se neanche «30+» è confermato, la sezione non si pubblica e il layout resta pronto. «~200.000» e «60%» non si pubblicano senza fonte.
+- **Scala:** `.stat__value` ha un clamp proprio (64 → 240 px); dopo il lancio passa al token `--fs-display-xxl`, dopo una verifica della scalinata a 1440 px (S5).
 - **Accessibilità:** `<ul>`; simbolo `aria-hidden` + «circa»/«oltre» nascosti; niente conteggio animato (se richiesto: valore finale nel DOM, animazione `aria-hidden`, spenta con reduced motion).
 - **Solo numeri verificati:** l'etichetta di «~200.000» chiarisce che è il bacino dei territori, non le imprese sul portale (N2).
 
 ### 3.13 VideoSection
 
 - **Anatomia:** soglia Video a tutta larghezza (altezza `min(100svh − header, 56.25vw)`) · copertina sempre presente · controlli in basso a sinistra: nodo riproduci/pausa (cerchio 44 px), pillole testuali «Audio» e «Schermo intero» (e «Sottotitoli» se c'è parlato), tempo in mono; fondo notte al 72% con bordo calce al 60% · sotto: `<details>` «Leggi la descrizione del video».
-- **Copertina** (finché manca il fotogramma del cliente, in staging e in pubblicazione): superficie notte-2 e nodo di riproduzione (anello di 1 px, 72 px; 56 px su mobile). Nessun titolo: il titolo è l'H2 sopra (review, I14). Da 700 px c'è anche un orizzonte al 50%: da togliere, perché con l'orizzonte di fine hero sono due orizzonti nella stessa schermata (V10).
+- **Copertina** (finché manca il fotogramma del cliente, in staging e in pubblicazione): superficie notte-2 e nodo di riproduzione (anello di 1 px, 72 px; 56 px su mobile). Nessun titolo: il titolo è l'H2 sopra (review, I14). Nessun orizzonte: con quello di fine hero sarebbero due nella stessa schermata a 768–1024 px, e il gesto dell'orizzonte che si apre nel video lo fa già quello (decisione del G4 su V10, applicata: sulla pagina resta un solo orizzonte).
+- **Poster reale** (N4, condizione C05): quando arriva il file, il creative-director sceglie il fotogramma; ui-designer prepara la copertina in AVIF e WebP responsive, senza attributo `poster` (`architettura.md`).
 - **Stati:** poster · in riproduzione (pausa sempre visibile durante l'autoplay) · in pausa · muto/audio · caricamento · errore («Il video non si è caricato…», microcopy §5).
 - **Contrasto:** fondo notte al 72% e bordo calce al 60%. Su un fotogramma bianco il fondo risultante (circa #525558) regge 7:1 col fotogramma e 6,6:1 col testo calce; su un fotogramma nero regge il bordo (circa 7:1). Quindi ≥ 3:1 su qualunque fotogramma. Niente velature a gradiente.
 - **Autoplay muto** solo in viewport, mai con reduced motion o Save-Data; su mobile poster e pulsante `[IPOTESI della struttura pagine]`.
@@ -491,7 +494,7 @@ Nessun link verso altre pagine tra la CTA e il form.
 | Etichetta | `small` 15 px, peso 600, `--fg`, sempre visibile sopra il campo; «(facoltativo)» nell'etichetta dei campi facoltativi; «*» per gli obbligatori con la frase «I campi con * sono obbligatori.» in testa |
 | Suggerimento | `small` `--fg-2`, tra etichetta e campo |
 | Campo | altezza ≥ 48 px, testo `body` (≥ 16 px: niente zoom su iOS), padding 12 × 16 px, raggio 0, fondo `--field-bg`, bordo 1 px `--field-border` |
-| Form a due colonne (≥ 1024 px) | i campi di una riga finiscono sulla stessa linea (`.contact--wide .contact__field--half { align-content: end }`): riquadri allineati e alti uguali (52 px), ogni etichetta a 8 px dal suo campo, il suggerimento del vicino tra la sua etichetta e il suo campo. Mai riquadri allungati dal vicino. Con un solo errore nella riga i riquadri si sfalsano dell'altezza del messaggio finché l'errore resta: accettato. Da applicare (preferenza UI del 2026-09-28; alternativa provata con subgrid nella verifica UI) |
+| Form a due colonne (≥ 1024 px) | i campi di una riga finiscono sulla stessa linea (`.contact--wide .contact__field--half { align-content: end }`): riquadri allineati e alti uguali (52 px), ogni etichetta a 8 px dal suo campo, il suggerimento del vicino tra la sua etichetta e il suo campo. Mai riquadri allungati dal vicino. Con un solo errore nella riga i riquadri si sfalsano dell'altezza del messaggio finché l'errore resta: accettato. Applicato in 846f142 e confermato dal creative-director al G4 (verdetto §3.6); se i test con utenti mostrassero esitazioni, c'è l'alternativa in subgrid già provata nella verifica UI |
 | Stati del campo | hover: bordo `--fg` · focus: contorno 2 px `--focus` + bordo `--fg` · errore: bordo 2 px `--error` (senza spostamenti) + messaggio sotto il campo (decisione di ux-designer, 2026-09-28) con icona (!) e prefisso nascosto «Errore:» · compilato valido: nessun segno verde |
 | Checkbox | quadrato 24 × 24, raggio 0, bordo `--field-border`; selezionata: fondo `--fg`, segno di spunta `--bg` tratto 2 px; etichetta cliccabile; privacy **mai preselezionata**; «Mi interessa» (scelta di argomento, non consenso) preselezionata in build sulle pagine di linea |
 | Gruppo «Mi interessa» | `fieldset` + `legend` (`small` 600); pillole selezionabili (bordo `--field-border`, raggio pillola, casella nativa visibile; selezionata: fondo `--fg`, testo `--bg`), a capo quando serve; focus sulla pillola via `:has(:focus-visible)`. Accettate il 2026-09-28: coerenti con «il cerchio è l'interazione» |
@@ -554,10 +557,10 @@ Al lancio nessun cookie non tecnico e nessun banner (piano di misurazione §1). 
 | Box | stesso contenitore e stesso `aspect-ratio` dello slot (niente CLS alla sostituzione), `--slot-bg`, `overflow: clip`, `container-type: inline-size`; zero byte di immagini |
 | Accessibilità | tutto `aria-hidden`, nessun elemento focalizzabile. Quindi la variante mostra solo testo che la pagina dice già accanto; se non lo dice, la variante resta senza testo (WCAG 1.3.1) |
 | Marcatura | `data-asset-pending="<slot>"`; `npm run check:launch` elenca le istanze come informazione, senza bloccare. Nessun «ASSET RICHIESTO» nell'HTML (verificato su 5 pagine) |
-| Orizzonte | filo di 1 px `--fg`; tacche corte (6 px) ogni `4cqi` e lunghe (12 px) ogni `12cqi`, disegnate con gradienti a stop netti |
-| **Luogo** (porta 3:5) | filo al 58% (il rapporto cielo/terra della hero); nome in piedi sul filo, 1,25rem sopra, `clamp(display-s, 11cqi, display-m)` a 400; nodo-luogo `--place` (punto Ø 10 e anello Ø 26, fermo) al 78% sul filo; sotto il filo, 1,5rem, due righe mono `--fg-2`: «rilevamento · distanza» (o «SEDE» per Acquaviva) e le coordinate. Ogni riga va a capo solo tra i segmenti « · »; rilevamento, distanza e coordinate vengono da `lib/geo.ts`, mai scritti a mano |
-| **Luogo, porte strette** | sotto `8rem` di larghezza si toglie la riga delle coordinate, sotto `7rem` anche il nome: sono entrambi nel testo accanto alla porta. Senza, a 320–345 px il nome viene tagliato e le coordinate escono dal fondo (V7, applicato) |
-| **Esperienza SIII** (schermo 16:10; porta 4:5 → 3:5 nella hero di SIII) | filo al 62%; tre hotspot `--node` fermi (punto e anello, niente ping) all'altezza degli occhi: (22, 50), (55, 47), (80, 51) negli schermi (V8, applicato); (30, 28), (70, 40), (44, 52) nella hero. In alto a sinistra (inset `6cqi 8cqi`) il nome in `display-s` 600 e il luogo in mono, **solo dove il testo accanto li nomina** (esempi di `/siii/`). Nessun testo nella hero di SIII (il nome è l'H1) e nel capitolo 01 della Home (il capitolo parla del SIII, non di un cliente: O6 della verifica di ux-designer, prop `pendingText={false}` di `Media.astro`). Proposta V9: gradi ogni 45° sotto le tacche lunghe nei contenitori ≥ 700 px |
+| Orizzonte | filo di 1 px `--fg`; tacche disegnate con gradienti a stop netti: nel luogo corte (6 px) ogni `4cqi` e lunghe (12 px) ogni `12cqi`; nell'esperienza lunghe ogni `12.5cqi` da `6cqi` (i 45° della riga dei gradi) e corte a un terzo |
+| **Luogo** (porta 3:5) | filo al 58% (il rapporto cielo/terra della hero); nome in piedi sul filo, 1,25rem sopra, `clamp(display-s, 11cqi, display-m)` a 400; nodo-luogo `--place` (punto Ø 10 e anello Ø 26, fermo) al 78% sul filo; sotto il filo, 1,5rem, una riga mono `--fg-2`: «rilevamento · distanza» (o «SEDE» per Acquaviva), che va a capo solo tra i segmenti « · ». Le coordinate non si ripetono: stanno già sotto l'H3 accanto (decisione del G4 su N9, a tutte le larghezze: `.slot-pub--place .slot-pub__meta > span + span { display: none; }`). Rilevamento e distanza vengono da `lib/geo.ts`, mai scritti a mano. Verificato in C14 sulla build di pubblicazione: «256° · 37 KM» Gravina, «SEDE» Acquaviva, «081° · 38 KM» Monopoli |
+| **Luogo, porte strette** | sotto `7rem` di larghezza si toglie anche il nome, che è nell'H3 accanto: a 320 px (porte da 102 px) restano filo, nodo e rilevamento. Senza, a 320–345 px il nome viene tagliato (V7, applicato) |
+| **Esperienza SIII** (schermo 16:10; porta 4:5 → 3:5 nella hero di SIII) | filo al 62%; tre hotspot `--node` fermi (punto e anello, niente ping) all'altezza degli occhi: (22, 50), (55, 47), (80, 51) negli schermi (V8, applicato); (30, 28), (70, 40), (44, 52) nella hero. **Nessun testo dentro il pannello**, né in Home né su `/siii/`: nome e luogo li dicono l'H3 e la riga accanto, e un pannello scuro con un titolo e dei punti si leggerebbe come una finta schermata (decisione del G4 su N3; prop `pendingText={false}` di `Media.astro` su tutte le istanze). Nei pannelli larghi almeno 700 px (`@container (min-width: 43.75rem)`), gradi ogni 45° sotto le tacche lunghe, lettere solo ai cardinali («000° N», «045°», …): tacche lunghe ogni `12.5cqi` a partire da `6cqi`, gradi alle stesse posizioni (6% + 12,5% × n), scarto misurato 0,0 px (V9, applicato). Sotto i 700 px niente gradi: il righello sarebbe fitto |
 | Con la pagina | i nodi che la pagina sovrappone alla soglia (`.worlds__hot`, `.siii-hero__node`) si nascondono quando c'è `.slot-pub`; l'apertura (`.aperture`) vale anche per `.slot-pub` |
 | **Poster del video** | la copertina tipografica di §3.13, uguale in entrambe le modalità |
 
@@ -622,14 +625,15 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 - **Disegno della linea:** con `vector-effect: non-scaling-stroke` il tratteggio si calcola in px dello schermo e `pathLength` non vale (verificato in Chromium: con `stroke-dashoffset` a metà la costa resta intera). Due strade: (a) raccomandata, un otturatore nel colore della superficie che scorre in `transform` nella direzione della linea (ovest → est per la Puglia, nord → sud per l'Italia), come le aperture; (b) `pathLength="1"` e `stroke-dashoffset` **senza** `non-scaling-stroke`, con `stroke-width` in unità del viewBox per ogni breakpoint.
 - Città Digitali: l'ordine verticale delle città si allinea a `yPct` dei nodi (Varese 12,9%, Altamura 59,2%, Caltanissetta 90,8%).
 - Peso: 7 KB e 0,5 KB inline, dentro i limiti di `budget.md` (≤ 20 KB) e della direzione (≤ 8 KB).
-- Coordinate di lavoro `[DA VERIFICARE]`; per un confine regionale ufficiale servirebbero i limiti ISTAT (con attribuzione).
+- Coordinate dei luoghi dalla fonte unica a 2 decimali (§2.4; `generate-maps.mjs` legge gli stessi valori, `maps.json` rigenerato con C11). Per un confine regionale ufficiale servirebbero i limiti ISTAT (con attribuzione).
+- **Etichette dei luoghi:** i nomi lunghi vanno a capo nelle carte piccole («Acquaviva delle / Fonti»); nelle carte larghe almeno 45rem (720 px) stanno su una riga (proposta N8: hero di `/puglia-digitale/` da 800 px di viewport; le carte dei capitoli in Home, al massimo 480 px, non cambiano). Le coordinate si tolgono sotto i 25rem.
 
 ### 5.5 Immagine social: `public/og/default.jpg`
 
 | | |
 |---|---|
 | **File** | 1200 × 630, JPEG sRGB, 4:4:4, 45 KB |
-| **Composizione** | card tipografica su calce/pietra come la hero della Home: wordmark in alto a sinistra, coordinate della sede in alto a destra, «Esperienze digitali immersive» in piedi sull'orizzonte, orizzonte graduato a tutta larghezza (060°–260°, tacche ogni 5°, etichette ogni 45°), «per imprese e territori.» nella terra con rientro di 2 colonne |
+| **Composizione** | card tipografica su calce/pietra come la hero della Home: wordmark in alto a sinistra, coordinate di Acquaviva delle Fonti, il comune della sede («40.90° N · 16.85° E», rigenerata con C11), in alto a destra, «Esperienze digitali immersive» in piedi sull'orizzonte, orizzonte graduato a tutta larghezza (060°–260°, tacche ogni 5°, etichette ogni 45°), «per imprese e territori.» nella terra con rientro di 2 colonne |
 | **Sorgente** | `scripts/og/og-card.html` (impaginata a 2× del sistema: nei feed la card si vede a 500–600 px) |
 | **Comando** | `node scripts/og/build-og.mjs` → inserisce il wordmark attuale, cattura con `npx playwright screenshot` a 1200 × 630, converte con sharp e controlla misure e peso (< 300 KB) |
 | **Varianti** | parametri `theme=notte`, `line1`, `line2`: per una card per pagina (`/og/siii.jpg` su notte, ecc.) si aggiunge una voce a `VARIANTS` |
@@ -654,7 +658,14 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 | Richiami ed etichette degli orizzonti | box delle etichette e ascissa dei richiami, 320–1920 px, scroll 0/150/300/450 | incroci nella hero (fino a 1440 px) e su Città Digitali (768–1280); zero incroci con le file che partono dalla seconda (§2.1, V5) |
 | A capo dei Passaggi | righe visive per ogni riga d'autore, 320–1440 px, con e senza `text-wrap: balance` | il browser spezza gli statement dei capitoli; con arrivo `display-m` e `balance`, 2 righe (01, 02) e 4 bilanciate (03) (§2.5, V4) |
 | Variante «in pubblicazione» | HTML di 5 pagine; sonda geometrica di 8 istanze da 320 a 1440 px; ritagli a 2× a 390 e 1440 | nessuna richiesta visibile; conforme da 360 px in su; porte tagliate sotto i 350 px (§4, V7) |
-| Maschera dei ritratti | tre valori a confronto sui due derivati, a 2× | 40/74 (Home) e 36/68 (Contatti) assorbono skyline e linee di rete (§1.7, V6) |
+| Maschera dei ritratti | tre valori a confronto sui due derivati, a 2× | 40/74 (Home) e 36/68 (Contatti) assorbono skyline e linee di rete (§1.7, V6); applicati e letti nel CSS calcolato in C14 |
+| **Verifica C14** (dopo il verdetto G4) | Playwright a 320, 390, 768, 1024, 1440 px su staging e variante «in pubblicazione»; sonde DOM, screenshot a 1× e 2× | I4, V4, V6, V10, N1, N5, S10, N6, N3, V9, N9, C11 conformi (review di verifica, sezione C14) |
+| Coordinate (C11) | HTML di 8 pagine, ricerca di ogni coordinata | nessun valore con più di 2 decimali; una sola precisione per pagina; firma, didascalie, porte e carte dalla stessa fonte |
+| Richiami ed etichette dopo C11 e V14 | 20 larghezze da 320 a 1920 px, scroll 0/150/300/450; tra 700 e 767 px ogni 10 px, scroll 0–700 a passi di 50 | nessun incrocio nella hero e su Città Digitali; sul tablet tre etichette intere; a riposo l'etichetta del gruppo murgiano esce dal bordo a 320–390 px (C14-1) |
+| Reflow dopo C10–C12 | 8 pagine × 5 larghezze, staging e pubblicazione | 80 su 80 senza scorrimento orizzontale né testo fuori viewport |
+| Peso di `display-m` (S4) | stili calcolati su 8 pagine a 1440 px | conforme alla regola del G4 (§1.2) |
+| Etichette della carta di Puglia Digitale (N8) | regola iniettata, 720–1920 px, sovrapposizioni al livello del testo | una riga da 800 px di viewport; nessuna sovrapposizione, niente fuori schermo; carte della Home invariate |
+| Nodo 2 del Documento (N7) | griglia al 1% sul ritaglio Panorama, anteprima a 2× | leggio a (36%, 30,7%): il nodo cade sul piano del leggio, di lato alla figura |
 
 ---
 
@@ -665,7 +676,8 @@ Letto `src/styles/tokens.css` (5,5 KB, versione delle 09:38) e, per il contesto,
 **Stato dopo la verifica del 2026-09-28** (`tokens.css` riletto):
 - **Applicati:** n. 1; n. 5 (`--node-ink`); n. 7 (`--focus-width`, `--focus-offset`, `--focus-ring-media`, usato da video e Documento); n. 8 (`color-scheme: dark`); n. 10 (`--btn-ghost-border`, usato da `Cta`). In più, il nuovo minimo di `--fs-display-xl` a `2.75rem` (review, B1).
 - **In parte:** n. 4. I rapporti porta, ritratto, schermo, panorama e video esistono, ma segnaposto e componenti usano ancora stringhe; mancano quadrato e 3:4.
-- **Aperti:** n. 3, 6, 9, 11 e 12.
+- **Aperti:** n. 3, 6, 9, 11, 12 e 13 (nuovo, dal verdetto del G4 su S5: dopo il lancio).
+- Riletto il 2026-09-28 per la verifica C14: nessun token cambiato dal G4.
 
 | # | Priorità | Token | Valore attuale | Valore proposto | Motivo | Decide |
 |---|---|---|---|---|---|---|
@@ -681,6 +693,7 @@ Letto `src/styles/tokens.css` (5,5 KB, versione delle 09:38) e, per il contesto,
 | 10 | [SUGGERIMENTO] | nuovo: `--btn-ghost-border` | `.cta--ghost { border-color: var(--line) }` (1,52:1) | `--btn-ghost-border: var(--field-border)` (4,11:1 su calce, 4,06:1 su notte con `bordo-campo-notte`) | La pillola ghost con il filetto decorativo sembra disattivata; il testo basta per 1.4.11, ma il contorno deve leggersi come controllo | creative-director |
 | 11 | [SUGGERIMENTO] | nuovi: logo e icone | altezze del logo in `Wordmark.astro`; tratto delle frecce nei componenti | `--logo-h: 1.5rem` (1.75rem da 64em); `--stroke-icon: 1.5px` | Misure della direzione §4.4 e §3.1 in un solo posto | sessione principale |
 | 12 | [SUGGERIMENTO] | motion del disegno di linea | `--dur-1400` (direzione) | decidere tra 1400 ms (direzione §6) e ≤ 1200 ms (`architettura.md` §6.6) e fissare `--dur-draw` | Due documenti danno valori diversi per lo stesso movimento | creative-director con web-performance-specialist |
+| 13 | [SUGGERIMENTO] | nuovo: `--fs-ui` | voci dell'header e «Menu» a `1rem` scritto nei componenti | `--fs-ui: 1rem` (16 px, peso 600) per i controlli dell'header, fuori dalla scala editoriale e documentato qui (S5, verdetto del G4) | Un solo posto per le misure: oggi è l'unico corpo fuori scala del sito, insieme al clamp di `.stat__value` (§3.12) | sessione principale, dopo il lancio |
 
 Nota fuori dai token, per la sessione principale: in `global.css` la maschera del text reveal si toglieva con un'animazione di `overflow` (`@keyframes unclip`), animabile solo in modo discreto. **Risolta:** ora `reveal.ts` aggiunge `.is-revealed` a fine animazione e la maschera si toglie con la classe (1.4.12).
 
@@ -692,23 +705,23 @@ Nota fuori dai token, per la sessione principale: in `global.css` la maschera de
 - Le isole sotto i 18 km² possono restare fuori dalla carta d'Italia (a quella scala diventano puntini).
 - La costa della Terra di Bari levigata con Catmull-Rom è un'interpretazione grafica corretta: passa per tutti i vertici di Natural Earth rimasti e non aggiunge dati.
 - L'immagine social su calce è la predefinita; la variante notte serve per pagine a dominante notte (SIII, Città Digitali).
-- Le coordinate della sede nell'immagine social sono quelle del comune di Acquaviva delle Fonti (direzione §1.4), non dell'indirizzo: `[DA VERIFICARE]`.
-- Le regole della versione 0.2 sono misurate in Chromium: `text-wrap: balance`, file delle etichette, soglia di 1280 px delle città e varianti strette delle porte vanno riverificate su Safari iOS e Firefox `[DA VERIFICARE]`.
-- La regola delle file delle etichette (§2.1) e la soglia delle città (§3.8) dipendono dai luoghi e dal copy attuali: se cambiano, si rimisura.
+- Le coordinate dei sette luoghi sono state lette dal riquadro di Wikipedia tramite WebSearch e superano un controllo incrociato entro 1,4 km; la lettura diretta delle pagine resta `[DA VERIFICARE]`, non bloccante (direzione §1.4). Che le coordinate della sede siano quelle del comune, non dell'indirizzo, è deciso (`coordinate-luoghi.md` §5).
+- Le regole delle versioni 0.2 e 0.3 sono misurate in Chromium: `text-wrap: balance`, file delle etichette, centri dell'orizzonte, soglia di 1280 px delle città, varianti strette delle porte, gradi della variante «esperienza» e query di contenitore delle carte vanno riverificate su Safari iOS e Firefox `[DA VERIFICARE]`.
+- La regola delle file delle etichette (§2.1), i centri dell'orizzonte e la soglia delle città (§3.8) dipendono dai luoghi, dalle coordinate e dal copy attuali: se cambiano, si rimisura (C11 lo ha dimostrato: C14-1).
 
 ## Domande aperte
 
 - **Cliente:** logo vettoriale ufficiale (positivo e negativo) e codici colore; conferma che la trama poligonale resta fuori dalla versione web; dati societari mancanti del footer.
 - **creative-director:**
+  - centro dell'orizzonte mobile della Home a 238° invece di 250° (§2.1, C14-1): è un valore della direzione §5;
+  - posizione del nodo 2 del Documento sul leggio (36%, 31%) e riga della direzione §4.2 da aggiornare (§3.9, N7);
+  - nomi dei luoghi su una riga nelle carte larghe (§5.4, N8);
+  - direzione §5, mobile: «l'orizzonte cade a circa il 55% della prima schermata» non è più compatibile con la riga di posizionamento e la didascalia su tre righe; misurato il 42% (§3.4);
+  - direzione §3.2: confermare nel testo che i Passaggi interamente in `display-m` stanno a 600 nei due registri (§1.2);
   - descrizione dell'anello nella direzione §4.4 (la misura dice «vuoto a destra e un poco in basso»);
   - durata del disegno di linea (§7, n. 12);
-  - tecnica del disegno delle carte (otturatore o tratteggio, §5.4);
-  - colore dei nodi-hotspot sulle foto (§2.3: oggi calce, la direzione vorrebbe blu);
-  - valori della maschera dei ritratti (§1.7, V6);
-  - arrivo in `display-m` negli statement dei capitoli (§2.5, V4);
-  - campo di 200° su tablet nella hero (§2.1, V14);
-  - ordine delle porte su mobile (§3.8, I11).
-- **ux-designer:** conferma dell'area di tocco di 44 px attorno ai nodi da 26 px; conferma dell'allineamento `end` dei campi nel form a due colonne (§3.15). Posizione e icona dei messaggi di errore sono decise: sotto il campo, con «!».
+  - tecnica del disegno delle carte (otturatore o tratteggio, §5.4).
+- **ux-designer:** conferma dell'area di tocco di 44 px attorno ai nodi da 26 px. Decisi: messaggi di errore sotto il campo con «!»; allineamento `end` dei campi appaiati (G4).
 - **web-performance-specialist:** fallback con metriche per Fragment Mono (§7, n. 3).
 - **brand-strategist e consulente legale:** testo della nota di trasparenza sotto i ritratti a inchiostro.
 
@@ -716,4 +729,4 @@ Nota fuori dai token, per la sessione principale: in `global.css` la maschera de
 
 1. **Adozione dei token ancora aperti** (§7, nn. 3, 4 per la parte mancante, 6, 9, 11 e 12): nessuno cambia valori della direzione, li mette in un solo posto.
 2. **Logo provvisorio in produzione:** va online il ridisegno finché non arriva il vettoriale ufficiale? Proposta: sì, con sostituzione allo stesso percorso (`src/assets/brand/itnode-wordmark.svg`, `public/brand/logo-itnode.png`), rigenerando favicon e immagine social con i due script.
-3. **Regole nuove della versione 0.2** (§2.1 file delle etichette, §2.5 gradini del Passaggio, §3.8 soglia delle città, §4 porte strette): si applicano con le osservazioni V2–V7 della verifica. Il creative-director le approva insieme al verdetto di G4.
+3. **Proposte della verifica C14** (creative-director): centro mobile a 238° (C14-1, consigliato prima del lancio), nodo 2 sul leggio (N7) ed etichette della carta su una riga (N8). Gli snippet sono nella review di verifica, sezione C14. Le regole nuove della versione 0.2 (file delle etichette, gradini del Passaggio, soglia delle città, porte strette) sono state decise al G4 e sono applicate.
