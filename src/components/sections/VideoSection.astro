@@ -1,15 +1,15 @@
 ---
 /**
  * VideoSection — variant `full-bleed` (Città Digitali, visual direction §7.6).
- * - preload="none" and no poster attribute: nothing is downloaded before play. The cover is a
- *   designed typographic poster (visual direction §4.5, «poster del video») until the client
- *   provides a frame; it hides on the first rendered frame (src/scripts/video.ts).
+ * - preload="none" and no poster attribute: nothing is downloaded before play. Until the client
+ *   provides the file and the creative director picks a frame (G4 verdict, N4), the cover is the
+ *   play node alone: one horizon per screen, the one closing the hero (visual direction §1.1).
+ *   It hides on the first rendered frame (src/scripts/video.ts).
  * - Minimal controls: play/pause node, audio, full screen, time in mono. Buttons of 44 px,
  *   names that change with the state (no aria-pressed).
  * - Muted autoplay only on desktop with the section half in view, never with reduced motion,
  *   Save-Data or 2G (video.ts). The description block renders only when written.
  */
-import Horizon from '../ui/Horizon.astro';
 
 interface Props {
   id: string;
@@ -43,9 +43,6 @@ const titleId = `${id}-title`;
       <span class="video__cover-play">
         <svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg>
       </span>
-      <div class="video__cover-horizon">
-        <Horizon places={[]} rotate={0} />
-      </div>
     </div>
 
     <div class="video__controls">
@@ -181,15 +178,6 @@ const titleId = `${id}-title`;
     transform: scale(1.08);
   }
 
-  .video__cover-horizon {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 28%;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
   .video__controls {
     position: absolute;
     left: var(--page-margin);
@@ -259,12 +247,8 @@ const titleId = `${id}-title`;
     color: var(--calce);
   }
 
-  /* Phones: the 16:9 stage is short, so the cover keeps only the play node above the controls. */
+  /* Phones: the 16:9 stage is short, so the play node sits above the controls. */
   @media (max-width: 43.74em) {
-    .video__cover-horizon {
-      display: none;
-    }
-
     .video__cover-play {
       width: 3.5rem;
       height: 3.5rem;

@@ -6,7 +6,8 @@
  * - place (Porta 3:5): a horizon at 58% (the hero's sky/ground ratio), the name standing on
  *   it, the place node on the thread; bearing, distance and coordinates below.
  * - experience (Schermo 16:10): the comparison figure without labels: a graduated horizon
- *   at 62%, three still hotspot rings, name and place top left.
+ *   at 62% with degrees every 45° on wide screens, three still hotspot rings, name and place
+ *   top left (pages that do not name them pass no text: Media `pendingText={false}`).
  * Decorative: name and place are already in the text next to it, nothing is focusable.
  */
 import type { SlotPublish } from '../../data/asset-slots';
@@ -19,6 +20,10 @@ interface Props extends SlotPublish {
 }
 
 const { kind, ratio, name, meta = [], nodes = [], asset, class: className } = Astro.props;
+// Degrees every 45° under the long ticks, as in the SIII comparison figure (letters only for
+// cardinal points, visual direction §1.1).
+const cardinal: Record<number, string> = { 0: ' N', 90: ' E', 180: ' S', 270: ' O' };
+const degrees = [0, 45, 90, 135, 180, 225, 270, 315].map((d, i) => ({ at: 6 + i * 12.5, text: `${String(d).padStart(3, '0')}°${cardinal[d] ?? ''}` }));
 // Each mono line breaks only between its « · » segments, never inside a coordinate.
 const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
 ---
@@ -27,6 +32,7 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
   <span class="slot-pub__horizon"></span>
   {kind === 'place' && <span class="slot-pub__node" />}
   {kind === 'experience' && nodes.map((n) => <span class="slot-pub__hot" style={`left: ${n.x}%; top: ${n.y}%`} />)}
+  {kind === 'experience' && degrees.map((d) => <span class="slot-pub__deg t-label" style={`left: ${d.at}%`}>{d.text}</span>)}
   {
     (name || lines.length > 0) && (
       <span class="slot-pub__text">
@@ -60,15 +66,40 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
   }
 
   /* 1 px thread with ticks below it: short ones every 4cqi, longer ones every third. */
+  /* 1 px thread with ticks below it: short ones, and a longer one every third. */
   .slot-pub__horizon {
+    --long: 12cqi;
+    --offset: 0cqi;
     position: absolute;
     inset-inline: 0;
     top: var(--sky);
     height: 12px;
     border-top: var(--hairline) solid var(--fg);
     background:
-      repeating-linear-gradient(to right, var(--fg) 0 1px, transparent 1px 12cqi) top left / 100% 12px no-repeat,
-      repeating-linear-gradient(to right, var(--fg) 0 1px, transparent 1px 4cqi) top left / 100% 6px no-repeat;
+      linear-gradient(to right, var(--fg) 0 1px, transparent 1px) var(--offset) 0 / var(--long) 12px repeat-x,
+      linear-gradient(to right, var(--fg) 0 1px, transparent 1px) var(--offset) 0 / calc(var(--long) / 3) 6px repeat-x;
+  }
+
+  /* Experience: long ticks every 45°, at the positions of the degree labels (6% + 12.5% × n). */
+  .slot-pub--experience .slot-pub__horizon {
+    --long: 12.5cqi;
+    --offset: 6cqi;
+  }
+
+  .slot-pub__deg {
+    display: none;
+    position: absolute;
+    top: calc(var(--sky) + 18px);
+    translate: -50% 0;
+    color: var(--fg-2);
+    white-space: nowrap;
+  }
+
+  /* Degrees only on wide screens: on narrow ones the ruler would crowd (UI verification, V9). */
+  @container (min-width: 43.75rem) {
+    .slot-pub--experience .slot-pub__deg {
+      display: block;
+    }
   }
 
   /* Dot Ø 10 px and ring Ø 26 px, like the Node component; still, no ping. */
@@ -135,12 +166,10 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
     justify-items: start;
   }
 
-  /* Narrow doors (phones under ~400 px): the coordinates, then the name, are already in the
-     text beside the door. */
-  @container (max-width: 8rem) {
-    .slot-pub--place .slot-pub__meta > span + span {
-      display: none;
-    }
+  /* Narrow doors (phones under ~350 px): the name too is already in the text beside the door. */
+  /* Doors: the coordinates are already under the H3 beside the door (G4 verdict, N9). */
+  .slot-pub--place .slot-pub__meta > span + span {
+    display: none;
   }
 
   @container (max-width: 7rem) {

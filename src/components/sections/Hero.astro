@@ -17,6 +17,8 @@ interface Props {
   name?: string;
   descriptor?: string;
   places?: HorizonPlace[];
+  /** home: the positioning line in `lead`, right after the H1 (visual direction §5). */
+  lead?: string;
   caption?: string;
   surface?: 'calce' | 'pietra' | 'notte';
   /** line: scale of the name. «SIII» (four letters) can be huge. */
@@ -31,6 +33,7 @@ const {
   name,
   descriptor,
   places = [],
+  lead,
   caption,
   surface = 'calce',
   nameSize = 'xl',
@@ -58,6 +61,7 @@ const secondLines = second.split('\n');
             ))}
           </span>
         </h1>
+        {lead && <p class="hero-home__lead t-lead">{lead}</p>}
         <div class="hero-home__horizon">
           <Horizon places={places} />
         </div>
@@ -107,8 +111,18 @@ const secondLines = second.split('\n');
     display: grid;
     grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
     column-gap: var(--gutter);
-    grid-template-rows: [sky] auto [line] 0 [earth] auto [foot] auto;
+    grid-template-rows: [sky] auto [line] 0 [earth] auto [lead] auto [foot] auto;
     padding-top: clamp(var(--space-xl), 8vh, var(--space-3xl));
+  }
+
+  /* Positioning line (visual direction §5; G4 verdict, I4): what ITnode does, in reading order
+     right after the H1. A paragraph, not part of the heading. */
+  .hero-home__lead {
+    grid-column: 1 / -1;
+    grid-row: lead;
+    margin: var(--space-m) 0 0;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-home__kicker {
@@ -202,12 +216,30 @@ const secondLines = second.split('\n');
       padding-top: calc(7rem + var(--space-s));
       padding-left: calc((100% + var(--gutter)) / var(--cols) * 2);
     }
+
+    .hero-home__lead {
+      padding-left: calc((100% + var(--gutter)) / var(--cols) * 2);
+    }
+
+    /* Tablet and up: a 200° field of view, so the places at rest are whole labels (G4 verdict,
+       V14). Heavier than the component's own breakpoint rule; Città Digitali keeps 150°. */
+    .hero--home .hero-home__horizon :global(.horizon) {
+      --fov: 200;
+    }
   }
 
   @media (min-width: 64em) {
+    /* Earth and lead are sized by their content: the horizon sits at ~57% at 1440 × 900. */
     .hero-home {
       min-height: clamp(40rem, calc(100svh - var(--header-h)), 60rem);
-      grid-template-rows: [sky] 1fr [line] 0 [earth] minmax(auto, 0.72fr);
+      grid-template-rows: [sky] 1fr [line] 0 [earth] auto [lead] auto;
+    }
+
+    .hero-home__lead {
+      grid-column: 5 / span 7;
+      padding-left: 0;
+      padding-bottom: var(--space-xl); /* ends on the same line as the observer's caption */
+      align-self: start;
     }
 
     .hero-home__r2 {
@@ -221,7 +253,7 @@ const secondLines = second.split('\n');
 
     .hero-home__caption {
       grid-column: 1 / span 4;
-      grid-row: earth;
+      grid-row: earth / span 2;
       align-self: end;
       padding-bottom: var(--space-xl);
     }

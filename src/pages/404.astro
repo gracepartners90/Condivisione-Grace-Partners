@@ -45,13 +45,13 @@ const worlds = [
         {
           worlds.map((w, i) => (
             <li class="nf__world" style={`--i: ${i}`}>
-              <span class="nf__node" aria-hidden="true" />
               <p class="nf__world-bearing t-label" aria-hidden="true">
                 {w.bearing}
               </p>
               <p class="nf__world-name">{w.name}</p>
               <p class="nf__world-statement">{w.statement}</p>
               <a class="nf__world-link" href={w.href} data-track="cta_click" data-cta-id={w.id} data-cta-location="404">
+                <span class="nf__node" aria-hidden="true" />
                 {w.label}
                 <Arrow dir="right" />
               </a>
@@ -112,8 +112,12 @@ const worlds = [
     max-width: var(--measure-lead);
   }
 
-  /* The three worlds on a horizon, at 000°, 120° and 240°. */
+  /* The three worlds on a horizon, at 000°, 120° and 240°. The line is graduated like the
+     Horizon (ticks every 5°, 15° and 45°, below the line): 360° span three columns and their
+     gutters, so 120° and 240° fall exactly where the second and third world start. */
   .nf__worlds {
+    --deg: calc((100% + var(--gutter)) / 72);
+    position: relative;
     display: grid;
     gap: var(--space-xl);
     margin: var(--space-3xl) 0 var(--space-2xl);
@@ -121,13 +125,31 @@ const worlds = [
     border-top: 1px solid var(--fg);
   }
 
+  .nf__worlds::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, var(--fg) 0 1px, transparent 1px) 0 0 / calc(var(--deg) * 9) 20px repeat-x,
+      linear-gradient(to right, var(--fg) 0 1px, transparent 1px) 0 0 / calc(var(--deg) * 3) 12px repeat-x,
+      linear-gradient(to right, var(--fg) 0 1px, transparent 1px) 0 0 / var(--deg) 6px repeat-x;
+  }
+
+  /* Each world starts at the top of its column, whatever the length of its statement (N6). */
   .nf__world {
     position: relative;
     display: grid;
     gap: var(--space-2xs);
     justify-items: start;
+    align-content: start;
   }
 
+  /* The node stands on the horizon but belongs to the link: it is part of what you click, and it
+     shows its ring on hover and focus (Node anatomy: dot Ø 10, ring Ø 26). */
   .nf__node {
     position: absolute;
     top: calc(-1 * var(--space-xl) - 5px);
@@ -136,6 +158,13 @@ const worlds = [
     height: 10px;
     border-radius: 50%;
     background: var(--node);
+    outline: 1px solid transparent;
+    outline-offset: 7px;
+    transition: outline-color var(--dur-250) var(--ease-out);
+  }
+
+  .nf__world-link:is(:hover, :focus-visible) .nf__node {
+    outline-color: var(--node);
   }
 
   .nf__world-bearing {

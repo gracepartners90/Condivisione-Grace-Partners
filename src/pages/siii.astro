@@ -234,7 +234,7 @@ const phrases: Record<string, string> = {
           <li class:list={['example', `example--${i + 1}`]}>
             <div class="wrap grid example__grid">
               <div class="example__screen aperture">
-                <Media asset={ex.slot} />
+                <Media asset={ex.slot} pendingText={false} />
               </div>
               <div class="example__body" data-reveal>
                 <h3 class="example__name">{ex.name}</h3>

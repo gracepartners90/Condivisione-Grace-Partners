@@ -16,6 +16,10 @@ const pages = [];
   }
 })(dist);
 const page = (rel) => pages.find((p) => p.path === join(dist, rel))?.html ?? '';
+
+// Veridicity reserves still open (ADR 002; veracity review B2, I2; G4 verdict N10). Set to true
+// only with the client's written confirmation, recorded in docs/.
+const CONFIRMED = { highTraffic: false, clients10k: false };
 const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.replace(dist, ''));
 
 const checks = [
@@ -34,6 +38,18 @@ const checks = [
     // Minimal guard: which alternative is needed depends on the video (speech or music only).
     name: 'Video di Città Digitali: sottotitoli (<track>) o descrizione testuale (A3)',
     ok: /<track kind="captions"|Leggi la descrizione del video/.test(page('citta-digitali/index.html')),
+  },
+  {
+    name: 'Claim senza conferma scritta: «ad alto traffico» (B2), «10.000+ clienti» (I2)',
+    ok:
+      (CONFIRMED.highTraffic || !/alto traffico/.test(page('citta-digitali/index.html'))) &&
+      (CONFIRMED.clients10k || !/10\.000\+/.test(page('index.html'))),
+  },
+  {
+    // Visual direction §1.4: digits as given by the source, never padded with zeros.
+    name: 'Coordinate senza zeri di riempimento',
+    ok: anyPage(/\d\.\d\d00°/).length === 0,
+    detail: anyPage(/\d\.\d\d00°/),
   },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];

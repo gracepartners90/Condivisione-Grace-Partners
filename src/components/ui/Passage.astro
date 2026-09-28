@@ -134,17 +134,9 @@ const regs = registers.map((text, r) => ({
     padding-left: clamp(0px, (100vw - 20rem) * 0.7, min(1.2em, 3rem));
   }
 
-  .passage--cascade .passage__reg {
-    padding-left: calc(var(--reg) * clamp(0px, (100vw - 20rem) * 0.7, min(1.2em, 3rem)));
-  }
-
   @media (min-width: 43.75em) {
     .passage--indent-default .passage__reg + .passage__reg {
       padding-left: var(--indent-step);
-    }
-
-    .passage--cascade .passage__reg {
-      padding-left: calc(var(--reg) * var(--indent-step));
     }
   }
 
@@ -156,5 +148,29 @@ const regs = registers.map((text, r) => ({
     .passage--indent-wide .passage__reg + .passage__reg {
       padding-left: calc(var(--indent-step) * 4);
     }
+  }
+
+  /* Cascade (visual direction §1.5): each register steps one indent further than the previous
+     one. Same selector weight as the default-indent rule and declared after it, so it wins at
+     every width. */
+  .passage--cascade .passage__reg + .passage__reg {
+    padding-left: calc(var(--reg) * clamp(0px, (100vw - 20rem) * 0.7, min(1.2em, 3rem)));
+  }
+
+  @media (min-width: 43.75em) {
+    .passage--cascade .passage__reg + .passage__reg {
+      padding-left: calc(var(--reg) * var(--indent-step));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .passage--cascade .passage__reg + .passage__reg {
+      padding-left: calc(var(--reg) * var(--indent-step) * 2);
+    }
+  }
+
+  /* Authored lines that still wrap are balanced, whatever the tag (V4). */
+  .passage :global(.line) {
+    text-wrap: balance;
   }
 </style>
