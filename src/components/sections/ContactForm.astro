@@ -691,8 +691,11 @@ const newTab = ' (si apre in una nuova scheda)';
       grid-column: 1 / -1;
     }
 
+    /* Paired fields of unequal height (help text on one side) keep their boxes aligned at the
+       bottom of the row: labels stay 8 px above their field (ui-designer, 2026-09-28). */
     .contact--wide .contact__form > .contact__field--half {
       grid-column: auto;
+      align-content: end;
     }
   }
 

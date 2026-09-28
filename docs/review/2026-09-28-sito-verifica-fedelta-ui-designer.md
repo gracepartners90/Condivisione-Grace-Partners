@@ -3,9 +3,9 @@ titolo: Verifica di fedeltà UI dopo le correzioni (verso G4)
 owner: ui-designer
 contributi: []
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, build del commit c025181 su http://localhost:4323 e http://localhost:4324 (ricontrollo), docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
+fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, build del commit c025181 su http://localhost:4323 e http://localhost:4324 (ricontrollo), build del commit 007956d su http://localhost:4321 (reveal e campi del form), docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
 ---
 
 # Verifica di fedeltà UI dopo le correzioni (verso G4)
@@ -430,3 +430,70 @@ Il verdetto di gate spetta al creative-director.
 
   Tra questi raccomando ancora V4 e V6 prima del lancio: gli statement del capitolo 03 vanno a capo per il browser (fino a 6 righe a 1024 px), e lo skyline resta leggibile nei ritratti.
 - Il verdetto di gate spetta al creative-director.
+
+---
+
+## Reveal senza CLS e campi del form
+
+### Reveal a righe dopo 007956d: conforme
+
+- **Dove.** Build su http://localhost:4321 con il commit 007956d, movimento attivo, a 390 e 1440 px. 27 Passaggi con reveal a righe:
+  - Home: Chi siamo, Infrastruttura, tre capitoli, fondatore, chiusura;
+  - SIII: definizione, confronto, cosa si può fare, esempi, chiusura;
+  - Puglia Digitale: progetto, chiusura;
+  - Città Digitali: chiusura.
+- **Come.**
+  - Ho rinviato di 60 s il timer che aggiunge `.is-revealed`, per congelare lo stato «salita finita, maschera ancora attiva». Poi ho confrontato al pixel quello stato con lo stato rivelato.
+  - Stessa prova con la nuova regola annullata.
+  - Fotogrammi della salita ogni ~110 ms a 1440 px (titolo del fondatore, cascata degli esempi di SIII).
+- **Esito con la correzione.** In tutti i 27 casi: 0 pixel diversi, stessa altezza, righe ferme. Togliere la maschera non sposta nulla e alla fine della salita nessun glifo è tagliato.
+- **Esito senza la correzione.** In ogni Passaggio a due registri il secondo registro scattava in su di 0,12 em al togliere della maschera:
+  - 4,8 px a 390 e 10,3 px a 1440;
+  - 13,8 px nella chiusura della Home;
+  - 10,3 e 20,6 px nella cascata «Entra. / Esplora. / Interagisci.».
+- **Effetto visivo.** Le righe salgono già alla spaziatura finale: è quello che descrive la DV §6 (ogni riga d'autore sale dalla propria maschera), e sparisce lo scatto finale. È un miglioramento: nessuna azione.
+
+### Campi del form a due colonne (nota di ux-designer)
+
+- **[IMPORTANTE] Dove.** `/puglia-digitale/` e `/citta-digitali/`, form di chiusura (`contact--wide`), da 1024 px. `ContactForm.astro`.
+- **Problema.** I campi di una riga si allungano fino all'altezza del vicino che ha un suggerimento:
+  - «Nome» e «Azienda» sono alti 68 px a 1440 (77 e 66 a 1024) contro 52;
+  - dopo un invio vuoto «Nome» scende a 63.
+- **Motivazione.** DS §3.15: i campi sono rettangoli di altezza uniforme. Un riquadro più alto sembra un'area di testo e rompe la griglia del form.
+- **Le opzioni, misurate** a 1024 e 1440 px, a riposo, dopo un invio vuoto e con un solo errore nella riga (nome valido, email non valida):
+
+  | Opzione | Riquadri | Etichette | Con un solo errore | Costo |
+  |---|---|---|---|---|
+  | oggi (`stretch`) | altezze diverse (52 contro 68–77 px), cime sfalsate di 15–35 px | allineate | sfalsati | — |
+  | `align-content: start` (proposta ux-designer) | 52 px, cime sfalsate di 30–53 px in ogni riga | allineate | sfalsati | 1 riga |
+  | **`align-content: end`** | **52 px, allineati** | ognuna a 8 px dal suo campo, sfalsate di 30–53 px | sfalsati di 30–53 px (l'altezza del messaggio), finché l'errore resta | 1 riga |
+  | subgrid a 4 tracce (etichetta, suggerimento, campo, messaggio) | 52 px, allineati | a 8 px dal campo | **allineati** | ~22 px d'aria in più sotto ogni coppia a riposo: tra le righe dei campi ~54 px contro i 32 del resto del form |
+
+  Scartata anche una subgrid con la traccia del messaggio solo in errore: con un solo errore rompe il posizionamento automatico e sfalsa di 71 px la riga successiva.
+- **Preferenza UI: `align-content: end`.**
+  - Nello stato che vedono tutti, a riposo, e dopo un invio vuoto (nome ed email sono obbligatori, i messaggi arrivano insieme) i riquadri formano una griglia pulita e alta uguale.
+  - Ogni etichetta resta accanto al suo campo, e il ritmo del form (32 px tra le righe) non cambia.
+  - Lo scostamento con un solo errore è transitorio e pari al messaggio: lo accetto.
+
+  ```css
+  /* ContactForm.astro, inside @media (min-width: 64em): the half fields of a row end on the same
+     line — boxes aligned and equally tall, each label next to its field, the neighbour's hint
+     between its label and its field. */
+  .contact--wide .contact__field--half { align-content: end; }
+  ```
+- **Alternativa**, se ux-designer o il creative-director vogliono l'allineamento anche con un solo errore: subgrid a 4 tracce (provata), accettando più aria a riposo.
+  ```css
+  @supports (grid-template-rows: subgrid) {
+    @media (min-width: 64em) {
+      .contact--wide .contact__field--half { grid-row: span 4; grid-template-rows: subgrid; row-gap: var(--space-2xs); }
+      .contact--wide .contact__field--half > .contact__label { grid-row: 1; }
+      .contact--wide .contact__field--half > .contact__help { grid-row: 2; }
+      .contact--wide .contact__field--half:not(:has(> .contact__help)) > .contact__label { grid-row: 2; align-self: end; }
+      .contact--wide .contact__field--half > :is(input, textarea) { grid-row: 3; }
+      .contact--wide .contact__field--half > .contact__error { grid-row: 4; }
+    }
+  }
+  ```
+- **Quando.** Consigliata prima del G4 perché costa una riga, ma non è bloccante.
+
+**Verdetto UI.** Invariato: approvabile per il G4. Il reveal è approvato; per i campi del form raccomando `align-content: end`.

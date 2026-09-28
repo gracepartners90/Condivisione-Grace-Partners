@@ -230,7 +230,7 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 | Movimento | Funzione (una sola) | Token | Con `prefers-reduced-motion` |
 |---|---|---|---|
 | Reveal | far entrare un blocco nella lettura | 700 ease-out, cascata 80 ms, max 4 | visibile subito |
-| Text reveal | leggere un Passaggio riga per riga | 700 ease-out, cascata 90 ms | visibile subito |
+| Text reveal | leggere un Passaggio riga per riga: ogni riga d'autore sale dalla propria maschera (padding 0,12em, margine −0,12em; registri in colonna flex finché la maschera c'è, così le righe salgono già alla spaziatura finale e togliere la maschera non sposta nulla: CLS 0, verificato al pixel) | 700 ease-out, cascata 90 ms | visibile subito |
 | Apertura (firma) | entrare in un'immagine dall'orizzonte | 1000 ease-in-out; otturatori in `transform` (già in `global.css`) | aperta |
 | Parallax | profondità di una sola immagine per schermata | scroll, ±6% max 48 px | fermo |
 | Rotazione dell'orizzonte | guardarsi intorno | scroll, +60° in uscita dalla hero | inquadratura iniziale |
@@ -481,7 +481,8 @@ Nessun link verso altre pagine tra la CTA e il form.
 | Etichetta | `small` 15 px, peso 600, `--fg`, sempre visibile sopra il campo; «(facoltativo)» nell'etichetta dei campi facoltativi; «*» per gli obbligatori con la frase «I campi con * sono obbligatori.» in testa |
 | Suggerimento | `small` `--fg-2`, tra etichetta e campo |
 | Campo | altezza ≥ 48 px, testo `body` (≥ 16 px: niente zoom su iOS), padding 12 × 16 px, raggio 0, fondo `--field-bg`, bordo 1 px `--field-border` |
-| Stati del campo | hover: bordo `--fg` · focus: contorno 2 px `--focus` + bordo `--fg` · errore: bordo 2 px `--error` (senza spostamenti) + messaggio sopra il campo con icona (!) e prefisso nascosto «Errore:» · compilato valido: nessun segno verde |
+| Form a due colonne (≥ 1024 px) | i campi di una riga finiscono sulla stessa linea (`.contact--wide .contact__field--half { align-content: end }`): riquadri allineati e alti uguali (52 px), ogni etichetta a 8 px dal suo campo, il suggerimento del vicino tra la sua etichetta e il suo campo. Mai riquadri allungati dal vicino. Con un solo errore nella riga i riquadri si sfalsano dell'altezza del messaggio finché l'errore resta: accettato. Da applicare (preferenza UI del 2026-09-28; alternativa provata con subgrid nella verifica UI) |
+| Stati del campo | hover: bordo `--fg` · focus: contorno 2 px `--focus` + bordo `--fg` · errore: bordo 2 px `--error` (senza spostamenti) + messaggio sotto il campo (decisione di ux-designer, 2026-09-28) con icona (!) e prefisso nascosto «Errore:» · compilato valido: nessun segno verde |
 | Checkbox | quadrato 24 × 24, raggio 0, bordo `--field-border`; selezionata: fondo `--fg`, segno di spunta `--bg` tratto 2 px; etichetta cliccabile; privacy **mai preselezionata**; «Mi interessa» (scelta di argomento, non consenso) preselezionata in build sulle pagine di linea |
 | Gruppo «Mi interessa» | `fieldset` + `legend` (`small` 600); pillole selezionabili (bordo `--field-border`, raggio pillola, casella nativa visibile; selezionata: fondo `--fg`, testo `--bg`), a capo quando serve; focus sulla pillola via `:has(:focus-visible)`. Accettate il 2026-09-28: coerenti con «il cerchio è l'interazione» |
 | Avviso «modulo non attivo» | prima dei campi, solo senza endpoint: fondo `--slot-bg`, filetto sinistro 2 px `--fg` (mai `--place`), testo `small`, larghezza ≤ 66ch |
@@ -697,7 +698,7 @@ Nota fuori dai token, per la sessione principale: in `global.css` la maschera de
   - arrivo in `display-m` negli statement dei capitoli (§2.5, V4);
   - campo di 200° su tablet nella hero (§2.1, V14);
   - ordine delle porte su mobile (§3.8, I11).
-- **ux-designer:** conferma dell'area di tocco di 44 px attorno ai nodi da 26 px; posizione e icona dei messaggi di errore dei campi (§3.15, S9).
+- **ux-designer:** conferma dell'area di tocco di 44 px attorno ai nodi da 26 px; conferma dell'allineamento `end` dei campi nel form a due colonne (§3.15). Posizione e icona dei messaggi di errore sono decise: sotto il campo, con «!».
 - **web-performance-specialist:** fallback con metriche per Fragment Mono (§7, n. 3).
 - **brand-strategist e consulente legale:** testo della nota di trasparenza sotto i ritratti a inchiostro.
 
