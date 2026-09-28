@@ -559,6 +559,14 @@ const newTab = ' (si apre in una nuova scheda)';
     cursor: progress;
   }
 
+  /* Phones: full-width submit, like the band CTAs (design system §3.15). */
+  @media (max-width: 43.74em) {
+    .contact__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
   .contact__summary {
     padding: var(--space-m);
     border: 2px solid var(--error);
