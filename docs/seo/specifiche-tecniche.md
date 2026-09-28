@@ -110,7 +110,7 @@ Un componente unico, `SeoHead.astro`, legge i dati di ogni pagina da `src/data/p
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT } from '../data/pages';
 
 interface Props {
-  title: string;       // full <title>, e.g. "SIII – Siti Interattivi Immersivi | ITnode"
+  title: string;       // full <title>, e.g. "Puglia Digitale: destination marketing immersivo | ITnode"
   description: string;
   ogImage?: string;    // path in /public, e.g. "/og/siii.jpg"
   ogImageAlt?: string;
@@ -152,21 +152,9 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
 <meta name="twitter:image:alt" content={ogImageAlt} />
 ```
 
-### 2.2 Title provvisori per lo sviluppo
-I testi definitivi di title, description e H1 li scrive seo-content in `docs/seo/mappa-keyword-url.md`. Fino ad allora si usano questi valori:
-
-| Pagina | Title provvisorio |
-|---|---|
-| `/` | ITnode \| Esperienze immersive per imprese e territori |
-| `/siii/` | SIII – Siti Interattivi Immersivi \| ITnode |
-| `/puglia-digitale/` | Puglia Digitale, destination marketing immersivo \| ITnode |
-| `/citta-digitali/` | Città Digitali, le attività del territorio online \| ITnode |
-| `/contatti/` | Contatti, Acquaviva delle Fonti (BA) \| ITnode |
-| `/privacy-policy/` | Privacy Policy \| ITnode |
-| `/cookie-policy/` | Cookie Policy \| ITnode |
-| 404 | Pagina non trovata \| ITnode |
-
-Per le description vale `[DA FORNIRE: seo-content]`. Finché mancano, il controllo n. 3 della sezione 7 fallisce: è voluto.
+### 2.2 Testi di title, description e H1
+- I valori per tutte le pagine, 404 compresa, sono in `docs/seo/mappa-keyword-url.md` (seo-content). Vanno copiati in `src/data/pages.ts`: questo documento fissa solo template e vincoli.
+- Il regex di `og:title` toglie « | ITnode» solo in fondo al title. Un title che non segue il pattern `… | ITnode`, come oggi quello di Contatti, resta intero in `og:title`: meglio allinearlo al pattern (segnalato a seo-content).
 
 ### 2.3 Immagine social 1200×630
 - **Specifiche.**
@@ -280,17 +268,17 @@ Regole:
 - Grandi statement, marquee e numeri sono paragrafi o elementi stilizzati, non heading, a meno che introducano una sezione.
 - `Hero`, `SectionIntro` e `LargeStatement` ricevono il livello dell'heading come proprietà (`as="h1" | "h2" | "h3"`), così un componente riusato non genera un secondo H1.
 
-H1 di partenza, presi dalle linee guida (versione definitiva in `mappa-keyword-url.md`):
+H1 secondo `mappa-keyword-url.md`, che resta la fonte in caso di modifiche. «+» indica un unico H1 su due righe: nome grande e descrittore più piccolo, per esempio `<h1>Puglia Digitale <span>Una piattaforma…</span></h1>`, con uno spazio o un segno di punteggiatura tra le due parti nel testo.
 
 | Pagina | H1 |
 |---|---|
 | `/` | La tecnologia cambia. La curiosità ci accompagna da sempre. |
-| `/siii/` | SIII · Siti Interattivi Immersivi (le due righe dell'hero formano un unico H1) |
-| `/puglia-digitale/` | Puglia Digitale |
-| `/citta-digitali/` | Città Digitali |
+| `/siii/` | SIII + Siti Interattivi Immersivi |
+| `/puglia-digitale/` | Puglia Digitale + Una piattaforma interattiva immersiva per la valorizzazione territoriale. |
+| `/citta-digitali/` | Città Digitali + Le attività del territorio, online senza perdere radici. |
 | `/contatti/` | Parliamo del prossimo spazio digitale. |
 | `/privacy-policy/`, `/cookie-policy/` | Privacy Policy; Cookie Policy |
-| 404 | Pagina non trovata |
+| 404 | Pagina non trovata (il testo lo scrive copywriter-brand) |
 
 - **Home.** L'H1 non contiene «ITnode». Per questo la frase «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.» viene subito dopo, come H2 o come primo paragrafo in evidenza, e il marchio compare nel title.
 - **Timeline del fondatore**: lista ordinata (`<ol>`) con le date in `<time>`. Dati e numeri solo se forniti dal cliente (linee guida, sez. 9 e 25).

@@ -38,10 +38,10 @@ export const founder = {
 } as const;
 
 export const nav = [
-  { label: 'SIII', href: '/siii' },
-  { label: 'Puglia Digitale', href: '/puglia-digitale' },
-  { label: 'Città Digitali', href: '/citta-digitali' },
-  { label: 'Contatti', href: '/contatti' },
+  { id: 'siii', label: 'SIII', href: '/siii/' },
+  { id: 'puglia-digitale', label: 'Puglia Digitale', href: '/puglia-digitale/' },
+  { id: 'citta-digitali', label: 'Città Digitali', href: '/citta-digitali/' },
+  { id: 'contatti', label: 'Contatti', href: '/contatti/' },
 ] as const;
 
 export const portals = {
