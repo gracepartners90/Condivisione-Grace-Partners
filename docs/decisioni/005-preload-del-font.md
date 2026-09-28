@@ -3,9 +3,9 @@ titolo: "ADR 005 · Preload del carattere principale (Schibsted Grotesk)"
 owner: creative-director
 contributi: [web-performance-specialist]
 stato: accettata
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md, docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59)]
+fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md (§3, nota di web-performance-specialist sull'ADR 005), docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59)]
 ---
 
 # ADR 005 · Preload del carattere principale
@@ -48,15 +48,19 @@ La rimisura valuta il costo per l'identità solo su rete lenta. Ho misurato anch
 
 - **Lettura.**
   - Su connessione veloce il preload elimina lo scambio di carattere: il titolo compare subito in Schibsted. Senza preload, in 5 caricamenti su 5 il titolo compare in Arial e cambia forma dopo 1–2 fotogrammi.
-  - Su 4G il preload riduce la finestra del ripiego da 160–180 ms a 13–32 ms (veloce) e da 630–690 ms a 180–230 ms (lento), al costo di un primo paint più tardi di 100–280 ms.
+  - Su 4G il preload riduce la finestra del ripiego da 158–183 ms a 13–32 ms (veloce) e da 626–694 ms a 184–234 ms (lento). Senza preload la finestra è quindi da 2,7 a 14 volte più lunga: 2,7–3,8 volte su 4G lento, 4,9–14 su 4G veloce.
+  - Il costo è un primo paint più tardi di 72–280 ms su 4G; il valore più basso è `/siii/` su 4G veloce (228 contro 156 ms). Con la fibra la differenza è nulla (±8 ms).
+  - I due intervalli sono stati ricalcolati sulla tabella da web-performance-specialist (`budget.md` §3). La versione 1.0 di questo ADR indicava 100–280 ms e «3–6 volte».
   - I valori assoluti di questa emulazione non sono confrontabili con Lighthouse: conta il confronto tra le due varianti nelle stesse condizioni.
 
 ## Opzioni considerate
 
 | Opzione | Pro | Contro |
 |---|---|---|
-| **A. Togliere il preload** (proposta di web-performance-specialist) | LCP migliore di 145–177 ms con rete lenta; un `<link>` in meno | Lo scambio di carattere si vede su ogni prima visita, anche con la fibra; con 4G il titolo resta nel carattere di ripiego 3–6 volte più a lungo; FCP simulato della Home 0,01 s sopra l'obiettivo |
-| **B. Tenere il preload** (scelta) | Nessuno scambio visibile su connessione veloce; finestra del ripiego ridotta a un terzo su 4G; è la configurazione della direzione visiva (§3.2) e del design system; tutti gli obiettivi del budget rispettati | Primo paint più tardi di 100–280 ms su rete mobile, sempre con ampio margine sulla soglia di 2,5 s |
+| **A. Togliere il preload** (proposta di web-performance-specialist) | LCP migliore di 145–177 ms con rete lenta; un `<link>` in meno | Lo scambio di carattere si vede su ogni prima visita, anche con la fibra; su 4G il titolo resta nel carattere di ripiego da 2,7 a 14 volte più a lungo |
+| **B. Tenere il preload** (scelta) | Nessuno scambio visibile su connessione veloce; finestra del ripiego da 2,7 a 14 volte più corta su 4G; è la configurazione della direzione visiva (§3.2) e del design system; tutti gli obiettivi del budget rispettati | Primo paint più tardi di 72–280 ms su 4G (nessuna differenza con la fibra), sempre con ampio margine sulla soglia di 2,5 s |
+
+L'FCP simulato della Home senza preload (1,51 s, 0,01 s sopra l'obiettivo) non è un contro dell'opzione A. È un limite del modello Lantern: con throttling applicato l'FCP scende (nota di web-performance-specialist, `budget.md` §3).
 
 ## Decisione
 
@@ -69,13 +73,20 @@ La rimisura valuta il costo per l'identità solo su rete lenta. Ho misurato anch
   - i dati di campo (RUM `web-vitals` o CrUX), una volta disponibili, mostrano un LCP mobile al 75° percentile sopra 2,0 s;
   - una nuova versione di Chromium cambia il comportamento dei font in preload in modo misurabile;
   - la hero smette di essere tipografica, per esempio con un panorama reale (direzione visiva §5, «Evoluzione»).
+- **Sorveglianza delle condizioni** (proposta di web-performance-specialist, adottata nella versione 1.1). Owner: web-performance-specialist.
+  - **Dati di campo.** RUM `web-vitals` senza cookie, dopo il lancio. Senza RUM la prima condizione non può scattare, e CrUX è improbabile con il traffico del sito. La decisione è ancora aperta con cro-specialist e l'utente, e questo ADR la raccomanda.
+  - **Confronto in laboratorio** su `/` e `/siii/` a ogni aggiornamento maggiore del Chromium di misura, e comunque ogni tre mesi.
+    - Stessa build, con la sola riga del preload tolta; 3 corse per variante con throttling applicato, alternate.
+    - Si riapre se il ritardo dell'LCP dovuto al preload supera 300 ms (oggi 151–177 ms), oppure se cambiano le costanti `kMaxFCPDelay` e `kMaxBlockingTimeForRenderBlockingFonts` del sorgente di Chromium.
+    - Facoltativo, per pesare anche l'altro lato: nello stesso confronto si registra la finestra del ripiego su 4G veloce, con il metodo di questo ADR (evento `loadingdone` di `document.fonts`).
+  - L'esito di ogni confronto va nel `budget.md` (§3). Se una condizione scatta, web-performance-specialist toglie il preload e ne informa il creative-director.
 
 ## Conseguenze
 
 - **Codice.** Nessuna modifica: `BaseLayout.astro` ha già il preload (riga 42).
-- **Documenti da riallineare** (li aggiorna web-performance-specialist, owner):
-  - `docs/performance/budget.md`: §3 («Nessun preload dei font»), controllo n. 7 (torna a «un solo preload per pagina, Schibsted») e riga FCP del §2;
-  - `docs/performance/architettura.md`: regola 4, §2, §12 e i passaggi che danno per tolto il preload.
+- **Documenti riallineati** da web-performance-specialist il 2026-09-28:
+  - `docs/performance/budget.md`: §3 con la nota sull'ADR 005, controllo n. 7 («esattamente un preload per pagina») e riga FCP del §2;
+  - `docs/performance/architettura.md`: regola 4, implementazione dei font e riepiloghi.
 - **Nessun cambio** a `docs/ui/design-system.md` (tabella dei font: già «preload») né alla direzione visiva (§3.2, aggiornata solo con il rimando a questo ADR).
 - La baseline di laboratorio del `budget.md` §7.1 è già misurata con il preload: resta valida.
 
