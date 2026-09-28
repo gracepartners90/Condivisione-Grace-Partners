@@ -3,7 +3,7 @@ titolo: Copy deck · Contatti
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-09-28
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, src/data/site.ts, src/data/media.ts]
 ---
@@ -120,7 +120,8 @@ Tra i due livelli c'è una virgola nascosta alla vista (`sr-only`): lo screen re
 | Icona | → in SVG con `aria-hidden="true"`, attaccata all'ultima parola (tone of voice §6) |
 | Markup | `Scopri il suo percorso<span class="sr-only"> nella home</span><Arrow dir="right" />`, come il link «Apri in Google Maps» dei recapiti |
 | Destinazione | `/#fondatore`, sezione «Il fondatore» della Home; stessa scheda |
-| Tracciamento | `data-track="cta_click"`, `data-cta-id="contatti-persona-percorso"`, `data-cta-location="sezione"` [IPOTESI: valori da confermare con cro-specialist] |
+| Tracciamento | `data-track="cta_click"`, `data-cta-id="contatti-persona-percorso"`, `data-cta-location="persona"`: il nome della sezione, scelto dalla sessione principale al posto di «sezione» [IPOTESI: da confermare con cro-specialist, che aggiunge il valore all'elenco del piano di misurazione] |
+| Stato | Applicato nel sito (commit bd78d79); verificato il 2026-09-28 sulla build: una riga, nome accessibile «Scopri il suo percorso nella home» |
 
 Alternativa: «Il suo percorso →» (15), la forma proposta dal creative-director. È più editoriale, ma non ha il verbo: nel sito ogni freccia accompagna un verbo con il suo oggetto (tone of voice §6, regola 1), quindi per coerenza propongo la forma con il verbo. Con l'alternativa il testo nascosto non cambia: «Il suo percorso nella home».
 

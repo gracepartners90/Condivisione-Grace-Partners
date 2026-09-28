@@ -3,9 +3,9 @@ titolo: Tone of voice e guida di stile
 owner: copywriter-brand
 contributi: [copywriter-content, brand-strategist, seo-content, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md]
 ---
 
 # Tone of voice e guida di stile
@@ -128,7 +128,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 - Capitoli e punti numerati sempre a due cifre: 01, 02, 03. Il numero è decorativo: `aria-hidden` oppure fuori dall’heading.
 - Telefoni: +39 080 2466520 e +39 335 1229785, con spazi non separabili perché non vadano a capo; nei link `tel:+390802466520`.
 - Simbolo di grado attaccato: 360°. «24/7» è ammesso nei titoli (testo del cliente, § 16).
-- Coordinate geografiche con il punto decimale, nella notazione cartografica: «40.8957° N · 16.8412° E». Compaiono solo nelle etichette mono della direzione visiva, mai nel testo corrente. Stesso trattamento per i rilevamenti: «081°», «253–265°».
+- Coordinate geografiche con il punto decimale, nella notazione cartografica: «40.90° N · 16.85° E». La precisione è quella della fonte, uguale per tutti i luoghi: oggi 2 decimali (`docs/strategia/coordinate-luoghi.md`). Niente cifre aggiunte per effetto; lo zero di «40.90» è una cifra vera. Compaiono solo nelle etichette mono della direzione visiva, mai nel testo corrente. Stesso trattamento per rilevamenti e distanze: «081°», «251–256°», «38 km».
 - «36 anni» invecchia: va aggiornato ogni anno o calcolato dall’anno di inizio `[DA VERIFICARE]` (brief, N4).
 
 ## 8. Maiuscole e punteggiatura

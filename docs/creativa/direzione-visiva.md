@@ -1,11 +1,11 @@
 ---
 titolo: Direzione visiva
 owner: creative-director
-contributi: [ui-designer, web-performance-specialist, ux-designer]
+contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -29,6 +29,10 @@ Tutto il resto è tipografia e aria.
 - §4.5: variante «in pubblicazione» delle esperienze SIII senza nome e con i gradi.
 - §5: campo visivo di 200° anche su tablet, occhiello corto.
 - §7.3–7.8: statement dei capitoli, «10.000+» senza conferma, numeri con il solo «30+», porte di Puglia Digitale da ovest a est a tutte le larghezze, copertina del video senza orizzonte, nodi della 404.
+
+**Modifiche della versione 0.3 (dopo il G4, 2026-09-28).**
+- §1.4, §5, §7.8, Ipotesi: coordinate pubblicate a 2 decimali da una fonte unica, con i nuovi rilevamenti e il limite noto sul rilevamento di Cassano delle Murge. La condizione C11 è chiusa (`docs/strategia/coordinate-luoghi.md`).
+- §5: niente invito allo scorrimento («Scorri per esplorare») e didascalia dell'osservatore su tre righe; parere sulle varianti della riga di posizionamento per il test E1.
 
 ---
 
@@ -99,26 +103,31 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
 ### 1.4 Le Coordinate (territorio)
 
 - **Cos'è.** Dati geografici veri come unico ornamento:
-  - coordinate in gradi decimali a 4 cifre, per esempio «40.8957° N · 16.8412° E»;
-  - rilevamento e distanza dalla sede di Acquaviva delle Fonti, per esempio «MONOPOLI · 081° · 39 KM»;
+  - coordinate in gradi decimali, con le cifre che la fonte garantisce: oggi 2, per esempio «40.90° N · 16.85° E» (regola di precisione qui sotto);
+  - rilevamento e distanza da Acquaviva delle Fonti, il comune della sede, per esempio «MONOPOLI · 081° · 38 KM»;
   - cartografia a filo.
 - **Dove.** Orizzonte della hero, carta della Puglia, porte dei luoghi, carta d'Italia, didascalie degli showcase (dove si trova l'impresa), Contatti (sede e link «Apri in Mappe»), firma del footer.
 - **Come.**
   - Contorni da Natural Earth 1:10m (pubblico dominio), semplificati: al massimo 8 KB per carta.
   - Una sola proiezione per tutte le carte.
   - Tratto di 1 px con `vector-effect: non-scaling-stroke`.
-  - Coordinate da OpenStreetMap o Wikipedia, con 4 decimali.
-- **Dati di lavoro** (calcolati il 2026-09-28): `[DA VERIFICARE]` prima della pubblicazione.
+  - Coordinate da un'unica fonte dichiarata per tutti i luoghi, con le cifre che quella fonte garantisce (regola qui sotto). Fonte, conversione e verifica: `docs/strategia/coordinate-luoghi.md` (brand-strategist).
+- **Dati pubblicati** (G4, condizione C11 chiusa il 2026-09-28).
+  - Fonte: riquadro della voce di Wikipedia in inglese di ogni comune, in gradi e primi (Caltanissetta anche in secondi), convertiti e arrotondati a 2 decimali (circa 1 km).
+  - Rilevamenti e distanze sono calcolati da questi valori in `src/lib/geo.ts`. Gli stessi valori vanno nella firma del footer e nell'immagine social.
+  - I valori sono stati letti tramite WebSearch e superano un controllo incrociato entro 1,4 km. La lettura diretta delle sette pagine resta `[DA VERIFICARE]`, non bloccante.
 
   | Luogo | Coordinate | Da Acquaviva | Distanza | Mondo |
   |---|---|---|---|---|
-  | Acquaviva delle Fonti (sede) | 40.8957° N · 16.8412° E | — | — | ITnode, Puglia Digitale, SIII (D.L. Natura Dentro) |
-  | Cassano delle Murge | 40.8906° N · 16.7700° E | 265° | 6 km | SIII (Masseria Santella) |
-  | Altamura | 40.8286° N · 16.5528° E | 253° | 25 km | Città Digitali |
-  | Gravina in Puglia | 40.8196° N · 16.4231° E | 257° | 36 km | Puglia Digitale |
-  | Monopoli | 40.9500° N · 17.3000° E | 081° | 39 km | Puglia Digitale, SIII (Maison Miminà) |
-  | Caltanissetta | 37.4900° N · 14.0617° E | 213° | 448 km | Città Digitali |
-  | Varese | 45.8206° N · 8.8251° E | 313° | 848 km | Città Digitali |
+  | Acquaviva delle Fonti (comune della sede) | 40.90° N · 16.85° E | — | — | ITnode, Puglia Digitale, SIII (D.L. Natura Dentro) |
+  | Cassano delle Murge | 40.88° N · 16.77° E | 252° (incerto di circa ±10°, vedi sotto) | 7 km | SIII (Masseria Santella) |
+  | Altamura | 40.82° N · 16.55° E | 251° | 27 km | Città Digitali |
+  | Gravina in Puglia | 40.82° N · 16.42° E | 256° | 37 km | Puglia Digitale |
+  | Monopoli | 40.95° N · 17.30° E | 081° | 38 km | Puglia Digitale, SIII (Maison Miminà) |
+  | Caltanissetta | 37.49° N · 14.06° E | 213° | 449 km | Città Digitali |
+  | Varese | 45.82° N · 8.83° E | 313° | 848 km | Città Digitali |
+
+  Sull'orizzonte della Home i tre luoghi murgiani, a meno di 12° l'uno dall'altro, formano un'unica etichetta: «Altamura · Cassano · Gravina — 251–256° · 7–37 km».
 
   L'associazione tra showcase SIII e comune è dedotta dall'indirizzo del portale (acquavivadigitale, cassanodigitale, monopolidigitale). `[DA VERIFICARE]`
 
@@ -126,7 +135,16 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - **Opzione principale:** tutti i luoghi dalla stessa fonte (nodo del centro del comune in OpenStreetMap, oppure Wikidata P625), con 4 decimali reali; la fonte si scrive in un commento accanto ai dati.
   - **Ripiego:** se la fonte unica non è disponibile prima del lancio, 2 decimali per tutti i luoghi (circa 1 km: la precisione onesta del «centro di un comune»).
   - Mai precisioni diverse nella stessa pagina.
-  - Nel sito costruito Monopoli (40.9500 · 17.3000), Caltanissetta (37.4900) e Cassano delle Murge (16.7700) sono arrotondati e mostrati con 4 decimali: vanno corretti. Una ricerca del 2026-09-28 restituisce per Monopoli valori diversi a seconda della fonte (40.9571 · 17.2905 e 40.9525 · 17.2986): per questo serve un'unica fonte dichiarata.
+  - **Stato al 2026-09-28: applicato il ripiego (C11).**
+    - Il sito costruito mostrava tre valori arrotondati con zeri di riempimento: «40.9500 · 17.3000» per Monopoli, «37.4900» per Caltanissetta, «16.7700» per Cassano delle Murge. Una ricerca dava per Monopoli valori diversi a seconda della fonte.
+    - OpenStreetMap e Wikidata non erano raggiungibili: policy di rete, e l'API Overpass ha risposto 406 anche all'utente.
+    - Oggi tutti i luoghi hanno 2 decimali dalla stessa fonte. Gli zeri di «40.90» e «17.30» sono cifre vere (40°54′ = 40,90°), non riempimento.
+    - Il controllo di go-live blocca qualunque coordinata con più di 2 decimali.
+  - **Limite noto.** Con coordinate precise al chilometro, il rilevamento di un luogo vicino è incerto.
+    - Per Cassano delle Murge, a 7 km, l'incertezza è di circa ±10° (stima di brand-strategist): «252°» indica una direzione, non una misura.
+    - Per gli altri luoghi, da 27 km in su, l'incertezza è trascurabile.
+    - Sull'orizzonte Cassano non ha un'etichetta propria, perché sta nel gruppo murgiano. Il suo rilevamento non va citato da solo in nessun testo.
+  - **Dopo il lancio, facoltativo.** Si torna a 4 decimali reali per tutti, dai nodi `place` di OpenStreetMap, quando qualcuno del team lavora da una rete che li raggiunge (`coordinate-luoghi.md` §4). L'incertezza su Cassano scende sotto il grado.
 
 - **Non si fa.** Pattern topografici decorativi, mappe del mondo a puntini, pin in stile Google, coordinate inventate o arrotondate per effetto.
 
@@ -393,7 +411,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 
 **Idea.** Guardarsi intorno da Acquaviva delle Fonti:
 - un orizzonte a 360° porta i luoghi veri in cui lavora ITnode, nella loro direzione e alla loro distanza reali;
-- Monopoli e il mare a est (081°), l'entroterra murgiano a ovest (253–265°), Caltanissetta (213°) e Varese (313°) più lontano;
+- Monopoli e il mare a est (081°), l'entroterra murgiano a ovest (251–256°), Caltanissetta (213°) e Varese (313°) più lontano;
 - scorrendo, lo sguardo ruota;
 - il titolo sta in piedi su questa linea: è il gesto di un tour a 360°, fatto con tipografia e dati invece che con foto.
 
@@ -416,6 +434,10 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 - **Riga di posizionamento** (`lead`, colonne 5–11, 24–32 px sotto il secondo registro): «Esperienze digitali immersive per imprese e territori.» È la riga che fa superare il test dei 5 secondi: l'H1 da solo non dice che cosa fa ITnode.
   - È un `<p>` dopo l'`<h1>`, non dentro. La didascalia dell'osservatore (colonne 1–4) si allinea in basso con la riga.
   - Provato in pagina al G4: a 1440 × 900 l'orizzonte scende al 57% dell'altezza (era il 62%) e la riga sta nella prima schermata; a 1024 × 768 la hero intera sta nella prima schermata.
+  - **Varianti per il test E1, dopo il lancio** (copy deck della Home, §1). Parere del creative-director per il backlog di cro-specialist:
+    - si prova **B**, «Rendiamo imprese e territori esplorabili sul Web.», come sfidante principale della riga attuale;
+    - **C** resta di riserva: non dice chi fa che cosa e somiglia a un motto da portale.
+    - Tutte e due stanno nella composizione senza modifiche, con la stessa posizione, la stessa scala e gli stessi a capo misurati.
 
 **Orizzonte e luoghi**
 - **Orizzonte.**
@@ -423,16 +445,23 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - Campo visivo di 200° sulla larghezza della finestra, centrato su 170°: si vedono Monopoli, Caltanissetta e il gruppo Altamura–Gravina–Cassano.
 - **Nodi-luogo** (`terra`) sulla linea.
   - Le etichette mono stanno **sotto** le tacche, con una linea di richiamo, su un massimo di 3 file per evitare sovrapposizioni.
-  - I luoghi a meno di 12° l'uno dall'altro si raggruppano in un'unica etichetta: «ALTAMURA · GRAVINA · CASSANO — 253–265°».
+  - I luoghi a meno di 12° l'uno dall'altro si raggruppano in un'unica etichetta, in ordine di rilevamento: «ALTAMURA · CASSANO · GRAVINA — 251–256° · 7–37 KM».
   - Sopra la linea non va nessuna etichetta: lo spazio è del titolo.
-- **Didascalia dell'osservatore e invito allo scorrimento** (mono, colonne 1–4, allineati al secondo registro):
-  - «Vista da Acquaviva delle Fonti — 40.8957° N · 16.8412° E»;
-  - sotto, «Scorri per esplorare» (dal copy deck, `aria-hidden`). Qui l'invito descrive quello che succede davvero: scorrendo, l'orizzonte ruota.
+- **Didascalia dell'osservatore** (mono, colonne 1–4, allineata in basso con la riga di posizionamento), su tre righe:
+  - «Vista da Acquaviva delle Fonti»;
+  - «40.90° N · 16.85° E» (`aria-hidden`, come gli altri segni grafici);
+  - «Distanze in linea d'aria» (review di veridicità, S2).
+- **Nessun invito allo scorrimento** (decisione del G4, su proposta di copywriter-brand). La versione 0.1 prevedeva «Scorri per esplorare», indicato per errore come testo del copy deck: il copy deck non l'ha mai previsto e il sito non lo mostra. Si toglie anche dalla struttura UX (HM-1) e dal design system, per tre ragioni:
+  - con il movimento ridotto, o dove le scroll-driven animations non sono supportate, l'orizzonte non ruota, e l'invito prometterebbe qualcosa che non succede;
+  - con la riga di posizionamento la hero ha già quattro livelli di testo, e deve respirare (LG §07);
+  - «scorri per esplorare» è una formula da template.
+
+  La rotazione resta una scoperta per chi scorre, non una promessa.
 
 ### Tablet (700–1023 px)
 
 - Stessa struttura.
-- Campo visivo di 200°, come su desktop (G4). Con 150° erano in vista solo Caltanissetta e due etichette tagliate dal bordo, tra cui «— 081° · 39 KM» senza il nome di Monopoli. Con 200°, da 768 a 1023 px, a riposo le tre etichette sono intere, e nessun richiamo attraversa un'etichetta né a riposo né durante la rotazione. Tra 700 e 767 px il richiamo del gruppo murgiano tocca il frammento di «Varese» che entra dal bordo destro, dentro la dissolvenza (§2): residuo accettato. Vale solo per l'orizzonte della hero della Home. Quello di Città Digitali resta a 150° su tablet: le sue tre città stanno già in vista, e con 200° le etichette di Caltanissetta e Varese si sovrappongono da 700 a 900 px (misurato).
+- Campo visivo di 200°, come su desktop (G4). Con 150° erano in vista solo Caltanissetta e due etichette tagliate dal bordo, tra cui quella di Monopoli senza il nome («— 081° · …»). Con 200°, da 768 a 1023 px, a riposo le tre etichette sono intere, e nessun richiamo attraversa un'etichetta né a riposo né durante la rotazione. Tra 700 e 767 px il richiamo del gruppo murgiano tocca il frammento di «Varese» che entra dal bordo destro, dentro la dissolvenza (§2): residuo accettato. Vale solo per l'orizzonte della hero della Home. Quello di Città Digitali resta a 150° su tablet: le sue tre città stanno già in vista, e con 200° le etichette di Caltanissetta e Varese si sovrappongono da 700 a 900 px (misurato).
 - Secondo registro dalla colonna 3 di 8.
 
 ### Mobile (< 700 px)
@@ -443,7 +472,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - Campo visivo di 100°, centrato su 250° (il gruppo murgiano, con Caltanissetta al margine).
   - Al massimo 2 etichette visibili alla volta, in formato compatto (nome e rilevamento, senza distanza) e su due file alternate. Nello schizzo a 390 px le etichette complete si sovrapponevano.
   - Scorrendo entra Varese.
-- **Sotto l'orizzonte**, in ordine: secondo registro, riga di posizionamento (20 px), didascalia dell'osservatore e invito allo scorrimento. Il totale misurato sta in una schermata da 390 × 844.
+- **Sotto l'orizzonte**, in ordine: secondo registro, riga di posizionamento (20 px), didascalia dell'osservatore. Il totale misurato sta in una schermata da 390 × 844.
 - **Header.** Segue la sitemap UX (§4): logo, «Parliamone» compatto e «Menu».
 
 ### Movimento
@@ -647,7 +676,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
   - «Parliamone» come pillola `calce`, telefono ed email in mono.
   - I rilevamenti dei capitoli (000°, 120°, 240°) restano in Home: nel menu sarebbero rumore.
 - **Breadcrumb** (sitemap UX §5). Sulle pagine interne sta sopra l'H1 della hero, in `label` mono, e prende il posto dell'occhiello: `inchiostro-2` su chiaro, `testo-notte-2` su scuro.
-- **Footer.** Blocchi e ordine della sitemap UX (§6), su `notte`. L'ultima riga, in mono, è la firma: «ITnode · Acquaviva delle Fonti · 40.8957° N · 16.8412° E».
+- **Footer.** Blocchi e ordine della sitemap UX (§6), su `notte`. L'ultima riga, in mono, è la firma: «ITnode · Acquaviva delle Fonti · 40.90° N · 16.85° E». Le coordinate sono quelle del comune, non dell'indirizzo, e nessun testo le presenta come posizione della sede (`coordinate-luoghi.md` §5).
 - **404.** Su calce: «404°» in `display-xxl`, perché su una bussola non esiste, come la pagina. Un orizzonte con i tre mondi come nodi a 000°, 120° e 240° porta alle pagine. Il copy è del copywriter.
   - Precisazioni del G4: l'orizzonte ha le tacche (senza, a 390 px una linea con tre punti sembra uno slider). Ogni nodo sta dentro l'area del link del suo mondo, perché il blu è interazione (§1.3). Le tre colonne sono allineate in alto.
 - **Privacy e cookie.** Su calce, testo su 7 colonne, numeri di sezione in mono. Nessun dispositivo firma: pagine silenziose.
@@ -678,7 +707,7 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 - **Motion.** CSS scroll-driven animations e view transition cross-document come miglioramento progressivo, senza polyfill.
   - Stato al 2026-09-28, da fonti web: supportate in Chromium e in Safari 26 (le view transition da Safari 18.2).
   - Su Firefox le fonti sono discordanti `[DA VERIFICARE]`: lì l'esperienza resta statica.
-- **Coordinate, rilevamenti e distanze** (§1.4): calcolati da coordinate pubbliche approssimate `[DA VERIFICARE]` prima della pubblicazione, con la regola di precisione del G4 (una sola fonte e 4 decimali reali, oppure 2 decimali per tutti).
+- **Coordinate, rilevamenti e distanze** (§1.4): 2 decimali da una fonte unica, il riquadro di Wikipedia in inglese. I valori sono letti tramite WebSearch e superano un controllo incrociato. Resta `[DA VERIFICARE]`, non bloccante, la lettura diretta delle sette pagine. Il rilevamento di Cassano delle Murge è incerto di circa ±10°.
 - **Dimensioni tipografiche** (§3.2 e §5): verificate su Chromium con i font reali, da riverificare su Safari iOS nei prototipi del `ui-designer`.
 - **Anteprima immersiva «Prova qui»** (iframe dell'esperienza SIII caricato solo al clic), in aggiunta all'apertura in nuova scheda chiesta dalle linee guida. Dipende da due verifiche:
   - se i portali permettono l'incorporamento (`X-Frame-Options`, `frame-ancestors`) `[DA VERIFICARE]`;

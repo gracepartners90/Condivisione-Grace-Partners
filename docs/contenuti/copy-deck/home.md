@@ -3,9 +3,9 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, src/data/site.ts, src/components/ui/Horizon.astro]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md, src/data/site.ts, src/components/ui/Horizon.astro]
 ---
 
 # Copy deck · Home
@@ -79,13 +79,13 @@ Spazio unificatore (U+00A0) tra «per» e «imprese».
 
 **Didascalia dell’osservatore** · p · mono · tre righe · la riga delle coordinate è `aria-hidden`
 > Vista da Acquaviva delle Fonti\
-> 40.8957° N · 16.8412° E\
+> 40.90° N · 16.85° E\
 > Distanze in linea d’aria
 
 **Etichette dei luoghi sull’orizzonte** · dentro l’orizzonte `aria-hidden` · generate da `Horizon.astro` con i dati di `src/data/site.ts`
-> Monopoli — 081° · 39 km
+> Monopoli — 081° · 38 km
 
-Formato: nome, trattino lungo, rilevamento, distanza in linea d’aria. I luoghi a meno di 12° l’uno dall’altro si raggruppano, con i nomi brevi: «Altamura · Gravina · Cassano — 253–265° · 6–36 km». Sotto i 700 px l’etichetta va su due righe, nome e rilevamento, senza distanza. Sull’orizzonte ci sono anche i gradi ogni 45°, con i punti cardinali: «090° E», «180° S», «270° O». Nel sorgente la maiuscola va solo all’iniziale; il maiuscolo lo applica il CSS.
+Formato: nome, trattino lungo, rilevamento, distanza in linea d’aria. I luoghi a meno di 12° l’uno dall’altro si raggruppano, con i nomi brevi in ordine di rilevamento. Le quattro etichette di oggi: «Monopoli — 081° · 38 km», «Caltanissetta — 213° · 449 km», «Altamura · Cassano · Gravina — 251–256° · 7–37 km», «Varese — 313° · 848 km». Sotto i 700 px l’etichetta va su due righe, nome e rilevamento, senza distanza. Sull’orizzonte ci sono anche i gradi ogni 45°, con i punti cardinali: «090° E», «180° S», «270° O». Nel sorgente la maiuscola va solo all’iniziale; il maiuscolo lo applica il CSS.
 
 Note:
 - **Perché la riga di posizionamento sta in `lead`.** Il test dei cinque secondi si gioca su ciò che si legge subito dopo il titolo. Nell’occhiello, la frase che dice che cosa fa ITnode aveva il corpo più piccolo della pagina (12–13 px, mono) e a 1440 px stava 300 px sopra il titolo. In `lead` arriva dove l’occhio atterra dopo l’H1. Ha deciso il creative-director, sentiti copywriter-brand, cro-specialist (esperimento E1) e ui-designer. Il testo non cambia: cambia il suo posto nella gerarchia.
@@ -101,7 +101,7 @@ Note:
   - Da 1024 px stanno entrambi su una riga; la riga di posizionamento anche a 600 px.
 - **Ordine di lettura per gli screen reader**: occhiello, H1, riga di posizionamento, «Vista da Acquaviva delle Fonti», «Distanze in linea d’aria». Coordinate, gradi ed etichette dei luoghi restano nascosti.
 - **Nessuna CTA e nessun invito allo scorrimento**: la hero deve respirare (§ 07) e «Parliamone» è già nell’header. La terza riga della didascalia, «Distanze in linea d’aria», viene dalla review di veridicità (S2).
-- **Coordinate e distanze** si calcolano dai dati di `src/data/site.ts` e seguono la regola della direzione visiva (§ 1.4; G4, N2): quattro decimali reali da un’unica fonte, oppure due per tutti i luoghi `[DA VERIFICARE]`. I valori qui sopra sono quelli di oggi e cambiano da soli con la condizione C11 (`docs/strategia/coordinate-luoghi.md`): il copy deck non va riallineato. Il punto decimale è quello della notazione cartografica (tone of voice, § 7).
+- **Coordinate, rilevamenti e distanze** si calcolano dai dati di `src/data/site.ts`, con il ripiego della direzione visiva (§ 1.4): 2 decimali per tutti i luoghi, da un’unica fonte, il riquadro della voce del comune su Wikipedia in inglese (`docs/strategia/coordinate-luoghi.md`, v0.3; C11 chiusa il 2026-09-28). Per Acquaviva è la coordinata del comune, non dell’indirizzo della sede: nessun testo la presenta come posizione della sede. Resta `[DA VERIFICARE]` solo la lettura diretta della fonte, che non blocca il lancio. I valori citati qui sono esempi: se i dati cambiano, per esempio con i 4 decimali dopo il lancio, vanno riallineati anche qui. Il punto decimale è quello della notazione cartografica (tone of voice, § 7).
 - **H1**: primo registro «La tecnologia cambia.»; secondo registro «La curiosità ci accompagna / da sempre.», con l’a capo d’autore prima di «da sempre». Su mobile valgono gli a capo della direzione visiva (§ 5).
 
 **Varianti della riga di posizionamento per E1** · dopo il lancio, con cro-specialist · al lancio resta la variante A
