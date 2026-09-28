@@ -3,9 +3,9 @@ titolo: "ADR 005 · Preload del carattere principale (Schibsted Grotesk)"
 owner: creative-director
 contributi: [web-performance-specialist]
 stato: accettata
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md (§3, nota di web-performance-specialist sull'ADR 005), docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59)]
+fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md (0.4, §3: nota di web-performance-specialist sull'ADR 005, protocollo e registro dei confronti), docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59)]
 ---
 
 # ADR 005 · Preload del carattere principale
@@ -68,7 +68,7 @@ L'FCP simulato della Home senza preload (1,51 s, 0,01 s sopra l'obiettivo) non �
 
 - **Perché.**
   - Sopra le soglie, e con margini ampi in entrambe le varianti, prevale l'identità: la tipografia è il visual della hero. Uno scambio di forma dei glifi a 115 px è il primo gesto che il sito compie davanti a chi arriva.
-  - Il guadagno di LCP (circa 150 ms in laboratorio) non cambia la classe di nessuna metrica.
+  - Il guadagno di LCP senza preload (150–200 ms in laboratorio: 151–177 ms nella rimisura, 201–204 ms nel primo confronto di sorveglianza) non cambia la classe di nessuna metrica.
 - **Quando si riapre.** La decisione torna a web-performance-specialist, che può togliere il preload senza nuovo assenso, se accade una di queste cose:
   - i dati di campo (RUM `web-vitals` o CrUX), una volta disponibili, mostrano un LCP mobile al 75° percentile sopra 2,0 s;
   - una nuova versione di Chromium cambia il comportamento dei font in preload in modo misurabile;
@@ -76,8 +76,12 @@ L'FCP simulato della Home senza preload (1,51 s, 0,01 s sopra l'obiettivo) non �
 - **Sorveglianza delle condizioni** (proposta di web-performance-specialist, adottata nella versione 1.1). Owner: web-performance-specialist.
   - **Dati di campo.** RUM `web-vitals` senza cookie, dopo il lancio. Senza RUM la prima condizione non può scattare, e CrUX è improbabile con il traffico del sito. La decisione è ancora aperta con cro-specialist e l'utente, e questo ADR la raccomanda.
   - **Confronto in laboratorio** su `/` e `/siii/` a ogni aggiornamento maggiore del Chromium di misura, e comunque ogni tre mesi.
-    - Stessa build, con la sola riga del preload tolta; 3 corse per variante con throttling applicato, alternate.
-    - Si riapre se il ritardo dell'LCP dovuto al preload supera 300 ms (oggi 151–177 ms), oppure se cambiano le costanti `kMaxFCPDelay` e `kMaxBlockingTimeForRenderBlockingFonts` del sorgente di Chromium.
+    - Stessa build, con la sola riga del preload tolta; throttling applicato, corse alternate con e senza preload.
+    - **Almeno 6 corse per variante** (versione 1.2; la 1.1 ne prevedeva 3). Le singole coppie oscillano da 106 a 361 ms: nel primo confronto, con 3 corse, la stima su `/siii/` era 282 ms, con 6 è 201 ms.
+    - Il ritardo è la differenza tra le mediane dell'LCP con e senza preload.
+    - Si riapre se il ritardo supera 300 ms su una delle due pagine, oppure se cambiano le costanti `kMaxFCPDelay` (100 ms) e `kMaxBlockingTimeForRenderBlockingFonts` (1500 ms) del sorgente di Chromium.
+    - **Primo confronto, 2026-09-28** (build del G4, Chromium 141, 6 corse per variante): +204 ms sulla Home, +201 ms su `/siii/`, costanti invariate. Sotto la soglia: il preload resta.
+    - **Prossimo confronto:** al primo aggiornamento maggiore del Chromium di misura, e comunque **entro lunedì 28 dicembre 2026**; poi ogni tre mesi dall'ultimo.
     - Facoltativo, per pesare anche l'altro lato: nello stesso confronto si registra la finestra del ripiego su 4G veloce, con il metodo di questo ADR (evento `loadingdone` di `document.fonts`).
   - L'esito di ogni confronto va nel `budget.md` (§3). Se una condizione scatta, web-performance-specialist toglie il preload e ne informa il creative-director.
 
