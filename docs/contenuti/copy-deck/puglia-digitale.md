@@ -1,11 +1,11 @@
 ---
 titolo: Copy deck · Puglia Digitale
 owner: copywriter-content
-contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
+contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, brand-strategist, creative-director]
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, src/data/site.ts, src/data/asset-slots.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/creativa/direzione-visiva.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/pages/puglia-digitale.astro]
 ---
 
 # Copy deck · Puglia Digitale
@@ -92,16 +92,53 @@ Note:
 |---|---|---|---|
 | 1 | 30+ | città coinvolte | Più di 30 città coinvolte |
 | 2 | ~200.000 | partite IVA nei territori coinvolti | Circa 200.000 partite IVA nei territori coinvolti |
-| 3 | 60% | del tessuto produttivo pugliese | Il 60% del tessuto produttivo pugliese |
+| 3 | 60% | del tessuto produttivo pugliese è in questi territori | Il 60% del tessuto produttivo pugliese si trova nei territori coinvolti |
 
 **Nota sotto i numeri** · p · max 70 · obbligatoria
 > Dati ITnode, aggiornati a [DA FORNIRE: mese e anno].
 
 Note:
-- Valori e didascalie della §14, dati forniti dal cliente (brief N1–N3). Unico adattamento: «Città» diventa «città coinvolte», come «territori coinvolti».
+- Valori e didascalie della §14, dati forniti dal cliente (brief N1–N3). Primo adattamento: «Città» diventa «città coinvolte», come «territori coinvolti».
+- Riga 3 allineata al sito nella v1.2: etichetta e testo nascosto sono quelli della review di veridicità (I9), perché «del tessuto produttivo pugliese» si poteva leggere come «il 60% delle imprese pugliesi è su Puglia Digitale». L'etichetta ha 53 caratteri, oltre il massimo di 45 della tabella: a 390 px va su due righe, a 320 px su tre (misurato il 2026-09-28).
 - L'H2 dice a che cosa si riferiscono i numeri: al bacino economico dei territori, non alle imprese presenti sulla piattaforma. Nessuna didascalia deve diventare «200.000 imprese in Puglia Digitale» o «il 60% delle imprese pugliesi aderisce». La mappa SEO proponeva «Puglia Digitale in numeri»: questo titolo protegge meglio il claim N2.
-- La nota con la fonte è obbligatoria: il componente Stats non mostra numeri senza fonte (strategia di conversione §9; brief DR4). Se la data non arriva prima del lancio, brand-strategist decide se pubblicare la nota senza data («Dati ITnode.») o rinviare la sezione.
+- La nota con la fonte è obbligatoria: il componente Stats non mostra numeri senza fonte (strategia di conversione §9; brief DR4). Che cosa si pubblica, e con quale nota, lo ha deciso brand-strategist (B3): vedi la tabella qui sotto.
 - Markup: il valore visivo è `aria-hidden="true"` e accanto c'è il testo per le tecnologie assistive, visivamente nascosto. Senza questo accorgimento alcuni lettori di schermo leggono «tilde 200.000».
+
+**Stati della sezione al lancio** · decisione B3 di brand-strategist (review di veridicità) e verdetto G4 (§§ 3.7 e 3.8)
+
+| Situazione | Che cosa si pubblica | Nota sotto i numeri |
+|---|---|---|
+| Anteprima protetta | I tre numeri, perché il cliente li riveda e li confermi | «Dati ITnode.» |
+| Go-live con fonte e data per tutti e tre i numeri | I tre numeri e il titolo «I numeri dei territori coinvolti» | «Città: dati ITnode, aggiornati a [mese anno]. Partite IVA e tessuto produttivo: elaborazione ITnode su dati [fonte], [anno].» È più lunga del massimo di 70: l'a capo va verificato |
+| Go-live con la conferma del solo «30+»: numero, perimetro e data | La variante di riserva a un numero, qui sotto | «Dati ITnode, aggiornati a [mese anno].» |
+| Go-live senza conferma nemmeno del «30+» | Niente: la sezione non si pubblica e il layout resta pronto (direzione visiva §7.5) | — |
+
+### Variante di riserva · un solo numero (B3)
+
+**Da non applicare ora.** È pronta per quando il cliente risponde, se resta confermato solo «30+». Composizione della direzione visiva (§7.5): un solo numero in `display-xxl` dalla colonna 3, con etichetta e nota con la data.
+
+**H2** · max 45 (28)
+> Puglia Digitale in un numero
+
+Alternativa: «Il territorio di Puglia Digitale» (32).
+
+**Numero** · componente Stats con un solo elemento
+| Valore (visivo) | Etichetta | Testo per le tecnologie assistive |
+|---|---|---|
+| 30+ | città coinvolte | Più di 30 città coinvolte |
+
+**Nota sotto il numero** · p · obbligatoria, con la data
+> Dati ITnode, aggiornati a [DA FORNIRE: mese e anno].
+
+Condizioni (brand-strategist, B3 e I9): il cliente conferma il numero, il perimetro e il mese e l'anno del dato. Il perimetro deve dire quali sono le città e che sono tutte di Puglia Digitale. Se comprende città di altri progetti, per esempio di Città Digitali, il numero non vale per questa pagina: decide brand-strategist.
+
+Note:
+- **Perché questo titolo.** Dice che cosa contiene la sezione e di chi è il numero. Il singolare rende il numero unico una scelta di composizione, non il vuoto lasciato da altri due. Recupera la proposta della mappa SEO («Puglia Digitale in numeri»), accantonata per proteggere il claim delle partite IVA (N2): senza quel numero, il rischio non c'è più.
+- **Perché non «Il numero dei territori coinvolti»**, il singolare letterale del titolo attuale. «Il numero dei territori» è un conteggio di territori, mentre qui si contano città; e «coinvolti» si ripeterebbe subito nell'etichetta «città coinvolte».
+- **Etichetta e testo nascosto restano quelli già approvati**: il titolo dice già a che cosa si riferiscono. Lo screen reader legge «Puglia Digitale in un numero», poi «Più di 30 città coinvolte», poi la nota.
+- **A capo**, provati il 2026-09-28 con DOM iniettato e il numero dalla colonna 3: il titolo sta su una riga da 360 a 1920 px; a 320 px va su due, «Puglia Digitale / in un numero». L'alternativa va a capo in «Il territorio di / Puglia Digitale», sempre solo a 320 px.
+- **Dove si applica**: in `src/pages/puglia-digitale.astro`, il `title` di `<Stats>` e il solo primo elemento di `stats`; in `src/data/figures.ts`, mese e anno in `pugliaUpdated`. La composizione a un numero la cura ui-designer.
+- **seo-content** allinea l'H2 nella mappa keyword→URL, se la variante va online.
 
 ## 4. I luoghi
 
@@ -213,6 +250,8 @@ In entrata: Home (capitolo 02, «Scopri Puglia Digitale →»), blocchi finali d
 |---|---|---|
 | Ancora del form | `#richiesta` | Strategia di conversione. La mappa SEO usa `#aderisci`: va allineata. |
 | H2 dei numeri | «I numeri dei territori coinvolti» (la mappa propone «Puglia Digitale in numeri») | Rende chiaro il perimetro dei dati (brief N2). |
+| H2 con il solo «30+» | «Puglia Digitale in un numero» (variante di riserva, sezione 3; copywriter-brand, v1.2) | Senza le partite IVA il rischio N2 non c'è più; il singolare segue il numero unico (direzione visiva §7.5). |
+| Etichetta del 60% | «del tessuto produttivo pugliese è in questi territori» | Allineata al sito (review di veridicità, I9). |
 | Eyebrow della hero | «Destination marketing» | Sostituisce «Un progetto ITnode» della v1.0, un'attribuzione non ancora confermata (A1). |
 | Luoghi | Ordine dalla costa all'entroterra | Scelta editoriale, reversibile. |
 | CTA secondaria della hero | «Aderisci a Puglia Digitale ↓» | Massimo 28 caratteri (tone of voice §6); stesso schema di Città Digitali. |

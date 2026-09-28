@@ -1,11 +1,11 @@
 ---
 titolo: Copy deck · Contatti
 owner: copywriter-content
-contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-designer]
+contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, src/data/site.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, src/data/site.ts, src/data/media.ts]
 ---
 
 # Copy deck · Contatti
@@ -40,8 +40,9 @@ Ordine della strategia di conversione §4: prima i canali diretti, poi il form. 
 | 1 | Hero | — | Hero, variante compatta |
 | 2 | Recapiti | `#recapiti` | `<address>` con `<dl>` |
 | 3 | Scrivici | `#richiesta` | ContactForm |
-| 4 | I portali | `#portali` | Due righe editoriali |
-| 5 | Dati societari | `#dati-societari` | Blocco testuale piccolo |
+| 4 | Persona | — | Ritratto a inchiostro, nome e ruolo, link al racconto in Home (direzione visiva §7.7) |
+| 5 | I portali | `#portali` | Due righe editoriali |
+| 6 | Dati societari | `#dati-societari` | Blocco testuale piccolo |
 
 ## 1. Hero
 
@@ -92,7 +93,45 @@ Note:
 - «Mi interessa»: nessuna preselezione, salvo il parametro `?interesse=` (strategia di conversione §5). `form_id` richiesta-contatti. Pulsante: «Invia richiesta» (§23).
 - Il form non simula l'invio se manca l'endpoint (§23): il ripiego con email e telefono è già in `src/scripts/form.ts`.
 
-## 4. I portali
+## 4. Persona
+
+Tra il form e i portali: ritratto, nome e ruolo del fondatore, poi un link al suo racconto in Home. La composizione è quella della direzione visiva (§7.7), con il ritratto a inchiostro (DR3-b). La citazione del fondatore non c'è più: fuori dal racconto della Home cambiava significato (review di bozze, K1). Il link risponde all'osservazione N5 del verdetto G4.
+
+**Ritratto** · `figure` · immagine e testi in `src/data/media.ts` (`founderPortraitContacts`)
+| Elemento | Testo |
+|---|---|
+| Testo alternativo | Giacomo Lenoci in abito scuro, sorridente. |
+| Nota di trasparenza · `figcaption` · mono | Immagine generata o elaborata con strumenti di intelligenza artificiale |
+
+**H2** · nome e ruolo nello stesso heading, su due livelli · dati di `founder` in `src/data/site.ts` · [DA VERIFICARE: nome e ruolo, F7]
+> Giacomo Lenoci\
+> Fondatore di ITnode
+
+Tra i due livelli c'è una virgola visibile solo agli screen reader: si legge «Giacomo Lenoci, Fondatore di ITnode».
+
+**Link al racconto del fondatore** · a → `/#fondatore` · sotto il ruolo · max 28 (22 più la freccia)
+> Scopri il suo percorso →
+
+| Campo | Valore |
+|---|---|
+| Testo visibile | Scopri il suo percorso |
+| Testo per gli screen reader | « nella home», con lo spazio iniziale, in uno `<span class="sr-only">` subito dopo il testo visibile |
+| Nome accessibile | Scopri il suo percorso nella home |
+| Icona | → in SVG con `aria-hidden="true"`, attaccata all'ultima parola (tone of voice §6) |
+| Markup | `Scopri il suo percorso<span class="sr-only"> nella home</span><Arrow dir="right" />`, come il link «Apri in Google Maps» dei recapiti |
+| Destinazione | `/#fondatore`, sezione «Il fondatore» della Home; stessa scheda |
+| Tracciamento | `data-track="cta_click"`, `data-cta-id="contatti-persona-percorso"`, `data-cta-location="sezione"` [IPOTESI: valori da confermare con cro-specialist] |
+
+Alternativa: «Il suo percorso →» (15), la forma proposta dal creative-director. È più editoriale, ma non ha il verbo: nel sito ogni freccia accompagna un verbo con il suo oggetto (tone of voice §6, regola 1), quindi per coerenza propongo la forma con il verbo. Con l'alternativa il testo nascosto non cambia: «Il suo percorso nella home».
+
+Note:
+- **Nessuna frase nuova attribuita al fondatore** (K1, N5). Il link parla di lui in terza persona e non riassume il racconto: rimanda al testo che c'è già.
+- **Perché «percorso».** Il racconto in Home comincia proprio così: «Il suo percorso comincia con IBM…». Chi clicca trova subito ciò che il link promette. Verificato il 2026-09-28 a 390 e a 1440 px: aprendo `/#fondatore`, occhiello, titolo e primo paragrafo della sezione sono visibili sotto l'header. Provato in pagina con il link iniettato: sta su una riga da 320 a 1920 px.
+- **Perché il testo nascosto.** «Scopri il suo percorso» non dice che si cambia pagina: lo dice la freccia →, ma solo a chi la vede. « nella home» aggiunge la destinazione al nome accessibile, che comincia comunque con il testo visibile (tone of voice §6, regola 6; WCAG 2.5.3). Per il criterio 2.4.4 basterebbe già il titolo che precede, con nome e ruolo (tecnica H80): il testo nascosto serve a chi scorre l'elenco dei link. Decide ux-designer, owner dell'accessibilità.
+- **Se il nome non viene confermato** (F7): propongo come H2 «Il fondatore di ITnode», la stessa formula prevista per la Home; il link resta com'è.
+- **Evoluzione possibile** (review di conversione, osservazione 14; verdetto G4, N5). Se il cliente conferma che è il fondatore a rispondere alle richieste, e arriva una sua foto reale, la sezione può diventare «Ti risponde Giacomo Lenoci», insieme al blocco «Cosa succede dopo» della strategia di conversione (§8). Fino ad allora non si scrive. [DA FORNIRE: chi risponde alle richieste, tempi garantiti, foto reale]
+
+## 5. I portali
 
 **H2** · verbatim · max 24
 > I portali
@@ -114,7 +153,7 @@ Note:
 - I link interni usano le stesse etichette dei capitoli della Home: stessa azione, stessa etichetta (tone of voice §6).
 - Dominio di Città Digitali da verificare in QA (cittadigitali.it o cittàdigitali.it: brief, glossario).
 
-## 5. Dati societari
+## 6. Dati societari
 
 **H2** · max 24
 > Dati societari
@@ -137,6 +176,7 @@ Note:
 
 | Da | Anchor | Verso |
 |---|---|---|
+| Persona | Scopri il suo percorso → | `/#fondatore` |
 | I portali | Esplora Città Digitali → · Scopri Puglia Digitale → | `/citta-digitali/` · `/puglia-digitale/` |
 | Form, consenso | informativa privacy (microcopy di copywriter-brand) | `/privacy-policy/` |
 
@@ -150,6 +190,7 @@ In entrata: la CTA «Parliamone» dell'header dalle pagine senza form, la naviga
 | Hero | Nessuna CTA; lead riscritto senza i nomi dei tre progetti | Strategia di conversione §4. I nomi dei progetti sono già nel campo «Mi interessa» e nei portali. |
 | Form | Introduzione della strategia di conversione §8 | Stesso testo in tutto il team. Tolta la riga «Preferisci parlarne a voce?» della v1.0: i canali diretti sono già sopra il form. |
 | Link alla mappa | «Apri in Google Maps ↗» | Mappa SEO §3.5 e strategia di conversione (sostituisce «Indicazioni stradali» della v1.0). |
+| Sezione Persona | Aggiunta nella v1.2 (copywriter-brand): ritratto, nome e ruolo, link «Scopri il suo percorso →» | Era nel sito ma non nel copy deck. Direzione visiva §7.7 (DR3-b); citazione tolta per la review di bozze (K1); link dal verdetto G4 (N5). |
 
 ## Testi originali mancanti
 
@@ -170,6 +211,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 - [IPOTESI: il profilo LinkedIn indicato è quello del fondatore, Giacomo Lenoci (brief F7)]
 - [IPOTESI: la sede operativa riceve visite. Il link a Google Maps ha senso solo in questo caso]
+- [IPOTESI: il link della sezione Persona non sottrae richieste. Sta dopo il form, e la sezione del fondatore in Home è seguita dalla chiusura con «Parliamone →», che riporta qui]
 
 ## Domande aperte
 
@@ -177,8 +219,10 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 2. Esiste una pagina aziendale LinkedIn di ITnode (S6)?
 3. Orari di risposta al telefono, se il cliente vuole indicarli.
 4. Tempi di risposta al form: se c'è un impegno reale (per esempio «entro due giorni lavorativi»), diventa una rassicurazione. Senza conferma non si scrive.
+5. Chi risponde alle richieste? Se è il fondatore, la sezione Persona può diventare «Ti risponde…» (sezione 4, evoluzione possibile).
 
 ## Decisioni richieste
 
-- **ux-designer**: composizione affiancata o in colonna di recapiti e form; posizione dei dati societari (pagina e footer).
-- **cro-specialist**: conferma del lead senza CTA.
+- **ux-designer**: composizione affiancata o in colonna di recapiti e form; posizione dei dati societari (pagina e footer); testo nascosto « nella home» nel link della sezione Persona.
+- **cro-specialist**: conferma del lead senza CTA; attributi di tracciamento del link della sezione Persona.
+- **creative-director**: forma del link della sezione Persona, «Scopri il suo percorso →» (proposta) o «Il suo percorso →».
