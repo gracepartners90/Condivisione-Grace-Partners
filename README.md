@@ -2,7 +2,7 @@
 
 Repository di progetto per il nuovo sito di ITNODE. Il lavoro è svolto da un team di specialisti: subagent di Claude Code definiti in [`.claude/agents/`](.claude/agents/) e coordinati dalla sessione principale di Claude.
 
-> **Stato:** team costruito · in attesa delle linee guida di progetto.
+> **Stato:** sito costruito secondo il metodo delle linee guida (fasi 1–5) · review finale del team in corso · gate G1–G4 in attesa dell'approvazione del cliente · mancano gli asset e i dati elencati sotto.
 
 ## Il team
 
@@ -42,9 +42,53 @@ Repository di progetto per il nuovo sito di ITNODE. Il lavoro è svolto da un te
 
 Le regole operative complete (fasi, soglie di qualità, convenzioni, orchestrazione) sono in [CLAUDE.md](CLAUDE.md).
 
+## Il sito
+
+Astro 7, output statico (ADR in [`docs/decisioni/001-stack-tecnologico.md`](docs/decisioni/001-stack-tecnologico.md)). Node 22.12 o successivo.
+
+```bash
+npm install
+npm run dev       # sviluppo su http://localhost:4321
+npm run build     # build statica in dist/
+npm run preview   # anteprima della build
+npm run assets    # rigenera i ritagli e i ritratti da src/assets/images/
+npm run brand     # rigenera favicon e logo PNG dal wordmark SVG
+npm run maps      # rigenera le carte (Natural Earth) in src/data/maps.json
+npm run og        # rigenera l'immagine social public/og/default.jpg
+```
+
+Pagine: `/`, `/siii/`, `/puglia-digitale/`, `/citta-digitali/`, `/contatti/`, `/privacy-policy/`, `/cookie-policy/` e la pagina 404.
+
+**Modulo di contatto.** L'indirizzo che riceve le richieste si imposta con la variabile d'ambiente `PUBLIC_FORM_ENDPOINT` al momento della build (POST `multipart/form-data`, risposta 2xx). Finché è vuota, il sito lo dichiara prima dei campi e all'invio prepara un'email già compilata: nessun invio viene simulato.
+
+### Asset da fornire
+
+Ogni spazio in attesa di un asset mostra un segnaposto dichiarato con formato e contenuto richiesti. L'elenco completo, con specifiche, è in [`src/data/asset-slots.ts`](src/data/asset-slots.ts); le priorità e la direzione fotografica sono in [`docs/creativa/direzione-visiva.md`](docs/creativa/direzione-visiva.md) §4.6.
+
+| Asset | Formato | Dove |
+|---|---|---|
+| Schermate delle esperienze SIII: Masseria Santella, Maison Miminà, D.L. Natura Dentro | 16:10, almeno 2560 × 1600 px, più la vista mobile | Home (capitolo SIII), /siii/ (esempi) |
+| Un'esperienza SIII vista da smartphone | 3:5, almeno 1200 × 2000 px | /siii/ (hero) |
+| Foto reali di Monopoli, Acquaviva delle Fonti, Gravina in Puglia | Porta 3:5, lato lungo di almeno 2400 px | /puglia-digitale/ (I luoghi) |
+| Video di Città Digitali: file sorgente e permesso di ospitarlo, fotogramma di copertina, durata, sottotitoli se c'è parlato | 16:9, poster 1920 × 1080 px | /citta-digitali/ (video) |
+| Foto evento Puglia Digitale originale, senza cornice né sovrimpressioni, con luogo, data e autore | originale ad alta risoluzione | Home, /puglia-digitale/ |
+| Logo vettoriale ufficiale di ITnode (positivo e negativo) e codici colore; marchi di Puglia Digitale e Città Digitali | SVG | header, footer, favicon, immagine social |
+| Un ritratto reale del fondatore, in un luogo vero | 4:5 | facoltativo: sostituisce i ritratti elaborati con AI |
+
+Dati da fornire o confermare: dati societari (REA, capitale sociale, sede legale, PEC), data di aggiornamento dei numeri di Puglia Digitale, testo della Privacy Policy dal consulente, endpoint del modulo, hosting e DNS.
+
 ## Struttura del repository
 
 ```text
+src/
+  pages/             le pagine del sito
+  components/        ui/ (dispositivi e primitive), sections/, layout/, seo/
+  data/              dati del sito, metadati, segnaposto, carte
+  lib/, scripts/     dati strutturati, geografia, script del browser
+  styles/            token e stili globali
+  assets/            immagini del cliente e derivati, wordmark
+public/              favicon, logo PNG, immagine social, robots.txt, _headers, _redirects
+scripts/             generatori di derivati, favicon, carte e immagine social
 .claude/
   agents/            il team: un file per membro
   agent-memory/      memoria di progetto dei membri (feedback e lezioni apprese)
