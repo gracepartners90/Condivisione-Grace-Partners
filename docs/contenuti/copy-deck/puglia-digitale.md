@@ -3,122 +3,107 @@ titolo: Copy deck · Puglia Digitale
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, src/data/site.ts, src/data/asset-slots.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, src/data/site.ts, src/data/asset-slots.ts]
 ---
 
 # Copy deck · Puglia Digitale
 
-Pagina `/puglia-digitale`. Copre le sezioni 13, 14, 15 e 16 delle linee guida, la CTA finale e l'introduzione al form (sez. 23). Rispetto alla pagina SIII il carattere è più territoriale ed emozionale (sez. 13). I testi sono pronti da impaginare.
+Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (LG), la chiusura e l'introduzione al form (§23). Rispetto a SIII il carattere è più territoriale ed emozionale (§13). I testi sono pronti da impaginare.
 
 ## Come leggere questo documento
 
 - **Testo da pubblicare**: è nei blocchi citati (`>`) e nelle tabelle marcate come copy. Tutto il resto sono note per design e sviluppo.
-- **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi, pensati per la scala della sez. 04. **verbatim**: frase delle linee guida da non modificare.
-- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3).
-- **Microcopy del form**: è di copywriter-brand.
+- **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi, per la scala della §04. **verbatim**: frase delle LG; si cambia solo l'apostrofo tipografico.
+- **Frecce** (tone of voice §6): → altra pagina o form, ↓ sezione della pagina nei link secondari, ↗ sito esterno in nuova scheda. Sempre `aria-hidden="true"`.
+- **Link esterni**: `target="_blank" rel="noopener"`. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3) e dichiara la nuova scheda.
+- **Fonti che prevalgono nel loro dominio**: brief consolidato (fatti e claim), mappa keyword→URL (heading, metadati, blocchi di risposta), strategia di conversione (CTA, ancore, form).
+- **Attribuzione.** Finché il cliente non chiarisce il ruolo di ITnode (brief A1, D1, DR4), nessun testo dice che ITnode ha creato Puglia Digitale, né che si tratta di «un progetto ITnode». Formula provvisoria: «Con Puglia Digitale, ITnode porta online…». Nessun riferimento a patrocini, alla Regione o al portale omonimo puglia-digitale.it (A2).
 
 ## Metadati
 
-Proposta da validare con seo-content: manca ancora il brief SEO della pagina.
+Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comodità:
 
 | Campo | Testo | Limite |
 |---|---|---|
-| URL | `/puglia-digitale` | — |
-| Title | Puglia Digitale · Destination Marketing immersivo · ITnode | ≤ 60 |
-| Meta description | Puglia Digitale è il progetto di Destination Marketing di ITnode: città, borghi e imprese pugliesi da esplorare online attraverso esperienze immersive. | 120–155 |
-| og:title | Puglia Digitale · Un progetto ITnode | ≤ 60 |
-| og:description | Dalla costa all’entroterra. Un territorio da esplorare. | ≤ 110 |
+| Title | Puglia Digitale: destination marketing immersivo \| ITnode | ≤ 60 |
+| Meta description | Puglia Digitale è una piattaforma di destination marketing che digitalizza e valorizza città, borghi e imprese pugliesi con esperienze immersive. | 140–155 |
 | Breadcrumb | Home › Puglia Digitale | — |
-
-Nota SEO: il nome «Puglia Digitale» è usato anche da altri soggetti, tra cui i programmi di agenda digitale della Regione Puglia («Puglia Digitale 2020», «Puglia Digitale 2030») e il portale puglia-digitale.it di un'associazione (vedi Fonti). Title, meta description, eyebrow e prima frase della pagina associano sempre il nome a ITnode, così il progetto resta distinguibile.
 
 ## Struttura della pagina
 
-| # | Sezione | Ancora | Componente suggerito (sez. 30) |
+| # | Sezione | Ancora | Componente suggerito (§30) |
 |---|---|---|---|
 | 1 | Hero | — | Hero |
-| 2 | Il progetto | `#progetto` | LargeStatement + testo editoriale |
-| 3 | Fotografia dell'evento | — | Immagine a tutta larghezza con didascalia |
-| 4 | Numeri | `#numeri` | Stats, grande impatto tipografico |
-| 5 | I luoghi | `#luoghi` | LocationShowcase: tre porte d'accesso, non tre card |
-| 6 | Perché aderire | `#perche-aderire` | BenefitsSection con numerazione grande |
-| 7 | CTA finale e form | `#contatto` | CTASection + ContactForm |
+| 2 | Dalla costa all’entroterra | `#progetto` | LargeStatement + testo editoriale |
+| 3 | Numeri | `#numeri` | Stats, grande impatto tipografico |
+| 4 | I luoghi | `#luoghi` | LocationShowcase: tre porte d'accesso, non tre card |
+| 5 | Perché aderire, con la foto dell'evento | `#perche-aderire` | BenefitsSection con numerazione grande |
+| 6 | Chiusura e form | `#richiesta` | CTASection + ContactForm |
+| 7 | Gli altri mondi ITnode | — | Riga editoriale con due link |
 
 ## 1. Hero
 
 **Eyebrow** · p · max 36
-> Un progetto ITnode
+> Destination marketing
 
-**H1** · verbatim · max 16
-> Puglia Digitale
-
-**Sottotitolo** · p · verbatim · max 80
+**H1** · verbatim · max 90 in totale (riga 1: 15, riga 2: 73) · due righe nello stesso H1: nome alla scala piena, descrittore alla scala del lead
+> Puglia Digitale\
 > Una piattaforma interattiva immersiva per la valorizzazione territoriale.
 
-**CTA** · a → https://www.lapugliadigitale.it · verbatim
-> Visita il portale →
+**CTA primaria** · a → https://www.lapugliadigitale.it · verbatim · `cta_id` pd-hero-portale
+> Visita il portale ↗
 
-**Nome accessibile della CTA**
+**Nome accessibile della CTA primaria**
 > Visita il portale Puglia Digitale (si apre in una nuova scheda)
 
-Note:
-- L'eyebrow «Un progetto ITnode» è un fatto della sez. 07 («ITnode ha creato Città Digitali e Puglia Digitale») e distingue il progetto dagli omonimi.
-- Visual: le linee guida chiedono immagini della Puglia, ma non ci sono negli asset (slot `puglia-paesaggio`). L'unica foto reale legata al progetto è quella dell'evento: vedi sezione 3.
+**CTA secondaria** · link testuale → `#richiesta` · max 28 · `cta_id` pd-hero-richiesta
+> Aderisci a Puglia Digitale ↓
 
-## 2. Il progetto
+Note:
+- H1 composto da nome e descrittore, come nella mappa SEO §2: distingue il progetto dai programmi omonimi della Regione. La composizione su due livelli la decidono ux-designer e copywriter-brand.
+- CTA secondaria: la strategia di conversione propone «Porta la tua impresa in Puglia Digitale» (39 caratteri). La guida di stile fissa un massimo di 28 caratteri: propongo «Aderisci a Puglia Digitale ↓», che riprende la sezione «Perché aderire». Da confermare con cro-specialist.
+- Visual: le LG chiedono immagini della Puglia, che negli asset non ci sono (slot `puglia-paesaggio`). [DA FORNIRE]
+
+## 2. Dalla costa all’entroterra
 
 **H2** · verbatim · max 60
 > Dalla costa all’entroterra. Un territorio da esplorare.
 
-**Testo 1** · p · max 260
-> Puglia Digitale è un progetto di Destination Marketing: digitalizza e valorizza città, borghi e imprese attraverso esperienze immersive. Piazze, vie e attività diventano luoghi da visitare online, prima di partire e dopo il ritorno.
+**Testo 1** · p · blocco di risposta D · max 500
+> Puglia Digitale è una piattaforma interattiva immersiva per la valorizzazione territoriale, online su lapugliadigitale.it. È un progetto di destination marketing che digitalizza e valorizza città, borghi e imprese della Puglia attraverso esperienze immersive, dalla costa all’entroterra. Tra i luoghi da esplorare ci sono Acquaviva delle Fonti, Gravina in Puglia e Monopoli. Con Puglia Digitale, ITnode porta online luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.
 
-**Testo 2** · p · max 220
-> Fare Destination Marketing significa promuovere un territorio come destinazione. Puglia Digitale lo fa mettendo in rete luoghi e imprese: chi cerca la Puglia non si limita a leggerla, la esplora.
-
-Note:
-- La prima frase del Testo 1 è la definizione della pagina (sez. 13), autosufficiente per i motori di risposta.
-- Parola lunga nel titolo: «all’entroterra.» è un blocco unico di 15 caratteri. A 44 px su uno schermo da 390 px rischia di uscire dalla colonna. Prevedere `hyphens: auto` con `lang="it"` oppure una scala minima più bassa per questo titolo.
-- «Destination Marketing» con le iniziali maiuscole, come nelle linee guida (da confermare nel glossario con copywriter-brand).
-
-## 3. Fotografia dell'evento
-
-**Immagine**: `src/assets/images/derivate/evento-panoramica.jpg` (oppure `evento-palco.jpg` su mobile). Testo alternativo in `docs/contenuti/alt-text.md`.
-
-**Didascalia** · figcaption · max 100
-> Puglia Digitale, evento regionale digitale: Giacomo Lenoci, fondatore di ITnode, sul palco.
+**Testo 2** · p · max 260
+> Fare destination marketing significa promuovere un territorio come destinazione. Puglia Digitale lo fa mettendo in rete luoghi e imprese: chi cerca la Puglia non si limita a leggerla, la esplora prima di partire e la ritrova dopo il ritorno.
 
 Note:
-- È l'unica foto reale del progetto: platea numerosa e tour virtuali sui maxischermi. Racconta la rete meglio di qualsiasi paesaggio generico.
-- La didascalia riprende la scritta sul fondale («Evento regionale digitale – Puglia»). Non aggiungere enti organizzatori o patrocini: non sono documentati.
-- [DA VERIFICARE: nome del fondatore. Viene dal profilo LinkedIn indicato nelle linee guida e da fonti pubbliche. Se non viene confermato: «Puglia Digitale, evento regionale digitale: il fondatore di ITnode sul palco.»]
-- [DA FORNIRE: data e luogo dell'evento. Con questi dati la didascalia diventa una prova concreta, per esempio «Bari, marzo 2026»]
-- Anche la foto originale porta in basso a destra il segno di Gemini (vedi Rischi).
+- Il Testo 1 è il Blocco D della mappa SEO, con le stesse parole; una frase è spezzata in due per la leggibilità (Gulpease). È il primo paragrafo sotto l'H2, nell'HTML statico.
+- «destination marketing» in minuscolo nel testo corrente, come propone il brief (DR2).
+- Parola lunga nel titolo: «all’entroterra.» è un blocco di 15 caratteri. A 44 px su 390 px rischia di uscire dalla colonna: prevedere `hyphens: auto` con `lang="it"` o una scala minima più bassa per questo titolo.
 
-## 4. Numeri
+## 3. Numeri
 
 **H2** · max 45
 > I numeri dei territori coinvolti
 
-**Numeri** · copy · componente Stats
+**Numeri** · copy · componente Stats (`<dl>`)
 | # | Valore (visivo) · max 10 | Didascalia · max 45 | Testo per le tecnologie assistive |
 |---|---|---|---|
-| 1 | 30+ | città coinvolte | Oltre 30 città coinvolte |
+| 1 | 30+ | città coinvolte | Più di 30 città coinvolte |
 | 2 | ~200.000 | partite IVA nei territori coinvolti | Circa 200.000 partite IVA nei territori coinvolti |
 | 3 | 60% | del tessuto produttivo pugliese | Il 60% del tessuto produttivo pugliese |
 
-**Nota sotto i numeri** · p · max 70 · da pubblicare solo se il cliente fornisce la data
+**Nota sotto i numeri** · p · max 70 · obbligatoria
 > Dati ITnode, aggiornati a [DA FORNIRE: mese e anno].
 
 Note:
-- Valori e didascalie sono quelli della sez. 14, trattati come dati forniti dal cliente. Unico adattamento: «Città» diventa «città coinvolte», per coerenza con «territori coinvolti».
-- L'H2 dice a che cosa si riferiscono i numeri: descrivono i territori coinvolti, non le imprese che hanno aderito al portale. Nessuna didascalia deve diventare «200.000 imprese in Puglia Digitale» o «il 60% delle imprese pugliesi aderisce».
-- Markup: il valore visivo va con `aria-hidden="true"` e accanto il testo per le tecnologie assistive, visivamente nascosto. Senza questo accorgimento alcuni lettori di schermo leggono «tilde 200.000».
-- Nessun'altra statistica (sez. 14).
+- Valori e didascalie della §14, dati forniti dal cliente (brief N1–N3). Unico adattamento: «Città» diventa «città coinvolte», come «territori coinvolti».
+- L'H2 dice a che cosa si riferiscono i numeri: al bacino economico dei territori, non alle imprese presenti sulla piattaforma. Nessuna didascalia deve diventare «200.000 imprese in Puglia Digitale» o «il 60% delle imprese pugliesi aderisce». La mappa SEO proponeva «Puglia Digitale in numeri»: questo titolo protegge meglio il claim N2.
+- La nota con la fonte è obbligatoria: il componente Stats non mostra numeri senza fonte (strategia di conversione §9; brief DR4). Se la data non arriva prima del lancio, brand-strategist decide se pubblicare la nota senza data («Dati ITnode.») o rinviare la sezione.
+- Markup: il valore visivo è `aria-hidden="true"` e accanto c'è il testo per le tecnologie assistive, visivamente nascosto. Senza questo accorgimento alcuni lettori di schermo leggono «tilde 200.000».
 
-## 5. I luoghi
+## 4. I luoghi
 
 **H2** · verbatim · max 20
 > I luoghi
@@ -126,23 +111,24 @@ Note:
 **Testo** · p · max 90
 > Tre città, tre porte d’accesso al territorio. Scegli da dove entrare.
 
-**Schede dei luoghi** · copy · una colonna per luogo, nell'ordine dalla costa all'entroterra
+**Schede dei luoghi** · copy · una colonna per luogo, dalla costa all'entroterra
 | Campo | Luogo 1 | Luogo 2 | Luogo 3 |
 |---|---|---|---|
 | Nome · H3 · max 24 | Monopoli | Acquaviva delle Fonti | Gravina in Puglia |
 | Riga · p · max 80 | Sulla costa adriatica, tra il porto antico e il centro storico. | Nell’entroterra barese, la città in cui ha sede ITnode. | La città che prende il nome dalla sua gravina, nell’Alta Murgia. |
 | Dominio · p | monopolidigitale.it | acquavivadigitale.com | gravinadigitale.it |
-| CTA · a · verbatim | Esplora → | Esplora → | Esplora → |
+| CTA · a · verbatim | Esplora ↗ | Esplora ↗ | Esplora ↗ |
 | Nome accessibile della CTA | Esplora Monopoli su monopolidigitale.it (si apre in una nuova scheda) | Esplora Acquaviva delle Fonti su acquavivadigitale.com (si apre in una nuova scheda) | Esplora Gravina in Puglia su gravinadigitale.it (si apre in una nuova scheda) |
 | URL | https://www.monopolidigitale.it | https://www.acquavivadigitale.com | https://www.gravinadigitale.it |
+| `cta_id` | pd-luoghi-monopoli | pd-luoghi-acquaviva | pd-luoghi-gravina |
 | Immagine (slot) | `luogo-monopoli` | `luogo-acquaviva` | `luogo-gravina` |
 
 Note:
-- Ordine proposto: dalla costa all'entroterra, come il titolo della sezione 2. Le linee guida elencano Acquaviva, Gravina e Monopoli: se si preferisce quell'ordine, i testi restano validi. In `src/data/site.ts` basta riordinare `pugliaPlaces`.
-- Ogni riga contiene un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti), più il legame con ITnode per Acquaviva (sede operativa, sez. 22). Non ci sono informazioni sui contenuti dei portali, che non si possono consultare.
-- Le fotografie dei luoghi mancano (slot `luogo-*`): è l'asset più importante per il carattere territoriale della pagina.
+- Ordine proposto: dalla costa all'entroterra, come il titolo della sezione 2. Le LG elencano Acquaviva, Gravina e Monopoli: i testi valgono anche in quell'ordine (in `src/data/site.ts` basta riordinare `pugliaPlaces`).
+- Ogni riga contiene un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti). Per Acquaviva c'è anche il legame con ITnode, che lì ha la sede operativa (§22). Nessuna informazione sui contenuti dei portali, che non si possono consultare.
+- La mappa SEO chiede 2–3 righe per luogo [DA FORNIRE dal cliente]. Qui c'è una riga, come previsto dall'incarico.
 
-## 6. Perché aderire
+## 5. Perché aderire a Puglia Digitale
 
 **Eyebrow** · p · max 36
 > Per le imprese
@@ -174,87 +160,109 @@ Note:
 **Testo 04** · p · max 180
 > Il viaggio finisce, il legame no. Chi ti ha conosciuto in Puglia può tornare a trovarti online, rivedere i tuoi spazi e ricontattarti da casa.
 
-Note:
-- Numerazione grande (01–04) con `aria-hidden="true"`. Composizione dinamica, non quattro card identiche (sez. 16).
-- Nessun dato quantitativo sul traffico o sulle vendite.
+**Fotografia dell'evento**, accanto a «La forza della rete» (strategia di conversione §9): `src/assets/images/derivate/evento-panoramica.jpg`, oppure `evento-palco.jpg` su mobile. Testo alternativo in `docs/contenuti/alt-text.md`. La didascalia si pubblica solo quando data e luogo sono confermati (brief A4).
 
-## 7. CTA finale e form
+**Didascalia** · figcaption · max 100 · solo con data e luogo confermati
+> [DA FORNIRE: luogo], [DA FORNIRE: mese e anno]. Giacomo Lenoci, fondatore di ITnode, sul palco di Puglia Digitale.
+
+Note:
+- Numerazione 01–04 decorativa (`aria-hidden="true"`). Composizione dinamica, non quattro card identiche (§16).
+- Nessun dato su traffico o vendite.
+- Foto dell'evento: nell'originale c'è il segno di Gemini (vedi `alt-text.md`, Rischi) e in platea ci sono persone riconoscibili. Servono liberatorie o l'informativa dell'evento, altrimenti si usa un ritaglio senza volti riconoscibili (brief A4). Nome e ruolo del fondatore: [DA VERIFICARE] (F7).
+- Il link a `/siii/` con anchor «cos’è un Sito Interattivo Immersivo» nel Testo 02 (mappa SEO) si aggiunge solo se il cliente conferma che le imprese entrano nel portale con un SIII (brief I3). Fino ad allora il collegamento a `/siii/` è nella sezione 7.
+
+## 6. Chiusura e form
 
 **H2** · verbatim · max 50
 > Porta la tua impresa dentro Puglia Digitale.
 
-**CTA** · a → `#contatto` (primo campo del form) · verbatim
+**CTA** · a → `#richiesta` · verbatim · `cta_id` pd-chiusura-contattaci
 > Contattaci →
 
-**Titolo del form** · H3 · max 32
-> Parlaci della tua impresa
-
 **Introduzione del form** · p · max 160
-> Raccontaci cosa fai e dove ti trovi: ti spieghiamo come entrare nel portale.
+> Raccontaci la tua impresa: ti spieghiamo come entrare in Puglia Digitale.
 
 Note:
-- Campo «Mi interessa»: Puglia Digitale preselezionato (dato di contesto, non consenso). Consenso privacy mai preselezionato.
-- Pulsante di invio: «Invia richiesta» (sez. 23, verbatim).
+- Se il form è già visibile, la CTA diventa il titolo del form (H3 «Contattaci», senza freccia).
+- «Mi interessa»: Puglia Digitale preselezionato in build (`form_id` richiesta-puglia-digitale). Casella privacy sempre vuota. Pulsante: «Invia richiesta».
+- Introduzione del form: testo della strategia di conversione §8, adottato così com'è.
+
+## 7. Gli altri mondi ITnode
+
+**H2** · max 36
+> Gli altri mondi ITnode
+
+**Testo** · p · max 150 · due link interni
+> Dalla singola impresa alla rete di città: la stessa visione si ritrova nei Siti Interattivi Immersivi (SIII) e in Città Digitali.
+
+Link: «Siti Interattivi Immersivi (SIII)» → `/siii/`; «Città Digitali» → `/citta-digitali/`. È la prima occorrenza della sigla nel testo della pagina, quindi va sciolta (glossario del brief).
 
 ## Collegamenti interni
 
 | Da | Anchor | Verso |
 |---|---|---|
-| Sezione 7 | Contattaci → | `#contatto` |
-| Testo 1, sezione 2 (facoltativo) | esperienze immersive | `/siii` |
+| Hero | Aderisci a Puglia Digitale ↓ | `#richiesta` |
+| Sezione 6 | Contattaci → | `#richiesta` |
+| Sezione 7 | Siti Interattivi Immersivi (SIII) · Città Digitali | `/siii/` · `/citta-digitali/` |
 
-Il link da «esperienze immersive» a `/siii` è facoltativo e va usato solo se il cliente conferma che le imprese entrano nel portale con un SIII. L'indizio c'è: l'esempio Maison Miminà è pubblicato su monopolidigitale.it. [DA VERIFICARE]
+In entrata: Home (capitolo 02, «Scopri Puglia Digitale →»), blocchi finali di `/siii/` e `/citta-digitali/`, `/contatti/` (I portali), navigazione e footer.
 
-Link in entrata: dalla pagina SIII (sezione 7) e dalla Home (capitolo 02, CTA «Scopri Puglia Digitale →»).
+## Allineamenti con gli altri documenti
+
+| Punto | Scelta in questo documento | Motivo |
+|---|---|---|
+| Ancora del form | `#richiesta` | Strategia di conversione. La mappa SEO usa `#aderisci`: va allineata. |
+| H2 dei numeri | «I numeri dei territori coinvolti» (la mappa propone «Puglia Digitale in numeri») | Rende chiaro il perimetro dei dati (brief N2). |
+| Eyebrow della hero | «Destination marketing» | Sostituisce «Un progetto ITnode» della v1.0, un'attribuzione non ancora confermata (A1). |
+| Luoghi | Ordine dalla costa all'entroterra | Scelta editoriale, reversibile. |
+| CTA secondaria della hero | «Aderisci a Puglia Digitale ↓» | Massimo 28 caratteri (tone of voice §6); stesso schema di Città Digitali. |
 
 ## Testi originali mancanti
 
-- **Perché aderire (sez. 16).** Le linee guida chiedono di «riorganizzare i contenuti forniti», ma i testi originali non sono nel repository. Le descrizioni sono scritte solo a partire dai quattro titoli e dal concept della sez. 13. [DA FORNIRE: testi originali]
-- **Il progetto (sez. 13).** Scritto con i soli fatti della sez. 13, più una definizione generale di Destination Marketing.
-- **I luoghi (sez. 15).** Una riga per luogo, con un fatto geografico da fonti pubbliche citate.
-- **Numeri (sez. 14).** [DA FORNIRE: fonte e data di riferimento dei tre dati]
+- **Perché aderire (§16).** Le LG chiedono di «riorganizzare i contenuti forniti», ma i testi originali non sono nel repository (brief §7, P1). Le descrizioni sono scritte solo a partire dai quattro titoli e dal concept della §13. [DA FORNIRE: testi originali]
+- **Dalla costa all’entroterra (§13).** Blocco D della mappa SEO e un secondo paragrafo con una definizione generale di destination marketing.
+- **I luoghi (§15).** Una riga per luogo, con un fatto geografico da fonti pubbliche citate. [DA FORNIRE: 2–3 righe per luogo dal cliente]
+- **Numeri (§14).** [DA FORNIRE: fonte, data di riferimento ed elenco delle città]
 
 ## Leggibilità
 
-Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi, tabelle di copy; esclusi eyebrow, CTA, URL e metadati). Formula: 89 + (300 × frasi − 10 × lettere) / parole.
+Indice Gulpease calcolato con uno script sui testi principali (titoli, statement, paragrafi, tabelle di copy; esclusi eyebrow, CTA, URL e metadati). Formula: 89 + (300 × frasi − 10 × lettere) / parole.
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | 19 | 229 | 1.138 | **64,2** |
-| Tutti i testi principali | 38 | 307 | 1.592 | 74,3 |
+| Paragrafi e tabelle | 21 | 277 | 1.424 | **60,3** |
+| Tutti i testi principali | 39 | 355 | 1.875 | 69,1 |
 
-Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 35 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 35 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 
-- [DA VERIFICARE: «60% del tessuto produttivo pugliese» indica la quota di imprese pugliesi che si trova nei territori coinvolti. Le didascalie e l'H2 della sezione 4 si basano su questa lettura]
-- [IPOTESI: «30+ città» indica i comuni coinvolti nel progetto, cioè gli stessi territori delle 200.000 partite IVA]
-- [IPOTESI: il portale ufficiale del progetto è https://www.lapugliadigitale.it (sez. 22) e non ha legami con puglia-digitale.it]
-- [DA VERIFICARE: nome del fondatore nella didascalia]
+- [DA VERIFICARE: «60% del tessuto produttivo pugliese» è la quota di imprese pugliesi che si trova nei territori coinvolti. È la lettura su cui si basano l'H2 e le didascalie; la verifica di coerenza è nel brief, N3]
+- [IPOTESI: «30+ città» sono i comuni coinvolti nel progetto, cioè gli stessi territori delle 200.000 partite IVA (brief N1, I6)]
+- [DA VERIFICARE: nome e ruolo del fondatore nella didascalia (F7)]
 
 ## Domande aperte
 
-1. Qual è la fonte dei tre numeri, e a quale data si riferiscono?
-2. Qual è il rapporto tra Puglia Digitale e Città Digitali? Per esempio: Puglia Digitale è la declinazione regionale della rete? Serve per i link tra le due pagine.
-3. Le imprese entrano nel portale con un SIII, con un tour virtuale o con entrambi?
-4. Data, luogo e numero di partecipanti (se documentato) dell'evento nella fotografia.
-5. ITnode ha rapporti con la Regione Puglia, con il portale puglia-digitale.it o con i progetti omonimi? Se non ne ha, la pagina non deve lasciarli intendere. Se ne ha, vanno documentati prima di citarli.
+1. Ruolo di ITnode in Puglia Digitale e dominio ufficiale del portale (brief D1). Dalla risposta dipendono l'attribuzione e il Blocco D.
+2. Fonte, data e definizione dei tre numeri, con l'elenco delle città (D7).
+3. Le imprese entrano nel portale con un SIII, con un tour virtuale o con entrambi (I3, D4)?
+4. Data, luogo e liberatorie della foto dell'evento (A4, D9).
 
 ## Decisioni richieste
 
-- **creative-director e ux-designer**: ordine dei luoghi (dalla costa all'entroterra oppure quello delle linee guida) e posizione della fotografia dell'evento.
-- **seo-content**: strategia di distinzione del nome «Puglia Digitale» dagli omonimi (title, meta description, dati strutturati).
+- **creative-director e ux-designer**: ordine dei luoghi e posizione della foto dell'evento.
+- **seo-content**: allineare nella mappa l'ancora `#richiesta` e l'H2 dei numeri.
+- **cro-specialist**: etichetta della CTA secondaria della hero.
 
 ## Rischi
 
-- **Omonimia.** «Puglia Digitale» è anche il nome dei programmi di agenda digitale della Regione Puglia e di un altro portale di tour virtuali. Un visitatore potrebbe credere che il progetto sia istituzionale, e la fotografia con la scritta «Evento regionale» rafforza questa lettura. Nessun testo deve suggerire patrocini o collaborazioni non documentati (soglia 1).
-- **Foto elaborata con AI.** La foto originale dell'evento ha nell'angolo il segno visibile che Gemini applica alle immagini create o modificate con l'app. I ritagli in `derivate/` lo eliminano. Vedi `docs/contenuti/alt-text.md`, sezione Rischi.
+- **Omonimia e attribuzione.** «Puglia Digitale» è anche il nome dei programmi regionali e di un portale di tour virtuali di un'associazione. Un testo che attribuisse il progetto a ITnode, o che suggerisse un legame istituzionale, potrebbe risultare falso (soglia 1). La foto con la scritta «Evento regionale» sul fondale rafforza la lettura istituzionale: per questo la didascalia non riprende la parola «regionale».
 
 ## Fonti consultate
 
-Consultate il 2026-09-28. I portali del progetto e itnode.it sono bloccati dall'ambiente.
+Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente.
 
 - Monopoli, costa adriatica, porto antico e centro storico: https://it.wikipedia.org/wiki/Monopoli_(Italia) · https://www.tuttitalia.it/puglia/60-monopoli/
 - Acquaviva delle Fonti, entroterra della provincia di Bari: https://www.italia.it/en/puglia/acquaviva-delle-fonti · https://en.wikipedia.org/wiki/Acquaviva_delle_Fonti
-- Gravina in Puglia, nome dalla gravina e sede del Parco nazionale dell'Alta Murgia: https://www.cittaslow.it/citta/gravina-puglia · https://en.wikipedia.org/wiki/Alta_Murgia_National_Park
-- Omonimi «Puglia Digitale»: https://www.regione.puglia.it/web/trasformazione-digitale/puglia-digitale-2030 · https://www.regione.puglia.it/web/trasformazione-digitale/puglia-digitale · https://puglia-digitale.it/ · https://www.consiglio.puglia.it/-/tour-virtuali-delle-citt%C3%A0-pugliesi (solo sintesi di ricerca)
+- Gravina in Puglia, nome dalla gravina, sede del Parco nazionale dell'Alta Murgia: https://www.cittaslow.it/citta/gravina-puglia · https://en.wikipedia.org/wiki/Alta_Murgia_National_Park
+- Omonimie: vedi brief consolidato §4 e §8.

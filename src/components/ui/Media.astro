@@ -61,11 +61,10 @@ const usableWidths = image ? widths.filter((w) => w <= image.width).concat(width
   <div
     class:list={['media-slot', className]}
     style={`--media-ratio: ${aspect}`}
-    role="img"
-    aria-label={slotData?.alt ?? alt}
+    aria-hidden="true"
     data-asset-slot={slot}
   >
-    <span class="media-slot__label" aria-hidden="true">
+    <span class="media-slot__label">
       <span class="media-slot__kind">Asset in arrivo</span>
       <span class="media-slot__name">{slotData?.label}</span>
       <span class="media-slot__spec">{slotData?.spec}</span>

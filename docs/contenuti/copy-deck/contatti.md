@@ -3,43 +3,44 @@ titolo: Copy deck · Contatti
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, src/data/site.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, src/data/site.ts]
 ---
 
 # Copy deck · Contatti
 
-Pagina `/contatti`. Copre la sezione 22 delle linee guida e l'introduzione al form (sez. 23). I recapiti sono quelli forniti dal cliente, senza modifiche. I testi sono pronti da impaginare.
+Pagina `/contatti/`. Copre la sezione 22 delle linee guida (LG) e l'introduzione al form (§23). I recapiti sono quelli forniti dal cliente, senza modifiche. I testi sono pronti da impaginare.
 
 ## Come leggere questo documento
 
 - **Testo da pubblicare**: è nei blocchi citati (`>`) e nelle tabelle marcate come copy. Tutto il resto sono note per design e sviluppo.
-- **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi. **verbatim**: frase delle linee guida da non modificare.
-- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3).
-- **Microcopy del form** (etichette, errori, stati, conferma, consenso privacy): è di copywriter-brand.
+- **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi. **verbatim**: frase delle LG; si cambia solo l'apostrofo tipografico.
+- **Frecce** (tone of voice §6): → altra pagina, ↗ sito esterno in nuova scheda. Sempre `aria-hidden="true"`.
+- **Link esterni**: `target="_blank" rel="noopener"`. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3) e dichiara la nuova scheda.
+- **Fonti che prevalgono nel loro dominio**: brief consolidato (dati societari, S1–S8), mappa keyword→URL (metadati, heading), strategia di conversione (ordine dei blocchi, CTA, form), tone of voice (grafie).
+- **Microcopy del form** (etichette, errori, stati, conferma, consenso): copywriter-brand e strategia di conversione §8.
 
 ## Metadati
 
-Proposta da validare con seo-content: manca ancora il brief SEO della pagina.
+Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comodità:
 
 | Campo | Testo | Limite |
 |---|---|---|
-| URL | `/contatti` | — |
-| Title | Contatti · ITnode · Acquaviva delle Fonti (BA) | ≤ 60 |
-| Meta description | Parliamo del prossimo spazio digitale. Scrivi a ITnode o chiama la sede di Acquaviva delle Fonti (BA) per SIII, Puglia Digitale e Città Digitali. | 120–155 |
-| og:title | Contatti · ITnode | ≤ 60 |
-| og:description | Parliamo del prossimo spazio digitale. | ≤ 110 |
+| Title | Contatti \| ITnode, Acquaviva delle Fonti (BA) | ≤ 60 |
+| Meta description | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. | 140–155 |
 | Breadcrumb | Home › Contatti | — |
 
 ## Struttura della pagina
 
-| # | Sezione | Ancora | Componente suggerito (sez. 30) |
+Ordine della strategia di conversione §4: prima i canali diretti, poi il form. Su desktop recapiti e form stanno affiancati; su mobile i recapiti vengono prima.
+
+| # | Sezione | Ancora | Componente suggerito (§30) |
 |---|---|---|---|
 | 1 | Hero | — | Hero, variante compatta |
-| 2 | Recapiti | `#recapiti` | Lista editoriale (`<address>` + `<dl>`) |
-| 3 | I portali | `#portali` | Due righe editoriali |
-| 4 | Form | `#contatto` | ContactForm |
+| 2 | Recapiti | `#recapiti` | `<address>` con `<dl>` |
+| 3 | Scrivici | `#richiesta` | ContactForm |
+| 4 | I portali | `#portali` | Due righe editoriali |
 | 5 | Dati societari | `#dati-societari` | Blocco testuale piccolo |
 
 ## 1. Hero
@@ -51,36 +52,47 @@ Proposta da validare con seo-content: manca ancora il brief SEO della pagina.
 > Parliamo del prossimo spazio digitale.
 
 **Lead** · p · max 160
-> Un’impresa da rendere esplorabile, un territorio da valorizzare, una domanda su SIII, Puglia Digitale o Città Digitali: scrivici o chiamaci.
-
-**CTA** · a → `#contatto` · max 24 · facoltativa, da validare con cro-specialist
-> Scrivici ↓
+> Hai un’impresa da rendere esplorabile o un territorio da valorizzare? Raccontacelo: scrivici o chiamaci.
 
 Note:
-- L'H1 non contiene la parola «Contatti»: la portano l'eyebrow, il title e il breadcrumb. Da confermare con seo-content.
-- «Un territorio da valorizzare» si rivolge agli enti, che il form prevede nel campo «Nome Azienda / Ente» (sez. 23).
+- Nessuna CTA nella hero (strategia di conversione §4): i canali diretti sono subito sotto.
+- L'H1 non contiene «Contatti»: la parola è nell'eyebrow, nel title e nel breadcrumb (mappa SEO §3.5).
+- «Un territorio da valorizzare» si rivolge anche agli enti, previsti dal campo «Nome Azienda / Ente» (§23).
 
 ## 2. Recapiti
 
 **H2** · max 24 · può essere visivamente nascosto
 > Recapiti
 
-**Recapiti** · copy · `<address>` con una `<dl>`
-| Etichetta (`dt`) | Valore (`dd`) | Link | Nome accessibile del link |
-|---|---|---|---|
-| Sede operativa | Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA) | «Indicazioni stradali →» → https://www.google.com/maps/search/?api=1&query=Via%20Sant%27Anna%2034%2C%2070021%20Acquaviva%20delle%20Fonti%20BA | Indicazioni stradali per la sede operativa di ITnode (si apre in una nuova scheda) |
-| Telefono | +39 080 2466520 | `tel:+390802466520` | — |
-| Mobile | +39 335 1229785 | `tel:+393351229785` | — |
-| Email | info@itnode.it | `mailto:info@itnode.it` | — |
-| LinkedIn | Giacomo Lenoci | https://www.linkedin.com/in/giacomo-lenoci/ | Giacomo Lenoci su LinkedIn (si apre in una nuova scheda) |
+**Recapiti** · copy · `<address>` con una `<dl>`, in quest'ordine
+| Etichetta (`dt`) | Valore e link (`dd`) | Destinazione | Nome accessibile del link | `cta_id` |
+|---|---|---|---|---|
+| Telefono | +39 080 2466520 | `tel:+390802466520` | — | contatti-telefono |
+| Mobile | +39 335 1229785 | `tel:+393351229785` | — | contatti-mobile |
+| Email | info@itnode.it | `mailto:info@itnode.it` | — | contatti-email |
+| Sede operativa | Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA) · link «Apri in Google Maps ↗» | https://www.google.com/maps/search/?api=1&query=Via%20Sant%27Anna%2034%2C%2070021%20Acquaviva%20delle%20Fonti%20BA | Apri in Google Maps la sede operativa di ITnode (si apre in una nuova scheda) | contatti-mappa |
+| LinkedIn | Giacomo Lenoci ↗ | https://www.linkedin.com/in/giacomo-lenoci/ | Giacomo Lenoci su LinkedIn (si apre in una nuova scheda) | contatti-linkedin |
 
 Note:
-- Valori verbatim dalla sez. 22 e già presenti in `src/data/site.ts`. Nei numeri di telefono usare spazi non separabili, così non vanno a capo.
-- Il link a Google Maps è una proposta: è un semplice link, senza mappa incorporata, quindi nessun cookie di terze parti prima del consenso. Una mappa incorporata richiederebbe il consenso (soglia 5).
-- Il profilo LinkedIn è personale. Come testo del link uso il nome visibile nell'indirizzo del profilo. [DA VERIFICARE: nome e ruolo. Se ITnode ha una pagina aziendale su LinkedIn, valutare di aggiungerla]
-- [DA FORNIRE, facoltativo: orari in cui si risponde al telefono]
+- Valori verbatim dalla §22, già in `src/data/site.ts`. Nei numeri di telefono vanno spazi non separabili, così non vanno a capo (tone of voice §7). Nome, indirizzo e telefono devono essere identici qui, nel footer, nei dati strutturati e sui profili esterni (mappa SEO §3.5).
+- «Sede operativa» diventa «Sede legale e operativa» se il cliente conferma che i due indirizzi coincidono (brief S3).
+- Google Maps: un link, niente mappa incorporata, quindi nessun cookie di terze parti prima del consenso (soglia 5).
+- LinkedIn: il profilo è personale (brief S6). L'etichetta «LinkedIn» più il nome lo rendono chiaro. [DA VERIFICARE: nome, F7] Se ITnode ha una pagina aziendale, va aggiunta [DA FORNIRE].
 
-## 3. I portali
+## 3. Scrivici
+
+**H2** · max 32
+> Scrivici
+
+**Introduzione del form** · p · max 160
+> Scrivici di cosa hai bisogno: ti ricontattiamo noi.
+
+Note:
+- Testo della strategia di conversione §8, adottato così com'è.
+- «Mi interessa»: nessuna preselezione, salvo il parametro `?interesse=` (strategia di conversione §5). `form_id` richiesta-contatti. Pulsante: «Invia richiesta» (§23).
+- Il form non simula l'invio se manca l'endpoint (§23): il ripiego con email e telefono è già in `src/scripts/form.ts`.
+
+## 4. I portali
 
 **H2** · verbatim · max 24
 > I portali
@@ -91,32 +103,16 @@ Note:
 | Nome · H3 · max 20 | Città Digitali | Puglia Digitale |
 | Frase · p · max 80 | Le attività del territorio, online senza perdere radici. | Una piattaforma interattiva immersiva per la valorizzazione territoriale. |
 | Link esterno · a | cittadigitali.it ↗ | lapugliadigitale.it ↗ |
-| Nome accessibile del link esterno | cittadigitali.it, portale Città Digitali (si apre in una nuova scheda) | lapugliadigitale.it, portale Puglia Digitale (si apre in una nuova scheda) |
+| Nome accessibile del link esterno | cittadigitali.it, portale di Città Digitali (si apre in una nuova scheda) | lapugliadigitale.it, portale di Puglia Digitale (si apre in una nuova scheda) |
 | URL esterno | https://www.cittadigitali.it | https://www.lapugliadigitale.it |
-| Link interno · a · max 24 | Scopri il progetto → | Scopri il progetto → |
-| Nome accessibile del link interno | Scopri il progetto Città Digitali | Scopri il progetto Puglia Digitale |
-| URL interno | `/citta-digitali` | `/puglia-digitale` |
+| `cta_id` | contatti-portale-citta-digitali | contatti-portale-puglia-digitale |
+| Link interno · a · max 28 | Esplora Città Digitali → | Scopri Puglia Digitale → |
+| URL interno | `/citta-digitali/` | `/puglia-digitale/` |
 
 Note:
-- Le frasi sono lo statement della sez. 17 e il sottotitolo della sez. 13: stesse parole, stessa voce.
-- L'icona «↗» è decorativa (`aria-hidden="true"`): la nuova scheda è dichiarata nel nome accessibile.
-- Due link per riga: il portale esterno richiesto dalla sez. 22 e la pagina interna del progetto (collegamento interno).
-
-## 4. Form
-
-**H2** · max 32
-> Scrivici
-
-**Introduzione del form** · p · max 160
-> Compila il modulo: ti ricontattiamo per capire insieme da dove partire.
-
-**Alternativa al form** · p · max 70 · il numero è un link `tel:`
-> Preferisci parlarne a voce? Chiama il +39 080 2466520.
-
-Note:
-- Campo «Mi interessa»: nessuna preselezione in questa pagina, perché manca un contesto.
-- Pulsante di invio: «Invia richiesta» (sez. 23, verbatim). Il resto del microcopy è di copywriter-brand.
-- Il form non deve simulare l'invio se non esiste ancora un endpoint (sez. 23).
+- Le frasi sono lo statement della §17 e il sottotitolo della §13: stesse parole, stessa voce.
+- I link interni usano le stesse etichette dei capitoli della Home: stessa azione, stessa etichetta (tone of voice §6).
+- Dominio di Città Digitali da verificare in QA (cittadigitali.it o cittàdigitali.it: brief, glossario).
 
 ## 5. Dati societari
 
@@ -126,27 +122,38 @@ Note:
 **Dati societari** · copy · da completare prima della pubblicazione (soglia 5)
 | Voce | Valore |
 |---|---|
-| Ragione sociale | ITNODE S.r.l. [DA VERIFICARE] |
-| Sede legale | [DA FORNIRE] |
-| Partita IVA | 08937270729 [DA VERIFICARE] |
-| Registro delle imprese | [DA FORNIRE: ufficio e numero di iscrizione, numero REA] |
-| Capitale sociale | [DA FORNIRE: importo e quota versata] |
+| Ragione sociale | ITNODE S.r.l. [DA VERIFICARE: grafia da visura, S1] |
+| Sede legale | Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA) [DA VERIFICARE: da visura, S3] |
+| Partita IVA | 08937270729 [DA VERIFICARE: da visura, S2] |
+| Registro delle imprese | [DA FORNIRE: ufficio, numero di iscrizione e numero REA, S4] |
+| Capitale sociale | [DA FORNIRE: importo versato, S4] |
+| PEC | [DA VERIFICARE: indirizzo trovato su fonte pubblica, da confermare, S4] |
 
 Note:
-- Ragione sociale e partita IVA vengono da `src/data/site.ts`, dove sono marcate come ricavate da un registro pubblico. Vanno confermate dal cliente.
-- Gli stessi dati vanno anche nel footer, su tutte le pagine (sez. 24 e soglia 5).
-- [DA VERIFICARE: se la società ha un socio unico, va indicato; lo stesso vale per un'eventuale liquidazione]
+- Gli stessi dati vanno nel footer di tutte le pagine (§24 e soglia 5). Qui compaiono per completezza, vicino ai recapiti.
+- [DA VERIFICARE: se la società ha un socio unico o è in liquidazione, va indicato]
 
 ## Collegamenti interni
 
 | Da | Anchor | Verso |
 |---|---|---|
-| Hero | Scrivici ↓ | `#contatto` |
-| I portali | Scopri il progetto → | `/citta-digitali`, `/puglia-digitale` |
+| I portali | Esplora Città Digitali → · Scopri Puglia Digitale → | `/citta-digitali/` · `/puglia-digitale/` |
+| Form, consenso | informativa privacy (microcopy di copywriter-brand) | `/privacy-policy/` |
+
+In entrata: la CTA «Parliamone» dell'header dalle pagine senza form, la navigazione, il footer, la chiusura della Home.
+
+## Allineamenti con gli altri documenti
+
+| Punto | Scelta in questo documento | Motivo |
+|---|---|---|
+| Ordine dei blocchi | Recapiti, form, portali, dati societari | Strategia di conversione §4 (canali diretti subito sotto la hero). |
+| Hero | Nessuna CTA; lead riscritto senza i nomi dei tre progetti | Strategia di conversione §4. I nomi dei progetti sono già nel campo «Mi interessa» e nei portali. |
+| Form | Introduzione della strategia di conversione §8 | Stesso testo in tutto il team. Tolta la riga «Preferisci parlarne a voce?» della v1.0: i canali diretti sono già sopra il form. |
+| Link alla mappa | «Apri in Google Maps ↗» | Mappa SEO §3.5 e strategia di conversione (sostituisce «Indicazioni stradali» della v1.0). |
 
 ## Testi originali mancanti
 
-Nessuno per i recapiti, che sono completi nelle linee guida. Il lead, l'introduzione al form e l'alternativa telefonica sono nuovi e usano solo dati forniti. Mancano i dati societari obbligatori.
+Nessuno per i recapiti, completi nelle LG. Il lead e l'introduzione al form sono testi nuovi, scritti con i soli dati forniti. Mancano i dati societari obbligatori.
 
 ## Leggibilità
 
@@ -154,24 +161,24 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | 6 | 56 | 317 | **64,5** |
-| Tutti i testi principali | 13 | 71 | 414 | 85,6 |
+| Paragrafi e tabelle | 5 | 38 | 241 | **65,1** |
+| Tutti i testi principali | 12 | 53 | 338 | 93,2 |
 
-Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 16 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 14 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 
-- [IPOTESI: il profilo LinkedIn indicato è quello del fondatore, Giacomo Lenoci]
-- [IPOTESI: la sede operativa è anche il luogo dove si ricevono visite. Il link «Indicazioni stradali» ha senso solo in questo caso]
+- [IPOTESI: il profilo LinkedIn indicato è quello del fondatore, Giacomo Lenoci (brief F7)]
+- [IPOTESI: la sede operativa riceve visite. Il link a Google Maps ha senso solo in questo caso]
 
 ## Domande aperte
 
-1. Dati societari completi: sede legale, REA, capitale sociale, eventuale socio unico.
-2. Esiste una pagina aziendale LinkedIn di ITnode, da affiancare o sostituire al profilo personale?
-3. Orari di risposta telefonica, se il cliente vuole indicarli.
-4. Tempi di risposta al form: se c'è un impegno reale (per esempio «entro due giorni lavorativi»), può diventare una rassicurazione. Senza conferma non va scritto.
+1. Dati societari completi: sede legale, REA, capitale sociale versato, PEC, eventuale socio unico (brief S1–S4, D10).
+2. Esiste una pagina aziendale LinkedIn di ITnode (S6)?
+3. Orari di risposta al telefono, se il cliente vuole indicarli.
+4. Tempi di risposta al form: se c'è un impegno reale (per esempio «entro due giorni lavorativi»), diventa una rassicurazione. Senza conferma non si scrive.
 
 ## Decisioni richieste
 
-- **cro-specialist**: CTA «Scrivici ↓» nella hero e riga «Preferisci parlarne a voce?» accanto al form.
-- **ux-designer**: link a Google Maps (sì o no) e posizione dei dati societari (pagina e footer).
+- **ux-designer**: composizione affiancata o in colonna di recapiti e form; posizione dei dati societari (pagina e footer).
+- **cro-specialist**: conferma del lead senza CTA.
