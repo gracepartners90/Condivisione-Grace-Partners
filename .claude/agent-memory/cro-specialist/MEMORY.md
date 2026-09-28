@@ -12,8 +12,16 @@ Solo lezioni apprese e note di lavoro. Fatti e decisioni ufficiali stanno in `do
 - 2026-09-28 · Il rendering condizionale di dati obbligatori («si mostra solo se valorizzato», come REA e capitale sociale) fa passare la build senza alcun segnale. Proponi sempre un controllo pre-deploy che fallisce.
 - 2026-09-28 · Tecniche di verifica che funzionano: (1) un listener `click` in cattura su `window` con `preventDefault` permette di cliccare ogni `[data-track]` e leggere il payload senza navigare. (2) Per provare successo ed errori senza endpoint, riscrivi l'HTML con `page.route` (valorizzando `data-endpoint`, senza gli header `content-length` e `content-encoding`) e rispondi all'endpoint con `access-control-allow-origin: *`. (3) Compila il form con dati riconoscibili (prefisso `zz`) e cercali nel dataLayer serializzato.
 - 2026-09-28 · Gli script di verifica nello scratchpad si perdono a fine sessione: i test del piano §9 vanno portati nel repository.
+- 2026-09-28 · Per allineare la tassonomia al codice, parti dalla build, non dal grep sui sorgenti. I valori passano anche da prop con default (`CTASection` → `chiusura`, `LocationShowcase` → `luoghi`), e un grep su `location=` conta anche `data-nav-location`. `npx astro build --outDir <scratchpad>` costruisce in circa 2 s senza toccare `dist/` né il working tree; poi basta una regex su `<a|button … data-track>` per l'inventario per pagina.
+- 2026-09-28 · Uno script nel repository non è per forza attivo: `immersive.ts` esiste ma nessuna pagina lo importa. Controlla gli import prima di contare un evento come vivo.
+- 2026-09-28 · Ricalcola sempre le medie ICE: nella review E5 era scritto 5,3, la media di 5, 4 e 8 è 5,7.
+- 2026-09-28 · Rete: bloccati anche docs.railway.com, railway.com, help.brevo.com e i siti dei piccoli servizi di form (simplyforms.app, postto.dev). raw.githubusercontent.com funziona: la documentazione di Scaleway si legge dal repository `scaleway/docs-content`. Cerca sempre un sorgente pubblico su GitHub prima di accontentarti dei risultati di ricerca.
+- 2026-09-28 · Endpoint del form: `form.ts` controlla l'honeypot e lo toglie dal payload, quindi al server arriva pieno solo dai POST senza JavaScript. Lato server: quarantena marcata, mai scarto; risposta 2xx anche per la quarantena; nessuna risposta automatica al richiedente, altrimenti l'endpoint diventa un relay di spam.
+- 2026-09-28 · RUM senza cookie: per l'EDPB (linee guida 2/2023) anche uno script che fa inviare dati dal dispositivo rientra nell'art. 5(3). L'argomento giusto non è «niente cookie», ma l'assimilazione del Garante (prima parte, ottimizzazione, aggregati), da far confermare al consulente.
 
 ## Da riprendere
-- Dopo le correzioni della sessione principale (review del 2026-09-28, oss. 4–6): portare il piano di misurazione alla v0.2. Tassonomia allineata al codice, nuova definizione di `form_view`, via `preview_start`.
-- Scrivere i test Playwright del piano (§9) nel repository. Base: gli script della review del 2026-09-28.
-- Dopo il lancio: aprire `docs/cro/backlog-esperimenti.md` partendo da E1–E5 della review e dai feedback di chi gestisce le richieste.
+- Scrivere i test Playwright del piano (§9) nel repository, compresi il test 2 con gli elenchi chiusi, il 6 (RUM) e il 7 (endpoint). Base: gli script della review del 2026-09-28.
+- E1: quando il creative-director fissa il momento, preparare le due schermate A e B con Playwright sull'anteprima (sostituendo il testo in pagina), la traccia della sessione e la griglia di codifica con copywriter-brand.
+- ADR 006: dopo la scelta dell'utente, passarlo ad «accettata» e provare l'endpoint in staging (requisito 8).
+- RUM: se l'utente dice sì, scrivere le dieci condizioni del piano §8.1 nell'ADR sull'analytics con web-performance-specialist.
+- Dopo il lancio: registro delle richieste e feedback di chi risponde nel backlog (§7).

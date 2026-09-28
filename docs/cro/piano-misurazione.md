@@ -3,9 +3,9 @@ titolo: Piano di misurazione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts]
+fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, inventario degli attributi data-* nella build del 2026-09-28]
 ---
 
 # Piano di misurazione
@@ -15,6 +15,8 @@ fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, src/script
 > - Il markup nasce con gli attributi `data-*` già al loro posto e con una funzione `track()` che scrive solo in `window.dataLayer`, in memoria: nessuna richiesta di rete, nessuno storage. Quando si sceglierà uno strumento, basterà aggiungere un adattatore.
 > - Anche senza analytics si misura ciò che conta davvero: le richieste ricevute per pagina e per prodotto, e come vanno a finire (registro delle richieste, §2).
 > - Per attivare un analytics serve prima un ADR. Le strade sono due: uno strumento privacy-first configurato in modo da non richiedere consenso [DA VERIFICARE], oppure GA4 con un banner conforme al Garante e Consent Mode v2 in modalità Basic (§8).
+> - **v0.2: tassonomia allineata al codice.** `data-cta-location` ha un elenco chiuso di 15 valori, tutti già usati nella build (§5.1): **nessuna rinomina da fare nel codice**. `showcase`, `citta` e `contatti` escono dall'elenco. `form_view` ha la nuova definizione e `preview_start` è sospeso (§4).
+> - **RUM delle prestazioni con `web-vitals`: sì, dopo il lancio e senza banner, ma solo alle dieci condizioni del §8.1**, compresa la conferma del consulente privacy. Se il consulente chiede il consenso, no.
 
 ## 1. Al lancio: niente tracciamento, niente banner
 
@@ -29,7 +31,7 @@ La premessa regge solo se **tutte** queste condizioni sono vere:
 | 3 | Nessun contenuto di terze parti che imposti cookie al caricamento: mappe incorporate, YouTube, Vimeo, widget social | rispettata. La sede su /contatti è un **link** a Maps, non una mappa incorporata |
 | 4 | Anteprime immersive dietro una facade, cioè l'iframe si carica solo al clic. **Prima di attivarle**, verificare quali cookie impostano i portali incorporati. Se impostano cookie non tecnici ci sono tre strade: disattivarli nella versione incorporata (i portali sono di ITnode), mostrare un avviso e trattare l'anteprima come contenuto soggetto a consenso, oppure rinunciare all'iframe e usare schermata e nuova scheda | la facade c'è già in `immersive.ts`. La verifica dei cookie è [DA FARE da una rete che raggiunga i portali] |
 | 5 | Video servito da un'infrastruttura che non imposta cookie. Oggi arriva da `itnode-website-production.up.railway.app`: meglio servirlo dallo stesso dominio o dalla stessa CDN del sito, anche per la performance (da concordare con web-performance-specialist). Se resta dov'è, va citato nell'informativa | da decidere |
-| 6 | Servizio del form senza cookie né script di tracciamento; Turnstile spento, oppure acceso ma senza pre-clearance | da verificare nell'ADR sull'endpoint |
+| 6 | Servizio del form senza cookie né script di tracciamento; Turnstile spento, oppure acceso ma senza pre-clearance | requisiti e opzioni nell'ADR 006 (proposta, `docs/decisioni/006-endpoint-del-form.md`) |
 | 7 | Cookie dell'hosting o della CDN solo tecnici (per esempio la protezione dai bot), elencati nella cookie policy | hosting da decidere |
 | 8 | `localStorage` e `sessionStorage` usati solo per funzioni tecniche: nessun salvataggio di UTM o identificativi | rispettata |
 
@@ -57,11 +59,12 @@ Il limite va detto chiaramente: senza analytics non si costruisce una baseline d
 | Conversione | Tasso di conversione per pagina | `form_submit` / visite della pagina | — | analytics |
 | Diagnosi | Completamento del form | `form_submit` / `form_start`; errori per campo da `form_error` | — | analytics |
 | Diagnosi | Raggiungimento del form | `form_view` / visite della pagina | — | analytics |
-| Micro | Prova del prodotto | `outbound_click` di tipo `esperienza` e `preview_start` su /siii | — | analytics |
-| Micro | Interesse per i portali | `outbound_click` di tipo `portale` e `portale-citta` | — | analytics |
+| Micro | Prova del prodotto | `outbound_click` di tipo `esperienza-siii` su /siii (al lancio non ci sono anteprime in iframe) | — | analytics |
+| Micro | Interesse per i portali | `outbound_click` di tipo `portale` e `portale-luogo` | — | analytics |
 | Micro | Video | `video_progress` al 50% / `video_start` | — | analytics |
 | Salute | Errori d'invio | `form_error` di tipo `rete`, `timeout` o `server`; obiettivo: zero | log dell'endpoint | analytics |
 | Salute | Tempo di prima risposta | ore tra la richiesta e il primo contatto | registro | registro |
+| Salute | Prestazioni reali | LCP, INP e CLS al 75° percentile, per `page_type` e classe di dispositivo | — | RUM, se approvato (§8.1) |
 
 Nessun target numerico finché non arrivano i dati di business [DA FORNIRE]. Proposta: fissarli dopo 8–12 settimane di dati.
 
@@ -77,18 +80,18 @@ Nessun target numerico finché non arrivano i dati di business [DA FORNIRE]. Pro
 | Priorità | Evento | Quando | Parametri | Conversione |
 |---|---|---|---|---|
 | P1 | `cta_click` | clic su una CTA interna (verso una pagina o un'ancora) | `cta_id`, `cta_location`, `cta_text`, `link_url`, `interest` (se pertinente) | — |
-| P1 | `outbound_click` | clic verso un altro dominio | `cta_id`, `cta_location`, `outbound_type`, `destination_id`, `link_url`, `link_domain` | micro, se di tipo `esperienza` |
+| P1 | `outbound_click` | clic verso un altro dominio | `cta_id`, `cta_location`, `outbound_type`, `destination_id`, `link_url`, `link_domain` | micro, se di tipo `esperienza-siii` |
 | P1 | `contact_click` | clic su `tel:` o `mailto:`, compresa la bozza email del fallback | `cta_id`, `cta_location`, `contact_method`; **mai `link_url`**, perché la bozza email contiene i dati dell'utente | **sì, secondaria** |
-| P1 | `form_view` | form visibile almeno al 50%, una volta per pagina | `form_id`, `interest_preselected` | — |
+| P1 | `form_view` | form visibile almeno al 50%, **oppure** che occupa almeno metà dell'altezza dello schermo; una volta per pagina. La seconda condizione serve sugli schermi bassi, dove un form alto circa 1.300 px non arriva mai al 50% | `form_id`, `interest_preselected` | — |
 | P1 | `form_start` | primo `input` o `change` in un campo visibile | `form_id`, `interest_preselected` | — |
 | P1 | `form_submit` | **risposta 2xx dell'endpoint**, non il clic sul bottone | `form_id`; `interest` (le opzioni selezionate, ordinate e separate da virgola); `optional_fields` (i campi facoltativi compilati, per esempio `telefono,messaggio`) | **sì, principale** |
 | P1 | `form_error` | errore di validazione o di invio | `form_id`, `error_type` (`validazione`, `rete`, `timeout`, `server`, `spam`, `endpoint-assente`), `error_fields` (nomi dei campi), `http_status` (solo per `server`) | — |
-| P2 | `video_start` | primo avvio | `video_id`, `video_title`, `video_trigger` (`autoplay`, `utente`) | — |
+| P2 | `video_start` | primo fotogramma riprodotto (`playing`), una volta. Non `play`, che scatta anche quando il file poi non si carica | `video_id`, `video_title`, `video_trigger` (`autoplay`, `utente`) | — |
 | P2 | `video_progress` | al 25, 50 e 75%, una volta ciascuno | `video_id`, `video_percent` | — |
-| P2 | `video_complete` | fine del video (`ended`) | `video_id` | — |
+| P2 | `video_complete` | al 97% della durata, una volta. Il video è in loop, quindi `ended` non scatta | `video_id` | — |
 | P2 | `video_unmute` | l'utente attiva l'audio. Con l'autoplay muto è questo il vero segnale d'interesse | `video_id`, `video_current_time` | — |
-| P2 | `preview_start` | clic su «Avvia l'anteprima», cioè caricamento dell'iframe | `experience_id`, `cta_location` | micro |
-| P3 | `section_view` | una sezione chiave visibile almeno al 50%, una volta | `section_id` | — |
+| sospeso | `preview_start` | clic su «Avvia l'anteprima», cioè caricamento dell'iframe. **Al lancio non parte mai**: nessuna pagina include `immersive.ts`. Torna se dopo il lancio si attiva l'anteprima «Prova qui» (verdetto G4, §5.2), con `cta_location` `esempi` | `experience_id`, `cta_location` | micro |
+| P3 | `section_view` | una sezione chiave visibile almeno al 50%, una volta. Non predisposto al lancio | `section_id` | — |
 | P3 | `nav_click` | clic su una voce di menu o del footer | `nav_item`, `nav_location` (`header`, `menu-mobile`, `footer`) | — |
 | P3 | `menu_open` | apertura del menu mobile | — | — |
 | auto | `page_view` | lo gestisce lo strumento | `page_type` | — |
@@ -101,17 +104,17 @@ Gli eventi video riprendono i nomi di GA4 (`video_start`, `video_progress`, `vid
 |---|---|---|
 | `<body>` | `data-page-type` | `home`, `siii`, `puglia-digitale`, `citta-digitali`, `contatti`, `legale`, `404` |
 | CTA, link, bottoni | `data-track` | `cta_click`, `outbound_click`, `contact_click`, `nav_click` |
-| | `data-cta-id` | schema `<pagina>-<sezione>-<azione>`; l'elenco completo è nella strategia di conversione, §3–4 |
-| | `data-cta-location` | `header`, `menu-mobile`, `hero`, `capitolo`, `sezione`, `showcase`, `luoghi`, `citta`, `chiusura`, `form`, `contatti`, `footer`, `404` |
+| | `data-cta-id` | schema `<pagina>-<sezione>-<azione>`; l'elenco completo è nella strategia di conversione, §3–4. È una **chiave stabile**: non si interpreta e non si rinomina dopo il lancio. La sezione, nei report, si legge da `cta_location` |
+| | `data-cta-location` | **elenco chiuso di 15 valori, §5.1** |
 | | `data-interest` (facoltativo) | `siii`, `puglia-digitale`, `citta-digitali` |
-| Link esterni | `data-outbound-type` | `esperienza`, `portale`, `portale-citta`, `social`, `mappa` |
-| | `data-destination-id` | `masseria-santella`, `maison-mimina`, `dl-natura-dentro`, `lapugliadigitale`, `cittadigitali`, `acquaviva`, `gravina`, `monopoli`, `varese`, `altamura`, `caltanissetta`, `linkedin-fondatore`, `mappa-sede` |
-| `tel:` e `mailto:` | `data-contact-method` | `telefono`, `mobile`, `email`; `whatsapp` se si attiva quel canale |
+| Link esterni | `data-outbound-type` | `esperienza-siii`, `portale`, `portale-luogo`, `social`, `mappa` |
+| | `data-destination-id` | `masseria-santella`, `maison-mimina`, `dl-natura-dentro`, `puglia-digitale`, `citta-digitali`, `acquaviva`, `gravina`, `monopoli`, `varese`, `altamura`, `caltanissetta`, `linkedin-fondatore`, `google-maps` |
+| `tel:` e `mailto:` | `data-contact-method` | `telefono` (il fisso), `cellulare`, `email`; `whatsapp` se si attiva quel canale |
 | `form[data-contact-form]` | `data-form-id` | `richiesta-siii`, `richiesta-puglia-digitale`, `richiesta-citta-digitali`, `richiesta-contatti` |
 | `[data-video]` | `data-video-id`, `data-video-title` | `citta-digitali`, «Città Digitali» |
-| `[data-immersive]` | `data-experience-id` | gli stessi valori di `destination_id` usati per le esperienze |
-| Sezioni chiave (P3) | `data-section-id` | per esempio `siii-confronto`, `siii-esempi`, `pd-numeri`, `pd-perche-aderire`, `cd-video`, `home-fondatore` |
-| Voci di menu (P3) | `data-nav-item` | lo slug della pagina |
+| `[data-immersive]` | `data-experience-id` | sospeso con `preview_start`: gli stessi valori di `destination_id` usati per le esperienze |
+| Sezioni chiave (P3) | `data-section-id` | non predisposto al lancio. Per esempio `siii-confronto`, `siii-esempi`, `pd-numeri`, `pd-perche-aderire`, `cd-video`, `home-fondatore` |
+| Voci di menu (P3) | `data-nav-item`, `data-nav-location` | lo slug della pagina (`home`, `siii`, `puglia-digitale`, `citta-digitali`, `contatti`); `header`, `menu-mobile`, `footer` |
 
 Esempio:
 
@@ -120,17 +123,52 @@ Esempio:
   <a href="#richiesta" data-track="cta_click" data-cta-id="header-parliamone" data-cta-location="header">Parliamone</a>
 
   <a href="https://www.cassanodigitale.it/masseriasantella/" target="_blank" rel="noopener"
-     data-track="outbound_click" data-cta-id="siii-showcase-masseria-santella" data-cta-location="showcase"
-     data-outbound-type="esperienza" data-destination-id="masseria-santella">
-    Entra nell'esperienza<span class="visually-hidden"> Masseria Santella (si apre in una nuova scheda)</span><span aria-hidden="true"> ↗</span>
+     data-track="outbound_click" data-cta-id="siii-showcase-masseria-santella" data-cta-location="esempi"
+     data-outbound-type="esperienza-siii" data-destination-id="masseria-santella">
+    Entra nell'esperienza<span class="sr-only"> di Masseria Santella (si apre in una nuova scheda)</span><!-- Arrow: inline SVG, aria-hidden -->
   </a>
+</body>
 
+<body data-page-type="contatti">
   <a href="tel:+390802466520" data-track="contact_click" data-cta-id="contatti-telefono"
-     data-cta-location="contatti" data-contact-method="telefono">+39 080 2466520</a>
+     data-cta-location="recapiti" data-contact-method="telefono">+39 080 2466520</a>
 
-  <form data-contact-form data-form-id="richiesta-siii" data-endpoint="" action="" method="post">…</form>
+  <form data-contact-form data-form-id="richiesta-contatti" data-endpoint="" action="" method="post">…</form>
 </body>
 ```
+
+### 5.1 Valori di `data-cta-location`
+
+`cta_location` dice **in che tipo di sezione** sta l'elemento; `page_type` dice in quale pagina. Insieme danno la posizione: per esempio `hero` su `siii`. L'elenco è chiuso: un valore nuovo si aggiunge prima qui, poi nel codice, e il test 2 del §9 fallisce sui valori fuori elenco.
+
+Inventario della build del 2026-09-28: 154 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine. Nessun valore è vuoto o fuori elenco.
+
+| Valore | Dove | `cta_id` | Pagine |
+|---|---|---|---|
+| `header` | «Parliamone» nella barra | `header-parliamone` | tutte |
+| `menu-mobile` | menu a schermo intero: Parliamone, telefono, email | `menu-mobile-parliamone`, `menu-mobile-telefono`, `menu-mobile-email` | tutte |
+| `hero` | CTA della hero | `siii-hero-esempi`, `siii-hero-offerta`, `pd-hero-portale`, `pd-hero-richiesta`, `cd-hero-portale`, `cd-hero-richiesta` | SIII, PD, CD |
+| `capitolo` | i tre capitoli della Home | `home-capitolo-siii`, `home-capitolo-puglia-digitale`, `home-capitolo-citta-digitali` | Home |
+| `benefici` | CTA dopo i benefici | `siii-benefici-offerta` | SIII |
+| `esempi` | le tre esperienze, sezione `#esempi` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` | SIII |
+| `luoghi` | città con il loro portale: «I luoghi» su PD, «L'Italia in un unico portale» su CD | `pd-luoghi-gravina`, `pd-luoghi-acquaviva`, `pd-luoghi-monopoli`, `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` | PD, CD |
+| `sezione` | link nel testo di una sezione | `home-fondatore-linkedin`, `pd-progetto-portale`, `legale-email` | Home, PD, pagine legali |
+| `chiusura` | chiusura con CTA e recapiti | `home-chiusura-parliamone`, `home-chiusura-email`, `home-chiusura-telefono` | Home. Su SIII, PD e CD la chiusura è il form: nessun bottone |
+| `form` | ogni link dentro il componente del form: avviso, telefono sotto il form, pannelli di successo, errore e ripiego | `<form_id>-avviso-email`, `<form_id>-ripiego-bozza-email`, `<form_id>-successo-portale` e gli altri della strategia, §4 | SIII, PD, CD, Contatti |
+| `recapiti` | canali diretti di Contatti: telefono, cellulare, email, mappa, LinkedIn | `contatti-telefono`, `contatti-mobile`, `contatti-email`, `contatti-mappa`, `contatti-linkedin` | Contatti |
+| `persona` | sezione Persona di Contatti: «Scopri il suo percorso →» verso `/#fondatore` | `contatti-persona-percorso` | Contatti |
+| `portali` | blocco dei portali di Contatti | `contatti-portale-puglia-digitale`, `contatti-portale-citta-digitali` | Contatti |
+| `footer` | recapiti e portali nel footer | `footer-telefono`, `footer-email`, `footer-portale-puglia-digitale`, `footer-portale-citta-digitali` | tutte |
+| `404` | corpo della pagina 404 | `404-siii`, `404-puglia-digitale`, `404-citta-digitali`, `404-parliamone`, `404-email` | 404 |
+
+**Valori della v0.1 che escono dall'elenco**
+- `showcase` → `esempi`: è il nome dell'ancora e della CTA «Esplora gli esempi», ed è italiano come gli altri valori.
+- `citta` → `luoghi`: su PD e CD è lo stesso tipo di sezione, e nei report le due pagine si confrontano sulla stessa riga.
+- `contatti` → `recapiti`: `contatti` si confonderebbe con `page_type=contatti` e con la voce di menu.
+
+**Nel codice non va rinominato nessun valore di `data-cta-location`.** Una sola rinomina facoltativa, in codice oggi non incluso in nessuna pagina: in `src/scripts/immersive.ts`, riga 23, `cta_location: 'showcase'` diventa `'esempi'`. Va fatta solo se si riattiva l'anteprima.
+
+I `cta_id` con la vecchia parola di sezione (`siii-showcase-*`, `cd-citta-*`) restano come sono: sono chiavi, e cambiarle non porta alcun beneficio.
 
 ## 6. Regole di implementazione
 
@@ -138,17 +176,18 @@ Esempio:
 2. **Un solo listener delegato**: un `click` su `document` che risale con `closest('[data-track]')`. Legge il `dataset`, converte le chiavi da camelCase a snake_case e aggiunge `link_url`, `link_domain` e `cta_text` (il testo visibile ripulito, al massimo 100 caratteri). Per `contact_click` non aggiunge `link_url`. Non blocca mai la navigazione.
 3. **Hook negli script esistenti**
    - `form.ts`:
-     - `form_view`, con un IntersectionObserver;
+     - `form_view`, con un IntersectionObserver a soglie multiple e la doppia condizione del §4;
      - `form_start`, al primo input;
      - `form_submit`, dopo `response.ok`;
      - `form_error`, con `error_type` ricavato dal caso: riepilogo di validazione → `validazione`; honeypot → `spam`; endpoint vuoto → `endpoint-assente`; `AbortError` → `timeout`; `TypeError` → `rete`; `HTTP 4xx/5xx` → `server`, con `http_status`.
    - `video.ts`:
-     - `video_start` al primo `play`, con `autoplay` se il video è partito in muto dall'IntersectionObserver;
+     - `video_start` al primo `playing`, con `autoplay` se il video è partito in muto dall'IntersectionObserver;
      - `video_progress` su `timeupdate`;
-     - `video_complete` su `ended`;
+     - `video_complete` al 97%, perché il video è in loop;
      - `video_unmute` dal bottone dell'audio.
-   - `immersive.ts`: `preview_start` nel click del trigger.
+   - `immersive.ts`: `preview_start` nel click del trigger. Sospeso: lo script non è incluso in nessuna pagina (§4).
    - `header.ts`: `menu_open` (priorità P3).
+   - `track.ts`: inoltra solo le chiavi documentate al §5 e, come `cta_text`, solo l'etichetta visibile, senza il testo per i lettori di schermo.
 4. **Niente doppi conteggi.** Se si attiva GA4, nella «misurazione avanzata» vanno spenti «Clic in uscita» e «Interazioni con i moduli»: li sostituiscono i nostri eventi.
 5. **Nessun dato personale negli URL**: nessun campo del form in query string o nei redirect.
 6. **`rel="noopener"` senza `noreferrer`** sui link ai portali (strategia di conversione, §2).
@@ -202,6 +241,34 @@ In GA4 i medium `qr` e `print` richiedono un gruppo di canali personalizzato, al
 6. **Adattatore**: uno script che legge `window.dataLayer`, o si aggancia a `track()`, e inoltra gli eventi allo strumento. Con l'opzione B si carica solo dopo il consenso; con l'opzione A subito.
 7. **Verifica** con Playwright (§9, test 5) prima della pubblicazione.
 
+### 8.1 RUM delle prestazioni con `web-vitals`: parere
+
+**Sì, dopo il lancio e senza banner, ma solo se valgono tutte le dieci condizioni della tabella.** Se il consulente privacy ritiene che serva il consenso, **no**: un banner solo per il RUM non si giustifica, e la sorveglianza dell'ADR 005 resta quella di laboratorio.
+
+**A che cosa serve.** È l'unico modo di sorvegliare la prima condizione di riapertura dell'ADR 005 (LCP mobile al 75° percentile sopra 2,0 s), l'INP del menu e il TTFB reale. Con il traffico del sito, CrUX è improbabile (`docs/performance/budget.md`, §6.7).
+
+**Perché senza consenso, e perché solo a condizioni**
+- L'art. 5(3) della direttiva ePrivacy vale anche senza cookie. Per l'EDPB (linee guida 2/2023) anche uno script che fa inviare informazioni dal dispositivo è un accesso al terminale. Quindi conta l'esenzione, non l'assenza di cookie.
+- Il Garante (linee guida del 10 giugno 2021) assimila ai cookie tecnici gli strumenti di analisi usati dal titolare per ottimizzare il sito, con statistiche in forma aggregata, senza incroci e senza cessioni a terzi. La CNIL include espressamente la misura delle prestazioni tra le finalità della misura d'audience esente dal consenso. [DA VERIFICARE con il consulente privacy che il RUM configurato così rientri nell'assimilazione.]
+- La proposta di Digital Omnibus (nuovo art. 88a del GDPR, 19 novembre 2025) esenterebbe la misura aggregata del proprio servizio. È però ancora una proposta: non ci si può contare.
+
+| # | Condizione |
+|---|---|
+| 1 | **Finalità esclusiva**: le prestazioni tecniche del sito (LCP, INP, CLS, FCP, TTFB), per le soglie di CLAUDE.md e per l'ADR 005. Nessun uso di marketing, profilazione o analisi del comportamento; nessun incrocio con il registro delle richieste |
+| 2 | **Prima parte**: `web-vitals` dentro il bundle del sito, nessuna CDN. Invio con `navigator.sendBeacon` a un endpoint del sito, per esempio lo stesso dell'ADR 006 (opzione A). Nessun fornitore di analytics |
+| 3 | **Nessun cookie, nessuno storage, nessun identificativo**: niente `localStorage` né `sessionStorage`. L'`id` che `web-vitals` genera per ogni pagina non si invia |
+| 4 | **Payload chiuso**: `metric`, `value`, `rating`, `page_type`, `device_class` (`mobile` o `desktop`, dalla larghezza della finestra), `navigation_type`. Per LCP e INP, facoltativo, il selettore dell'elemento (versione `attribution`). Mai URL con query string, user agent, risoluzione dello schermo o tipo di connessione |
+| 5 | **IP non registrato** dall'endpoint, al più tenuto in memoria per il limite di frequenza. Log dell'hosting con conservazione breve [DA VERIFICARE con l'hosting scelto] |
+| 6 | **Solo aggregati**: si leggono i p75 per `page_type`, classe di dispositivo e periodo. Valori grezzi cancellati entro 30 giorni [IPOTESI]. Un p75 si legge solo con almeno 100 campioni per combinazione nel periodo [IPOTESI, da fissare con web-performance-specialist] |
+| 7 | **Peso e INP**: caricamento dopo `load` con `import()`; 3,0 KB con Brotli, 4,9 KB nella versione `attribution`. Budget e verifica di web-performance-specialist |
+| 8 | **Trasparenza**: citato nella cookie policy come strumento di misura tecnica, senza cookie (condizione C03 del G4) |
+| 9 | **Conferma scritta del consulente privacy** prima dell'attivazione |
+| 10 | **Verifica con Playwright** prima della pubblicazione (§9, test 6) |
+
+Se in futuro si attiva GA4 con il banner (opzione B), il RUM resta separato e di prima parte: non passa da GA4.
+
+La decisione va registrata nell'ADR sull'analytics, oppure in un ADR dedicato se arriva prima. Owner: cro-specialist, con web-performance-specialist per peso e soglie. Decide l'utente.
+
 ## 9. Verifiche con Playwright
 
 Li scrivo io appena la build è pronta.
@@ -209,7 +276,8 @@ Li scrivo io appena la build è pronta.
 2. **Markup**
    - Ogni `a[href^="http"]` esterno ha `data-track="outbound_click"`, `target="_blank"` e un `rel` che contiene `noopener` ma non `noreferrer`.
    - Ogni `tel:` e `mailto:` ha `data-track="contact_click"`.
-   - Ogni `[data-track]` ha `data-cta-id` e `data-cta-location`.
+   - Ogni `[data-track]` ha `data-cta-id` e `data-cta-location`, tranne i `nav_click`, che hanno `data-nav-item` e `data-nav-location`.
+   - Ogni valore di `data-cta-location`, `data-outbound-type`, `data-destination-id` e `data-contact-method` appartiene agli elenchi del §5 e del §5.1.
    - `<body>` ha `data-page-type`.
 3. **Eventi**: il clic su ogni elemento tracciato produce in `window.dataLayer` l'evento giusto, con i parametri obbligatori e **senza dati personali**.
 4. **Form**
@@ -219,6 +287,8 @@ Li scrivo io appena la build è pronta.
    - Nessuna risposta entro 15 s: `form_error` di tipo `timeout`.
    - Preselezione corretta su /siii, /puglia-digitale, /citta-digitali e su `/contatti?interesse=citta-digitali`.
 5. **Dopo l'attivazione** (opzione B): nessuna richiesta a domini Google prima del consenso; nessuna nemmeno dopo «Rifiuta» o la X; dopo «Accetta», eventi con i parametri giusti.
+6. **RUM, se approvato** (§8.1): nessun cookie e nessuno storage; il beacon parte solo verso l'endpoint del sito, dopo `load`; il payload contiene solo le chiavi ammesse, senza `id`, URL con query string o user agent.
+7. **Endpoint del form**, quando c'è (ADR 006): richiesta valida ricevuta e con risposta 2xx; invio troppo rapido o con honeypot compilato in quarantena, mai scartato; limite di frequenza con risposta 429; nessun `Set-Cookie` nella risposta; CORS rifiutato da un'altra origine, se l'endpoint non è sullo stesso dominio.
 
 ## 10. Sperimentazione
 
@@ -229,28 +299,38 @@ Si parte con metodi qualitativi:
 - il feedback di chi gestisce le richieste (domande ricorrenti, obiezioni);
 - l'analisi degli errori del form.
 
-Il backlog degli esperimenti si apre dopo il lancio, in `docs/cro/backlog-esperimenti.md`.
+Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo è E1, la riga di posizionamento della hero della Home, A contro B, con un test dei 5 secondi: non richiede traffico.
 
 ## 11. Fonti
 - Garante per la protezione dei dati personali, [Linee guida cookie e altri strumenti di tracciamento, 10 giugno 2021](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9677876) e [FAQ sui cookie](https://www.garanteprivacy.it/faq/cookie). Il sito del Garante è bloccato dall'ambiente: il contenuto è stato verificato il 2026-09-28 attraverso i risultati di ricerca e due sintesi, [Filodiritto](https://www.filodiritto.com/i-cookie-nuove-linee-guida-dal-garante) e [Cyber Security 360](https://www.cybersecurity360.it/legal/privacy-dati-personali/utilizzo-dei-cookie-analitici-e-consenso-degli-interessati-ecco-le-regole).
 - Google, [Consent mode overview](https://developers.google.com/tag-platform/security/concepts/consent-mode) e [Behavioral modeling for consent mode](https://support.google.com/analytics/answer/11161109), per le soglie di idoneità alla modellazione. Consultati il 2026-09-28 attraverso i risultati di ricerca.
 - Cloudflare, [Turnstile, pre-clearance](https://developers.cloudflare.com/turnstile/get-started/pre-clearance/): il cookie `cf_clearance` viene impostato solo con la pre-clearance attiva. Consultato il 2026-09-28.
-- Codice esistente letto il 2026-09-28: `src/scripts/form.ts`, `video.ts`, `immersive.ts`, `header.ts`, `src/data/site.ts`, `astro.config.mjs`.
+- Codice esistente letto il 2026-09-28: `src/scripts/track.ts`, `form.ts`, `video.ts`, `immersive.ts`, `header.ts`, `src/data/site.ts`, `astro.config.mjs`.
+- Inventario degli attributi `data-*` (v0.2): build del commit `9948b57`, generata il 2026-09-28 in una cartella temporanea, fuori da `dist/`. Un solo script ha letto ogni `a` e `button` con `data-track` nelle 8 pagine.
+- RUM e consenso (§8.1), consultati il 2026-09-28 attraverso i risultati di ricerca, perché i siti delle autorità non sono raggiungibili dall'ambiente:
+  - EDPB, [Guidelines 2/2023 on Technical Scope of Art. 5(3) of ePrivacy Directive](https://www.edpb.europa.eu/documents/guideline/guidelines-22023-on-technical-scope-of-art-53-of-eprivacy-directive_en), versione 2.0 adottata il 7 ottobre 2024;
+  - Garante, linee guida del 10 giugno 2021 (link sopra), sull'assimilazione degli analytics ai cookie tecnici; sintesi in [Ratio Iuris](https://ratioiuris.it/ladeguamento-dei-siti-web-alle-linee-guida-sui-cookie-2021-del-garante-privacy/);
+  - CNIL, [Cookies : solutions pour les outils de mesure d'audience](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience), sulla misura delle prestazioni tra le finalità esenti;
+  - Digital Omnibus, art. 88a del GDPR ancora in proposta: [Taylor Wessing](https://www.taylorwessing.com/en/global-data-hub/2026/the-digital-omnibus-proposal/gdh---the-digital-omnibus---cookies) e [Osborne Clarke](https://www.osborneclarke.com/insights/digital-omnibus-reshapes-eu-cookie-rules-leaves-banner-fatigue-largely-intact).
 
 ## Ipotesi da validare
 - Il traffico del sito non basta per test A/B né per la modellazione di Consent Mode (§8, §10).
 - I portali e le esperienze SIII non impostano cookie non tecnici quando vengono incorporati come anteprima.
 - Esistono link «Realizzato da ITnode» dai portali verso itnode.it.
+- Il RUM configurato secondo il §8.1 è assimilabile agli strumenti tecnici e non richiede il consenso.
+- Con il traffico del sito, 100 campioni per template e classe di dispositivo si raggiungono in un periodo utile (§8.1, condizione 6).
 
 ## Domande aperte
 - [DA FORNIRE] Traffico e richieste del sito attuale, e lo strumento di analytics in uso oggi, se c'è.
 - [DA FORNIRE] Chi tiene il registro delle richieste, e se esiste già un CRM.
 - [DA FORNIRE] Il cliente prevede campagne Google Ads? Da questo dipende la scelta tra le opzioni A e B.
 - [DA VERIFICARE] Cookie impostati dai portali e dalle esperienze: servono una verifica da una rete non bloccata o un export dal cliente.
-- [DA VERIFICARE, con il consulente privacy] Uno strumento senza cookie è assimilabile ai cookie tecnici? Turnstile va citato nell'informativa?
+- [DA VERIFICARE, con il consulente privacy] Uno strumento senza cookie è assimilabile ai cookie tecnici? Il RUM del §8.1 lo è? Turnstile va citato nell'informativa?
 
 ## Decisioni richieste
 1. **Nessun analytics al lancio, nessun banner**: confermare, alle condizioni del §1. Decide il cliente.
 2. **Strumento di analytics**, opzione A o B, con un ADR entro il primo mese dal lancio. Decide il cliente; owner cro-specialist, insieme a web-performance-specialist.
 3. **Hosting del video** (stesso dominio o CDN invece di railway.app). Decidono web-performance-specialist e la sessione principale.
 4. **Anteprime immersive con iframe**: attivarle solo dopo la verifica dei cookie (§1, condizione 4). Decidono sessione principale e cliente.
+5. **RUM delle prestazioni** (§8.1): sì alle dieci condizioni, dopo la conferma del consulente privacy. Decide l'utente; owner cro-specialist e web-performance-specialist.
+6. **Endpoint del form**: opzioni nell'ADR 006 (proposta). Decide l'utente o il cliente prima del go-live (condizione C04 del G4).

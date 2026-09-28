@@ -3,9 +3,9 @@ titolo: Strategia di conversione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/]
+fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/006-endpoint-del-form.md, inventario dei cta_id nella build del 2026-09-28]
 ---
 
 # Strategia di conversione
@@ -17,6 +17,7 @@ fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/da
 > - Il campo email accetta **qualsiasi indirizzo valido**. Proposta: etichettarlo «Email» invece di «Email aziendale».
 > - Se l'endpoint manca non si simula nulla: un avviso compare **prima dei campi**, e il fallback già presente in `form.ts` offre l'email precompilata e il telefono.
 > - La fiducia si costruisce solo con prove vere: esperienze e portali reali, il percorso del fondatore, la sede in Puglia. **Tre foto hanno un simbolo compatibile con il watermark di Google Gemini**: prima di usarle come prova serve una verifica (§9).
+> - **v0.2.** Le tabelle dei `cta_id` (§3–4) sono allineate alla build del 2026-09-28, con il nuovo `contatti-persona-percorso` e i link dentro il form. Le opzioni per l'endpoint sono nell'ADR 006, in stato di proposta (§7).
 
 ## 1. Conversioni per audience
 
@@ -37,7 +38,7 @@ Non fisso obiettivi numerici finché mancano [DA FORNIRE: valore medio di un con
 4. **Link esterni** (esperienze, portali, LinkedIn, mappa): `target="_blank" rel="noopener"`, **senza `noreferrer`**, così i portali di ITnode vedono arrivare il traffico da itnode.it. Il nome accessibile contiene la destinazione e «(si apre in una nuova scheda)», per esempio «Esplora Monopoli (si apre in una nuova scheda)».
 5. **Ancora del form**: la sezione del form ha `id="richiesta"` e `scroll-margin-top` pari all'altezza dell'header sticky. Il titolo del form ha `tabindex="-1"` e riceve il focus quando si arriva dall'ancora.
 6. **Click-to-call**: `tel:+390802466520` e `tel:+393351229785` (già in `site.ts`). Il numero resta visibile per intero anche su desktop.
-7. **Tracciamento**: ogni CTA porta gli attributi `data-*` definiti in `docs/cro/piano-misurazione.md` §5. Il `cta_id` di ogni CTA è nelle tabelle che seguono.
+7. **Tracciamento**: ogni CTA porta gli attributi `data-*` definiti in `docs/cro/piano-misurazione.md` §5. Il `cta_id` di ogni CTA è nelle tabelle che seguono; il valore di `cta_location` è nell'elenco chiuso del piano, §5.1. I `cta_id` sono chiavi stabili: dopo il lancio non si rinominano.
 
 ## 3. Header e menu mobile
 
@@ -57,24 +58,25 @@ Non fisso obiettivi numerici finché mancano [DA FORNIRE: valore medio di un con
 ### Home `/`
 | Sezione | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
-| Hero | nessuna CTA commerciale, perché la hero deve respirare; al massimo un invito allo scroll | — | sezione successiva | — |
+| Hero | nessuna CTA e nessun invito allo scorrimento: la hero deve respirare, e «Parliamone» è nell'header (direzione visiva, §5) | — | — | — |
 | Capitolo 01 SIII | Esplora SIII → | primaria del capitolo | `/siii` | `home-capitolo-siii` |
 | Capitolo 02 | Scopri Puglia Digitale → | primaria del capitolo | `/puglia-digitale` | `home-capitolo-puglia-digitale` |
 | Capitolo 03 | Esplora Città Digitali → | primaria del capitolo | `/citta-digitali` | `home-capitolo-citta-digitali` |
-| Fondatore | nessuna dentro il racconto | — | — | — |
-| **Chiusura (proposta)**, dopo la frase del fondatore | Parliamone →, con telefono ed email come alternative | primaria + alternative | `/contatti`, `tel:`, `mailto:` | `home-chiusura-parliamone`, `home-chiusura-telefono`, `home-chiusura-email` |
+| Fondatore | nessuna CTA commerciale dentro il racconto; il profilo LinkedIn nella timeline ↗ | uscita (`social`) | profilo LinkedIn | `home-fondatore-linkedin` |
+| **Chiusura**, dopo la frase del fondatore | Parliamone →, con telefono ed email come alternative | primaria + alternative | `/contatti`, `tel:`, `mailto:` | `home-chiusura-parliamone`, `home-chiusura-telefono`, `home-chiusura-email` |
 
 Nei capitoli della home niente link esterni: prima si approfondisce sul sito, i portali stanno nelle pagine dedicate.
 
 ### SIII `/siii`
 | Sezione | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
-| Hero | **Esplora gli esempi ↓** (proposta) | primaria | `#esempi` (sezione showcase) | `siii-hero-esempi` |
-| Hero | Richiedi un'offerta | secondaria, link testuale | `#richiesta` | `siii-hero-offerta` |
-| Dopo i benefici (opzionale) | Richiedi un'offerta → | primaria della vista | `#richiesta` | `siii-benefici-offerta` |
-| Showcase, tre esperienze | Entra nell'esperienza ↗ | uscita in nuova scheda | URL in `siiiShowcase` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` |
-| Showcase, se c'è l'anteprima | Avvia l'anteprima | coinvolgimento | facade che carica l'iframe | evento `preview_start` |
-| Chiusura | «La tua azienda può diventare un'esperienza.» **Richiedi un'offerta →** | primaria | `#richiesta`, con SIII preselezionato | `siii-chiusura-offerta` |
+| Hero | **Esplora gli esempi ↓** | primaria | `#esempi` (sezione Esempi) | `siii-hero-esempi` |
+| Hero | Richiedi un'offerta ↓ | secondaria, link testuale | `#richiesta` | `siii-hero-offerta` |
+| Dopo i benefici | Richiedi un'offerta ↓ | primaria della vista | `#richiesta` | `siii-benefici-offerta` |
+| Esempi (`#esempi`), tre esperienze | Entra nell'esperienza ↗ | uscita in nuova scheda | URL in `siiiShowcase` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` |
+| Esempi, anteprima in iframe | Avvia l'anteprima | coinvolgimento | facade che carica l'iframe | **non attiva al lancio**: evento `preview_start` sospeso (piano §4) |
+| Chiusura | «La tua azienda può diventare un'esperienza.» seguita dal form, **senza bottone**: la chiusura è il form stesso (§5) | primaria | form con SIII preselezionato | nessun `cta_id`; evento `form_submit` |
+| Pannello di successo del form | Torna agli esempi ↑ | ritorno alla prova | `#esempi` | `richiesta-siii-successo-esempi` |
 
 Perché la hero porta agli esempi: il SIII è un prodotto nuovo e la prova più forte è provarlo. Chi è già convinto ha comunque il link secondario al form.
 
@@ -82,40 +84,59 @@ Perché la hero porta agli esempi: il SIII è un prodotto nuovo e la prova più 
 | Sezione | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
 | Hero | **Visita il portale ↗** | primaria (uscita, nuova scheda) | lapugliadigitale.it | `pd-hero-portale` |
-| Hero | Porta la tua impresa in Puglia Digitale | secondaria, link testuale | `#richiesta` | `pd-hero-richiesta` |
+| Hero | link testuale verso il form (etichetta attuale nel copy deck: «Aderisci a Puglia Digitale ↓») | secondaria | `#richiesta` | `pd-hero-richiesta` |
+| Il progetto | link in linea a lapugliadigitale.it ↗ | uscita | portale | `pd-progetto-portale` |
 | Numeri | nessuna CTA; nota con fonte e anno | — | — | — |
 | I luoghi, tre città | Esplora ↗ | uscita | portali cittadini in `pugliaPlaces` | `pd-luoghi-acquaviva`, `pd-luoghi-gravina`, `pd-luoghi-monopoli` |
 | Perché aderire (01–04) | nessuna all'interno | — | — | — |
-| Chiusura | «Porta la tua impresa dentro Puglia Digitale.» **Contattaci →** | primaria | `#richiesta`, con Puglia Digitale preselezionato | `pd-chiusura-contattaci` |
+| Chiusura | «Porta la tua impresa dentro Puglia Digitale.» seguita dal form, **senza bottone e senza uscita verso il portale** (review di conversione, oss. 7, applicata) | primaria | form con Puglia Digitale preselezionato | nessun `cta_id`; evento `form_submit` |
 
 ### Città Digitali `/citta-digitali`
 | Sezione | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
 | Hero | **Visita il portale ↗** | primaria (uscita, nuova scheda) | cittadigitali.it | `cd-hero-portale` |
-| Hero | Porta la tua attività in Città Digitali | secondaria, link testuale | `#richiesta` | `cd-hero-richiesta` |
-| L'Italia in un unico portale, tre città | Esplora ↗ | uscita | portali in `italyPlaces` | `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` |
+| Hero | link testuale verso il form (etichetta attuale nel copy deck: «Aderisci a Città Digitali ↓») | secondaria | `#richiesta` | `cd-hero-richiesta` |
+| L'Italia in un unico portale, tre città | Esplora ↗ | uscita; `cta_location` `luoghi`, come su PD | portali in `italyPlaces` | `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` |
 | Video | avvio e audio | coinvolgimento | — | eventi `video_*` |
 | Dal locale al nazionale | nessuna | — | — | — |
-| Chiusura | «La tua azienda merita…» **Entra in Città Digitali →** | primaria | `#richiesta`, con Città Digitali preselezionato | `cd-chiusura-entra` |
+| Chiusura | «La tua azienda merita…» seguita dal form, **senza bottone** | primaria | form con Città Digitali preselezionato | nessun `cta_id`; evento `form_submit` |
 
-«Entra in Città Digitali» si può leggere anche come «visita il portale». L'introduzione del form scioglie il dubbio dicendo cosa succede (§8).
+Il titolo del form di CD, «Entra in Città Digitali», si può leggere anche come «visita il portale». L'introduzione del form scioglie il dubbio dicendo cosa succede (§8).
 
 ### Contatti `/contatti`
 | Blocco | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
 | Hero «Parliamo del prossimo spazio digitale.» | — | — | — | — |
-| Canali diretti, subito sotto la hero (compatti su mobile) | Telefono · Mobile · Email | alternative a basso attrito | `tel:`, `mailto:` | `contatti-telefono`, `contatti-mobile`, `contatti-email` |
+| Recapiti (`#recapiti`), subito sotto la hero (compatti su mobile) | Telefono · Mobile · Email | alternative a basso attrito | `tel:`, `mailto:` | `contatti-telefono`, `contatti-mobile`, `contatti-email` |
+| Recapiti, sede operativa | Apri in Google Maps ↗: **un link, non una mappa incorporata** (vedi piano di misurazione §1) | uscita | URL di Google Maps | `contatti-mappa` |
+| Recapiti, LinkedIn | «Giacomo Lenoci su LinkedIn ↗»: il profilo è personale, non una pagina aziendale | uscita | profilo LinkedIn | `contatti-linkedin` |
 | Form | **Invia richiesta** | primaria | endpoint | evento `form_submit` |
-| Sede operativa | Apri in Maps ↗: **un link, non una mappa incorporata** (vedi piano di misurazione §1) | uscita | URL di Google Maps o OpenStreetMap | `contatti-mappa` |
-| LinkedIn | «Giacomo Lenoci su LinkedIn ↗»: il profilo è personale, non una pagina aziendale | uscita | profilo LinkedIn | `contatti-linkedin` |
-| Portali | Città Digitali ↗ · Puglia Digitale ↗ | uscita | portali | `contatti-portale-citta-digitali`, `contatti-portale-puglia-digitale` |
+| Persona | «Scopri il suo percorso →», dopo nome e ruolo del fondatore (verdetto G4, N5) | approfondimento, fiducia | `/#fondatore` | `contatti-persona-percorso` |
+| Portali (`#portali`) | Città Digitali ↗ · Puglia Digitale ↗ | uscita | portali | `contatti-portale-citta-digitali`, `contatti-portale-puglia-digitale` |
+
+Tutti gli elementi di Recapiti hanno `cta_location` `recapiti`; il link della sezione Persona ha `persona`; i portali `portali` (piano, §5.1).
 
 Su desktop il form e i canali stanno affiancati e si vedono senza scorrere. Su mobile vengono prima i canali (tre righe da toccare), poi il form. [IPOTESI: se il team preferisce ricevere richieste scritte piuttosto che telefonate, l'ordine si inverte. DA FORNIRE.]
 
 ### Footer, pagine legali e 404
 - **Footer**: telefono ed email come link (`footer-telefono`, `footer-email`), portali con ↗ (`footer-portale-citta-digitali`, `footer-portale-puglia-digitale`), dati societari obbligatori, link a Privacy Policy e Cookie Policy.
-- **Privacy e Cookie Policy**: nessuna CTA oltre a quella dell'header.
-- **404**: i tre mondi (→) e «Parliamone» verso `/contatti` (`404-siii`, `404-puglia-digitale`, `404-citta-digitali`, `404-parliamone`).
+- **Privacy e Cookie Policy**: nessuna CTA oltre a quella dell'header; l'indirizzo email nel testo è tracciato come `legale-email` (`contact_click`, `cta_location` `sezione`).
+- **404**: i tre mondi (→) e «Parliamone» verso `/contatti` (`404-siii`, `404-puglia-digitale`, `404-citta-digitali`, `404-parliamone`), più l'email per segnalare un link rotto (`404-email`).
+
+### Link dentro il form
+
+Hanno tutti `cta_location` `form`. `<form_id>` vale `richiesta-siii`, `richiesta-puglia-digitale`, `richiesta-citta-digitali` o `richiesta-contatti`.
+
+| Dove | Link | `cta_id` | Evento |
+|---|---|---|---|
+| Avviso prima dei campi, se manca l'endpoint | email, telefono | `<form_id>-avviso-email`, `<form_id>-avviso-telefono` | `contact_click` |
+| Sotto il form | telefono | `<form_id>-telefono` | `contact_click` |
+| Pannello di successo | email, telefono | `<form_id>-successo-email`, `<form_id>-successo-telefono` | `contact_click` |
+| Pannello di successo, azione di contesto | SIII: «Torna agli esempi ↑»; PD e CD: il portale ↗; Contatti: i tre mondi | `richiesta-siii-successo-esempi`; `<form_id>-successo-portale`; `richiesta-contatti-successo-siii`, `richiesta-contatti-successo-puglia-digitale`, `richiesta-contatti-successo-citta-digitali` | `cta_click`; `outbound_click` per il portale |
+| Pannello d'errore | telefono, bozza email | `<form_id>-errore-telefono`, `<form_id>-errore-bozza-email` | `contact_click` |
+| Pannello di ripiego, senza endpoint | bozza email, email, telefono, cellulare | `<form_id>-ripiego-bozza-email`, `<form_id>-ripiego-email`, `<form_id>-ripiego-telefono`, `<form_id>-ripiego-mobile` | `contact_click` |
+
+Finché manca l'endpoint, i `cta_id` che finiscono in `-bozza-email` sono la conversione di riferimento: si contano come «richiesta preparata», non come richiesta certa.
 
 ## 5. Form: posizione e preselezione
 
@@ -162,17 +183,17 @@ I due `pattern` sono stati provati con i flag `u` e `v`: i browser attuali compi
 
 La logica di base esiste già in `src/scripts/form.ts`. Qui fisso il contratto con l'endpoint e le integrazioni che mancano.
 
-**Endpoint configurabile.** Una variabile d'ambiente pubblica letta in build (per esempio `PUBLIC_FORM_ENDPOINT`) finisce in `data-endpoint` e nell'attributo `action` (che serve se JavaScript è disattivato). La scelta del servizio va registrata in un ADR. Le opzioni sono tre:
-- una funzione serverless dell'hosting con invio SMTP;
-- un servizio di form con DPA e dati nell'UE;
-- l'eventuale endpoint del sito attuale su Railway [DA VERIFICARE se esiste].
+**Endpoint configurabile.** `PUBLIC_FORM_ENDPOINT`, letta in build, finisce in `data-endpoint` e nell'attributo `action`, che serve se JavaScript è disattivato. Il servizio si sceglie con l'**ADR 006** (`docs/decisioni/006-endpoint-del-form.md`, in stato di proposta), che contiene i requisiti minimi e le opzioni con pro e contro:
+- **A, consigliata**: una funzione sullo stesso dominio del sito, sull'hosting scelto, che invia la richiesta per email con un provider che tiene i dati nell'UE;
+- **B**: un servizio di form gestito, con sede e dati nell'UE;
+- **C**: nessun endpoint al lancio, con il ripiego «email già compilata», accettato per iscritto e con una scadenza.
 
-Requisiti, qualunque sia la scelta:
-- `POST` `multipart/form-data`; risposta `2xx` se va a buon fine, `4xx`/`5xx` con JSON se fallisce; CORS limitato all'origine del sito;
+Requisiti, qualunque sia la scelta (il dettaglio è nell'ADR 006):
+- `POST` `multipart/form-data`. Risposta `2xx` con JSON se va a buon fine, anche per le richieste messe in quarantena; `4xx`/`5xx` con JSON se fallisce; sempre entro i 15 s del timeout di `form.ts`. CORS solo verso l'origine del sito, se l'endpoint sta su un altro dominio;
 - validazione ripetuta lato server: campi obbligatori, formato dell'email, lunghezze;
-- notifica a [DA FORNIRE: destinatario, per esempio info@itnode.it] con `Reply-To` uguale all'email del richiedente, e con `_page` e gli interessi nell'oggetto;
+- notifica a [DA FORNIRE: destinatario, per esempio info@itnode.it] con `Reply-To` uguale all'email del richiedente, e con `_page` e gli interessi nell'oggetto. **Nessuna risposta automatica al richiedente**: trasformerebbe l'endpoint in un modo per mandare email a indirizzi qualsiasi;
 - nessun cookie e nessuno script di tracciamento;
-- dati conservati solo per il tempo indicato nell'informativa.
+- dati conservati solo nell'UE e solo per il tempo indicato nell'informativa; nessun log del contenuto delle richieste.
 
 **Stati del form**
 | Stato | Cosa vede l'utente | Nota per lo sviluppo |
@@ -185,8 +206,8 @@ Requisiti, qualunque sia la scelta:
 | Honeypot compilato | lo stesso pannello d'errore onesto, **mai un finto successo** | già presente |
 
 **Antispam a livelli, senza alcun peso per l'utente**
-1. **Honeypot** `_gotcha`, già presente: il campo sta fuori schermo, in un contenitore con `aria-hidden="true"`, e ha `tabindex="-1"` e `autocomplete="off"`. Il server scarta l'invio o lo mette in quarantena.
-2. **Tempo minimo**: `_elapsed_ms` viene già inviato. Il server considera sospetti gli invii arrivati meno di 3000 ms dopo il caricamento. Meglio la **quarantena** (una cartella spam da controllare ogni settimana) della cancellazione: un falso positivo è un contatto perso.
+1. **Honeypot** `_gotcha`, già presente: il campo sta fuori schermo, in un contenitore con `aria-hidden="true"`, e ha `tabindex="-1"` e `autocomplete="off"`. `form.ts` lo controlla prima dell'invio e lo toglie dal payload: al server arriva compilato solo dagli invii senza JavaScript, quasi sempre bot che scrivono direttamente all'endpoint. Il server li mette in quarantena.
+2. **Tempo minimo**: `_elapsed_ms` viene già inviato. Il server considera sospetti gli invii arrivati meno di 3000 ms dopo il caricamento, e quelli senza `_elapsed_ms` (senza JavaScript). Meglio la **quarantena** (per esempio l'oggetto «[Da controllare]», da rivedere ogni settimana) della cancellazione: un falso positivo è un contatto perso.
 3. **Limite di frequenza** per IP sull'endpoint.
 4. **Cloudflare Turnstile, predisposto ma spento.** Si accende solo se lo spam lo rende necessario, impostando `PUBLIC_TURNSTILE_SITE_KEY`:
    - modalità «managed» o «invisible»;
@@ -245,7 +266,7 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 
 | # | Rischio | Impatto | Mitigazione | Chi |
 |---|---|---|---|---|
-| 1 | Lancio senza endpoint: la conversione principale non funziona | alto | avviso prima dei campi e fallback onesto; **decidere l'endpoint prima del go-live** | cliente, sessione principale |
+| 1 | Lancio senza endpoint: la conversione principale non funziona | alto | avviso prima dei campi e fallback onesto; **decidere l'endpoint prima del go-live** (ADR 006, condizione C04 del G4) | cliente, sessione principale |
 | 2 | Mancano le schermate SIII e le foto dei luoghi: per capire il prodotto bisogna uscire dal sito | alto su /siii | [DA FORNIRE] gli asset; anteprime con facade solo se i portali non impostano cookie non tecnici | cliente |
 | 3 | Nessuna informazione su processo, tempi e modalità di adesione | medio | blocco «Cosa succede dopo» con dati reali | cliente, copywriter |
 | 4 | Link verso i portali già nella hero di PD e CD | medio | apertura in nuova scheda; link secondario al form nella hero; chiusure forti | ux-designer |
@@ -261,6 +282,7 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 - Watermark visibile di Google Gemini (stella a quattro punte in basso a destra): [Google AI Developers Forum](https://discuss.ai.google.dev/t/regression-forced-visible-star-watermark-breaks-gemini-nano-banana-pro-image-to-image-and-flow-frame-to-video-workflows/114193) e [spiegazione del simbolo](https://removegeminiwatermarkai.com/blogs/what-is-gemini-watermark-sparkle-symbol), consultati il 2026-09-28. Il riscontro è solo visivo: i file non contengono metadati di provenienza (EXIF, XMP, C2PA), quindi non è una prova.
 - Turnstile, cookie `cf_clearance` solo con pre-clearance: [Cloudflare Turnstile docs, pre-clearance](https://developers.cloudflare.com/turnstile/get-started/pre-clearance/), consultato il 2026-09-28 attraverso i risultati di ricerca (cloudflare.com è bloccato dall'ambiente).
 - Codice esistente letto il 2026-09-28: `src/scripts/form.ts`, `src/data/site.ts`, `src/data/asset-slots.ts`, `scripts/prepare-assets.mjs`.
+- v0.2: `cta_id` ricavati dalla build del commit `9948b57` (2026-09-28), generata in una cartella temporanea: ogni `a` e `button` con `data-track` nelle 8 pagine. Pagine lette: `src/pages/contatti.astro`, `siii.astro`, `puglia-digitale.astro`, `citta-digitali.astro`; `src/components/sections/ContactForm.astro`, `CTASection.astro`, `LocationShowcase.astro`.
 
 ## Ipotesi da validare
 - Audience e peso relativo di imprese ed enti (§1).
@@ -280,7 +302,7 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 - [DA FORNIRE] I testi del cliente citati nel brief (storia del fondatore, benefici del SIII, motivi per aderire): non sono nel repository.
 
 ## Decisioni richieste
-1. **Endpoint del form e servizio di invio**, da registrare come ADR in `docs/decisioni/` e da chiudere prima del go-live. Decide il cliente; la parte tecnica è della sessione principale.
+1. **Endpoint del form e servizio di invio**: opzioni A, B e C nell'ADR 006 (proposta), da chiudere prima del go-live (condizione C04 del G4). Decide l'utente o il cliente; la parte tecnica è della sessione principale.
 2. **Etichetta «Email» invece di «Email aziendale», casella privacy come presa visione.** Decide il cliente, con il consulente privacy.
 3. **CTA dell'header «Parliamone»**, con destinazione `#richiesta` sulle pagine che hanno un form. Decidono creative-director e ux-designer.
 4. **Uso delle foto con la stella a quattro punte.** Decidono cliente e creative-director, dopo la verifica.
