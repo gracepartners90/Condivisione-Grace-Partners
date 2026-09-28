@@ -1,4 +1,4 @@
-export {};
+import { track } from './track';
 
 /**
  * Header state and mobile menu.
@@ -24,6 +24,7 @@ if (menu && openButton) {
   openButton.addEventListener('click', () => {
     menu.showModal();
     openButton.setAttribute('aria-expanded', 'true');
+    track('menu_open');
   });
 
   menu.addEventListener('close', () => {

@@ -1,11 +1,11 @@
-export {};
-
 /**
  * Large video sections with minimal custom controls.
  * - preload="none" in markup; nothing downloads until play.
  * - Muted autoplay only when the section is mostly in view, and never with
  *   prefers-reduced-motion or Save-Data. Pauses when it leaves the viewport.
  */
+import { track } from './track';
+
 type NetworkInformation = { saveData?: boolean };
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -24,7 +24,12 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
     unmute: mute?.dataset.labelUnmute ?? 'Attiva l’audio',
   };
   const autoplay = root.dataset.autoplay === 'true' && !reduceMotion && !saveData;
+  const videoId = root.dataset.videoId ?? 'video';
+  const videoTitle = root.dataset.videoTitle ?? '';
   let pausedByUser = false;
+  let startedBy: 'autoplay' | 'utente' | null = null;
+  let tracked = false;
+  const milestones = new Set<number>();
 
   const sync = () => {
     const playing = !video.paused && !video.ended;
@@ -37,12 +42,15 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
     }
   };
 
-  const play = () => video.play().catch(() => sync());
+  const play = (trigger: 'autoplay' | 'utente') => {
+    startedBy ??= trigger;
+    return video.play().catch(() => sync());
+  };
 
   toggle.addEventListener('click', () => {
     if (video.paused || video.ended) {
       pausedByUser = false;
-      play();
+      play('utente');
     } else {
       pausedByUser = true;
       video.pause();
@@ -51,8 +59,26 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
 
   mute?.addEventListener('click', () => {
     video.muted = !video.muted;
+    if (!video.muted) track('video_unmute', { video_id: videoId, video_current_time: Math.round(video.currentTime) });
     sync();
   });
+
+  video.addEventListener('play', () => {
+    if (tracked) return;
+    tracked = true;
+    track('video_start', { video_id: videoId, video_title: videoTitle, video_trigger: startedBy ?? 'utente' });
+  });
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration) return;
+    const percent = (video.currentTime / video.duration) * 100;
+    for (const mark of [25, 50, 75]) {
+      if (percent >= mark && !milestones.has(mark)) {
+        milestones.add(mark);
+        track('video_progress', { video_id: videoId, video_percent: mark });
+      }
+    }
+  });
+  video.addEventListener('ended', () => track('video_complete', { video_id: videoId }));
 
   ['play', 'pause', 'ended', 'volumechange'].forEach((type) => video.addEventListener(type, sync));
   video.addEventListener('error', () => {
@@ -65,7 +91,7 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
         if (entry.intersectionRatio >= 0.5) {
           if (autoplay && !pausedByUser && video.paused) {
             video.muted = true;
-            play();
+            play('autoplay');
           }
         } else if (!video.paused) {
           video.pause();

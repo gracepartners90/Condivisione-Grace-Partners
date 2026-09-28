@@ -1,4 +1,4 @@
-export {};
+import { track } from './track';
 
 /**
  * Immersive preview facade: the third-party experience (iframe) loads only on request.
@@ -11,6 +11,7 @@ document.querySelectorAll<HTMLElement>('[data-immersive]').forEach((root) => {
   if (!trigger || !stage || !src) return;
 
   trigger.addEventListener('click', () => {
+    track('preview_start', { experience_id: root.dataset.experienceId, cta_location: 'showcase' });
     const iframe = document.createElement('iframe');
     iframe.src = src;
     iframe.title = root.dataset.embedTitle ?? '';

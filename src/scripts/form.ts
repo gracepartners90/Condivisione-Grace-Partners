@@ -1,12 +1,12 @@
-export {};
-
 /**
  * Contact form controller.
  * - Accessible validation: inline errors (aria-invalid + aria-describedby) and an error summary.
- * - Never simulates a submission: with no endpoint configured it shows the "not active yet"
- *   panel with real alternatives (email, phone, pre-filled email draft).
+ * - Never simulates a submission: with no endpoint configured the page says so before the
+ *   fields, and submitting prepares a real email draft instead.
  * - Spam protection hooks: honeypot field and elapsed time sent along with the payload.
+ * - Measurement hooks per docs/cro/piano-misurazione.md (no personal data in events).
  */
+import { track } from './track';
 
 type FieldElement = HTMLInputElement | HTMLTextAreaElement;
 
@@ -42,10 +42,42 @@ function initForm(form: HTMLFormElement) {
   const failure = container.querySelector<HTMLElement>('[data-form-failure]');
   const honeypot = form.querySelector<HTMLInputElement>('[data-honeypot]');
   const endpoint = (form.dataset.endpoint ?? '').trim();
+  const formId = form.dataset.formId ?? 'richiesta';
+  const interestBoxes = [...form.querySelectorAll<HTMLInputElement>('input[name="interesse"]')];
   const startedAt = Date.now();
   const fields = [...form.querySelectorAll<FieldElement>('input:not([type="hidden"]):not([data-honeypot]), textarea')].filter(
     (f) => f.willValidate,
   );
+
+  // Preselect interests from ?interesse= (links from other pages) when the page did not preselect any.
+  const fromQuery = new URLSearchParams(window.location.search).getAll('interesse');
+  if (fromQuery.length && !interestBoxes.some((box) => box.checked)) {
+    interestBoxes.forEach((box) => {
+      if (fromQuery.includes(box.value)) box.checked = true;
+    });
+  }
+  const preselected = interestBoxes.filter((b) => b.checked).map((b) => b.value).join(',');
+
+  // Measurement: form_view (once, when half visible) and form_start (first interaction).
+  if ('IntersectionObserver' in window) {
+    const viewObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 0.5) return;
+        track('form_view', { form_id: formId, interest_preselected: preselected });
+        viewObserver.disconnect();
+      },
+      { threshold: 0.5 },
+    );
+    viewObserver.observe(form);
+  }
+  let started = false;
+  const onStart = () => {
+    if (started) return;
+    started = true;
+    track('form_start', { form_id: formId, interest_preselected: preselected });
+  };
+  form.addEventListener('input', onStart);
+  form.addEventListener('change', onStart);
 
   const showError = (field: FieldElement, show: boolean) => {
     const errorId = `${field.id}-error`;
@@ -84,6 +116,11 @@ function initForm(form: HTMLFormElement) {
     });
   });
 
+  const fieldLabel = (field: FieldElement) => {
+    const label = form.querySelector(`label[for="${CSS.escape(field.id)}"]`);
+    return (label?.getAttribute('data-label') ?? label?.textContent ?? field.name).replace(/\s*\*\s*$/, '').trim();
+  };
+
   const renderSummary = (invalid: FieldElement[]) => {
     if (!summary || !summaryList) return;
     summaryList.replaceChildren(
@@ -91,9 +128,7 @@ function initForm(form: HTMLFormElement) {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = `#${field.id}`;
-        const label = form.querySelector(`label[for="${CSS.escape(field.id)}"]`);
-        const name = (label?.getAttribute('data-label') ?? label?.textContent ?? field.name).replace(/\s*\*\s*$/, '').trim();
-        a.textContent = `${name}: ${messageFor(field, form)}`;
+        a.textContent = `${fieldLabel(field)}: ${messageFor(field, form)}`;
         a.addEventListener('click', (event) => {
           event.preventDefault();
           field.focus();
@@ -114,11 +149,18 @@ function initForm(form: HTMLFormElement) {
     data.delete(honeypot?.name ?? '_gotcha');
     data.set('_elapsed_ms', String(Date.now() - startedAt));
     data.set('_page', window.location.pathname);
+    data.set('_form', formId);
     return data;
   };
 
+  const interestLabels = (data: FormData) =>
+    data
+      .getAll('interesse')
+      .map((value) => interestBoxes.find((box) => box.value === value)?.dataset.label ?? String(value))
+      .join(', ');
+
   const mailtoDraft = (data: FormData) => {
-    const interests = data.getAll('interesse').join(', ');
+    const interests = interestLabels(data);
     const lines = [
       `Nome e cognome: ${data.get('nome') ?? ''}`,
       `Email: ${data.get('email') ?? ''}`,
@@ -128,7 +170,7 @@ function initForm(form: HTMLFormElement) {
       '',
       String(data.get('messaggio') ?? ''),
     ];
-    const subject = `Richiesta dal sito ITnode${interests ? ` — ${interests}` : ''}`;
+    const subject = `Richiesta dal sito ITnode${interests ? ` · ${interests}` : ''}`;
     const to = form.dataset.fallbackEmail ?? 'info@itnode.it';
     return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
   };
@@ -139,13 +181,18 @@ function initForm(form: HTMLFormElement) {
     panel.focus();
   };
 
+  const optionalFilled = (data: FormData) =>
+    ['telefono', 'azienda', 'messaggio'].filter((name) => String(data.get(name) ?? '').trim() !== '').join(',');
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (form.dataset.state === 'sending') return;
     if (failure) failure.hidden = true;
 
     const invalid = fields.filter((field) => !validate(field));
     renderSummary(invalid);
     if (invalid.length) {
+      track('form_error', { form_id: formId, error_type: 'validazione', error_fields: invalid.map((f) => f.name).join(',') });
       summary?.focus();
       return;
     }
@@ -154,11 +201,13 @@ function initForm(form: HTMLFormElement) {
 
     // A filled honeypot means an automated submission: do not send, and never fake a success.
     if (honeypot && honeypot.value.trim() !== '') {
+      track('form_error', { form_id: formId, error_type: 'spam' });
       reveal(failure);
       return;
     }
 
     if (!endpoint) {
+      track('form_error', { form_id: formId, error_type: 'endpoint-assente' });
       const draft = fallback?.querySelector<HTMLAnchorElement>('[data-mailto-draft]');
       if (draft) draft.href = mailtoDraft(data);
       form.hidden = true;
@@ -170,7 +219,7 @@ function initForm(form: HTMLFormElement) {
     const timer = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     form.setAttribute('aria-busy', 'true');
     form.dataset.state = 'sending';
-    if (submit) submit.disabled = true;
+    submit?.setAttribute('aria-disabled', 'true');
     setStatus(form.dataset.msgSending ?? 'Invio in corso…');
 
     try {
@@ -180,12 +229,27 @@ function initForm(form: HTMLFormElement) {
         headers: { Accept: 'application/json' },
         signal: controller.signal,
       });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) {
+        track('form_error', { form_id: formId, error_type: 'server', http_status: response.status });
+        throw new Error(`HTTP ${response.status}`);
+      }
+      track('form_submit', {
+        form_id: formId,
+        interest: data.getAll('interesse').map(String).sort().join(','),
+        optional_fields: optionalFilled(data),
+      });
+      const email = String(data.get('email') ?? '');
+      success?.querySelectorAll<HTMLElement>('[data-success-email]').forEach((el) => (el.textContent = email));
       form.reset();
       form.hidden = true;
       setStatus('');
+      form.dataset.state = 'sent';
       reveal(success);
-    } catch {
+    } catch (error) {
+      if (!(error instanceof Error && error.message.startsWith('HTTP'))) {
+        const type = error instanceof DOMException && error.name === 'AbortError' ? 'timeout' : 'rete';
+        track('form_error', { form_id: formId, error_type: type });
+      }
       form.dataset.state = 'error';
       setStatus('');
       const draft = failure?.querySelector<HTMLAnchorElement>('[data-mailto-draft]');
@@ -194,8 +258,8 @@ function initForm(form: HTMLFormElement) {
     } finally {
       window.clearTimeout(timer);
       form.removeAttribute('aria-busy');
+      submit?.removeAttribute('aria-disabled');
       if (form.dataset.state === 'sending') form.dataset.state = 'idle';
-      if (submit) submit.disabled = false;
     }
   });
 }

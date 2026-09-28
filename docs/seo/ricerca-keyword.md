@@ -3,9 +3,9 @@ titolo: Ricerca keyword e analisi degli intenti (qualitativa)
 owner: seo-content
 contributi: [brand-strategist, seo-technical]
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, osservazione delle SERP con WebSearch del 2026-09-28 (URL nella sezione Fonti)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, osservazione delle SERP con WebSearch del 2026-09-28 (URL nella sezione Fonti)]
 ---
 
 # Ricerca keyword e analisi degli intenti
@@ -23,8 +23,8 @@ fonti: [docs/brief/linee-guida.md, osservazione delle SERP con WebSearch del 202
 
 1. **«Sito Interattivo Immersivo» e «SIII» non sono termini di ricerca consolidati.** Nessun risultato li usa come nome di un prodotto. In SERP compaiono articoli sul «web design immersivo» e installazioni fisiche (sale e pareti immersive). Conseguenza: ITnode può appropriarsi della definizione, con un vantaggio per AEO e GEO, ma la domanda di ricerca va intercettata con i termini che le persone usano già: *tour virtuale interattivo*, *virtual tour per aziende*, *tour virtuale 3D*, *tour 360°*.
 2. **Il mercato del tour virtuale e del tour 360° è affollato e basato sul prezzo.** Fotografi certificati Google Street View, rivenditori Matterport, software (3DVista, CloudPano, Kuula) e pagine «quanto costa un virtual tour». Il SIII si distingue per funzione: è un sito con azioni commerciali, non un contenuto da guardare. La comparazione tour 360°/SIII chiesta dalle linee guida (§10) è anche la scelta SEO giusta: la SERP informativa più ricca è proprio quella sulla «differenza tra tour 360 e tour 3D».
-3. **«Puglia Digitale» è un nome conteso.** L'intento dominante è istituzionale: l'agenda digitale della Regione Puglia (Puglia Digitale 2020, PugliaDigitale2030). Esiste inoltre un portale omonimo, puglia-digitale.it, realizzato dall'associazione Campo e controcampo con il contributo del Consiglio regionale, con tour virtuali di Alberobello, Gallipoli, Martina Franca, Monopoli, Ostuni, Polignano, San Giovanni Rotondo e Trani `[DA VERIFICARE: estratti di consiglio.puglia.it, TTG Italia, Leccesette]`. La pagina di ITnode deve disambiguare sempre, con il nome del progetto, «ITnode», il dominio lapugliadigitale.it e «destination marketing».
-4. **«Città Digitali» ha omonimi e due domini.** In SERP ci sono schede di franchising (Infofranchising, BeTheBoss, AprireInFranchising, TuttiFranchising, Franchising.cloud), il portale su cittàdigitali.it (dominio con accento; la sua pagina Contatti cita iTNode Srl) e cittadigitali.it (titolo «CITTA' DIGITALI», con una pagina su Biella). Compaiono anche omonimi: «Città Digitale», un prodotto per i siti dei Comuni (cittadigitale.it), il neologismo Treccani «città digitale» e le smart city di AgID. Le linee guida indicano www.cittadigitali.it `[DA VERIFICARE: dominio canonico]`.
+3. **«Puglia Digitale» è un nome conteso.** L'intento dominante è istituzionale: l'agenda digitale della Regione Puglia (Puglia Digitale 2020, PugliaDigitale2030). Esiste inoltre un portale omonimo, puglia-digitale.it, realizzato dall'associazione Campo e controcampo con il contributo del Consiglio regionale, con tour virtuali di Alberobello, Gallipoli, Martina Franca, Monopoli, Ostuni, Polignano, San Giovanni Rotondo e Trani `[DA VERIFICARE: estratti di consiglio.puglia.it, TTG Italia, Leccesette]`. La pagina di ITnode deve disambiguare sempre, con il nome del progetto, «ITnode», il dominio lapugliadigitale.it e «destination marketing». Le conseguenze sull'attribuzione del progetto sono nel brief consolidato (§0 e A1).
+4. **«Città Digitali» ha omonimi e due domini.** In SERP ci sono schede di franchising (Infofranchising, BeTheBoss, AprireInFranchising, TuttiFranchising, Franchising.cloud), il portale su cittàdigitali.it (dominio con accento; negli estratti la sua pagina Contatti compare insieme ai dati di «iTNode Srl» `[DA VERIFICARE]`) e cittadigitali.it (titolo «CITTA' DIGITALI», con una pagina su Biella). Compaiono anche omonimi: «Città Digitale», un prodotto per i siti dei Comuni (cittadigitale.it), il neologismo Treccani «città digitale» e le smart city di AgID. Le linee guida indicano www.cittadigitali.it `[DA VERIFICARE: dominio canonico]`.
 5. **Anche il brand è ambiguo.** Cercando «ITnode» si trovano ITNODE S.r.l. (Instagram @itnodedigital, registri camerali, itnode.it), ma anche ITNode (Australia, assistenza informatica per studi dentistici), IT NoDe (Gurugram, India) e Webnode. Sul Web la grafia è incoerente: ItNode, iTNode, ITNODE. Il nome «Giacomo Lenoci» ha diversi omonimi (LinkedIn mostra 6 profili). Servono una definizione dell'entità identica ovunque e collegamenti `sameAs` corretti nei dati strutturati.
 6. **I concetti «ombrello» hanno SERP non commerciali.** «Digitalizzazione territoriale» è dominata da PA, PNRR, AgID e articoli accademici. «Destination marketing Puglia» è dominata da Pugliapromozione, Regione Puglia e tesi di laurea. Una pagina di servizio di ITnode non ha possibilità realistiche su queste query di testa: vanno usate come entità di contesto (definizioni, testo), non come query primarie.
 7. **«Esperienze immersive per aziende» porta a VR/AR ed eventi fisici** (sale immersive, fiere, laser show, formazione). Per ITnode serve solo se qualificata: esperienze immersive *sul Web*, da desktop e smartphone.
@@ -76,9 +76,11 @@ fonti: [docs/brief/linee-guida.md, osservazione delle SERP con WebSearch del 202
 1. **Per il cliente.** Può darci accesso in lettura a Google Search Console di itnode.it (e dei portali, se possibile) e, se esiste, a Google Ads/Keyword Planner?
 2. **Per il cliente e seo-technical.** Il sito attuale ha pagine con traffico o link? In SERP compare almeno `itnode.it/informativa-privacy/`, che serve anche alla mappa dei redirect.
 3. **Per il cliente.** Qual è il dominio canonico di Città Digitali: www.cittadigitali.it (linee guida) o cittàdigitali.it (dominio con accento visto in SERP)? Per Acquaviva è acquavivadigitale.com (linee guida) o esiste anche acquavivadigitale.it?
-4. **Per il cliente.** Che rapporto c'è tra Puglia Digitale di ITnode e il portale puglia-digitale.it (Campo e controcampo)? La collaborazione con BariExperience va citata?
-5. **Per il cliente.** Il modello in franchising di Città Digitali è attivo e va presidiato sul sito? Oggi non è nelle linee guida.
-6. **Per il cliente.** Che tecnologia usa il SIII: foto sferiche a 360°, scansione 3D o modelli 3D?
+4. **Già nel brief consolidato.** Le seguenti domande hanno effetto anche sulla SEO e si seguono lì:
+   - D1: il rapporto tra Puglia Digitale e il portale puglia-digitale.it;
+   - A3: la collaborazione con BariExperience;
+   - D5 e DR5: il franchising di Città Digitali, che se attivo richiede una pagina per «Città Digitali franchising»;
+   - D4: la tecnologia del SIII, da cui dipende l'uso di «tour virtuale 3D».
 
 ## Decisioni richieste
 

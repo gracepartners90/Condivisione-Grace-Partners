@@ -1,0 +1,10 @@
+vecchio_url,nuovo_url,codice,note
+https://itnode.it/,https://itnode.it/,200,"Home: URL invariato, nessun redirect; va verificato che risponda 200. È uno dei due soli URL del sito attuale risultati indicizzati nella ricerca web del 2026-09-28 (itnode.it non è raggiungibile dall'ambiente). Mappa PARZIALE: vedi l'ultima riga."
+https://itnode.it/informativa-privacy/,https://itnode.it/privacy-policy/,301,"Stesso argomento: l'informativa privacy. Il nuovo slug segue l'etichetta «Privacy Policy» del footer (linee guida, sez. 24). Il testo va aggiornato per il nuovo sito (form, cookie). Fonte: ricerca web del 2026-09-28."
+https://itnode.it/informativa-privacy,https://itnode.it/privacy-policy/,301,"Variante senza barra finale: stessa destinazione in un salto, senza passare da /informativa-privacy/. Da testare: non tutti gli hosting applicano una regola a entrambe le varianti."
+https://www.itnode.it/informativa-privacy/,https://itnode.it/privacy-policy/,301,"Variante con www: un solo salto verso l'URL finale. [DA VERIFICARE: comportamento attuale di www.itnode.it]"
+http://itnode.it/informativa-privacy/,https://itnode.it/privacy-policy/,301,"Variante http: obiettivo un salto; tollerati due se l'hosting forza HTTPS prima delle regole sui percorsi."
+http://itnode.it/,https://itnode.it/,301,"Normalizzazione del protocollo (HTTPS)."
+https://www.itnode.it/,https://itnode.it/,301,"Normalizzazione dell'host: dominio canonico senza www, come proposto nelle specifiche (sez. 1.1). [DA VERIFICARE: host canonico attuale]"
+http://www.itnode.it/,https://itnode.it/,301,"Normalizzazione di protocollo e host in un solo salto."
+[DA FORNIRE: inventario completo degli URL attuali],,,"Riga segnaposto, da saltare nei test. Servono l'export di Search Console (Pagine e Prestazioni degli ultimi 16 mesi), la sitemap attuale, un crawl completo o l'accesso al CMS, e i backlink. Dalla ricerca web risultano anche le voci di menu Tour Virtuali, Esperienze Digitali, Il Digital Marketing, L'E-Commerce e Contatti, con URL non noti: potrebbero essere ancore della home. Destinazioni proposte in docs/seo/specifiche-tecniche.md, sez. 6."
