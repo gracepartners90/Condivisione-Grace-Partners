@@ -1,0 +1,100 @@
+---
+/**
+ * Base layout: head (fonts, SEO, icons, JSON-LD), skip link, header, breadcrumbs,
+ * main landmark and footer. Every page passes its id from src/data/pages.ts.
+ */
+import '../styles/global.css';
+import SeoHead from '../components/seo/SeoHead.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import { pages, crumbsFor, type PageId } from '../data/pages';
+import { graph } from '../lib/structured-data';
+import schibstedUrl from '@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url';
+import fragmentUrl from '@fontsource/fragment-mono/files/fragment-mono-latin-400-normal.woff2?url';
+
+interface Props {
+  page: PageId;
+  /** JSON-LD nodes; published as one @graph. Omit on noindex pages. */
+  schema?: object[];
+  /** Colour of the hero at the top of the page (header and breadcrumb bar match it). */
+  theme?: 'light' | 'dark';
+  hasForm?: boolean;
+}
+
+const { page, schema, theme = 'light', hasForm = false } = Astro.props;
+const meta = pages[page];
+const crumbs = page === '404' ? [] : crumbsFor(page);
+const pageType = ['privacy-policy', 'cookie-policy'].includes(page) ? 'legale' : page;
+
+// Latin subset only: it covers Italian (à è é ì ò ù « » ’ €).
+const latinRange =
+  'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD';
+const fontFaces = `@font-face{font-family:'Schibsted Grotesk Variable';font-style:normal;font-display:swap;font-weight:400 900;src:url(${schibstedUrl}) format('woff2-variations'),url(${schibstedUrl}) format('woff2');unicode-range:${latinRange}}@font-face{font-family:'Fragment Mono';font-style:normal;font-display:swap;font-weight:400;src:url(${fragmentUrl}) format('woff2');unicode-range:${latinRange}}`;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={schibstedUrl} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontFaces}></style>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <SeoHead meta={meta} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content={theme === 'dark' ? '#0F1317' : '#F3F1EC'} />
+    {schema && !meta.noindex && <JsonLd data={graph(...schema)} />}
+    <script type="speculationrules" is:inline>
+      {"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"selector_matches":"[target=_blank], [download]"}}]},"eagerness":"moderate"}]}
+    </script>
+  </head>
+  <body data-page-type={pageType}>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
+    <div class="scroll-sentinel" data-scroll-sentinel aria-hidden="true"></div>
+    <Header current={page} theme={theme} hasForm={hasForm} />
+    {
+      crumbs.length > 0 && (
+        <div class:list={['crumbs-bar', theme === 'dark' ? 'surface-notte' : 'surface-calce']}>
+          <div class="wrap">
+            <Breadcrumbs crumbs={crumbs} />
+          </div>
+        </div>
+      )
+    }
+    <main id="contenuto" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/track';
+      import '../scripts/header';
+      import '../scripts/reveal';
+    </script>
+  </body>
+</html>
+
+<style>
+  .scroll-sentinel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 16px;
+    pointer-events: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  .crumbs-bar {
+    padding-top: var(--space-xs);
+  }
+</style>

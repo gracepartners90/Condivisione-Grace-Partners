@@ -1,0 +1,372 @@
+---
+/**
+ * Header + MobileMenu (docs/ux/sitemap.md §3–4, docs/creativa/direzione-visiva.md §7.8).
+ * Sticky from load (no layout jump); after the first scroll it gains a hairline.
+ * Below 1024 px the navigation moves into a full-screen <dialog>.
+ */
+import Wordmark from '../ui/Wordmark.astro';
+import Cta from '../ui/Cta.astro';
+import { nav, site } from '../../data/site';
+import type { PageId } from '../../data/pages';
+
+interface Props {
+  current: PageId;
+  /** Colour of the hero under the header in its top state. */
+  theme?: 'light' | 'dark';
+  /** Pages with a contact form: "Parliamone" scrolls to #richiesta instead of /contatti/. */
+  hasForm?: boolean;
+}
+
+const { current, theme = 'light', hasForm = false } = Astro.props;
+const ctaHref = hasForm ? '#richiesta' : '/contatti/';
+
+const menuItems = [
+  { id: 'siii', num: '01', bearing: '000°', label: 'SIII', desc: 'Siti Interattivi Immersivi', href: '/siii/' },
+  { id: 'puglia-digitale', num: '02', bearing: '120°', label: 'Puglia Digitale', desc: 'Dalla costa all’entroterra', href: '/puglia-digitale/' },
+  { id: 'citta-digitali', num: '03', bearing: '240°', label: 'Città Digitali', desc: 'Le attività del territorio, online', href: '/citta-digitali/' },
+  { id: 'contatti', num: '', bearing: '', label: 'Contatti', desc: '', href: '/contatti/' },
+];
+---
+
+<header class:list={['site-header', theme === 'dark' ? 'surface-notte' : 'surface-calce']} data-site-header data-scrolled="false">
+  <div class="site-header__bar wrap">
+    <a class="site-header__logo" href="/" aria-current={current === 'home' ? 'page' : undefined} data-track="nav_click" data-nav-item="home" data-nav-location="header">
+      <Wordmark />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Principale">
+      <ul role="list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current === item.id ? 'page' : undefined} data-track="nav_click" data-nav-item={item.id} data-nav-location="header">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <Cta href={ctaHref} label="Parliamone" variant="primary" arrow="none" ctaId="header-parliamone" location="header" class="site-header__cta" />
+
+    <button type="button" class="site-header__menu-btn" aria-haspopup="dialog" aria-expanded="false" data-menu-open>Menu</button>
+  </div>
+
+  <dialog class="mobile-menu surface-notte" aria-label="Menu" data-mobile-menu>
+    <div class="mobile-menu__inner wrap">
+      <div class="mobile-menu__bar">
+        <span class="mobile-menu__logo" aria-hidden="true"><Wordmark label="" /></span>
+        <button type="button" class="mobile-menu__close" data-menu-close>Chiudi</button>
+      </div>
+
+      <nav aria-label="Menu principale">
+        <ol role="list" class="mobile-menu__list">
+          {
+            menuItems.map((item, i) => (
+              <li style={`--i: ${i}`}>
+                <a href={item.href} aria-current={current === item.id ? 'page' : undefined} data-track="nav_click" data-nav-item={item.id} data-nav-location="menu-mobile">
+                  {item.num && (
+                    <span class="mobile-menu__num t-label" aria-hidden="true">
+                      {item.num} · {item.bearing}
+                    </span>
+                  )}
+                  <span class="mobile-menu__name">{item.label}</span>
+                  {item.desc && <span class="mobile-menu__desc">{item.desc}</span>}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="mobile-menu__foot">
+        <Cta href={ctaHref} label="Parliamone" variant="primary" arrow={hasForm ? 'down' : 'right'} ctaId="menu-mobile-parliamone" location="menu-mobile" />
+        <ul role="list" class="mobile-menu__contacts t-label">
+          <li><a href={site.phone.href} data-track="contact_click" data-cta-id="menu-mobile-telefono" data-cta-location="menu-mobile" data-contact-method="telefono">Chiama {site.phone.display}</a></li>
+          <li><a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="menu-mobile-email" data-cta-location="menu-mobile" data-contact-method="email">Scrivi a {site.email}</a></li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color var(--dur-250) var(--ease-out),
+      background-color var(--dur-250) var(--ease-out);
+    view-transition-name: site-header;
+  }
+
+  .site-header[data-scrolled='true'] {
+    border-bottom-color: var(--line);
+  }
+
+  /* Short viewports (landscape phones, 400% zoom): not sticky (WCAG 1.4.10). */
+  @media (max-height: 29.99em) {
+    .site-header {
+      position: relative;
+    }
+  }
+
+  .site-header__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    min-height: var(--header-h);
+  }
+
+  .site-header__logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    margin-right: auto;
+    color: var(--wordmark);
+    text-decoration: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-l);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .site-header__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.55rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .site-header__nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Current page: a node before the label, not colour alone. */
+  .site-header__nav a[aria-current='page']::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background: var(--node);
+  }
+
+  .site-header :global(.site-header__cta) {
+    font-size: 0.9375rem;
+    min-height: 2.75rem;
+    padding: 0.6em 1.2em;
+  }
+
+  .site-header__menu-btn {
+    display: none;
+    align-items: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding: 0 0.25rem;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    font-weight: var(--fw-strong);
+    font-size: 1rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--link-underline);
+  }
+
+  @media (max-width: 63.99em) {
+    :global(.js) .site-header__nav {
+      display: none;
+    }
+
+    :global(.js) .site-header__menu-btn {
+      display: inline-flex;
+    }
+
+    .site-header__bar {
+      gap: var(--space-s);
+    }
+  }
+
+  @media (max-width: 22.49em) {
+    :global(.js) .site-header :global(.site-header__cta) {
+      display: none;
+    }
+  }
+
+  /* ─── Mobile menu ─── */
+  :global(html:has(dialog[data-mobile-menu][open])) {
+    overflow: hidden;
+  }
+
+  .mobile-menu {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    clip-path: inset(0 0 100% 0);
+    transition:
+      clip-path var(--dur-250) var(--ease-in-out),
+      overlay var(--dur-250) allow-discrete,
+      display var(--dur-250) allow-discrete;
+  }
+
+  .mobile-menu[open] {
+    clip-path: inset(0);
+  }
+
+  @starting-style {
+    .mobile-menu[open] {
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+
+  .mobile-menu::backdrop {
+    background: var(--notte);
+  }
+
+  .mobile-menu__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding-bottom: var(--space-xl);
+  }
+
+  .mobile-menu__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-h);
+  }
+
+  .mobile-menu__close {
+    order: 2;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding: 0 0.25rem;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    font-weight: var(--fw-strong);
+    font-size: 1rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--link-underline);
+  }
+
+  .mobile-menu__list {
+    margin: var(--space-xl) 0 var(--space-l);
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-menu__list li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mobile-menu__list a {
+    display: grid;
+    gap: 0.25rem;
+    min-height: 3rem;
+    padding-block: var(--space-s);
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .mobile-menu__num {
+    color: var(--fg-2);
+  }
+
+  .mobile-menu__name {
+    font-size: clamp(2rem, 1.2rem + 4vw, 3.25rem);
+    font-weight: var(--fw-strong);
+    line-height: 1;
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .mobile-menu__desc {
+    color: var(--fg-2);
+    font-size: var(--fs-small);
+  }
+
+  .mobile-menu__list a[aria-current='page'] .mobile-menu__name::before {
+    content: '';
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-right: 0.6rem;
+    border-radius: 50%;
+    background: var(--node);
+    vertical-align: middle;
+  }
+
+  .mobile-menu__foot {
+    display: grid;
+    gap: var(--space-m);
+    margin-top: auto;
+    justify-items: start;
+  }
+
+  .mobile-menu__contacts {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-menu__contacts a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    text-decoration-color: var(--link-underline);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-menu[open] .mobile-menu__list li {
+      animation: menu-item var(--dur-250) var(--ease-out) both;
+      animation-delay: calc(var(--i) * 40ms);
+    }
+  }
+
+  @keyframes menu-item {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

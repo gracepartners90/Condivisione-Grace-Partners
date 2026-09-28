@@ -1,0 +1,40 @@
+---
+/**
+ * <head> metadata per docs/seo/specifiche-tecniche.md §2.1.
+ * Values come from src/data/pages.ts; canonical URLs always end with "/".
+ */
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT, type PageMeta } from '../../data/pages';
+
+interface Props {
+  meta: PageMeta;
+}
+
+const { meta } = Astro.props;
+const { title, description, noindex = false } = meta;
+const ogImage = meta.ogImage ?? DEFAULT_OG_IMAGE;
+const ogImageAlt = meta.ogImageAlt ?? DEFAULT_OG_IMAGE_ALT;
+const canonical = new URL(meta.path, Astro.site).href;
+const ogTitle = title.replace(/\s\|\sITnode$/, '');
+const ogImageUrl = new URL(ogImage, Astro.site).href;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex ? <meta name="robots" content="noindex" /> : <meta name="robots" content="max-image-preview:large" />}
+{!noindex && <link rel="canonical" href={canonical} />}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ITnode" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={description} />
+{!noindex && <meta property="og:url" content={canonical} />}
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:alt" content={ogImageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+<meta name="twitter:image:alt" content={ogImageAlt} />

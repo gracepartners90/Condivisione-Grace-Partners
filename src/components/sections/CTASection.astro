@@ -1,0 +1,113 @@
+---
+/**
+ * CTASection — variants:
+ * - `band`: closing statement with a CTA and quick contacts (Home).
+ * - `form`: closing statement followed by the contact form (line pages).
+ */
+import Passage from '../ui/Passage.astro';
+import Cta from '../ui/Cta.astro';
+import { site } from '../../data/site';
+
+interface Props {
+  variant?: 'band' | 'form';
+  eyebrow?: string;
+  title: string[];
+  text?: string;
+  cta?: { label: string; href: string; id: string };
+  location?: string;
+  surface?: 'calce' | 'pietra' | 'notte';
+  id?: string;
+}
+
+const { variant = 'band', eyebrow, title, text, cta, location = 'chiusura', surface = 'notte', id } = Astro.props;
+const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
+---
+
+<section id={id} class:list={['cta-section', `cta-section--${variant}`, `surface-${surface}`]} aria-labelledby={`${id ?? 'chiusura'}-title`}>
+  <div class="wrap grid cta-section__grid">
+    {eyebrow && <p class="cta-section__eyebrow t-label">{eyebrow}</p>}
+    <Passage as="h2" id={`${id ?? 'chiusura'}-title`} registers={title} size={variant === 'band' ? 'xl' : 'l'} class="cta-section__title" />
+    {
+      (text || cta) && (
+        <div class="cta-section__body" data-reveal>
+          {text && <p class="cta-section__text">{text}</p>}
+          {cta && <Cta href={cta.href} label={cta.label} variant="primary" size="large" ctaId={cta.id} location={location} />}
+          {variant === 'band' && (
+            <ul role="list" class="cta-section__contacts t-label">
+              <li>
+                <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${trackPrefix}-email`} data-cta-location={location} data-contact-method="email">
+                  Scrivi a {site.email}
+                </a>
+              </li>
+              <li>
+                <a href={site.phone.href} data-track="contact_click" data-cta-id={`${trackPrefix}-telefono`} data-cta-location={location} data-contact-method="telefono">
+                  Chiama {site.phone.display}
+                </a>
+              </li>
+            </ul>
+          )}
+        </div>
+      )
+    }
+    <slot />
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding-block: var(--section-pad);
+  }
+
+  .cta-section__grid {
+    row-gap: var(--space-xl);
+  }
+
+  .cta-section__eyebrow {
+    grid-column: 1 / -1;
+    color: var(--fg-2);
+  }
+
+  .cta-section :global(.cta-section__title) {
+    grid-column: 1 / -1;
+  }
+
+  .cta-section__body {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--space-l);
+    justify-items: start;
+  }
+
+  .cta-section__text {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+    color: var(--fg);
+  }
+
+  .cta-section__contacts {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta-section__contacts a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+  }
+
+  @media (max-width: 43.74em) {
+    .cta-section--band .cta-section__body :global(.cta) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .cta-section--band .cta-section__body {
+      grid-column: 7 / span 6;
+    }
+  }
+</style>

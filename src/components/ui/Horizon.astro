@@ -1,0 +1,366 @@
+---
+/**
+ * L'Orizzonte (visual direction §1.1, §5): a 1 px line graduated 0–360° like the compass
+ * of a 360° viewer, carrying real places at their true bearing from the office.
+ * - Built at build time (SVG ticks + HTML labels), no JavaScript.
+ * - The strip spans −90°…450° so it can rotate without gaps; field of view and centre
+ *   change per breakpoint via custom properties.
+ * - Rotation on scroll uses CSS scroll-driven animations inside @supports; static elsewhere
+ *   and with prefers-reduced-motion.
+ * Decorative: aria-hidden. The places have real links further down the page.
+ */
+import { formatBearing, formatKm } from '../../lib/geo';
+
+export type HorizonPlace = { id: string; name: string; bearing: number; km: number };
+
+interface Props {
+  places: HorizonPlace[];
+  /** Degrees of rotation while the hero scrolls out. */
+  rotate?: number;
+  class?: string;
+}
+
+const { places, rotate = 60, class: className } = Astro.props;
+
+const START = -90;
+const SPAN = 540;
+const pos = (b: number) => ((b - START) / SPAN) * 100;
+
+// Ticks every 5° (6 px), 15° (12 px) and 45° (20 px), below the line.
+let ticks = '';
+for (let d = START; d <= START + SPAN; d += 5) {
+  const len = d % 45 === 0 ? 20 : d % 15 === 0 ? 12 : 6;
+  ticks += `M${d} 0V${len}`;
+}
+
+const cardinal: Record<number, string> = { 0: 'N', 90: 'E', 180: 'S', 270: 'O' };
+const degreeLabels = [] as { at: number; text: string }[];
+for (let d = START; d <= START + SPAN; d += 45) {
+  const norm = ((d % 360) + 360) % 360;
+  degreeLabels.push({ at: pos(d), text: `${formatBearing(norm)}${cardinal[norm] ? ` ${cardinal[norm]}` : ''}` });
+}
+
+// Group places closer than 12° into one label (visual direction §5).
+const sorted = [...places].sort((a, b) => a.bearing - b.bearing);
+const groups: HorizonPlace[][] = [];
+for (const p of sorted) {
+  const last = groups.at(-1);
+  if (last && p.bearing - last.at(-1)!.bearing < 12) last.push(p);
+  else groups.push([p]);
+}
+
+type Label = { at: number; end: number; row: number; full: string; compact: string[]; key: string; anchor: string };
+
+// Centre bearing per breakpoint (must match the CSS below): labels past the centre hang to the
+// left of their node, so they never run off the right edge.
+const CENTERS = { m: 250, t: 170, d: 170 };
+const anchorClasses = (b: number) =>
+  (Object.entries(CENTERS) as [string, number][])
+    .filter(([, c]) => b > c)
+    .map(([bp]) => `horizon__label--${bp}-left`)
+    .join(' ');
+const labels: Label[] = [];
+const nodes: { at: number; key: string; i: number }[] = [];
+
+groups.forEach((group, gi) => {
+  const first = group[0].bearing;
+  const last = group.at(-1)!.bearing;
+  const names = group.map((p) => p.name.replace(' delle Murge', '').replace(' in Puglia', '')).join(' · ');
+  const bearingText = group.length > 1 ? `${formatBearing(first).slice(0, -1)}–${formatBearing(last)}` : formatBearing(first);
+  const kms = group.map((p) => p.km);
+  const kmText =
+    group.length > 1
+      ? `${Math.round(Math.min(...kms))}–${formatKm(Math.max(...kms))}`
+      : formatKm(kms[0]);
+  const full = `${names} — ${bearingText} · ${kmText}`;
+  const compact = [names, bearingText];
+
+  // Draw at the true bearing and at ±360° when inside the strip, so rotation stays seamless.
+  for (const shift of [-360, 0, 360]) {
+    const b0 = first + shift;
+    if (b0 < START || b0 > START + SPAN) continue;
+    labels.push({ at: pos(b0), row: gi % 2, full, compact, key: `${gi}${shift}`, anchor: anchorClasses(last + shift), end: pos(last + shift) });
+    group.forEach((p, i) => nodes.push({ at: pos(p.bearing + shift), key: `${p.id}${shift}`, i: gi + i }));
+  }
+});
+---
+
+<div class:list={['horizon', className]} style={`--rotate: ${rotate}`} aria-hidden="true">
+  <div class="horizon__view">
+  <div class="horizon__strip">
+    <svg class="horizon__ticks" viewBox={`${START} 0 ${SPAN} 20`} preserveAspectRatio="none" focusable="false">
+      <path d={ticks} vector-effect="non-scaling-stroke"></path>
+    </svg>
+    {degreeLabels.map((l) => <span class="horizon__degree" style={`left: ${l.at}%`}>{l.text}</span>)}
+    {
+      labels.map((l) => (
+        <span class:list={['horizon__label', `horizon__label--row${l.row}`, l.anchor]} style={`--start: ${l.at}%; --end: ${l.end}%`}>
+          <span class="horizon__label-full">{l.full}</span>
+          <span class="horizon__label-compact">
+            <span>{l.compact[0]}</span>
+            <span>{l.compact[1]}</span>
+          </span>
+        </span>
+      ))
+    }
+    {
+      nodes.map((n) => (
+        <span class="horizon__node" style={`left: ${n.at}%; --i: ${n.i}`}>
+          <span class="horizon__ping" />
+        </span>
+      ))
+    }
+  </div>
+  </div>
+</div>
+
+<style>
+  .horizon {
+    /* Field of view and centre bearing per breakpoint (visual direction §5). */
+    --fov: 100;
+    --center: 250;
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    height: 0;
+    border-top: 1px solid var(--fg);
+    color: var(--fg-2);
+  }
+
+  @media (min-width: 43.75em) {
+    .horizon {
+      --fov: 150;
+      --center: 170;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .horizon {
+      --fov: 200;
+      --center: 170;
+    }
+  }
+
+  /* The visible window: labels and ticks fade out at the screen edges instead of being cut
+     mid-word while the horizon rotates. The line itself (border-top above) stays full-bleed. */
+  .horizon__view {
+    --bleed: 16px;
+    position: absolute;
+    top: calc(-1 * var(--bleed));
+    left: 0;
+    width: 100%;
+    height: 11rem;
+    overflow: clip;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+    pointer-events: none;
+  }
+
+  .horizon__strip {
+    position: absolute;
+    top: var(--bleed);
+    left: calc((0.5 - (var(--center) + 90) / var(--fov)) * 100%);
+    width: calc(540 / var(--fov) * 100%);
+    height: 0;
+  }
+
+  .horizon__ticks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    overflow: visible;
+    stroke: var(--fg);
+    stroke-width: 1px;
+    opacity: 0.55;
+  }
+
+  .horizon__degree,
+  .horizon__label {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .horizon__degree {
+    top: 26px;
+    transform: translateX(-50%);
+    opacity: 0.7;
+  }
+
+  /* Place labels hang from the line with a leader, in two alternating rows. */
+  .horizon__label {
+    --drop: 52px;
+    top: var(--drop);
+    left: var(--start);
+    padding-left: 0.6rem;
+    color: var(--fg);
+  }
+
+  .horizon__label::before {
+    left: 0;
+  }
+
+  /* Hanging to the left of the group's last node. */
+  @media (max-width: 43.74em) {
+    .horizon__label--m-left {
+      left: var(--end);
+      transform: translateX(-100%);
+      padding: 0 0.6rem 0 0;
+    }
+
+    .horizon__label--m-left::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  @media (min-width: 43.75em) and (max-width: 63.99em) {
+    .horizon__label--t-left {
+      left: var(--end);
+      transform: translateX(-100%);
+      padding: 0 0.6rem 0 0;
+    }
+
+    .horizon__label--t-left::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .horizon__label--d-left {
+      left: var(--end);
+      transform: translateX(-100%);
+      padding: 0 0.6rem 0 0;
+    }
+
+    .horizon__label--d-left::before {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  .horizon__label--row1 {
+    --drop: 76px;
+  }
+
+  /* Leader line from the horizon down to the first text line. */
+  .horizon__label::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--drop));
+    width: 1px;
+    height: calc(var(--drop) + 0.6em);
+    background: var(--place);
+  }
+
+  .horizon__label-full {
+    display: none;
+  }
+
+  .horizon__label-compact > span {
+    display: block;
+  }
+
+  @media (max-width: 43.74em) {
+    .horizon__label {
+      --drop: 48px;
+    }
+
+    .horizon__label--row1 {
+      --drop: 92px;
+    }
+
+    .horizon__label-compact > span + span {
+      color: var(--fg-2);
+    }
+  }
+
+  @media (min-width: 43.75em) {
+    .horizon__label-full {
+      display: inline;
+    }
+
+    .horizon__label-compact {
+      display: none;
+    }
+  }
+
+  .horizon__node {
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 50%;
+    background: var(--place);
+  }
+
+  .horizon__ping {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid var(--place);
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .horizon__ticks,
+    .horizon__degree,
+    .horizon__label {
+      animation-name: horizon-fade;
+      animation-duration: var(--dur-500);
+      animation-timing-function: var(--ease-out);
+      animation-delay: 150ms;
+      animation-fill-mode: both;
+    }
+
+    .horizon__ping {
+      animation-name: horizon-ping;
+      animation-duration: var(--dur-1000);
+      animation-timing-function: var(--ease-out);
+      animation-delay: calc(450ms + var(--i) * 120ms);
+      animation-fill-mode: both;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      /* Longhand only: the minifier merges a shorthand with animation-timeline into an invalid rule. */
+      .horizon__strip {
+        animation-name: horizon-rotate;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+    }
+  }
+
+  @keyframes horizon-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes horizon-ping {
+    0% {
+      transform: scale(0.6);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  @keyframes horizon-rotate {
+    to {
+      transform: translateX(calc(var(--rotate) / -540 * 100%));
+    }
+  }
+</style>

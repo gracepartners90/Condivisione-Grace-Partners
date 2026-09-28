@@ -1,0 +1,157 @@
+---
+/**
+ * Il Passaggio: statements in two registers — departure and arrival, the second
+ * offset to the right (visual direction §1.5). Authored line breaks come from the
+ * content ("\n" inside a register), never from the browser.
+ */
+interface Props {
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+  registers: string[];
+  /** Scale of the first register; the second may step down, never up. */
+  size?: 'xxl' | 'xl' | 'l' | 'm';
+  secondSize?: 'xl' | 'l' | 'm' | 's' | 'same';
+  /** Offset of the second register: two columns on desktop, one on tablet. */
+  indent?: 'default' | 'none' | 'wide';
+  cascade?: boolean;
+  reveal?: boolean;
+  id?: string;
+  class?: string;
+  tabindex?: number;
+}
+
+const {
+  as: Tag = 'p',
+  registers,
+  size = 'l',
+  secondSize = 'same',
+  indent = 'default',
+  cascade = false,
+  reveal = true,
+  id,
+  class: className,
+  tabindex,
+} = Astro.props;
+
+let lineIndex = 0;
+const regs = registers.map((text, r) => ({
+  r,
+  lines: text.split('\n').map((line) => ({ text: line, i: lineIndex++ })),
+}));
+---
+
+<Tag
+  id={id}
+  tabindex={tabindex}
+  class:list={['passage', `passage--${size}`, `passage--second-${secondSize}`, `passage--indent-${indent}`, { 'passage--cascade': cascade }, className]}
+  data-reveal={reveal ? 'lines' : undefined}
+>
+  {
+    regs.map((reg, idx) => (
+      <>
+        <span class:list={['passage__reg', `passage__reg--${reg.r + 1}`]} style={`--reg: ${reg.r}`}>
+          {reg.lines.map((line, li) => (
+            <>
+              <span class="line" style={`--line: ${line.i}`}>
+                <span>{line.text}</span>
+              </span>
+              {li < reg.lines.length - 1 && ' '}
+            </>
+          ))}
+        </span>
+        {idx < regs.length - 1 && ' '}
+      </>
+    ))
+  }
+</Tag>
+
+<style>
+  .passage {
+    display: block;
+    font-weight: var(--fw-strong);
+    color: var(--fg);
+    --indent-step: calc((100% + var(--gutter)) / var(--cols));
+  }
+
+  .passage__reg {
+    display: block;
+  }
+
+  .passage--xxl {
+    font-size: var(--fs-display-xxl);
+    line-height: var(--lh-display-xxl);
+    letter-spacing: var(--tr-display-xxl);
+  }
+
+  .passage--xl {
+    font-size: var(--fs-display-xl);
+    line-height: var(--lh-display-xl);
+    letter-spacing: var(--tr-display-xl);
+  }
+
+  .passage--l {
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .passage--m {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .passage--second-xl .passage__reg--2 {
+    font-size: var(--fs-display-xl);
+    line-height: var(--lh-display-xl);
+    letter-spacing: var(--tr-display-xl);
+  }
+
+  .passage--second-l .passage__reg--2 {
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .passage--second-m .passage__reg--2 {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+    font-weight: var(--fw-regular);
+  }
+
+  .passage--second-s .passage__reg--2 {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  /* Second register offset: 1.2em on mobile (at most 3 rem, so the largest sizes still fit
+     at 320 px), one column on tablet, two on desktop. */
+  .passage--indent-default .passage__reg + .passage__reg {
+    padding-left: min(1.2em, 3rem);
+  }
+
+  .passage--cascade .passage__reg {
+    padding-left: calc(var(--reg) * min(1.2em, 3rem));
+  }
+
+  @media (min-width: 43.75em) {
+    .passage--indent-default .passage__reg + .passage__reg {
+      padding-left: var(--indent-step);
+    }
+
+    .passage--cascade .passage__reg {
+      padding-left: calc(var(--reg) * var(--indent-step));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .passage--indent-default .passage__reg + .passage__reg {
+      padding-left: calc(var(--indent-step) * 2);
+    }
+
+    .passage--indent-wide .passage__reg + .passage__reg {
+      padding-left: calc(var(--indent-step) * 4);
+    }
+  }
+</style>

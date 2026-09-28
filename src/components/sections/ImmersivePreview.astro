@@ -1,0 +1,299 @@
+---
+/**
+ * ImmersivePreview — variant `document`: a real photo in a threshold (aperture) with
+ * numbered hotspot nodes and an always-visible legend (visual direction §4.2).
+ * Each node is a real <button> that discloses its label; the legend is the accessible content.
+ * Art direction: below 700 px an optional `smallImage` (a narrower crop of the same photo)
+ * replaces the wide one; hotspots without a `small` position, and their legend entries,
+ * are hidden there, so the legend only describes what is visible.
+ */
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+type Hotspot = { x: number; y: number; label: string; small?: { x: number; y: number } };
+
+interface Props {
+  image: ImageMetadata;
+  smallImage?: ImageMetadata;
+  /** Must describe what both crops show. */
+  alt: string;
+  hotspots: Hotspot[];
+  caption?: string;
+  sizes?: string;
+  surface?: 'calce' | 'pietra' | 'notte';
+  legendTitle?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  image,
+  smallImage,
+  alt,
+  hotspots,
+  caption,
+  sizes = '(min-width: 80rem) 1200px, 94vw',
+  surface = 'pietra',
+  legendTitle = 'Nella foto',
+  id = 'documento',
+  class: className,
+} = Astro.props;
+
+const SMALL = '(max-width: 43.74em)';
+const fit = (img: ImageMetadata, widths: number[]) => [...new Set([...widths.filter((w) => w < img.width), img.width])];
+const wideWidths = fit(image, [640, 960, 1272]);
+const variants = async (img: ImageMetadata, widths: number[]) => {
+  const [avif, webp, jpg] = await Promise.all(
+    (['avif', 'webp', 'jpg'] as const).map((format) => getImage({ src: img, widths, format })),
+  );
+  return { avif: avif.srcSet.attribute, webp: webp.srcSet.attribute, jpg: jpg.srcSet.attribute, src: jpg.src };
+};
+const wide = await variants(image, wideWidths);
+const small = smallImage ? await variants(smallImage, fit(smallImage, [360, 448])) : undefined;
+const ratioWide = `${image.width} / ${image.height}`;
+const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : ratioWide;
+---
+
+<section class:list={['document', `surface-${surface}`, className]} aria-label={legendTitle}>
+  <div class="wrap">
+    <figure class="document__figure">
+      <div class="document__frame aperture" data-nodes style={`--ratio-wide: ${ratioWide}; --ratio-small: ${ratioSmall}`}>
+        <picture class="document__picture">
+          {
+            small && (
+              <>
+                <source media={SMALL} type="image/avif" srcset={small.avif} sizes="100vw" width={smallImage!.width} height={smallImage!.height} />
+                <source media={SMALL} type="image/webp" srcset={small.webp} sizes="100vw" width={smallImage!.width} height={smallImage!.height} />
+                <source media={SMALL} type="image/jpeg" srcset={small.jpg} sizes="100vw" width={smallImage!.width} height={smallImage!.height} />
+              </>
+            )
+          }
+          <source type="image/avif" srcset={wide.avif} sizes={sizes} />
+          <source type="image/webp" srcset={wide.webp} sizes={sizes} />
+          <img
+            class="document__img"
+            src={wide.src}
+            srcset={wide.jpg}
+            sizes={sizes}
+            alt={alt}
+            width={image.width}
+            height={image.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        {
+          hotspots.map((h, i) => (
+            <div
+              class:list={['document__node', { 'document__node--wide-only': smallImage && !h.small }]}
+              style={`--x: ${h.x}%; --y: ${h.y}%; --xs: ${(h.small ?? h).x}%; --ys: ${(h.small ?? h).y}%`}
+            >
+              <button
+                type="button"
+                class="document__btn"
+                data-node-toggle
+                aria-expanded="false"
+                aria-controls={`${id}-label-${i + 1}`}
+                aria-label={`${i + 1} – ${h.label}`}
+              >
+                <span class="document__ring" aria-hidden="true" />
+                <span class="document__dot" aria-hidden="true">
+                  {i + 1}
+                </span>
+              </button>
+              <span id={`${id}-label-${i + 1}`} class="document__callout t-label" aria-hidden="true">
+                {h.label}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+      <figcaption class="document__legend">
+        <ol role="list">
+          {
+            hotspots.map((h, i) => (
+              <li class:list={{ 'document__item--wide-only': smallImage && !h.small }}>
+                <span class="document__num t-label" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>{h.label}</span>
+              </li>
+            ))
+          }
+        </ol>
+        {caption && <p class="t-label document__caption">{caption}</p>}
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/nodes';
+</script>
+
+<style>
+  .document {
+    padding-block: var(--space-xl) var(--section-pad);
+  }
+
+  .document__figure {
+    display: grid;
+    gap: var(--space-m);
+    max-width: 75rem;
+  }
+
+  .document__frame {
+    position: relative;
+    aspect-ratio: var(--ratio-wide);
+  }
+
+  .document__picture,
+  .document__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .document__img {
+    object-fit: cover;
+  }
+
+  .document__node {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    z-index: 3;
+    transform: translate(-50%, -50%);
+  }
+
+  .document__btn {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--notte);
+  }
+
+  .document__ring,
+  .document__dot {
+    grid-area: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .document__ring {
+    width: 1.625rem;
+    height: 1.625rem;
+    border: 1px solid var(--calce);
+    box-shadow: 0 0 0 1px rgb(15 19 23 / 0.35);
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .document__dot {
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: var(--calce);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+  }
+
+  .document__btn:hover .document__ring,
+  .document__btn:focus-visible .document__ring,
+  .document__btn[aria-expanded='true'] .document__ring {
+    transform: scale(1.4);
+  }
+
+  .document__btn:focus-visible {
+    outline-color: var(--calce);
+    outline-offset: 0;
+  }
+
+  .document__callout {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 0.25rem);
+    width: max-content;
+    max-width: 16rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--notte);
+    color: var(--calce);
+    white-space: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-250) var(--ease-out);
+  }
+
+  .document__node:hover .document__callout,
+  .document__btn:focus-visible + .document__callout,
+  .document__btn[aria-expanded='true'] + .document__callout {
+    opacity: 1;
+  }
+
+  .document__legend ol {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+  }
+
+  .document__legend li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    align-items: baseline;
+    font-size: var(--fs-small);
+    color: var(--fg);
+  }
+
+  .document__num {
+    color: var(--fg-2);
+  }
+
+  .document__caption {
+    margin-top: var(--space-s);
+    color: var(--fg-2);
+  }
+
+  @media (min-width: 64em) {
+    .document__legend ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gutter);
+    }
+  }
+
+  @media (max-width: 43.74em) {
+    .document .wrap {
+      padding-inline: 0;
+    }
+
+    .document__frame {
+      aspect-ratio: var(--ratio-small);
+    }
+
+    .document__node {
+      left: var(--xs);
+      top: var(--ys);
+    }
+
+    .document__node--wide-only,
+    .document__legend .document__item--wide-only {
+      display: none;
+    }
+
+    .document__legend {
+      padding-inline: var(--page-margin);
+    }
+
+    .document__callout {
+      display: none;
+    }
+  }
+</style>

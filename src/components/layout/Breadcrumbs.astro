@@ -1,6 +1,7 @@
 ---
 /**
  * Visible breadcrumb trail for inner pages (mirrors the BreadcrumbList JSON-LD).
+ * Placed right before <main>, visually at the top of the hero (docs/ux/sitemap.md §5).
  */
 import type { Crumb } from '../../lib/structured-data';
 
@@ -13,12 +14,19 @@ const { crumbs, class: className } = Astro.props;
 ---
 
 <nav class:list={['breadcrumbs', className]} aria-label="Percorso">
-  <ol>
-    {crumbs.map((crumb, index) => (
-      <li>
-        {index < crumbs.length - 1 ? <a href={crumb.path}>{crumb.name}</a> : <span aria-current="page">{crumb.name}</span>}
-      </li>
-    ))}
+  <ol role="list">
+    {
+      crumbs.map((crumb, index) => (
+        <li>
+          {index > 0 && (
+            <span class="breadcrumbs__sep" aria-hidden="true">
+              /
+            </span>
+          )}
+          {index < crumbs.length - 1 ? <a href={crumb.path}>{crumb.name}</a> : <span aria-current="page">{crumb.name}</span>}
+        </li>
+      ))
+    }
   </ol>
 </nav>
 
@@ -26,33 +34,39 @@ const { crumbs, class: className } = Astro.props;
   .breadcrumbs ol {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 0.6rem;
+    align-items: center;
+    gap: 0 0.6rem;
     margin: 0;
     padding: 0;
-    list-style: none;
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: var(--text-label, 0.8125rem);
-    letter-spacing: 0.04em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tr-label);
     text-transform: uppercase;
+    color: var(--fg-2);
   }
+
   .breadcrumbs li {
     display: flex;
     align-items: center;
     gap: 0.6rem;
   }
-  .breadcrumbs li + li::before {
-    content: '/';
-    opacity: 0.5;
-  }
+
   .breadcrumbs a {
-    color: inherit;
-    text-decoration: none;
-    opacity: 0.72;
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.5rem;
     padding-block: 0.35rem;
+    color: var(--fg-2);
+    text-decoration: none;
   }
+
   .breadcrumbs a:hover {
-    opacity: 1;
+    color: var(--fg);
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-decoration-color: var(--link-underline);
+  }
+
+  .breadcrumbs [aria-current='page'] {
+    color: var(--fg);
   }
 </style>

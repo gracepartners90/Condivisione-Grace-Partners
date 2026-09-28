@@ -1,0 +1,105 @@
+---
+/**
+ * Il Nodo: the "o" of the itNode logo as the sign of what can be explored.
+ * Blue (--node) = interaction/hotspot; terra/orange (--place) = a place.
+ * Decorative by default; pass `label` + `as="button"` for an interactive hotspot.
+ */
+interface Props {
+  kind?: 'hotspot' | 'place';
+  number?: number | string;
+  ping?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const { kind = 'hotspot', number, ping = false, class: className, style } = Astro.props;
+---
+
+<span class:list={['node', `node--${kind}`, { 'node--ping': ping }, className]} style={style} aria-hidden="true">
+  <span class="node__ring"></span>
+  <span class="node__dot">{number && <span class="node__num">{number}</span>}</span>
+</span>
+
+<style>
+  .node {
+    --node-color: var(--node);
+    --ring: 1.625rem; /* 26 px */
+    --dot: 0.625rem; /* 10 px */
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: var(--ring);
+    height: var(--ring);
+    flex: none;
+  }
+
+  .node--place {
+    --node-color: var(--place);
+  }
+
+  .node__ring,
+  .node__dot {
+    grid-area: 1 / 1;
+    border-radius: 50%;
+  }
+
+  .node__ring {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--node-color);
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .node__dot {
+    width: var(--dot);
+    height: var(--dot);
+    background: var(--node-color);
+    display: grid;
+    place-items: center;
+  }
+
+  .node:has(.node__num) .node__dot {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .node__num {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    color: var(--bg);
+  }
+
+  /* One ping when the node enters the view (motion token: 1000 ms, ease-out). */
+  .node--ping .node__ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid var(--node-color);
+    opacity: 0;
+  }
+
+  :global(.is-inview) .node--ping .node__ring::after,
+  :global(.node-ping-now) .node--ping .node__ring::after {
+    animation: node-ping var(--dur-1000) var(--ease-out) calc(var(--ping-delay, 0) * 120ms) 1;
+  }
+
+  @keyframes node-ping {
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  :global(a:hover) > .node .node__ring,
+  :global(a:focus-visible) > .node .node__ring,
+  :global(button:hover) > .node .node__ring,
+  :global(button:focus-visible) > .node .node__ring {
+    transform: scale(1.4);
+  }
+</style>

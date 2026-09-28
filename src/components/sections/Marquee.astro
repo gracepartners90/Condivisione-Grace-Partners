@@ -1,0 +1,88 @@
+---
+/**
+ * Typographic marquee linked to scroll (visual direction §6): it moves only while the user
+ * scrolls, never on its own, so no pause control is needed (WCAG 2.2.2 does not apply).
+ * Static with prefers-reduced-motion or without scroll-driven animations. Decorative.
+ */
+import Arrow from '../ui/Arrow.astro';
+
+interface Props {
+  items: string[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+const copies = [0, 1, 2];
+---
+
+<div class:list={['marquee', className]} aria-hidden="true">
+  <div class="marquee__track">
+    {
+      copies.map(() => (
+        <span class="marquee__group">
+          {items.map((item) => (
+            <span class="marquee__item">
+              {item}
+              <Arrow dir="right" class="marquee__arrow" />
+            </span>
+          ))}
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: clip;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    border-block: 1px solid var(--line);
+    padding-block: var(--space-m);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+  }
+
+  .marquee__group,
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .marquee__item {
+    gap: 0.35em;
+    padding-right: 0.45em;
+    font-size: var(--fs-display-m);
+    line-height: 1.1;
+    letter-spacing: var(--tr-display-m);
+    white-space: nowrap;
+  }
+
+  .marquee__item :global(.marquee__arrow) {
+    width: 0.62em;
+    height: 0.62em;
+    color: var(--place);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .marquee__track {
+        animation-name: marquee-scroll;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+
+  /* About 0.4× the scroll speed for a one-line band (docs/performance/architettura.md §6.5). */
+  @keyframes marquee-scroll {
+    to {
+      transform: translateX(-45svh);
+    }
+  }
+</style>

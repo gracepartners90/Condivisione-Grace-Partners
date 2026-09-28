@@ -1,0 +1,100 @@
+---
+/**
+ * LargeStatement — variants:
+ * - `manifesto`: section heading as a large statement, with an offset lead paragraph.
+ * - `passage`: a two-register statement (Il Passaggio) as <p>, optional marquee below.
+ */
+import Passage from '../ui/Passage.astro';
+
+interface Props {
+  variant?: 'manifesto' | 'passage';
+  as?: 'h2' | 'p';
+  eyebrow?: string;
+  registers: string[];
+  size?: 'xl' | 'l' | 'm';
+  secondSize?: 'xl' | 'l' | 'm' | 's' | 'same';
+  surface?: 'calce' | 'pietra' | 'notte';
+  id?: string;
+  headingId?: string;
+  class?: string;
+}
+
+const {
+  variant = 'manifesto',
+  as = 'h2',
+  eyebrow,
+  registers,
+  size = 'l',
+  secondSize = 'same',
+  surface = 'pietra',
+  id,
+  headingId,
+  class: className,
+} = Astro.props;
+---
+
+<section id={id} class:list={['statement', `statement--${variant}`, `surface-${surface}`, className]} aria-labelledby={as === 'h2' ? headingId : undefined}>
+  <div class="wrap grid statement__grid">
+    {eyebrow && <p class="statement__eyebrow t-label">{eyebrow}</p>}
+    <Passage as={as} id={headingId} registers={registers} size={size} secondSize={secondSize} class="statement__text" />
+    {
+      Astro.slots.has('default') && (
+        <div class="statement__body" data-reveal>
+          <slot />
+        </div>
+      )
+    }
+  </div>
+  <slot name="after" />
+</section>
+
+<style>
+  .statement {
+    padding-block: var(--section-pad);
+  }
+
+  .statement__grid {
+    row-gap: var(--space-l);
+  }
+
+  .statement__eyebrow {
+    grid-column: 1 / -1;
+    color: var(--fg-2);
+  }
+
+  .statement :global(.statement__text) {
+    grid-column: 1 / -1;
+  }
+
+  .statement__body {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--space-m);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    letter-spacing: var(--tr-lead);
+  }
+
+  .statement__body :global(p) {
+    max-width: var(--measure-lead);
+  }
+
+  @media (min-width: 64em) {
+    .statement--manifesto :global(.statement__text) {
+      grid-column: 1 / span 10;
+    }
+
+    .statement--manifesto .statement__body {
+      grid-column: 7 / span 5;
+      margin-top: var(--space-xl);
+    }
+
+    .statement--passage .statement__body {
+      grid-column: 5 / span 6;
+    }
+  }
+
+  :global(.statement--passage + *) {
+    margin-top: 0;
+  }
+</style>

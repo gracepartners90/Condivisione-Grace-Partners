@@ -53,32 +53,57 @@ export const video = {
   cittaDigitali: 'https://itnode-website-production.up.railway.app/public/video/citta-digitali.mp4?v=2',
 } as const;
 
-/** Geographic coordinates are public data (degrees and minutes, town centre). */
+/**
+ * Places. Coordinates are public data (town centre, decimal degrees, 4 digits) and must be
+ * checked before launch (docs/creativa/direzione-visiva.md §1.4). Bearings and distances
+ * from the ITnode office are computed from them in src/lib/geo.ts.
+ */
 export type Place = {
+  id: string;
   name: string;
-  url: string;
-  display: string;
   province: string;
   region: string;
-  coords: string;
+  lat: number;
+  lon: number;
+  url?: string;
+  display?: string;
+};
+
+export const office: Place = {
+  id: 'acquaviva',
+  name: 'Acquaviva delle Fonti',
+  province: 'BA',
+  region: 'Puglia',
+  lat: 40.8957,
+  lon: 16.8412,
 };
 
 export const pugliaPlaces: Place[] = [
-  { name: 'Acquaviva delle Fonti', url: 'https://www.acquavivadigitale.com', display: 'acquavivadigitale.com', province: 'BA', region: 'Puglia', coords: '40°54′N 16°50′E' },
-  { name: 'Gravina in Puglia', url: 'https://www.gravinadigitale.it', display: 'gravinadigitale.it', province: 'BA', region: 'Puglia', coords: '40°49′N 16°25′E' },
-  { name: 'Monopoli', url: 'https://www.monopolidigitale.it', display: 'monopolidigitale.it', province: 'BA', region: 'Puglia', coords: '40°57′N 17°18′E' },
+  { id: 'acquaviva', name: 'Acquaviva delle Fonti', province: 'BA', region: 'Puglia', lat: 40.8957, lon: 16.8412, url: 'https://www.acquavivadigitale.com', display: 'acquavivadigitale.com' },
+  { id: 'gravina', name: 'Gravina in Puglia', province: 'BA', region: 'Puglia', lat: 40.8196, lon: 16.4231, url: 'https://www.gravinadigitale.it', display: 'gravinadigitale.it' },
+  { id: 'monopoli', name: 'Monopoli', province: 'BA', region: 'Puglia', lat: 40.95, lon: 17.3, url: 'https://www.monopolidigitale.it', display: 'monopolidigitale.it' },
 ];
 
 export const italyPlaces: Place[] = [
-  { name: 'Varese', url: 'https://www.varesedigitale.it', display: 'varesedigitale.it', province: 'VA', region: 'Lombardia', coords: '45°49′N 8°50′E' },
-  { name: 'Altamura', url: 'https://www.altamuradigitale.com', display: 'altamuradigitale.com', province: 'BA', region: 'Puglia', coords: '40°50′N 16°33′E' },
-  { name: 'Caltanissetta', url: 'https://www.caltanissettadigitale.it', display: 'caltanissettadigitale.it', province: 'CL', region: 'Sicilia', coords: '37°29′N 14°04′E' },
+  { id: 'varese', name: 'Varese', province: 'VA', region: 'Lombardia', lat: 45.8206, lon: 8.8251, url: 'https://www.varesedigitale.it', display: 'varesedigitale.it' },
+  { id: 'altamura', name: 'Altamura', province: 'BA', region: 'Puglia', lat: 40.8286, lon: 16.5528, url: 'https://www.altamuradigitale.com', display: 'altamuradigitale.com' },
+  { id: 'caltanissetta', name: 'Caltanissetta', province: 'CL', region: 'Sicilia', lat: 37.49, lon: 14.0617, url: 'https://www.caltanissettadigitale.it', display: 'caltanissettadigitale.it' },
+];
+
+/** Places on the Home horizon: every town where ITnode's three worlds are online. */
+export const horizonPlaces: Place[] = [
+  pugliaPlaces[2],
+  { id: 'cassano', name: 'Cassano delle Murge', province: 'BA', region: 'Puglia', lat: 40.8906, lon: 16.77 },
+  italyPlaces[1],
+  pugliaPlaces[1],
+  italyPlaces[2],
+  italyPlaces[0],
 ];
 
 export const siiiShowcase = [
-  { name: 'Masseria Santella', url: 'https://www.cassanodigitale.it/masseriasantella/', portal: 'cassanodigitale.it', coords: '40°53′N 16°46′E' },
-  { name: 'Maison Miminà', url: 'https://www.monopolidigitale.it/maisonmimina/', portal: 'monopolidigitale.it', coords: '40°57′N 17°18′E' },
-  { name: 'D.L. Natura Dentro', url: 'https://www.acquavivadigitale.com/dielle/', portal: 'acquavivadigitale.com', coords: '40°54′N 16°50′E' },
+  { id: 'masseria-santella', name: 'Masseria Santella', place: 'Cassano delle Murge (BA)', lat: 40.8906, lon: 16.77, url: 'https://www.cassanodigitale.it/masseriasantella/', portal: 'cassanodigitale.it', slot: 'siii-masseria-santella' },
+  { id: 'maison-mimina', name: 'Maison Miminà', place: 'Monopoli (BA)', lat: 40.95, lon: 17.3, url: 'https://www.monopolidigitale.it/maisonmimina/', portal: 'monopolidigitale.it', slot: 'siii-maison-mimina' },
+  { id: 'dl-natura-dentro', name: 'D.L. Natura Dentro', place: 'Acquaviva delle Fonti (BA)', lat: 40.8957, lon: 16.8412, url: 'https://www.acquavivadigitale.com/dielle/', portal: 'acquavivadigitale.com', slot: 'siii-dielle' },
 ] as const;
 
 /** Contact-form interests; `value` is what gets submitted. */

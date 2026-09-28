@@ -1,0 +1,141 @@
+---
+/**
+ * Call to action: pill button or text link with arrow.
+ * - External links open in a new tab, announced to assistive technology.
+ * - Tracking attributes follow docs/cro/piano-misurazione.md.
+ */
+import Arrow from './Arrow.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'ghost' | 'link';
+  /** Extra text for screen readers only, appended to the visible label (WCAG 2.5.3). */
+  srText?: string;
+  arrow?: 'right' | 'down' | 'up' | 'external' | 'none';
+  ctaId?: string;
+  location?: string;
+  interest?: string;
+  destinationId?: string;
+  outboundType?: string;
+  contactMethod?: string;
+  class?: string;
+  size?: 'default' | 'large';
+}
+
+const {
+  href,
+  label,
+  variant = 'link',
+  srText,
+  ctaId,
+  location,
+  interest,
+  destinationId,
+  outboundType,
+  contactMethod,
+  class: className,
+  size = 'default',
+} = Astro.props;
+
+const isExternal = /^https?:\/\//.test(href);
+const isContact = /^(tel|mailto):/.test(href);
+const isAnchor = href.startsWith('#');
+const arrow = Astro.props.arrow ?? (isExternal ? 'external' : isAnchor ? 'down' : isContact ? 'none' : 'right');
+const trackEvent = isContact ? 'contact_click' : isExternal ? 'outbound_click' : 'cta_click';
+---
+
+<a
+  class:list={['cta', `cta--${variant}`, `cta--${size}`, className]}
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener' : undefined}
+  data-track={ctaId ? trackEvent : undefined}
+  data-cta-id={ctaId}
+  data-cta-location={location}
+  data-interest={interest}
+  data-destination-id={destinationId}
+  data-outbound-type={isExternal ? outboundType : undefined}
+  data-contact-method={contactMethod}
+>
+  <span class="cta__label">{label}</span>{srText && <span class="sr-only">{srText}</span>}{
+    isExternal && <span class="sr-only"> (si apre in una nuova scheda)</span>
+  }{arrow !== 'none' && <Arrow dir={arrow} class="cta__arrow" />}
+</a>
+
+<style>
+  .cta {
+    --cta-gap: 0.6em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--cta-gap);
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
+    text-decoration: none;
+    line-height: 1.2;
+    transition:
+      background-color var(--dur-250) var(--ease-out),
+      color var(--dur-250) var(--ease-out),
+      border-color var(--dur-250) var(--ease-out);
+  }
+
+  .cta :global(.cta__arrow) {
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .cta:hover :global(.cta__arrow--right),
+  .cta:focus-visible :global(.cta__arrow--right) {
+    transform: translateX(4px);
+  }
+
+  .cta:hover :global(.arrow--down) {
+    transform: translateY(3px);
+  }
+
+  .cta:hover :global(.arrow--external) {
+    transform: translate(2px, -2px);
+  }
+
+  /* Pill: the circle is interaction (visual direction §1.2). Never blue. */
+  .cta--primary,
+  .cta--ghost {
+    padding: 0.75em 1.35em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--btn-bg);
+  }
+
+  .cta--primary {
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+  }
+
+  .cta--primary:hover {
+    background: transparent;
+    color: var(--fg);
+  }
+
+  .cta--ghost {
+    background: transparent;
+    color: var(--fg);
+    border-color: var(--line);
+  }
+
+  .cta--ghost:hover {
+    border-color: var(--fg);
+  }
+
+  .cta--link {
+    color: var(--fg);
+    padding-block: 0.4em;
+    border-bottom: 1px solid var(--link-underline);
+  }
+
+  .cta--link:hover {
+    border-bottom-width: 2px;
+    margin-bottom: -1px;
+  }
+
+  .cta--large {
+    font-size: var(--fs-lead);
+  }
+</style>

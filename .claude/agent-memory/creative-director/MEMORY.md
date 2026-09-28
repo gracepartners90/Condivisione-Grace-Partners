@@ -19,5 +19,9 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Sottoinsiemi latini @fontsource:** non includono → ↗ ≈ e spesso nemmeno ′ ″. Frecce in SVG, coordinate in gradi decimali.
 - **La «I» maiuscola** di Schibsted Grotesk ha le grazie: è il motivo per cui è stato scelto (disambigua «Il SIII»). Con qualunque alternativa, verificare sempre la resa di «Il SIII».
 
+## Lezioni di processo
+- **Prima di chiudere un deliverable, rileggere `docs/` per intero.** Altri membri lavorano in parallelo e possono aver registrato regole vincolanti nel frattempo: registro dei claim e decisioni DR nel brief consolidato, vincoli di motion e menu nella sitemap UX, elementi della hero nel copy deck. Il 2026-09-28 la bozza andava contro DR3, A4 e N5 e i vincoli UX, ed è stata riallineata prima della consegna.
+- **Istruzioni in conflitto.** Quando un'istruzione della sessione principale confligge con una decisione aperta nel brief (per esempio «usare i ritratti» contro DR3), si danno il parere e le specifiche per entrambe le opzioni e si segnala il conflitto nella consegna.
+
 ## Preferenze e feedback del cliente
 - Nessun feedback diretto ancora ricevuto sul piano creativo. Aggiornare dopo il gate G2.

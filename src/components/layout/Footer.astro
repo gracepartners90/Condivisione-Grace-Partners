@@ -1,0 +1,213 @@
+---
+/**
+ * Footer (docs/ux/sitemap.md §6, docs/contenuti/microcopy.md §3).
+ * Mandatory company data (art. 2250 c.c.) render only once confirmed in site.ts.
+ */
+import Wordmark from '../ui/Wordmark.astro';
+import Arrow from '../ui/Arrow.astro';
+import { nav, site, portals, office } from '../../data/site';
+import { formatCoords } from '../../lib/geo';
+
+const year = new Date().getFullYear();
+const legal = [
+  `© <span data-year>${year}</span> ${site.legalName}`,
+  `P.IVA ${site.vatId}`,
+  site.rea && `REA ${site.rea}`,
+  site.shareCapital && `Capitale sociale ${site.shareCapital}`,
+].filter(Boolean) as string[];
+
+const portalLinks = [
+  { ...portals.cittaDigitali, id: 'cittadigitali', cta: 'footer-portale-citta-digitali' },
+  { ...portals.pugliaDigitale, id: 'lapugliadigitale', cta: 'footer-portale-puglia-digitale' },
+];
+---
+
+<footer class="site-footer surface-notte">
+  <div class="wrap">
+    <div class="site-footer__top grid">
+      <a class="site-footer__logo" href="/" data-track="nav_click" data-nav-item="home" data-nav-location="footer">
+        <Wordmark />
+      </a>
+
+      <nav class="site-footer__group site-footer__group--nav" aria-labelledby="footer-nav-title">
+        <h2 id="footer-nav-title" class="t-label site-footer__title">Navigazione</h2>
+        <ul role="list">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} data-track="nav_click" data-nav-item={item.id} data-nav-location="footer">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="site-footer__group site-footer__group--contacts">
+        <h2 class="t-label site-footer__title">Contatti</h2>
+        <address>
+          <p>
+            {site.address.label}<br />
+            {site.address.street}<br />
+            {site.address.postalCode} {site.address.locality} ({site.address.province})
+          </p>
+          <ul role="list">
+            <li>
+              <a href={site.phone.href} data-track="contact_click" data-cta-id="footer-telefono" data-cta-location="footer" data-contact-method="telefono">{site.phone.display}</a>
+            </li>
+            <li>
+              <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="footer-email" data-cta-location="footer" data-contact-method="email">{site.email}</a>
+            </li>
+          </ul>
+        </address>
+      </div>
+
+      <div class="site-footer__group site-footer__group--portals">
+        <h2 class="t-label site-footer__title">Portali</h2>
+        <ul role="list">
+          {
+            portalLinks.map((p) => (
+              <li>
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id={p.cta}
+                  data-cta-location="footer"
+                  data-outbound-type="portale"
+                  data-destination-id={p.id}
+                >
+                  {p.display}
+                  <span class="sr-only">, portale di {p.name} (si apre in una nuova scheda)</span>
+                  <Arrow dir="external" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__legal">
+      <p class="t-small">
+        <Fragment set:html={legal.join(' · ')} />
+      </p>
+      <ul role="list" class="t-small">
+        <li><a href="/privacy-policy/">Privacy Policy</a></li>
+        <li><a href="/cookie-policy/">Cookie Policy</a></li>
+      </ul>
+    </div>
+
+    <p class="site-footer__sign t-label" aria-hidden="true">
+      ITnode · {office.name} · {formatCoords(office)}
+    </p>
+  </div>
+</footer>
+
+<script is:inline>
+  document.querySelectorAll('[data-year]').forEach((el) => (el.textContent = String(new Date().getFullYear())));
+</script>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-3xl) var(--space-l);
+  }
+
+  .site-footer__top {
+    row-gap: var(--space-xl);
+    padding-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .site-footer__logo {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-self: start;
+    color: var(--wordmark);
+  }
+
+  .site-footer__logo :global(.wordmark) {
+    height: 2rem;
+  }
+
+  .site-footer__group {
+    grid-column: 1 / -1;
+  }
+
+  .site-footer__title {
+    margin-bottom: var(--space-s);
+    color: var(--fg-2);
+  }
+
+  .site-footer__group ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__group a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    text-decoration-color: var(--link-underline);
+  }
+
+  .site-footer__group address p {
+    margin-bottom: var(--space-2xs);
+    color: var(--fg-2);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-s) var(--space-xl);
+    padding-top: var(--space-l);
+    color: var(--fg-2);
+  }
+
+  .site-footer__legal ul {
+    display: flex;
+    gap: var(--space-l);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    color: var(--fg);
+  }
+
+  .site-footer__sign {
+    margin-top: var(--space-l);
+    color: var(--fg-2);
+  }
+
+  @media (min-width: 43.75em) {
+    .site-footer__group {
+      grid-column: span 4;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .site-footer__logo {
+      grid-column: 1 / span 3;
+    }
+
+    .site-footer__group--nav {
+      grid-column: 5 / span 2;
+    }
+
+    .site-footer__group--contacts {
+      grid-column: 7 / span 3;
+    }
+
+    .site-footer__group--portals {
+      grid-column: 10 / span 3;
+    }
+  }
+</style>

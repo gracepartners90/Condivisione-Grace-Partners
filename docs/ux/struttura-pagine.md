@@ -26,25 +26,26 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
    - Eyebrow e numeri dei capitoli non sono titoli; i numeri hanno `aria-hidden="true"`, perché l'ordine lo dà la lista (`<ol>`).
    - I componenti con titolo ricevono il livello come proprietà (`as`).
 3. **Headline su mobile: la parola più lunga deve stare nella colonna a 320 px** (reflow, 1.4.10).
-   - Misure in Chromium: Inter 700, tracking −0,02 em, margini laterali di 20 px. Con Inter 600 e Liberation Sans 700 i valori cambiano di ±2 px.
+   - Misure in Chromium sul font e sulla scala della direzione visiva (§ tipografia): Schibsted Grotesk, peso e tracking di ogni stile, minimo del `clamp()`, margini laterali di 20 px. La colonna utile è di 280, 320 e 350 px (a 320, 360 e 390 px).
 
-   | Parola più lunga (dove) | Larghezza | Corpo max a 320 px | a 360 px | a 390 px |
+   | Parola più lunga (stile, corpo minimo) | Larghezza | Occupa | Esito | Corpo max a 320 px |
    |---|---|---|---|---|
-   | «un’esperienza.» (H2 di chiusura SIII) | 6,96 em | 40 px | 45 px | 50 px |
-   | «l’innovazione.» (H2 fondatore) | 6,57 em | 42 px | 48 px | 53 px |
-   | «all’entroterra.» (H2 Puglia Digitale) | 6,35 em | 44 px | 50 px | 55 px |
-   | «accompagna» (H1 home) | 6,13 em | 45 px | 52 px | 57 px |
-   | «Interagisci.» (H2 esempi SIII) | 5,25 em | 53 px | 60 px | 66 px |
-   | «~200.000» (Stats) | 4,75 em | 58 px | 67 px | 73 px |
-   | «Interattivi» (H1 SIII, seconda riga) | 4,49 em | 62 px | 71 px | 77 px |
+   | «~200.000» (`display-xxl`, 72 px) | 4,16 em | 300 px | **sfora a 320 px** (280); regge a 360 e 390 | 67 px |
+   | «tecnologia» (`display-xl`, 52 px, H1 home primo registro) | 4,67 em | 243 px | regge | 59 px |
+   | «un’esperienza.» (`display-l`, 40 px) | 6,58 em | 263 px | regge, con solo 17 px di margine | 42 px |
+   | «l’innovazione.» / «all’entroterra.» (`display-l`, 40 px) | 6,21 / 6,07 em | 248 / 243 px | reggono | 45 / 46 px |
+   | «imprenditoriale» (`display-m`, 28 px) | 6,66 em | 186 px | regge | 42 px |
 
-   - I minimi «indicativi» delle LG (64 px per l'H1, 44 px per i titoli di sezione) sotto i 400 px vanno abbassati: l'H1 della home a 64 px esce dalla colonna anche a 390 px.
-   - Si ricalcola con il font scelto (script di misura riusabile, vedi `accessibilita.md` §3).
+   - La scala della direzione visiva abbassa già i minimi indicativi delle LG: da 64 a 52 px per l'H1, da 44 a 40 px per i titoli di sezione. Con 64 e 44 px, a 320 px sarebbero uscite dalla colonna, per esempio, «tecnologia» (299 px su 280) e «un’esperienza.» (290 px su 280).
+   - Resta un solo caso: i numeri di Stats in `display-xxl`. Il minimo va abbassato a 4 rem al massimo (per esempio `clamp(4rem, 18vw, 17.5rem)`), oppure sotto i 360 px i numeri passano a `display-xl`.
+   - Se una parola lunga cambia stile va rimisurata: «accompagna» in `display-xl` occuperebbe 303 px e sforerebbe, mentre in `display-m`, come previsto, regge.
+   - Script di misura: `accessibilita.md`, Appendice B.
    - Ogni dimensione fluida contiene una parte in `rem`, mai solo `vw` (1.4.4).
    - `overflow-wrap: break-word` solo come rete di sicurezza. Niente `hyphens: auto` sui titoli display.
 4. **Sticky, caroselli, scroll.**
    - Sezioni sticky solo con viewport di almeno 1024 × 720 px, e con l'elemento sticky più basso del viewport meno l'header. Su mobile diventano flusso normale.
-   - Niente caroselli a scorrimento orizzontale, niente scroll-jacking, niente sezioni «pinned» che trasformano lo scroll verticale in movimento orizzontale.
+   - Niente caroselli a scorrimento orizzontale, niente scroll-jacking.
+   - Una sezione che trasforma lo scroll verticale in movimento orizzontale è ammessa solo per la timeline del fondatore, su desktop, alle condizioni di HM-6. La prima condizione è che nella parte che si muove non ci siano elementi focalizzabili.
    - Il form non sta mai dentro una sezione sticky.
 5. **Motion e JavaScript.**
    - Tutto il contenuto è visibile senza JavaScript e con `prefers-reduced-motion: reduce`: lo fa già `reveal.ts`.
@@ -63,93 +64,106 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 
 ## 1. Home `/`
 
+Sette sezioni, come nel copy deck della home e nella direzione visiva (§7.3). I testi sono nel copy deck.
+
 ```text
-H1  La tecnologia cambia. La curiosità ci accompagna da sempre.
-H2  ITnode nasce dall’idea di creare un nuovo modo di abitare il Web.
-H2  [DA SCRIVERE: titolo dei tre mondi, ≤ 45 caratteri]
-    H3  SIII · H3  Puglia Digitale · H3  Città Digitali
-H2  36 anni dentro l’innovazione. E ancora la stessa curiosità.
-    H3  una per tappa della timeline (o nessuna: vedi HM-4)
-H2  [DA SCRIVERE: titolo della chiusura, ≤ 60 caratteri]
+H1  La tecnologia cambia. La curiosità ci accompagna da sempre.       (due registri nello stesso H1)
+H2  ITnode nasce dall’idea di creare un nuovo modo di abitare il Web.  (#chi-siamo: copre le sezioni HM-2, HM-3 e HM-4)
+H2  I tre mondi ITnode                                               (#tre-mondi)
+    H3  SIII · Siti Interattivi Immersivi · H3  Puglia Digitale · H3  Città Digitali
+H2  36 anni dentro l’innovazione. E ancora la stessa curiosità.      (#fondatore; tappe senza H3)
+H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
 ```
 
 ### HM-1 · Hero — `Hero` variante `home`
 - **Scopo.** Far sentire il concetto (spazio fisico → spazio digitale → persone → imprese → territorio) nei primi secondi. La hero «respira».
-- **Contenuti.**
-  - H1 verbatim.
-  - Elemento visivo o di motion su spazio e territorio, scelto dal creative-director tra materiali reali: brief §7 P3 (brevi clip dei tour senza audio) o un estratto muto del video di Città Digitali `[DA FORNIRE: file]`. Qui niente foto del fondatore.
-  - `[IPOTESI]` Riga descrittiva facoltativa di ≤ 70 caratteri, che dica la categoria (esperienze digitali immersive per imprese e territori): aiuta il test dei 5 secondi. Decidono creative-director e cro-specialist.
-  - Nessuna CTA commerciale (strategia di conversione §4).
-- **Desktop.** H1 su 2–3 righe alla scala massima, visual accanto o dietro il testo. La hero non supera l'altezza del viewport e lascia intravedere l'inizio della sezione successiva, così si capisce che la pagina continua.
-- **Mobile.**
-  - L'H1 viene prima del visual ed è interamente visibile nel primo viewport, a 360 × 640 e a 390 × 844.
-  - Corpo dell'H1 secondo §0.3: circa 45 px a 320 px e 57 px a 390 px.
-  - Visual sotto l'H1, oppure come sfondo con velatura.
+- **Contenuti** (copy deck; composizione della direzione visiva §5):
+  - occhiello;
+  - H1 in due registri nello stesso `<h1>`;
+  - riga di posizionamento in `lead`, «Esperienze digitali immersive per imprese e territori.»: senza, l'H1 non dice che cosa fa ITnode e il test dei 5 secondi non si supera;
+  - «orizzonte dei luoghi» (SVG con i luoghi reali);
+  - didascalia dell'osservatore;
+  - «Scorri per esplorare».
+  - Nessuna CTA: «Parliamone» è nell'header.
+- **Mobile.** H1 → riga di posizionamento → orizzonte. L'H1 è interamente visibile nel primo viewport, a 360 × 640 e a 390 × 844.
 - **Interazione e accessibilità.**
-  - Visual decorativo (`alt=""` o `aria-hidden`).
-  - Se si muove da solo per più di 5 s, serve un pulsante di pausa oppure un movimento legato allo scroll. Con reduce resta fermo su un fotogramma.
-  - L'H1 è il candidato LCP su mobile: nessun visual pesante prima di lui.
+  - L'orizzonte, con le etichette dei luoghi, è decorativo: SVG `aria-hidden`. «Scorri per esplorare» è `aria-hidden`.
+  - Ruota solo con lo scroll, mai da solo, quindi il criterio 2.2.2 non si applica. Con reduce resta fermo.
+  - L'H1 è il candidato LCP: l'SVG in linea deve restare leggero.
 
-### HM-2 · Manifesto — `LargeStatement` variante `manifesto`
-- **Scopo.** Dire chi è ITnode subito dopo la hero. È la frase con «grande importanza» (LG §07).
+### HM-2 · Manifesto — `LargeStatement` variante `manifesto` (`#chi-siamo`)
 - **Contenuti.**
   - H2 verbatim.
-  - Paragrafo di sintesi, nella formulazione provvisoria del brief §2.4 finché D1 è aperta. I nomi «Città Digitali» e «Puglia Digitale» sono link interni.
-  - Concetto in evidenza come secondo statement `<p>`: «Una nuova infrastruttura digitale per connettere imprese, cittadini e visitatori.».
-  - Facoltativo: la catena spazio fisico → spazio digitale → persone → imprese → territorio come elemento tipografico, in testo reale con le frecce `aria-hidden`.
-- **Desktop.** Statement alla scala dei titoli di sezione, allineato a sinistra. Sintesi in una colonna stretta e sfalsata, concetto a scala intermedia.
-- **Mobile.** Statement → sintesi → concetto, con paragrafi brevi.
-- **Accessibilità.** Le maschere del text reveal (`overflow: hidden`) si tolgono a fine animazione, altrimenti con spaziature del testo aumentate le righe restano tagliate (1.4.12).
+  - `lead` di sintesi, nella formulazione provvisoria del brief §2.4 finché D1 è aperta. I nomi «Città Digitali» e «Puglia Digitale» sono link interni.
+- **Desktop.** Statement su 10 colonne, lead sfalsato.
+- **Mobile.** Statement → lead, senza sfalsamento.
+- **Accessibilità.** Il text reveal anima righe, non lettere. Le maschere `overflow: hidden` si tolgono a fine animazione (1.4.12).
 
-### HM-3 · I tre mondi — `SectionIntro` + `ProjectShowcase` variante `chapter` (×3)
+### HM-3 · Documento — figura editoriale (`Media` + `<figcaption>`, fuori da §30)
+- **Contenuti.**
+  - Foto dell'evento in `<picture>` con art direction: ritaglio «Panorama» su desktop, «Città» 4:5 su mobile.
+  - I tre nodi numerati sull'immagine sono `aria-hidden` e non interattivi. La legenda è un `<ol>` di testo nella didascalia.
+  - Didascalia con data e luogo solo se confermati (brief A4) `[DA VERIFICARE: provenienza della foto]`.
+- **Titolo.** Nessun heading: la figura fa parte di `#chi-siamo`.
+
+### HM-4 · Infrastruttura — statement in `<p>` + marquee legato allo scroll
+- **Statement.** «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.», in `<p>`: non è il titolo di una sezione.
+- **Marquee.** «spazio fisico → spazio digitale → persone → imprese → territorio →».
+  - La prima copia è leggibile, con le frecce SVG `aria-hidden`; le copie del ciclo sono `aria-hidden`.
+  - Si muove con lo scroll e resta fermo con reduce (`accessibilita.md` §2.6).
+- **Mobile.** Statement su 4 righe, marquee più lento.
+
+### HM-5 · I tre mondi — `SectionIntro` + `ProjectShowcase` variante `chapter` (×3, `#tre-mondi`)
 - **Scopo.** Far capire che SIII, Puglia Digitale e Città Digitali sono tre applicazioni della stessa visione. È lo snodo verso le tre pagine.
-- **Contenuti per capitolo.**
-  - Numero 01–03 e nome (H3).
-  - Statement verbatim (LG §08).
-  - Microdescrizione `[DA SCRIVERE: ≤ 160 caratteri]`.
-  - CTA interna: «Esplora SIII →», «Scopri Puglia Digitale →», «Esplora Città Digitali →». Nessun link esterno (strategia di conversione §4).
+- **Contenuti per capitolo** (copy deck):
+  - numero 01–03 e nome (H3), statement verbatim (LG §08), microdescrizione;
+  - CTA interna: «Esplora SIII →», «Scopri Puglia Digitale →», «Esplora Città Digitali →». Nessun link esterno.
   - **Visual**
-    - 01: slot `siii-masseria-santella` (stessa schermata dello showcase);
-    - 02: `derivate/evento-quadrato.jpg` o `evento-panoramica.jpg` (vedi il rischio sulla provenienza);
-    - 03: slot `video-poster`.
-- **Desktop.**
-  - Tre capitoli grandi, non tre card, ognuno con una composizione diversa (alternanza e scala: creative-director).
-  - Dentro ogni capitolo, numero o visual possono essere sticky.
-- **Mobile.** Per ogni capitolo: numero + nome → statement → visual → microdescrizione → CTA a tutta larghezza. Niente sticky, niente swipe.
+    - 01: soglia «Schermo» 16:10, slot `siii-masseria-santella`;
+    - 02: carta della Puglia, finché non arriva una foto del territorio;
+    - 03: carta d'Italia.
+    - Le carte sono SVG decorativi (`aria-hidden`): i luoghi sono nominati come testo nelle pagine di linea.
+- **Desktop.** Tre capitoli grandi, non tre card, con composizioni speculari (direzione visiva). Dentro ogni capitolo, numero o visual possono essere sticky.
+- **Mobile.** Per ogni capitolo: numero → nome → statement → visual → microdescrizione → CTA a tutta larghezza. Niente sticky, niente swipe.
 - **Interazione e accessibilità.**
-  - I capitoli sono un `<ol>`.
+  - I capitoli sono un `<ol>`, con il numero grande `aria-hidden`.
   - Il link vero è la CTA. Se anche il visual è cliccabile, è un duplicato con `tabindex="-1"` e `aria-hidden="true"`.
   - Nessuna informazione che compaia solo al passaggio del mouse.
 
-### HM-4 · Fondatore — `FounderTimeline`
+### HM-6 · Fondatore — `FounderTimeline` (`#fondatore`)
 - **Scopo.** Credibilità e continuità: 36 anni di innovazione che arrivano a ITnode, e un volto.
 - **Contenuti.**
   - H2 verbatim.
-  - Racconto in 2–3 paragrafi brevi `[DA FORNIRE: testo originale del fondatore]`.
+  - Racconto `[DA FORNIRE: testo originale del fondatore]`.
   - Timeline.
+  - «10.000+ clienti» come momento numerico, agganciato alla tappa Leadstone con la sua attribuzione: mai vicino a ITnode (brief N5).
   - Citazione di chiusura verbatim in `<blockquote>`.
   - Attribuzione visibile: nome, ruolo e link «Giacomo Lenoci su LinkedIn ↗» `[DA VERIFICARE: nome e ruolo, brief F7]`. Nome, ruolo e link visibili sono le condizioni per il markup Person (`dati-strutturati.md` §7).
-- **Ritratto.**
-  - Dipende da DR3 (brief), che è una decisione dell'utente.
-  - La composizione deve funzionare anche senza ritratto, per esempio con il ritaglio `derivate/evento-palco.jpg`, e senza presentare come eventi reali le scene con palco e platea.
+- **Immagine.**
+  - Dipende da DR3 (brief), che è una decisione dell'utente. La direzione visiva chiude sulla foto reale «Palco» (DR3-a).
+  - Le scene con palco e platea non si presentano come eventi reali se non sono documentate.
 - **Timeline.**
-  - `<ol>` di tappe, ognuna con periodo (facoltativo, in `<time>` se c'è una data), titolo e dettaglio di ≤ 120 caratteri.
-  - Le tappe sono quelle delle LG §09, nell'ordine e con i dubbi del brief §6.
-  - «10.000+ clienti» si attribuisce solo alle aziende precedenti, mai a ITnode (brief N5).
-  - Se le tappe restano brevi, sono voci della lista senza H3, per non riempire di titoli la navigazione del lettore di schermo.
+  - `<ol>` di tappe, nell'ordine e con i dubbi del brief §6. Ogni tappa ha periodo (facoltativo, in `<time>` se c'è una data), titolo e dettaglio di ≤ 120 caratteri.
+  - Nessun H3, così la navigazione per titoli del lettore di schermo non si riempie.
+  - È ordinale, non in scala: le date mancanti non si inventano.
 - **Desktop.**
   - Composizione editoriale, non «foto a sinistra, biografia a destra» (LG §09).
-  - Timeline orizzontale solo se tutte le tappe stanno nel viewport senza scorrimento orizzontale; altrimenti verticale, con il ritratto sticky.
-- **Mobile.** Ritratto → testo → timeline verticale → citazione. Nessun elemento sticky.
-- **Accessibilità.** La linea e l'avanzamento legato allo scroll sono decorativi (`aria-hidden`) e restano fermi con reduce. L'alt del ritratto è in `alt-text.md` e non dà per reale un evento non documentato.
+  - La direzione visiva prevede un «orizzonte del tempo» orizzontale e sticky, che trasla con lo scroll. È accettabile a queste condizioni:
+    1. **Nella parte che trasla non c'è nulla di focalizzabile.** Le tre voci di «oggi» (ITnode, Puglia Digitale, Città Digitali), che sono link, stanno in un nodo fermo alla fine della sezione, non sul binario che si muove. Altrimenti chi usa la tastiera potrebbe dare il focus a un link fuori dallo schermo.
+    2. Il testo delle tappe è un vero `<ol>` nell'ordine del DOM, letto indipendentemente dalla posizione visiva. La linea e le tacche sono `aria-hidden`.
+    3. Solo con viewport di almeno 1024 × 720 px, con l'elemento sticky più basso del viewport meno l'header, e con un percorso di scroll breve: al massimo una volta e mezza l'altezza del viewport.
+    4. Lo scroll resta quello nativo: rotella, Spazio e Pagina giù funzionano normalmente. Nessuna libreria di smooth scroll.
+    5. Con `prefers-reduced-motion` diventa una griglia statica, come già previsto.
+  - Senza queste condizioni: timeline verticale.
+- **Mobile.** Linea verticale a sinistra, tappe in pila, niente sticky; poi immagine e citazione.
 
-### HM-5 · Chiusura — `CTASection` variante `band`
+### HM-7 · Chiusura — `CTASection` variante `band`
 - **Scopo.** Il passo successivo per chi arriva in fondo. In home niente form: le LG lo prevedono solo nelle pagine di linea e in Contatti.
-- **Contenuti.**
-  - Titolo `[DA SCRIVERE]`.
-  - CTA «Parliamone →» verso `/contatti/`.
-  - Telefono ed email come alternative (strategia di conversione §4).
-- **Mobile.** CTA a tutta larghezza, poi telefono ed email come righe alte almeno 44 px.
+- **Contenuti** (copy deck):
+  - H2;
+  - CTA «Parliamone →» verso `/contatti/`;
+  - email e telefono come contatti rapidi.
+- **Mobile.** CTA a tutta larghezza, poi email e telefono come righe alte almeno 44 px.
 
 ## 2. SIII `/siii/`
 
@@ -161,7 +175,7 @@ H2  Una visita che diventa azione.               (#cosa-puoi-fare)
 H2  Cosa cambia per la tua impresa.              (#benefici)  → H3 ×4
 H2  Entra. Esplora. Interagisci.                 (#esempi)    → H3 ×3
 H2  La tua azienda può diventare un’esperienza.  (chiusura)
-    H3  [titolo del form, dal copy deck]         (#richiesta)
+    H3  Richiedi un’offerta                      (#richiesta: titolo del form)
 H2  Continua a esplorare                         [PROPOSTA]
 ```
 I testi dei titoli sono quelli del copy deck SIII; qui interessano i livelli.
@@ -198,7 +212,7 @@ I testi dei titoli sono quelli del copy deck SIII; qui interessano i livelli.
 - **Desktop.** Azione a scala grande, complemento piccolo, eventualmente su due colonne sfalsate.
 - **Mobile.** Una colonna. L'azione alla scala del lead, perché «Accedere alle azioni commerciali» è la voce più lunga.
 
-### SI-5 · Benefici — `BenefitsSection` variante `alternating`
+### SI-5 · Benefici — `BenefitsSection` variante `zigzag` («zig-zag» nella direzione visiva)
 - **Contenuti.**
   - 4 benefici: H3 verbatim più testo.
   - Nessun dato quantitativo.
@@ -227,15 +241,16 @@ I testi dei titoli sono quelli del copy deck SIII; qui interessano i livelli.
     - accanto, la nota «L’anteprima carica contenuti da …».
 
 ### SI-7 · Ponte — riga editoriale con due link interni
-Viene dopo gli esempi, prima della chiusura: spiega dove vivono gli esempi, con i link a /puglia-digitale/ e /citta-digitali/. Non va spostata tra la CTA e il form.
+Viene dopo gli esempi, prima della chiusura: spiega dove vivono gli esempi, con i link a /puglia-digitale/ e /citta-digitali/. Non va spostata tra lo statement di chiusura e il form.
 
 ### SI-8 · Chiusura e form — `CTASection` variante `form` + `ContactForm` (preselezione `siii`)
+- **La CTA delle LG diventa il titolo del form.** Nella composizione della direzione visiva il form sta accanto allo statement (desktop) o subito sotto (mobile). Un link che fa scorrere di pochi pixel sarebbe inutile (strategia di conversione §5; copy deck §8). Il titolo (H3) è quindi «Richiedi un’offerta», senza freccia e senza link.
 - **Struttura.**
-  - `<section>` con l'H2 statement e la CTA «Richiedi un’offerta ↓» verso `#richiesta`.
-  - Poi il blocco del form `id="richiesta"`: titolo H3 (`tabindex="-1"`, riceve il focus all'arrivo dall'ancora), introduzione, form (§7), alternative «Preferisci parlarne a voce?» con `tel:`.
-- **Desktop.** Statement a tutta larghezza. Sotto, a sinistra titolo, introduzione e alternative; a destra il form, largo al massimo 40 rem circa.
-- **Mobile.** Statement (corpo secondo §0.3: «un’esperienza.» ≤ 40 px a 320 px) → CTA → titolo → introduzione → form → alternative.
-- **Nota sul copy deck.** La CTA punta al titolo del form, non «al primo campo»: su mobile il focus su un campo aprirebbe la tastiera prima che si capisca dove si è arrivati.
+  - `<section>` con l'H2 statement.
+  - Poi il blocco del form `id="richiesta"`: titolo H3 (`tabindex="-1"`, riceve il focus quando si arriva dall'ancora), introduzione, form (§7), alternativa «Preferisci parlarne a voce?» con `tel:`.
+- **Chi arriva a `#richiesta`.** «Parliamone» nell'header e il link secondario della hero. Arrivano sul titolo del form, non sul primo campo: su mobile il focus su un campo aprirebbe la tastiera prima che si capisca dove si è arrivati.
+- **Desktop.** Statement a sinistra (colonne 1–5), form a destra (colonne 7–12, largo al massimo 40 rem circa).
+- **Mobile.** Statement (corpo secondo §0.3) → titolo → introduzione → form → alternativa.
 
 ### SI-9 · Continua a esplorare — `ProjectShowcase` variante `compact` → 02 Puglia Digitale `[PROPOSTA]`
 - **Contenuti.** Numero, nome e statement della linea successiva, con un link. Gli stessi dati dei capitoli della home.
@@ -250,10 +265,10 @@ H2  [titolo dei numeri, copy deck §4]                          (#numeri)
 H2  I luoghi                                                   (#luoghi)          → H3 ×3
 H2  [titolo di «Perché aderire», copy deck §6]                 (#perche-aderire)  → H3 ×4
 H2  Porta la tua impresa dentro Puglia Digitale.               (chiusura)
-    H3  [titolo del form, dal copy deck]                        (#richiesta)
+    H3  Contattaci                                             (#richiesta: titolo del form)
 H2  Continua a esplorare                                       [PROPOSTA]
 ```
-L'H1 su due righe segue `mappa-keyword-url.md`: il sottotitolo sta dentro l'H1. Il copy deck lo tiene come `<p>` separato e va allineato.
+L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo sta dentro l'H1.
 
 ### PD-1 · Hero — `Hero` variante `line`, carattere territoriale
 - **Contenuti.**
@@ -268,7 +283,7 @@ L'H1 su due righe segue `mappa-keyword-url.md`: il sottotitolo sta dentro l'H1. 
 ### PD-2 · Il progetto — `LargeStatement` variante `territory`
 - **Contenuti.** H2 verbatim e due paragrafi (copy deck §2); la prima frase è la definizione della pagina.
 - **Desktop.** Statement grande, testo in colonna sfalsata.
-- **Mobile.** Statement (per «all’entroterra.» ≤ 44 px a 320 px) → testo.
+- **Mobile.** Statement → testo. «all’entroterra.» in `display-l` regge anche a 320 px (§0.3).
 - **Facoltativo.** Marquee tipografico con i nomi dei comuni aderenti `[DA FORNIRE: elenco verificato]`, legato allo scroll oppure con pausa (`accessibilita.md` §2.6).
 
 ### PD-3 · Fotografia dell'evento — figura editoriale a tutta larghezza (`Media` + `<figcaption>`, fuori da §30)
@@ -284,7 +299,7 @@ L'H1 su due righe segue `mappa-keyword-url.md`: il sottotitolo sta dentro l'H1. 
   - Nota con fonte e anno (soltanto se forniti).
   - L'H2 dice che i numeri descrivono i territori coinvolti, non le imprese iscritte al portale.
 - **Desktop.** Tre numeri alla scala massima, in composizione asimmetrica.
-- **Mobile.** Un numero per riga, con l'etichetta sotto. Corpo del numero vincolato: «~200.000» ≤ 58 px a 320 px e ≤ 73 px a 390 px.
+- **Mobile.** Un numero per riga, con l'etichetta sotto. Corpo del numero vincolato: «~200.000» ≤ 67 px a 320 px (§0.3).
 - **Accessibilità.**
   - `<ul>`, con numero ed etichetta nello stesso `<li>`.
   - Simbolo visivo `aria-hidden` più testo nascosto «circa» e «oltre», altrimenti si sente «tilde» e «più».
@@ -298,15 +313,20 @@ L'H1 su due righe segue `mappa-keyword-url.md`: il sottotitolo sta dentro l'H1. 
   - `[PROPOSTA]` Sotto Monopoli e Acquaviva delle Fonti, un link a `/siii/#esempi`: Maison Miminà e D.L. Natura Dentro sono pubblicati su quei portali.
 - **Desktop.** Tre «porte»: immagini verticali alte, composte in modo non uniforme.
 - **Mobile.** Impilate a tutta larghezza (rapporto 4:5 dello slot). Nome e CTA sempre visibili: non si rivelano al passaggio del mouse.
+- **Ordine `[IMPORTANTE]`: lo stesso a tutte le larghezze.**
+  - Oggi la direzione visiva mette le porte, su desktop, secondo la longitudine (Gravina, Acquaviva, Monopoli, da sinistra a destra), e su mobile le impila dalla costa all'entroterra (Monopoli, Acquaviva, Gravina). Un solo DOM non può seguire entrambi gli ordini: su uno dei due layout il Tab andrebbe da destra a sinistra, al contrario della lettura (2.4.3).
+  - Due soluzioni, sceglie il creative-director:
+    - ordine geografico ovest → est ovunque;
+    - dalla costa all'entroterra ovunque, con la composizione desktop che non segue la longitudine.
 - **Accessibilità.** `<ul>`. Se l'intera scheda è cliccabile, l'immagine ha `alt=""` (`alt-text.md`).
 
-### PD-6 · Perché aderire — `BenefitsSection` variante `numbered`
+### PD-6 · Perché aderire — `BenefitsSection` variante `staircase` («scala» nella direzione visiva)
 - **Contenuti.** Eyebrow, H2, quattro motivi (H3 verbatim) con testo.
 - **Desktop.** Numerazione grande e composizione dinamica: sfalsata, a scale diverse.
 - **Mobile.** Lista verticale, numeri più piccoli, niente sticky.
 
 ### PD-7 · Chiusura e form — `CTASection` variante `form` + `ContactForm` (preselezione `puglia-digitale`)
-Stessa struttura di SI-8: H2 verbatim, CTA «Contattaci ↓» → `#richiesta`, poi titolo, introduzione e form del copy deck §7.
+Stessa struttura di SI-8: H2 verbatim, poi il blocco `#richiesta` con il titolo H3 «Contattaci» (la CTA delle LG, senza link), introduzione e form (copy deck §7).
 
 ### PD-8 · Continua a esplorare → 03 Città Digitali `[PROPOSTA]`
 
@@ -318,10 +338,10 @@ H2  L’Italia in un unico portale.          (#portale)        → H3 ×3
 H2  [titolo del video, copy deck §3]        (#video)
 H2  Dal locale al nazionale.                (#come-funziona)  → H3 ×5
 H2  La tua azienda merita più di una presenza online. Merita di essere esplorata.
-    H3  [titolo del form, dal copy deck]    (#richiesta)
+    H3  Entra in Città Digitali             (#richiesta: titolo del form)
 H2  Continua a esplorare                    [PROPOSTA]
 ```
-Anche qui l'H1 su due righe segue `mappa-keyword-url.md`: lo statement sta dentro l'H1. Il copy deck va allineato.
+Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo statement sta dentro l'H1.
 
 ### CD-1 · Hero — `Hero` variante `line`
 - **Contenuti.**
@@ -356,7 +376,7 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md`: lo statement sta dentr
   - Durante l'autoplay il pulsante Pausa è sempre visibile (2.2.2).
   - L'audio si attiva solo su richiesta.
   - I controlli sono `<button>` di almeno 44 × 44 px, visibili al focus e al tocco, non solo al passaggio del mouse.
-  - Etichette dei pulsanti: vedi `accessibilita.md` §2.7 (in `video.ts` va corretto l'uso di `aria-pressed`).
+  - Etichette dei pulsanti: cambiano con lo stato, senza `aria-pressed` (`accessibilita.md` §2.7; già così in `video.ts`).
 
 ### CD-4 · Dal locale al nazionale — `BenefitsSection` variante `sticky`
 - **Contenuti.**
@@ -372,8 +392,8 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md`: lo statement sta dentr
   - Nessun elemento interattivo nella colonna sticky, così non può coprire il focus.
 
 ### CD-5 · Chiusura e form — `CTASection` variante `form` + `ContactForm` (preselezione `citta-digitali`)
-- **Struttura.** Come SI-8: H2 su due livelli tipografici (copy deck §5), CTA «Entra in Città Digitali ↓» → `#richiesta`, titolo, introduzione e form.
-- **Perché la freccia ↓.** «Entra in Città Digitali» si può leggere come «visita il portale». La freccia verso il basso e l'introduzione del form chiariscono che si tratta di aderire.
+- **Struttura.** Come SI-8: H2 su due livelli tipografici (copy deck §5), poi il blocco `#richiesta` con il titolo H3 «Entra in Città Digitali», senza link, l'introduzione e il form.
+- **Perché così.** Come pulsante, «Entra in Città Digitali» si potrebbe leggere come «visita il portale». Come titolo del form, seguito dall'introduzione («ti spieghiamo come entrare in Città Digitali»), dice chiaramente che si tratta di aderire.
 
 ### CD-6 · Continua a esplorare → 01 SIII `[PROPOSTA]`
 
@@ -386,7 +406,7 @@ H2  Scrivici            (#richiesta)
 H2  I portali           (#portali)
 H2  Dati societari      (#dati-societari)
 ```
-**Differenza dal copy deck.** Il form viene prima dei portali. I portali sono un'uscita secondaria: su mobile non devono spingere il form più in basso.
+Il form viene prima dei portali, come nel copy deck v1.1: i portali sono un'uscita secondaria e su mobile non devono spingere il form più in basso.
 
 ### CT-1 · Hero — `Hero` variante `compact`
 - **Contenuti.** Breadcrumb, eyebrow, H1 verbatim, lead.
@@ -394,16 +414,21 @@ H2  Dati societari      (#dati-societari)
 - **Obiettivo di layout.** A 1280 × 800 recapiti e inizio del form stanno nel primo viewport; a 390 × 844 almeno i canali diretti.
 
 ### CT-2 · Recapiti e CT-3 · Form — due colonne su desktop
-- **Recapiti.**
-  - `<address>` con `<dl>` (copy deck §2), in questo ordine: Telefono, Mobile, Email, Sede operativa (con «Indicazioni stradali ↗», un semplice link senza mappa incorporata), LinkedIn («Giacomo Lenoci su LinkedIn ↗»).
-  - Prima vengono i canali diretti (strategia di conversione §4): da mobile, chiamare e scrivere sono i compiti più probabili `[IPOTESI]`.
-  - Numeri di telefono con spazi non separabili.
+- **Ordine del DOM, uguale all'ordine mobile.** Come nella direzione visiva:
+  1. Canali diretti: Telefono, Mobile, Email (`<address>` con `<dl>`, copy deck §2).
+  2. Form.
+  3. Sede operativa, con il link esterno alla mappa (etichetta nel copy deck; un semplice link, senza mappa incorporata).
+  4. «Giacomo Lenoci su LinkedIn ↗».
+  5. Portali.
+  6. Dati societari.
+
+  Prima vengono i canali diretti (strategia di conversione §4): da mobile, chiamare e scrivere sono i compiti più probabili `[IPOTESI]`. Numeri di telefono con spazi non separabili.
 - **Form.** `ContactForm` senza preselezione. `?interesse=` è supportato. Titolo H2, introduzione e alternativa «Preferisci parlarne a voce?» (copy deck §4).
-- **Desktop.** Recapiti a sinistra, in una colonna stretta; form a destra.
-- **Mobile.** Recapiti come righe da toccare (almeno 48 px) → form.
+- **Desktop.** Canali, sede e LinkedIn nella colonna sinistra (sede e LinkedIn sotto i canali), form a destra. L'ordine del focus diventa canali → form → sede: non inverte la lettura, quindi è accettabile.
+- **Mobile.** Canali come righe da toccare, alte almeno 48 px → form → sede e LinkedIn.
 
 ### CT-4 · I portali — due righe editoriali
-Per ogni portale: nome (H3), frase, link esterno con il dominio visibile (`↗`) e link interno «Scopri il progetto →» (copy deck §3).
+Per ogni portale: nome (H3), frase, link esterno con il dominio visibile (`↗`) e link interno alla pagina del progetto (etichette nel copy deck §3).
 
 ### CT-5 · Dati societari — blocco testuale piccolo in `<dl>`
 Gli stessi dati del footer, da completare prima del go-live (soglia 5).
@@ -416,16 +441,16 @@ Gli stessi dati del footer, da completare prima del go-live (soglia 5).
 | MobileMenu | `<dialog>` modale | tutte, sotto i 1024 px |
 | Footer | — | tutte |
 | Hero | `home`, `line`, `compact` | HM-1; SI-1, PD-1, CD-1; CT-1, pagine legali, 404 |
-| SectionIntro | titolo e introduzione, allineamenti diversi | HM-3, SI-2, SI-4, SI-6, PD-5, CD-2 |
-| LargeStatement | `manifesto`, `territory` | HM-2, SI-2, PD-2 |
-| ProjectShowcase | `chapter`, `experience`, `compact` | HM-3; SI-6; «Continua a esplorare» e 404 |
+| SectionIntro | titolo e introduzione, allineamenti diversi | HM-5, SI-2, SI-4, SI-6, PD-5, CD-2 |
+| LargeStatement | `manifesto`, `territory` | HM-2, HM-4, SI-2, PD-2 |
+| ProjectShowcase | `chapter`, `experience`, `compact` | HM-5; SI-6; «Continua a esplorare» e 404 |
 | LocationShowcase | `doors`, `italy` | PD-5, CD-2 |
 | ImmersivePreview | `poster` (al lancio), `facade` (dopo le verifiche di SI-6) | SI-1, SI-6 |
-| FounderTimeline | — | HM-4 |
-| BenefitsSection | `alternating`, `numbered`, `sticky` | SI-5, PD-6, CD-4: una variante per pagina, così le tre pagine non si somigliano (il creative-director può riassegnarle) |
+| FounderTimeline | — | HM-6 |
+| BenefitsSection | `zigzag`, `staircase`, `sticky` (nella direzione visiva: zig-zag, scala, sticky) | SI-5, PD-6, CD-4: una variante per pagina, come nella direzione visiva, così le tre pagine non si somigliano |
 | Stats | `impact`, più il modulo «Dato documentato» dentro BenefitsSection | PD-4; SI-5 e CD-4 solo con fonte |
 | VideoSection | `full-bleed` | CD-3 |
-| CTASection | `band`, `form` | HM-5; SI-8, PD-7, CD-5 |
+| CTASection | `band`, `form` | HM-7; SI-8, PD-7, CD-5 |
 | ContactForm | proprietà `formId`, `preselect`, `title`, `headingLevel` | SI-8, PD-7, CD-5, CT-3 |
 
 - **Fuori da §30, già esistenti o necessari:**
@@ -437,15 +462,16 @@ Gli stessi dati del footer, da completare prima del go-live (soglia 5).
 
 ## 7. Form di contatto (`ContactForm`, `src/scripts/form.ts`)
 
-Qui ci sono struttura, validazione, stati e accessibilità. Il microcopy completo e il contratto con l'endpoint sono nella strategia di conversione (§6–8).
+Qui ci sono struttura, validazione, stati e accessibilità. I testi (etichette, aiuti, errori, pannelli) sono in `docs/contenuti/microcopy.md` §4. Il contratto con l'endpoint e l'antispam sono nella strategia di conversione (§7).
 
 ### 7.1 Struttura
 - **Impaginazione.**
   - Una colonna, etichette sempre visibili sopra i campi, suggerimenti tra etichetta e campo; nessun placeholder al posto dell'etichetta.
-  - In testa: «I campi con * sono obbligatori.»; i campi facoltativi hanno «(facoltativo)» nell'etichetta.
+  - In testa la riga sugli obbligatori (microcopy.md §4.1). I campi facoltativi hanno «(facoltativo)» nell'etichetta.
 - **Markup del form.**
   - `<form data-contact-form data-form-id="richiesta-…" method="post" action="{endpoint}" aria-labelledby="{id del titolo}">`: con un nome accessibile il form diventa un landmark.
-  - `novalidate` lo aggiunge lo script. Senza JavaScript restano la validazione nativa e l'invio in POST all'endpoint.
+  - `novalidate` lo aggiunge lo script (`form.noValidate = true` in `initForm`). Senza JavaScript restano la validazione nativa e l'invio in POST all'endpoint.
+  - **Da aggiungere a `form.ts`.** Senza `novalidate`, quando si invia un form con campi obbligatori vuoti il browser mostra i suoi fumetti e non genera l'evento `submit`. Riepilogo e messaggi personalizzati non comparirebbero mai.
 - **Ordine dei campi.** `[PROPOSTA condivisa con cro-specialist]`
   1. Mi interessa
   2. Nome e cognome
@@ -463,20 +489,23 @@ Qui ci sono struttura, validazione, stati e accessibilità. Il microcopy complet
   - Pulsante alto almeno 44 px, a tutta larghezza su mobile.
 
 ### 7.2 Campi
+Etichette, suggerimenti e messaggi d'errore sono in `docs/contenuti/microcopy.md` §4.2 (copywriter-brand), che resta la fonte dei testi. Qui ci sono tipi, obbligatorietà e regole.
 
-| Campo (etichetta visibile) | `name` | Tipo e attributi | `autocomplete` | Obbl. | Validazione | Messaggio d'errore |
-|---|---|---|---|---|---|---|
-| Mi interessa | `interesse` | 3 checkbox (`siii`, `puglia-digitale`, `citta-digitali`) in `<fieldset>` con `<legend>`; suggerimento «Puoi sceglierne più di uno.» | — | no | — | — |
-| Nome e cognome * | `nome` | `text`, `maxlength="100"` | `name` | sì | non vuoto, spazi esclusi | «Inserisci nome e cognome.» |
-| Email * | `email` | `type="email"`, `maxlength="254"`, `spellcheck="false"`, `autocapitalize="off"`, `pattern` di cro-specialist | `email` | sì | formato valido; nessun dominio escluso: Gmail, PEC e indirizzi istituzionali vanno bene | vuoto: «Inserisci il tuo indirizzo email.» · formato: «Controlla l’email: per esempio nome@azienda.it» |
-| Telefono (facoltativo) | `telefono` | `type="tel"`, `pattern="[0-9 +\-\.\(\)\/]{6,20}"` | `tel` | no | solo se compilato | «Controlla il numero: usa cifre, spazi e +, per esempio +39 080 1234567.» |
-| Azienda o ente (facoltativo) | `azienda` | `text`, `maxlength="150"` | `organization` | no | — | — |
-| Messaggio (facoltativo) | `messaggio` | `textarea`, `rows="5"`, `maxlength="2000"`, suggerimento specifico per pagina | — | no | al massimo 2.000 caratteri | — |
-| Privacy * | `privacy` | checkbox, mai preselezionata; etichetta «Ho letto l’[informativa privacy]» | — | sì | spuntata | «Per inviare la richiesta conferma di aver letto l’informativa privacy.» |
-| (nascosto) | `_gotcha` | honeypot (§7.6) | `off` | — | deve restare vuoto | — |
-| (aggiunti all'invio) | `_elapsed_ms`, `_page`, `_form` | aggiunti da `form.ts` | — | — | controllati dall'endpoint | — |
+| Campo | `name` | Tipo e attributi | `autocomplete` | Obbl. | Validazione |
+|---|---|---|---|---|---|
+| Mi interessa (facoltativo) | `interesse` | 3 checkbox (`siii`, `puglia-digitale`, `citta-digitali`) in `<fieldset>` con `<legend>` | — | no | — |
+| Nome e cognome | `nome` | `text`, `maxlength="100"`, `required` | `name` | sì | non vuoto, spazi esclusi |
+| Email | `email` | `type="email"`, `maxlength="254"`, `spellcheck="false"`, `autocapitalize="off"`, `pattern` di cro-specialist, `required` | `email` | sì | formato valido; nessun dominio escluso: Gmail, PEC e indirizzi istituzionali vanno bene |
+| Telefono (facoltativo) | `telefono` | `type="tel"`, `pattern="[0-9 +\-\.\(\)\/]{6,20}"` | `tel` | no | solo se compilato |
+| Azienda o ente (facoltativo) | `azienda` | `text`, `maxlength="150"` | `organization` | no | — |
+| Messaggio (facoltativo) | `messaggio` | `textarea`, `rows="5"`, `maxlength="2000"` | — | no | al massimo 2.000 caratteri |
+| Privacy | `privacy` | checkbox, `required`, mai preselezionata; «informativa privacy» è un link | — | sì | spuntata |
+| (nascosto) | `_gotcha` | honeypot (§7.6) | `off` | — | deve restare vuoto |
+| (aggiunti all'invio) | `_elapsed_ms`, `_page`, `_form` | li aggiunge `form.ts` | — | — | controllati dall'endpoint |
 
-- **Etichetta dell'email.** Le LG dicono «Email aziendale»; cro-specialist propone «Email»; decide il cliente. In entrambi i casi nessun blocco sui domini.
+- **Etichetta dell'email.** Le LG dicono «Email aziendale»; cro-specialist e copywriter-brand propongono «Email»; decide il cliente. In entrambi i casi nessun blocco sui domini.
+- **Asterisco.** Negli obbligatori è `aria-hidden`: l'obbligo lo comunica `required` (microcopy.md §4.1).
+- **Posizione dei suggerimenti.** Tra etichetta e campo, anche se microcopy.md chiama la colonna «Aiuto sotto il campo»: quella colonna indica il testo, la posizione la decide questa specifica. Letto prima del campo, il suggerimento resta visibile con la tastiera virtuale e con i menu di completamento automatico.
 - **Privacy.**
   - È una presa visione, non un consenso (strategia di conversione §6) `[DA VERIFICARE con il consulente privacy]`.
   - Il link all'informativa si apre in una nuova scheda, con l'avviso, così chi lo apre non perde i dati inseriti.
@@ -519,7 +548,7 @@ Qui ci sono struttura, validazione, stati e accessibilità. Il microcopy complet
 | Pronto | caricamento | form con la preselezione della pagina | — |
 | Endpoint assente | `PUBLIC_FORM_ENDPOINT` vuoto in build | **Avviso già al caricamento, prima dei campi** (da aggiungere in build): l'invio online non è attivo, con email e telefono. All'invio valido il form si nasconde e compare il pannello di ripiego: «Prepara l’email con i tuoi dati» (`mailto:` precompilato), indirizzo in chiaro, telefono. **Mai un messaggio di successo.** | focus sul titolo del pannello |
 | Errori di validazione | invio con campi non validi | riepilogo ed errori sui campi; dati intatti | focus sul riepilogo |
-| Invio in corso | invio valido | pulsante «Invio in corso…», `aria-busy` sul form, clic ripetuti ignorati | stato: «Invio in corso…» |
+| Invio in corso | invio valido | «Invio in corso…» visibile accanto al pulsante con un indicatore `aria-hidden`; il pulsante resta «Invia richiesta» con `aria-disabled="true"` (microcopy.md §4.1); `aria-busy` sul form; clic ripetuti ignorati | stato: «Invio in corso…» |
 | Inviato | risposta 2xx | pannello di conferma al posto del form: email e interessi letti **prima** di `form.reset()`; prossimi passi solo se confermati `[DA FORNIRE]` | focus sul titolo del pannello |
 | Errore di invio | risposta 4xx/5xx, rete assente, timeout di 15 s | pannello d'errore sopra il pulsante, con alternative ed email precompilata; il form resta compilato | focus sul titolo del pannello |
 | Honeypot compilato | campo `_gotcha` non vuoto | lo stesso pannello d'errore onesto, mai un finto successo | come sopra |
@@ -544,23 +573,22 @@ Vale quanto previsto dalla strategia di conversione §7:
 - Le composizioni reggono senza gli asset mancanti, grazie agli slot a rapporto fisso.
 
 ## Domande aperte
-- **creative-director**: visual della hero della home (HM-1); ritratto nella sezione fondatore in attesa di DR3; eventuale assegnazione diversa delle varianti di BenefitsSection.
-- **copywriter-content e copywriter-brand**: allineare nei copy deck:
-  - l'ancora `#richiesta`;
-  - le frecce `↓` e `↗`;
-  - le CTA di chiusura che puntano al titolo del form;
-  - l'H1 su due righe di Puglia Digitale e Città Digitali (`mappa-keyword-url.md`);
-  - l'ordine di Contatti (form prima dei portali).
-  
-  Serve anche il copy della home: titolo dei tre mondi, microdescrizioni, chiusura.
-- **seo-content**: conferma degli H1 su due righe anche nei copy deck; testo dei link del blocco «Continua a esplorare».
-- **cro-specialist**: conferma della CTA di chiusura come link `↓` al titolo del form, invece di trasformarla nel titolo del form; formato di `?interesse=` (parametri ripetuti o virgole).
+- **creative-director**: ritratto nella sezione fondatore in attesa di DR3; ordine delle porte (PD-5); condizioni per la timeline (HM-6); minimo di `display-xxl` (§0.3).
+- **copywriter-content e copywriter-brand.** I copy deck v1.1 sono già allineati su ancora `#richiesta`, H1 su due righe e ordine di Contatti. Restano tre punti:
+  - le CTA verso un'ancora della stessa pagina usano ancora `→`. Per esempio «Richiedi un’offerta →» nella hero SIII va a `#richiesta`: la convenzione di cro-specialist vuole `↓`;
+  - la regola «la CTA di chiusura diventa il titolo del form» oggi è condizionata («se il form è già visibile»). Va resa fissa: con la composizione della direzione visiva il form è sempre accanto o subito sotto (SI-8);
+  - manca il testo del blocco «Continua a esplorare», se viene approvato.
+- **seo-content**: testo dei link del blocco «Continua a esplorare».
+- **cro-specialist**: formato di `?interesse=`. `form.ts` legge parametri ripetuti (`?interesse=siii&interesse=citta-digitali`), la strategia di conversione parla di valori separati da virgola.
 - **Cliente**: testi originali (brief §7 P1), asset, endpoint del form, tempi di risposta garantiti.
 
 ## Decisioni richieste
 - **Sviluppo** (sessione principale), correzioni al codice esistente:
-  - in `form.ts`, focus sul titolo dei pannelli e avviso di endpoint assente reso in build;
+  - in `form.ts`, `novalidate` impostato dallo script, focus sul titolo dei pannelli e avviso di endpoint assente reso in build;
   - in `immersive.ts`, pulsante «Chiudi l’anteprima» e anteprima solo da 1024 px;
-  - in `video.ts`, stati dei pulsanti (`accessibilita.md` §2.7);
   - il template 404 non mostra il breadcrumb.
+- **creative-director**:
+  - ordine delle porte in PD-5, lo stesso a tutte le larghezze;
+  - timeline del fondatore alle condizioni di HM-6, cioè link di «oggi» fuori dal binario che si muove;
+  - minimo di `display-xxl` per i numeri di Stats (§0.3).
 - **creative-director**: approvare l'impostazione per le sezioni sticky, i caroselli e le headline su mobile (§0.3–0.4). Sono vincoli di accessibilità, quindi soglie; il modo di rispettarli resta alla direzione visiva.

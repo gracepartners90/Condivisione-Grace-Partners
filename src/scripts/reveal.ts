@@ -7,7 +7,7 @@ export {};
  * animations instead of [data-reveal] to avoid a flash.
  */
 const root = document.documentElement;
-const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+const elements = document.querySelectorAll<HTMLElement>('[data-reveal], .aperture');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (elements.length > 0 && 'IntersectionObserver' in window && !reduceMotion) {

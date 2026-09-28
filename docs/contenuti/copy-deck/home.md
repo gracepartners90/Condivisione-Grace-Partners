@@ -5,7 +5,7 @@ contributi: [creative-director, seo-content, brand-strategist, cro-specialist, u
 stato: in revisione
 versione: 1.0
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, src/data/site.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, src/data/site.ts]
 ---
 
 # Copy deck · Home
@@ -60,7 +60,7 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.
 
 ## 1. Hero · «L’orizzonte dei luoghi»
 
-**Kicker** · p · mono · max 64 (61)
+**Kicker** · p · mono · max 64 (62)
 > ITnode — esperienze digitali immersive per imprese e territori
 
 Alternative: «ITnode — esperienze immersive per imprese e territori» (53) · «ITnode — oltre i confini del Web tradizionale» (45).
@@ -136,8 +136,10 @@ Note:
 
 ## 5. I tre mondi ITnode
 
-**H2** · p · max 24 (18) · può avere la scala visiva di un’etichetta
+**H2** · max 45 (18) · può avere la scala visiva di un’etichetta
 > I tre mondi ITnode
+
+Alternativa, se la composizione chiede un titolo più forte: H2 «Un’impresa. Un territorio. Una rete di città.» (45, entro il limite della struttura UX) e «I tre mondi ITnode» come occhiello mono. La mappa SEO indica «I tre mondi ITnode» come H2: con l’alternativa va avvisato seo-content.
 
 **Testo** · p · max 200 (193) · Gulpease 52 · blocco di risposta F di seo-content, accorciato
 > SIII, Puglia Digitale e Città Digitali sono tre applicazioni concrete della stessa visione. ITnode rende esplorabili gli spazi reali e usa questa tecnologia per valorizzare imprese e territori.
@@ -154,8 +156,8 @@ Note:
 | Nome | H3 · 16 | SIII | Puglia Digitale | Città Digitali |
 | Descrittore | seconda riga dell’H3, più piccola · 30 | Siti Interattivi Immersivi | — | — |
 | Statement | p, due registri · 60 | Spazi reali.<br>Esperienze digitali. | Un territorio.<br>Migliaia di storie. | Le attività del territorio,<br>online senza perdere radici. |
-| Microdescrizione | p · 180 | Il SIII replica digitalmente gli spazi della tua impresa. Chi entra li esplora da desktop e smartphone, guarda prodotti e video, chiede informazioni e prenota. | Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive. | Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per le imprese e le attività commerciali italiane. Varese, Altamura, Caltanissetta: città diverse, un unico portale. |
-| Lunghezza e Gulpease | — | 159 · 61 | 131 · 63 | 179 · 52 |
+| Microdescrizione | p · 160 (struttura UX) | Il SIII replica digitalmente gli spazi della tua impresa. Chi entra li esplora da desktop e smartphone, guarda prodotti e video, chiede informazioni e prenota. | Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive. | Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per imprese e attività. Varese, Altamura, Caltanissetta: città diverse, un unico portale. |
+| Lunghezza e Gulpease | — | 159 · 61 | 131 · 63 | 152 · 56 |
 | CTA | a · verbatim · 28 | Esplora SIII → | Scopri Puglia Digitale → | Esplora Città Digitali → |
 | Destinazione | — | `/siii/` | `/puglia-digitale/` | `/citta-digitali/` |
 | `data-track` | — | `home-capitolo-siii` | `home-capitolo-puglia-digitale` | `home-capitolo-citta-digitali` |
@@ -167,7 +169,8 @@ Note:
 - Lo statement di sezione è facoltativo. Segue il filo narrativo del brief (2.3): dalla singola impresa al territorio, fino alla rete di città, una parola per capitolo. Non lascia intendere che tutta l’Italia sia coperta (N12). Se si usa, va su una riga: la regola del Passaggio ammette tre registri solo per «Entra. Esplora. Interagisci.».
 - 01: le funzioni del SIII sono quelle del § 10. Il descrittore scioglie la sigla alla prima occorrenza, come l’hero della pagina SIII.
 - 02: nessuna attribuzione della creazione di Puglia Digitale (A1). «destination marketing» con `lang="en"`.
-- 03: ordine «Siti Interattivi Immersivi» uniformato (il § 17 scrive «Siti Immersivi Interattivi»: brief, DR2). Le città sono quelle del § 18 e coincidono con i nodi della carta: vengono nominate, come chiede N12.
+- 03: ordine «Siti Interattivi Immersivi» uniformato (il § 17 scrive «Siti Immersivi Interattivi»: brief, DR2). «Imprese e attività» riassume il «tessuto imprenditoriale e commerciale italiano» del § 17; la scala nazionale la dicono le tre città del § 18, nominate come chiede N12 e coincidenti con i nodi della carta.
+- Visual: la direzione visiva (§ 7.3) e la struttura UX (HM-3) indicano soluzioni diverse per i capitoli 02 e 03 (ritaglio «Schermo» e carta d’Italia contro foto intera e poster del video). I testi valgono in entrambi i casi; decide creative-director.
 - Niente link esterni nei capitoli: prima si approfondisce sul sito (cro-specialist). Le CTA hanno testi diversi tra loro, quindi non serve un nome accessibile aggiuntivo.
 
 ## 6. Il fondatore
@@ -221,7 +224,7 @@ Note:
 **Occhiello** · p · mono · facoltativo · max 24 (18)
 > Il prossimo spazio
 
-**H2** · due registri · max 56 (49)
+**H2** · due registri · max 60 (49)
 > Il Web si può abitare.\
 > Cominciamo dal tuo spazio.
 

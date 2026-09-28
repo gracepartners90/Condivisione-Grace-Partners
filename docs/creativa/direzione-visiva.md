@@ -5,7 +5,7 @@ contributi: [ui-designer, web-performance-specialist, ux-designer]
 stato: bozza
 versione: 0.1
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/creativa/analisi-riferimento.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -279,7 +279,7 @@ In Home la foto compare al massimo due volte, in ritagli con soggetti diversi.
 Le quattro foto hanno fondali con skyline di grattacieli e reti luminose: è l'estetica vietata dalle linee guida (§33), estranea al territorio (in Puglia non ci sono grattacieli) e con segni di generazione o ritocco con AI (brief consolidato, I7). Il brief consolidato registra la scelta come **DR3**: decide l'utente, sentito il creative-director.
 
 **Parere del creative-director: opzione (a) subito, (c) appena possibile.**
-- **(a)** La sezione del fondatore si chiude sulla foto reale: il ritaglio «Palco», con il fondatore sul palco davanti a una sala piena. È un documento, non un ritratto, ed è più forte di un ritratto da studio. In Contatti la sezione «Persona» diventa tipografica (§7.7).
+- **(a)** La sezione del fondatore si chiude sulla foto reale: il ritaglio «Palco», con il fondatore sul palco davanti a una sala piena. Che sia lui lo dice la descrizione degli asset `[DA VERIFICARE: D6]`. È un documento, non un ritratto, ed è più forte di un ritratto da studio. In Contatti la sezione «Persona» diventa tipografica (§7.7).
 - **(c)** Uno shooting reale (§4.6, priorità 4) sostituisce o affianca il «Palco».
 - **Perché non (b).** Un'immagine realistica di una persona reale in una scena generata:
   - rientra negli obblighi di trasparenza dell'AI Act (art. 50, dal 2 agosto 2026, fonte citata nel brief consolidato);
@@ -337,6 +337,8 @@ I derivati si generano con uno script sharp versionato nel repository; gli origi
 **Mai:** riquadri grigi con icona «immagine», icone di immagine rotta, lorem ipsum, stock, immagini generate.
 
 ### 4.6 Asset da chiedere, in ordine di priorità
+
+L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si aggiungono formati, risoluzioni e direzione fotografica.
 
 1. **Foto evento:** originale ad alta risoluzione senza cornice e scritte, con luogo, data e autore.
 2. **Screenshot delle tre esperienze SIII** (Masseria Santella, Maison Miminà, D.L. Natura Dentro): desktop 16:10 da almeno 2560 px e mobile. In alternativa, un accesso per catturarli: i portali sono bloccati dal nostro ambiente.
@@ -403,7 +405,7 @@ I derivati si generano con uno script sharp versionato nel repository; gli origi
 - **H1.** «La tecnologia / cambia.» su due righe (52 px; «La tecnologia» occupa 310 px su 350). Il secondo registro è a 28 px su tre righe, senza rientro: lo separa l'orizzonte.
 - **Orizzonte.**
   - Campo visivo di 100°, centrato su 250° (il gruppo murgiano, con Caltanissetta al margine).
-  - Al massimo 2 etichette visibili alla volta.
+  - Al massimo 2 etichette visibili alla volta, in formato compatto (nome e rilevamento, senza distanza) e su due file alternate. Nello schizzo a 390 px le etichette complete si sovrapponevano.
   - Scorrendo entra Varese.
 - **Sotto l'orizzonte**, in ordine: secondo registro, riga di posizionamento (20 px), didascalia dell'osservatore e invito allo scorrimento. Il totale misurato sta in una schermata da 390 × 844.
 - **Header.** Segue la sitemap UX (§4): logo, «Parliamone» compatto e «Menu».
@@ -463,10 +465,12 @@ Quando arriverà un panorama equirettangolare reale (per esempio una piazza di A
 | **Hover dei link** | Link testuali | Sottolineatura da 1 a 2 px e cambio di colore | 150 ms | ease-out |
 | **Hover delle CTA** | Pulsanti e CTA con freccia | Freccia che trasla di 4 px verso destra; cambio di fondo | 250 ms | ease-out |
 | **Hover della soglia** | Showcase, porte dei luoghi | Immagine che scala 1→1,03; solo con `(hover: hover) and (pointer: fine)` | 700 ms | ease-out |
-| **Menu mobile** | Apertura e chiusura | Tendina dall'alto (`clip-path` da `inset(0 0 100% 0)` a `inset(0)`); voci a cascata di 60 ms; focus intrappolato; Esc chiude | 500 / 250 ms | ease-in-out |
-| **Header sticky** | Dopo il primo scroll | Compaiono il fondo `calce` e il filetto `linea`; l'altezza non cambia (niente CLS) | 250 ms | ease-out |
+| **Menu mobile** | Apertura e chiusura | Dissolvenza con lieve traslazione del pannello; voci a cascata di 40 ms, al massimo 300 ms in tutto; il pannello si usa subito. Dialog modale, focus ed Esc come da sitemap UX (§4) | 250 / 150 ms | ease-out |
+| **Header sticky** | Dopo il primo scroll | Compaiono il fondo pieno (`calce`, o `notte` sulle pagine con hero scura) e il filetto; l'altezza non cambia (niente CLS). Durata entro i 200 ms della sitemap UX (§3.3) | 150 ms | ease-out |
 | **Transizione tra pagine** | Tutte | View transition cross-document solo CSS (`@view-transition { navigation: auto; }`): dissolvenza, header persistente; dove non è supportata, navigazione normale | 250 ms | ease-out |
 | **Video** | Città Digitali | Apertura più autoplay muto solo quando è nella viewport; pausa quando esce | — | — |
+
+**Marquee e WCAG 2.2.2.** Il marquee è legato allo scroll: non parte da solo e si ferma quando lo scroll si ferma. Per questo non ricade nel criterio 2.2.2 (Pausa, stop, nascondi) e il controllo di pausa previsto nel copy deck della Home non serve. Se in futuro si scegliesse un moto autonomo, il controllo tornerebbe obbligatorio. La conferma spetta a `ux-designer`, owner dell'accessibilità.
 
 **Regole tecniche.**
 - Si animano solo `transform`, `opacity` e `clip-path`.
@@ -540,14 +544,16 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 |---|---|---|---|---|---|
 | 1 | Hero | «L'orizzonte dei luoghi» (§5): H1 in due registri sull'orizzonte graduato con i luoghi reali | calce / pietra | `display-xl` | vedi §5 |
 | 2 | Manifesto | Statement su 10 colonne: «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.»; sotto, sfalsato (colonne 7–11), il `lead` di sintesi su Città Digitali e Puglia Digitale | pietra (la terra continua) | `display-l` | statement e poi lead, senza sfalsamento |
-| 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda e didascalia mono | pietra | — (didascalia) | ritaglio «Palco» 4:5; legenda sotto |
+| 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda; didascalia solo con data e luogo confermati (A4) | pietra | — (legenda) | ritaglio «Città» 4:5; legenda sotto |
 | 4 | Infrastruttura | Passaggio «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.»; in basso, marquee legato allo scroll: «spazio fisico → spazio digitale → persone → imprese → territorio →» (frecce SVG) | **notte** (primo ingresso nel digitale) | `display-l`, marquee in `display-m` | statement su 4 righe; marquee più lento |
-| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): ritaglio «Schermo» 4:5 sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12. **03 Città Digitali** (240°, pietra): carta d'Italia a filo con 3 nodi sulle colonne 8–12, testo sulle colonne 1–6 | notte → calce → pietra | numeri `display-xxl`, nomi `display-m` | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
-| 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sul ritratto a inchiostro e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
+| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo con 3 nodi sulle colonne 8–12, testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m` | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
+| 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`, agganciato alla tappa Leadstone con la sua attribuzione (registro N5: clienti delle aziende fondate prima di ITnode) e separato da «oggi» da almeno una tappa di spazio: mai vicino al logo o ai nomi dei prodotti ITnode. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sulla foto reale «Palco» (DR3-a; ritratto a inchiostro solo con DR3-b) e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
 | 7 | Chiusura | Passaggio, CTA «Parliamone» e contatti rapidi in mono (email, telefono) | notte | `display-xl` | CTA a tutta larghezza |
-| — | Footer | Logo, navigazione, contatti, dati societari, link legali e portali, copyright; ultima riga mono: «ITnode · Acquaviva delle Fonti · 40.8957° N · 16.8412° E» | notte | — | colonne in pila |
+| — | Footer | Vedi §7.8 | notte | — | colonne in pila |
 
-**Timeline.** È ordinale, non in scala: le date di IcommLab, Leadstone e ITnode sono `[DA FORNIRE]` e una scala in anni le inventerebbe. Con `prefers-reduced-motion` diventa una griglia statica a 4 colonne.
+**Timeline.** È ordinale, non in scala: le date di IcommLab, Leadstone e ITnode sono `[DA FORNIRE]` e una scala in anni le inventerebbe. L'ordine delle tappe segue il brief consolidato (§6), che può ancora cambiare. Con `prefers-reduced-motion` diventa una griglia statica a 4 colonne.
+
+**Rapporto con il copy deck.** Il copy deck raggruppa le sezioni 2–4 in un'unica «Chi siamo» (ancora `#chi-siamo`). I testi sono gli stessi, distribuiti su tre composizioni: l'ancora va sulla sezione 2 e il marquee chiude la sezione 4.
 
 ### 7.4 SIII (`/siii`)
 
@@ -558,7 +564,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 3 | Confronto | Una sola immagine Schermo 16:10 con interruttore accessibile a due stati. «Tour 360° — guardi»: solo orizzonte. «SIII — agisci»: compaiono i nodi (prodotto, video, informazioni, prenotazione). Sotto, 3 righe di differenze in tabella tipografica | pietra | `display-l` | interruttore a tutta larghezza; tabella in pila |
 | 4 | Cosa puoi fare | Marquee di verbi in `display-xl` presi dalle 7 azioni delle linee guida (§10), per esempio «Esplora · Interagisci · Guarda · Chiedi · Prenota»; il testo definitivo è del copywriter e nessun verbo può promettere più di quanto il SIII fa. Sotto, l'elenco accessibile delle 7 azioni su due colonne | notte | marquee | elenco in una colonna |
 | 5 | Benefici | Elenco *zig-zag*: 4 benefici, numeri `display-xxl` alternati a sinistra e a destra, una idea per schermata; solo formulazioni qualitative (linee guida §11) | calce | `display-s` per voce | numero sopra il testo |
-| 6 | Showcase | Passaggio a cascata «Entra. / Esplora. / Interagisci.», poi tre soglie Schermo 16:10 di larghezze diverse (12 colonne; 8 a destra; 8 a sinistra), nome in `display-l`, luogo e coordinate in mono, CTA «Entra nell'esperienza →» (nuova scheda, dichiarata) | notte | `display-l` | soglie a tutta larghezza in pila |
+| 6 | Showcase | Passaggio a cascata «Entra. / Esplora. / Interagisci.», poi tre soglie Schermo 16:10 di larghezze diverse (12 colonne; 8 a destra; 8 a sinistra), nome in `display-l`, luogo e coordinate in mono, CTA «Entra nell'esperienza →» (nuova scheda, dichiarata). Nomi e immagini delle imprese solo con il loro consenso (A7) | notte | `display-l` | soglie a tutta larghezza in pila |
 | 7 | Chiusura | Passaggio «La tua azienda può diventare un'esperienza.» sulle colonne 1–5, CTA «Richiedi un'offerta →», form sulle colonne 7–12 | calce | `display-l` | statement, poi form |
 
 ### 7.5 Puglia Digitale (`/puglia-digitale`)
@@ -566,8 +572,8 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
 | 1 | Hero | H1 «Puglia Digitale» con sottotitolo e CTA «Visita il portale →»; la costa pugliese è un'unica linea che attraversa la pagina e si disegna all'ingresso, con i nodi `terra` di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» | calce | `display-xl` | carta ritagliata sulla Terra di Bari, sotto il titolo |
-| 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Palco» 4:5 in soglia sulle colonne 1–5, testo sul Destination Marketing sulle colonne 7–11, didascalia | pietra | `display-l` | foto a tutta larghezza, poi testo |
-| 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono; nota «Dati forniti da ITnode» `[DA VERIFICARE: fonte e anno]` | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350) |
+| 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Schermo» 4:5 in soglia sulle colonne 1–5 (persone che esplorano una piazza pugliese sul maxischermo), testo sul Destination Marketing sulle colonne 7–11; didascalia solo con data e luogo (A4) | pietra | `display-l` | foto a tutta larghezza, poi testo |
+| 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350) |
 | 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →» | calce | `display-l` | pila ordinata **dalla costa all'entroterra**: Monopoli → Acquaviva → Gravina |
 | 5 | Perché aderire | Elenco *scala*: le 4 voci rientrano ciascuna di una colonna rispetto alla precedente; numeri in `display-xl`, titoli in `display-s` | pietra | `display-m` | rientri di 16 px |
 | 6 | Chiusura | Passaggio «Porta la tua impresa / dentro Puglia Digitale.», CTA «Contattaci →», form su due colonne sotto lo statement; link secondario al portale | notte | `display-l` | form a una colonna |
@@ -578,7 +584,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 |---|---|---|---|---|---|
 | 1 | Hero | H1 «Città Digitali», Passaggio «Le attività del territorio, / online senza perdere radici.», sottotitolo, CTA «Visita il portale →»; nessuna immagine: la hero finisce su un orizzonte che si apre nel video | calce | `display-xl` | — |
 | 2 | Video | A tutta larghezza, altezza `min(100svh, 56.25vw)`; apertura dall'orizzonte; controlli minimi (un nodo play/pausa in basso a sinistra, audio, tempo in mono); poster sempre presente | notte | — (etichetta mono) | 16:9 a tutta larghezza; niente autoplay con Save-Data o reduced motion |
-| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
+| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12) | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
 | 4 | Dal locale al nazionale | Elenco *sticky*: titolo e indicatore mono «01/05» fermi a sinistra, i 5 concetti scorrono a destra; spazio predisposto per dati documentati, nascosto finché non arrivano (linee guida §20) | calce | `display-l` | elenco numerato, niente sticky |
 | 5 | Chiusura | Passaggio «La tua azienda merita più di una presenza online. / Merita di essere esplorata.» in `display-xl`, CTA «Entra in Città Digitali →» e form sotto | notte | `display-xl` | form a una colonna |
 
@@ -587,18 +593,23 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
 | 1 | Hero e form | H1 «Parliamo del prossimo spazio digitale.» su 12 colonne. Sotto, sulle colonne 1–4, la scheda contatti: sede con coordinate e «Apri in Mappe ↗» (nessuna mappa incorporata), telefono, cellulare, email, LinkedIn. Sulle colonne 6–12 il form | calce | `display-xl` | H1, poi email e telefono come tap target, poi form, poi il resto |
-| 2 | Persona | Ritratto a inchiostro (`fondatore-in-piedi`, al massimo 320 px), una riga del fondatore e link LinkedIn | calce (la sfumatura del ritratto lo richiede) | `display-m` | ritratto a 60% della larghezza |
+| 2 | Persona | Con DR3-a (raccomandata): composizione tipografica, con nome e ruolo in `display-m` `[DA VERIFICARE: F7]`, una riga del fondatore e link al profilo LinkedIn etichettato come personale (S6). Con DR3-b: ritratto a inchiostro (`fondatore-in-piedi`, al massimo 320 px) con nota di trasparenza | calce (la sfumatura del ritratto lo richiede) | `display-m` | ritratto, se c'è, al 60% della larghezza |
 | 3 | Portali | Due righe tipografiche a tutta larghezza: «Città Digitali ↗» e «Puglia Digitale ↗» in `display-l`, URL in mono, filetti; all'hover la freccia avanza | notte | `display-l` | righe in pila |
 
 ### 7.8 Elementi fissi e pagine di servizio
 
-- **Header.**
-  - Su calce: logo a sinistra; a destra le 4 voci e «Parliamone» (pillola `inchiostro`).
-  - Diventa sticky dopo il primo scroll, con fondo calce e filetto.
-  - Su mobile: logo e «Menu» (testo).
-- **Menu mobile.** A tutto schermo su `notte`:
-  - voci in `display-l`, numerate con il rilevamento (01 SIII · 000°; 02 Puglia Digitale · 120°; 03 Città Digitali · 240°; Contatti);
-  - poi la CTA e i contatti in mono.
+- **Header.** Struttura, ordine del focus e stati sono quelli della sitemap UX (§3); qui c'è solo l'aspetto.
+  - Logo a sinistra; a destra le 4 voci come testo e «Parliamone» come pillola `inchiostro`.
+  - La voce corrente ha il punto del Nodo prima dell'etichetta: non si basa solo sul colore.
+  - Sotto i 1024 px: logo, «Parliamone» compatto e «Menu» testuale.
+  - Sulle pagine con hero scura (SIII) lo stato iniziale è su `notte`.
+- **Menu mobile.** Struttura e comportamento dalla sitemap UX (§4); l'aspetto:
+  - pannello a tutto schermo su `notte`;
+  - numeri «01», «02», «03» in mono (`aria-hidden`), nomi in `display-l`, descrittori in `small` e `testo-notte-2`;
+  - «Parliamone» come pillola `calce`, telefono ed email in mono.
+  - I rilevamenti dei capitoli (000°, 120°, 240°) restano in Home: nel menu sarebbero rumore.
+- **Breadcrumb** (sitemap UX §5). Sulle pagine interne sta sopra l'H1 della hero, in `label` mono, e prende il posto dell'occhiello: `inchiostro-2` su chiaro, `testo-notte-2` su scuro.
+- **Footer.** Blocchi e ordine della sitemap UX (§6), su `notte`. L'ultima riga, in mono, è la firma: «ITnode · Acquaviva delle Fonti · 40.8957° N · 16.8412° E».
 - **404.** Su calce: «404°» in `display-xxl`, perché su una bussola non esiste, come la pagina. Un orizzonte con i tre mondi come nodi a 000°, 120° e 240° porta alle pagine. Il copy è del copywriter.
 - **Privacy e cookie.** Su calce, testo su 7 colonne, numeri di sezione in mono. Nessun dispositivo firma: pagine silenziose.
 
@@ -639,24 +650,31 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 
 ## Domande aperte
 
-- **Foto evento.** Esiste il file originale ad alta risoluzione senza cornice, marchio e scritta? Luogo, data e autore? La scena è stata ritoccata con strumenti generativi (il simbolo ✦ lo fa sospettare)?
-- **SIII.** Che cosa significa la quarta «I»? Le linee guida sciolgono solo «Siti Interattivi Immersivi».
-- **Fondatore.**
-  - Conferma del nome (Giacomo Lenoci `[DA VERIFICARE]`).
-  - Anni di IcommLab, Leadstone e ITnode.
-  - Testo narrativo originale: le linee guida lo citano ma non è nel repository.
-- **Video Città Digitali.** Durata, presenza di parlato (sottotitoli obbligatori per WCAG 1.2.2), possibilità di ospitarlo sul nostro hosting e poster.
-- **Numeri.** Fonte e anno dei dati di Puglia Digitale (30+, ~200.000, 60%) e del dato «10.000+ clienti» di Leadstone.
-- **Materiali.** Marchi vettoriali, codici colore ufficiali e l'elenco delle città di Puglia Digitale.
+Le domande sui materiali e sui fatti sono già registrate nel brief consolidato e qui non si duplicano:
+- D3: la quarta «I» di SIII;
+- D6: il fondatore;
+- D7: i numeri;
+- D9: le immagini e l'originale della foto evento;
+- §7: i materiali mancanti.
+
+Da aggiungere, per la parte visiva:
+- **Foto evento.** La scena, oltre alla sovrimpressione, è stata ritoccata con strumenti generativi? Il simbolo ✦ lo fa sospettare.
+- **Colori.** Codici ufficiali (HEX o Pantone) di ITnode, Puglia Digitale e Città Digitali.
+- **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2).
 - **Riferimento.** Screenshot di aprildunford.com (vedi `analisi-riferimento.md`).
 
 ## Decisioni richieste
 
 1. **Logo per il web.** Proposta: wordmark senza trama poligonale. Pro: leggibile a 24–28 px e coerente con il divieto di pattern tecnologici. Contro: la trama sparisce dall'uso quotidiano. È una decisione del cliente perché tocca l'identità.
-2. **Ritratti del fondatore.** Si usano le foto attuali con il trattamento a inchiostro, oppure si pianifica uno shooting reale?
-   - Foto attuali. Pro: subito disponibili. Contro: fondali generati attenuati ma non eliminati, e risoluzione limitata.
-   - Shooting. Pro: autenticità, coerenza con §33. Contro: costo e tempi.
+2. **Ritratti del fondatore: DR3 del brief consolidato.** Parere del creative-director:
+   - **(a) subito**: la foto reale «Palco» chiude la sezione del fondatore;
+   - **(c) il prima possibile**: shooting reale.
 
-   La raccomandazione è **usarle ora e pianificare lo shooting prima del lancio**.
+   Le opzioni:
+   - (a) Pro: vera, disponibile, forte. Contro: il fondatore è piccolo nell'inquadratura; è un documento, non un ritratto.
+   - (b) Ritratti attuali con trattamento a inchiostro e nota di trasparenza. Pro: disponibili, volto in primo piano. Contro: obblighi di trasparenza (AI Act, art. 50), fondali generati attenuati ma non eliminati, risoluzione limitata, contraddizione con la promessa di autenticità del sito.
+   - (c) Pro: autenticità piena. Contro: costo e tempi.
+
+   Le specifiche per (a) e (b) sono pronte (§4.3). Nota: l'incarico chiedeva di usare le foto del fondatore; DR3 e l'AI Act sono i motivi nuovi per cui il creative-director raccomanda (a).
 3. **Produzione fotografica dei luoghi** (6 località): budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Va approvato al gate G2 insieme a questa direzione visiva.

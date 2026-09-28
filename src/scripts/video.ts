@@ -1,20 +1,24 @@
 /**
- * Large video sections with minimal custom controls.
- * - preload="none" in markup; nothing downloads until play.
- * - Muted autoplay only when the section is mostly in view, and never with
- *   prefers-reduced-motion or Save-Data. Pauses when it leaves the viewport.
+ * Large video sections with minimal custom controls (docs/performance/architettura.md §4).
+ * - preload="none" and no poster attribute: nothing downloads until play; the cover is a
+ *   lazy <picture> overlaid on the video and hidden on the first rendered frame.
+ * - Muted autoplay only on desktop (≥ 64em), when the section is mostly in view, and never with
+ *   prefers-reduced-motion, Save-Data or 2G. Pauses when it leaves the viewport.
  */
 import { track } from './track';
 
-type NetworkInformation = { saveData?: boolean };
+type Connection = { saveData?: boolean; effectiveType?: string };
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const saveData = Boolean((navigator as Navigator & { connection?: NetworkInformation }).connection?.saveData);
+const desktop = window.matchMedia('(min-width: 64em)');
+const conn = (navigator as Navigator & { connection?: Connection }).connection;
+const lowData = Boolean(conn?.saveData) || /(^|-)2g$/.test(conn?.effectiveType ?? '');
 
 document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
   const video = root.querySelector<HTMLVideoElement>('video');
   const toggle = root.querySelector<HTMLButtonElement>('[data-video-toggle]');
   const mute = root.querySelector<HTMLButtonElement>('[data-video-mute]');
+  const time = root.querySelector<HTMLElement>('[data-video-time]');
   if (!video || !toggle) return;
 
   const labels = {
@@ -23,23 +27,20 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
     mute: mute?.dataset.labelMute ?? 'Disattiva l’audio',
     unmute: mute?.dataset.labelUnmute ?? 'Attiva l’audio',
   };
-  const autoplay = root.dataset.autoplay === 'true' && !reduceMotion && !saveData;
+  const autoplayWanted = root.dataset.autoplay === 'true' && !reduceMotion && !lowData;
   const videoId = root.dataset.videoId ?? 'video';
   const videoTitle = root.dataset.videoTitle ?? '';
   let pausedByUser = false;
   let startedBy: 'autoplay' | 'utente' | null = null;
   let tracked = false;
   const milestones = new Set<number>();
+  let shownSecond = -1;
 
   const sync = () => {
     const playing = !video.paused && !video.ended;
     root.dataset.state = playing ? 'playing' : 'paused';
     toggle.setAttribute('aria-label', playing ? labels.pause : labels.play);
-    toggle.setAttribute('aria-pressed', String(playing));
-    if (mute) {
-      mute.setAttribute('aria-label', video.muted ? labels.unmute : labels.mute);
-      mute.setAttribute('aria-pressed', String(!video.muted));
-    }
+    if (mute) mute.setAttribute('aria-label', video.muted ? labels.unmute : labels.mute);
   };
 
   const play = (trigger: 'autoplay' | 'utente') => {
@@ -63,12 +64,23 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
     sync();
   });
 
+  ['play', 'pause', 'ended', 'volumechange'].forEach((type) => video.addEventListener(type, sync));
+
+  // Hide the cover on the first rendered frame, not on 'play': no black flash.
+  video.addEventListener('playing', () => (root.dataset.ready = ''), { once: true });
+
   video.addEventListener('play', () => {
     if (tracked) return;
     tracked = true;
     track('video_start', { video_id: videoId, video_title: videoTitle, video_trigger: startedBy ?? 'utente' });
   });
+
   video.addEventListener('timeupdate', () => {
+    const s = Math.floor(video.currentTime);
+    if (time && s !== shownSecond) {
+      shownSecond = s;
+      time.textContent = `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+    }
     if (!video.duration) return;
     const percent = (video.currentTime / video.duration) * 100;
     for (const mark of [25, 50, 75]) {
@@ -78,18 +90,15 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
       }
     }
   });
-  video.addEventListener('ended', () => track('video_complete', { video_id: videoId }));
 
-  ['play', 'pause', 'ended', 'volumechange'].forEach((type) => video.addEventListener(type, sync));
-  video.addEventListener('error', () => {
-    root.dataset.state = 'error';
-  });
+  video.addEventListener('ended', () => track('video_complete', { video_id: videoId }));
+  video.addEventListener('error', () => (root.dataset.state = 'error'));
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(
       ([entry]) => {
         if (entry.intersectionRatio >= 0.5) {
-          if (autoplay && !pausedByUser && video.paused) {
+          if (autoplayWanted && desktop.matches && !pausedByUser && video.paused) {
             video.muted = true;
             play('autoplay');
           }

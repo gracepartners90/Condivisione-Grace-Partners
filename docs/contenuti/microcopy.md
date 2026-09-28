@@ -1,92 +1,88 @@
 ---
 titolo: Microcopy e UX writing
 owner: copywriter-brand
-contributi: [cro-specialist, ux-designer, copywriter-content, seo-content, seo-technical, web-performance-specialist]
+contributi: [cro-specialist, ux-designer, creative-director, copywriter-content, seo-content, seo-technical, web-performance-specialist]
 stato: in revisione
 versione: 1.0
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/cro/strategia-conversione.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/contenuti/alt-text.md, docs/contenuti/copy-deck/siii.md, docs/contenuti/copy-deck/contatti.md, src/data/site.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/marquee.ts, src/scripts/header.ts, src/scripts/immersive.ts, src/scripts/track.ts]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/creativa/direzione-visiva.md, docs/cro/strategia-conversione.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/contenuti/alt-text.md, docs/contenuti/copy-deck/siii.md, docs/contenuti/copy-deck/contatti.md, src/data/site.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/marquee.ts, src/scripts/header.ts, src/scripts/immersive.ts, src/scripts/track.ts]
 ---
 
 # Microcopy e UX writing
 
-Testi di interfaccia pronti da impaginare, agganciati agli attributi già presenti nel codice (`src/scripts/`). Recepiscono le decisioni di conversione di cro-specialist (`docs/cro/strategia-conversione.md`, §§ 3–8). Dove la sua proposta di microcopy e questo documento differiscono, vale questo documento: la scelta finale spetta a copywriter-brand, come indica il § 8 della strategia. Grafie e convenzioni: `docs/contenuti/tone-of-voice.md`.
+Testi di interfaccia pronti da impaginare, agganciati agli attributi già presenti nel codice (`src/scripts/`). Struttura e comportamento di header, menu, breadcrumb, footer e 404 sono quelli della sitemap di ux-designer (`docs/ux/sitemap.md`). Le decisioni di conversione sono di cro-specialist (`docs/cro/strategia-conversione.md`, §§ 3–8). Dove la proposta di microcopy di cro-specialist e questo documento differiscono, vale questo documento: la scelta finale spetta a copywriter-brand, come dice il § 8 della strategia. Grafie e convenzioni: `docs/contenuti/tone-of-voice.md`.
 
 ## Come leggere questo documento
 
 - **Visibile**: il testo a schermo. **Nome accessibile**: ciò che leggono gli screen reader, quando è diverso (`aria-label` o testo nascosto `sr-only`). Il nome accessibile comincia sempre con il testo visibile (WCAG 2.5.3).
 - **Aggancio**: attributo o variabile nel codice attuale.
 - `{…}`: valore da inserire in sviluppo. Le marcature `[DA …]` non si pubblicano.
-- Percorsi con la barra finale, come prevedono le specifiche di seo-technical: `/siii/`, `/contatti/`.
+- **Frecce** → ↓ ↗ ↑: indicano l’icona SVG da usare (`aria-hidden="true"`), non un carattere (tone of voice, § 6).
+- **Percorsi** con la barra finale, come prevedono le specifiche di seo-technical: `/siii/`, `/contatti/`.
 
-## 1. Header e navigazione
+## 1. Header
 
 | Elemento | Visibile | Nome accessibile e attributi | Note |
 |---|---|---|---|
-| Link per saltare la navigazione | Vai al contenuto principale | `href="#contenuto"` sul `<main id="contenuto">` | Primo elemento raggiungibile con Tab; nascosto finché non riceve il focus. |
-| Logo | immagine | Testo alternativo in `alt-text.md`: «ITnode – Home» | La mappa SEO scrive «ITnode, home»: va usata una sola forma (proposta: quella di `alt-text.md`). |
-| Navigazione | — | `<nav aria-label="Menu principale">` | — |
-| Voci | SIII · Puglia Digitale · Città Digitali · Contatti | `aria-current="page"` sulla pagina attiva | Come `nav` in `src/data/site.ts`. |
-| CTA dell’header | Parliamone | Porta a `#richiesta` sulle pagine con form, altrimenti a `/contatti/`; `data-track="header-parliamone"` | Evidenziata, senza freccia (cro-specialist, § 3). |
+| Skip link | Vai al contenuto | `href="#contenuto"`, verso `<main id="contenuto">` | Primo elemento raggiungibile con Tab; si vede solo quando riceve il focus. |
+| Logo | immagine | `<img alt="ITnode">` dentro il link a `/`; sulla home il link ha `aria-current="page"` | Forma della sitemap UX. `alt-text.md` propone «ITnode – Home» e la mappa SEO «ITnode, home»: serve una forma sola, e decide ux-designer, che è owner dell’accessibilità. |
+| Navigazione | — | `<nav aria-label="Principale">` | — |
+| Voci | SIII · Puglia Digitale · Città Digitali · Contatti | `aria-current="page"` sulla voce della pagina corrente | Come `nav` in `src/data/site.ts`. |
+| CTA | Parliamone | Link `<a>`: porta a `#richiesta` sulle pagine con form, a `/contatti/` su home, pagine legali e 404; `data-track="header-parliamone"` | Evidenziata, senza icona. |
 | Sigla SIII (facoltativo) | SIII | `SIII<span class="sr-only"> – Siti Interattivi Immersivi</span>` | Da provare con NVDA e VoiceOver: la sigla potrebbe essere letta come una parola. |
 
-## 2. Menu mobile a schermo intero
+## 2. Menu mobile a tutto schermo
 
-| Elemento | Visibile | Nome accessibile | Aggancio |
+| Elemento | Visibile | Nome accessibile | Aggancio e note |
 |---|---|---|---|
-| Pulsante di apertura | Menu | Apri menu | `[data-menu-open]`, con `aria-expanded` |
-| Pulsante di chiusura | Chiudi | Chiudi menu | `[data-menu-close]` |
-| Finestra | — | `aria-label="Menu"` sul `<dialog>` | `[data-mobile-menu]` |
-| Voci | SIII · Puglia Digitale · Città Digitali · Contatti | — | — |
-| CTA dopo le voci | Parliamone | — | `menu-mobile-parliamone` |
+| Pulsante di apertura | Menu | Apri menu | `[data-menu-open]`, con `aria-haspopup="dialog"` e `aria-expanded` |
+| Pulsante di chiusura | Chiudi | Chiudi menu | `[data-menu-close]`: è il primo elemento del pannello, nella stessa posizione di «Menu» |
+| Pannello | — | `<dialog aria-label="Menu">` | `[data-mobile-menu]` |
+| Voci | 01 SIII · 02 Puglia Digitale · 03 Città Digitali · Contatti | numeri `aria-hidden="true"` | voci alte almeno 48 px |
+| CTA | Parliamone | — | `menu-mobile-parliamone` |
 | Canali diretti | Chiama +39 080 2466520 · Scrivi a info@itnode.it | — | `tel:`, `mailto:`; `menu-mobile-telefono`, `menu-mobile-email` |
 
-**Descrittori delle voci** (facoltativi, sotto il nome, dentro lo stesso link, al massimo 40 caratteri):
-
-| Voce | Descrittore |
-|---|---|
-| SIII | Siti Interattivi Immersivi |
-| Puglia Digitale | Un territorio da esplorare |
-| Città Digitali | Le attività del territorio, online |
-| Contatti | Parliamo del prossimo spazio digitale |
+- **Nomi dei pulsanti.** La sitemap UX usa come nome il solo testo visibile («Menu», «Chiudi»). «Apri menu» e «Chiudi menu» come `aria-label` sono compatibili, perché contengono il testo visibile, e dicono l’azione in modo esplicito. Decide ux-designer; se preferisce il solo testo visibile, vale quello.
+- **Descrittori delle voci**, dentro il link, sotto il nome: SIII → «Siti Interattivi Immersivi»; Puglia Digitale → «Dalla costa all’entroterra» (sitemap UX, testi del cliente). Per Città Digitali la sitemap indica «L’Italia in un unico portale», che però il brief ammette solo accompagnato dalle città reali (N12). In un menu le città non ci stanno: propongo «Le attività del territorio, online», dallo statement del § 17.
 
 ## 3. Footer
 
-| Elemento | Testo | Note |
-|---|---|---|
-| Payoff sotto il logo | Esperienze digitali immersive per imprese e territori. | È la stessa riga di posizionamento della hero. |
-| Titolo della navigazione | Esplora | `<nav aria-label="Esplora">`; voci: SIII · Puglia Digitale · Città Digitali · Contatti |
-| Titolo dei recapiti | Contatti | — |
-| Sede | Sede operativa<br>Via Sant’Anna, 34<br>70021 Acquaviva delle Fonti (BA) | Se sede legale e operativa coincidono: «Sede legale e operativa» (brief, S3). |
-| Telefono | Telefono · +39 080 2466520 | `tel:+390802466520`; `footer-telefono` |
-| Mobile | Mobile · +39 335 1229785 | `tel:+393351229785` |
-| Email | Email · info@itnode.it | `mailto:`; `footer-email` |
-| LinkedIn | LinkedIn · Giacomo Lenoci ↗ | Nome accessibile: «Giacomo Lenoci su LinkedIn (si apre in una nuova scheda)». È un profilo personale e va presentato come tale (brief, S6). |
-| Titolo dei portali | Portali | — |
-| Portali | Città Digitali · cittadigitali.it ↗<br>Puglia Digitale · lapugliadigitale.it ↗ | Il link è il dominio, così non si confonde con le voci di navigazione che hanno lo stesso nome. Nome accessibile: «cittadigitali.it, portale di Città Digitali (si apre in una nuova scheda)». `footer-portale-citta-digitali`, `footer-portale-puglia-digitale` |
-| Link legali | Privacy Policy · Cookie Policy | «Gestisci i cookie» si aggiunge solo se arriva un banner di consenso (§ 10.3). |
-| Torna su (facoltativo) | Torna all’inizio ↑ | Link a `#top`; la freccia è `aria-hidden`. |
+I blocchi, nell’ordine del DOM, sono quelli della sitemap UX (§ 6). I titoli dei gruppi sono `<h2>` in stile piccolo.
+
+| # | Blocco | Testo | Note |
+|---|---|---|---|
+| 1 | Logo | immagine, `alt="ITnode"` | Link a `/`. |
+| 2 | Navigazione | Titolo: Navigazione<br>Voci: SIII · Puglia Digitale · Città Digitali · Contatti | `<nav aria-label="Piè di pagina">` |
+| 3 | Contatti | Titolo: Contatti<br>Sede operativa<br>Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA)<br>+39 080 2466520<br>info@itnode.it | In `<address>`. Telefono (`tel:+390802466520`, `footer-telefono`) ed email (`mailto:`, `footer-email`) sono link. Se sede legale e operativa coincidono: «Sede legale e operativa» (brief, S3). |
+| 4 | Portali | Titolo: Portali<br>cittadigitali.it ↗<br>lapugliadigitale.it ↗ | Nuova scheda. Nomi accessibili: «cittadigitali.it, portale di Città Digitali (si apre in una nuova scheda)» e «lapugliadigitale.it, portale di Puglia Digitale (si apre in una nuova scheda)». Il dominio evita due link con lo stesso nome («Città Digitali») e destinazioni diverse. `footer-portale-citta-digitali`, `footer-portale-puglia-digitale` |
+| 5 | Riga legale | vedi sotto | — |
+| 6 | Firma | ITnode · Acquaviva delle Fonti · 40.8957° N · 16.8412° E | Riga mono della direzione visiva (§ 7.3); coordinate `[DA VERIFICARE]`. |
+
+Il cellulare (+39 335 1229785) e il profilo LinkedIn del fondatore restano sulla pagina Contatti: la sitemap non li prevede nel footer. Il `sameAs` di Person è coperto dal link a LinkedIn nella sezione del fondatore in Home.
 
 **Riga legale e copyright**
 
-> © {anno} ITNODE S.r.l. · Sede legale: Via Sant’Anna, 34 – 70021 Acquaviva delle Fonti (BA) · P.IVA, C.F. e iscrizione al Registro delle imprese di Bari n. 08937270729 · REA BA-{numero} · Capitale sociale € {importo} i.v.
+> © {anno} ITNODE S.r.l. · P.IVA 08937270729 · Sede legale: Via Sant’Anna, 34 – 70021 Acquaviva delle Fonti (BA) · C.F. e iscrizione al Registro delle imprese di Bari n. 08937270729 · REA BA-{numero} · Capitale sociale € {importo} i.v.
 
-- `{anno}` è dinamico. Con un sito statico si aggiorna a ogni build: serve una build a gennaio, oppure uno script che aggiorni l’anno nel browser.
-- La riga deve essere completa al go-live (soglia 5 di CLAUDE.md, art. 2250 del Codice civile). Finché i dati non sono confermati, `rea` e `shareCapital` restano vuoti in `src/data/site.ts` e i due elementi non compaiono.
+Seguono i link: Privacy Policy · Cookie Policy · Preferenze cookie (quest’ultimo solo se esiste un banner di consenso, § 10.3).
+
+- `{anno}` si genera in build; un piccolo script lo aggiorna se il sito non viene ricompilato a inizio anno (sitemap UX).
+- Nella riga legale l’indirizzo usa il trattino medio, perché il punto a metà altezza separa già le voci.
+- La riga deve essere completa al go-live (soglia 5 di CLAUDE.md, art. 2250 del Codice civile). Finché i dati non sono confermati, `rea` e `shareCapital` restano vuoti in `src/data/site.ts` e i due elementi non compaiono: il go-live resta bloccato.
 
 | Dato | Valore | Stato e fonte |
 |---|---|---|
 | Ragione sociale | ITNODE S.r.l. | `[DA VERIFICARE: grafia da visura]` ufficiocamerale.it e atoka.io, dagli estratti di ricerca del 2026-09-28 |
 | P.IVA | 08937270729 | `[DA VERIFICARE]` stesse fonti |
 | C.F. e numero di iscrizione al Registro delle imprese | 08937270729 | `[DA VERIFICARE]` per le S.r.l. di norma coincidono con la P.IVA |
-| Registro delle imprese | Bari | `[DA VERIFICARE]` sede nel comune di Acquaviva delle Fonti (BA) |
+| Registro delle imprese | Bari | `[DA VERIFICARE]` la sede è nel comune di Acquaviva delle Fonti (BA) |
 | REA | BA-660035 | `[DA VERIFICARE]` valore letto solo nell’estratto di un risultato di ricerca (atoka.io / ufficiocamerale.it, 2026-09-28): la pagina non è raggiungibile dal nostro ambiente |
 | Capitale sociale | € 10.000,00 | `[DA VERIFICARE]` stessa origine; «i.v.» solo se interamente versato |
-| Socio unico | — | `[DA VERIFICARE]` se la società è unipersonale, va indicato |
+| Socio unico | — | `[DA VERIFICARE]` se la società è unipersonale va indicato |
 
 ## 4. Modulo di contatto
 
-Il componente è lo stesso su SIII, Puglia Digitale, Città Digitali e Contatti. Titolo e introduzione del form li scrive, pagina per pagina, chi cura la pagina (copywriter-content). Qui c’è tutto il resto.
+Il componente è lo stesso su SIII, Puglia Digitale, Città Digitali e Contatti, nella sezione `#richiesta`. Titolo e introduzione del form li scrive, pagina per pagina, chi cura la pagina (copywriter-content). Qui c’è tutto il resto.
 
 ### 4.1 Testi fissi
 
@@ -94,9 +90,9 @@ Il componente è lo stesso su SIII, Puglia Digitale, Città Digitali e Contatti.
 |---|---|---|
 | Nome accessibile del form | il titolo del form della pagina | `aria-labelledby` sul titolo. Se il titolo manca: `aria-label="Modulo di contatto"`. |
 | Riga sotto l’introduzione | La richiesta è senza impegno. I campi con * sono obbligatori. | L’asterisco nelle etichette è `aria-hidden`: l’obbligo lo comunica `required`. |
-| Avviso prima dei campi, solo se il modulo non è attivo | Il modulo online non è ancora attivo. Per ora scrivici a info@itnode.it o chiamaci al +39 080 2466520. Se compili i campi, all’invio prepariamo un’email già pronta da spedire. | Da rendere in build quando `data-endpoint` è vuoto (cro-specialist, § 7). Così nessuno compila il modulo credendo che parta. Gulpease 73. |
+| Avviso prima dei campi, solo se il modulo non è attivo | Il modulo online non è ancora attivo. Per ora scrivici a info@itnode.it o chiamaci al +39 080 2466520. Se compili i campi, all’invio prepariamo un’email già pronta da spedire. | Da rendere in build quando `data-endpoint` è vuoto (cro-specialist, § 7). Così nessuno compila il modulo credendo che parta. |
 | Pulsante di invio | Invia richiesta | Testo del cliente (§ 23). |
-| Stato di invio | Invio in corso… | `data-msg-sending` sul form, letto da `[data-form-status]`. Il pulsante resta «Invia richiesta» con `aria-disabled="true"`. |
+| Stato di invio | Invio in corso… | `data-msg-sending` sul form, letto da `[data-form-status]`. Il pulsante resta «Invia richiesta», con `aria-disabled="true"`. |
 | Messaggio generico di campo mancante | Compila questo campo. | `data-msg-required` sul form: vale solo se un campo non ha il suo messaggio. |
 
 ### 4.2 Campi
@@ -139,7 +135,7 @@ Ogni messaggio nomina già il proprio campo. Per questo nel riepilogo basta il m
 | Titolo | Richiesta inviata. Grazie. |
 | Testo | Abbiamo ricevuto la tua richiesta e ti risponderemo a {email}. Se l’indirizzo non è giusto, scrivici a info@itnode.it. |
 | Passo successivo | Vuoi parlarne subito? Chiamaci al +39 080 2466520. |
-| Un’azione, in base alla pagina | /siii/: Entra in un’esperienza → (a `#esempi`) · /puglia-digitale/ e /citta-digitali/: Visita il portale ↗ · /contatti/: Esplora SIII → · Scopri Puglia Digitale → · Esplora Città Digitali → |
+| Un’azione, in base alla pagina | /siii/: Torna agli esempi ↑ (a `#esempi`) · /puglia-digitale/ e /citta-digitali/: Visita il portale ↗ · /contatti/: Esplora SIII → · Scopri Puglia Digitale → · Esplora Città Digitali → |
 
 - `{email}` va dentro `[data-success-email]`: il codice lo riempie già.
 - Tempi di risposta `[DA FORNIRE]`: si aggiungono solo se il cliente li garantisce («…ti risponderemo a {email} entro {tempo}.»).
@@ -220,7 +216,7 @@ Informativa privacy: {URL di /privacy-policy/}
 | Sottotitoli, se il video ha una traccia parlata | Sottotitoli | Attiva i sottotitoli · Disattiva i sottotitoli | `[DA VERIFICARE]` se c’è parlato, i sottotitoli sono obbligatori (WCAG 1.2.2) |
 | Contenitore | — | `aria-label="Video: Città Digitali"` | Titolo e descrizione del video: copywriter-content |
 
-**Nota per lo sviluppo.** Oggi `video.ts` cambia il nome del pulsante («Riproduci il video» / «Metti in pausa il video») e imposta anche `aria-pressed`. Uno screen reader leggerebbe «Metti in pausa il video, premuto»: due segnali in contrasto. Basta uno dei due: il nome che cambia, senza `aria-pressed`, oppure un nome fisso con `aria-pressed`. Consiglio il nome che cambia. Lo stesso vale per l’audio e per il marquee. La decisione spetta a ux-designer (accessibilità).
+**Nota per lo sviluppo.** Oggi `video.ts` cambia il nome del pulsante («Riproduci il video» / «Metti in pausa il video») e imposta anche `aria-pressed`. Uno screen reader leggerebbe «Metti in pausa il video, premuto»: due segnali in contrasto. Basta uno dei due: il nome che cambia, senza `aria-pressed`, oppure un nome fisso con `aria-pressed`. Consiglio il nome che cambia. Lo stesso vale per l’audio e per il marquee. Decide ux-designer, owner dell’accessibilità.
 
 ## 6. Marquee
 
@@ -230,7 +226,7 @@ Informativa privacy: {URL di /privacy-policy/}
 | Ripresa | Riprendi | Riprendi lo scorrimento | `data-label-play` |
 
 - Il controllo è obbligatorio se il movimento dura più di 5 secondi (WCAG 2.2.2).
-- Le copie del testo che scorre sono `aria-hidden="true"` (mappa SEO, regole comuni).
+- Le copie del testo che scorre sono `aria-hidden="true"` (mappa SEO, regole comuni). Il testo del marquee della Home è nel copy deck, sezione 4.
 - Con `prefers-reduced-motion` il marquee resta fermo e il pulsante si può nascondere.
 
 ## 7. Anteprime immersive (`immersive.ts`)
@@ -249,23 +245,24 @@ I testi sono quelli del copy deck SIII (copywriter-content, sezione 6), adottati
 
 - Al nome accessibile si aggiunge « (si apre in una nuova scheda)», con lo spazio iniziale.
 - Si aprono in una nuova scheda: esperienze SIII (§ 12), portali e portali dei luoghi, profilo LinkedIn e informativa privacy richiamata dal form.
-- Segno visivo: ↗ con `aria-hidden="true"` (tone of voice, § 6).
+- Icona ↗ in SVG con `aria-hidden="true"` (tone of voice, § 6).
 - CTA ripetute con lo stesso testo: il nome accessibile comincia dal testo visibile e aggiunge la destinazione, per esempio «Esplora<span class="sr-only"> Acquaviva delle Fonti su acquavivadigitale.com (si apre in una nuova scheda)</span>» (mappa SEO, regole comuni).
 
 ## 9. Pagina 404
 
-Title e meta description sono di seo-content: title «Pagina non trovata \| ITnode», `noindex`, stato HTTP 404.
+Title e meta description sono di seo-content: title «Pagina non trovata \| ITnode», `noindex`, stato HTTP 404, niente breadcrumb (sitemap UX, § 7).
 
-| Elemento | Tag | Testo |
-|---|---|---|
-| Occhiello | p | Errore 404 |
-| Titolo | H1 | Questa pagina non esiste. Il resto è tutto da esplorare. |
-| Testo | p | Forse l’indirizzo contiene un errore di battitura, oppure la pagina è stata spostata. Riparti da qui: |
-| Link | ul | Esplora SIII → · Scopri Puglia Digitale → · Esplora Città Digitali → · Torna alla home → |
-| Contatto | p + a | Cercavi qualcos’altro? Parliamone → (a `/contatti/`) |
-| Segnalazione | p | Hai trovato un link che non funziona sul nostro sito? Segnalacelo a info@itnode.it. |
+| Elemento | Tag | Testo | Limite |
+|---|---|---|---|
+| Occhiello | p · mono | Errore 404 | — |
+| Titolo | H1 | Questa pagina non esiste. | ≤ 40 (25) |
+| Testo | p | Forse l’indirizzo contiene un errore, oppure la pagina è stata spostata. Tutto il resto è da esplorare: riparti da qui. | ≤ 140 (119) · Gulpease 72 |
+| I tre mondi | variante compatta dei capitoli della Home | 01 SIII · Spazi reali. Esperienze digitali. · Esplora SIII →<br>02 Puglia Digitale · Un territorio. Migliaia di storie. · Scopri Puglia Digitale →<br>03 Città Digitali · Le attività del territorio, online senza perdere radici. · Esplora Città Digitali → | — |
+| Contatto | p + a | Cercavi qualcos’altro? Parliamone → (a `/contatti/`) | — |
+| Home | a | Torna alla home → | — |
+| Segnalazione | p | Hai trovato un link che non funziona sul nostro sito? Segnalacelo a info@itnode.it. | — |
 
-- Alternativa per l’H1: «Qui la mappa finisce. Il resto è da esplorare.» Più evocativa, ma dice meno chiaramente che la pagina non c’è.
+- Alternativa per l’H1: «Qui la mappa finisce.» (21). È più evocativa, ma dice meno chiaramente che la pagina non c’è.
 - I link riusano le etichette della Home: stessa azione, stessa etichetta. `data-track`: `404-siii`, `404-puglia-digitale`, `404-citta-digitali`, `404-parliamone` (cro-specialist).
 
 ## 10. Cookie
@@ -289,43 +286,42 @@ Title e meta description sono di seo-content: title «Pagina non trovata \| ITno
 - `[DA VERIFICARE con l’audit tecnico]` Se il sito non imposta nessun cookie, nemmeno tecnico, la seconda frase diventa: «Il sito non usa cookie di profilazione né cookie di statistica, e non ha bisogno di cookie per funzionare.»
 - `[DA VERIFICARE]` L’indirizzo per le richieste privacy potrebbe essere un altro (per esempio la PEC).
 
-### 10.2 Banner
+### 10.2 Quando servirà il consenso
 
-Al lancio non serve: il banner è richiesto solo per cookie o strumenti non tecnici. Se in futuro si attiva uno strumento di statistica o altri cookie non tecnici, servono i testi del § 10.3 e la variante della policy qui sotto.
+Al lancio il banner non serve: è richiesto solo per cookie o strumenti non tecnici. Se in futuro si attiva uno strumento di statistica o un altro cookie non tecnico, servono i testi del § 10.3, il pulsante «Modifica le preferenze sui cookie» nella Cookie Policy (sitemap UX, § 7) e questa variante della seconda frase della policy:
 
-> Oltre ai cookie tecnici, il sito usa cookie di statistica solo se ci dai il consenso. Puoi darlo, negarlo o revocarlo quando vuoi da «Gestisci i cookie», in fondo a ogni pagina.
+> Oltre ai cookie tecnici, il sito usa cookie di statistica solo se ci dai il consenso. Puoi darlo, negarlo o revocarlo quando vuoi da «Preferenze cookie», in fondo a ogni pagina.
 
 ### 10.3 Testi del banner, per quando servirà
 
 | Elemento | Testo | Note |
 |---|---|---|
 | Titolo | Cookie | — |
-| Testo | Usiamo cookie tecnici, necessari al funzionamento del sito. Con il tuo consenso useremmo anche cookie di statistica, per capire come viene usato il sito e migliorarlo. Puoi cambiare idea quando vuoi da «Gestisci i cookie», in fondo a ogni pagina. | Più il link «Cookie Policy». Finalità da allineare al piano di misurazione. |
+| Testo | Usiamo cookie tecnici, necessari al funzionamento del sito. Con il tuo consenso useremmo anche cookie di statistica, per capire come viene usato il sito e migliorarlo. Puoi cambiare idea quando vuoi da «Preferenze cookie», in fondo a ogni pagina. | Più il link «Cookie Policy». Finalità da allineare al piano di misurazione. |
 | Pulsanti | Accetta tutti · Rifiuta · Personalizza | «Accetta tutti» e «Rifiuta» hanno lo stesso peso visivo e stanno sullo stesso livello (Garante privacy, linee guida sui cookie del 2021). |
 | Chiusura (X) | — | Nome accessibile: «Chiudi senza accettare». Chiudere equivale a rifiutare i cookie non tecnici. |
-| Pannello delle preferenze | Necessari · Sempre attivi<br>Statistica<br>Salva le mie scelte | Interruttori non tecnici spenti di default. |
-| Link nel footer | Gestisci i cookie | Riapre il pannello. |
+| Pannello delle preferenze | Necessari · Sempre attivi<br>Statistica<br>Salva le mie scelte | Gli interruttori non tecnici sono spenti di default. |
+| Link nel footer | Preferenze cookie | Riapre il pannello (sitemap UX, § 6). |
 
 ## 11. Altri testi di servizio
 
 | Elemento | Testo | Note |
 |---|---|---|
-| Breadcrumb, se visibile | Home › {pagina} | `<nav aria-label="Percorso di navigazione">`; separatore `aria-hidden`. Prima voce «Home» come nel copy deck SIII, oppure «ITnode» come propone seo-content: da allineare. |
-| Torna su | Torna all’inizio ↑ | facoltativo |
-| Caricamento | Caricamento… | per stati generici |
+| Breadcrumb | Home › {pagina} | `<nav aria-label="Percorso">` con un `<ol>`; l’etichetta della pagina è identica a quella del menu; separatore `aria-hidden`. Solo sulle pagine interne (sitemap UX, § 5). |
+| Torna su (facoltativo) | Torna all’inizio ↑ | Link a `#top`; non previsto dalla sitemap. |
+| Caricamento | Caricamento… | Per gli stati generici. |
 
 ## Ipotesi da validare
 
 - Al lancio il sito non usa cookie di statistica: il piano di misurazione è predisposto ma spento (`track.ts`).
-- Le anteprime immersive si caricano solo al clic. Se i siti incorporati impostano cookie non tecnici, la nota del § 7 basta come consenso specifico: `[DA VERIFICARE]`.
+- Le anteprime immersive si caricano solo al clic. Se i siti incorporati impostano cookie non tecnici, la nota del § 7 basta come consenso specifico `[DA VERIFICARE]`.
 - La sede operativa coincide con la sede legale (brief, S3).
 
 ## Domande aperte
 
 - **Per il cliente** (tramite la sessione principale): conferma dell’etichetta «Email» al posto di «Email aziendale»; tempi di risposta garantiti, se ci sono; dati societari (denominazione esatta, REA, capitale sociale versato, eventuale socio unico); indirizzo per le richieste privacy; testo dell’informativa privacy.
-- **Per ux-designer**: `aria-pressed` insieme al nome che cambia su video e marquee (§ 5); descrittori delle voci nel menu mobile.
-- **Per copywriter-content**: una sola forma per il nome accessibile del logo («ITnode – Home» in `alt-text.md`, «ITnode, home» nella mappa SEO); prima voce del breadcrumb.
-- **Per seo-technical o web-performance-specialist**: l’audit dei cookie al lancio (hosting, CDN, font, video), che decide la frase del § 10.1.
+- **Per ux-designer**: `aria-label` «Apri menu» e «Chiudi menu» in aggiunta al testo visibile (§ 2); `aria-pressed` insieme al nome che cambia su video e marquee (§ 5); descrittore di Città Digitali nel menu mobile (N12); forma unica del nome accessibile del logo.
+- **Per seo-technical o web-performance-specialist**: l’audit dei cookie al lancio (hosting, CDN, font, video, anteprime), che decide la frase del § 10.1.
 
 ## Decisioni richieste
 

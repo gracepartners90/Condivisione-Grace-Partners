@@ -1,0 +1,188 @@
+/*
+ * Design tokens — derived 1:1 from docs/creativa/direzione-visiva.md (creative-director).
+ * Values may only change through a review by the creative-director; the ui-designer
+ * documents them in docs/ui/design-system.md.
+ */
+
+:root {
+  /* ─── Palette: calce, pietra, inchiostro, notte. Blue is rare, orange marks places. ─── */
+  --calce: #f3f1ec;
+  --pietra: #e4dfd5;
+  --inchiostro: #141413;
+  --inchiostro-2: #55514a;
+  --notte: #0f1317;
+  --notte-2: #1a2027;
+  --testo-notte-2: #a9afb6;
+  --blu-node: #3c71a5;
+  --blu-node-scuro: #2d5a87;
+  --blu-node-chiaro: #8db3dc;
+  --terra: #a65308;
+  --arancio-segnale: #e07f1f;
+  --linea: #ccc5b7;
+  --linea-notte: #2b333d;
+  --bordo-campo: #7a7468;
+  --bordo-campo-notte: #6e7680;
+  --errore: #b42318;
+  --errore-notte: #ff8a7a;
+  --successo: #2e6b3f;
+  --successo-notte: #86cfa0;
+  --selezione: #bfddd8;
+
+  /* ─── Typography ─── */
+  --font-sans: 'Schibsted Grotesk Variable', 'Schibsted Grotesk Fallback', 'Schibsted Grotesk Fallback Roboto', sans-serif;
+  --font-mono: 'Fragment Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /*
+   * Fluid scale: the preferred value mixes rem and vw so text still grows with browser zoom
+   * (WCAG 1.4.4). Each step matches the measured sizes of the visual direction at 390 and 1440 px.
+   */
+  --fs-display-xxl: clamp(4.5rem, 0.16rem + 17.8vw, 17.5rem); /* 72 → 259 */
+  --fs-display-xl: clamp(3.25rem, 1.79rem + 6vw, 9.375rem); /* 52 → 115, max 150 */
+  --fs-display-l: clamp(2.5rem, 1.43rem + 4.38vw, 6.25rem); /* 40 → 86, max 100 */
+  --fs-display-m: clamp(1.75rem, 1rem + 3.05vw, 4.75rem); /* 28 → 60 */
+  --fs-display-s: clamp(1.375rem, 1.14rem + 0.95vw, 2.25rem); /* 22 → 32 */
+  --fs-lead: clamp(1.25rem, 1.18rem + 0.29vw, 1.625rem); /* 20 → 23 */
+  --fs-body: clamp(1.0625rem, 0.95rem + 0.35vw, 1.25rem); /* 17 → 20 */
+  --fs-small: 0.9375rem; /* 15 */
+  --fs-label: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem); /* 12 → 13 */
+
+  --lh-display-xxl: 0.82;
+  --lh-display-xl: 0.92;
+  --lh-display-l: 0.98;
+  --lh-display-m: 1.04;
+  --lh-display-s: 1.1;
+  --lh-lead: 1.4;
+  --lh-body: 1.55;
+  --lh-small: 1.5;
+  --lh-label: 1.4;
+
+  --tr-display-xxl: -0.045em;
+  --tr-display-xl: -0.035em;
+  --tr-display-l: -0.03em;
+  --tr-display-m: -0.022em;
+  --tr-display-s: -0.015em;
+  --tr-lead: -0.005em;
+  --tr-label: 0.06em;
+
+  --fw-regular: 400;
+  --fw-strong: 600;
+
+  --measure-body: 66ch;
+  --measure-lead: 42ch;
+
+  /* ─── Space (4/8 base) ─── */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+  --space-5xl: 12rem;
+  --section-pad: clamp(4.5rem, 2.8rem + 7vw, 11rem);
+  --section-pad-tight: clamp(3rem, 2rem + 4vw, 6.5rem);
+
+  /* ─── Grid: 4 columns < 700 px, 8 up to 1023 px, 12 from 1024 px ─── */
+  --cols: 4;
+  --page-margin: clamp(1.25rem, 0.55rem + 2.9vw, 3.5rem);
+  --gutter: clamp(1rem, 0.62rem + 1.15vw, 1.75rem);
+  --page-max: 100rem;
+
+  /* ─── Shape: rectangles are space (radius 0), circles are interaction ─── */
+  --radius-pill: 999px;
+  --hairline: 1px;
+
+  /* ─── Motion ─── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-150: 150ms;
+  --dur-250: 250ms;
+  --dur-500: 500ms;
+  --dur-700: 700ms;
+  --dur-1000: 1000ms;
+  --dur-1400: 1400ms;
+
+  /* ─── Layers and chrome ─── */
+  --header-h: 4rem;
+  --z-header: 50;
+  --z-menu: 100;
+  --tap-min: 2.75rem; /* 44 px: comfortable touch target, above the 24 px WCAG minimum */
+}
+
+@media (min-width: 43.75em) {
+  :root {
+    --cols: 8;
+  }
+}
+
+@media (min-width: 64em) {
+  :root {
+    --cols: 12;
+    --header-h: 4.75rem;
+  }
+}
+
+/*
+ * Surfaces: each section declares one; semantic roles switch with it.
+ * Warm light surfaces = physical space and territory; cold dark = digital space.
+ */
+:root,
+.surface-calce {
+  --bg: var(--calce);
+  --fg: var(--inchiostro);
+  --fg-2: var(--inchiostro-2);
+  --line: var(--linea);
+  --link-underline: var(--blu-node-scuro);
+  --focus: var(--blu-node);
+  --node: var(--blu-node);
+  --place: var(--terra);
+  --field-bg: var(--calce);
+  --field-border: var(--bordo-campo);
+  --btn-bg: var(--inchiostro);
+  --btn-fg: var(--calce);
+  --error: var(--errore);
+  --success: var(--successo);
+  --slot-bg: var(--pietra);
+  --wordmark: var(--inchiostro);
+}
+
+.surface-pietra {
+  --bg: var(--pietra);
+  --fg: var(--inchiostro);
+  --fg-2: var(--inchiostro-2);
+  --line: var(--linea);
+  --link-underline: var(--blu-node-scuro);
+  --focus: var(--blu-node-scuro);
+  --node: var(--blu-node);
+  --place: var(--terra);
+  --field-bg: var(--calce);
+  --field-border: var(--bordo-campo);
+  --btn-bg: var(--inchiostro);
+  --btn-fg: var(--calce);
+  --error: var(--errore);
+  --success: var(--successo);
+  --slot-bg: var(--calce);
+  --wordmark: var(--inchiostro);
+}
+
+.surface-notte {
+  --bg: var(--notte);
+  --fg: var(--calce);
+  --fg-2: var(--testo-notte-2);
+  --line: var(--linea-notte);
+  --link-underline: var(--blu-node-chiaro);
+  --focus: var(--blu-node-chiaro);
+  --node: var(--blu-node-chiaro);
+  --place: var(--arancio-segnale);
+  --field-bg: var(--notte-2);
+  --field-border: var(--bordo-campo-notte);
+  --btn-bg: var(--calce);
+  --btn-fg: var(--inchiostro);
+  --error: var(--errore-notte);
+  --success: var(--successo-notte);
+  --slot-bg: var(--notte-2);
+  --wordmark: var(--calce);
+}

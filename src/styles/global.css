@@ -1,0 +1,425 @@
+/*
+ * Global styles: reset, typography, surfaces, layout primitives, motion states.
+ * Component styles live next to their components.
+ */
+@import './tokens.css';
+
+/* Metric-matched fallbacks: the swap to Schibsted Grotesk causes no layout shift. */
+@font-face {
+  font-family: 'Schibsted Grotesk Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 104.49%;
+  ascent-override: 93.46%;
+  descent-override: 24.67%;
+  line-gap-override: 0%;
+}
+
+/* Android has no Arial: Roboto with metrics computed for Schibsted Grotesk. */
+@font-face {
+  font-family: 'Schibsted Grotesk Fallback Roboto';
+  src: local('Roboto');
+  size-adjust: 104.72%;
+  ascent-override: 93.25%;
+  descent-override: 24.62%;
+  line-gap-override: 0%;
+}
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + var(--space-s));
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--calce);
+  color: var(--inchiostro);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ol,
+ul {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--fw-strong);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+p,
+li,
+dd,
+blockquote {
+  text-wrap: pretty;
+}
+
+ol[role='list'],
+ul[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+picture,
+video,
+svg,
+canvas,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+address {
+  font-style: normal;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+::selection {
+  background: var(--selezione);
+  color: var(--inchiostro);
+}
+
+/* ─── Focus: always visible, 2 px, colour set by the surface ─── */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ─── Surfaces ─── */
+.surface-calce,
+.surface-pietra,
+.surface-notte {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ─── Links in running text ─── */
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 0.2em;
+  transition:
+    text-decoration-thickness var(--dur-150) var(--ease-out),
+    text-decoration-color var(--dur-150) var(--ease-out);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ─── Type scale ─── */
+.t-display-xxl,
+.t-display-xl,
+.t-display-l,
+.t-display-m,
+.t-display-s {
+  font-family: var(--font-sans);
+  font-feature-settings: 'kern' 1;
+}
+
+.t-display-xxl {
+  font-size: var(--fs-display-xxl);
+  line-height: var(--lh-display-xxl);
+  letter-spacing: var(--tr-display-xxl);
+  font-weight: var(--fw-strong);
+}
+
+.t-display-xl {
+  font-size: var(--fs-display-xl);
+  line-height: var(--lh-display-xl);
+  letter-spacing: var(--tr-display-xl);
+  font-weight: var(--fw-strong);
+}
+
+.t-display-l {
+  font-size: var(--fs-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--tr-display-l);
+  font-weight: var(--fw-strong);
+}
+
+.t-display-m {
+  font-size: var(--fs-display-m);
+  line-height: var(--lh-display-m);
+  letter-spacing: var(--tr-display-m);
+  font-weight: var(--fw-regular);
+}
+
+.t-display-s {
+  font-size: var(--fs-display-s);
+  line-height: var(--lh-display-s);
+  letter-spacing: var(--tr-display-s);
+  font-weight: var(--fw-strong);
+}
+
+.t-lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  letter-spacing: var(--tr-lead);
+  max-width: var(--measure-lead);
+}
+
+.t-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  max-width: var(--measure-body);
+}
+
+.t-small {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+.t-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  font-weight: var(--fw-regular);
+  font-variant-numeric: tabular-nums;
+}
+
+.t-muted {
+  color: var(--fg-2);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Layout primitives ─── */
+.wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-pad);
+}
+
+.section--tight {
+  padding-block: var(--section-pad-tight);
+}
+
+/* Visually hidden but announced by assistive technology. */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Skip link: first focusable element on every page. */
+.skip-link {
+  position: absolute;
+  top: var(--space-2xs);
+  left: var(--space-2xs);
+  z-index: calc(var(--z-menu) + 1);
+  padding: var(--space-xs) var(--space-s);
+  background: var(--inchiostro);
+  color: var(--calce);
+  font-weight: var(--fw-strong);
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform var(--dur-150) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ─── Motion states (JS adds .reveal-ready; content is visible without it) ───
+ * Only transform and opacity (docs/performance/architettura.md §6). Nothing above the
+ * fold starts hidden: the hero H1 is the LCP element. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal]:not([data-reveal='lines'], [data-reveal='aperture']) {
+    transition:
+      opacity var(--dur-700) var(--ease-out),
+      transform var(--dur-700) var(--ease-out);
+    transition-delay: calc(var(--stagger, 0) * 80ms);
+  }
+
+  .reveal-ready [data-reveal]:not([data-reveal='lines'], [data-reveal='aperture'], .is-inview) {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+  }
+
+  /* Text reveal: each authored line rises from a mask; the mask is removed afterwards (WCAG 1.4.12). */
+  .reveal-ready [data-reveal='lines'] .line {
+    overflow: clip;
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+
+  .reveal-ready [data-reveal='lines'] .line > span {
+    display: inline-block;
+    transition: transform var(--dur-700) var(--ease-out);
+    transition-delay: calc(var(--line, 0) * 90ms);
+  }
+
+  .reveal-ready [data-reveal='lines']:not(.is-inview) .line > span {
+    transform: translate3d(0, 110%, 0);
+  }
+
+  .reveal-ready [data-reveal='lines'].is-inview .line {
+    animation: unclip 0s 1.2s forwards;
+  }
+}
+
+@keyframes unclip {
+  to {
+    overflow: visible;
+  }
+}
+
+[data-reveal='lines'] .line {
+  display: block;
+}
+
+/* Aperture: images open from the horizon, from a slit to the full frame. Two shutters in the
+   surface colour translate away (composited: 6 paints per second instead of 124 with clip-path). */
+.aperture {
+  position: relative;
+  overflow: clip;
+}
+
+.aperture::before,
+.aperture::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  block-size: 46%;
+  background: var(--bg);
+  pointer-events: none;
+  transform: translateY(-101%);
+}
+
+.aperture::before {
+  inset-block-start: 0;
+}
+
+.aperture::after {
+  inset-block-end: 0;
+  transform: translateY(101%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aperture::before,
+  .aperture::after,
+  .aperture :is(img, .media-slot) {
+    transition: transform var(--dur-1000) var(--ease-in-out);
+  }
+
+  .reveal-ready .aperture:not(.is-inview)::before,
+  .reveal-ready .aperture:not(.is-inview)::after {
+    transform: none;
+  }
+
+  .reveal-ready .aperture:not(.is-inview) :is(img, .media-slot) {
+    transform: scale(1.06);
+  }
+}
+
+/* ─── Page transitions: CSS-only cross-document view transitions ─── */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-250);
+    animation-timing-function: var(--ease-out);
+  }
+}
+
+/* ─── Reduced motion: everything visible and still ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

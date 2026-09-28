@@ -1,0 +1,83 @@
+---
+/**
+ * SectionIntro: eyebrow, heading (level from props) and an optional intro paragraph.
+ * Variants change scale and alignment so consecutive sections never look the same.
+ */
+interface Props {
+  as?: 'h2' | 'h3';
+  eyebrow?: string;
+  title: string;
+  size?: 'l' | 'm' | 's' | 'label';
+  id?: string;
+  class?: string;
+}
+
+const { as: Tag = 'h2', eyebrow, title, size = 'l', id, class: className } = Astro.props;
+---
+
+<div class:list={['section-intro', `section-intro--${size}`, className]}>
+  {eyebrow && <p class="section-intro__eyebrow t-label">{eyebrow}</p>}
+  <Tag id={id} class="section-intro__title" data-anchor-focus tabindex="-1">{title}</Tag>
+  {
+    Astro.slots.has('default') && (
+      <div class="section-intro__body">
+        <slot />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .section-intro {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .section-intro__eyebrow {
+    color: var(--fg-2);
+  }
+
+  .section-intro__title {
+    margin: 0;
+  }
+
+  .section-intro__title:focus {
+    outline: none;
+  }
+
+  .section-intro--l .section-intro__title {
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .section-intro--m .section-intro__title {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .section-intro--s .section-intro__title {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  .section-intro--label .section-intro__title {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    line-height: var(--lh-label);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    font-weight: var(--fw-regular);
+    color: var(--fg-2);
+  }
+
+  .section-intro__body {
+    display: grid;
+    gap: var(--space-s);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+</style>

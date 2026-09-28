@@ -1,11 +1,11 @@
 ---
 titolo: Tone of voice e guida di stile
 owner: copywriter-brand
-contributi: [copywriter-content, brand-strategist, seo-content, cro-specialist, creative-director]
+contributi: [copywriter-content, brand-strategist, seo-content, cro-specialist, ux-designer, creative-director]
 stato: in revisione
 versione: 1.0
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md]
 ---
 
 # Tone of voice e guida di stile
@@ -90,9 +90,13 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 
 **Regole**
 1. **Verbo e oggetto.** Imperativo alla seconda persona più un oggetto: la CTA dice dove porta o che cosa succede. Niente punto finale; al massimo 28 caratteri, freccia compresa.
-2. **→ per andare avanti nel sito.** La freccia chiude le CTA che portano a un’altra pagina o a un’altra sezione. Prima della freccia va uno spazio unificatore, e la freccia è nascosta agli screen reader: `Esplora SIII<span aria-hidden="true">&nbsp;→</span>`.
-3. **↗ per uscire dal sito.** I link verso portali, esperienze e siti esterni si aprono in una nuova scheda e usano ↗ al posto di →. Le parole delle CTA del cliente restano identiche; cambia solo il segno. È la convenzione di cro-specialist, già usata nel copy deck Contatti.
-4. **↓ per scendere nella stessa pagina**, solo nei link secondari («Esplora gli esempi ↓», «Scrivici ↓»). Le CTA del cliente con → che portano al form restano con →.
+2. **Le frecce sono icone.** Nei documenti si scrivono → ↓ ↗ ↑ per dire quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri, perché i font scelti non li contengono (direzione visiva, § 3). L’icona non va mai a capo da sola: resta attaccata all’ultima parola.
+3. **Quale freccia.** È la convenzione condivisa con cro-specialist e ux-designer:
+   - **→** porta a un’altra pagina del sito: «Esplora SIII →».
+   - **↓** porta più in basso nella stessa pagina, form compreso: «Richiedi un’offerta ↓», «Esplora gli esempi ↓».
+   - **↗** esce dal sito e apre una nuova scheda: «Visita il portale ↗», «Entra nell’esperienza ↗».
+   - **↑** risale nella stessa pagina, e si usa di rado: «Torna all’inizio ↑».
+4. **Le parole delle CTA del cliente restano identiche.** Cambia solo l’icona, quando la destinazione lo richiede: nelle linee guida tutte le CTA hanno →.
 5. **Niente freccia** su voci di menu e footer, sulla CTA dell’header e sui pulsanti che eseguono un’azione («Invia richiesta», «Apri l’email già compilata», «Riproduci il video»).
 6. **Nuova scheda dichiarata.** Al nome accessibile si aggiunge « (si apre in una nuova scheda)». Se lo stesso testo visibile si ripete (tre «Entra nell’esperienza ↗»), il nome accessibile comincia con il testo visibile e aggiunge la destinazione: «Entra nell’esperienza di Masseria Santella (si apre in una nuova scheda)».
 7. **Stessa azione, stessa etichetta** in tutto il sito.
@@ -105,8 +109,8 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 | Andare alla pagina SIII | Esplora SIII → | Home, capitolo 01 |
 | Andare alla pagina Puglia Digitale | Scopri Puglia Digitale → | Home, capitolo 02 |
 | Andare alla pagina Città Digitali | Esplora Città Digitali → | Home, capitolo 03 |
-| Parlare con ITnode | Parliamone (header, senza freccia) · Parliamone → (nel contenuto) | header di tutte le pagine; chiusura della Home; 404. Porta a `#richiesta` dove c’è un form, altrimenti a `/contatti` (cro-specialist) |
-| Andare al form della pagina | Richiedi un’offerta → · Contattaci → · Entra in Città Digitali → | chiusure di SIII, Puglia Digitale e Città Digitali (§§ 12, 16, 21) |
+| Parlare con ITnode | Parliamone (header, senza freccia) · Parliamone → (nel contenuto) | header di tutte le pagine; chiusura della Home; 404. Porta a `#richiesta` dove c’è un form, altrimenti a `/contatti/` (cro-specialist, ux-designer) |
+| Andare al form della pagina (`#richiesta`) | Richiedi un’offerta ↓ · Contattaci ↓ · Entra in Città Digitali ↓ | chiusure di SIII, Puglia Digitale e Città Digitali (§§ 12, 16, 21); il form ha già «Mi interessa» preselezionato |
 | Visitare un portale | Visita il portale ↗ | hero di Puglia Digitale e Città Digitali |
 | Aprire un’esperienza SIII | Entra nell’esperienza ↗ | showcase SIII |
 | Aprire il portale di un luogo | Esplora ↗ | «I luoghi» di Puglia Digitale (nome accessibile con luogo e dominio) |
@@ -123,6 +127,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 - Capitoli e punti numerati sempre a due cifre: 01, 02, 03. Il numero è decorativo: `aria-hidden` oppure fuori dall’heading.
 - Telefoni: +39 080 2466520 e +39 335 1229785, con spazi non separabili perché non vadano a capo; nei link `tel:+390802466520`.
 - Simbolo di grado attaccato: 360°. «24/7» è ammesso nei titoli (testo del cliente, § 16).
+- Coordinate geografiche con il punto decimale, nella notazione cartografica: «40.8957° N · 16.8412° E». Compaiono solo nelle etichette mono della direzione visiva, mai nel testo corrente. Stesso trattamento per i rilevamenti: «081°», «253–265°».
 - «36 anni» invecchia: va aggiornato ogni anno o calcolato dall’anno di inizio `[DA VERIFICARE]` (brief, N4).
 
 ## 8. Maiuscole e punteggiatura
@@ -134,7 +139,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 - **È** con l’accento, mai E’. Perché, né, sé, più, così, città.
 - Puntini di sospensione in un solo carattere: … .
 - Incisi con il trattino medio tra spazi: « – ». Il trattino lungo «—» solo come separatore grafico (01 — SIII).
-- **Spazio unificatore** tra le ultime due parole delle headline, per non lasciare una parola sola sull’ultima riga, e prima della freccia delle CTA.
+- **Spazio unificatore** tra le ultime due parole delle headline, per non lasciare una parola sola sull’ultima riga. Anche l’icona delle CTA resta attaccata all’ultima parola (§ 6).
 
 ## 9. Prima di consegnare un testo
 
@@ -155,10 +160,10 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 
 - **Per il cliente:** che cosa significa la terza «I» di SIII? Qual è la grafia corretta tra «IcommLab», «iComm Lab» e «iCommLab»? Da quale anno si contano i 36 anni?
 - **Per seo-content:** maiuscole di «Tour Virtuali Interattivi Immersivi» (glossario del brief contro la proposta di minuscolo).
-- **Per copywriter-content:** allineare le CTA esterne dei copy deck SIII, Puglia Digitale e Città Digitali alla regola ↗ (per esempio «Entra nell’esperienza ↗», «Visita il portale ↗», «Esplora ↗»; in Contatti anche «Indicazioni stradali ↗»).
+- **Per copywriter-content:** allineare le icone delle CTA nei copy deck SIII, Puglia Digitale, Città Digitali e Contatti alla regola del § 6: ↗ per le uscite («Entra nell’esperienza ↗», «Visita il portale ↗», «Esplora ↗», «Indicazioni stradali ↗») e ↓ per le CTA che portano al form della pagina.
 
 ## Decisioni richieste
 
 - **Registro e voce** (creative-director e brand-strategist, poi utente): «tu» per chi legge, «noi» per ITnode.
 - **Convenzioni di grafia** (§§ 5 e 8): recepiscono la proposta DR2 del brief. Serve la conferma dell’utente, perché correggono un testo del cliente («Siti Immersivi Interattivi», § 17).
-- **↗ per le uscite in nuova scheda** (creative-director e ui-designer): cambia il segno, non le parole, di alcune CTA del cliente.
+- **Icone ↓ e ↗ sulle CTA del cliente** (creative-director): la convenzione è già condivisa da cro-specialist e ux-designer, ma cambia l’icona, non le parole, di CTA che nelle linee guida hanno →. La tabella della direzione visiva (§ 7.4) riporta ancora «Richiedi un’offerta →».

@@ -1,0 +1,317 @@
+---
+/**
+ * FounderTimeline — an editorial section, not «photo left, bio right» (guidelines §09).
+ * Two-register title, lead, the horizon of time (ordinal, not to scale: only the given
+ * stages), then the portrait in «inchiostro» treatment and the closing quote.
+ */
+import type { ImageMetadata } from 'astro';
+import Passage from '../ui/Passage.astro';
+import Media from '../ui/Media.astro';
+import Arrow from '../ui/Arrow.astro';
+
+type Stage = {
+  when: string;
+  datetime?: string;
+  title: string;
+  links?: { label: string; href: string }[];
+  note?: string;
+  figure?: { value: string; label: string; srText: string };
+  now?: boolean;
+};
+
+interface Props {
+  eyebrow?: string;
+  title: string[];
+  lead: string;
+  stages: Stage[];
+  portrait?: ImageMetadata;
+  portraitAlt?: string;
+  portraitNote?: string;
+  quote: string;
+  signature: string;
+  profile?: { label: string; href: string };
+}
+
+const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, quote, signature, profile } = Astro.props;
+---
+
+<section id="fondatore" class="founder surface-calce" aria-labelledby="fondatore-title">
+  <div class="wrap">
+    <div class="grid founder__intro">
+      {eyebrow && <p class="founder__eyebrow t-label">{eyebrow}</p>}
+      <Passage as="h2" id="fondatore-title" registers={title} size="l" secondSize="m" class="founder__title" />
+      <p class="founder__lead" data-reveal>{lead}</p>
+    </div>
+
+    <ol role="list" class="founder__timeline" style={`--stages: ${stages.length}`}>
+      {
+        stages.map((stage, i) => (
+          <li class:list={['founder__stage', { 'founder__stage--now': stage.now }]} data-reveal style={`--stagger: ${i}`}>
+            <span class="founder__tick" aria-hidden="true" />
+            <p class="founder__when t-label">{stage.datetime ? <time datetime={stage.datetime}>{stage.when}</time> : stage.when}</p>
+            {stage.links ? (
+              <ul role="list" class="founder__what founder__links">
+                {stage.links.map((l) => (
+                  <li>{l.href ? <a href={l.href}>{l.label}</a> : l.label}</li>
+                ))}
+              </ul>
+            ) : (
+              <p class="founder__what">{stage.title}</p>
+            )}
+            {stage.figure && (
+              <p class="founder__figure">
+                <span class="founder__figure-value" aria-hidden="true">
+                  {stage.figure.value}
+                </span>
+                <span class="founder__figure-label" aria-hidden="true">
+                  {stage.figure.label}
+                </span>
+                <span class="sr-only">{stage.figure.srText}</span>
+              </p>
+            )}
+            {stage.note && <p class="founder__note">{stage.note}</p>}
+          </li>
+        ))
+      }
+    </ol>
+
+    <figure class="grid founder__close">
+      {
+        portrait && (
+          <div class="founder__portrait">
+            <Media image={portrait} alt={portraitAlt} sizes="(min-width: 64rem) 400px, 70vw" class="founder__img" />
+            {portraitNote && <p class="founder__portrait-note t-label">{portraitNote}</p>}
+          </div>
+        )
+      }
+      <div class="founder__quote-wrap">
+        <blockquote class="founder__quote">
+          <p>«{quote}»</p>
+        </blockquote>
+        <figcaption class="founder__sign">
+          <span>{signature}</span>
+          {
+            profile && (
+              <a href={profile.href} target="_blank" rel="noopener" data-track="outbound_click" data-cta-id="home-fondatore-linkedin" data-cta-location="sezione" data-outbound-type="social" data-destination-id="linkedin-fondatore">
+                {profile.label}
+                <span class="sr-only"> (si apre in una nuova scheda)</span>
+                <Arrow dir="external" />
+              </a>
+            )
+          }
+        </figcaption>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .founder {
+    padding-block: var(--section-pad);
+  }
+
+  .founder__intro {
+    row-gap: var(--space-l);
+  }
+
+  .founder__eyebrow {
+    grid-column: 1 / -1;
+    color: var(--fg-2);
+  }
+
+  .founder :global(.founder__title) {
+    grid-column: 1 / -1;
+  }
+
+  .founder__lead {
+    grid-column: 1 / -1;
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  /* The horizon of time: vertical on mobile, horizontal from 1024 px. */
+  .founder__timeline {
+    display: grid;
+    gap: var(--space-xl);
+    margin: var(--space-3xl) 0;
+    padding: 0 0 0 var(--space-l);
+    border-left: 1px solid var(--fg);
+  }
+
+  .founder__stage {
+    position: relative;
+    display: grid;
+    gap: var(--space-2xs);
+    align-content: start;
+  }
+
+  .founder__tick {
+    position: absolute;
+    left: calc(-1 * var(--space-l) - 4px);
+    top: 0.35em;
+    width: 9px;
+    height: 1px;
+    background: var(--fg);
+  }
+
+  .founder__stage--now .founder__tick {
+    left: calc(-1 * var(--space-l) - 6px);
+    top: 0.1em;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--node);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--node) 16%, transparent);
+  }
+
+  .founder__when {
+    color: var(--fg-2);
+  }
+
+  .founder__what {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    font-weight: var(--fw-strong);
+  }
+
+  .founder__what a {
+    text-decoration-thickness: 2px;
+  }
+
+  .founder__links {
+    display: grid;
+    gap: var(--space-3xs);
+    margin: 0;
+    padding: 0;
+  }
+
+  .founder__figure {
+    display: grid;
+    margin-top: var(--space-2xs);
+  }
+
+  .founder__figure-value {
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+    font-weight: var(--fw-strong);
+  }
+
+  .founder__figure-label,
+  .founder__note {
+    font-size: var(--fs-small);
+    color: var(--fg-2);
+    max-width: 30ch;
+  }
+
+  .founder__close {
+    row-gap: var(--space-xl);
+    align-items: end;
+    margin: 0;
+  }
+
+  .founder__portrait {
+    grid-column: 1 / span 3;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  /* The portrait melts into the paper on the right (visual direction §4.3). */
+  .founder__portrait :global(.founder__img) {
+    width: 100%;
+    height: auto;
+    -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+  }
+
+  .founder__portrait-note {
+    color: var(--fg-2);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .founder__quote-wrap {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .founder__quote {
+    margin: 0;
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+    max-width: 24ch;
+  }
+
+  .founder__sign {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-l);
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--fg-2);
+  }
+
+  .founder__sign a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    color: var(--fg);
+  }
+
+  @media (min-width: 43.75em) {
+    .founder__portrait {
+      grid-column: 1 / span 4;
+    }
+
+    .founder__quote-wrap {
+      grid-column: 5 / -1;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .founder :global(.founder__title) {
+      grid-column: 1 / span 10;
+    }
+
+    .founder__lead {
+      grid-column: 6 / span 6;
+    }
+
+    .founder__timeline {
+      grid-template-columns: repeat(var(--stages), minmax(0, 1fr));
+      gap: var(--gutter);
+      padding: var(--space-l) 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--fg);
+    }
+
+    .founder__tick {
+      left: 0;
+      top: calc(-1 * var(--space-l));
+      width: 1px;
+      height: 20px;
+    }
+
+    .founder__stage--now .founder__tick {
+      left: -6px;
+      top: calc(-1 * var(--space-l) - 6px);
+    }
+
+    .founder__portrait {
+      grid-column: 2 / span 4;
+    }
+
+    .founder__quote-wrap {
+      grid-column: 7 / -1;
+      padding-bottom: var(--space-xl);
+    }
+  }
+</style>

@@ -34,7 +34,7 @@ https://itnode.it/
 | Ancora | Dove | Uso |
 |---|---|---|
 | `#contenuto` | `<main>` di ogni pagina | skip link |
-| `#richiesta` | sezione del form su /siii/, /puglia-digitale/, /citta-digitali/, /contatti/ | «Parliamone», CTA di chiusura, CTA secondarie delle hero. **Sostituisce** `#richiedi-offerta` e `#contatto` dei copy deck. |
+| `#richiesta` | blocco del form su /siii/, /puglia-digitale/, /citta-digitali/, /contatti/ | «Parliamone» e link secondari delle hero. Adottata anche dai copy deck v1.1. |
 | `#esempi` | showcase di /siii/ | CTA della hero SIII |
 | altre ancore di sezione | quelle indicate nei copy deck (`#cos-e`, `#benefici`, `#numeri`, `#luoghi`, `#video`, `#recapiti`, `#portali`…) | link profondi; nessuna CTA le usa |
 
@@ -63,6 +63,12 @@ L'ordine del DOM coincide con l'ordine del focus:
 5. Pulsante «Menu», solo sotto i 1024 px.
 
 Le voci di navigazione esistono nell'HTML anche quando il menu è chiuso (specifiche SEO §3.5).
+
+**Due `nav`.** Con il menu mobile in un `<dialog>` servono due elementi di navigazione:
+- il `nav` della barra, visibile su desktop e, senza JavaScript, anche su mobile;
+- il `nav` dentro il dialog.
+
+Entrambi hanno `aria-label="Principale"`: non si vedono mai insieme, perché il `nav` della barra è in `display: none` sotto i 1024 px quando c'è JavaScript, e il dialog chiuso non è esposto. Le voci vengono entrambe da `nav` in `src/data/site.ts`.
 
 ### 3.2 CTA dell'header: «Parliamone» (scelta, concordata con cro-specialist)
 - **Perché non «Contattaci».** Accanto alla voce «Contatti» sarebbe quasi la stessa etichetta con la stessa destinazione: due scelte che sembrano uguali aggiungono rumore (legge di Hick) e fanno chiedere quale sia la differenza.
@@ -118,8 +124,8 @@ Regole:
 | Contenuto, in ordine | 1. «01 SIII», «02 Puglia Digitale», «03 Città Digitali», «Contatti»: voci grandi, alte almeno 48 px, con i numeri `aria-hidden`. Sotto ogni linea, un descrittore di una riga preso dalle LG: «Siti Interattivi Immersivi», «Dalla costa all’entroterra», «L’Italia in un unico portale». Il descrittore sta dentro il link e ne arricchisce il nome.<br>2. «Parliamone».<br>3. «Chiama +39 080 2466520» (`tel:`) e «Scrivi a info@itnode.it» (`mailto:`).<br>Nient'altro (legge di Hick). |
 | Ordine del focus | Chiudi → SIII → Puglia Digitale → Città Digitali → Contatti → Parliamone → telefono → email, poi di nuovo Chiudi. La pagina sotto è inerte. |
 | Chiusura | «Chiudi», Esc da qualunque punto, scelta di una voce, passaggio a ≥ 1024 px (già in `header.ts`). Alla chiusura il focus torna a «Menu», **tranne** nel caso della riga seguente. |
-| Voce che punta alla stessa pagina | È il caso di «Parliamone» su una pagina con form (`#richiesta`). Prima si chiude il dialog, poi si scorre alla sezione e il focus va al titolo del form. **Da correggere in `header.ts`**: oggi l'evento `close` riporta sempre il focus su «Menu», e chi usa tastiera o lettore di schermo resta in cima alla pagina. |
-| Blocco dello scroll | `showModal()` non blocca lo scroll della pagina sotto. Serve `html:has(dialog[data-mobile-menu][open]) { overflow: hidden; }` con `scrollbar-gutter: stable` su `html`. Il pannello scorre da solo se non entra nello schermo (`overflow-y: auto; overscroll-behavior: contain`). Alla chiusura la posizione di lettura non cambia. |
+| Voce che punta alla stessa pagina | È il caso di «Parliamone» su una pagina con form (`#richiesta`). Prima si chiude il dialog, poi si scorre alla sezione e il focus va al titolo del form, non su «Menu». Già così in `header.ts`. |
+| Blocco dello scroll | `showModal()` non blocca lo scroll della pagina sotto. Serve `html:has(dialog[data-mobile-menu][open]) { overflow: hidden; }` (già in `Header.astro`) con `scrollbar-gutter: stable` su `html`. Il pannello scorre da solo se non entra nello schermo (`overflow-y: auto; overscroll-behavior: contain`). Alla chiusura la posizione di lettura non cambia. |
 | Motion | Dissolvenza o traslazione ≤ 250 ms; l'eventuale ingresso scalato delle voci dura al massimo 300 ms in tutto. Con reduce, apertura istantanea. Il pannello si può usare subito, senza aspettare la fine dell'animazione. |
 | Senza JavaScript | Il pulsante resta nascosto (lo mostra lo script) e le quattro voci si vedono nella barra, disposte su una o due righe. Tutte le pagine restano raggiungibili anche dal footer. |
 
@@ -128,8 +134,8 @@ Regole:
 - **Posizione nel DOM.** Subito prima di `<main id="contenuto">`, così lo skip link porta direttamente all'H1. L'ordine visivo resta uguale a quello del DOM.
 - **Markup.** È quello di `Breadcrumbs.astro`: `<nav aria-label="Percorso">` con un `<ol>`. L'ultima voce è la pagina corrente, senza link e con `aria-current="page"`. L'etichetta «Percorso» è la scelta definitiva: è breve e il lettore di schermo la annuncia come «Percorso, navigazione».
 - **Voci.** «Home» → `/`, poi l'etichetta della pagina, identica a quella del menu (da `pages.ts`): SIII, Puglia Digitale, Città Digitali, Contatti, Privacy Policy, Cookie Policy.
-- **Separatore decorativo, non letto.** Oggi `content: '/'` viene letto da alcuni lettori di schermo («barra»): serve `content: '/' / ''`, oppure uno `<span aria-hidden="true">`.
-- **Contrasto.** L'`opacity: 0.72` sui link abbassa il contrasto del testo: va verificato con il colore reale (≥ 4,5:1), meglio usare un colore di token invece dell'opacità.
+- **Separatore decorativo, non letto.** È in uno `<span aria-hidden="true">`, come in `Breadcrumbs.astro`.
+- **Contrasto.** I link usano il token `--fg-2` invece dell'opacità: il contrasto va misurato sulle superfici reali (almeno 4,5:1).
 - **Target.** Ogni link è alto almeno 24 px, come nell'implementazione attuale: `padding-block` da 0,35 rem.
 - **BreadcrumbList.** Stessi nomi, stesso ordine e URL assoluti canonici della traccia visibile (seo-technical).
 
@@ -176,7 +182,7 @@ Principio: sono «tre applicazioni concrete della stessa visione» (LG §35). Og
 | /puglia-digitale/ | /siii/#esempi | «I luoghi»: Monopoli ↔ Maison Miminà, Acquaviva delle Fonti ↔ D.L. Natura Dentro. Gli esempi sono pubblicati su quei portali, come mostrano i loro URL. | Riga sotto il luogo `[PROPOSTA per copywriter-content]` |
 | /citta-digitali/ | /siii/ | Testo di «Dal locale al nazionale» (copy deck CD §4) e sottotitolo della hero | Link nel testo |
 | Ogni pagina di linea | Linea successiva | Blocco «Continua a esplorare», dopo il form, in sequenza circolare: SIII → Puglia Digitale → Città Digitali → SIII | `ProjectShowcase` compatto `[PROPOSTA]` |
-| /contatti/ | Pagine e portali | Sezione «I portali»: link interno «Scopri il progetto» e link esterno al portale | Link |
+| /contatti/ | Pagine e portali | Sezione «I portali»: link interno alla pagina del progetto e link esterno al portale (etichette nel copy deck) | Link |
 | Tutte | Tutte | Header e footer | Navigazione |
 | 404 | Home, tre linee, contatti | Corpo della pagina | Link |
 
@@ -190,10 +196,10 @@ Il testo dei link è descrittivo (nome della destinazione) e va concordato con s
 
 ## Domande aperte
 - **creative-director**: tema dello stato `top` dell'header per pagina, chiaro o scuro, a seconda della hero.
-- **copywriter-content e copywriter-brand**: nei copy deck le ancore del form vanno portate a `#richiesta`. Per la CTA di chiusura e quella di Contatti, freccia `↓` invece di `→` (convenzione di cro-specialist).
+- **copywriter-content e copywriter-brand**: le CTA verso un'ancora della stessa pagina usano `↓`, non `→` (convenzione di cro-specialist). Nei copy deck v1.1 alcune usano ancora `→`.
 - **seo-technical**: conferma dell'etichetta «Percorso» per il breadcrumb, al posto di «Percorso di navigazione» (lasciata alla scelta di ux-designer).
 - **Cliente**: logo in SVG, positivo e negativo; dati societari mancanti; esistenza di un banner di consenso (dipende dagli strumenti scelti nel piano di misurazione).
 
 ## Decisioni richieste
 - **creative-director e ux-designer** (richiesta da cro-specialist): CTA dell'header «Parliamone» con destinazione `#richiesta` sulle pagine con form. Proposta di ux-designer: approvare.
-- **Sviluppo** (sessione principale): in `header.ts`, focus sul bersaglio quando la voce del menu è un'ancora della stessa pagina; blocco dello scroll con il menu aperto; nome accessibile del `<dialog>`. In `Breadcrumbs.astro`, separatore non letto e contrasto dei link.
+- **Sviluppo** (sessione principale): le correzioni di header, menu e breadcrumb richieste in questo documento sono già applicate. Resta il template 404, che non deve mostrare il breadcrumb.

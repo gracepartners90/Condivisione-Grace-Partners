@@ -1,0 +1,76 @@
+---
+/**
+ * itNode wordmark. Uses the vector redraw in src/assets/brand/itnode-wordmark.svg
+ * (letters in currentColor, the ring of the "o" always #3C71A5). Until that file
+ * exists, a typographic stand-in with the same anatomy is rendered.
+ */
+interface Props {
+  class?: string;
+  /** Accessible name; empty when the surrounding link already has one. */
+  label?: string;
+}
+
+const { class: className, label = 'ITnode' } = Astro.props;
+const files = import.meta.glob<string>('../../assets/brand/itnode-wordmark.svg', { query: '?raw', import: 'default', eager: true });
+const raw = Object.values(files)[0];
+const svg = raw
+  ?.replace(/<\?xml[^>]*>/, '')
+  .replace('<svg', `<svg role="img" aria-label="${label}" focusable="false"`);
+---
+
+{
+  svg ? (
+    <span class:list={['wordmark', className]} set:html={svg} />
+  ) : (
+    <span class:list={['wordmark', 'wordmark--text', className]} role="img" aria-label={label}>
+      <span aria-hidden="true">
+        itN<svg class="wordmark__o" viewBox="0 0 20 20" focusable="false">
+          <circle cx="10" cy="10" r="7.6" fill="none" stroke="#3c71a5" stroke-width="3.4" />
+        </svg>de
+      </span>
+    </span>
+  )
+}
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    height: 1.5rem;
+    color: var(--wordmark, currentColor);
+  }
+
+  .wordmark:not(.wordmark--text) > :global(svg) {
+    height: 100%;
+    width: auto;
+  }
+
+  .wordmark--text {
+    font-family: 'Montserrat', var(--font-sans);
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .wordmark--text > span {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .wordmark__o {
+    display: inline-block;
+    flex: none;
+    width: 0.62em;
+    height: 0.62em;
+    margin-inline: 0.02em;
+    align-self: center;
+    transform: translateY(0.08em);
+  }
+
+  @media (min-width: 64em) {
+    .wordmark {
+      height: 1.75rem;
+    }
+  }
+</style>

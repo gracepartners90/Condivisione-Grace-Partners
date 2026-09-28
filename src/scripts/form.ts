@@ -116,11 +116,6 @@ function initForm(form: HTMLFormElement) {
     });
   });
 
-  const fieldLabel = (field: FieldElement) => {
-    const label = form.querySelector(`label[for="${CSS.escape(field.id)}"]`);
-    return (label?.getAttribute('data-label') ?? label?.textContent ?? field.name).replace(/\s*\*\s*$/, '').trim();
-  };
-
   const renderSummary = (invalid: FieldElement[]) => {
     if (!summary || !summaryList) return;
     summaryList.replaceChildren(
@@ -128,7 +123,8 @@ function initForm(form: HTMLFormElement) {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = `#${field.id}`;
-        a.textContent = `${fieldLabel(field)}: ${messageFor(field, form)}`;
+        // Each message already names its field (docs/contenuti/microcopy.md §4.3).
+        a.textContent = messageFor(field, form);
         a.addEventListener('click', (event) => {
           event.preventDefault();
           field.focus();
@@ -165,9 +161,10 @@ function initForm(form: HTMLFormElement) {
       `Nome e cognome: ${data.get('nome') ?? ''}`,
       `Email: ${data.get('email') ?? ''}`,
       `Telefono: ${data.get('telefono') ?? ''}`,
-      `Azienda / Ente: ${data.get('azienda') ?? ''}`,
+      `Azienda o ente: ${data.get('azienda') ?? ''}`,
       `Mi interessa: ${interests}`,
       '',
+      'Messaggio:',
       String(data.get('messaggio') ?? ''),
     ];
     const subject = `Richiesta dal sito ITnode${interests ? ` · ${interests}` : ''}`;

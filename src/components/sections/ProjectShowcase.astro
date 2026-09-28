@@ -1,0 +1,219 @@
+---
+/**
+ * ProjectShowcase — variant `chapter` (Home «I tre mondi»): one of three large chapters,
+ * each with its own composition (layout a/b/c), opened by a stretch of horizon with its
+ * bearing (01 = 000°, 02 = 120°, 03 = 240°). Render inside an <ol>.
+ * Order in the DOM is the mobile reading order: number, name, statement, visual, text, CTA.
+ */
+import Passage from '../ui/Passage.astro';
+import Cta from '../ui/Cta.astro';
+
+interface Props {
+  number: string;
+  bearing: string;
+  name: string;
+  descriptor?: string;
+  statement: string[];
+  text: string;
+  cta: { label: string; href: string; id: string };
+  layout: 'a' | 'b' | 'c';
+  surface: 'calce' | 'pietra' | 'notte';
+}
+
+const { number, bearing, name, descriptor, statement, text, cta, layout, surface } = Astro.props;
+---
+
+<li class:list={['chapter', `chapter--${layout}`, `surface-${surface}`]}>
+  <div class="wrap">
+    <div class="chapter__rule" aria-hidden="true">
+      <span class="chapter__bearing t-label">{bearing}</span>
+    </div>
+    <div class="grid chapter__grid">
+      <p class="chapter__num" aria-hidden="true">{number}</p>
+      <div class="chapter__head">
+        <h3 class="chapter__name">
+          {name}
+          {
+            descriptor && (
+              <>
+                {' '}
+                <span class="chapter__descriptor">{descriptor}</span>
+              </>
+            )
+          }
+        </h3>
+        <Passage as="p" registers={statement} size="m" class="chapter__statement" />
+      </div>
+      <div class="chapter__visual">
+        <slot name="visual" />
+      </div>
+      <div class="chapter__body" data-reveal>
+        <p class="chapter__text">{text}</p>
+        <Cta href={cta.href} label={cta.label} variant="primary" ctaId={cta.id} location="capitolo" />
+      </div>
+    </div>
+  </div>
+</li>
+
+<style>
+  .chapter {
+    padding-block: var(--space-2xl) var(--section-pad);
+  }
+
+  /* A stretch of horizon with the chapter's bearing. */
+  .chapter__rule {
+    position: relative;
+    height: 12px;
+    margin-bottom: var(--space-2xl);
+    border-top: 1px solid var(--fg);
+    background-image: repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px 24px);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+  }
+
+  .chapter__bearing {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    color: var(--fg-2);
+  }
+
+  .chapter__bearing::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -15px;
+    width: 9px;
+    height: 9px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: var(--node);
+  }
+
+  .chapter__grid {
+    row-gap: var(--space-l);
+    align-items: start;
+  }
+
+  .chapter__num {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: var(--fs-display-xxl);
+    line-height: var(--lh-display-xxl);
+    letter-spacing: var(--tr-display-xxl);
+    font-weight: var(--fw-strong);
+    color: var(--fg);
+  }
+
+  .chapter__head,
+  .chapter__visual,
+  .chapter__body {
+    grid-column: 1 / -1;
+  }
+
+  .chapter__head {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .chapter__name {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .chapter__descriptor {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    font-weight: var(--fw-regular);
+    color: var(--fg-2);
+  }
+
+  .chapter :global(.chapter__statement) {
+    color: var(--fg);
+  }
+
+  .chapter__body {
+    display: grid;
+    gap: var(--space-l);
+    justify-items: start;
+  }
+
+  .chapter__text {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: 34ch;
+  }
+
+  @media (min-width: 64em) {
+    /* 01 — number left, head and visual right, text bottom-left. */
+    .chapter--a .chapter__num {
+      grid-column: 1 / span 4;
+      grid-row: 1 / span 2;
+    }
+
+    .chapter--a .chapter__head {
+      grid-column: 5 / -1;
+      grid-row: 1;
+    }
+
+    .chapter--a .chapter__visual {
+      grid-column: 5 / -1;
+      grid-row: 2;
+    }
+
+    .chapter--a .chapter__body {
+      grid-column: 1 / span 4;
+      grid-row: 2;
+      align-self: end;
+    }
+
+    /* 02 — visual left (4:5), number top-right, text right. */
+    .chapter--b .chapter__visual {
+      grid-column: 1 / span 5;
+      grid-row: 1 / span 3;
+    }
+
+    .chapter--b .chapter__num {
+      grid-column: 7 / -1;
+      grid-row: 1;
+      text-align: right;
+    }
+
+    .chapter--b .chapter__head {
+      grid-column: 7 / -1;
+      grid-row: 2;
+    }
+
+    .chapter--b .chapter__body {
+      grid-column: 7 / -1;
+      grid-row: 3;
+    }
+
+    /* 03 — text left, map right, number over the text. */
+    .chapter--c .chapter__num {
+      grid-column: 1 / span 6;
+      grid-row: 1;
+    }
+
+    .chapter--c .chapter__head {
+      grid-column: 1 / span 6;
+      grid-row: 2;
+    }
+
+    .chapter--c .chapter__body {
+      grid-column: 1 / span 6;
+      grid-row: 3;
+    }
+
+    .chapter--c .chapter__visual {
+      grid-column: 8 / -1;
+      grid-row: 1 / span 3;
+      align-self: center;
+    }
+  }
+</style>

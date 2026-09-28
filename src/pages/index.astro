@@ -1,3 +1,260 @@
 ---
+/**
+ * Home — «L'orizzonte dei luoghi». Copy: docs/contenuti/copy-deck/home.md.
+ * Rhythm: docs/creativa/direzione-visiva.md §7.3.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import LargeStatement from '../components/sections/LargeStatement.astro';
+import ImmersivePreview from '../components/sections/ImmersivePreview.astro';
+import Marquee from '../components/sections/Marquee.astro';
+import SectionIntro from '../components/sections/SectionIntro.astro';
+import ProjectShowcase from '../components/sections/ProjectShowcase.astro';
+import FounderTimeline from '../components/sections/FounderTimeline.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import Media from '../components/ui/Media.astro';
+import MapItaly from '../components/ui/MapItaly.astro';
+import Node from '../components/ui/Node.astro';
+import { horizonPlaces, italyPlaces, pugliaPlaces, office, founder } from '../data/site';
+import { founderPortrait } from '../data/media';
+import { bearing, distanceKm, formatCoords } from '../lib/geo';
+import { pageGraph, person, ids } from '../lib/structured-data';
+import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
+import eventoCitta from '../assets/images/derivate/evento-citta.jpg';
+
+const places = horizonPlaces.map((p) => ({ id: p.id, name: p.name, bearing: bearing(office, p), km: distanceKm(office, p) }));
+const schema = pageGraph('home', [person()], { about: ids.organization });
 ---
-<html lang="it"><head><meta charset="utf-8"><title>ITnode</title></head><body><p>In costruzione.</p></body></html>
+
+<BaseLayout page="home" schema={schema}>
+  <Hero
+    variant="home"
+    eyebrow="ITnode — esperienze digitali immersive per imprese e territori"
+    registers={['La tecnologia cambia.', 'La curiosità ci accompagna\nda sempre.']}
+    places={places}
+    caption={`Vista da ${office.name}\n${formatCoords(office)}`}
+  />
+
+  <LargeStatement
+    variant="manifesto"
+    as="h2"
+    id="chi-siamo"
+    headingId="chi-siamo-title"
+    eyebrow="Chi siamo"
+    registers={['ITnode nasce dall’idea di creare un nuovo modo di abitare il Web.']}
+    size="l"
+    surface="pietra"
+  >
+    <p>
+      ITnode è un’azienda di Acquaviva delle Fonti, in provincia di Bari, che rende gli spazi fisici esplorabili sul Web. Crea
+      <a href="/siii/">Siti Interattivi Immersivi</a> (SIII) per le imprese. Ha creato <a href="/citta-digitali/">Città Digitali</a> e
+      <a href="/puglia-digitale/">Puglia Digitale</a>, due progetti di digitalizzazione territoriale che portano online luoghi, imprese e attività
+      attraverso Tour Virtuali Interattivi Immersivi.
+    </p>
+  </LargeStatement>
+
+  <ImmersivePreview
+    image={eventoPanorama}
+    smallImage={eventoCitta}
+    alt="La platea dell’evento Puglia Digitale davanti ai maxischermi, con un tour virtuale a 360° di una città vista dall’alto."
+    legendTitle="L’evento Puglia Digitale"
+    surface="pietra"
+    hotspots={[
+      { x: 13.3, y: 18, small: { x: 37.7, y: 18 }, label: 'Vista aerea a 360° di una città, con le attività in evidenza' },
+      { x: 44, y: 30, label: 'Il palco dell’evento Puglia Digitale' },
+      { x: 85, y: 16, label: 'Una piazza storica esplorabile a 360°' },
+    ]}
+  />
+
+  <LargeStatement
+    variant="passage"
+    as="p"
+    registers={['Una nuova infrastruttura digitale', 'per connettere imprese, cittadini e visitatori.']}
+    size="l"
+    secondSize="m"
+    surface="notte"
+    class="home-infra"
+  >
+    <Fragment slot="after">
+      <div class="wrap">
+        <Marquee items={['spazio fisico', 'spazio digitale', 'persone', 'imprese', 'territorio']} />
+      </div>
+    </Fragment>
+  </LargeStatement>
+
+  <section class="worlds" aria-labelledby="tre-mondi-title" id="tre-mondi">
+    <div class="surface-notte worlds__intro">
+      <div class="wrap grid worlds__grid">
+        <SectionIntro id="tre-mondi-title" title="I tre mondi ITnode" size="label" class="worlds__head" />
+        <p class="worlds__statement">Un’impresa. Un territorio. Una rete di città.</p>
+        <p class="worlds__text" data-reveal>
+          SIII, Puglia Digitale e Città Digitali sono tre applicazioni concrete della stessa visione. ITnode rende esplorabili gli spazi reali e usa
+          questa tecnologia per valorizzare imprese e territori.
+        </p>
+      </div>
+    </div>
+
+    <ol role="list" class="worlds__list">
+      <ProjectShowcase
+        layout="a"
+        surface="notte"
+        number="01"
+        bearing="000° · N"
+        name="SIII"
+        descriptor="Siti Interattivi Immersivi"
+        statement={['Spazi reali.', 'Esperienze digitali.']}
+        text="Il SIII replica digitalmente gli spazi della tua impresa. Chi entra li esplora da desktop e smartphone, guarda prodotti e video, chiede informazioni e prenota."
+        cta={{ label: 'Esplora SIII', href: '/siii/', id: 'home-capitolo-siii' }}
+      >
+        <div slot="visual" class="worlds__screen aperture">
+          <Media asset="siii-masseria-santella" />
+          <Node kind="hotspot" class="worlds__hot" style="left: 22%; top: 58%" ping />
+          <Node kind="hotspot" class="worlds__hot" style="left: 57%; top: 38%" ping />
+          <Node kind="hotspot" class="worlds__hot" style="left: 78%; top: 66%" ping />
+        </div>
+      </ProjectShowcase>
+
+      <ProjectShowcase
+        layout="b"
+        surface="calce"
+        number="02"
+        bearing="120° · ESE"
+        name="Puglia Digitale"
+        statement={['Un territorio.', 'Migliaia di storie.']}
+        text="Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive."
+        cta={{ label: 'Scopri Puglia Digitale', href: '/puglia-digitale/', id: 'home-capitolo-puglia-digitale' }}
+      >
+        <MapItaly slot="visual" map="puglia" places={pugliaPlaces} home="acquaviva" compact class="worlds__map worlds__map--puglia" />
+      </ProjectShowcase>
+
+      <ProjectShowcase
+        layout="c"
+        surface="pietra"
+        number="03"
+        bearing="240° · OSO"
+        name="Città Digitali"
+        statement={['Le attività del territorio,', 'online senza perdere radici.']}
+        text="Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per imprese e attività. Varese, Altamura, Caltanissetta: città diverse, un unico portale."
+        cta={{ label: 'Esplora Città Digitali', href: '/citta-digitali/', id: 'home-capitolo-citta-digitali' }}
+      >
+        <MapItaly slot="visual" map="italia" places={italyPlaces} class="worlds__map" />
+      </ProjectShowcase>
+    </ol>
+  </section>
+
+  <FounderTimeline
+    eyebrow="Il fondatore"
+    title={['36 anni dentro l’innovazione.', 'E ancora la stessa curiosità.']}
+    lead={`ITnode è stata fondata da ${founder.name}, che lavora nell’innovazione da 36 anni. Il suo percorso comincia con IBM negli anni ’90 e passa per la prima azienda, MyComm, iComm Lab e Leadstone. Oggi continua con ITnode, Puglia Digitale e Città Digitali.`}
+    stages={[
+      { when: 'Anni ’90', title: 'IBM', note: 'L’inizio del percorso.' },
+      { when: '—', title: 'La prima azienda', note: 'Il primo passo da imprenditore.' },
+      {
+        when: 'Dal 2002',
+        title: 'MyComm · iComm Lab · Leadstone',
+        figure: { value: '10.000+', label: 'clienti, prima di ITnode', srText: 'Oltre 10.000 clienti, prima di ITnode' },
+      },
+      {
+        when: 'Oggi',
+        title: 'ITnode · Puglia Digitale · Città Digitali',
+        links: [
+          { label: 'ITnode', href: '' },
+          { label: 'Puglia Digitale', href: '/puglia-digitale/' },
+          { label: 'Città Digitali', href: '/citta-digitali/' },
+        ],
+        note: 'La stessa curiosità, applicata a spazi, imprese e territori.',
+        now: true,
+      },
+    ]}
+    portrait={founderPortrait.image}
+    portraitAlt={founderPortrait.alt}
+    portraitNote={founderPortrait.aiNote}
+    quote="È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno."
+    signature={`${founder.name}, fondatore di ITnode`}
+    profile={{ label: `${founder.name} su LinkedIn`, href: founder.linkedin }}
+  />
+
+  <CTASection
+    variant="band"
+    id="chiusura"
+    eyebrow="Il prossimo spazio"
+    title={['Il Web si può abitare.', 'Cominciamo dal tuo spazio.']}
+    text="Un’impresa, un’attività, un territorio: raccontaci che cosa vuoi rendere esplorabile. Ti aiutiamo a scegliere tra SIII, Puglia Digitale e Città Digitali."
+    cta={{ label: 'Parliamone', href: '/contatti/', id: 'home-chiusura-parliamone' }}
+    surface="notte"
+  />
+</BaseLayout>
+
+<style>
+  .home-infra {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .home-infra :global(.marquee) {
+    margin-top: var(--space-3xl);
+  }
+
+  .worlds__intro {
+    padding-block: var(--space-2xl) 0;
+  }
+
+  .worlds__grid {
+    row-gap: var(--space-m);
+  }
+
+  .worlds__intro :global(.worlds__head),
+  .worlds__statement,
+  .worlds__text {
+    grid-column: 1 / -1;
+  }
+
+  .worlds__statement {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+    color: var(--fg);
+  }
+
+  .worlds__text {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  @media (min-width: 64em) {
+    .worlds__statement {
+      grid-column: 1 / span 10;
+    }
+
+    .worlds__text {
+      grid-column: 7 / span 5;
+    }
+  }
+
+  .worlds__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .worlds__screen {
+    position: relative;
+  }
+
+  .worlds__screen :global(.worlds__hot) {
+    position: absolute;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+  }
+
+  /* On a small placeholder the nodes would cover the asset brief: they return with the image. */
+  @media (max-width: 43.74em) {
+    .worlds__screen:has(:global(.media-slot)) :global(.worlds__hot) {
+      display: none;
+    }
+  }
+
+  .worlds :global(.worlds__map) {
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+</style>
