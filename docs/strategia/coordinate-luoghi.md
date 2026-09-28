@@ -3,9 +3,9 @@ titolo: Coordinate dei luoghi · fonte, precisione e valori da applicare
 owner: brand-strategist
 contributi: [creative-director, sessione principale]
 stato: in revisione
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/creativa/direzione-visiva.md (0.2, §1.4), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (N2, C11), src/data/site.ts, src/lib/geo.ts, src/components/ui/Horizon.astro, src/data/asset-slots.ts, src/pages/contatti.astro, scripts/generate-maps.mjs, scripts/og/og-card.html, WebSearch del 2026-09-28 (URL nella tabella 1 e al §1), esito del link Overpass aperto dall'utente (riferito dalla sessione principale il 2026-09-28)]
+fonti: [docs/creativa/direzione-visiva.md (0.2, §1.4), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (N2, C11), src/data/site.ts, src/lib/geo.ts, src/components/ui/Horizon.astro, src/data/asset-slots.ts, src/pages/contatti.astro, scripts/generate-maps.mjs, scripts/og/og-card.html, WebSearch del 2026-09-28 (URL nella tabella 1 e al §1), esito del link Overpass aperto dall'utente (riferito dalla sessione principale il 2026-09-28), commit f1b6780 (valori applicati), dist/ (build di staging dopo f1b6780), src/data/maps.json, public/og/default.jpg, scripts/prelaunch-check.mjs]
 ---
 
 # Coordinate dei luoghi
@@ -13,13 +13,14 @@ fonti: [docs/creativa/direzione-visiva.md (0.2, §1.4), docs/review/2026-09-28-s
 **Perché.** Verdetto G4, N2 e condizione C11: tre coordinate sono arrotondate e mostrate con zeri di riempimento (Monopoli «40.9500° N · 17.3000° E», Caltanissetta «37.4900° N», Cassano delle Murge «16.7700° E»), e nessuna ha una fonte dichiarata. La regola della DV §1.4 chiede una fonte unica per tutti e sette i luoghi: 4 decimali reali, oppure 2 decimali per tutti.
 
 **In breve.**
+- **C11 chiusa il 2026-09-28.** La sessione principale ha applicato la tabella 1 (commit f1b6780). Ho verificato i valori pubblicati nel codice, nella build `dist/` e nell'immagine social: coincidono tutti (§7). Restano solo allineamenti non bloccanti.
 - **Non c'è una fonte unica a 4 decimali disponibile prima del lancio.**
   - Wikidata, OpenStreetMap e Wikipedia sono bloccati dalla policy di rete di questo ambiente.
   - Il link Overpass (OSM) aperto dall'utente ha risposto «406 Not Acceptable»; all'utente non si chiede altro.
   - L'ultimo tentativo con WebSearch, un sito alla volta, non ha trovato nessuna fonte che esponga le coordinate al secondo d'arco per tutti e sette i comuni (§1).
 - **Decisione: si applica il ripiego della DV §1.4.** Sono 2 decimali per tutti i luoghi, dalla tabella 1: fonte unica Wikipedia in inglese, riquadro del comune.
   - Lo confermo come verifica di C11: la fonte è dichiarata ed è la stessa per tutti, nessuna cifra è di riempimento, il controllo incrociato è superato (§2).
-  - Lo applica la sessione principale nei file del §6.
+  - Applicato dalla sessione principale nei file del §6 (commit f1b6780).
 - **Effetto visibile:** cambiano alcuni gradi e chilometri, soprattutto per Cassano delle Murge (da 265° a 252°). Resta una sola etichetta di gruppo sull'orizzonte della Home (§3).
 - **Sede:** la coordinata del comune va bene per `office`, alle condizioni del §5.
 
@@ -168,7 +169,47 @@ Le coordinate sono duplicate in quattro file del codice: vanno aggiornate tutte 
 **Poi:**
 - `npm run check:launch`;
 - ui-designer rifà la misura degli incroci dell'orizzonte in Home e Città Digitali;
-- io confronto i valori pubblicati con la tabella 1 (chiusura di C11).
+- io confronto i valori pubblicati con la tabella 1 (chiusura di C11: fatto, §7).
+
+## 7. Verifica di C11 (2026-09-28, sola lettura)
+
+**Come.**
+- **Codice dopo il commit f1b6780:** `site.ts`, `geo.ts`, `asset-slots.ts`, `generate-maps.mjs` con `maps.json`, `og-card.html`, `prelaunch-check.mjs`.
+- **Build `dist/`:** ricerca di tutte le coordinate (numero con decimali, «°», poi N, S, E o O), dei valori vecchi, dei rilevamenti e delle distanze.
+- **Immagine social:** `public/og/default.jpg`, guardata.
+- **Limite.** http://localhost:4321/ non è raggiungibile da questo ruolo: lo strumento di lettura web non apre localhost e non ho Bash per Playwright. Ho letto i file della build che il server serve.
+
+| Dove | Atteso (tabella 1 e §3) | Trovato | Esito |
+|---|---|---|---|
+| Dati, `site.ts` | Sette luoghi e `office` come la tabella 1; commento con la fonte | Uguali; commento alle righe 92–95 | OK |
+| Formato, `geo.ts` | 2 decimali | `toFixed(2)` | OK |
+| Segnaposto dei luoghi, `asset-slots.ts` | Nessun valore duplicato | Legge da `site.ts` | OK |
+| Carte, `generate-maps.mjs` e `maps.json` | Stessi valori, nota sulla fonte | Uguali; nota aggiornata | OK |
+| Didascalia della hero, Home | «Vista da Acquaviva delle Fonti», «40.90° N · 16.85° E» | Uguale (`dist/index.html`, riga 230) | OK |
+| Orizzonte della Home | 081° · 38 km; 213° · 449 km; «Altamura · Cassano · Gravina — 251–256° · 7–37 km»; 313° · 848 km | Uguali (righe 172–202) | OK |
+| Carte dei capitoli 02 e 03, Home | Coordinate dei sei luoghi | Uguali (righe 599–611 e 672–684) | OK |
+| Carta e porte di `/puglia-digitale/` | Acquaviva 40.90 · 16.85; Gravina 40.82 · 16.42; Monopoli 40.95 · 17.30 | Uguali nelle due carte (righe 210–251), nei segnaposto e sotto il nome delle porte (righe 361–435) | OK |
+| Carta, orizzonte e città di `/citta-digitali/` | Varese 45.82 · 8.83; Altamura 40.82 · 16.55; Caltanissetta 37.49 · 14.06; 213° · 449 km, 251° · 27 km, 313° · 848 km | Uguali (righe 203–221 e 314–340) | OK |
+| Firma del footer | «40.90° N · 16.85° E» | Uguale in tutte e otto le pagine | OK |
+| Contatti | «Acquaviva delle Fonti · 40.90° N · 16.85° E» sotto l'indirizzo; «Apri in Google Maps» sull'indirizzo | Uguali (righe 192–193) | OK: condizioni 1 e 2 della sede (§5) |
+| Immagine social | «40.90° N · 16.85° E» | Uguale | OK |
+| Valori vecchi in `dist/` | Nessuno | Nessuno | OK |
+| Coordinate in altri formati (virgola decimale, testo per screen reader) | Nessuna | Nessuna | OK |
+| JSON-LD | Nessuna coordinata `geo` | Nessuna | OK |
+| Controllo di go-live | Nessuna coordinata con più di 2 decimali | Regola presente (`prelaunch-check.mjs`, righe 48–53) | OK |
+
+**Non visto in una build.** La variante «in pubblicazione» delle porte (`PUBLIC_SLOT_MODE=publish`) non è in `dist/`, che è la build di staging.
+- I suoi valori vengono dalle stesse funzioni e dagli stessi dati dell'orizzonte della Home, già verificati. Attesi: «256° · 37 km» per Gravina, «081° · 38 km» per Monopoli, «Sede» per Acquaviva.
+- Si guardano nella build di produzione (C12).
+
+**Allineamenti non bloccanti.** Riguardano testi non pubblicati.
+- `src/data/site.ts`, righe 76–80: il commento del tipo `Place` dice ancora «4 digits» e «must be checked before launch», in contrasto con il commento delle righe 92–95. Lo corregge la sessione principale.
+- Documenti di riferimento del team con i valori vecchi, da allineare perché nessuno li reintroduca:
+  - DV §1.4 (righe 102, 110, 115–121, 129), §5 (riga 429), §7.8 (riga 650), «Ipotesi» (riga 681): creative-director;
+  - `docs/ui/design-system.md`, righe 311–312: ui-designer;
+  - `docs/contenuti/microcopy.md` riga 59, `docs/contenuti/tone-of-voice.md` riga 131, `docs/contenuti/copy-deck/home.md` riga 82: copywriter-brand.
+
+**Esito: C11 chiusa.** I valori pubblicati corrispondono alla fonte dichiarata, con una sola precisione e senza cifre di riempimento.
 
 ## Ipotesi da validare
 
@@ -185,7 +226,11 @@ Le coordinate sono duplicate in quattro file del codice: vanno aggiornate tutte 
 
 ## Decisioni richieste
 
-- **Sessione principale:** applicare la tabella 1 nei file del §6; rigenerare carte e immagine social; adeguare il controllo di go-live.
-- **Creative-director:** conferma che il ripiego vale per ogni occorrenza, firma del footer e immagine social comprese; aggiornamento della DV §1.4.
-- **ui-designer:** misura degli incroci dell'orizzonte dopo il cambio.
+- **Sessione principale:** tabella 1 applicata, carte e immagine social rigenerate, controllo di go-live adeguato (commit f1b6780). Resta il commento di `site.ts`, righe 76–80 (§7).
+- **Creative-director:** aggiornare la DV §1.4 (tabella, esempi, stato della regola) e gli esempi di §5, §7.8 e «Ipotesi». Il ripiego vale già per ogni occorrenza, firma del footer e immagine social comprese.
+- **ui-designer:**
+  - misura degli incroci dell'orizzonte dopo il cambio (V14);
+  - controllo delle porte nella variante «in pubblicazione» (C12);
+  - esempi del design system.
+- **copywriter-brand:** esempi di microcopy, tone of voice e copy deck della Home.
 - **Dopo il lancio, facoltativo:** ritorno a 4 decimali da OSM (§4), con una nuova verifica della brand-strategist.

@@ -74,9 +74,9 @@ export const video = {
 } as const;
 
 /**
- * Places. Coordinates are public data (town centre, decimal degrees, 4 digits) and must be
- * checked before launch (docs/creativa/direzione-visiva.md §1.4). Bearings and distances
- * from the ITnode office are computed from them in src/lib/geo.ts.
+ * Places. Coordinates are public data (town, decimal degrees at the precision of one declared
+ * source: 2 digits, see the office below and docs/strategia/coordinate-luoghi.md). Bearings and
+ * distances from the ITnode office are computed from them in src/lib/geo.ts.
  */
 export type Place = {
   id: string;
