@@ -2,7 +2,7 @@
 
 Repository di progetto per il nuovo sito di ITNODE. Il lavoro è svolto da un team di specialisti: subagent di Claude Code definiti in [`.claude/agents/`](.claude/agents/) e coordinati dalla sessione principale di Claude.
 
-> **Stato:** sito costruito secondo il metodo delle linee guida (fasi 1–5) · review finale del team in corso · gate G1–G4 in attesa dell'approvazione del cliente · mancano gli asset e i dati elencati sotto.
+> **Stato:** G4 approvato con condizioni dal creative-director: build approvata, pubblicazione non ancora (condizioni C01–C14 nel [verdetto](docs/review/2026-09-28-sito-verdetto-g4-creative-director.md)) · in attesa dell'approvazione dell'utente (G4 e, retroattivamente, G1–G3) · anteprima protetta su Railway ([ADR 004](docs/decisioni/004-anteprima-su-railway.md)).
 
 ## Il team
 
