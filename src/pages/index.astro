@@ -16,7 +16,7 @@ import Media from '../components/ui/Media.astro';
 import MapItaly from '../components/ui/MapItaly.astro';
 import Node from '../components/ui/Node.astro';
 import { horizonPlaces, italyPlaces, pugliaPlaces, office, founder } from '../data/site';
-import { founderPortrait } from '../data/media';
+import { founderPortrait, eventPhotoNote } from '../data/media';
 import { bearing, distanceKm, formatCoords } from '../lib/geo';
 import { pageGraph, person, ids } from '../lib/structured-data';
 import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
@@ -32,7 +32,7 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
     eyebrow="ITnode — esperienze digitali immersive per imprese e territori"
     registers={['La tecnologia cambia.', 'La curiosità ci accompagna\nda sempre.']}
     places={places}
-    caption={`Vista da ${office.name}\n${formatCoords(office)}`}
+    caption={`Vista da ${office.name}\n${formatCoords(office)}\nDistanze in linea d’aria`}
   />
 
   <LargeStatement
@@ -58,6 +58,7 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
     smallImage={eventoCitta}
     alt="La platea dell’evento Puglia Digitale davanti ai maxischermi, con un tour virtuale a 360° di una città vista dall’alto."
     legendTitle="L’evento Puglia Digitale"
+    note={eventPhotoNote}
     surface="pietra"
     hotspots={[
       { x: 13.3, y: 18, small: { x: 37.7, y: 18 }, label: 'Vista aerea a 360° di una città, con le attività in evidenza' },

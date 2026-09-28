@@ -9,8 +9,16 @@ import ritratto from '../assets/images/derivate/fondatore-ritratto.jpg';
 import ritrattoContatti from '../assets/images/derivate/fondatore-contatti.jpg';
 import { founder } from './site';
 
-const aiNote = 'Immagine elaborata con strumenti di intelligenza artificiale';
+// Portraits: provenance not confirmed (generated or retouched), so the note says both until the
+// client answers (review docs/review/2026-09-28-sito-veridicita-brand-strategist.md, I5).
+const aiNote = 'Immagine generata o elaborata con strumenti di intelligenza artificiale';
 const showAiNote = true;
+
+/**
+ * Event photo: the source file carries the watermark of a generative editor (brief I7). Same
+ * criterion as the portraits until the client sends the original shot (review B4).
+ */
+export const eventPhotoNote = 'Immagine elaborata con strumenti di intelligenza artificiale';
 
 // Alt texts from docs/contenuti/alt-text.md ("with the name in the text"), adapted to the
 // monochrome crops: no colours that the treated image no longer shows.

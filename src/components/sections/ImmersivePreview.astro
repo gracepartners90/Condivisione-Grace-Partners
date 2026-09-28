@@ -19,6 +19,8 @@ interface Props {
   alt: string;
   hotspots: Hotspot[];
   caption?: string;
+  /** Transparency note under the photo (e.g. AI editing), in mono, sentence case. */
+  note?: string;
   sizes?: string;
   surface?: 'calce' | 'pietra' | 'notte';
   legendTitle?: string;
@@ -32,6 +34,7 @@ const {
   alt,
   hotspots,
   caption,
+  note,
   sizes = '(min-width: 80rem) 1200px, 94vw',
   surface = 'pietra',
   legendTitle = 'Nella foto',
@@ -122,6 +125,7 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
           }
         </ol>
         {caption && <p class="t-label document__caption">{caption}</p>}
+        {note && <p class="document__note">{note}</p>}
       </figcaption>
     </figure>
   </div>
@@ -263,6 +267,14 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
 
   .document__caption {
     margin-top: var(--space-s);
+    color: var(--fg-2);
+  }
+
+  .document__note {
+    margin-top: var(--space-s);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    line-height: var(--lh-label);
     color: var(--fg-2);
   }
 

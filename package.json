@@ -12,7 +12,8 @@
     "assets": "node scripts/prepare-assets.mjs",
     "brand": "node scripts/generate-brand.mjs",
     "maps": "node scripts/generate-maps.mjs",
-    "og": "node scripts/og/build-og.mjs"
+    "og": "node scripts/og/build-og.mjs",
+    "check:seo": "node scripts/seo-check.mjs dist https://itnode.it"
   },
   "engines": {
     "node": ">=22.12.0"

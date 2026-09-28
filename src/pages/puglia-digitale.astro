@@ -17,10 +17,12 @@ import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { portals, pugliaPlaces } from '../data/site';
 import { figures } from '../data/figures';
-import { pageGraph, ids } from '../lib/structured-data';
+import { eventPhotoNote } from '../data/media';
+import { pageGraph } from '../lib/structured-data';
 import eventoSchermo from '../assets/images/derivate/evento-schermo.jpg';
 
-const schema = pageGraph('puglia-digitale', [], { about: ids.pugliaBrand });
+// No `about` → Brand until the client confirms the role of ITnode in Puglia Digitale (brief D1).
+const schema = pageGraph('puglia-digitale');
 const portal = portals.pugliaDigitale;
 
 const lines: Record<string, string> = {
@@ -99,6 +101,7 @@ const locations = pugliaPlaces.map((p) => ({
             sizes="(min-width: 64em) 36vw, 100vw"
           />
         </div>
+        <figcaption class="project__note">{eventPhotoNote}</figcaption>
       </figure>
     </div>
   </section>
@@ -111,7 +114,12 @@ const locations = pugliaPlaces.map((p) => ({
     stats={[
       { value: '30', suffix: '+', label: 'città coinvolte', srText: 'Più di 30 città coinvolte' },
       { prefix: '~', value: '200.000', label: 'partite IVA nei territori coinvolti', srText: 'Circa 200.000 partite IVA nei territori coinvolti' },
-      { value: '60', suffix: '%', label: 'del tessuto produttivo pugliese', srText: 'Il 60% del tessuto produttivo pugliese' },
+      {
+        value: '60',
+        suffix: '%',
+        label: 'del tessuto produttivo pugliese è in questi territori',
+        srText: 'Il 60% del tessuto produttivo pugliese si trova nei territori coinvolti',
+      },
     ]}
   />
 
@@ -292,6 +300,14 @@ const locations = pugliaPlaces.map((p) => ({
 
   .project__photo {
     margin: 0;
+  }
+
+  .project__note {
+    margin-top: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    line-height: var(--lh-label);
+    color: var(--fg-2);
   }
 
   @media (min-width: 64em) {

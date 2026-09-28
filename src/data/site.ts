@@ -25,6 +25,13 @@ export const site = {
     region: 'Puglia',
     country: 'IT',
   },
+  /**
+   * Organization.description in the JSON-LD (answer block A, docs/seo/mappa-keyword-url.md §4).
+   * Prudent wording until the client confirms who created Puglia Digitale (brief D1; review
+   * docs/review/2026-09-28-sito-veridicita-brand-strategist.md, B1).
+   */
+  description:
+    'ITnode rende esplorabili sul Web gli spazi reali di imprese e territori: crea Siti Interattivi Immersivi (SIII) e, con Città Digitali e Puglia Digitale, porta online luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.',
   /** Missing mandatory company data (art. 2250 c.c.): rendered only when provided. */
   rea: '',
   shareCapital: '',
@@ -49,8 +56,21 @@ export const portals = {
   pugliaDigitale: { name: 'Puglia Digitale', url: 'https://www.lapugliadigitale.it', display: 'lapugliadigitale.it' },
 } as const;
 
+/**
+ * Videos. The VideoObject is published only when thumbnail and upload date exist
+ * (docs/seo/dati-strutturati.md §6): fill them from the real file, never invent them.
+ */
 export const video = {
-  cittaDigitali: 'https://itnode-website-production.up.railway.app/public/video/citta-digitali.mp4?v=2',
+  cittaDigitali: {
+    /** DA FORNIRE: the file hosted on the new site (e.g. '/video/citta-digitali.v1.mp4'). */
+    src: 'https://itnode-website-production.up.railway.app/public/video/citta-digitali.mp4?v=2',
+    /** A real frame chosen by the creative-director, e.g. '/video/citta-digitali-poster.jpg'. */
+    thumbnail: '',
+    /** ISO 8601 with time zone, from the client. */
+    uploadDate: '',
+    /** ISO 8601 from the file (ffprobe), e.g. 'PT1M45S'. */
+    duration: '',
+  },
 } as const;
 
 /**
@@ -101,9 +121,9 @@ export const horizonPlaces: Place[] = [
 ];
 
 export const siiiShowcase = [
-  { id: 'masseria-santella', name: 'Masseria Santella', place: 'Cassano delle Murge (BA)', lat: 40.8906, lon: 16.77, url: 'https://www.cassanodigitale.it/masseriasantella/', portal: 'cassanodigitale.it', slot: 'siii-masseria-santella' },
-  { id: 'maison-mimina', name: 'Maison Miminà', place: 'Monopoli (BA)', lat: 40.95, lon: 17.3, url: 'https://www.monopolidigitale.it/maisonmimina/', portal: 'monopolidigitale.it', slot: 'siii-maison-mimina' },
-  { id: 'dl-natura-dentro', name: 'D.L. Natura Dentro', place: 'Acquaviva delle Fonti (BA)', lat: 40.8957, lon: 16.8412, url: 'https://www.acquavivadigitale.com/dielle/', portal: 'acquavivadigitale.com', slot: 'siii-dielle' },
+  { id: 'masseria-santella', name: 'Masseria Santella', place: 'Cassano delle Murge (BA)', url: 'https://www.cassanodigitale.it/masseriasantella/', portal: 'cassanodigitale.it', slot: 'siii-masseria-santella' },
+  { id: 'maison-mimina', name: 'Maison Miminà', place: 'Monopoli (BA)', url: 'https://www.monopolidigitale.it/maisonmimina/', portal: 'monopolidigitale.it', slot: 'siii-maison-mimina' },
+  { id: 'dl-natura-dentro', name: 'D.L. Natura Dentro', place: 'Acquaviva delle Fonti (BA)', url: 'https://www.acquavivadigitale.com/dielle/', portal: 'acquavivadigitale.com', slot: 'siii-dielle' },
 ] as const;
 
 /** Contact-form interests; `value` is what gets submitted. */

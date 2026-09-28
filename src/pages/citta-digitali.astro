@@ -23,7 +23,15 @@ const videoTitle = 'Città Digitali, in movimento.';
 const videoText = 'Il progetto Città Digitali, raccontato per immagini.';
 
 // VideoObject only when thumbnail and upload date exist (docs/seo/dati-strutturati.md).
-const videoNode = videoObject({ name: videoTitle.replace(/\.$/, ''), description: videoText });
+const v = video.cittaDigitali;
+const videoNode = videoObject({
+  name: videoTitle.replace(/\.$/, ''),
+  description: videoText,
+  thumbnailUrl: v.thumbnail,
+  uploadDate: v.uploadDate,
+  duration: v.duration,
+  contentUrl: v.src,
+});
 const schema = pageGraph('citta-digitali', videoNode ? [videoNode] : [], {
   about: ids.cittaBrand,
   videoId: videoNode ? ids.video : undefined,
@@ -72,7 +80,7 @@ const cities = italyPlaces.map((p) => ({
     <Horizon places={horizonCities} rotate={40} centers={{ m: 263, t: 263, d: 263 }} />
   </div>
 
-  <VideoSection id="video" eyebrow="Video" title={videoTitle} text={videoText} src={video.cittaDigitali} videoId="citta-digitali" />
+  <VideoSection id="video" eyebrow="Video" title={videoTitle} text={videoText} src={v.src} videoId="citta-digitali" />
 
   <LocationShowcase
     variant="italy"

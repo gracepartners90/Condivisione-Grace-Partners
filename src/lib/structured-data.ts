@@ -13,13 +13,16 @@ export const ids = {
   logo: abs('/#logo'),
   website: abs('/#website'),
   founder: abs('/#founder'),
-  pugliaBrand: abs('/puglia-digitale/#brand'),
   cittaBrand: abs('/citta-digitali/#brand'),
   siiiService: abs('/siii/#service'),
   video: abs('/citta-digitali/#video'),
 };
 
 export type Crumb = { name: string; path: string };
+
+/** Answer block B (docs/seo/mappa-keyword-url.md §4): /siii/ definition and Service.description. */
+export const siiiDefinition =
+  'Un Sito Interattivo Immersivo (SIII) replica digitalmente gli spazi fisici di un’impresa e li trasforma in un ambiente navigabile da desktop e da smartphone. Chi lo visita non legge una pagina: entra, esplora gli ambienti e trova al loro interno prodotti, video, informazioni e azioni commerciali. È la soluzione di ITnode per le aziende che, invece di raccontarsi, vogliono farsi esplorare.';
 
 export function organization({ withFounder = false } = {}) {
   return {
@@ -36,8 +39,7 @@ export function organization({ withFounder = false } = {}) {
       contentUrl: abs('/brand/logo-itnode.png'),
       caption: site.name,
     },
-    description:
-      'ITnode ha creato Città Digitali e Puglia Digitale, due progetti di digitalizzazione territoriale che portano online luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.',
+    description: site.description,
     email: site.email,
     telephone: site.phone.display,
     vatID: `IT${site.vatId}`,
@@ -56,14 +58,8 @@ export function organization({ withFounder = false } = {}) {
       email: site.email,
       availableLanguage: 'it',
     },
+    // Puglia Digitale is not declared as an ITnode brand until the client confirms it (brief D1).
     brand: [
-      {
-        '@type': 'Brand',
-        '@id': ids.pugliaBrand,
-        name: portals.pugliaDigitale.name,
-        url: `${portals.pugliaDigitale.url}/`,
-        description: 'Piattaforma interattiva immersiva per la valorizzazione territoriale.',
-      },
       {
         '@type': 'Brand',
         '@id': ids.cittaBrand,
@@ -138,8 +134,7 @@ export function siiiService() {
     '@id': ids.siiiService,
     name: 'SIII – Siti Interattivi Immersivi',
     serviceType: 'Sito Interattivo Immersivo',
-    description:
-      'Il SIII replica digitalmente gli spazi fisici dell’impresa e crea un ambiente navigabile da desktop e smartphone, in cui esplorare gli ambienti, interagire con hotspot, vedere prodotti e video, richiedere informazioni e prenotare servizi.',
+    description: siiiDefinition,
     provider: { '@id': ids.organization },
     url: abs('/siii/'),
   };
@@ -165,7 +160,7 @@ export function videoObject(video: VideoData) {
     thumbnailUrl: abs(video.thumbnailUrl),
     uploadDate: video.uploadDate,
     ...(video.duration ? { duration: video.duration } : {}),
-    ...(video.contentUrl ? { contentUrl: video.contentUrl } : {}),
+    ...(video.contentUrl ? { contentUrl: abs(video.contentUrl) } : {}),
   };
 }
 

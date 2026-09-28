@@ -16,8 +16,7 @@ import CTASection from '../components/sections/CTASection.astro';
 import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { siiiShowcase } from '../data/site';
-import { formatCoords } from '../lib/geo';
-import { pageGraph, siiiService, ids } from '../lib/structured-data';
+import { pageGraph, siiiService, siiiDefinition, ids } from '../lib/structured-data';
 
 const schema = pageGraph('siii', [siiiService()], { about: ids.siiiService });
 
@@ -80,11 +79,7 @@ const phrases: Record<string, string> = {
   <section id="cos-e" class="define surface-calce" aria-labelledby="cos-e-title">
     <div class="wrap grid define__grid">
       <h2 id="cos-e-title" class="t-label define__label" tabindex="-1" data-anchor-focus>Cos’è un Sito Interattivo Immersivo</h2>
-      <p class="define__text" data-reveal>
-        Un Sito Interattivo Immersivo (SIII) replica digitalmente gli spazi fisici di un’impresa e li trasforma in un ambiente navigabile da
-        desktop e da smartphone. Chi lo visita non legge una pagina: entra, esplora gli ambienti e trova al loro interno prodotti, video,
-        informazioni e azioni commerciali. È la soluzione di ITnode per le aziende che, invece di raccontarsi, vogliono farsi esplorare.
-      </p>
+      <p class="define__text" data-reveal>{siiiDefinition}</p>
       <Passage as="p" registers={['Il sito diventa un luogo.']} size="l" class="define__statement" />
     </div>
   </section>
@@ -241,7 +236,6 @@ const phrases: Record<string, string> = {
                 <h3 class="example__name">{ex.name}</h3>
                 <p class="example__place t-label">
                   <span>{ex.place}</span>
-                  <span>{formatCoords(ex)}</span>
                   <span>{ex.portal}</span>
                 </p>
                 <p class="example__phrase">{phrases[ex.id]}</p>

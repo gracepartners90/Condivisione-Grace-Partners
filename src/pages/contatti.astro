@@ -12,9 +12,9 @@ import ContactForm from '../components/sections/ContactForm.astro';
 import { site, founder, office, portals } from '../data/site';
 import { founderPortraitContacts } from '../data/media';
 import { formatCoords } from '../lib/geo';
-import { pageGraph } from '../lib/structured-data';
+import { pageGraph, ids } from '../lib/structured-data';
 
-const schema = pageGraph('contatti', [], { type: 'ContactPage' });
+const schema = pageGraph('contatti', [], { type: 'ContactPage', about: ids.organization });
 const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Via%20Sant%27Anna%2034%2C%2070021%20Acquaviva%20delle%20Fonti%20BA';
 const newTab = ' (si apre in una nuova scheda)';
 const nb = (s: string) => s.replace(/ /g, ' ');
