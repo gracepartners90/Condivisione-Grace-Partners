@@ -12,6 +12,7 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Dal 2026-09-28 si usa `DIST_DIR=<build> PORT=<porta> node scripts/serve.mjs` (ADR 004): applica `_headers`, comprime all'avvio e ha un TTFB di circa 1 ms. Legge la build **all'avvio**: dopo una nuova build va riavviato.
   - Il server di riserva (`scratchpad/serve.mjs`, budget §6.6) rilegge i file a ogni richiesta e comprime ogni volta. Le mediane di Lighthouse sono le stesse (verificato).
   - Su 8080 gira ancora il server di riserva su `/home/user/itnode/dist`.
+  - **Su 4321 la sessione principale tiene `astro preview`** (dalle 09:34): non va usato per misurare, anche se la richiesta dice «servito su 4321». Si avvia `scripts/serve.mjs` su una porta propria (8091–8093 usate per C14).
   - `scripts/serve.mjs` gestisce le richieste `Range` dal commit `007956d` (verificato: 206 e 1024 byte).
   - Con `PREVIEW_AUTH=utente:password` il server locale chiede la Basic Auth (la 503 senza password vale solo su Railway): utile per provare procedure con credenziali.
   - Per aspettare un server avviato in background senza `sleep` in primo piano: `curl -s -o /dev/null --retry 20 --retry-connrefused --retry-delay 1 <url>/healthz`.
@@ -20,6 +21,9 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - `lh.sh`: corse Lighthouse; nomi senza trattino, perché `lhsum.mjs` divide sul `-`.
   - `runs.mjs`, `mt.mjs`: dettaglio per corsa.
   - `reveal-frames.mjs`, `lcp-detail.mjs`, `inp-scroll.mjs`, `menu-first.mjs`, `menu-trace.mjs`, `scroll2.mjs`, `fix-check.mjs`, `publish-check.mjs`, `counter-func.mjs`.
+  - C14: `c14-lcp.mjs` (candidati LCP e aree dei blocchi di testo a 6 viewport), `c14-cls.mjs` (CLS in lettura, nuova build contro controllo), `c14-loadshift.mjs` (origine degli spostamenti al caricamento), `c14/run.sh` e `c14/ab.sh` (corse alternate).
+  - Build di controllo: `perf-rimisura/dist-fixF` = baseline §7.1 (`7c5f747`) con la correzione del reveal a righe.
+- **Altri membri misurano in parallelo** (ux-designer e ui-designer con Playwright): il carico sale a 2–3 su 4 CPU. Si alternano le varianti corsa per corsa e si annotano carico e `benchmarkIndex`; gli script di geometria (LCP, CLS) non ne risentono.
 - **Rete.**
   - Bloccati: docs.astro.build, docs.railway.com, railway.com, station.railway.com, `*.up.railway.app` (anteprima compresa: CONNECT 403, 2026-09-28), developers.cloudflare.com, MDN, web.dev, caniuse, jsDelivr, api.fontsource.org, railway.app, itnode.it, erwinhofman.com, webpagetest.org.
   - Funzionano: il registry npm, raw.githubusercontent.com (anche il **sorgente di Chromium**: `chromium/chromium/main/third_party/blink/...`), github.com con WebFetch, WebSearch (solo sintesi).
@@ -79,7 +83,12 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Budget e architettura riallineati (0.3). Nella nota del budget §3 ho chiesto due correzioni numeriche all'ADR (+72–280 ms, 2,7–14 volte) e proposto come sorvegliare le condizioni di riapertura: A/B a ogni Chromium maggiore o ogni tre mesi, soglia 300 ms; RUM per la condizione di campo.
   - Posso togliere il preload senza nuovo assenso solo se scatta una condizione dell'ADR 005.
 - **Condizione C08 (hosting):** controlli H1–H11 e soglie di TTFB nel budget §6.8. Riferimento: HTML della home 133 KB non compresso, 20,8 KB Brotli, 25,9 KB gzip (build delle 13:59).
-- **Rimisura breve C14** (Home e `/siii/`): la chiede la sessione principale dopo C10–C12. Il creative-director chiede di confermare che l'H1 resti l'elemento LCP della Home con la nuova riga in `lead`.
+- **Rimisura C14 fatta** (review della rimisura, §12): conforme, nessuna regressione. L'H1 resta l'LCP della Home a 6 viewport; la riga in `lead` ha un'area almeno 2,4 volte più piccola (a 390 px). Se il testo in `lead` si allunga, va ricontrollato.
+- **Sorveglianza del preload** (ADR 005 v1.1, owner io): registro nel budget §3.
+  - Confronto C14: +204 e +201 ms, sotto la soglia di 300 ms.
+  - **Servono 6 corse per variante.** Le singole coppie oscillano da 106 a 361 ms: con 3 corse `/siii/` dava 282 ms. Ho chiesto al creative-director di allineare l'ADR (che dice 3).
+  - Prossimo confronto entro il 28 dicembre 2026, o prima se si aggiorna il Chromium di misura.
+- **Micro-spostamento preesistente:** 0,00016 di CLS al cambio di carattere, per lo spostamento orizzontale della navigazione dell'header a 1440 px (identico sul controllo). Si ignora, ma non va scambiato per una regressione.
 - **Contatore 01/05 di Città Digitali.** Applicato l'IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'` (`007956d`): provato su Chromium, da provare su Safari.
 - **Autoplay del video su mobile.** Risolto: `video.ts` fa autoplay solo da 64em. Restano aperti il file su Railway (403 dal proxy) e l'hosting: sono le condizioni per il go-live.
 

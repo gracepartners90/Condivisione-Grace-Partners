@@ -3,12 +3,12 @@ titolo: Design system
 owner: ui-designer
 contributi: [creative-director, ux-designer, web-performance-specialist]
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/creativa/direzione-visiva.md, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md, docs/performance/budget.md, docs/performance/architettura.md, docs/contenuti/microcopy.md, docs/seo/specifiche-tecniche.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, src/styles/tokens.css, src/styles/global.css, src/components/, misure Playwright 1.56 e sharp 0.35 del 2026-09-28]
+fonti: [docs/creativa/direzione-visiva.md (0.3), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md (0.3), docs/decisioni/005-preload-del-font.md, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md, docs/performance/budget.md, docs/performance/architettura.md, docs/contenuti/microcopy.md, docs/contenuti/copy-deck/home.md, docs/seo/specifiche-tecniche.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, misure Playwright 1.56 e sharp 0.35 del 2026-09-28 (staging http://localhost:4321, variante «in pubblicazione» http://localhost:4322)]
 ---
 
-> **Versione 0.2.** Allineata al sito costruito dopo la review di fedeltà e la sua verifica. Le regole che la build deve ancora raggiungere sono marcate con il numero dell'osservazione della verifica (V1–V17 in `docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md`).
+> **Versione 0.3.** Allineata alla direzione visiva 0.3 e al verdetto del G4 (`docs/review/2026-09-28-sito-verdetto-g4-creative-director.md`): regole decise al G4 (S1, S4, V4, V6, V9, V10, V14, N1, N3, N6, N9, S10, I4, I11, campi del form a due colonne), coordinate a 2 decimali da fonte unica (C11) e nessun invito allo scorrimento nella hero della Home. Tutto verificato sulla build nella verifica C14 (sezione «Verifica C14 dopo il verdetto G4» di `docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md`). Le regole ancora da applicare portano il numero dell'osservazione (C14-1, N7, N8, S5): sono proposte finché il creative-director non le decide.
 
 # Design system ITnode
 
@@ -111,14 +111,16 @@ Queste misure rispondono alle «coppie da misurare» di `docs/ux/accessibilita.m
 - Il blu non fa mai da sfondo di sezione, non entra in gradienti, non colora i titoli; **mai pulsanti blu**.
 - Link nel testo: colore del testo più sottolineatura di 1 px in `--link-underline`, 2 px all'hover. Il link non dipende dal solo colore.
 - Arancio solo su scuro; su chiaro si usa `--terra`. Entrambi segnano solo luoghi e simboli numerici (+ ~ %).
-- Niente gradienti, ombre, bagliori, trasparenze vetrose. Unica sfumatura ammessa: la maschera del ritratto verso la carta (§1.7).
+- Niente gradienti, ombre, bagliori, trasparenze vetrose. Due sfumature ammesse, entrambe maschere di trasparenza e mai di colore (direzione §2, G4):
+  - la maschera del ritratto verso la carta (§1.7);
+  - la dissolvenza ai bordi della finestra dell'Orizzonte: al massimo 2rem per lato, solo su tacche ed etichette, mai sulla linea, che resta piena da bordo a bordo (§2.1; S1, eccezione registrata).
 - Colori dei marchi Puglia Digitale e Città Digitali: solo dentro i loro loghi, mai nella UI.
 
 ### 1.2 Tipografia
 
 | Famiglia | File | Uso | Caricamento |
 |---|---|---|---|
-| Schibsted Grotesk Variable (400–900), OFL 1.1 | `@fontsource-variable/schibsted-grotesk`, latin, WOFF2 45,9 KB | tutto il testo e i titoli | preload, `font-display: swap`, fallback con metriche (`Schibsted Grotesk Fallback` su Arial, `… Fallback Roboto` su Android) |
+| Schibsted Grotesk Variable (400–900), OFL 1.1 | `@fontsource-variable/schibsted-grotesk`, latin, WOFF2 45,9 KB | tutto il testo e i titoli | preload (confermato al G4: ADR 005, con le condizioni per riaprire la decisione), `font-display: swap`, fallback con metriche (`Schibsted Grotesk Fallback` su Arial, `… Fallback Roboto` su Android) |
 | Fragment Mono 400, OFL 1.1 | `@fontsource/fragment-mono`, latin, WOFF2 24,8 KB | etichette, gradi, coordinate, numeri di sezione | senza preload |
 
 **Copertura verificata** (2026-09-28, confronto delle larghezze con due font di ripiego): entrambi i font contengono à è é ì ò ù À È É Ì Ò Ù ç « » ’ ‘ “ ” – — … ° · € × ↑ ↓ ′ ″. **Mancano → e ↗** (e №): le frecce sono sempre SVG inline (§1.5), anche ↑ e ↓, per avere lo stesso tratto.
@@ -130,7 +132,7 @@ Queste misure rispondono alle «coppie da misurare» di `docs/ux/accessibilita.m
 | `--fs-display-xxl` · `.t-display-xxl` | numeri giganti, «SIII», «404°», numeri dei capitoli | 59,5* | 72 | 139 | 185 | 259 | 600 | 0,82 | −0,045em |
 | `--fs-display-xl` · `.t-display-xl` | H1 delle hero, chiusure forti | 47,8* | 52 | 75 | 90 | 115 | 600 | 0,92 | −0,035em |
 | `--fs-display-l` · `.t-display-l` | H2 di sezione, statement | 40 | 40 | 57 | 68 | 86 | 600 | 0,98 | −0,03em |
-| `--fs-display-m` · `.t-display-m` | secondo registro, nomi dei capitoli | 28 | 28 | 39 | 47 | 60 | 400 | 1,04 | −0,022em |
+| `--fs-display-m` · `.t-display-m` | arrivo del Passaggio, descrittori, nomi dei capitoli, statement secondari (400); titolo di una sezione o di una voce (600, S4) | 28 | 28 | 39 | 47 | 60 | 400 · 600 | 1,04 | −0,022em |
 | `--fs-display-s` · `.t-display-s` | titoli di voce (benefici, luoghi, tappe) | 22 | 22 | 26 | 28 | 32 | 600 | 1,1 | −0,015em |
 | `--fs-lead` · `.t-lead` | paragrafi d'apertura (≤ 42ch) | 20 | 20 | 21 | 22 | 23 | 400 | 1,4 | −0,005em |
 | `--fs-body` · `.t-body` | testo corrente (≤ 66ch) | 17 | 17 | 18 | 19 | 20 | 400 | 1,55 | 0 |
@@ -152,8 +154,12 @@ Queste misure rispondono alle «coppie da misurare» di `docs/ux/accessibilita.m
 
 **Regole.**
 - Due pesi: 600 per titoli e grassetto, 400 per il resto. Niente corsivi. Maiuscolo solo nelle etichette mono.
+- **Peso di `display-m`** (direzione §3.2, regola del G4 su S4). Il codice è conforme (misura del 2026-09-28 su 8 pagine a 1440 px):
+  - **400** quando fa da voce d'arrivo del Passaggio, descrittore, nome di capitolo o statement secondario: secondo registro della hero della Home, arrivo degli statement dei capitoli e del fondatore, descrittori delle hero di linea, nomi dei capitoli, statement dei mondi, citazione del fondatore, marquee, numeri «01–05» di Città Digitali;
+  - **600** quando è il titolo (H2 o H3) di una sezione o di una voce: titolo del video, nomi delle città, «Perché scegliere un SIII», «Perché aderire a Puglia Digitale», nome della sezione Persona in Contatti, H1 della 404;
+  - i tre Passaggi interamente in `display-m` di SIII (hero, «Il sito diventa un luogo.», «Una visita che diventa azione.») sono a 600 in tutti e due i registri: l'arrivo va a 400 quando scende di un gradino rispetto alla partenza, non quando i due registri condividono il gradino. È la lettura che rende il codice conforme; la conferma nel testo della direzione è una domanda aperta.
 - Due titoli consecutivi non usano lo stesso gradino; la seconda riga di un Passaggio può scendere di un gradino, mai salire.
-- `text-wrap: balance` sui titoli, `pretty` sui paragrafi; niente sillabazione nei titoli; `lang="it"`. Un Passaggio è sempre un titolo, anche quando è un `<p>`: le sue righe d'autore si bilanciano (`.line { text-wrap: balance }` in `Passage.astro`; da applicare, V4).
+- `text-wrap: balance` sui titoli, `pretty` sui paragrafi; niente sillabazione nei titoli; `lang="it"`. Un Passaggio è sempre un titolo, anche quando è un `<p>`: le sue righe d'autore si bilanciano (`.passage .line { text-wrap: balance }` in `Passage.astro`: applicato, V4, verificato in C14).
 - A capo d'autore nel contenuto (righe separate o `<br>`), mai affidati al browser; su mobile si rivedono con il copy deck.
 - Numeri approssimati: il simbolo è `aria-hidden` e il testo nascosto dice «circa» / «oltre».
 - Cifre tabellari (`tnum`) in tabelle, coordinate e tempi del video.
@@ -191,7 +197,7 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 | contenitore | `--page-max` 1600 px | — | — | — | — | — |
 
 - Mobile first: il DOM segue l'ordine di lettura mobile; su desktop la griglia sposta i blocchi, non ne cambia l'ordine (niente `order` sui blocchi con link).
-- Rientri del Passaggio: 2 colonne su desktop, 1 su tablet, 1,2em su mobile.
+- Rientri del Passaggio: 2 colonne su desktop, 1 su tablet, 1,2em su mobile; nella cascata a tre registri 2 e 4 colonne, 1 e 2, 1,2 e 2,4em, nessuno a 320 px (§2.5, N1).
 - A tutta larghezza (oltre i margini) solo l'Orizzonte della hero e il Video.
 - Sticky solo con viewport ≥ 1024 × 720 px e con l'elemento sticky più basso del viewport meno l'header.
 - Breakpoint nei media query sempre in `em` (43.75em, 64em): seguono lo zoom del testo.
@@ -233,7 +239,7 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 | Text reveal | leggere un Passaggio riga per riga: ogni riga d'autore sale dalla propria maschera (padding 0,12em, margine −0,12em; registri in colonna flex finché la maschera c'è, così le righe salgono già alla spaziatura finale e togliere la maschera non sposta nulla: CLS 0, verificato al pixel) | 700 ease-out, cascata 90 ms | visibile subito |
 | Apertura (firma) | entrare in un'immagine dall'orizzonte | 1000 ease-in-out; otturatori in `transform` (già in `global.css`) | aperta |
 | Parallax | profondità di una sola immagine per schermata | scroll, ±6% max 48 px | fermo |
-| Rotazione dell'orizzonte | guardarsi intorno | scroll, +60° in uscita dalla hero | inquadratura iniziale |
+| Rotazione dell'orizzonte | guardarsi intorno | scroll, +60° in uscita dalla hero (+40° su Città Digitali); nessun invito a scorrere: è una scoperta, non una promessa (direzione §5, 0.3) | inquadratura iniziale |
 | Marquee | la catena del concept | scroll, ~0,4× la velocità | riga statica |
 | Disegno di linea | tracciare costa e orizzonte del tempo | 1400 ease-in-out (direzione) · ≤ 1200 (performance): da allineare | già disegnata |
 | Ping del nodo | segnalare un punto esplorabile | 1000 ease-out, una volta, cascata 120 ms | niente |
@@ -259,10 +265,12 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 | Video | 16:9 | video Città Digitali |
 
 - **Foto documentali:** colore intatto, solo tagli (§4.2 della direzione); AVIF/WebP; mai oltre 1200 px CSS per la foto evento.
-- **Ritratti del fondatore (decisione dell'utente: DR3-b).** Trattamento «inchiostro» della direzione §4.3: luminanza pesata sul blu, contrasto ×1,2 −30, mappatura inchiostro → calce, maschera verso destra. Solo su fondo `calce` (la sfumatura va verso la carta). Home ≤ 400 px CSS (`max-width: 25rem`), Contatti ≤ 320 px CSS.
-  - **Maschera.** La direzione indica `#000 62% → transparent 100%`. La build usa `#000 48% → transparent 86%` (review, I10), ma lo skyline resta leggibile, in Contatti con le linee di rete.
-  - **Proposta V6** (provata): `#000 40% → transparent 74%` in Home, `#000 36% → transparent 68%` in Contatti. Il valore lo decide il creative-director.
-  - Un taglio più stretto non basta: lo skyline sta dietro il braccio. Sotto, in mono `small`: «Immagine elaborata con strumenti di intelligenza artificiale» `[DA VERIFICARE: testo definitivo di brand-strategist e consulente legale]`. Mai a colori, mai con didascalie di luogo o data, mai le due immagini scartate (§4.3).
+- **Nodi sulle foto:** calce, per il contrasto su sfondi variabili (decisione del G4, §2.3); mai sul corpo di una persona, sempre su un oggetto o un luogo della scena (N7).
+- **Foto dell'evento senza conferma dell'informativa sulle riprese (C07):** ritagli stretti su schermi e palco, senza i profili riconoscibili ai margini (direzione §4.2). Li prepara ui-designer se la conferma non arriva; li verifica il creative-director.
+- **Ritratti del fondatore (DR3).** Il sito applica (b), scelta della sessione principale in attesa della conferma dell'utente (ADR 002); parere del creative-director: (b) per il lancio, (c) appena possibile (direzione §4.3). Trattamento «inchiostro»: luminanza pesata sul blu, contrasto ×1,2 −30, mappatura inchiostro → calce, maschera verso destra. Solo su fondo `calce` (la sfumatura va verso la carta). Home ≤ 400 px CSS (`max-width: 25rem`), Contatti ≤ 320 px CSS.
+  - **Maschera** (decisione del G4, direzione §4.3; applicata e verificata in C14): Home `linear-gradient(to right, #000 40%, transparent 74%)`; Contatti, figura più stretta, `linear-gradient(to right, #000 36%, transparent 68%)`. I valori precedenti (62% → 100% e 48% → 86%) lasciavano leggibili skyline e «reti luminose»; questi sono il massimo ottenibile dai derivati attuali.
+  - Un taglio più stretto non basta: lo skyline sta dietro il braccio. Sotto, in mono `small`: «Immagine generata o elaborata con strumenti di intelligenza artificiale» (`src/data/media.ts`) `[DA VERIFICARE: testo definitivo di brand-strategist e consulente legale]`. Mai a colori, mai con didascalie di luogo o data, mai le due immagini scartate (§4.3).
+  - **Contatti, sezione Persona:** ritratto, nome e ruolo (`display-m` 600, H2) e, sotto, il link «Scopri il suo percorso nella home →» verso `/#fondatore`, 32 px sotto il nome, alto 44 px (N5, applicato).
 - **Testo sopra le immagini:** di norma no. Se serve, velatura piena misurata sull'area peggiore del ritaglio più sfavorevole (≥ 4,5:1).
 - **Rapporto fisso sempre dichiarato** (`aspect-ratio`): la sostituzione di un segnaposto non genera CLS.
 
@@ -274,13 +282,14 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 
 | | |
 |---|---|
-| **Anatomia** | linea 1 px `--fg`; tacche sotto la linea ogni 5° (6 px), 15° (12 px), 45° (20 px); etichette `label` mono solo ogni 45° («045°»; cardinali «000° N», «090° E», «180° S», «270° O»), 26 px sotto la linea, cioè sotto le tacche; nodi-luogo `--place` sulla linea (nella hero solo il punto Ø 10: sono `aria-hidden` e non interattivi) con etichetta sotto e linea di richiamo (max 3 file) |
-| **File delle etichette** | Nessun richiamo attraversa un'etichetta. Le file si alternano a partire dalla seconda (`row = (gruppo + 1) % 2` in `Horizon.astro`). Così il luogo isolato tra due gruppi sta nella fila alta e il suo richiamo resta corto. Verificato da 320 a 1920 px, a riposo e in rotazione, sulla hero e su Città Digitali (applicato in c025181, V5). Se cambiano luoghi o campi visivi, si rimisura |
-| **Varianti** | *hero* (Home: a tutta larghezza, campo 200° centrato su 170°; tablet 150°, che a riposo taglia le etichette di Monopoli e del gruppo: vedi V14; mobile 100° centrato su 250°, max 2 etichette compatte); *capitolo* (tratto statico con il rilevamento, 01 = 000°, 02 = 120°, 03 = 240°: una tacca 1 × 20 px `--fg` all'inizio del filo, non un nodo, e l'etichetta 26 px sotto la linea, mai sulla tacca, V3, applicato); *tempo* (timeline del fondatore, tappe ordinali, non in scala); *404* (tre mondi come nodi a 000°, 120°, 240°) |
+| **Anatomia** | linea 1 px `--fg`; tacche sotto la linea ogni 5° (6 px), 15° (12 px), 45° (20 px); etichette `label` mono solo ogni 45° («045°»; cardinali «000° N», «090° E», «180° S», «270° O»), 26 px sotto la linea, cioè sotto le tacche; nodi-luogo `--place` sulla linea (nella hero solo il punto Ø 10: sono `aria-hidden` e non interattivi) con etichetta sotto e linea di richiamo (max 3 file); dissolvenza ai bordi della finestra (maschera di trasparenza di 2rem per lato su tacche ed etichette, mai sulla linea: eccezione della direzione §2, S1) |
+| **File delle etichette** | Nessun richiamo attraversa un'etichetta. Le file si alternano a partire dalla seconda (`row = (gruppo + 1) % 2` in `Horizon.astro`). Così il luogo isolato tra due gruppi sta nella fila alta e il suo richiamo resta corto. Le etichette dei luoghi oltre il centro si appendono a sinistra del nodo (centri per breakpoint calcolati al build). Verificato da 320 a 1920 px, a riposo e in rotazione, sulla hero e su Città Digitali (applicato in c025181, V5); rimisurato in C14 dopo le coordinate nuove (C11) e il campo di 200° sul tablet (V14): nessun incrocio. **Se cambiano luoghi, coordinate, centri o campi visivi, si rimisura**: con C11 il gruppo murgiano è passato oltre il centro mobile e la sua etichetta ha cambiato lato (C14-1) |
+| **Varianti** | *hero* (Home: a tutta larghezza; desktop e tablet 200° centrati su 170°, con il tablet dalla decisione del G4 su V14, solo per la Home; mobile 100° centrato su 250°, max 2 etichette compatte, proposta 238° in C14-1); *hero di linea* (Città Digitali, fine hero: 100°–150° secondo il breakpoint, centro 263°, rotazione +40°; sul tablet resta a 150°, perché con 200° Caltanissetta e Varese si sovrappongono da 700 a 900 px); *capitolo* (tratto statico con il rilevamento, 01 = 000°, 02 = 120°, 03 = 240°: una tacca 1 × 20 px `--fg` all'inizio del filo, non un nodo, e l'etichetta 26 px sotto la linea, mai sulla tacca, V3, applicato); *tempo* (timeline del fondatore, tappe ordinali, non in scala); *404* (vedi sotto) |
+| **Variante 404** | Linea 1 px `--fg` graduata come l'Orizzonte: tacche sotto la linea ogni 5°, 15° e 45° (6, 12, 20 px), con 360° pari a tre colonne più i loro gutter, così 120° e 240° cadono esattamente all'inizio della seconda e della terza colonna (`--deg: calc((100% + var(--gutter)) / 72)`, unità di 5°). I tre mondi a 000°, 120°, 240°: ogni nodo (punto `--node` Ø 10) sta dentro l'area del link del suo mondo, perché il blu è interazione, e mostra l'anello Ø 26 su hover e focus. Colonne allineate in alto (`align-content: start`). Sotto i 1024 px i mondi vanno in pila e solo il primo nodo sta sulla linea (S10, N6, applicati e verificati in C14). Proposta minore: nodo centrato sulla tacca (`left: -4.5px`, oggi 4,5 px a destra) |
 | **Stati** | statico; rotazione legata allo scroll (+60°, lineare); con reduced motion inquadratura iniziale |
 | **Accessibilità** | `aria-hidden`: i luoghi hanno link veri altrove; didascalia dell'osservatore in testo reale |
 | **Performance** | SVG inline generato al build, ≤ 6 KB, niente JS per il disegno |
-| **Non si fa** | curve, prospettive, bagliori, mirini, numeri di telemetria inventati, più di un orizzonte per schermata, etichette sopra la linea |
+| **Non si fa** | curve, prospettive, bagliori, mirini, numeri di telemetria inventati, più di un orizzonte per schermata (per questo la copertina del video non ne ha uno, V10), etichette sopra la linea, inviti allo scorrimento («Scorri per esplorare»: tolto dalla direzione 0.3, §5) |
 
 ### 2.2 La Soglia (`global.css` `.aperture` + `ui/Media.astro`)
 

@@ -3,7 +3,7 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.3
+versione: 0.4
 aggiornato: 2026-09-28
 fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), fonti web elencate nel §6.8]
 ---
@@ -93,7 +93,7 @@ Le soglie valgono per tutti i template:
       - i dati di campo (RUM `web-vitals` o CrUX) mostrano un LCP mobile al 75° percentile sopra 2,0 s;
       - una nuova versione di Chromium cambia in modo misurabile il comportamento dei font in preload;
       - la hero smette di essere tipografica.
-    - Come sorvegliare le prime due condizioni: nota in fondo a questo paragrafo.
+    - **Sorveglianza delle condizioni:** adottata nell'ADR 005 versione 1.1, con web-performance-specialist come owner. Protocollo, registro dei confronti e data del prossimo confronto sono in fondo a questo paragrafo.
   - Niente corsivi né altri pesi statici. Un terzo file richiede un'eccezione (§8).
 - **CSS.** Resta tutto inline finché sta entro 15 KB per pagina. Oltre, si torna a `inlineStylesheets: 'auto'` e si rimisura.
 - **JavaScript.**
@@ -103,15 +103,24 @@ Le soglie valgono per tutti i template:
   - Questo vale anche per i domini dei portali, per railway.app e per i preconnect statici.
   - Ogni futura aggiunta (analytics, antispam del form) passa da un ADR con cro-specialist, con un proprio budget di peso e di INP.
 
-**Nota di web-performance-specialist sull'ADR 005.** Condivido la decisione: con o senza preload tutte le metriche restano nella stessa classe, e la scelta tra circa 150 ms di LCP in laboratorio e l'assenza dello scambio di carattere è una scelta d'identità, quindi del creative-director. Le misure su fibra e 4G colmano un limite della mia rimisura, che valutava solo la rete lenta. Tre osservazioni, che non cambiano la decisione:
-1. **Due numeri dell'ADR da precisare**, ricalcolati sulla sua tabella:
-   - su 4G il primo paint con il preload arriva più tardi di **72–280 ms**, non di 100–280 ms: il valore più basso è `/siii/` su 4G veloce (228 contro 156 ms). Con la fibra la differenza è nulla (±8 ms);
-   - senza preload la finestra del ripiego è **da 2,7 a 14 volte** più lunga, non «3–6 volte»: 2,7–3,8 volte su 4G lento, 4,9–14 volte su 4G veloce.
-2. **L'FCP simulato della home senza preload (1,51 s) non è un contro dell'opzione A.** È un limite del modello Lantern (§2): con throttling applicato l'FCP scende. Non incide sulla decisione presa.
-3. **Le prime due condizioni di riapertura oggi non sono sorvegliate.**
-   - Al lancio il piano CRO non prevede script di misura, e CrUX è improbabile con il traffico del sito (§6.7): senza RUM la condizione «LCP mobile p75 sopra 2,0 s» non può scattare. Serve il RUM `web-vitals` senza cookie, decisione ancora aperta con cro-specialist.
-   - Per la seconda condizione propongo un confronto A/B su `/` e `/siii/` a ogni aggiornamento maggiore del Chromium di misura, e comunque ogni tre mesi. Metodo: stessa build, sola riga del preload tolta, 3 corse per variante con throttling applicato, alternate.
-   - Soglia proposta: si riapre se il ritardo dell'LCP dovuto al preload supera 300 ms (oggi 151–177 ms), oppure se cambiano le due costanti del sorgente citate sopra.
+**Sorveglianza del preload (ADR 005, versione 1.1).** La mia nota sull'ADR è stata accolta il 2026-09-28: due numeri corretti (+72–280 ms di primo paint su 4G; finestra del ripiego da 2,7 a 14 volte più lunga senza preload), FCP simulato tolto dai contro, sorveglianza adottata. La decisione sul preload resta del creative-director; la sorveglianza spetta a web-performance-specialist.
+- **Dati di campo.** RUM `web-vitals` senza cookie dopo il lancio, raccomandato dall'ADR. Senza RUM la condizione «LCP mobile al 75° percentile sopra 2,0 s» non può scattare, e CrUX è improbabile con il traffico del sito (§6.7). La decisione è aperta con cro-specialist e l'utente.
+- **Confronto in laboratorio** su `/` e `/siii/`, a ogni aggiornamento maggiore del Chromium di misura e comunque ogni tre mesi:
+  - stessa build, con la sola riga del preload tolta; throttling applicato, corse alternate con e senza preload;
+  - **almeno 6 corse per variante**, non 3. Le singole coppie oscillano molto: nel confronto C14 da 106 a 361 ms. Con le prime 3 corse la stima su `/siii/` era 282 ms, con 6 è 201 ms;
+  - il ritardo è la differenza tra le mediane dell'LCP con e senza preload;
+  - si controllano anche le costanti `kMaxFCPDelay` (100 ms) e `kMaxBlockingTimeForRenderBlockingFonts` (1500 ms) nel sorgente di Chromium;
+  - facoltativo, dal metodo dell'ADR: la finestra del ripiego su 4G veloce, con l'evento `loadingdone` di `document.fonts`.
+- **Soglia.** Si riapre se il ritardo supera 300 ms su una delle due pagine, oppure se cambiano le due costanti. In quel caso web-performance-specialist toglie il preload e ne informa il creative-director.
+
+**Registro dei confronti**
+
+| Data | Build misurata | Chromium | Corse per variante | Home: LCP con / senza preload, ritardo | `/siii/`: LCP con / senza preload, ritardo | Costanti | Esito |
+|---|---|---|---|---|---|---|---|
+| 2026-09-28 | `7c5f747` (rimisura, §4) | 141.0.7390.37 | 5 | 1,01 / 0,86 s, **+151 ms** | 1,04 / 0,86 s, **+177 ms** | 100 e 1500 ms | Sotto 300 ms |
+| 2026-09-28 | Build del G4 (14:20, contenuto di `f1b6780`; rimisura, «Rimisura C14») | 141.0.7390.37 | 6 | 1,04 / 0,84 s, **+204 ms** | 1,03 / 0,83 s, **+201 ms** | 100 e 1500 ms, invariate | Sotto 300 ms: il preload resta |
+
+**Prossimo confronto:** al primo aggiornamento maggiore del Chromium di misura (oggi 141, con Playwright 1.56.1) e comunque **entro lunedì 28 dicembre 2026**. Poi ogni tre mesi dall'ultimo confronto.
 
 ## 4. Budget per componente e media
 
@@ -561,6 +570,12 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 | T4 (privacy, cookie, 404) | 0,99–1,03 / 1,36–1,51 s (3) | — | 0 / — | 0 | 81,8–82,6 KB, 6 | 2,0 KB | paragrafo |
 
 - **Il preload del font resta** (ADR 005): le righe della tabella restano la base di riferimento.
+- **Rimisura C14 dopo il verdetto G4** (build del 2026-09-28 alle 14:20, contenuto di `f1b6780`). Home e `/siii/` sono invariate rispetto a questa tabella e a una build di controllo misurata in alternanza:
+  - simulato: 1,18 / 1,65 s e 1,28 / 1,65 s;
+  - applicato: 1,05 e 1,03 s su 9 corse;
+  - CLS 0, anche durante la lettura;
+  - 115,1 e 97,1 KB.
+  - La base resta questa tabella. Dettaglio nella review della rimisura, sezione «Rimisura C14 dopo il verdetto G4».
 - **Variante senza preload** (copia della stessa build, §3), da usare solo come confronto per le condizioni di riapertura dell'ADR 005:
   - `/`: simulato 1,51 / 1,66 s; applicato 0,86 s.
   - `/siii/`: simulato 1,51 / 1,51 s; applicato FCP 0,78 s e LCP 0,86 s.
@@ -623,7 +638,7 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
   - chi misura dall'Italia (domanda 3) e, se si usa WebPageTest, una password temporanea dell'anteprima da cambiare dopo il test.
 - **brand-strategist:** assenso all'uso di WebPageTest sull'anteprima, i cui risultati sono visibili a chi ha il link (§6.8, punto 3). Senza assenso bastano lo script e Lighthouse.
 - **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve per l'INP del menu, per il TTFB reale e per la prima condizione di riapertura dell'ADR 005 (nota del §3).
-- **creative-director:** se le accoglie, correggere nell'ADR 005 i due numeri indicati nella nota del §3 e adottare la sorveglianza proposta per le condizioni di riapertura. La decisione sul preload resta la sua.
+- **creative-director:** nell'ADR 005 (versione 1.1, «Sorveglianza delle condizioni»), portare il confronto da 3 a **6 corse per variante**. Con 3 corse la stima del ritardo oscilla di circa 80 ms (§3, registro dei confronti).
 - **Sessione principale:**
   - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura), e salvare lo script del §6.8 in `scripts/perf/hosting-check.sh`;
   - con il connettore Railway: leggere le impostazioni del servizio dell'anteprima (regione, Serverless, CDN) e, durante la prova dall'Italia, i log HTTP (§6.8, punto 5);

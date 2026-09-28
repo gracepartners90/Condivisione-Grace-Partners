@@ -3,9 +3,9 @@ titolo: Rimisura di performance dopo le correzioni (Fase 5, verso G4)
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/performance/budget.md, docs/performance/architettura.md, dist/ (build del 2026-09-28 alle 11:30, commit 7c5f747), build «in pubblicazione» della sessione principale (PUBLIC_SLOT_MODE=publish, 11:30), misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-09-28 (11:36–12:40 UTC), sorgente di Chromium (render_blocking_resource_manager.cc, document_loader.cc, consultato il 2026-09-28)]
+fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/performance/budget.md, docs/performance/architettura.md, dist/ (build del 2026-09-28 alle 11:30, commit 7c5f747), build «in pubblicazione» della sessione principale (PUBLIC_SLOT_MODE=publish, 11:30), misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-09-28 (11:36–12:40 UTC), sorgente di Chromium (render_blocking_resource_manager.cc, document_loader.cc, consultato il 2026-09-28), §12: docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (C14), docs/decisioni/005-preload-del-font.md (versione 1.1), dist/ del 2026-09-28 alle 14:20 (contenuto di f1b6780), misure Lighthouse 13.5.0 e Playwright 1.56.1 delle 14:29–14:53 UTC]
 ---
 
 # Rimisura di performance dopo le correzioni
@@ -490,6 +490,158 @@ Consigliati prima del go-live, non bloccanti:
 - togliere il preload, dopo l'assenso di creative-director (osservazione 1);
 - la correzione CSS del reveal a righe (osservazione 2).
 
+**Aggiornamento del 2026-09-28.**
+- Il preload resta, per decisione del creative-director (ADR 005).
+- La correzione del reveal a righe e il contatore senza listener di scroll sono applicati (`007956d`).
+- Per il go-live, le verifiche sull'hosting seguono il `budget.md` §6.8.
+- Esito della rimisura C14 nel §12.
+
+## 12. Rimisura C14 dopo il verdetto G4
+
+**Oggetto.** Condizione C14 del verdetto G4: rimisura breve di Home e `/siii/` dopo le correzioni C10–C12 (commit `da195cb`, `bd78d79` e `f1b6780`). La sessione principale chiede di confermare tre punti:
+- l'H1 resta l'elemento LCP della Home con la nuova riga in `lead`;
+- il CLS durante la lettura è nullo con il reveal a righe (arrivo in `display-m`, `text-wrap: balance` sulle `.line`);
+- il controllo n. 7 riscritto: un solo preload per pagina.
+
+In più, il primo confronto della sorveglianza del preload (ADR 005, versione 1.1) sulla build del G4.
+
+**In breve.**
+- **Nessuna regressione.** Tempi, pesi e CLS di Home e `/siii/` sono pari a quelli del §7.1 del budget e a quelli di una build di controllo misurata in alternanza.
+- **L'H1 resta l'elemento LCP della Home** a tutte e sei le viewport provate, in 12 caricamenti su 12. La riga in `lead` ha un'area da 2,4 a 9,9 volte più piccola.
+- **CLS durante la lettura: 0** in 10 combinazioni su 10, con nessun cambio d'altezza dei passage.
+- **Controllo n. 7:** un solo preload, corretto, in 8 pagine su 8. Superati tutti e 8 i controlli statici.
+- **Preload:** ritardo dell'LCP di 204 ms sulla Home e di 201 ms su `/siii/`, sotto la soglia di riapertura di 300 ms.
+
+### 12.1 Condizioni
+
+- **Build misurata:** `dist/` del 2026-09-28 alle 14:20:26.
+  - Contiene già il contenuto di `f1b6780` (coordinate a 2 decimali) e di `bd78d79` (link in Contatti). L'albero di lavoro è pulito: la considero la build di `f1b6780`.
+- **Server:** `scripts/serve.mjs` (ADR 004), su porte mie:
+  - 8091: la nuova build;
+  - 8092: il controllo, cioè la build della baseline del `budget.md` §7.1 (`7c5f747`) con la sola correzione del reveal a righe (osservazione 2);
+  - 8093: la nuova build senza la riga del preload (126 byte in meno, nient'altro: verificato con `diff`).
+  - Non ho usato `astro preview` su 4321, che non comprime e manda `no-cache` (`budget.md` §6.1).
+- **Lighthouse 13.5.0**, Chromium 141.0.7390.37, preset mobile predefinito.
+  - 48 corse tra le 14:29 e le 14:53 UTC, alternate tra nuova build e controllo, e tra con e senza preload.
+  - `benchmarkIndex` 1716–2696; carico della macchina 1,0–2,6. Nella prima parte ux-designer e ui-designer eseguivano in parallelo le loro verifiche C14: l'alternanza fa pesare la contesa allo stesso modo sulle due varianti.
+- **Playwright 1.56.1**, CPU 4x e rete del throttling applicato (latenza 562,5 ms, 1,47 Mbit/s):
+  - elemento LCP a 6 viewport;
+  - reveal fotogramma per fotogramma a 4 viewport;
+  - CLS durante la lettura a 5 viewport, con la rotella a scatti di 400 px ogni 120 ms (`budget.md` §6.4);
+  - origine degli spostamenti al caricamento.
+
+### 12.2 Tempi (mediane)
+
+| Pagina, throttling | Corse | Nuova build | Controllo | `budget.md` §7.1 |
+|---|---|---|---|---|
+| `/`, simulato: FCP / LCP | 3 | 1,18 / 1,65 s | 1,18 / 1,65 s | 1,18 / 1,66 s |
+| `/`, applicato: FCP = LCP | 3 (9) | 1,08 s (1,05 s su 9 corse) | 1,05 s | 1,01 s |
+| `/siii/`, simulato: FCP / LCP | 3 | 1,28 / 1,65 s | 1,29 / 1,65 s | 1,28 / 1,66 s |
+| `/siii/`, applicato: FCP = LCP | 3 (9) | 1,01 s (1,03 s su 9 corse) | 1,04 s | 1,04 s |
+
+- **LCP − FCP** con throttling applicato: 0 ms in 9 corse su 9 per pagina. Le 9 corse comprendono le 6 con preload del confronto del §12.8, sulla stessa build.
+- **TBT:** 0 con il simulato; 43 ms sulla Home e 63 ms su `/siii/` con l'applicato (controllo: 49 e 45 ms).
+- **CLS:** 0 in tutte le corse. **Punteggio:** 99–100.
+- **Regola del +10% (`budget.md` §8):** non scatta. Con 9 corse la Home è pari al controllo (1,05 s) e `/siii/` è più veloce di 1 centesimo. Con 3 corse la Home è +3% e `/siii/` −3%.
+
+### 12.3 Pesi e richieste (trasferiti, al caricamento, senza scroll)
+
+| Pagina | Documento | JS | Font | Immagini | Totale | Richieste | Controllo | Limiti del budget §3 |
+|---|---|---|---|---|---|---|---|---|
+| `/` (T1) | 21,4 KB | 2,4 KB, 2 file | 71,1 KB | 19,5 KB | 115,1 KB | 7 | 114,8 KB | documento 40, JS 10, totale 300 KB; 15 richieste |
+| `/siii/` (T2) | 20,3 KB | 4,9 KB, 3 file | 71,1 KB | 0 | 97,1 KB | 7 | 96,8 KB | documento 35, JS 12, totale 300 KB; 18 richieste |
+
+- Rispetto al controllo, il contenuto cresce di 0,3 KB per pagina: la riga in `lead` e il suo CSS.
+- I +1,5–1,9 KB rispetto al §7.1 (113,2 e 95,3 KB) sono le intestazioni di risposta di `scripts/serve.mjs` sulle 7 richieste: il controllo, servito dallo stesso server, pesa altrettanto.
+- Zero terze parti.
+- L'insight sulla catena delle richieste segnala la stessa catena del controllo, da `BaseLayout` a `track.js` (§9): nessuna novità.
+
+### 12.4 Elemento LCP
+
+**Home.** Area del testo in px² (riquadro del testo nella viewport, stesso metodo per entrambi i blocchi), 2 caricamenti per viewport:
+
+| Viewport | Elemento LCP (12 caricamenti su 12) | Riga dell'H1 | Riga in `lead` | Rapporto |
+|---|---|---|---|---|
+| 320×640 | riga dell'H1 «La tecnologia cambia.» | 32 811 | 8 661 | 3,8 |
+| 390×844 | idem | 34 463 | 14 088 | 2,4 |
+| 412×823 | idem | 36 354 | 14 157 | 2,6 |
+| 768×1024 | idem | 71 102 | 15 568 | 4,6 |
+| 1024×768 | idem | 96 754 | 14 036 | 6,9 |
+| 1440×900 | idem | 158 062 | 15 917 | 9,9 |
+
+- In ogni caricamento c'è un solo candidato LCP, dipinto insieme al primo paint: LCP = FCP, 0,98–1,14 s.
+- Anche Lighthouse (412×823) indica «La tecnologia cambia.» in 12 corse su 12.
+- **Margine.** Il caso più stretto è 390 px: la riga in `lead` dovrebbe avere un'area 2,4 volte maggiore per diventare l'LCP. Se il testo in `lead` si allungherà oltre due righe a 390 px, o se cambierà la sua scala tipografica, va ricontrollato.
+
+**`/siii/`**, stesso metodo:
+- da 320 a 412 px l'LCP resta la prima riga dello statement della hero, «Non raccontare la tua azienda.», come nel §7.1;
+- da 768 px in su è «SIII»;
+- LCP = FCP a tutte le viewport. Su mobile la seconda candidata («SIII») è solo 1,2–1,3 volte più piccola, ma entrambe compaiono al primo fotogramma: uno scambio non cambierebbe i tempi.
+
+### 12.5 CLS durante la lettura
+
+Scroll completo con la rotella, Layout Instability API e ResizeObserver sui passage (`[data-reveal=lines]` e `.passage`). È lo stesso metodo che prima della correzione trovava fino a 0,016 (osservazione 2).
+
+| Pagina | 320×640 | 390×844 | 412×823 | 768×1024 | 1440×900 |
+|---|---|---|---|---|---|
+| `/`, nuova build | 0 | 0 | 0 | 0 | 0 |
+| `/`, controllo | 0 | 0 | 0 | 0 | 0 |
+| `/siii/`, nuova build | 0 | 0 | 0 | 0 | 0 |
+| `/siii/`, controllo | 0 | 0 | 0 | 0 | 0 |
+
+- In ogni prova: nessun cambio d'altezza dei passage; reveal a righe completati (7 su 7 sulla Home, 5 su 5 su `/siii/`); pagina scorsa fino in fondo.
+- Nella nuova build le `.line` hanno `text-wrap: balance`: la maschera del reveal non cambia gli a capo, e il blocco resta della stessa altezza.
+- **CLS al caricamento.** Lighthouse dà 0 in tutte le corse.
+  - Con la strumentazione per fotogramma compaiono 0,0001–0,0002: sono spostamenti orizzontali della navigazione dell'header, della CTA e di una freccia al cambio di carattere, con posizione verticale e altezza invariate.
+  - Sono identici sul controllo, quindi preesistenti e non legati a C10. Valgono 1/300 dell'obiettivo di 0,05: nessun intervento.
+
+### 12.6 Reveal nella prima viewport
+
+Controllo fotogramma per fotogramma (`budget.md` §6.4) su Home e `/siii/`, a 412×823, 390×844, 768×1024 e 1440×900: 8 caricamenti, 225–232 fotogrammi ciascuno.
+- **0 elementi** nascosti o spostati nella prima viewport, in nessun fotogramma.
+- La porta della hero di `/siii/` riceve subito `is-inview`.
+
+### 12.7 Controlli statici (`budget.md` §6.3)
+
+Tutti superati sulla build del G4:
+- 0 `fetchpriority="high"`;
+- 0 `<img>` senza dimensioni;
+- 0 shorthand `animation` con timeline di scroll;
+- 0 iframe;
+- `<video>` senza `autoplay` né `poster`;
+- 0 risorse esterne;
+- **n. 7:** `1 1` in 8 pagine su 8, cioè un solo preload per pagina: quello di Schibsted Grotesk, con `as`, `type` e `crossorigin`. 2 file `.woff2`. Il comando riconosce anche il caso sbagliato: un preload senza `crossorigin` dà `0 1`;
+- 0 immagini oltre i limiti di peso; nessuna foto in `public/` fuori da `og/`.
+
+### 12.8 Sorveglianza del preload: primo confronto sulla build del G4
+
+Protocollo dell'ADR 005, versione 1.1: stessa build, con e senza la riga del preload, throttling applicato, corse alternate.
+
+| Pagina | Con preload (6 corse) | Senza preload (6 corse) | Ritardo dovuto al preload | Singole coppie | Rimisura (`7c5f747`) |
+|---|---|---|---|---|---|
+| `/` | 1,04 s | 0,84 s | **+204 ms** | 106–361 ms | +151 ms |
+| `/siii/` | 1,03 s | 0,83 s | **+201 ms** | 169–350 ms | +177 ms |
+
+- Le costanti di Chromium sono invariate: `kMaxFCPDelay` 100 ms, `kMaxBlockingTimeForRenderBlockingFonts` 1500 ms (sorgente ricontrollato il 2026-09-28).
+- **Esito:** sotto la soglia di 300 ms, il preload resta. Registrato nel `budget.md` §3 con la data del prossimo confronto: entro il 28 dicembre 2026, o prima se si aggiorna il Chromium di misura.
+- **Nota sul metodo.** Con le prime 3 corse il ritardo su `/siii/` risultava 282 ms, vicino alla soglia; con 6 è 201 ms. Le singole coppie oscillano da 106 a 361 ms. Il budget chiede quindi **almeno 6 corse per variante**; l'ADR, che ne prevede 3, va allineato dal creative-director.
+- **Senza preload**, una corsa della Home ha LCP − FCP = 180 ms e un'altra CLS 0,002, come già nella rimisura (§4.1): il primo paint cade mentre gli script sono in esecuzione. Non incide sulla decisione.
+
+### 12.9 Verdetto C14
+
+**Conforme: la parte di performance di C14 è chiusa.**
+- Le correzioni C10–C12 non peggiorano nessuna metrica di Home e `/siii/`.
+- L'H1 resta l'elemento LCP della Home, con ampio margine.
+- Il CLS durante la lettura è nullo.
+- Il controllo n. 7 riscritto è superato.
+- La verifica di accessibilità di C14 spetta a ux-designer.
+
+**Condizioni di go-live ancora aperte per la performance:**
+- **C05, video:** i controlli sul file (≤ 25 MiB, `+faststart`, `Range`, 720p e 1080p).
+- **C08, hosting:** verifiche del `budget.md` §6.8 dall'Italia.
+  - Delle impostazioni del servizio Railway lette dalla sessione principale sono conformi: regione `europe-west4-drams3a`, una replica, modalità Serverless spenta, nessuna CDN.
+  - Restano da misurare, con `scripts/perf/hosting-check.sh`: compressione attraverso l'edge, HTTP/2 e TTFB.
+
 ## Ipotesi da validare
 
 - [IPOTESI: il blocco del rendering dovuto al preload riguarda Chrome su Android, che produce i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato: senza preload il testo compare con il ripiego Helvetica, che ha metriche corrette.]
@@ -497,6 +649,7 @@ Consigliati prima del go-live, non bloccanti:
 - [DA VERIFICARE: la causa del ricalcolo di stile dell'intero documento all'apertura del menu, probabilmente l'inerzia applicata da `showModal()`.]
 - [DA VERIFICARE: la variante IntersectionObserver del contatore su Safari, con un `rootMargin` molto grande.]
 - [DA VERIFICARE, dalla review: dimensione, bitrate, `+faststart` e supporto delle richieste `Range` del video su Railway; CLS dello swap su un Android e un iPhone reali.]
+- [IPOTESI, §12: l'elemento LCP e il CLS durante la lettura misurati con Chromium valgono anche per Safari e Firefox. Il `text-wrap: balance` delle `.line` non è provato fuori da Chromium.]
 
 ## Domande aperte
 
@@ -506,6 +659,16 @@ Consigliati prima del go-live, non bloccanti:
 4. **Per cro-specialist e l'utente.** RUM con `web-vitals` dopo il lancio, senza cookie: sì o no? È l'unico modo di sapere come si comportano sul campo il menu e il font senza preload.
 
 ## Decisioni richieste
+
+**Aggiornamento del 2026-09-28, dopo la rimisura C14 (§12).** Restano aperte:
+- **creative-director:** nell'ADR 005 portare il confronto di sorveglianza da 3 a 6 corse per variante (§12.8);
+- **Utente:** far eseguire dall'Italia `scripts/perf/hosting-check.sh` e le corse di Lighthouse del `budget.md` §6.8 (C08);
+- **cro-specialist:** RUM `web-vitals` dopo il lancio.
+
+Le voci che seguono sono il registro della prima versione. Sono chiuse:
+- l'osservazione 1 è superata dall'ADR 005: il preload resta;
+- le osservazioni 2, 3 e 6 sono applicate in `007956d`;
+- la rimisura breve è il §12.
 
 - **creative-director:** accettare che, senza preload, il carattere di ripiego resti visibile 0,4–0,5 s in più sulla prima pagina con rete lenta (osservazione 1). In alternativa, chiedere di mantenere il preload: resta dentro soglie e obiettivi.
 - **Sessione principale:**
