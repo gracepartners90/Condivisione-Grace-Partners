@@ -12,15 +12,18 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Dal 2026-09-28 si usa `DIST_DIR=<build> PORT=<porta> node scripts/serve.mjs` (ADR 004): applica `_headers`, comprime all'avvio e ha un TTFB di circa 1 ms. Legge la build **all'avvio**: dopo una nuova build va riavviato.
   - Il server di riserva (`scratchpad/serve.mjs`, budget §6.6) rilegge i file a ogni richiesta e comprime ogni volta. Le mediane di Lighthouse sono le stesse (verificato).
   - Su 8080 gira ancora il server di riserva su `/home/user/itnode/dist`.
-  - `scripts/serve.mjs` **non gestisce le richieste `Range`**: la correzione è nella rimisura, osservazione 6. Serve prima di mettere il video in `/video/`.
+  - `scripts/serve.mjs` gestisce le richieste `Range` dal commit `007956d` (verificato: 206 e 1024 byte).
+  - Con `PREVIEW_AUTH=utente:password` il server locale chiede la Basic Auth (la 503 senza password vale solo su Railway): utile per provare procedure con credenziali.
+  - Per aspettare un server avviato in background senza `sleep` in primo piano: `curl -s -o /dev/null --retry 20 --retry-connrefused --retry-delay 1 <url>/healthz`.
 - **Commit durante le misure.** La sessione principale committa e ricostruisce in parallelo. A fine misura si controllano `ls --time-style=full-iso dist/` e `git log`, e si dichiara quale commit è stato misurato.
-- **Script di misura** (possono sparire): Fase 5 in `scratchpad/audit/`, rimisura in `scratchpad/perf-rimisura/`.
+- **Script di misura** (possono sparire): Fase 5 in `scratchpad/audit/`, rimisura in `scratchpad/perf-rimisura/`, hosting in `scratchpad/hosting/`. Il testo di riferimento di `hosting-check.sh` è nel `budget.md` §6.8.
   - `lh.sh`: corse Lighthouse; nomi senza trattino, perché `lhsum.mjs` divide sul `-`.
   - `runs.mjs`, `mt.mjs`: dettaglio per corsa.
   - `reveal-frames.mjs`, `lcp-detail.mjs`, `inp-scroll.mjs`, `menu-first.mjs`, `menu-trace.mjs`, `scroll2.mjs`, `fix-check.mjs`, `publish-check.mjs`, `counter-func.mjs`.
 - **Rete.**
-  - Bloccati: docs.astro.build, docs.railway.com, developers.cloudflare.com, MDN, web.dev, caniuse, jsDelivr, api.fontsource.org, railway.app, itnode.it, erwinhofman.com.
-  - Funzionano: il registry npm, raw.githubusercontent.com (anche il **sorgente di Chromium**: `chromium/chromium/main/third_party/blink/...`), WebSearch (solo sintesi).
+  - Bloccati: docs.astro.build, docs.railway.com, railway.com, station.railway.com, `*.up.railway.app` (anteprima compresa: CONNECT 403, 2026-09-28), developers.cloudflare.com, MDN, web.dev, caniuse, jsDelivr, api.fontsource.org, railway.app, itnode.it, erwinhofman.com, webpagetest.org.
+  - Funzionano: il registry npm, raw.githubusercontent.com (anche il **sorgente di Chromium**: `chromium/chromium/main/third_party/blink/...`), github.com con WebFetch, WebSearch (solo sintesi).
+  - Le misure sull'host (C08) le fa una persona in Italia con lo script del `budget.md` §6.8: io leggo l'output e scrivo l'audit.
 - **PageSpeed Insights.** L'API risponde, ma la quota anonima è esaurita (429): serve una chiave.
 - **Font di sistema.** L'ambiente ha **Liberation Sans** (non Arial, Roboto, Helvetica né Segoe). Il ripiego `local('Liberation Sans')` si applica, quindi il CLS dello swap misurato qui è realistico (budget §6.1, corretto).
 - **Bash in modalità automatica.** A volte il classificatore non risponde (errore transitorio). Intanto si lavora con Read, Glob e Grep: dopo 10 fallimenti di fila il turno si ferma.
@@ -63,16 +66,24 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
 - **`pkill -f <pattern>`.** Se il pattern compare nel comando stesso, uccide la shell (exit 144): si usa `kill <PID>` con i PID presi da `lsof -t -iTCP:<porta>`.
 - **Server di misura.** La Brotli q11 a ogni richiesta dà un TTFB di 65–234 ms: è un artefatto del laboratorio, e sposta l'FCP simulato di qualche decina di ms tra una build e l'altra.
 - **Metodo delle varianti.** Per un confronto A/B si copia `dist/` nella scratchpad, si cambia una sola cosa (con `sed` o `perl` sull'HTML, oppure con uno `<style>` iniettato prima di `</head>`) e si serve su un'altra porta con `serve.mjs`.
+- **curl con credenziali.** Dopo un redirect `%{url_effective}` contiene `utente:password@` (anche con `-K` o `-u`): va ripulito con `sed -E 's#://[^/@ ]*@#://#g'` prima di stampare. Le credenziali vanno in un file `-K` con `chmod 600`, non nella riga di comando.
+- **Lighthouse 13.5 su pagine protette.** `--extra-headers=auth.json` con `{"Authorization":"Basic …"}` funziona (provato con `serve.mjs` e password).
+  - `audits['server-response-time'].numericValue` = attesa del server del documento (dall'invio al primo byte); nel simulato è il valore osservato, con `devtools` comprende la latenza emulata.
+  - `audits['document-latency-insight'].details.items.{usesCompression,serverResponseIsFast,noRedirects}.value`; soglia di lentezza 600 ms.
+- **Accept-Encoding nelle prove sull'host.** Si manda quello di Chrome (`gzip, deflate, br, zstd`): una fonte di terzi dice che la CDN di Railway comprime in base all'ordine.
+- **PageSpeed Insights** non gestisce la Basic Auth (401): sull'anteprima protetta non serve. WebPageTest Starter: risultati pubblici via link, credenziali visibili nei dettagli → solo con password temporanea.
 
 ## Compromessi e decisioni
-- **Preload del font: deciso di toglierlo** (rimisura del 2026-09-28, §4; budget §3).
-  - Guadagno misurato, throttling applicato: LCP −151 ms sulla home e −177 ms su `/siii/`.
-  - Costo: ripiego visibile 0,4–0,5 s in più sulla prima pagina.
-  - In attesa dell'assenso di creative-director e dell'applicazione della sessione principale (riga 42 di `BaseLayout.astro`). Dopo l'applicazione: rimisura breve di `/` e `/siii/`.
-- **Contatore 01/05 di Città Digitali.** Il listener di scroll è conforme al budget, ma va contro la regola 9 dell'architettura. Ho proposto un IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'`: provato su Chromium, da provare su Safari.
+- **Preload del font: resta** (ADR 005, creative-director al G4). Avevo proposto di toglierlo (LCP −151/−177 ms applicato); il creative-director ha misurato fibra e 4G, che io non avevo valutato: con la fibra il preload elimina lo scambio di carattere.
+  - Lezione: quando una scelta tocca l'identità, misurare il costo visibile su **tutti** i profili di rete del pubblico, non solo sul caso lento.
+  - Budget e architettura riallineati (0.3). Nella nota del budget §3 ho chiesto due correzioni numeriche all'ADR (+72–280 ms, 2,7–14 volte) e proposto come sorvegliare le condizioni di riapertura: A/B a ogni Chromium maggiore o ogni tre mesi, soglia 300 ms; RUM per la condizione di campo.
+  - Posso togliere il preload senza nuovo assenso solo se scatta una condizione dell'ADR 005.
+- **Condizione C08 (hosting):** controlli H1–H11 e soglie di TTFB nel budget §6.8. Riferimento: HTML della home 133 KB non compresso, 20,8 KB Brotli, 25,9 KB gzip (build delle 13:59).
+- **Rimisura breve C14** (Home e `/siii/`): la chiede la sessione principale dopo C10–C12. Il creative-director chiede di confermare che l'H1 resti l'elemento LCP della Home con la nuova riga in `lead`.
+- **Contatore 01/05 di Città Digitali.** Applicato l'IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'` (`007956d`): provato su Chromium, da provare su Safari.
 - **Autoplay del video su mobile.** Risolto: `video.ts` fa autoplay solo da 64em. Restano aperti il file su Railway (403 dal proxy) e l'hosting: sono le condizioni per il go-live.
 
 ## Collaborazione
-- La direzione visiva (creative-director) mi ha chiesto di validare i font: validati, 70,7 KB, 2 file. Il preload ora è in discussione con lei.
+- La direzione visiva (creative-director) mi ha chiesto di validare i font: validati, 70,7 KB, 2 file. Sul preload ha deciso lei (ADR 005): le decisioni d'identità sopra le soglie spettano al creative-director; io metto numeri e disaccordi motivati in una nota del budget.
 - Il piano CRO al lancio prevede zero script e zero banner. Ogni futuro analytics passa da un ADR con me per peso e INP. RUM `web-vitals` proposto per l'INP del menu e per i font.
 - La sessione principale mi richiama per le rimisure. Non posso modificare `src/`, `public/` né `scripts/`: le correzioni vanno come snippet nelle review.

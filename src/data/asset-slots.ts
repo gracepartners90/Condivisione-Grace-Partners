@@ -9,7 +9,7 @@
  * `publish` (PUBLIC_SLOT_MODE=publish) shows a typographic variant with no service text,
  * for a go-live without some assets. The flag is explicit: a preview is also a production build.
  */
-import { office } from './site';
+import { office, pugliaPlaces } from './site';
 import { bearing, distanceKm, formatBearing, formatCoords, formatKm } from '../lib/geo';
 
 export const SLOT_MODE: 'staging' | 'publish' = import.meta.env.PUBLIC_SLOT_MODE === 'publish' ? 'publish' : 'staging';
@@ -53,17 +53,23 @@ const hotspots = [
   { x: 80, y: 51 },
 ];
 
-const place = (name: string, lat: number, lon: number, usedIn: string): AssetSlot => ({
-  kind: 'foto',
-  label: `${name}: fotografia reale del luogo, luce naturale, orizzonte visibile.`,
-  spec: 'Formato verticale 3:5, lato lungo di almeno 2400 px.',
-  format: '3:5',
-  ratio: '3 / 5',
-  alt: name,
-  usedIn,
-  coords: { lat, lon },
-  publish: { kind: 'place', name, meta: placeMeta(lat, lon) },
-});
+// Place doors read name and coordinates from site.ts: one source of truth (C11).
+const place = (id: string, usedIn: string): AssetSlot => {
+  const found = pugliaPlaces.find((p) => p.id === id);
+  if (!found) throw new Error(`asset-slots: unknown place ${id}`);
+  const { name, lat, lon } = found;
+  return {
+    kind: 'foto',
+    label: `${name}: fotografia reale del luogo, luce naturale, orizzonte visibile.`,
+    spec: 'Formato verticale 3:5, lato lungo di almeno 2400 px.',
+    format: '3:5',
+    ratio: '3 / 5',
+    alt: name,
+    usedIn,
+    coords: { lat, lon },
+    publish: { kind: 'place', name, meta: placeMeta(lat, lon) },
+  };
+};
 
 const siii = (name: string, place: string): AssetSlot => ({
   kind: 'screenshot',
@@ -90,9 +96,9 @@ const slots = {
     usedIn: '/siii/ (hero)',
     publish: { kind: 'experience', nodes: [{ x: 30, y: 28 }, { x: 70, y: 40 }, { x: 44, y: 52 }] },
   },
-  'luogo-acquaviva': place('Acquaviva delle Fonti', 40.8957, 16.8412, '/puglia-digitale/ (I luoghi)'),
-  'luogo-gravina': place('Gravina in Puglia', 40.8196, 16.4231, '/puglia-digitale/ (I luoghi)'),
-  'luogo-monopoli': place('Monopoli', 40.95, 17.3, '/puglia-digitale/ (I luoghi)'),
+  'luogo-acquaviva': place('acquaviva', '/puglia-digitale/ (I luoghi)'),
+  'luogo-gravina': place('gravina', '/puglia-digitale/ (I luoghi)'),
+  'luogo-monopoli': place('monopoli', '/puglia-digitale/ (I luoghi)'),
   'video-poster': {
     kind: 'poster video',
     label: 'Città Digitali: fotogramma di copertina del video.',

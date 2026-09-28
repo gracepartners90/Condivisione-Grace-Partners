@@ -89,31 +89,35 @@ export type Place = {
   display?: string;
 };
 
+// Coordinates (visual direction §1.4, condition C11): one source for every place, the town's
+// infobox on English Wikipedia (degrees and minutes), read on 2026-09-28 via search results, at
+// 2 decimals: no padding digits. Direct reading of the pages still DA VERIFICARE; details and
+// URLs in docs/strategia/coordinate-luoghi.md. The office uses the town's coordinates.
 export const office: Place = {
   id: 'acquaviva',
   name: 'Acquaviva delle Fonti',
   province: 'BA',
   region: 'Puglia',
-  lat: 40.8957,
-  lon: 16.8412,
+  lat: 40.9, // 40°54′N
+  lon: 16.85, // 16°51′E
 };
 
 export const pugliaPlaces: Place[] = [
-  { id: 'acquaviva', name: 'Acquaviva delle Fonti', province: 'BA', region: 'Puglia', lat: 40.8957, lon: 16.8412, url: 'https://www.acquavivadigitale.com', display: 'acquavivadigitale.com' },
-  { id: 'gravina', name: 'Gravina in Puglia', province: 'BA', region: 'Puglia', lat: 40.8196, lon: 16.4231, url: 'https://www.gravinadigitale.it', display: 'gravinadigitale.it' },
+  { id: 'acquaviva', name: 'Acquaviva delle Fonti', province: 'BA', region: 'Puglia', lat: 40.9, lon: 16.85, url: 'https://www.acquavivadigitale.com', display: 'acquavivadigitale.com' },
+  { id: 'gravina', name: 'Gravina in Puglia', province: 'BA', region: 'Puglia', lat: 40.82, lon: 16.42, url: 'https://www.gravinadigitale.it', display: 'gravinadigitale.it' },
   { id: 'monopoli', name: 'Monopoli', province: 'BA', region: 'Puglia', lat: 40.95, lon: 17.3, url: 'https://www.monopolidigitale.it', display: 'monopolidigitale.it' },
 ];
 
 export const italyPlaces: Place[] = [
-  { id: 'varese', name: 'Varese', province: 'VA', region: 'Lombardia', lat: 45.8206, lon: 8.8251, url: 'https://www.varesedigitale.it', display: 'varesedigitale.it' },
-  { id: 'altamura', name: 'Altamura', province: 'BA', region: 'Puglia', lat: 40.8286, lon: 16.5528, url: 'https://www.altamuradigitale.com', display: 'altamuradigitale.com' },
-  { id: 'caltanissetta', name: 'Caltanissetta', province: 'CL', region: 'Sicilia', lat: 37.49, lon: 14.0617, url: 'https://www.caltanissettadigitale.it', display: 'caltanissettadigitale.it' },
+  { id: 'varese', name: 'Varese', province: 'VA', region: 'Lombardia', lat: 45.82, lon: 8.83, url: 'https://www.varesedigitale.it', display: 'varesedigitale.it' },
+  { id: 'altamura', name: 'Altamura', province: 'BA', region: 'Puglia', lat: 40.82, lon: 16.55, url: 'https://www.altamuradigitale.com', display: 'altamuradigitale.com' },
+  { id: 'caltanissetta', name: 'Caltanissetta', province: 'CL', region: 'Sicilia', lat: 37.49, lon: 14.06, url: 'https://www.caltanissettadigitale.it', display: 'caltanissettadigitale.it' },
 ];
 
 /** Places on the Home horizon: every town where ITnode's three worlds are online. */
 export const horizonPlaces: Place[] = [
   pugliaPlaces[2],
-  { id: 'cassano', name: 'Cassano delle Murge', province: 'BA', region: 'Puglia', lat: 40.8906, lon: 16.77 },
+  { id: 'cassano', name: 'Cassano delle Murge', province: 'BA', region: 'Puglia', lat: 40.88, lon: 16.77 },
   italyPlaces[1],
   pugliaPlaces[1],
   italyPlaces[2],

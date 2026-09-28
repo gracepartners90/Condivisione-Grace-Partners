@@ -37,13 +37,14 @@ const projection = geoConicConformal()
   .translate([0, 0])
   .precision(0);
 
-// Working coordinates of the places (direzione-visiva §1.4, DA VERIFICARE before publication).
+// Coordinates of the places: same values and source as src/data/site.ts (visual direction §1.4,
+// docs/strategia/coordinate-luoghi.md). Keep the two lists aligned, then run `npm run maps`.
 const PLACES = {
-  varese: { name: 'Varese', lat: 45.8206, lon: 8.8251 },
-  altamura: { name: 'Altamura', lat: 40.8286, lon: 16.5528 },
-  caltanissetta: { name: 'Caltanissetta', lat: 37.49, lon: 14.0617 },
-  acquaviva: { name: 'Acquaviva delle Fonti', lat: 40.8957, lon: 16.8412 },
-  gravina: { name: 'Gravina in Puglia', lat: 40.8196, lon: 16.4231 },
+  varese: { name: 'Varese', lat: 45.82, lon: 8.83 },
+  altamura: { name: 'Altamura', lat: 40.82, lon: 16.55 },
+  caltanissetta: { name: 'Caltanissetta', lat: 37.49, lon: 14.06 },
+  acquaviva: { name: 'Acquaviva delle Fonti', lat: 40.9, lon: 16.85 },
+  gravina: { name: 'Gravina in Puglia', lat: 40.82, lon: 16.42 },
   monopoli: { name: 'Monopoli', lat: 40.95, lon: 17.3 },
 };
 
@@ -308,7 +309,7 @@ const out = {
   source: `Natural Earth 1:10m Admin 0 – Countries (public domain), via world-atlas ${WORLD_ATLAS_VERSION} countries-10m.json`,
   generatedBy: 'scripts/generate-maps.mjs',
   projection: { ...PROJECTION, scale: EARTH_RADIUS_KM, note: 'Lambert conformal conic; one projection for every map' },
-  coordinatesNote: 'Coordinate di lavoro dalla direzione visiva §1.4: DA VERIFICARE prima della pubblicazione.',
+  coordinatesNote: 'Coordinate a 2 decimali da una fonte unica (riquadro Wikipedia dei comuni, 2026-09-28): docs/strategia/coordinate-luoghi.md.',
   maps: { italia, puglia },
 };
 await writeFile('src/data/maps.json', JSON.stringify(out, null, 2) + '\n');

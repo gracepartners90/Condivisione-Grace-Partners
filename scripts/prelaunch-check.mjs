@@ -46,10 +46,10 @@ const checks = [
       (CONFIRMED.clients10k || !/10\.000\+/.test(page('index.html'))),
   },
   {
-    // Visual direction §1.4: digits as given by the source, never padded with zeros.
-    name: 'Coordinate senza zeri di riempimento',
-    ok: anyPage(/\d\.\d\d00°/).length === 0,
-    detail: anyPage(/\d\.\d\d00°/),
+    // Visual direction §1.4: digits as given by the source (2 decimals, coordinate-luoghi.md).
+    name: 'Coordinate alla precisione della fonte (al massimo 2 decimali)',
+    ok: anyPage(/\d\.\d{3,}° [NSEO]/).length === 0,
+    detail: anyPage(/\d\.\d{3,}° [NSEO]/),
   },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];

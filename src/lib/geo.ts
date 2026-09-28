@@ -26,11 +26,12 @@ export function bearing(a: LatLon, b: LatLon): number {
   return (deg(Math.atan2(y, x)) + 360) % 360;
 }
 
-/** "40.8957° N · 16.8412° E" — decimal degrees, 4 digits (visual direction §1.4). */
+/** "40.90° N · 16.85° E" — decimal degrees at the precision of the source: 2 digits, never
+ *  padded (visual direction §1.4, docs/strategia/coordinate-luoghi.md). */
 export function formatCoords({ lat, lon }: LatLon): string {
   const ns = lat >= 0 ? 'N' : 'S';
   const ew = lon >= 0 ? 'E' : 'O';
-  return `${Math.abs(lat).toFixed(4)}° ${ns} · ${Math.abs(lon).toFixed(4)}° ${ew}`;
+  return `${Math.abs(lat).toFixed(2)}° ${ns} · ${Math.abs(lon).toFixed(2)}° ${ew}`;
 }
 
 /** "081°" — three-digit bearing. */

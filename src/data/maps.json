@@ -18,7 +18,7 @@
     "scale": 6371.0088,
     "note": "Lambert conformal conic; one projection for every map"
   },
-  "coordinatesNote": "Coordinate di lavoro dalla direzione visiva §1.4: DA VERIFICARE prima della pubblicazione.",
+  "coordinatesNote": "Coordinate a 2 decimali da una fonte unica (riquadro Wikipedia dei comuni, 2026-09-28): docs/strategia/coordinate-luoghi.md.",
   "maps": {
     "italia": {
       "description": "Italia con le isole maggiori e minori (≥ 18 km²): contorno chiuso, solo tratto.",
@@ -33,31 +33,31 @@
         {
           "id": "varese",
           "name": "Varese",
-          "lat": 45.8206,
-          "lon": 8.8251,
-          "x": 194.6,
-          "y": 152.5,
-          "xPct": 19.46,
-          "yPct": 12.91
+          "lat": 45.82,
+          "lon": 8.83,
+          "x": 195,
+          "y": 152.6,
+          "xPct": 19.5,
+          "yPct": 12.92
         },
         {
           "id": "altamura",
           "name": "Altamura",
-          "lat": 40.8286,
-          "lon": 16.5528,
-          "x": 812.5,
-          "y": 698.6,
-          "xPct": 81.25,
-          "yPct": 59.16
+          "lat": 40.82,
+          "lon": 16.55,
+          "x": 812.3,
+          "y": 699.6,
+          "xPct": 81.23,
+          "yPct": 59.24
         },
         {
           "id": "caltanissetta",
           "name": "Caltanissetta",
           "lat": 37.49,
-          "lon": 14.0617,
-          "x": 612.5,
+          "lon": 14.06,
+          "x": 612.3,
           "y": 1071.8,
-          "xPct": 61.25,
+          "xPct": 61.23,
           "yPct": 90.77
         }
       ]
@@ -82,22 +82,22 @@
         {
           "id": "gravina",
           "name": "Gravina in Puglia",
-          "lat": 40.8196,
-          "lon": 16.4231,
-          "x": 413.8,
-          "y": 683.2,
-          "xPct": 25.86,
-          "yPct": 79.7
+          "lat": 40.82,
+          "lon": 16.42,
+          "x": 410.9,
+          "y": 682.8,
+          "xPct": 25.68,
+          "yPct": 79.66
         },
         {
           "id": "acquaviva",
           "name": "Acquaviva delle Fonti",
-          "lat": 40.8957,
-          "lon": 16.8412,
-          "x": 791.2,
-          "y": 573,
-          "xPct": 49.45,
-          "yPct": 66.85,
+          "lat": 40.9,
+          "lon": 16.85,
+          "x": 799,
+          "y": 567.4,
+          "xPct": 49.94,
+          "yPct": 66.2,
           "role": "sede"
         },
         {
