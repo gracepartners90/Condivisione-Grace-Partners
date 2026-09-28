@@ -30,6 +30,7 @@ Lezioni apprese e pattern. Fatti e decisioni ufficiali stanno in `docs/` (soprat
 - Senza `novalidate`, se ci sono campi `required` vuoti il browser non genera `submit`: la validazione personalizzata non parte (verificato).
 - Misurare le headline in Chromium con il font reale (`@fontsource-variable/*` da npm) prima di dare numeri sul reflow (Appendice B). Con font diversi i risultati cambiano di molto.
 - `pkill -f "<pattern>"` uccide anche la shell che contiene il pattern: usa `cmd & PID=$!` e poi `kill $PID`.
+- In Bash `cd X && (A) & (B) & wait` manda in background anche il `cd`: `B` e i comandi successivi girano nella cartella di partenza. Negli script paralleli usa sempre percorsi assoluti.
 - **QA del sito costruito.**
   - **Correzioni applicate ≠ correzioni efficaci.** Con Astro ogni selettore composto riceve un attributo `[data-astro-cid]`, quindi una regola come `.contact [aria-invalid]` perde contro `.contact input:is(...)`. Due correzioni applicate (bordo d'errore, casella da 24 px) non avevano effetto. Verifica sempre gli stili calcolati, mai il sorgente. Nelle prove con CSS iniettato serve `!important`.
   - **Movimento attivo e ridotto danno layout diversi:** con il movimento le righe del text reveal sono `inline-block`. Ogni controllo tipografico va fatto nei due modi, e con il movimento dopo aver fatto scorrere tutta la pagina.
@@ -62,7 +63,7 @@ Lezioni apprese e pattern. Fatti e decisioni ufficiali stanno in `docs/` (soprat
   - icona «!» non letta (`content: '!' / ''`) e prefisso nascosto «Errore:»;
   - bordo d'errore da 2 px ottenuto con 1 px di bordo più ombra interna, senza spostamenti.
 - **Variante «in pubblicazione» dei segnaposto (`SlotPending`):** ammessa al go-live se il suo testo visibile è già nella pagina o è il segno grafico dei rilevamenti. Sulla Home il nome dell'esperienza non c'è nel testo, quindi niente nome o nome esposto (O6).
-- **Ordine delle porte (I11):** un solo ordine a tutte le larghezze; consigliato ovest → est. Un focus da destra a sinistra su desktop non è accettabile.
+- **Ordine delle porte (I11):** un solo ordine a tutte le larghezze; un focus da destra a sinistra su desktop non è accettabile. Deciso dal creative-director (verdetto G4 §3.5): ovest → est, come nel codice.
 - Città Digitali 1024–1279 px, città in elenco accanto alla carta (V2 della verifica UI): confermato, ordine del DOM uguale all'ordine visivo.
 
 ## Da tenere d'occhio

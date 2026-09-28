@@ -3,9 +3,9 @@ titolo: Verifica di accessibilità dopo le correzioni (verso il G4)
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-09-28
-fonti: [http://localhost:4321/ (build statica del commit 7c5f747, dist/ delle 11:30), http://localhost:4323/ e http://localhost:4324/ (commit c025181, ricontrollo), http://localhost:4322/ (stesso commit con PUBLIC_SLOT_MODE=publish), docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, docs/ui/design-system.md, docs/creativa/direzione-visiva.md, docs/contenuti/copy-deck/puglia-digitale.md, src/, scripts/prelaunch-check.mjs, CLAUDE.md]
+fonti: [http://localhost:4321/ (build statica del commit 7c5f747, dist/ delle 11:30), http://localhost:4323/ e http://localhost:4324/ (commit c025181, ricontrollo), http://localhost:4321/ e http://localhost:4322/ (commit f1b6780, verifica C14), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, http://localhost:4322/ (stesso commit con PUBLIC_SLOT_MODE=publish), docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, docs/ui/design-system.md, docs/creativa/direzione-visiva.md, docs/contenuti/copy-deck/puglia-digitale.md, src/, scripts/prelaunch-check.mjs, CLAUDE.md]
 oggetto: verifica di A1–A7 e B1, giro da tastiera, variante «in pubblicazione» dei segnaposto, form su mobile dopo un invio vuoto, I11
 ---
 
@@ -13,6 +13,7 @@ oggetto: verifica di A1–A7 e B1, giro da tastiera, variante «in pubblicazione
 
 ## In sintesi
 - **Aggiornamento dopo c025181:** O1–O6 e i suggerimenti S1–S5 sono applicati e verificati. Il verdetto aggiornato è in fondo, in «Ricontrollo dopo c025181».
+- **Verifica C14 dopo il verdetto G4 (commit f1b6780):** riga della hero e cascata senza testo tagliato né parole spezzate a 320 px; Home e `/siii/` superate da tastiera. Verdetto invariato, vedi la sezione in fondo.
 - **Le correzioni reggono.** A1 (didascalie dei punti caldi) e A2 (numeri delle statistiche) sono chiuse e verificate sul codice costruito, non più con correzioni iniettate. Il reflow a 320 px (B1) è pulito su tutte le 8 pagine, da 320 a 1440 px e a 320 × 256.
 - **Tastiera superata** su Home, /puglia-digitale/, /siii/, /citta-digitali/ e /contatti/, a 390 e 1440 px.
   - Focus non coperto (2.4.11): 159 prove pulite.
@@ -389,3 +390,44 @@ Il verdetto di gate spetta al creative-director.
 3. **Asset:** se ne manca anche uno, build di produzione con `PUBLIC_SLOT_MODE=publish`, che ora è conforme anche nella Home.
 
 S6 resta per dopo il lancio. Restano valide le ipotesi da validare sopra: screen reader reali, Safari e Firefox. Il verdetto di gate spetta al creative-director.
+
+## Verifica C14 dopo il verdetto G4
+**Oggetto.** Il verdetto G4 (`docs/review/2026-09-28-sito-verdetto-g4-creative-director.md`, C10 e C14) chiede a ux-designer:
+- parole spezzate;
+- testo tagliato con le spaziature di 1.4.12;
+- giro da tastiera su Home e `/siii/`;
+- conferma che la nuova riga della hero (I4) e la cascata (N1) non tagliano testo a 320 px.
+
+Ho verificato anche le altre modifiche che toccano l'accessibilità: nodi della 404, link «Scopri il suo percorso» in Contatti, copertina del video, variante «publish».
+
+- **Build.**
+  - Staging su http://localhost:4321/: commit f1b6780, `dist/` delle 14:20.
+  - Variante `PUBLIC_SLOT_MODE=publish` su http://localhost:4322/: costruita alle 14:22.
+  - Prima di misurare ho controllato nei file serviti la riga della hero, l'occhiello, le coordinate a 2 decimali, il link di Contatti e il nodo della 404; `src/` coincide con HEAD.
+- **Script:** `breaks.mjs`, `clip.mjs`, `probe.mjs`, `flows.mjs`, `axe.mjs` e il nuovo `c14-targets.mjs` (scratchpad della sessione, cartella `ux-verifica/`).
+
+| Verifica | Esito | Evidenza |
+|---|---|---|
+| Parole spezzate | Nessuna | Da 320 a 2560 px, con il movimento ridotto e attivo, su staging e «publish» (Home, `/siii/`, `/puglia-digitale/`) |
+| Testo tagliato, con e senza le spaziature di 1.4.12 | Nessun taglio nuovo | 8 pagine, da 320 a 1440 px e a 320 × 256, con il movimento ridotto e attivo, per 224 combinazioni. Restano solo i due residui già accettati, entrambi `aria-hidden` e solo con le spaziature dell'utente: il tempo del video a 320 px e il nome decorativo nelle porte «publish» a 360–390 px. |
+| Riga della hero (I4) | Nessun taglio | A 320 px 2 righe, 3 con le spaziature, dentro la hero che ha `overflow: clip`. Nessun taglio neanche a 360, 390, 768, 1024 e 1440 px, con e senza movimento. Ordine di lettura: occhiello → H1 → riga (un paragrafo, fuori dal titolo) → didascalia. |
+| Cascata di `/siii/` (N1) | Nessun taglio | A 320 px 3 righe senza rientro, anche con le spaziature. Con i rientri di 48 e 96 px (390 px) nessuna parola spezzata né tagliata. |
+| Giro da tastiera, Home e `/siii/` | Superato | Ordine uguale all'ordine visivo a 390 e 1440 px; la nuova riga della hero non aggiunge fermate. Ogni fermata ha il suo indicatore di focus. **Percorsi:** skip link, menu modale con Esc, «Parliamone» da header e menu verso il titolo del form, invio vuoto verso il riepilogo, link ai campi, correzione dal vivo, pannello senza endpoint; 0 errori prematuri. |
+| Focus non coperto (2.4.11) | Superato | 160 prove su 5 pagine × 2 larghezze |
+| 404, nodi dentro i link | Superato | Nomi «Esplora SIII», «Scopri Puglia Digitale», «Esplora Città Digitali»: il nodo è `aria-hidden` e non entra nel nome. Contorno di focus da 2 px; con il focus si evidenzia anche il nodo del link sull'orizzonte. Ordine da sinistra a destra; link alti 44 px. |
+| Contatti, «Scopri il suo percorso» | Superato | Nome accessibile «Scopri il suo percorso nella home», link alto 44 px. L'arrivo su `/#fondatore` resta sotto l'header (sezione a 80 px con header a 65 px, a 390; a 92 con 77, a 1440). Il Tab successivo parte dall'interno della sezione. |
+| Video | Superato | Copertina `aria-hidden`, senza elementi focalizzabili né orizzonte; controlli con i nomi di prima |
+| Variante «publish» | Superato | Home e pannelli di `/siii/`: solo i gradi dell'orizzonte, segno grafico `aria-hidden`. Porte: nome (lo stesso dell'H3) e rilevamento con distanza (segno grafico, decisione T10). Nessuna informazione visibile che manchi a chi usa le tecnologie assistive; nessun «Asset richiesto». |
+| axe-core 4.13 | 0 violazioni | 64 esecuzioni: 8 pagine × 2 larghezze × 2 build, più menu aperto e form con errori |
+
+### Verdetto di dominio (accessibilità) dopo C14
+**Invariato: conforme a WCAG 2.2 AA nel perimetro verificato (Chromium).**
+- Le modifiche di C10–C12 non introducono né testo tagliato né parole spezzate, e non toccano ordine del focus o nomi accessibili.
+- Per l'accessibilità C14 è chiusa.
+- Restano le condizioni di go-live di A3, che non dipendono dal codice:
+  - sottotitoli o descrizione del video secondo il contenuto (C05);
+  - endpoint del form;
+  - asset reali, oppure la variante «publish».
+- Restano da validare le prove con screen reader reali, Safari e Firefox.
+
+Il verdetto di gate spetta al creative-director.

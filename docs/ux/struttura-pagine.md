@@ -320,7 +320,8 @@ L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo st
     - dalla costa all'entroterra ovunque, con la composizione desktop che non segue la longitudine.
   - **Stato (verifica del 2026-09-28).** Il codice segue la prima soluzione: ovest → est a tutte le larghezze, con ordine del focus verificato.
   - **Posizione ux-designer su I11 della review UI.** La proposta di I11 non è accettata. Con il DOM Monopoli → Acquaviva → Gravina e le porte posizionate per longitudine, su desktop il focus andrebbe da destra a sinistra, al contrario della lettura della fila: 2.4.3, e 1.3.2 con la tecnica C27.
-  - **Raccomandazione:** ovest → est. «Dalla costa all'entroterra» è il titolo di #progetto, due sezioni prima; il copy deck dichiara l'ordine reversibile. Motivazione completa in `docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md` §3.3.
+  - **Decisione del creative-director** (verdetto G4 §3.5): ovest → est a tutte le larghezze, come nel codice.
+  - **Raccomandazione (accolta):** ovest → est. «Dalla costa all'entroterra» è il titolo di #progetto, due sezioni prima; il copy deck dichiara l'ordine reversibile. Motivazione completa in `docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md` §3.3.
 - **Accessibilità.** `<ul>`. Se l'intera scheda è cliccabile, l'immagine ha `alt=""` (`alt-text.md`).
 
 ### PD-6 · Perché aderire — `BenefitsSection` variante `staircase` («scala» nella direzione visiva)

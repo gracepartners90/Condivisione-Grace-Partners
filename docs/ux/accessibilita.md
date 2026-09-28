@@ -184,7 +184,7 @@ Tutto il comportamento è in `struttura-pagine.md` §7. Criteri coperti:
 | 11 | Video non ispezionabile (host bloccato): audio, parlato, lampeggiamenti sconosciuti | `/citta-digitali/` | 1.2.x, 2.3.1 | File sul sito; sottotitoli e descrizione dopo la visione | cliente, copywriter-content | aperto: condizione di go-live A3; oggi né `<track>` né descrizione |
 | 12 | Iframe dei portali: comportamento da tastiera e cookie non noti | `/siii/` | 2.1.2; soglia 5 | Anteprima solo dopo le verifiche; al lancio, link | sviluppo, QA | non più applicabile: al lancio solo link |
 | 13 | Timeline del fondatore orizzontale, sticky e traslata dallo scroll, con i link di «oggi» sul binario che si muove: si potrebbe dare il focus a un link fuori dallo schermo | home, direzione visiva §7.3 | 2.4.7, 2.4.11 | Nessun elemento focalizzabile nella parte che trasla; condizioni in `struttura-pagine.md` HM-6 | creative-director, sviluppo | risolto: la timeline non trasla |
-| 14 | Porte dei luoghi in ordine diverso tra desktop (longitudine) e mobile (dalla costa all'entroterra) | `/puglia-digitale/` | 2.4.3, 1.3.2 | Stesso ordine a tutte le larghezze (`struttura-pagine.md` PD-5) | creative-director | nel codice: ovest → est a tutte le larghezze, verificato. Proposta I11 (DOM dalla costa all'entroterra, focus da destra a sinistra su desktop) non accettata; decide il creative-director tra le due alternative di PD-5 |
+| 14 | Porte dei luoghi in ordine diverso tra desktop (longitudine) e mobile (dalla costa all'entroterra) | `/puglia-digitale/` | 2.4.3, 1.3.2 | Stesso ordine a tutte le larghezze (`struttura-pagine.md` PD-5) | creative-director | deciso dal creative-director (verdetto G4 §3.5): ovest → est a tutte le larghezze, come nel codice |
 
 ## 4. Checklist di verifica (Fase 5)
 
@@ -262,6 +262,7 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 | 2026-09-28 | Passaggi, 320–390 px con spaziature (O5) | Righe fuori colonna, pagina che scorre in orizzontale | 1.4.12 (nessuna perdita) | importante | `overflow-wrap: anywhere` su `.passage` | sviluppo | sì (c025181) |
 | 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live (chiuso) | Variante senza nome in Home (`pendingText={false}`) | sviluppo | sì (c025181) |
 | 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S3 (V7), S4, S5 applicati e verificati (c025181); S6 dopo il lancio |
+| 2026-09-28 | Home, `/siii/` e modifiche di C10–C12 (verifica C14) | Riga della hero, cascata, 404, link di Contatti, copertina del video, variante «publish» | 1.4.10, 1.4.12, 2.4.3, 2.4.11, 4.1.2 | verifica | Nessuna correzione necessaria | ux-designer | sì, nessun problema (f1b6780) |
 
 ## Ipotesi da validare
 - Lo skip link senza `tabindex` permanente funziona con i browser e i lettori di schermo di riferimento: verificato solo in Chromium.
@@ -282,7 +283,6 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
   - O1–O6, S1–S5 e V7 applicati e verificati (commit c025181);
   - al go-live: endpoint del form configurato; con asset mancanti, build di produzione con `PUBLIC_SLOT_MODE=publish`.
 - **Cliente, tramite la sessione principale**: informazioni sul video di Città Digitali (parlato, musica, lampeggiamenti, durata) per decidere sottotitoli e descrizione (condizione A3, presidiata dal controllo pre-lancio).
-- **creative-director**: problema 14 (I11), una delle due alternative di `struttura-pagine.md` PD-5. Per l'accessibilità è consigliata ovest → est a tutte le larghezze.
 
 ## Appendice A · `tests/a11y.mjs`
 Provato il 2026-09-28 su pagine di test:
