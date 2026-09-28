@@ -292,6 +292,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **creative-director e ux-designer**: ordine dei luoghi e posizione della foto dell'evento.
 - **seo-content**: allineare nella mappa l'ancora `#richiesta` e l'H2 dei numeri.
 - **cro-specialist**: etichetta della CTA secondaria della hero.
+- **brand-strategist e creative-director**: variante di riserva a un numero (sezione 3). Il titolo proposto è «Puglia Digitale in un numero», l'alternativa «Il territorio di Puglia Digitale». Si applica solo alle condizioni di B3.
 
 ## Rischi
 

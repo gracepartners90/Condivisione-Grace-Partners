@@ -29,9 +29,9 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
 <BaseLayout page="home" schema={schema}>
   <Hero
     variant="home"
-    eyebrow="ITnode — oltre i confini del Web tradizionale"
+    eyebrow={'ITnode — oltre i confini del\u00a0Web tradizionale'}
     registers={['La tecnologia cambia.', 'La curiosità ci accompagna\nda sempre.']}
-    lead="Esperienze digitali immersive per imprese e territori."
+    lead={'Esperienze digitali immersive per\u00a0imprese e territori.'}
     places={places}
     caption={`Vista da ${office.name}\n${formatCoords(office)}\nDistanze in linea d’aria`}
   />

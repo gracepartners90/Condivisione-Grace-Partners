@@ -107,7 +107,7 @@ Tra il form e i portali: ritratto, nome e ruolo del fondatore, poi un link al su
 > Giacomo Lenoci\
 > Fondatore di ITnode
 
-Tra i due livelli c'è una virgola visibile solo agli screen reader: si legge «Giacomo Lenoci, Fondatore di ITnode».
+Tra i due livelli c'è una virgola nascosta alla vista (`sr-only`): lo screen reader legge «Giacomo Lenoci, Fondatore di ITnode».
 
 **Link al racconto del fondatore** · a → `/#fondatore` · sotto il ruolo · max 28 (22 più la freccia)
 > Scopri il suo percorso →

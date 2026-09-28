@@ -3,9 +3,9 @@ titolo: Tone of voice e guida di stile
 owner: copywriter-brand
 contributi: [copywriter-content, brand-strategist, seo-content, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md]
 ---
 
 # Tone of voice e guida di stile
@@ -98,7 +98,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
    - **↑** risale nella stessa pagina, e si usa di rado: «Torna all’inizio ↑».
 4. **Le parole delle CTA del cliente restano identiche.** Cambia solo l’icona, quando la destinazione lo richiede: nelle linee guida tutte le CTA hanno →.
 5. **Niente freccia** su voci di menu e footer, sulla CTA dell’header e sui pulsanti che eseguono un’azione («Invia richiesta», «Apri l’email già compilata», «Riproduci il video»).
-6. **Nuova scheda dichiarata.** Al nome accessibile si aggiunge « (si apre in una nuova scheda)». Se lo stesso testo visibile si ripete (tre «Entra nell’esperienza ↗»), il nome accessibile comincia con il testo visibile e aggiunge la destinazione: «Entra nell’esperienza di Masseria Santella (si apre in una nuova scheda)».
+6. **Nuova scheda dichiarata.** Al nome accessibile si aggiunge « (si apre in una nuova scheda)». Se lo stesso testo visibile si ripete (tre «Entra nell’esperienza ↗»), il nome accessibile comincia con il testo visibile e aggiunge la destinazione: «Entra nell’esperienza di Masseria Santella (si apre in una nuova scheda)». Si aggiunge la destinazione anche quando il testo visibile non la dice e la freccia → è l’unico segnale del cambio di pagina: «Scopri il suo percorso nella home».
 7. **Stessa azione, stessa etichetta** in tutto il sito.
 8. **Un’eccezione.** La freccia compare anche nella catena del concept («spazio fisico → spazio digitale → …», § 02), come nel testo del cliente. Non è mai un link.
 
@@ -117,6 +117,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 | Inviare il form | Invia richiesta | pulsante (§ 23) |
 | Scrivere se il form non è attivo | Apri l’email già compilata | pulsante nel pannello di ripiego |
 | Tornare alla home dalla 404 | Torna alla home → | 404 |
+| Leggere il racconto del fondatore | Scopri il suo percorso → | Contatti, sezione Persona, verso `/#fondatore`; nome accessibile «Scopri il suo percorso nella home» (copy deck di Contatti, sezione 4) |
 
 ## 7. Numeri, date e simboli
 

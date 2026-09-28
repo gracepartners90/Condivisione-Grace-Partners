@@ -101,7 +101,7 @@ Note:
   - Da 1024 px stanno entrambi su una riga; la riga di posizionamento anche a 600 px.
 - **Ordine di lettura per gli screen reader**: occhiello, H1, riga di posizionamento, «Vista da Acquaviva delle Fonti», «Distanze in linea d’aria». Coordinate, gradi ed etichette dei luoghi restano nascosti.
 - **Nessuna CTA e nessun invito allo scorrimento**: la hero deve respirare (§ 07) e «Parliamone» è già nell’header. La terza riga della didascalia, «Distanze in linea d’aria», viene dalla review di veridicità (S2).
-- **Coordinate e distanze** si calcolano dai dati di `src/data/site.ts` e seguono la regola della direzione visiva (§ 1.4; G4, N2): quattro decimali reali da un’unica fonte, oppure due per tutti i luoghi `[DA VERIFICARE]`. Il punto decimale è quello della notazione cartografica (tone of voice, § 7).
+- **Coordinate e distanze** si calcolano dai dati di `src/data/site.ts` e seguono la regola della direzione visiva (§ 1.4; G4, N2): quattro decimali reali da un’unica fonte, oppure due per tutti i luoghi `[DA VERIFICARE]`. I valori qui sopra sono quelli di oggi e cambiano da soli con la condizione C11 (`docs/strategia/coordinate-luoghi.md`): il copy deck non va riallineato. Il punto decimale è quello della notazione cartografica (tone of voice, § 7).
 - **H1**: primo registro «La tecnologia cambia.»; secondo registro «La curiosità ci accompagna / da sempre.», con l’a capo d’autore prima di «da sempre». Su mobile valgono gli a capo della direzione visiva (§ 5).
 
 **Varianti della riga di posizionamento per E1** · dopo il lancio, con cro-specialist · al lancio resta la variante A

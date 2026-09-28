@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ al 2026-09-28, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -19,7 +19,7 @@ fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs
 1. **HTML statico e completo;** il JS migliora, non costruisce.
 2. **Zero terze parti al caricamento.** Nessuna richiesta verso altri domini prima di un gesto dell'utente.
 3. **L'LCP è il testo dell'H1:** visibile dal primo frame. Mai `opacity: 0`, `visibility: hidden`, `clip` totale o testo diviso in parole.
-4. **Font:** due file, **nessun preload** (in Chromium il preload blocca il primo rendering: `budget.md` §3), `font-display: swap`, fallback metrici.
+4. **Font:** due file, **un solo preload, Schibsted Grotesk** (ADR 005: scelta d'identità, con un costo di LCP misurato in `budget.md` §3), `font-display: swap`, fallback metrici.
 5. **Immagini** solo con `Media.astro` o `ArtDirectedMedia.astro`: AVIF e WebP, `sizes` corretto, `width` e `height`, `lazy` di default.
 6. **Video:** 0 byte finché non serve. Niente attributo `poster`: la copertina è un `<picture>` lazy.
 7. **Iframe** solo dopo un clic (facade); `preconnect` solo all'intenzione.
@@ -99,40 +99,61 @@ export default defineConfig({
 | `compressHTML` vale `'jsx'` per impostazione predefinita | Gli spazi tra elementi generati con `.map()` spariscono: «Latecnologiacambia.» | Lo spazio va scritto esplicitamente (§6.4). |
 | Minificatore CSS: Lightning CSS 1.33 in Vite 8.3.1 | Fonde `animation` e `animation-timeline` in uno shorthand che Chromium 141 scarta, quindi l'animazione non parte. Passare i target a `vite.css.lightningcss` **non** risolve. | Proprietà longhand (§6.5), più il controllo n. 3 di `budget.md` §6.3. |
 | Font con i provider `fontsource()` o `npm()` | La build scarica i file da api.fontsource.org o da jsDelivr, bloccati in questo ambiente. | Solo `fontProviders.local()` con il percorso del pacchetto. |
-| `astro dev` e `astro preview` | Rilevano l'agente AI e partono in background (fermarli con `astro dev stop` e `astro preview stop`). `preview` non comprime. | Per misurare si usa `scripts/perf/serve.mjs` (`budget.md` §6.6). |
+| `astro dev` e `astro preview` | Rilevano l'agente AI e partono in background (fermarli con `astro dev stop` e `astro preview stop`). `preview` non comprime. | Per misurare si usa `scripts/serve.mjs` (ADR 004; `budget.md` §6.1). |
 
 ## 2. Font
 
+**Implementazione nel sito** (`src/layouts/BaseLayout.astro`, letta il 2026-09-28): `@font-face` scritti a mano e **un solo preload**, quello di Schibsted Grotesk (ADR 005).
+
 ```astro
 ---
-// src/layouts/BaseLayout.astro (head)
-import { Font } from 'astro:assets';
+// src/layouts/BaseLayout.astro (frontmatter)
+import schibstedUrl from '@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2?url';
+import fragmentUrl from '@fontsource/fragment-mono/files/fragment-mono-latin-400-normal.woff2?url';
+// fontFaces: one @font-face per family, font-display: swap, Latin unicode-range
 ---
-<Font cssVariable="--font-sans" />   <!-- no preload: in Chromium it blocks the first render (budget.md §3) -->
-<Font cssVariable="--font-mono" />
+<!-- head, before the @font-face rules: the only preload of the site (ADR 005). as, type and crossorigin are all required -->
+<link rel="preload" href={schibstedUrl} as="font" type="font/woff2" crossorigin />
+<style is:inline set:html={fontFaces}></style>
 ```
 
 ```css
-body { font-family: var(--font-sans); }
-.mono { font-family: var(--font-mono); font-synthesis: none; } /* only weight 400 exists */
+/* global.css — metric-matched fallbacks: the swap to Schibsted Grotesk causes no layout shift */
+@font-face {
+  font-family: 'Schibsted Grotesk Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 104.49%; ascent-override: 93.46%; descent-override: 24.67%; line-gap-override: 0%;
+}
+@font-face { /* Android has no Arial */
+  font-family: 'Schibsted Grotesk Fallback Roboto';
+  src: local('Roboto');
+  size-adjust: 104.72%; ascent-override: 93.25%; descent-override: 24.62%; line-gap-override: 0%;
+}
+/* tokens.css */
+:root {
+  --font-sans: 'Schibsted Grotesk Variable', 'Schibsted Grotesk Fallback', 'Schibsted Grotesk Fallback Roboto', sans-serif;
+  --font-mono: 'Fragment Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
 ```
 
-**Cosa produce il componente `<Font>`** (verificato)
-- un `@font-face` con `font-display: swap`;
-- cinque `@font-face` di ripiego (BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial) con `size-adjust`, `ascent-override` e `descent-override` calcolati;
-- un `<link rel="preload">` solo se si passa l'attributo `preload`, che non si usa.
+**Alternativa equivalente: la Fonts API** di Astro (§1), verificata nel prototipo.
+- `<Font cssVariable="--font-sans" preload />` e `<Font cssVariable="--font-mono" />`: il preload solo sulla prima.
+- Genera un `@font-face` con `font-display: swap` e cinque facce di ripiego (BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial) con le metriche calcolate.
+- Emette il `<link rel="preload">` solo con l'attributo `preload`.
 
-**Perché niente preload** (misurato il 2026-09-28 sulle pagine vere; rimisura, §4):
-- In Chromium un `<link rel="preload">` di font dichiarato prima del `<body>` blocca il primo rendering. Il blocco dura fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dalla navigazione. Vale anche con `font-display: swap`.
-- Senza preload, con throttling applicato, l'LCP migliora di 151 ms (home) e di 177 ms (`/siii/`), con CLS invariato.
-- Costo: il ripiego resta visibile 0,4–0,5 s in più sulla prima pagina con rete lenta.
-- Il throttling simulato di Lighthouse dà il risultato opposto sull'FCP (+0,23–0,33 s) perché modella il font come bloccante: per i font si decide con il throttling applicato.
+**Perché il preload resta** (ADR 005, decisione del creative-director al gate G4; `budget.md` §3):
+- **Meccanismo.** In Chromium un `<link rel="preload">` di font dichiarato prima del `<body>` blocca il primo rendering fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dalla navigazione. Vale anche con `font-display: swap`.
+- **Beneficio d'identità.** La hero è tipografica e l'H1 è il visual. Con la fibra il titolo compare subito in Schibsted, senza scambio di carattere; su 4G la finestra del ripiego scende da 158–694 ms a 13–234 ms (misure del creative-director, ADR 005).
+- **Costo.** Con throttling applicato l'LCP arriva 151 ms (home) e 177 ms (`/siii/`) più tardi che senza preload, e resta 1,01–1,04 s. CLS invariato.
+- **Riapertura.** Con dati di campo sopra 2,0 s di LCP mobile al 75° percentile, con un cambio di Chromium o con una hero non più tipografica, la decisione torna a web-performance-specialist (ADR 005, «Quando si riapre»; sorveglianza proposta nella nota del `budget.md` §3).
+- **Misura.** Il throttling simulato di Lighthouse modella il font come bloccante per l'FCP e dà risultati opposti a quello applicato: per le decisioni sui font vale il throttling applicato (`budget.md` §2).
 
 **Regole**
+- **Preload.** Uno solo per pagina, sul file di Schibsted Grotesk, con `as="font"`, `type="font/woff2"` e `crossorigin`: senza `crossorigin` il preload non viene riutilizzato e il font si scarica due volte. Mai in preload Fragment Mono o le immagini. Controllo n. 7 di `budget.md` §6.3.
 - **Pesi.** Solo il file latino variabile `wght` 400–900 e il mono 400: niente corsivi, niente altri file.
   - Il testo in corsivo usa un tono o un peso diverso, deciso da ui-designer.
   - Il falso corsivo generato dal browser va evitato.
-- **Fallback.** `fallbacks: ['system-ui']`. Con `'sans-serif'` Astro genererebbe il ripiego solo per Arial, che su Android non esiste.
+- **Fallback.** Ogni sistema deve trovare una faccia di ripiego con metriche corrette: Arial o Helvetica, e Roboto per Android (implementazione sopra). Con la Fonts API si usa `fallbacks: ['system-ui']`: con `'sans-serif'` Astro genererebbe il ripiego solo per Arial, che su Android non esiste.
 - **Glifi.** I sottoinsiemi latini coprono accenti, « », ’, –, —, …, €, ° e ·, ma **non** → ↗ ≈ ′ ″.
   - Frecce e simboli sono SVG inline con `aria-hidden="true"`.
   - Un glifo mancante verrebbe preso da un font di sistema.
@@ -612,18 +633,22 @@ Esempio per Cloudflare (file `public/_headers`) [DA VERIFICARE sull'account scel
 - **`Cache-Control` sulla regola `/*`: no.** Se due regole impostano lo stesso header, i valori si uniscono [DA VERIFICARE su Workers].
 - **Protocolli e compressione:** Brotli o zstd per i testi, HTTP/2 e HTTP/3 attivi.
 - **Redirect e normalizzazioni:** secondo le specifiche SEO §1.4.
-- **Server Node dell'anteprima (`scripts/serve.mjs`, ADR 004).** Verificato il 2026-09-28: applica le regole di questa tabella da `_headers`, comprime all'avvio (TTFB locale circa 1 ms) e risponde con ETag e 304.
-  - Non gestisce ancora le richieste `Range`: prima di servire il video da `/video/` va aggiunto il blocco della rimisura, osservazione 6.
-  - Il TTFB reale da Railway (una sola regione) si misura sull'anteprima pubblicata.
+- **Server Node dell'anteprima (`scripts/serve.mjs`, ADR 004).** Verificato il 2026-09-28: applica le regole di questa tabella da `_headers`, comprime all'avvio (TTFB locale circa 1 ms), risponde con ETag e 304 e, dal commit `007956d`, con 206 alle richieste `Range`.
+- **Verifica sull'host reale.** Header, compressione, protocollo e TTFB dall'Italia si controllano sull'anteprima e poi sullo staging dell'hosting scelto, con le tabelle e lo script di `budget.md` §6.8 (condizione C08 del verdetto G4).
+- **Se la produzione resterà su Railway** (ADR 001, opzione C), oltre al `budget.md` §6.8:
+  - modalità Serverless spenta: un servizio sospeso risponde lento, o con un 502, alla prima richiesta;
+  - compressione: va verificato che l'edge inoltri quella del server, perché le fonti sono discordanti;
+  - HTTP/3 non risulta disponibile [DA VERIFICARE]: resta HTTP/2, ammesso dai requisiti dell'ADR 001 §3.6;
+  - CDN di Railway: da decidere. Se attiva, i controlli H1–H3 si ripetono senza credenziali sul dominio pubblico.
 
 ## 12. Adeguamenti al codice esistente (per la sessione principale)
 
 Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. Il codice cambia in parallelo: ricontrollare prima di intervenire.
 
-**Aggiornamento del 2026-09-28, rimisura sul commit `7c5f747`.** Gli interventi di questa sezione risultano applicati: review di performance del 2026-09-28, §4. Restano tre punti, descritti in `docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md` §8:
-- togliere il preload del font (`src/layouts/BaseLayout.astro:42`), dopo l'assenso di creative-director;
-- la maschera del reveal a righe, che cambia l'altezza dei passage (§6.2);
-- facoltativo: il contatore di `BenefitsSection` con IntersectionObserver invece del listener di scroll (§9).
+**Stato al 2026-09-28, commit `c28dac1`.** Tutti gli interventi di questa sezione risultano applicati (review di performance del 2026-09-28, §4; rimisura, §8). Il testo che segue resta come registro. I tre punti rimasti dopo la rimisura sono chiusi così:
+- **preload del font** (`src/layouts/BaseLayout.astro:42`): **resta**, per decisione del creative-director (ADR 005). Nessuna modifica al codice;
+- **maschera del reveal a righe**, che cambiava l'altezza dei passage (§6.2): applicata la correzione in flex a colonna (`global.css`, commit `007956d`);
+- **contatore di `BenefitsSection`**: ora usa un IntersectionObserver invece del listener di scroll (§9; commit `007956d`).
 
 **Da correggere subito: rotazione dell'orizzonte non funzionante.**
 - In `src/components/ui/Horizon.astro`, `.horizon__strip` usa `animation: horizon-rotate linear both;` più `animation-timeline: scroll(root block)`.
@@ -640,8 +665,8 @@ Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. 
 }
 ```
 
-**Da correggere: fallback metrico dei font su Android.**
-- `src/layouts/BaseLayout.astro` scrive i `@font-face` a mano: `swap` è corretto. Il preload si toglie (`budget.md` §3, decisione del 2026-09-28).
+**Da correggere: fallback metrico dei font su Android** (applicato: faccia `'Schibsted Grotesk Fallback Roboto'` in `global.css` e in `--font-sans`, §2).
+- `src/layouts/BaseLayout.astro` scrive i `@font-face` a mano: `swap` è corretto. Il preload di Schibsted Grotesk resta (ADR 005).
 - Il ripiego `'Schibsted Grotesk Fallback'` in `global.css` usa solo `local('Arial' | 'ArialMT' | 'Liberation Sans' | 'Helvetica')`, nessuno dei quali esiste su Android. Sul telefono di riferimento lo swap non è compensato.
 - I valori per Arial coincidono con quelli calcolati da Astro. Le soluzioni sono due:
   - (a) passare alla Fonts API del §1, che genera tutti i ripieghi;
@@ -695,9 +720,14 @@ Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. 
 
 ## Domande aperte
 1. Durata del video, presenza di parlato e file sorgente in alta qualità: chi li fornisce e quando?
-2. Il cliente vuole l'anteprima inline delle esperienze anche su smartphone, o basta il link in nuova scheda?
+2. Dopo il lancio: il cliente vuole l'anteprima inline delle esperienze anche su smartphone, o basta il link in nuova scheda?
 
 ## Decisioni richieste
-- **creative-director e ux-designer:** autoplay del video anche su mobile (circa 2,2–3,7 MB per 15 s) oppure, su viewport sotto i 64rem, copertina e pulsante di play. La raccomandazione di performance è copertina e play su mobile.
-- **creative-director e ui-designer:** l'«apertura» nella versione composita a otturatori (§6.3) al posto di `clip-path`.
-- **ux-designer:** anteprima immersiva inline solo su desktop (§5); marquee legato allo scroll senza pulsante di pausa (§6.5, WCAG 2.2.2).
+- **Utente:** hosting di produzione (ADR 001). Le verifiche sull'host seguono `budget.md` §6.8.
+- **Sessione principale:** se la produzione resterà su Railway, modalità Serverless spenta e una scelta sulla CDN (§11).
+- **Chiuse dalla versione 0.2:**
+  - autoplay del video solo da 64em; su mobile copertina e pulsante di play (`src/scripts/video.ts`);
+  - «apertura» composita a otturatori (§6.3, `global.css`);
+  - marquee legato allo scroll senza pulsante di pausa: per ux-designer il criterio 2.2.2 non si applica (review di accessibilità del 2026-09-28);
+  - anteprima immersiva inline: rinviata a dopo il lancio (verdetto G4, §5.2);
+  - preload del font: resta (ADR 005).

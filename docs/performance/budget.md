@@ -328,6 +328,223 @@ http.createServer(async (req, res) => {
   - script e Lighthouse del §6.8, dall'Italia;
   - PageSpeed Insights sul dominio pubblico.
 
+### 6.8 Hosting: header, compressione e TTFB dall'Italia (condizione C08)
+
+**Perché.** In laboratorio il sito è servito in locale, senza rete vera (§6.1). Solo sull'host si vedono:
+- la compressione che arriva davvero al browser. Il budget del documento (§3) vale solo con l'HTML compresso: la home pesa 133 KB non compressa, 20,8 KB con Brotli e 25,9 KB con gzip, contro un limite di 40 KB (build del 2026-09-28 alle 13:59);
+- cache, protocollo e latenza reali.
+
+**Quando e dove**
+
+| Momento | Host | Valore dell'esito |
+|---|---|---|
+| Ora | Anteprima su Railway (ADR 004): progetto `itnode-anteprima`, regione europe-west4 (Amsterdam), https://itnode-sito-production.up.railway.app, protetta da password | Prova dell'opzione C dell'ADR 001 e misura di riferimento. Bloccante solo se la produzione resterà su Railway |
+| Prima del cambio DNS | Staging dell'hosting di produzione scelto | **Bloccante per il go-live** (C08) |
+| Il giorno del lancio, poi ogni mese | Produzione, `https://itnode.it` | Controllo, più PageSpeed Insights (§6.7) |
+
+**Chi misura.** Una persona in Italia con le credenziali dell'anteprima: l'utente o il cliente [DA DEFINIRE].
+- L'ambiente di lavoro non raggiunge l'host: il proxy di rete rifiuta `*.up.railway.app` (403, verificato il 2026-09-28).
+- web-performance-specialist legge l'output e scrive l'audit.
+
+**Già verificato in locale** (rimisura del 2026-09-28, §9; commit `007956d`): `scripts/serve.mjs` applica `_headers`, comprime con Brotli e gzip all'avvio, risponde 304 con l'ETag e 206 alle richieste `Range`. Sull'host resta da vedere che cosa cambia l'infrastruttura davanti al server.
+- **Edge di Railway e compressione: fonti discordanti.**
+  - Una risposta dello staff di Railway, non datata, dice che il proxy non inoltra le risposte compresse.
+  - La documentazione della CDN di Railway, che si attiva per servizio ed è spenta di default, dice che con la CDN attiva l'edge comprime da sé.
+  - Un'osservazione di terzi (10 settembre 2026) riporta che con la CDN attiva la compressione dipende dall'ordine di `Accept-Encoding`: per questo lo script manda l'intestazione di Chrome.
+  - Se l'HTML arrivasse non compresso, il limite del documento (§3) salterebbe su tutti i template.
+- **Protocollo.** Railway documenta HTTP/1.1 e HTTP/2 verso internet e TLS 1.2 o superiore. HTTP/3 non risulta [DA VERIFICARE sull'anteprima].
+- **Sospensione.** Con la modalità Serverless il servizio si ferma dopo 5–10 minuti senza traffico in uscita; la prima richiesta successiva è lenta e può rispondere 502.
+
+#### Controlli su header e compressione
+
+Valori attesi su qualsiasi host.
+- **Bloccante:** blocca il go-live (C08).
+- **Da correggere:** si corregge prima del lancio, senza bloccarlo.
+- **Diagnostica:** si annota nell'audit.
+
+| # | Richiesta | Atteso | Se non è così |
+|---|---|---|---|
+| H1 | HTML (`/`, `/siii/`, `/privacy-policy/`) con l'`Accept-Encoding` di Chrome | `content-encoding: br` (gzip o zstd ammessi: restano nel §3); byte trasferiti entro il limite del §3 per il template | Bloccante |
+| H2 | HTML | `cache-control: public, max-age=0, must-revalidate` o `no-cache`, con `ETag` o `Last-Modified`; con `If-None-Match` risponde 304 | Bloccante: senza rivalidazione una nuova pubblicazione non arriva, oppure una pagina vecchia chiede asset che non esistono più |
+| H3 | Asset con hash in `/_astro/`: JS, WOFF2, AVIF | `cache-control: public, max-age=31536000, immutable`; JS compresso; WOFF2 e AVIF senza `content-encoding` | Cache diversa: bloccante, perché il preload del font (ADR 005) conta sul font già in cache dalla seconda pagina. File binari ricompressi: da correggere |
+| H4 | `/favicon.svg`, `/og/*`, `/brand/*` | `max-age=86400` | Da correggere |
+| H5 | Risposte compresse | `vary: Accept-Encoding` | Da correggere |
+| H6 | Protocollo | HTTP/2 (`HTTP/2 200`, ALPN `h2`); HTTP/3 (`alt-svc` con `h3`) preferibile | Senza HTTP/2: bloccante (ADR 001 §3.6, requisito 1). Senza HTTP/3: diagnostica |
+| H7 | TLS | TLS 1.3 | Diagnostica: con TLS 1.2 ogni nuova connessione costa un RTT in più |
+| H8 | `Range: bytes=0-1023` su un file binario: oggi il WOFF2, poi i file di `/video/` | 206, `content-range`, 1024 byte | Bloccante prima di pubblicare il video in `/video/`, perché Safari su iOS non lo riproduce; oggi diagnostica |
+| H9 | `http://`, `www.` e URL senza barra finale | Arrivano al canonico con un solo 301; il canonico risponde 200 senza redirect | Da correggere se i salti sono più di uno: ogni salto si somma al TTFB. Le regole sono di seo-technical |
+| H10 | Tutte | Nessun `set-cookie` | Da correggere, con cro-specialist e seo-technical (soglia 5 di CLAUDE.md) |
+| H11 | Solo anteprima: HTML e asset **senza** credenziali | 401 per tutti | Bloccante per l'anteprima (ADR 004, condizione di veridicità dello staging) |
+
+#### TTFB dall'Italia
+
+- **Che cosa.** Il tempo tra la richiesta e il primo byte della risposta, su una connessione nuova: DNS, TCP, TLS e attesa. È la grandezza del TTFB di campo (CrUX, `web-vitals`), senza i redirect.
+- **Da dove.** Almeno due reti in Italia: una fissa (fibra o FTTC) e una mobile (4G o 5G, anche l'hotspot di un telefono). Meglio se una delle due è in Puglia, dove ha sede il cliente [IPOTESI: una parte rilevante del pubblico è pugliese].
+- **Campione.** 20 richieste a `/` per rete, una al secondo, ognuna su una connessione nuova. Si riportano mediana, 75° percentile e massimo.
+
+| Misura | Obiettivo | Limite | Note |
+|---|---|---|---|
+| TTFB su rete mobile, 75° percentile | ≤ 0,6 s | ≤ 0,8 s | Come il §1. Sopra il limite il go-live è bloccato |
+| TTFB su rete fissa, 75° percentile | ≤ 0,3 s | — | Diagnostica: oltre, si cerca la causa |
+| Attesa oltre l'RTT (edge e server), mediana | ≤ 50 ms | — | Diagnostica: oltre 100 ms si controllano regione, instradamento e CPU del servizio |
+| Prima richiesta dopo almeno 15 minuti senza traffico | ≤ 0,8 s, stato 200 | — | In produzione la sospensione del servizio va spenta: **bloccante**. Sull'anteprima: diagnostica |
+| Da fuori Italia (ADR 004, se la produzione resta su Railway) | — | — | Diagnostica, con lo script da una postazione all'estero o con WebPageTest (punto 3): il pubblico è italiano |
+
+#### Come si misura
+
+**1. Script `curl`: il metodo principale.**
+- Funziona su macOS e Linux; su Windows con WSL o Git Bash.
+- Chiede utente e password all'avvio e li tiene in un file temporaneo privato: non finiscono nella cronologia della shell, nell'elenco dei processi né nell'output, che si può incollare nell'audit così com'è.
+- Provato il 2026-09-28 su `scripts/serve.mjs` in locale con password, anche con `"` e `\` nella password, e su un host HTTPS pubblico.
+- Si esegue una volta per rete: `bash hosting-check.sh https://itnode-sito-production.up.railway.app 20`.
+- Per la prova della sospensione si esegue dopo almeno 15 minuti senza richieste all'host, e si legge la riga 1.
+- La sessione principale può salvarlo in `scripts/perf/hosting-check.sh`.
+
+```bash
+#!/usr/bin/env bash
+# Hosting check for G4 condition C08 (docs/performance/budget.md §6.8): headers, compression,
+# protocol and cold TTFB, measured from the network the script runs on.
+# Run it from Italy twice: on a fixed line and on a mobile connection (phone hotspot, 4G/5G).
+# Usage:  bash hosting-check.sh <base-url> [runs]
+#   e.g.  bash hosting-check.sh https://itnode-sito-production.up.railway.app 20
+# Needs bash and curl 7.70+. The password is asked at run time and kept in a private temporary
+# file: it never appears in the shell history or in the process list.
+set -u
+H="${1:?usage: bash hosting-check.sh <base-url> [runs]}"; H="${H%/}"; N="${2:-20}"
+CFG=$(mktemp); RAW=$(mktemp); trap 'rm -f "$CFG" "$RAW"' EXIT; chmod 600 "$CFG"
+read -r -p 'Utente (invio se il sito è pubblico): ' U
+if [ -n "$U" ]; then
+  read -r -s -p 'Password: ' P; echo
+  printf 'user = "%s"\n' "$(printf '%s:%s' "$U" "$P" | sed 's/[\\"]/\\&/g')" > "$CFG"; unset P
+fi
+AE='Accept-Encoding: gzip, deflate, br, zstd'   # what Chrome sends
+c() { curl -K "$CFG" -sS --max-time 30 "$@"; }
+T='%{time_namelookup} %{time_connect} %{time_appconnect} %{time_starttransfer} %{http_code}\n'
+pct() { sort -n | awk '{v[NR]=$1} END {if (NR) printf "mediana %.3f · p75 %.3f · max %.3f s (n=%d)\n", v[int((NR+1)/2)], v[int(NR*0.75+0.999)], v[NR], NR}'; }
+
+echo "== $H · $(date '+%Y-%m-%d %H:%M %Z')"
+# 1. First request: after 15+ minutes without traffic it shows a sleeping service waking up.
+c -o /dev/null -H "$AE" -w "$T" "$H/" |
+  awk '{printf "1. Prima richiesta: HTTP %s, TTFB %.3f s (se il sito era fermo da 15 minuti: tempo di risveglio)\n", $5, $4}'
+
+PAGE=$(c --compressed "$H/")
+FONT=$(printf '%s' "$PAGE" | grep -oE '/_astro/[A-Za-z0-9._-]+\.woff2' | head -1)
+JS=$(printf '%s' "$PAGE" | grep -oE '/_astro/[A-Za-z0-9._-]+\.js' | head -1)
+IMG=$(printf '%s' "$PAGE" | grep -oE '/_astro/[A-Za-z0-9._-]+\.avif' | head -1)
+
+echo '2. Header e compressione (valori attesi: budget.md §6.8)'
+for p in / /siii/ /privacy-policy/ "$JS" "$FONT" "$IMG" /favicon.svg; do
+  [ -n "$p" ] || continue
+  echo "   -- $p"
+  c -o /dev/null -D - -H "$AE" -w 'trasferiti: %{size_download} byte\n' "$H$p" | tr -d '\r' |
+    grep -iE '^(HTTP/|content-encoding|cache-control|etag|last-modified|vary|accept-ranges|alt-svc|strict-transport-security|set-cookie|server:|x-railway-edge|x-robots-tag|age:|x-cache|trasferiti)' |
+    sed 's/^/      /'
+done
+
+ET=$(c -o /dev/null -D - -H "$AE" "$H/" | tr -d '\r' | awk 'tolower($1) == "etag:" {print $2}')
+if [ -n "$ET" ]; then
+  c -o /dev/null -H "$AE" -H "If-None-Match: $ET" -w "3. Rivalidazione dell'HTML con If-None-Match: HTTP %{http_code} (atteso 304)\n" "$H/"
+else
+  echo "3. Rivalidazione dell'HTML: nessun ETag (serve ETag o Last-Modified)"
+fi
+[ -n "$FONT" ] && c -o /dev/null -r 0-1023 -w "4. Range 0-1023 su un file binario: HTTP %{http_code}, %{size_download} byte (atteso 206 e 1024)\n" "$H$FONT"
+printf '5. Connessione: '
+c -v -o /dev/null "$H/" 2>&1 | grep -iE 'SSL connection using|ALPN.*accepted' | sed -E 's/^\* *//' | paste -s -d ';' -
+echo
+if [ -n "$U" ]; then
+  printf '6. Senza credenziali (atteso 401 per tutti): '
+  for p in / "$FONT" "$IMG"; do [ -n "$p" ] && curl -s -o /dev/null --max-time 30 -w "$p %{http_code}  " "$H$p"; done
+  echo
+fi
+printf '7. Redirect: '
+# After a redirect curl writes the credentials into url_effective: strip them before printing.
+for u in "${H/https:/http:}/" "$H/siii"; do
+  c -o /dev/null -L -w "$u → %{url_effective} (%{num_redirects} salti)  " "$u"
+done | sed -E 's#://[^/@ ]*@#://#g'
+echo
+
+echo "8. TTFB a freddo: $N richieste a / (nuova connessione ogni volta, una al secondo)"
+for i in $(seq "$N"); do c -o /dev/null -H "$AE" -w "$T" "$H/" >> "$RAW"; sleep 1; done
+row() { printf '   %-38s ' "$1"; }
+row 'TTFB (DNS + TCP + TLS + attesa)'; awk '{print $4}' "$RAW" | pct
+row 'di cui DNS'; awk '{print $1}' "$RAW" | pct
+row "RTT verso l'edge (handshake TCP)"; awk '{print $2 - $1}' "$RAW" | pct
+row 'attesa dopo la connessione'; awk '{print $4 - ($3 > 0 ? $3 : $2)}' "$RAW" | pct
+row "attesa oltre l'RTT (edge e server)"; awk '{print $4 - ($3 > 0 ? $3 : $2) - ($2 - $1)}' "$RAW" | pct
+awk '$5 != 200 {n++} END {if (n) printf "   ATTENZIONE: %d risposte diverse da 200\n", n}' "$RAW"
+echo '   Soglie (budget.md §6.8): rete mobile p75 ≤ 0,6 s (obiettivo) e ≤ 0,8 s (limite); rete fissa p75 ≤ 0,3 s (atteso).'
+echo "Nell'audit: incolla questo output con città, operatore e tipo di rete (fibra, FTTC, 4G, 5G)."
+```
+
+**2. Lighthouse dalla stessa postazione** (con Node 22 e Chrome installati).
+- È la procedura del §6.2, con le credenziali in un file di intestazioni da cancellare subito dopo.
+- Provato il 2026-09-28 sul server locale con password: tutte le richieste passano (200), e FCP e LCP coincidono con il §7.1 (1,18 e 1,65 s).
+
+```bash
+read -r -s -p 'Password: ' P; echo
+printf '{"Authorization":"Basic %s"}' "$(printf 'itnode:%s' "$P" | base64 | tr -d '\n')" > auth.json; unset P
+for i in 1 2 3 4 5; do
+  npx -y lighthouse@13.5.0 https://itnode-sito-production.up.railway.app/ --extra-headers=auth.json \
+    --only-categories=performance --chrome-flags="--headless=new" --output=json --output-path=home-$i.json --quiet
+done
+rm auth.json   # it holds the password
+```
+
+Dove leggere i valori nel JSON:
+- `audits['server-response-time'].numericValue`: attesa del server osservata sulla rete reale. Con il throttling simulato è il valore vero. Con `--throttling-method=devtools` comprende la latenza emulata (562,5 ms), quindi non serve per il TTFB;
+- `audits['document-latency-insight'].details.items`: `usesCompression`, `serverResponseIsFast` (attesa ≤ 600 ms) e `noRedirects` devono valere `true`;
+- `audits['network-requests'].details.items[].protocol`: `h2` per ogni richiesta;
+- FCP e LCP, da confrontare con il §7.1: contano la forma e l'ordine di grandezza. La CPU di quella postazione non è la nostra: si annota `benchmarkIndex`.
+
+**3. WebPageTest da Milano: facoltativo.**
+- Il piano gratuito Starter offre 300 test al mese e circa 30 località, e Milano risulta tra queste [DA VERIFICARE al momento del test]. I test privati sono solo nel piano Pro.
+- Impostazioni: Chrome, emulazione mobile (Moto G), connessione 4G, 5 esecuzioni, solo la prima visita. Credenziali nella scheda «Auth» [DA VERIFICARE che esista ancora].
+- **Attenzione.** Il risultato è visibile a chiunque abbia il link, con le schermate dell'anteprima e i dettagli delle richieste, che possono comprendere le credenziali.
+  - Si usa solo con una password temporanea, da cambiare subito dopo.
+  - Serve l'assenso di brand-strategist: le schermate mostrano testi non ancora confermati (ADR 002).
+
+**4. PageSpeed Insights: non sull'anteprima.**
+- Non gestisce l'autenticazione: riceve 401.
+- Misura da un data center di Google scelto in base a chi lancia il test: per l'Europa nei Paesi Bassi, non in Italia [DA VERIFICARE].
+- Serve in produzione, per i dati di campo CrUX (se ci sono) e per il controllo mensile (§6.7).
+
+**5. Pannello e registri di Railway** (sessione principale con il connettore Railway, oppure l'utente dal pannello).
+- **Impostazioni del servizio:**
+  - regione europe-west4;
+  - modalità Serverless spenta, obbligatoria in produzione;
+  - CDN spenta sull'anteprima, per prudenza: una pagina protetta non deve passare da una cache condivisa (incidente di Railway del 30 marzo 2026, in cui risposte autenticate sono state servite ad altri utenti).
+  - Le richieste con `Authorization` non passano dalla cache della CDN: le misure sull'anteprima non la vedono. Se in produzione la CDN sarà attiva, si ripetono H1–H3 senza credenziali sul dominio pubblico, guardando `age` e `x-cache`.
+- **Log HTTP delle richieste della prova** [DA VERIFICARE i nomi dei campi]:
+  - `edgeRegion`;
+  - `downstreamProto`, atteso HTTP/2;
+  - `upstreamRqDuration`, il tempo del server: pochi millisecondi;
+  - `totalDuration`;
+  - `txBytes`: circa 21 KB per `/`, se la compressione arriva al browser.
+- **Intestazioni di Railway.** `X-Railway-Edge` indica il punto di presenza che ha servito la richiesta. Con la richiesta `X-Railway-Debug: 1` l'edge aggiunge intestazioni sull'instradamento.
+
+#### Esito e report
+
+- **Audit** in `docs/performance/audit/AAAA-MM-GG-hosting-<host>.md`, con:
+  - host e piano;
+  - luogo, operatore e tipo di rete;
+  - data e ora;
+  - output completo dello script;
+  - mediane di Lighthouse;
+  - confronto con il §7.1 e con le tabelle di questo paragrafo.
+- **C08, parte di performance, superata** quando:
+  - H1, H2, H3 e H6 sono conformi, e anche H8 se il video è sull'host;
+  - il TTFB su rete mobile è entro 0,8 s al 75° percentile;
+  - in produzione la sospensione del servizio è spenta.
+- Il resto di C08 spetta a seo-technical: 404, redirect, `http` e `www`, sottodomini tecnici, ADR 003, Search Console.
+
+**Fonti web del §6.8.** Consultate il 2026-09-28 attraverso i risultati di ricerca, salvo dove indicato: le pagine di Railway e di WebPageTest non sono raggiungibili dall'ambiente.
+- Railway, documentazione: [Specs & Limits](https://docs.railway.com/networking/public-networking/specs-and-limits), [Edge Networking](https://docs.railway.com/networking/edge-networking), [CDN](https://docs.railway.com/networking/cdn), [Serverless](https://docs.railway.com/reference/app-sleeping), [Logs](https://docs.railway.com/observability/logs), [Regions](https://docs.railway.com/deployments/regions.md), [Incident report del 30 marzo 2026](https://blog.railway.com/p/incident-report-march-30-2026-accidental-cdn-caching).
+- Railway Help Station: [Compression not working on Railway, works on Local](https://station.railway.com/questions/compression-not-working-on-railway-work-05b6801b), [Add gzip by default or option to enable it on Railway's edge proxy](https://station.railway.com/feedback/add-gzip-by-default-or-option-to-enable-bcb38e00).
+- Osservazione di terzi sulla CDN di Railway: [issue #149 di knakamura13/oc-food-recs](https://github.com/knakamura13/oc-food-recs/issues/149), del 2026-09-10, letta direttamente.
+- WebPageTest: [prezzi (LogicMonitor)](https://www.logicmonitor.com/pricing/web-performance-optimization), [piano Starter (TrustRadius)](https://www.trustradius.com/products/catchpoint-webpagetest/pricing), [autenticazione (Web Performance Calendar, 2015)](https://calendar.perfplanet.com/2015/using-webpagetest-authentication/).
+- PageSpeed Insights: [About PageSpeed Insights](https://developers.google.com/speed/docs/insights/v5/about), [località dei server (Swift Performance)](https://swiftperformance.io/tldr/pagespeed-insights-server-locations/), [proxy per la Basic Auth (GitHub)](https://github.com/learntoswim/page-speed-proxy).
+- Lighthouse 13.5.0: sorgente del pacchetto npm (`server-response-time`, `document-latency-insight`, flag `--extra-headers`), letto il 2026-09-28.
+
 ## 7. Misure di riferimento
 
 ### 7.1 Sito costruito (rimisura del 2026-09-28, commit `7c5f747`)
@@ -343,10 +560,10 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 | `/contatti/` (T3) | 1,14 / 1,51 s (3) | 0,93 s (3) | 0 / 7 ms | 0 | 89,6 KB, 7 | 4,2 KB | H1 |
 | T4 (privacy, cookie, 404) | 0,99–1,03 / 1,36–1,51 s (3) | — | 0 / — | 0 | 81,8–82,6 KB, 6 | 2,0 KB | paragrafo |
 
-- **Senza preload del font** (copia della stessa build, §3):
+- **Il preload del font resta** (ADR 005): le righe della tabella restano la base di riferimento.
+- **Variante senza preload** (copia della stessa build, §3), da usare solo come confronto per le condizioni di riapertura dell'ADR 005:
   - `/`: simulato 1,51 / 1,66 s; applicato 0,86 s.
   - `/siii/`: simulato 1,51 / 1,51 s; applicato FCP 0,78 s e LCP 0,86 s.
-  - Quando la modifica sarà applicata, questi valori sostituiscono le prime due righe; le altre pagine si rimisurano al primo audit successivo.
 - **INP**, caso peggiore: prima apertura del menu, mediana 128 ms e massimo 200 ms su 19 caricamenti. Le altre interazioni restano tra 32 e 112 ms.
 - **Scroll:** nessun task oltre 50 ms. Main thread al 37–39% sulla home e al 25–31% su Città Digitali, con CPU 4x e motion attivo.
 - **Pesi:** HTML 8,7–22,1 KB, di cui CSS inline 4,9–10,1 KB con Brotli; DOM 179–583 elementi; zero terze parti.
@@ -389,19 +606,25 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 
 ## Ipotesi da validare
 - [IPOTESI: nessuna pagina avrà una foto come LCP, come prevede la direzione visiva. Vale per tutte le pagine attuali (verificato il 2026-09-28). Se una pagina futura la avrà, vale la riga «Immagine LCP» del §4.]
-- [IPOTESI: il blocco del rendering dovuto al preload dei font (§3) riguarda Chrome, quindi i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato.]
+- [IPOTESI: il blocco del rendering dovuto al preload del font (§3, ADR 005) riguarda Chrome, quindi i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato.]
+- [IPOTESI: le misure sull'anteprima fatte con le credenziali passano dall'edge di Railway ma non dalla sua CDN, perché le richieste con `Authorization` non vanno in cache (§6.8). Rappresentano quindi una produzione su Railway senza CDN.]
+- [DA VERIFICARE sull'anteprima (§6.8): l'edge di Railway inoltra la compressione del server; HTTP/2 attivo; modalità Serverless spenta.]
 - [DA VERIFICARE: CLS dello swap dei font su un Android di fascia media reale (Roboto) e su iPhone (Helvetica Neue). In laboratorio, con Liberation Sans, è 0–0,002.]
 - [DA VERIFICARE: INP della prima apertura del menu su un Android di fascia media reale (in laboratorio fino a 200 ms).]
 
 ## Domande aperte
 1. È disponibile un Android di fascia media per una verifica sul campo prima del lancio, oppure un servizio di test su dispositivi reali?
 2. Il cliente ha una chiave API di PageSpeed Insights o un accesso a Search Console per i dati sul campo del sito attuale?
+3. Chi esegue in Italia le verifiche sull'hosting del §6.8, e da quali reti (una fissa e una mobile, meglio se una in Puglia)?
 
 ## Decisioni richieste
-- **creative-director:** assenso alla rimozione del preload del font (§3): il ripiego resta visibile 0,4–0,5 s in più sulla prima pagina con rete lenta.
-- **ui-designer:** la qualità AVIF q50 resta confermata; tabella dei font del design system da allineare se il preload viene tolto.
-- **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve anche per l'INP del menu e per il font senza preload.
+- **Utente:**
+  - hosting di produzione (ADR 001; condizione C08): le verifiche del §6.8 si ripetono sullo staging dell'host scelto;
+  - chi misura dall'Italia (domanda 3) e, se si usa WebPageTest, una password temporanea dell'anteprima da cambiare dopo il test.
+- **brand-strategist:** assenso all'uso di WebPageTest sull'anteprima, i cui risultati sono visibili a chi ha il link (§6.8, punto 3). Senza assenso bastano lo script e Lighthouse.
+- **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve per l'INP del menu, per il TTFB reale e per la prima condizione di riapertura dell'ADR 005 (nota del §3).
+- **creative-director:** se le accoglie, correggere nell'ADR 005 i due numeri indicati nella nota del §3 e adottare la sorveglianza proposta per le condizioni di riapertura. La decisione sul preload resta la sua.
 - **Sessione principale:**
-  - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4: reveal fotogramma per fotogramma e CLS durante la lettura;
-  - il server di misura c'è già: `scripts/serve.mjs`, a cui manca solo il supporto alle richieste `Range` per il video (rimisura, osservazione 6);
-  - `.perf/` è già in `.gitignore`.
+  - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura), e salvare lo script del §6.8 in `scripts/perf/hosting-check.sh`;
+  - con il connettore Railway: leggere le impostazioni del servizio dell'anteprima (regione, Serverless, CDN) e, durante la prova dall'Italia, i log HTTP (§6.8, punto 5);
+  - il server di misura c'è già (`scripts/serve.mjs`, con le richieste `Range` dal commit `007956d`), e `.perf/` è già in `.gitignore`.
