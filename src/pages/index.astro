@@ -108,7 +108,8 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
         cta={{ label: 'Esplora SIII', href: '/siii/', id: 'home-capitolo-siii' }}
       >
         <div slot="visual" class="worlds__screen aperture">
-          <Media asset="siii-masseria-santella" />
+          {/* The chapter speaks of SIII in general: no client name on the publish variant. */}
+          <Media asset="siii-masseria-santella" pendingText={false} />
           <Node kind="hotspot" class="worlds__hot" style="left: 22%; top: 58%" ping />
           <Node kind="hotspot" class="worlds__hot" style="left: 57%; top: 38%" ping />
           <Node kind="hotspot" class="worlds__hot" style="left: 78%; top: 66%" ping />

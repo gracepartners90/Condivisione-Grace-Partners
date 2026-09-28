@@ -49,8 +49,8 @@ const placeMeta = (lat: number, lon: number) => {
 // At eye level, just above the horizon (62%): clear of the name even on a 16:10 phone screen.
 const hotspots = [
   { x: 22, y: 50 },
-  { x: 55, y: 44 },
-  { x: 80, y: 53 },
+  { x: 55, y: 47 },
+  { x: 80, y: 51 },
 ];
 
 const place = (name: string, lat: number, lon: number, usedIn: string): AssetSlot => ({

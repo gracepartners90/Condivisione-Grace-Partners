@@ -317,9 +317,11 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
     }
 
     /* «10.000+» never sits next to «oggi» (visual direction §7.3, register N5): one empty
-       step of horizon between them. */
+       step of horizon between them. «oggi» stands on the horizon of time like every other
+       stage: the extra space above it belongs to the vertical line on phones only. */
     .founder__stage--now {
       grid-column: -2 / -1;
+      margin-top: 0;
     }
 
     .founder__portrait {

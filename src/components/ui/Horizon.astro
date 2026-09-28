@@ -81,7 +81,10 @@ groups.forEach((group, gi) => {
   for (const shift of [-360, 0, 360]) {
     const b0 = first + shift;
     if (b0 < START || b0 > START + SPAN) continue;
-    labels.push({ at: pos(b0), row: gi % 2, full, compact, key: `${gi}${shift}`, anchor: anchorClasses(last + shift), end: pos(last + shift) });
+    // Rows start from the lower one: the lone place between two groups rides the upper row, so
+    // no leader crosses a label (verified 320–1920 px, hero and Città Digitali, at rest and
+    // rotating). If the places change, re-run the crossing check.
+    labels.push({ at: pos(b0), row: (gi + 1) % 2, full, compact, key: `${gi}${shift}`, anchor: anchorClasses(last + shift), end: pos(last + shift) });
     group.forEach((p, i) => nodes.push({ at: pos(p.bearing + shift), key: `${p.id}${shift}`, i: gi + i }));
   }
 });

@@ -12,9 +12,9 @@ import { formatCoords } from '../../lib/geo';
 const year = new Date().getFullYear();
 const legal = [
   `© <span data-year>${year}</span> ${site.legalName}`,
-  `P.IVA ${site.vatId}`,
-  site.rea && `REA ${site.rea}`,
-  site.shareCapital && `Capitale sociale ${site.shareCapital}`,
+  nb(`P.IVA ${site.vatId}`),
+  site.rea && nb(`REA ${site.rea}`),
+  site.shareCapital && `Capitale sociale ${nb(site.shareCapital)}`,
 ].filter(Boolean) as string[];
 
 const portalLinks = [

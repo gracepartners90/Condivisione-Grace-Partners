@@ -2,10 +2,10 @@
 titolo: Requisiti e verifica di accessibilità (WCAG 2.2 AA)
 owner: ux-designer
 contributi: [ui-designer, web-performance-specialist, cro-specialist, seo-technical, copywriter-content]
-stato: bozza
-versione: 0.1
+stato: in revisione
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
 ---
 
 # Requisiti e verifica di accessibilità (WCAG 2.2 AA)
@@ -83,7 +83,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 |---|---|---|
 | Ingrandimento del testo | Ogni dimensione fluida contiene una parte in `rem` (`clamp(… rem, … rem + … vw, … rem)`), mai solo `vw`. | 1.4.4 |
 | Reflow | A 320 px CSS niente scorrimento orizzontale. Ogni headline ha un corpo minimo che fa stare nella colonna la sua parola più lunga (misure in `struttura-pagine.md` §0.3, script in Appendice B). Le tabelle, su mobile, si impilano oppure scorrono in un contenitore focalizzabile con nome. | 1.4.10 |
-| Spaziatura del testo | Niente altezze fisse né `overflow: hidden` permanente sui contenitori di testo. Le maschere del text reveal si tolgono a fine animazione. | 1.4.12 |
+| Spaziatura del testo | Niente altezze fisse né `overflow: hidden` permanente sui contenitori di testo. Le maschere del text reveal si tolgono a fine animazione. **Rete di sicurezza** per le parole lunghe con le spaziature dell'utente: `overflow-wrap: break-word` sui titoli e `anywhere` sui Passaggi, le cui righe del text reveal sono `inline-block` (solo `anywhere` ne riduce la larghezza minima). La rete non deve mai scattare nel layout normale: ogni parola deve stare nella sua colonna a tutte le larghezze, con e senza movimento (controllo `midWordBreaks()`, Appendice C). | 1.4.12 |
 | Contenuto al passaggio o al focus | Nessuna informazione solo al passaggio del mouse. Ciò che compare al passaggio compare anche al focus e al tocco, si chiude con Esc e resta finché serve. | 1.4.13 |
 | Orientamento | Nessun blocco. | 1.3.4 |
 
@@ -125,7 +125,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 | Testi alternativi | Quelli di `alt-text.md`. Decorative: `alt=""`. Logo: `alt="ITnode"`. Immagine dentro un link che ha già testo: `alt=""`. | 1.1.1 |
 | Testo nelle immagini | Niente testo significativo dentro le immagini. La foto dell'evento ha cornice e scritta sovrimpresse: si usano i ritagli in `derivate/`, e l'originale resta `[DA FORNIRE]`. | 1.4.5 |
 | Veridicità | Tre immagini hanno il segno di Gemini e tutte e quattro le foto del fondatore sembrano elaborate. Alt e didascalie descrivono ciò che si vede, senza presentare come reali eventi non documentati (soglia 1; brief DR3). | 1.1.1 |
-| **Slot vuoti (decisione)** | Finché un asset manca, il segnaposto di `Media.astro` ha `aria-hidden="true"`, senza `role="img"` né `aria-label`: prima annunciava l'alt dell'immagine futura, cioè un'immagine che non c'era. Già corretto. L'etichetta visiva «Asset in arrivo» serve solo a chi rivede lo staging. In produzione nessuno slot resta vuoto: si riempie o si toglie dalla composizione (checklist §4.3). | 1.1.1, 4.1.2 |
+| **Slot vuoti (decisione)** | Finché un asset manca, il segnaposto di `Media.astro` ha `aria-hidden="true"`, senza `role="img"` né `aria-label`: prima annunciava l'alt dell'immagine futura, cioè un'immagine che non c'era. Già corretto. L'etichetta visiva «Asset richiesto» serve solo a chi rivede lo staging. **In produzione nessun segnaposto di staging:** si pubblica l'asset oppure la variante tipografica «in pubblicazione» (`SlotPending`, build con `PUBLIC_SLOT_MODE=publish`). Anche la variante è `aria-hidden` e senza elementi focalizzabili, ed è ammessa a una condizione: il testo che mostra è già scritto nella pagina (H3, righe di luogo) oppure è il segno grafico dei rilevamenti (rilevamento, distanza, coordinate: decisione T10). Sulla Home il nome dell'esperienza non è nel testo, quindi lì la variante va senza nome o con un nome esposto (verifica del 2026-09-28, O6). | 1.1.1, 1.3.1, 4.1.2 |
 
 ### 2.9 Link e nuove schede
 | Requisito | Regola operativa | Criteri |
@@ -171,20 +171,20 @@ Tutto il comportamento è in `struttura-pagine.md` §7. Criteri coperti:
 
 | # | Problema | Dove | Criterio | Soluzione | Owner | Stato |
 |---|---|---|---|---|---|---|
-| 1 | Con i minimi delle LG (64 e 44 px) alcune headline sarebbero uscite dalla colonna a 320 px, per esempio «tecnologia» (299 px su 280). Con la scala della direzione visiva (Schibsted Grotesk) resta solo «~200.000» in `display-xxl`: 300 px su 280. | tipografia | 1.4.10 | Minimo di `display-xxl` ≤ 4 rem, oppure numeri in `display-xl` sotto i 360 px (`struttura-pagine.md` §0.3) | creative-director, ui-designer | aperto |
+| 1 | Con i minimi delle LG (64 e 44 px) alcune headline sarebbero uscite dalla colonna a 320 px, per esempio «tecnologia» (299 px su 280). Con la scala della direzione visiva (Schibsted Grotesk) resta solo «~200.000» in `display-xxl`: 300 px su 280. | tipografia | 1.4.10 | Minimo di `display-xxl` ≤ 4 rem, oppure numeri in `display-xl` sotto i 360 px (`struttura-pagine.md` §0.3) | creative-director, ui-designer | risolto: minimi di `display-xl` (2,75 rem) e `display-xxl` (3,5 rem), `<wbr>` nei numeri; nessun testo tagliato da 320 a 1440 px (verifica del 2026-09-28) |
 | 2 | Senza `scroll-padding-top`, ancore ed elementi raggiunti con Shift+Tab finiscono sotto l'header sticky (verificato in Chromium con una pagina di prova) | header | 2.4.11 | `scroll-padding-top` su `html`; niente `scroll-margin-top` | sviluppo | risolto (`global.css`) |
 | 3 | Chiudendo il menu su un'ancora della stessa pagina, il focus torna su «Menu» | `header.ts` | 2.4.3 | Focus al bersaglio (titolo del form) | sviluppo | risolto (`header.ts`) |
 | 4 | `<dialog>` del menu senza nome; scroll della pagina non bloccato con il menu aperto | `header.ts` e markup | 4.1.2; usabilità | `aria-label="Menu"`; `html:has(dialog[open]) { overflow: hidden }` | sviluppo | risolto (`Header.astro`) |
 | 5 | Etichetta che cambia **e** `aria-pressed` sugli stessi pulsanti | `video.ts`, `marquee.ts` | 4.1.2 | Solo cambio di etichetta | sviluppo | risolto: `video.ts` corretto, `marquee.ts` rimosso |
-| 6 | Slot vuoti annunciati come immagini | `Media.astro` | 1.1.1 | `aria-hidden="true"` sul segnaposto | sviluppo | risolto (commit `ca49129`) |
+| 6 | Slot vuoti annunciati come immagini | `Media.astro` | 1.1.1 | `aria-hidden="true"` sul segnaposto | sviluppo | risolto (commit `ca49129`); al go-live vale §2.8 (variante «publish», O6) |
 | 7 | Separatore del breadcrumb letto («barra») e `opacity` sul testo dei link | `Breadcrumbs.astro` | 1.3.1; 1.4.3 | Separatore in `<span aria-hidden>`; colore di token `--fg-2` al posto dell'opacità | sviluppo, ui-designer | risolto; resta da misurare il contrasto di `--fg-2` (§2.4) |
-| 8 | Focus sul contenitore dei pannelli del form invece che sul titolo. Lo script non imposta `novalidate`: se manca anche nel markup, la validazione nativa blocca `submit` e il riepilogo non compare. | `form.ts` | 2.4.3, 3.3.1, 4.1.3 | Titolo con `tabindex="-1"` come bersaglio; `form.noValidate = true` in `initForm` | sviluppo | da correggere |
-| 9 | Anteprima immersiva senza un modo per uscirne e disponibile anche su mobile | `immersive.ts` | 2.1.2, 2.5.7 | «Chiudi l’anteprima»; solo da 1024 px | sviluppo | da correggere |
-| 10 | Foto con segno di Gemini, cornice e scritta sovrimpresse | asset | soglia 1; 1.4.5 | Brief DR3; ritagli `derivate/`; originali `[DA FORNIRE]` | cliente, creative-director | aperto |
-| 11 | Video non ispezionabile (host bloccato): audio, parlato, lampeggiamenti sconosciuti | `/citta-digitali/` | 1.2.x, 2.3.1 | File sul sito; sottotitoli e descrizione dopo la visione | cliente, copywriter-content | aperto |
-| 12 | Iframe dei portali: comportamento da tastiera e cookie non noti | `/siii/` | 2.1.2; soglia 5 | Anteprima solo dopo le verifiche; al lancio, link | sviluppo, QA | aperto |
-| 13 | Timeline del fondatore orizzontale, sticky e traslata dallo scroll, con i link di «oggi» sul binario che si muove: si potrebbe dare il focus a un link fuori dallo schermo | home, direzione visiva §7.3 | 2.4.7, 2.4.11 | Nessun elemento focalizzabile nella parte che trasla; condizioni in `struttura-pagine.md` HM-6 | creative-director, sviluppo | aperto |
-| 14 | Porte dei luoghi in ordine diverso tra desktop (longitudine) e mobile (dalla costa all'entroterra) | `/puglia-digitale/` | 2.4.3, 1.3.2 | Stesso ordine a tutte le larghezze (`struttura-pagine.md` PD-5) | creative-director | aperto |
+| 8 | Focus sul contenitore dei pannelli del form invece che sul titolo. Lo script non imposta `novalidate`: se manca anche nel markup, la validazione nativa blocca `submit` e il riepilogo non compare. | `form.ts` | 2.4.3, 3.3.1, 4.1.3 | Titolo con `tabindex="-1"` come bersaglio; `form.noValidate = true` in `initForm` | sviluppo | risolto e verificato (percorsi da tastiera del 2026-09-28) |
+| 9 | Anteprima immersiva senza un modo per uscirne e disponibile anche su mobile | `immersive.ts` | 2.1.2, 2.5.7 | «Chiudi l’anteprima»; solo da 1024 px | sviluppo | non più applicabile: nessun iframe nel sito |
+| 10 | Foto con segno di Gemini, cornice e scritta sovrimpresse | asset | soglia 1; 1.4.5 | Brief DR3; ritagli `derivate/`; originali `[DA FORNIRE]` | cliente, creative-director | deciso dalla sessione principale (trattamento «inchiostro» e nota AI); originali ancora `[DA FORNIRE]` |
+| 11 | Video non ispezionabile (host bloccato): audio, parlato, lampeggiamenti sconosciuti | `/citta-digitali/` | 1.2.x, 2.3.1 | File sul sito; sottotitoli e descrizione dopo la visione | cliente, copywriter-content | aperto: condizione di go-live A3; oggi né `<track>` né descrizione |
+| 12 | Iframe dei portali: comportamento da tastiera e cookie non noti | `/siii/` | 2.1.2; soglia 5 | Anteprima solo dopo le verifiche; al lancio, link | sviluppo, QA | non più applicabile: al lancio solo link |
+| 13 | Timeline del fondatore orizzontale, sticky e traslata dallo scroll, con i link di «oggi» sul binario che si muove: si potrebbe dare il focus a un link fuori dallo schermo | home, direzione visiva §7.3 | 2.4.7, 2.4.11 | Nessun elemento focalizzabile nella parte che trasla; condizioni in `struttura-pagine.md` HM-6 | creative-director, sviluppo | risolto: la timeline non trasla |
+| 14 | Porte dei luoghi in ordine diverso tra desktop (longitudine) e mobile (dalla costa all'entroterra) | `/puglia-digitale/` | 2.4.3, 1.3.2 | Stesso ordine a tutte le larghezze (`struttura-pagine.md` PD-5) | creative-director | nel codice: ovest → est a tutte le larghezze, verificato. Proposta I11 (DOM dalla costa all'entroterra, focus da destra a sinistra su desktop) non accettata; decide il creative-director tra le due alternative di PD-5 |
 
 ## 4. Checklist di verifica (Fase 5)
 
@@ -236,16 +236,32 @@ Va eseguito a 1280 px e a 390 px (con l'emulazione del dispositivo o il ridimens
 - **Target.** Regola `target-size` di axe, più una prova su dispositivo reale per menu, form e controlli video.
 - **Lettori di schermo**, prova rapida. Ambienti: NVDA con Firefox o Chrome su Windows; VoiceOver con Safari su iOS. Cosa controllare: elenco dei titoli e dei landmark, menu, form (errori e stati), tabella di confronto, video, annuncio della nuova scheda, lettura di «SIII».
 - **Prima del go-live.**
-  - Nessuno slot vuoto; nessun testo segnaposto (`[DA FORNIRE]`, `[DA VERIFICARE]`) in pagina.
+  - Nessun segnaposto di staging e nessun testo segnaposto (`[DA FORNIRE]`, `[DA VERIFICARE]`) in pagina. Con asset mancanti, build con `PUBLIC_SLOT_MODE=publish` alle condizioni di §2.8.
   - Endpoint del form configurato.
   - Sottotitoli e descrizione del video presenti, se servono.
+  - Controlli ripetuti sulla build di produzione: `clipped()` e `midWordBreaks()` dell'Appendice C, con e senza le spaziature e con e senza movimento; percorso del form da tastiera e al tocco.
 - **Limiti dell'ambiente.** Qui c'è solo Chromium: le prove con Firefox, WebKit, VoiceOver e dispositivi reali richiedono un altro ambiente `[DA FORNIRE: dispositivi o servizio di test]`.
 
-### 4.4 Registro dei problemi (da compilare in Fase 5)
+### 4.4 Registro dei problemi (Fase 5 e verifica verso il G4)
+
+Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilita-ux-designer.md` (A1–A7) e `docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md` (O1–O6, S1–S5).
 
 | Data | Pagina e stato | Problema | Criterio | Gravità | Soluzione | Owner | Verificato |
 |---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — |
+| 2026-09-28 | `/`, punti caldi (A1) | Didascalie su hover e focus, non chiudibili con Esc | 1.4.13 | bloccante | Didascalia solo con `aria-expanded="true"` | sviluppo | sì, desktop; mobile → O3 |
+| 2026-09-28 | `/puglia-digitale/`, statistiche (A2) | Numeri tagliati con le spaziature | 1.4.12 | bloccante | `<wbr>` e `white-space: normal` | sviluppo | sì |
+| 2026-09-28 | tutte (A3) | Video, endpoint, asset | 1.2.x, 2.3.1; 3.3; 1.1.1 | condizione di go-live | Alternative al video; endpoint; asset o variante «publish» con O6 | cliente, sessione principale | aperto |
+| 2026-09-28 | tutte, movimento attivo (A4) | Focus su blocchi non ancora rivelati | 2.4.7 | suggerimento | Reveal al `focusin` | sviluppo | sì: visibile al 65–70% dopo 150 ms |
+| 2026-09-28 | 320 px con spaziature (A5) | Parole lunghe fuori colonna | 1.4.12 | suggerimento | Rete di sicurezza `overflow-wrap` | sviluppo | applicata; effetti collaterali → O4, S1 |
+| 2026-09-28 | form (A6) | Link nell'etichetta privacy, casella piccola, telefono | 2.5.8 (rispettato), usabilità | suggerimento | Link nell'aiuto, casella 24 px, area del telefono | sviluppo | etichetta e telefono sì; casella → S2 |
+| 2026-09-28 | `/contatti/`, portali (A7) | «Nuova scheda» nei titoli | 2.4.6, usabilità | suggerimento | `aria-describedby` | sviluppo | sì |
+| 2026-09-28 | form (O1) | Errore prematuro sulla casella privacy passando con Tab | 3.3.1, §7.4 | importante | Casella «toccata» solo dopo una modifica | sviluppo | provata in pagina |
+| 2026-09-28 | form (O2) | Bordo d'errore non applicato (specificità) | DS §3.15, usabilità | importante | Selettore con la stessa forma della regola base, ombra interna | sviluppo | provata in pagina |
+| 2026-09-28 | `/`, mobile (O3) | Nodo che si espande senza mostrare nulla | 4.1.2, usabilità | importante | Didascalia anche sotto i 700 px, `max-width: min(16rem, 60vw)` | sviluppo | provata in pagina |
+| 2026-09-28 | `/siii/`, ≥ 1024 px, movimento ridotto (O4) | Titolo di chiusura spezzato a metà parola | leggibilità | importante | Titolo sulle colonne 1–6 | ui-designer, sviluppo | provata in pagina |
+| 2026-09-28 | Passaggi, 320–390 px con spaziature (O5) | Righe fuori colonna, pagina che scorre in orizzontale | 1.4.12 (nessuna perdita) | importante | `overflow-wrap: anywhere` su `.passage` | sviluppo | provata in pagina |
+| 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live | Variante senza nome in Home, o nome esposto | sviluppo, creative-director | aperto |
+| 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S5 e V7 provati in pagina |
 
 ## Ipotesi da validare
 - Lo skip link senza `tabindex` permanente funziona con i browser e i lettori di schermo di riferimento: verificato solo in Chromium.
@@ -258,14 +274,17 @@ Va eseguito a 1280 px e a 390 px (con l'emulazione del dispositivo o il ridimens
   - quali foto sono scatti reali?
   - c'è un banner di consenso (dipende dagli strumenti di misura)?
   - ci sono dispositivi o un servizio per i test fuori da Chromium?
-- **ui-designer**: valori dei token per misurare le coppie di §2.4; corpi minimi delle headline con il font scelto.
+- **ui-designer**: composizione di O4; allineamento del DS §3.15 alla decisione S9 (messaggio sotto il campo, icona «!», bordo d'errore senza spostamenti).
 - **seo-technical**: conferma dell'etichetta «Percorso» per il breadcrumb.
 
 ## Decisioni richieste
-- **Sessione principale (sviluppo)**: applicare le correzioni 8 e 9 di §3 (`form.ts`, `immersive.ts`). Le correzioni 2–7 sono già applicate.
-- **creative-director**: problemi 1, 13 e 14 di §3. Sono vincoli di accessibilità; come rispettarli resta una scelta della direzione visiva.
-- **Utente, con creative-director**: DR3 sulle immagini del fondatore (problema 10). Incide sulla veridicità e sugli alt.
-- **web-performance-specialist**: autoplay del video solo su desktop (`struttura-pagine.md` CD-3).
+- **Sessione principale (sviluppo)**:
+  - applicare O1–O5 e S1 (= V16), S2, S4, S5 della review di verifica, più V7 della verifica UI al posto di S3;
+  - con asset mancanti, build di produzione con `PUBLIC_SLOT_MODE=publish`, dopo O6.
+- **creative-director**:
+  - problema 14 (I11): una delle due alternative di `struttura-pagine.md` PD-5. Per l'accessibilità è consigliata ovest → est a tutte le larghezze;
+  - O6: variante senza nome in Home, oppure nome esposto;
+  - accettare esplicitamente le voci O1–O5 che non si correggono prima del go-live.
 
 ## Appendice A · `tests/a11y.mjs`
 Provato il 2026-09-28 su pagine di test:
@@ -391,4 +410,71 @@ for (const word of WORDS) {
   console.log(`${word.padEnd(16)} ${em.toFixed(2)} em · max 320: ${max(320)} px · 360: ${max(360)} px · 390: ${max(390)} px`);
 }
 await browser.close();
+```
+
+## Appendice C · Testo tagliato (v2) e parole spezzate
+Due funzioni da eseguire in pagina con Playwright, a 320, 360, 390, 640, 768, 1024 e 1440 px:
+- con e senza il CSS di §4.3 per la spaziatura;
+- con `reducedMotion: 'reduce'`, e con il movimento attivo dopo aver fatto scorrere tutta la pagina.
+
+Le due modalità producono layout diversi, perché con il movimento le righe del text reveal sono `inline-block`.
+- **`clipped()`** sostituisce la funzione dell'appendice della review del 2026-09-28. Confronta ogni riga con l'intersezione di tutti i contenitori che ritagliano (non solo il più vicino) e con il viewport, e salta il testo trasparente.
+- **`midWordBreaks()`** trova le righe che finiscono a metà parola nel layout normale: la rete di sicurezza di §2.5 non deve mai scattare senza le impostazioni dell'utente.
+
+```js
+const clipped = () => {
+  const SKIP = '.sr-only,.compare__table thead,.horizon,.marquee,.compare__screen,.media-slot,.map,[hidden],dialog:not([open]),.skip-link,.contact__trap,script,style,noscript';
+  const out = [];
+  const vw = document.documentElement.clientWidth;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const t = walker.currentNode;
+    const el = t.parentElement;
+    if (!t.data.trim() || !el || el.closest(SKIP)) continue;
+    let opacity = 1;
+    for (let n = el; n && n !== document.documentElement; n = n.parentElement) opacity *= +getComputedStyle(n).opacity;
+    if (opacity < 0.05 || getComputedStyle(el).visibility === 'hidden') continue;
+    const box = { left: -Infinity, right: Infinity, top: -Infinity, bottom: Infinity };
+    for (let a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+      const s = getComputedStyle(a);
+      const r = a.getBoundingClientRect();
+      if (/hidden|clip/.test(s.overflowX)) { box.left = Math.max(box.left, r.left); box.right = Math.min(box.right, r.right); }
+      if (/hidden|clip/.test(s.overflowY)) { box.top = Math.max(box.top, r.top); box.bottom = Math.min(box.bottom, r.bottom); }
+    }
+    const range = document.createRange();
+    range.selectNodeContents(t);
+    for (const r of range.getClientRects()) {
+      if (r.width < 0.5) continue;
+      const cut = r.right > Math.min(box.right, vw) + 1 || r.left < Math.max(box.left, 0) - 1 || r.bottom > box.bottom + 1 || r.top < box.top - 1;
+      if (cut) { out.push(`${el.className} «${t.data.trim().slice(0, 28)}»${el.closest('[aria-hidden="true"]') ? ' (aria-hidden)' : ''}`); break; }
+    }
+  }
+  return { cut: [...new Set(out)], hscroll: document.documentElement.scrollWidth - vw };
+};
+
+const midWordBreaks = () => {
+  const SKIP = '.sr-only,.marquee,.map,.horizon,[hidden],dialog:not([open]),script,style,.media-slot';
+  const letter = /[\p{L}\p{N}’'.,:;!?%~+°]/u;
+  const out = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const t = walker.currentNode;
+    if (!t.data.trim() || t.parentElement.closest(SKIP)) continue;
+    let prevTop = null;
+    for (let i = 0; i < t.length; i++) {
+      const r = document.createRange();
+      r.setStart(t, i);
+      r.setEnd(t, i + 1);
+      const rc = r.getClientRects()[0];
+      if (!rc || rc.width === 0) continue;
+      const top = Math.round(rc.top);
+      if (prevTop !== null && top - prevTop > 4 && letter.test(t.data[i]) && letter.test(t.data[i - 1] ?? '')) {
+        out.push(`${t.parentElement.closest('h1,h2,h3,h4,p,li,a')?.tagName} «${t.data.trim().slice(0, 40)}» a capo prima di «${t.data.slice(i, i + 6)}»`);
+        break;
+      }
+      prevTop = top;
+    }
+  }
+  return out;
+};
 ```

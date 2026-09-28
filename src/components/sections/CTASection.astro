@@ -159,9 +159,13 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
 
     /* SIII: statement on columns 1–5, form on 7–12 (visual direction §7.4). */
     .cta-section--form.cta-section--side .cta-section__eyebrow,
-    .cta-section--form.cta-section--side :global(.cta-section__title),
     .cta-section--form.cta-section--side .cta-section__body {
       grid-column: 1 / span 5;
+    }
+
+    /* The title may use the empty sixth column: «un’esperienza.» in display-l needs 6.6 em. */
+    .cta-section--form.cta-section--side :global(.cta-section__title) {
+      grid-column: 1 / span 6;
     }
 
     .cta-section--form.cta-section--side .cta-section__form {

@@ -24,6 +24,9 @@ interface Props {
   ratio?: string;
   priority?: boolean;
   position?: string;
+  /** Publish variant only: false drops name and place where the text around does not say them
+      (they would be visible but hidden from assistive technology, WCAG 1.3.1). */
+  pendingText?: boolean;
   class?: string;
 }
 
@@ -36,6 +39,7 @@ const {
   ratio,
   priority = false,
   position = '50% 50%',
+  pendingText = true,
   class: className,
 } = Astro.props;
 
@@ -66,7 +70,7 @@ const usableWidths = image
       style={`object-position: ${position}`}
     />
   ) : SLOT_MODE === 'publish' && slot && asset ? (
-    <SlotPending {...slot.publish} ratio={aspect} asset={asset} class={className} />
+    <SlotPending {...slot.publish} {...(pendingText ? {} : { name: undefined, meta: undefined })} ratio={aspect} asset={asset} class={className} />
   ) : (
     <div class:list={['media-slot', className]} style={`--media-ratio: ${aspect}`} aria-hidden="true" data-asset-slot={asset}>
       <span class="media-slot__inner">

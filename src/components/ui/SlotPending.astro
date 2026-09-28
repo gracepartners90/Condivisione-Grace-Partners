@@ -135,6 +135,20 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
     justify-items: start;
   }
 
+  /* Narrow doors (phones under ~400 px): the coordinates, then the name, are already in the
+     text beside the door. */
+  @container (max-width: 8rem) {
+    .slot-pub--place .slot-pub__meta > span + span {
+      display: none;
+    }
+  }
+
+  @container (max-width: 7rem) {
+    .slot-pub--place .slot-pub__name {
+      display: none;
+    }
+  }
+
   .slot-pub--experience .slot-pub__name {
     font-size: var(--fs-display-s);
     line-height: var(--lh-display-s);

@@ -100,7 +100,7 @@ const north = [...locations]
                     <Arrow dir="external" />
                   </a>
                   <p class="door__domain t-label t-as-is" aria-hidden="true">
-                    {d.display}
+                    {d.display.slice(0, d.display.lastIndexOf('.'))}<wbr />{d.display.slice(d.display.lastIndexOf('.'))}
                   </p>
                 </div>
               </li>
@@ -387,10 +387,23 @@ const north = [...locations]
       max-width: none;
     }
 
-    /* ...and each city at the latitude of its node: Varese high, Caltanissetta low. */
+    /* ...with the cities beside it: a list from 1024 to 1279 px, where the map is too short
+       for Altamura and Caltanissetta to stand at their own latitude without overlapping. */
     .places__cities {
       grid-column: 1 / span 5;
       grid-row: 2;
+    }
+  }
+
+  /* From 1280 px each city stands at the latitude of its node: Altamura → Caltanissetta is
+     31.6% of the map (≥ 217 px), more than a city block (~175 px). */
+  @media (min-width: 80em) {
+    /* Caltanissetta hangs ~95 px below the map: keep the section's own bottom air. */
+    .places__italy {
+      padding-bottom: var(--space-3xl);
+    }
+
+    .places__cities {
       position: relative;
       align-self: stretch;
       display: block;
@@ -402,9 +415,6 @@ const north = [...locations]
       inset-inline: 0;
       top: calc(var(--y, 0) * 1%);
       translate: 0 -1.2rem;
-    }
-
-    .city {
       grid-template-columns: minmax(0, 1fr) auto;
       column-gap: var(--space-m);
       align-items: baseline;

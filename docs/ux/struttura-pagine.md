@@ -2,8 +2,8 @@
 titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
-stato: bozza
-versione: 0.1
+stato: in revisione
+versione: 0.2
 aggiornato: 2026-09-28
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
@@ -318,6 +318,9 @@ L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo st
   - Due soluzioni, sceglie il creative-director:
     - ordine geografico ovest → est ovunque;
     - dalla costa all'entroterra ovunque, con la composizione desktop che non segue la longitudine.
+  - **Stato (verifica del 2026-09-28).** Il codice segue la prima soluzione: ovest → est a tutte le larghezze, con ordine del focus verificato.
+  - **Posizione ux-designer su I11 della review UI.** La proposta di I11 non è accettata. Con il DOM Monopoli → Acquaviva → Gravina e le porte posizionate per longitudine, su desktop il focus andrebbe da destra a sinistra, al contrario della lettura della fila: 2.4.3, e 1.3.2 con la tecnica C27.
+  - **Raccomandazione:** ovest → est. «Dalla costa all'entroterra» è il titolo di #progetto, due sezioni prima; il copy deck dichiara l'ordine reversibile. Motivazione completa in `docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md` §3.3.
 - **Accessibilità.** `<ul>`. Se l'intera scheda è cliccabile, l'immagine ha `alt=""` (`alt-text.md`).
 
 ### PD-6 · Perché aderire — `BenefitsSection` variante `staircase` («scala» nella direzione visiva)
@@ -471,7 +474,7 @@ Qui ci sono struttura, validazione, stati e accessibilità. I testi (etichette, 
 - **Markup del form.**
   - `<form data-contact-form data-form-id="richiesta-…" method="post" action="{endpoint}" aria-labelledby="{id del titolo}">`: con un nome accessibile il form diventa un landmark.
   - `novalidate` lo aggiunge lo script (`form.noValidate = true` in `initForm`). Senza JavaScript restano la validazione nativa e l'invio in POST all'endpoint.
-  - **Da aggiungere a `form.ts`.** Senza `novalidate`, quando si invia un form con campi obbligatori vuoti il browser mostra i suoi fumetti e non genera l'evento `submit`. Riepilogo e messaggi personalizzati non comparirebbero mai.
+  - **Perché serve** (applicato e verificato il 2026-09-28). Senza `novalidate`, quando si invia un form con campi obbligatori vuoti il browser mostra i suoi fumetti e non genera l'evento `submit`. Riepilogo e messaggi personalizzati non comparirebbero mai.
 - **Ordine dei campi.** `[PROPOSTA condivisa con cro-specialist]`
   1. Mi interessa
   2. Nome e cognome
@@ -524,12 +527,14 @@ Etichette, suggerimenti e messaggi d'errore sono in `docs/contenuti/microcopy.md
 ### 7.4 Validazione ed errori
 - **Quando.**
   - All'uscita dal campo, solo se l'utente ci ha scritto: errori di formato, oppure campo obbligatorio svuotato. Chi scorre i campi con Tab non riceve errori prematuri.
+  - Una casella conta come «toccata» solo dopo che è stata spuntata o tolta: il suo `value` («letta») non è mai vuoto e non dice nulla sull'interazione (verifica del 2026-09-28, O1).
   - I campi obbligatori mai toccati si segnalano all'invio.
   - Dopo la comparsa di un errore, il campo si rivalida a ogni modifica e l'errore sparisce appena il valore è corretto (già così in `form.ts`).
-- **Dove.**
-  - Il messaggio sta tra etichetta (e suggerimento) e campo, non sotto: resta visibile con la tastiera virtuale aperta e vicino all'etichetta per chi usa l'ingrandimento. Per la privacy, sopra la riga della checkbox.
-  - Testo più icona `aria-hidden`, non solo colore.
+- **Dove** (decisione del 2026-09-28 sulla domanda S9 della review UI; sostituisce «tra etichetta e campo»):
+  - **Il messaggio sta sotto il campo**; per la privacy, sotto la riga d'aiuto. Il form rivalida dal vivo e toglie l'errore alla prima battuta corretta: con il messaggio sopra, il campo in cui si sta scrivendo salirebbe sotto il dito. Lo stesso testo è nel link del riepilogo che porta al campo, ed è letto con il campo (`aria-describedby`).
+  - Testo più icona «!» non letta (`content: '!' / ''`), non solo colore.
   - Prefisso visivamente nascosto «Errore:».
+  - Campo con bordo `--error` di 2 px ottenuto con 1 px di bordo più 1 px di ombra interna, senza spostamenti (DS §3.15).
 - **ARIA.**
   - Campo con errore: `aria-invalid="true"` e `aria-describedby="{id}-hint {id}-error"`, con l'id dell'errore presente solo quando c'è.
   - Quando l'errore è corretto, spariscono entrambi (già così in `form.ts`).
@@ -546,14 +551,14 @@ Etichette, suggerimenti e messaggi d'errore sono in `docs/contenuti/microcopy.md
 | Stato | Quando | Cosa vede l'utente | Focus e annunci |
 |---|---|---|---|
 | Pronto | caricamento | form con la preselezione della pagina | — |
-| Endpoint assente | `PUBLIC_FORM_ENDPOINT` vuoto in build | **Avviso già al caricamento, prima dei campi** (da aggiungere in build): l'invio online non è attivo, con email e telefono. All'invio valido il form si nasconde e compare il pannello di ripiego: «Prepara l’email con i tuoi dati» (`mailto:` precompilato), indirizzo in chiaro, telefono. **Mai un messaggio di successo.** | focus sul titolo del pannello |
+| Endpoint assente | `PUBLIC_FORM_ENDPOINT` vuoto in build | **Avviso già al caricamento, prima dei campi** (presente nella build): l'invio online non è attivo, con email e telefono. All'invio valido il form si nasconde e compare il pannello di ripiego: «Prepara l’email con i tuoi dati» (`mailto:` precompilato), indirizzo in chiaro, telefono. **Mai un messaggio di successo.** | focus sul titolo del pannello |
 | Errori di validazione | invio con campi non validi | riepilogo ed errori sui campi; dati intatti | focus sul riepilogo |
 | Invio in corso | invio valido | «Invio in corso…» visibile accanto al pulsante con un indicatore `aria-hidden`; il pulsante resta «Invia richiesta» con `aria-disabled="true"` (microcopy.md §4.1); `aria-busy` sul form; clic ripetuti ignorati | stato: «Invio in corso…» |
 | Inviato | risposta 2xx | pannello di conferma al posto del form: email e interessi letti **prima** di `form.reset()`; prossimi passi solo se confermati `[DA FORNIRE]` | focus sul titolo del pannello |
 | Errore di invio | risposta 4xx/5xx, rete assente, timeout di 15 s | pannello d'errore sopra il pulsante, con alternative ed email precompilata; il form resta compilato | focus sul titolo del pannello |
 | Honeypot compilato | campo `_gotcha` non vuoto | lo stesso pannello d'errore onesto, mai un finto successo | come sopra |
 
-- **Pannelli.** I pannelli di conferma, ripiego ed errore iniziano con un titolo con `tabindex="-1"`: `form.ts` oggi dà il focus al contenitore, meglio darlo al titolo.
+- **Pannelli.** I pannelli di conferma, ripiego ed errore iniziano con un titolo con `tabindex="-1"`, che riceve il focus (verificato il 2026-09-28).
 - **Go-live.** In produzione l'endpoint deve esistere prima del lancio (strategia di conversione, decisione 1). Lo stato «endpoint assente» è una rete di sicurezza, non una condizione di lancio.
 
 ### 7.6 Antispam, senza CAPTCHA

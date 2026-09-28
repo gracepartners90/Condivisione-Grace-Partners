@@ -1,6 +1,7 @@
 /**
  * Hotspot nodes on images: each node is a real <button> that discloses its label
- * (aria-expanded). Hover and focus also reveal the label via CSS.
+ * (aria-expanded). Hover and focus only grow the ring; the label shows when the node is open
+ * (WCAG 1.4.13).
  */
 document.querySelectorAll<HTMLElement>('[data-nodes]').forEach((root) => {
   const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-node-toggle]')];

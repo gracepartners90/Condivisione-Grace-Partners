@@ -69,6 +69,9 @@ const regs = registers.map((text, r) => ({
     display: block;
     font-weight: var(--fw-strong);
     color: var(--fg);
+    /* Safety net for user text spacing (WCAG 1.4.12). «anywhere», not «break-word»: the
+       text-reveal lines are inline-blocks, and only «anywhere» lowers their min-content width. */
+    overflow-wrap: anywhere;
     --indent-step: calc((100% + var(--gutter)) / var(--cols));
   }
 

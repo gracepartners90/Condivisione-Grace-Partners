@@ -71,9 +71,10 @@ const { number, bearing, name, descriptor, statement, text, cta, layout, surface
     background-repeat: no-repeat;
   }
 
+  /* The label hangs 6 px under its 20 px tick, like the degree labels of the Horizon. */
   .chapter__bearing {
     position: absolute;
-    top: 14px;
+    top: 26px;
     left: 0;
     color: var(--fg-2);
   }
@@ -83,7 +84,7 @@ const { number, bearing, name, descriptor, statement, text, cta, layout, surface
     content: '';
     position: absolute;
     left: 0;
-    top: -14px;
+    top: -26px;
     width: 1px;
     height: 20px;
     background: var(--fg);

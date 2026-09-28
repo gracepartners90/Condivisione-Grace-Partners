@@ -30,6 +30,11 @@ const checks = [
     name: 'Numeri di Puglia Digitale con data e fonte (niente nota «Dati ITnode.» senza data)',
     ok: !/Dati ITnode\.</.test(page('puglia-digitale/index.html')),
   },
+  {
+    // Minimal guard: which alternative is needed depends on the video (speech or music only).
+    name: 'Video di Città Digitali: sottotitoli (<track>) o descrizione testuale (A3)',
+    ok: /<track kind="captions"|Leggi la descrizione del video/.test(page('citta-digitali/index.html')),
+  },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];
 

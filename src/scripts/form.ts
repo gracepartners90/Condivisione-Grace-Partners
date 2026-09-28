@@ -100,7 +100,8 @@ function initForm(form: HTMLFormElement) {
     const error = form.querySelector<HTMLElement>(`#${CSS.escape(errorId)}`);
     if (!error) return;
     if (show) {
-      error.textContent = messageFor(field, form);
+      const prefix = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: 'Errore: ' });
+      error.replaceChildren(prefix, messageFor(field, form));
       error.hidden = false;
       field.setAttribute('aria-invalid', 'true');
       describedBy(field, errorId, true);
@@ -121,7 +122,9 @@ function initForm(form: HTMLFormElement) {
   // Validate on leaving a field once the user has typed; re-validate live while an error is shown.
   fields.forEach((field) => {
     field.addEventListener('blur', () => {
-      if (field.value !== '' || field.dataset.touched === 'true') validate(field);
+      // A checkbox always has a value («letta»): only a real change marks it as touched.
+      const typed = field.type !== 'checkbox' && field.value !== '';
+      if (typed || field.dataset.touched === 'true') validate(field);
     });
     field.addEventListener('input', () => {
       field.dataset.touched = 'true';

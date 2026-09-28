@@ -307,8 +307,10 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
       padding-inline: var(--page-margin);
     }
 
+    /* A disclosure must disclose on phones too: mobile nodes sit between 30% and 70% of the
+       width, so 60vw keeps the callout inside the photo. */
     .document__callout {
-      display: none;
+      max-width: min(16rem, 60vw);
     }
   }
 </style>
