@@ -53,14 +53,14 @@ export const pages: Record<PageId, PageMeta> = {
     path: '/contatti/',
     title: 'Contatti, Acquaviva delle Fonti (BA) | ITnode',
     description:
-      'Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna 34, Acquaviva delle Fonti (BA). Tel. 080 2466520.',
+      'Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna, 34, Acquaviva delle Fonti (BA). Tel. 080 2466520.',
     crumb: 'Contatti',
   },
   'privacy-policy': {
     path: '/privacy-policy/',
     title: 'Privacy Policy | ITnode',
     description:
-      'Come ITnode tratta i dati personali raccolti con il sito e il modulo di contatto: titolare, finalità, basi giuridiche, tempi di conservazione e diritti.',
+      'Come ITnode tratta i dati personali inviati con il modulo di contatto: chi è il titolare, quali dati raccoglie, perché li usa e quali diritti hai.',
     crumb: 'Privacy Policy',
   },
   'cookie-policy': {
@@ -74,7 +74,7 @@ export const pages: Record<PageId, PageMeta> = {
     path: '/404/',
     title: 'Pagina non trovata | ITnode',
     description:
-      'La pagina che cerchi non esiste più o è stata spostata. Riparti dalla home page di ITnode oppure esplora SIII, Puglia Digitale e Città Digitali.',
+      'La pagina che cerchi non esiste più o è stata spostata. Riparti dalla home di ITnode oppure esplora SIII, Puglia Digitale e Città Digitali.',
     crumb: 'Pagina non trovata',
     noindex: true,
   },

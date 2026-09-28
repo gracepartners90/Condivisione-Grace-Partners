@@ -22,7 +22,7 @@ export type AssetSlot = {
 const place = (name: string, lat: number, lon: number, usedIn: string): AssetSlot => ({
   kind: 'foto',
   label: `${name}: fotografia reale del luogo, luce naturale, orizzonte visibile.`,
-  spec: 'Porta 3:5, lato lungo di almeno 2400 px.',
+  spec: 'Formato verticale 3:5, lato lungo di almeno 2400 px.',
   format: '3:5',
   ratio: '3 / 5',
   alt: name,
@@ -33,7 +33,7 @@ const place = (name: string, lat: number, lon: number, usedIn: string): AssetSlo
 const siii = (name: string): AssetSlot => ({
   kind: 'screenshot',
   label: `${name}: schermata dell’esperienza SIII, vista desktop.`,
-  spec: 'Schermo 16:10, almeno 2560 × 1600 px, più la vista mobile.',
+  spec: 'Formato 16:10, almeno 2560 × 1600 px, più la vista mobile.',
   format: '16:10',
   ratio: '16 / 10',
   alt: `Anteprima dell’esperienza immersiva di ${name}`,
@@ -47,7 +47,7 @@ export const assetSlots = {
   'siii-anteprima': {
     kind: 'screenshot',
     label: 'Un’esperienza SIII vista da smartphone, in verticale.',
-    spec: 'Porta 3:5, almeno 1200 × 2000 px.',
+    spec: 'Formato verticale 3:5, almeno 1200 × 2000 px.',
     format: '3:5',
     ratio: '3 / 5',
     alt: 'Anteprima di un’esperienza SIII su smartphone',

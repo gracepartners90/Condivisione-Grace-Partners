@@ -11,7 +11,7 @@
 import { interests, site, type InterestValue } from '../../data/site';
 import Arrow from '../ui/Arrow.astro';
 
-type Action = { label: string; href: string; srText?: string };
+type Action = { label: string; href: string; srText?: string; trackId?: string; destinationId?: string };
 
 interface Props {
   /** Analytics id of the form, e.g. `richiesta-siii`. */
@@ -26,6 +26,8 @@ interface Props {
   headingLevel?: 'h2' | 'h3';
   /** 2: wide form, fields in two columns on desktop (under a full-width statement). */
   columns?: 1 | 2;
+  /** «Preferisci parlarne a voce?» under the button; off where the phone is right above. */
+  phoneLine?: boolean;
   class?: string;
 }
 
@@ -38,6 +40,7 @@ const {
   successActions = [],
   headingLevel: Heading = 'h3',
   columns = 1,
+  phoneLine = true,
   class: className,
 } = Astro.props;
 
@@ -61,11 +64,10 @@ const newTab = ' (si apre in una nuova scheda)';
   {
     !endpoint && (
       <p class="contact__notice" data-form-inactive>
-        Il modulo online non è ancora attivo. Per ora scrivici a <a href={`mailto:${site.email}`}>{site.email}</a> o chiamaci al{' '}
-        <a href={site.phone.href} class="contact__nowrap">
-          {site.phone.display}
-        </a>
-        . Se compili i campi, all’invio prepariamo un’email già pronta da spedire.
+        Il modulo online non è ancora attivo. Per ora scrivici a <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${formId}-avviso-email`} data-cta-location="form" data-contact-method="email">{site.email}</a> o
+        chiamaci al{' '}
+        <a href={site.phone.href} class="contact__nowrap" data-track="contact_click" data-cta-id={`${formId}-avviso-telefono`} data-cta-location="form" data-contact-method="telefono">{site.phone.display}</a>. Se compili i campi, all’invio prepariamo un’email già pronta da
+        spedire.
       </p>
     )
   }
@@ -193,13 +195,11 @@ const newTab = ' (si apre in una nuova scheda)';
         aria-describedby="f-privacy-help"
         data-msg-required="Per inviare la richiesta, conferma di aver letto l’informativa privacy."
       />
-      <label for="f-privacy">
-        Ho letto l’<a href="/privacy-policy/" target="_blank" rel="noopener"
-          >informativa privacy<span class="sr-only">{newTab}</span></a
-        >
-        <span aria-hidden="true">*</span>
-      </label>
-      <p class="contact__help" id="f-privacy-help">Usiamo i tuoi dati solo per rispondere a questa richiesta.</p>
+      <label for="f-privacy">Ho letto l’informativa privacy <span aria-hidden="true">*</span></label>
+      <p class="contact__help" id="f-privacy-help">
+        Usiamo i tuoi dati solo per rispondere a questa richiesta.
+        <a href="/privacy-policy/" target="_blank" rel="noopener">Leggi l’informativa privacy<span class="sr-only">{newTab}</span></a>.
+      </p>
       <p class="contact__error" id="f-privacy-error" hidden></p>
     </div>
 
@@ -216,18 +216,33 @@ const newTab = ' (si apre in una nuova scheda)';
       <p class="contact__status t-label" data-form-status role="status"></p>
     </div>
 
-    <p class="contact__alt">
-      Preferisci parlarne a voce? Chiamaci al <a href={site.phone.href} data-track="contact_click" data-cta-id={`${formId}-telefono`} data-cta-location="form" data-contact-method="telefono" class="contact__nowrap">{site.phone.display}</a>.
-    </p>
+    {
+      phoneLine && (
+        <p class="contact__alt">
+          Preferisci parlarne a voce? Chiamaci al{' '}
+          <a
+            href={site.phone.href}
+            data-track="contact_click"
+            data-cta-id={`${formId}-telefono`}
+            data-cta-location="form"
+            data-contact-method="telefono"
+            class="contact__nowrap">{site.phone.display}</a>.
+        </p>
+      )
+    }
   </form>
 
   <div class="contact__panel" data-form-success hidden>
     <p class="contact__panel-title" tabindex="-1" data-panel-title>Richiesta inviata. Grazie.</p>
     <p>
       Abbiamo ricevuto la tua richiesta e ti risponderemo a <strong data-success-email></strong>. Se l’indirizzo non è giusto, scrivici a
-      <a href={`mailto:${site.email}`}>{site.email}</a>.
+      <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${formId}-successo-email`} data-cta-location="form" data-contact-method="email">{site.email}</a>.
     </p>
-    <p>Vuoi parlarne subito? Chiamaci al <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a>.</p>
+    <p>
+      Vuoi parlarne subito? Chiamaci al <a href={site.phone.href} class="contact__nowrap" data-track="contact_click" data-cta-id={`${formId}-successo-telefono`} data-cta-location="form" data-contact-method="telefono"
+        >{site.phone.display}</a
+      >.
+    </p>
     {
       successActions.length > 0 && (
         <ul role="list" class="contact__actions">
@@ -235,7 +250,16 @@ const newTab = ' (si apre in una nuova scheda)';
             const external = /^https?:/.test(a.href);
             return (
               <li>
-                <a href={a.href} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+                <a
+                  href={a.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener' : undefined}
+                  data-track={external ? 'outbound_click' : 'cta_click'}
+                  data-cta-id={`${formId}-successo-${a.trackId ?? (external ? 'portale' : a.href.replace(/[^a-z-]/g, ''))}`}
+                  data-cta-location="form"
+                  data-outbound-type={external ? 'portale' : undefined}
+                  data-destination-id={a.destinationId}
+                >
                   {a.label}
                   {a.srText && <span class="sr-only">{a.srText}</span>}
                   {external && <span class="sr-only">{newTab}</span>}
@@ -253,9 +277,12 @@ const newTab = ' (si apre in una nuova scheda)';
     <p class="contact__panel-title" tabindex="-1" data-panel-title>La richiesta non è stata inviata.</p>
     <p>Non siamo riusciti a inviarla: può dipendere dalla connessione o dai nostri sistemi. I tuoi dati sono ancora qui: riprova tra poco.</p>
     <p>
-      Se non funziona, mandaci la stessa richiesta via email o chiamaci al <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a>.
+      Se non funziona, mandaci la stessa richiesta via email o chiamaci al
+      <a href={site.phone.href} class="contact__nowrap" data-track="contact_click" data-cta-id={`${formId}-errore-telefono`} data-cta-location="form" data-contact-method="telefono">{site.phone.display}</a>.
     </p>
-    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft>Apri l’email già compilata</a>
+    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft data-track="contact_click" data-cta-id={`${formId}-errore-bozza-email`} data-cta-location="form" data-contact-method="email"
+      >Apri l’email già compilata</a
+    >
   </div>
 
   <div class="contact__panel" data-form-fallback hidden>
@@ -264,12 +291,14 @@ const newTab = ' (si apre in una nuova scheda)';
       La tua richiesta non è stata inviata, ma non devi riscriverla: abbiamo preparato un’email con i dati che hai inserito. Aprila e inviala dal tuo
       programma di posta.
     </p>
-    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft>Apri l’email già compilata</a>
+    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft data-track="contact_click" data-cta-id={`${formId}-ripiego-bozza-email`} data-cta-location="form" data-contact-method="email"
+      >Apri l’email già compilata</a
+    >
     <p>
-      Se non si apre nulla, scrivici a <a href={`mailto:${site.email}`}>{site.email}</a> o chiamaci al
-      <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a> (mobile <a href={site.mobile.href} class="contact__nowrap"
-        >{site.mobile.display}</a
-      >).
+      Se non si apre nulla, scrivici a <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${formId}-ripiego-email`} data-cta-location="form" data-contact-method="email">{site.email}</a> o
+      chiamaci al
+      <a href={site.phone.href} class="contact__nowrap" data-track="contact_click" data-cta-id={`${formId}-ripiego-telefono`} data-cta-location="form" data-contact-method="telefono">{site.phone.display}</a> (mobile
+      <a href={site.mobile.href} class="contact__nowrap" data-track="contact_click" data-cta-id={`${formId}-ripiego-mobile`} data-cta-location="form" data-contact-method="cellulare">{site.mobile.display}</a>).
     </p>
   </div>
 </div>
@@ -452,13 +481,27 @@ const newTab = ' (si apre in una nuova scheda)';
   }
 
   .contact__field--check {
-    grid-template-columns: 1.25rem minmax(0, 1fr);
+    grid-template-columns: 1.5rem minmax(0, 1fr);
     column-gap: 0.75rem;
     align-items: start;
   }
 
   .contact__field--check input {
-    margin-top: 0.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.1rem;
+  }
+
+  /* The whole label row is a comfortable target (at least 44 px). */
+  .contact__field--check label {
+    min-height: var(--tap-min);
+  }
+
+  /* The phone under the button stands alone on its line: a larger target is safe there
+     (not in the notice, where email and phone sit on consecutive lines). */
+  .contact__alt a {
+    display: inline-block;
+    padding-block: 0.625rem;
   }
 
   .contact__field--check label {

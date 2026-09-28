@@ -53,7 +53,10 @@ function initForm(form: HTMLFormElement) {
   );
 
   // Preselect interests from ?interesse= (links from other pages) when the page did not preselect any.
-  const fromQuery = new URLSearchParams(window.location.search).getAll('interesse');
+  const fromQuery = new URLSearchParams(window.location.search)
+    .getAll('interesse')
+    .flatMap((value) => value.split(','))
+    .map((value) => value.trim());
   if (fromQuery.length && !interestBoxes.some((box) => box.checked)) {
     interestBoxes.forEach((box) => {
       if (fromQuery.includes(box.value)) box.checked = true;
@@ -61,15 +64,17 @@ function initForm(form: HTMLFormElement) {
   }
   const preselected = interestBoxes.filter((b) => b.checked).map((b) => b.value).join(',');
 
-  // Measurement: form_view (once, when half visible) and form_start (first interaction).
+  // Measurement: form_view (once) when half of the form is visible, or when the form fills
+  // half of the viewport (tall forms on small screens never reach 50%), and form_start.
   if ('IntersectionObserver' in window) {
     const viewObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio < 0.5) return;
+        const rootH = entry.rootBounds?.height ?? window.innerHeight;
+        if (entry.intersectionRatio < 0.5 && entry.intersectionRect.height < rootH * 0.5) return;
         track('form_view', { form_id: formId, interest_preselected: preselected });
         viewObserver.disconnect();
       },
-      { threshold: 0.5 },
+      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
     );
     viewObserver.observe(form);
   }
@@ -211,6 +216,8 @@ function initForm(form: HTMLFormElement) {
 
     if (!endpoint) {
       track('form_error', { form_id: formId, error_type: 'endpoint-assente' });
+      // The notice before the fields says the same as the fallback panel: keep one.
+      container.querySelector('[data-form-inactive]')?.setAttribute('hidden', '');
       const draft = fallback?.querySelector<HTMLAnchorElement>('[data-mailto-draft]');
       if (draft) draft.href = mailtoDraft(data);
       form.hidden = true;

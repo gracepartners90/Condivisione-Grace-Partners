@@ -22,13 +22,19 @@ const schema = pageGraph('cookie-policy');
       richiedono il tuo consenso.
     </p>
 
+    <h2>Come gestire i cookie</h2>
+    <p>
+      Puoi bloccare o cancellare i cookie dalle impostazioni del tuo browser. Se blocchi i cookie tecnici, alcune parti del sito potrebbero non
+      funzionare.
+    </p>
+
     <h2>Siti collegati</h2>
     <p>
-      Le esperienze immersive e i portali collegati, come Città Digitali e Puglia Digitale, si aprono in una nuova scheda e sono siti distinti, ciascuno
-      con la propria informativa.
+      Le esperienze immersive e i portali collegati, come Città Digitali e Puglia Digitale, sono siti distinti, ciascuno con la propria informativa. Si
+      aprono in una nuova scheda.
     </p>
 
     <h2>Domande</h2>
-    <p>Per domande sui cookie e sui tuoi dati scrivi a <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    <p>Per domande sui cookie e sui tuoi dati scrivi a <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="legale-email" data-cta-location="sezione" data-contact-method="email">{site.email}</a>.</p>
   </LegalPage>
 </BaseLayout>

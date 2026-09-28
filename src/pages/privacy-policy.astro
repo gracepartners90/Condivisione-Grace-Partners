@@ -20,20 +20,20 @@ const schema = pageGraph('privacy-policy');
   >
     <h2>Chi tratta i dati</h2>
     <p>
-      Il titolare del trattamento è {site.legalName}, {site.address.street}, {site.address.postalCode}
+      Il titolare del trattamento è {site.legalName}, con sede in {site.address.street} – {site.address.postalCode}
       {site.address.locality} ({site.address.province}), partita IVA {site.vatId}. Per qualunque domanda sui tuoi dati puoi scrivere a
-      <a href={`mailto:${site.email}`}>{site.email}</a>.
+      <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="legale-email" data-cta-location="sezione" data-contact-method="email">{site.email}</a>.
     </p>
 
     <h2>Quali dati raccoglie il sito</h2>
-    <p>Il sito raccoglie dati personali solo quando compili il modulo di contatto. I campi sono:</p>
+    <p>Il sito raccoglie i dati che inserisci nel modulo di contatto. I campi sono:</p>
     <ul>
       <li>nome e cognome, obbligatorio;</li>
       <li>indirizzo email, obbligatorio;</li>
       <li>telefono, facoltativo;</li>
       <li>azienda o ente, facoltativo;</li>
-      <li>i progetti che ti interessano, facoltativo;</li>
-      <li>il messaggio, facoltativo.</li>
+      <li>progetti che ti interessano, facoltativo;</li>
+      <li>messaggio, facoltativo.</li>
     </ul>
     <p>
       Il sito non usa strumenti di statistica né cookie di profilazione. Per i cookie trovi i dettagli nella <a href="/cookie-policy/"
@@ -46,8 +46,9 @@ const schema = pageGraph('privacy-policy');
 
     <h2>I tuoi diritti</h2>
     <p>
-      Puoi chiedere in ogni momento di accedere ai tuoi dati, di correggerli o di cancellarli scrivendo a
-      <a href={`mailto:${site.email}`}>{site.email}</a>.
+      Puoi chiedere in ogni momento di accedere ai tuoi dati, di correggerli o di cancellarli, e di esercitare gli altri diritti previsti dagli
+      articoli 15–22 del GDPR, scrivendo a <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="legale-email" data-cta-location="sezione" data-contact-method="email">{site.email}</a>. Puoi anche presentare reclamo al Garante per la
+      protezione dei dati personali.
     </p>
   </LegalPage>
 </BaseLayout>

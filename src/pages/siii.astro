@@ -126,7 +126,7 @@ const phrases: Record<string, string> = {
             ))
           }
           <span class="compare__mode t-label compare__mode--tour">Tour 360° · ti guardi intorno</span>
-          <span class="compare__mode t-label compare__mode--siii">SIII · apri, guardi, chiedi, prenoti</span>
+          <span class="compare__mode t-label compare__mode--siii">SIII · apri, esplori, chiedi, prenoti</span>
         </div>
         <figcaption class="compare__caption">
           <span class="compare__cap compare__cap--tour">Nel tour 360° chi visita si guarda intorno e passa da un punto di vista all’altro.</span>
@@ -180,7 +180,10 @@ const phrases: Record<string, string> = {
         {
           actions.map(([verb, rest], i) => (
             <li class="actions__item" data-reveal style={`--stagger: ${i % 2}`}>
-              <span class="actions__verb">{verb}</span> <span class="actions__rest">{rest}</span>
+              <span class="actions__verb">
+                {verb}
+                <span class="sr-only">,</span>
+              </span> <span class="actions__rest">{rest}</span>
             </li>
           ))
         }
@@ -204,7 +207,7 @@ const phrases: Record<string, string> = {
       },
       {
         title: 'Vendita diretta',
-        text: 'Prodotti e servizi si mostrano nel loro contesto reale, e il passo successivo parte dallo stesso ambiente: una richiesta, una prenotazione, un’azione commerciale.',
+        text: 'Prodotti e servizi si mostrano nel loro contesto reale. E il passo successivo parte dallo stesso ambiente: una richiesta, una prenotazione, un’azione commerciale.',
       },
       {
         title: 'Uno strumento commerciale sempre accessibile',
@@ -236,7 +239,7 @@ const phrases: Record<string, string> = {
                 <h3 class="example__name">{ex.name}</h3>
                 <p class="example__place t-label">
                   <span>{ex.place}</span>
-                  <span>{ex.portal}</span>
+                  <span class="t-as-is">{ex.portal}</span>
                 </p>
                 <p class="example__phrase">{phrases[ex.id]}</p>
                 <a

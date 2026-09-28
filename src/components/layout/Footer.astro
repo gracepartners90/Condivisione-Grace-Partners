@@ -3,6 +3,7 @@
  * Footer (docs/ux/sitemap.md §6, docs/contenuti/microcopy.md §3).
  * Mandatory company data (art. 2250 c.c.) render only once confirmed in site.ts.
  */
+import { nb } from '../../lib/text';
 import Wordmark from '../ui/Wordmark.astro';
 import Arrow from '../ui/Arrow.astro';
 import { nav, site, portals, office } from '../../data/site';
@@ -17,8 +18,8 @@ const legal = [
 ].filter(Boolean) as string[];
 
 const portalLinks = [
-  { ...portals.cittaDigitali, id: 'cittadigitali', cta: 'footer-portale-citta-digitali' },
-  { ...portals.pugliaDigitale, id: 'lapugliadigitale', cta: 'footer-portale-puglia-digitale' },
+  { ...portals.cittaDigitali, id: 'citta-digitali', cta: 'footer-portale-citta-digitali' },
+  { ...portals.pugliaDigitale, id: 'puglia-digitale', cta: 'footer-portale-puglia-digitale' },
 ];
 ---
 
@@ -54,7 +55,7 @@ const portalLinks = [
           </p>
           <ul role="list">
             <li>
-              <a href={site.phone.href} data-track="contact_click" data-cta-id="footer-telefono" data-cta-location="footer" data-contact-method="telefono">{site.phone.display}</a>
+              <a href={site.phone.href} data-track="contact_click" data-cta-id="footer-telefono" data-cta-location="footer" data-contact-method="telefono">{nb(site.phone.display)}</a>
             </li>
             <li>
               <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="footer-email" data-cta-location="footer" data-contact-method="email">{site.email}</a>
@@ -79,8 +80,7 @@ const portalLinks = [
                   data-outbound-type="portale"
                   data-destination-id={p.id}
                 >
-                  {p.display}
-                  <span class="sr-only">, portale di {p.name} (si apre in una nuova scheda)</span>
+                  {p.display}<span class="sr-only">, portale di {p.name} (si apre in una nuova scheda)</span>
                   <Arrow dir="external" />
                 </a>
               </li>

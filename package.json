@@ -13,7 +13,8 @@
     "brand": "node scripts/generate-brand.mjs",
     "maps": "node scripts/generate-maps.mjs",
     "og": "node scripts/og/build-og.mjs",
-    "check:seo": "node scripts/seo-check.mjs dist https://itnode.it"
+    "check:seo": "node scripts/seo-check.mjs dist https://itnode.it",
+    "check:launch": "node scripts/prelaunch-check.mjs dist"
   },
   "engines": {
     "node": ">=22.12.0"

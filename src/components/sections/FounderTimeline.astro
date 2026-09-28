@@ -48,7 +48,9 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
         stages.map((stage, i) => (
           <li class:list={['founder__stage', { 'founder__stage--now': stage.now }]} data-reveal style={`--stagger: ${i}`}>
             <span class="founder__tick" aria-hidden="true" />
-            <p class="founder__when t-label">{stage.datetime ? <time datetime={stage.datetime}>{stage.when}</time> : stage.when}</p>
+            <p class="founder__when t-label" aria-hidden={stage.when === '—' ? 'true' : undefined}>
+              {stage.datetime ? <time datetime={stage.datetime}>{stage.when}</time> : stage.when}
+            </p>
             {stage.links ? (
               <ul role="list" class="founder__what founder__links">
                 {stage.links.map((l) => (

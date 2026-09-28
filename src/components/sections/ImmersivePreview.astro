@@ -96,7 +96,6 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
                 class="document__btn"
                 data-node-toggle
                 aria-expanded="false"
-                aria-controls={`${id}-label-${i + 1}`}
                 aria-label={`${i + 1} – ${h.label}`}
               >
                 <span class="document__ring" aria-hidden="true" />
@@ -240,8 +239,8 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
     transition: opacity var(--dur-250) var(--ease-out);
   }
 
-  .document__node:hover .document__callout,
-  .document__btn:focus-visible + .document__callout,
+  /* The callout appears only when the node is opened (WCAG 1.4.13): hover and focus only
+     grow the ring. The legend under the photo is the full alternative. */
   .document__btn[aria-expanded='true'] + .document__callout {
     opacity: 1;
   }

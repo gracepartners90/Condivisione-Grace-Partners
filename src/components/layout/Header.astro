@@ -4,6 +4,7 @@
  * Sticky from load (no layout jump); after the first scroll it gains a hairline.
  * Below 1024 px the navigation moves into a full-screen <dialog>.
  */
+import { nb } from '../../lib/text';
 import Wordmark from '../ui/Wordmark.astro';
 import Cta from '../ui/Cta.astro';
 import { nav, site } from '../../data/site';
@@ -83,7 +84,7 @@ const menuItems = [
       <div class="mobile-menu__foot">
         <Cta href={ctaHref} label="Parliamone" variant="primary" arrow={hasForm ? 'down' : 'right'} ctaId="menu-mobile-parliamone" location="menu-mobile" />
         <ul role="list" class="mobile-menu__contacts t-label">
-          <li><a href={site.phone.href} data-track="contact_click" data-cta-id="menu-mobile-telefono" data-cta-location="menu-mobile" data-contact-method="telefono">Chiama {site.phone.display}</a></li>
+          <li><a href={site.phone.href} data-track="contact_click" data-cta-id="menu-mobile-telefono" data-cta-location="menu-mobile" data-contact-method="telefono">Chiama {nb(site.phone.display)}</a></li>
           <li><a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="menu-mobile-email" data-cta-location="menu-mobile" data-contact-method="email">Scrivi a {site.email}</a></li>
         </ul>
       </div>

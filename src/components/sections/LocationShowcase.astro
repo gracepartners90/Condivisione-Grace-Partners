@@ -77,7 +77,9 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
                 </div>
                 <div class="door__body">
                   <h3 class="door__name">{d.name}</h3>
-                  <p class="door__coords t-label">{formatCoords(d)}</p>
+                  <p class="door__coords t-label" aria-hidden="true">
+                    {formatCoords(d)}
+                  </p>
                   <p class="door__line">{d.line}</p>
                   <a
                     class="door__cta"
@@ -93,7 +95,7 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
                     Esplora<span class="sr-only"> {d.name} su {d.display} (si apre in una nuova scheda)</span>
                     <Arrow dir="external" />
                   </a>
-                  <p class="door__domain t-label" aria-hidden="true">
+                  <p class="door__domain t-label t-as-is" aria-hidden="true">
                     {d.display}
                   </p>
                 </div>
@@ -119,7 +121,7 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
                 <h3 class="city__name">{c.name}</h3>
                 <p class="city__meta t-label">
                   {c.region && <span>{c.region}</span>}
-                  <span>{formatCoords(c)}</span>
+                  <span aria-hidden="true">{formatCoords(c)}</span>
                 </p>
                 <p class="city__line">{c.line}</p>
                 <a
@@ -240,6 +242,10 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
   .door__coords,
   .door__domain {
     color: var(--fg-2);
+  }
+
+  .door__domain {
+    overflow-wrap: anywhere;
   }
 
   .door__line {

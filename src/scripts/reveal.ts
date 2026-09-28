@@ -29,4 +29,13 @@ if (elements.length > 0 && 'IntersectionObserver' in window && !reduceMotion) {
     { rootMargin: '0px 0px -8% 0px', threshold: 0.1 },
   );
   elements.forEach((el) => observer.observe(el));
+
+  // Keyboard users never chase an invisible focus: reveal the block that receives it.
+  document.addEventListener('focusin', (event) => {
+    let el = (event.target as Element).closest<HTMLElement>('[data-reveal], .aperture');
+    while (el) {
+      el.classList.add('is-inview', 'is-revealed');
+      el = el.parentElement?.closest<HTMLElement>('[data-reveal], .aperture') ?? null;
+    }
+  });
 }

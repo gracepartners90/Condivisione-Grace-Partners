@@ -83,7 +83,15 @@ const locations = pugliaPlaces.map((p) => ({
       <div class="project__text" data-reveal>
         <p>
           Puglia Digitale è una piattaforma interattiva immersiva per la valorizzazione territoriale, online su
-          <a href={portal.url} target="_blank" rel="noopener">{portal.display}<span class="sr-only"> (si apre in una nuova scheda)</span></a>. È un
+          <a
+            href={portal.url}
+            target="_blank"
+            rel="noopener"
+            data-track="outbound_click"
+            data-cta-id="pd-progetto-portale"
+            data-cta-location="sezione"
+            data-outbound-type="portale"
+            data-destination-id="puglia-digitale">{portal.display}<span class="sr-only"> (si apre in una nuova scheda)</span></a>. È un
           progetto di destination marketing che digitalizza e valorizza città, borghi e imprese della Puglia attraverso esperienze immersive, dalla costa
           all’entroterra. Tra i luoghi da esplorare ci sono Acquaviva delle Fonti, Gravina in Puglia e Monopoli. Con Puglia Digitale, ITnode porta online
           luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.
@@ -169,13 +177,6 @@ const locations = pugliaPlaces.map((p) => ({
     surface="notte"
     location="chiusura"
     layout="stack"
-    secondary={{
-      label: 'Visita il portale',
-      srText: ' Puglia Digitale',
-      href: portal.url,
-      id: 'pd-chiusura-portale',
-      destinationId: 'puglia-digitale',
-    }}
   >
     <ContactForm
       formId="richiesta-puglia-digitale"
@@ -183,7 +184,7 @@ const locations = pugliaPlaces.map((p) => ({
       intro="Raccontaci la tua impresa: ti spieghiamo come entrare in Puglia Digitale."
       preselect={['puglia-digitale']}
       messageHint="In quale città lavori e di cosa si occupa la tua attività?"
-      successActions={[{ label: 'Visita il portale', href: portal.url, srText: ' Puglia Digitale' }]}
+      successActions={[{ label: 'Visita il portale', href: portal.url, destinationId: 'puglia-digitale', srText: ' Puglia Digitale' }]}
       columns={2}
     />
   </CTASection>

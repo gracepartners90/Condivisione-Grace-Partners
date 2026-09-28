@@ -27,6 +27,11 @@ Lezioni apprese e pattern. Fatti e decisioni ufficiali stanno in `docs/` (soprat
 - Senza `novalidate`, se ci sono campi `required` vuoti il browser non genera `submit`: la validazione personalizzata non parte (verificato).
 - Misurare le headline in Chromium con il font reale (`@fontsource-variable/*` da npm) prima di dare numeri sul reflow (Appendice B). Con font diversi i risultati cambiano di molto.
 - `pkill -f "<pattern>"` uccide anche la shell che contiene il pattern: usa `cmd & PID=$!` e poi `kill $PID`.
+- **QA del sito costruito (Fase 5).**
+  - «Nessuno scorrimento orizzontale» non vede il testo tagliato da sezioni con `overflow: clip/hidden`. Serve il confronto riga per riga con il contenitore che ritaglia, con e senza le spaziature di 1.4.12 (funzione nell'Appendice della review `docs/review/2026-09-28-sito-accessibilita-ux-designer.md`).
+  - Giro di Tab per la geometria: sempre con `reducedMotion: 'reduce'`, perché lo scroll fluido falsa le coordinate. Per riconoscere la fine del giro, marca gli elementi visitati (`data-*`). Il ritardo del reveal va misurato a parte, con il movimento attivo.
+  - Prova di 1.4.13: hover sul nodo, poi puntatore sulla didascalia; focus sul nodo, poi Esc.
+  - Prima di proporre una correzione, provala in pagina iniettando CSS e DOM: così la review dice «provata», non «dovrebbe».
 
 ## Pattern approvati o condivisi
 - CTA dell'header «Parliamone» → `#richiesta` sulle pagine con form, `/contatti/` altrove (condiviso con cro-specialist).
@@ -34,6 +39,13 @@ Lezioni apprese e pattern. Fatti e decisioni ufficiali stanno in `docs/` (soprat
 - Menu mobile in `<dialog>` modale (scelta del codice): «Chiudi» dentro il dialog nella posizione di «Menu». Servono il blocco dello scroll via `:has()` e il focus al bersaglio sulle ancore della stessa pagina.
 - Marquee legato allo scroll: il criterio 2.2.2 non si applica e non serve la pausa (confermato come owner dell'accessibilità).
 - Sezioni che traslano con lo scroll (la timeline del fondatore): ammesse solo senza elementi focalizzabili nella parte che si muove.
+- Didascalie sui nodi delle foto: si aprono solo con clic, tocco o tastiera (`aria-expanded`), mai su hover o focus. Così 1.4.13 non si applica. Proposta del 2026-09-28, in attesa della scelta tra opzione A e B.
+- Numeri grandi con `nowrap` (display): `<wbr>` dopo il separatore delle migliaia e `white-space: normal`. Il layout di base non cambia e con la spaziatura del testo non si taglia nulla.
+- Link in linea: niente `padding-block` per ingrandire l'area di tocco se stanno su righe consecutive, perché le aree si sovrappongono. Va bene solo per un link da solo sulla sua riga.
+- Decisioni sulle voci delegate da copywriter-content (2026-09-28):
+  - sì al separatore `sr-only` nei titoli su due righe;
+  - `aria-hidden` su coordinate e trattino della timeline;
+  - la riga «Preferisci parlarne a voce?» resta anche su /contatti/.
 
 ## Da tenere d'occhio
 - Ordine diverso tra desktop e mobile nelle composizioni della direzione visiva (per esempio le porte dei luoghi): un solo DOM non può seguire due ordini.

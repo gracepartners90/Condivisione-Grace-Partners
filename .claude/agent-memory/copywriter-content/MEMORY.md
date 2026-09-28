@@ -22,5 +22,12 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Gli H2 descrittivi della mappa SEO si possono tenere come heading piccoli, con lo statement creativo in `<p>` grande: tiene insieme SEO e art direction.
 - Asset: ingrandire gli angoli delle immagini per cercare watermark (trovato il segno di Gemini su 3 foto su 5).
 
+## QA sul sito costruito (lezione del 2026-09-28, Fase 5)
+- Estrazione con Playwright (`createRequire('/opt/node22/lib/node_modules/')`): `innerText` applica il `text-transform` del CSS (maiuscolo) e include i testi `sr-only`; per il testo sorgente usare `textContent`, per i nomi accessibili `locator('body').ariaSnapshot()`. Una scansione dei nodi di testo e degli attributi (alt, aria-label, content, data-msg-*) trova apici dritti e spazi errati in un colpo solo.
+- Trappole ricorrenti del markup Astro: un a capo tra `</a>` e il punto produce « .» visibile; un a capo prima di `<span class="sr-only">, …` produce « ,» nel nome accessibile. Controllarli sempre.
+- Confrontare il sito con il copy deck riga per riga: la sessione principale può reintrodurre il testo originale del cliente che il copy deck aveva ammorbidito per veridicità (caso «Ha creato Città Digitali e Puglia Digitale», anche nel JSON-LD).
+- Prima di scrivere una review, leggere quelle già in `docs/review/` della stessa data (brand-strategist, seo-technical) e rimandare alla loro numerazione invece di duplicare.
+- Una citazione verbatim riusata su un’altra pagina può perdere l’antecedente («È questo il futuro…»): verificare il senso nel nuovo contesto.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

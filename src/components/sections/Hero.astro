@@ -64,7 +64,7 @@ const secondLines = second.split('\n');
         {caption && (
           <p class="hero-home__caption t-label">
             {caption.split('\n').map((line) => (
-              <span>{line}</span>
+              <span aria-hidden={/\d°/.test(line) ? 'true' : undefined}>{line}</span>
             ))}
           </p>
         )}
@@ -78,7 +78,7 @@ const secondLines = second.split('\n');
           <span class:list={['hero-line__name', `hero-line__name--${nameSize}`]}>{name}</span>
           {descriptor && (
             <>
-              {' '}
+              <span class="sr-only"> – </span>
               <span class="hero-line__descriptor">{descriptor}</span>
             </>
           )}

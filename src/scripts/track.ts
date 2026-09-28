@@ -26,18 +26,30 @@ export function track(event: string, params: Params = {}) {
 
 const toSnake = (key: string) => key.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`);
 
+// Only the documented parameters leave the element (docs/cro/piano-misurazione.md §5).
+const KEYS = ['ctaId', 'ctaLocation', 'interest', 'outboundType', 'destinationId', 'contactMethod', 'navItem', 'navLocation'] as const;
+
+/** Visible label only, without the text meant for screen readers. */
+function visibleLabel(el: HTMLElement) {
+  const label = el.querySelector('.cta__label');
+  if (label) return label.textContent ?? '';
+  const clone = el.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
+  return clone.textContent ?? '';
+}
+
 // One delegated listener for every element marked [data-track].
 document.addEventListener(
   'click',
   (event) => {
     const el = (event.target as Element | null)?.closest<HTMLElement>('[data-track]');
     if (!el) return;
-    const { track: name, ...rest } = el.dataset;
+    const name = el.dataset.track;
     if (!name) return;
 
     const params: Params = {};
-    for (const [key, value] of Object.entries(rest)) params[toSnake(key)] = value;
-    params.cta_text = (el.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 100);
+    for (const key of KEYS) if (el.dataset[key]) params[toSnake(key)] = el.dataset[key];
+    params.cta_text = visibleLabel(el).replace(/\s+/g, ' ').trim().slice(0, 100);
 
     if (name !== 'contact_click' && el instanceof HTMLAnchorElement && el.href) {
       params.link_url = el.href;

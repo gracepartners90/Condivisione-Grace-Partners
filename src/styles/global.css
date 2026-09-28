@@ -79,6 +79,7 @@ h3,
 h4 {
   font-weight: var(--fw-strong);
   text-wrap: balance;
+  /* Safety net only: nothing changes when words fit (WCAG 1.4.12 at 320 px). */
   overflow-wrap: break-word;
 }
 
@@ -245,6 +246,11 @@ a:hover {
 
 .t-muted {
   color: var(--fg-2);
+}
+
+/* Domains and email addresses keep their case inside upper-case labels. */
+.t-as-is {
+  text-transform: none;
 }
 
 .tnum {

@@ -4,6 +4,7 @@
  * - `band`: closing statement with a CTA and quick contacts (Home).
  * - `form`: closing statement followed by the contact form (line pages).
  */
+import { nb } from '../../lib/text';
 import Passage from '../ui/Passage.astro';
 import Cta from '../ui/Cta.astro';
 import { site } from '../../data/site';
@@ -71,12 +72,12 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
             <ul role="list" class="cta-section__contacts t-label">
               <li>
                 <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${trackPrefix}-email`} data-cta-location={location} data-contact-method="email">
-                  Scrivi a {site.email}
+                  Scrivi a <span class="t-as-is">{site.email}</span>
                 </a>
               </li>
               <li>
                 <a href={site.phone.href} data-track="contact_click" data-cta-id={`${trackPrefix}-telefono`} data-cta-location={location} data-contact-method="telefono">
-                  Chiama {site.phone.display}
+                  Chiama {nb(site.phone.display)}
                 </a>
               </li>
             </ul>

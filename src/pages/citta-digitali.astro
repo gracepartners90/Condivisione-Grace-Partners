@@ -90,7 +90,7 @@ const cities = italyPlaces.map((p) => ({
     statement="Da Varese a Caltanissetta, passando per Altamura: città diverse, un’unica rete da esplorare."
     locations={cities}
     surface="notte"
-    location="portale"
+    location="luoghi"
   />
 
   <BenefitsSection
@@ -144,7 +144,7 @@ const cities = italyPlaces.map((p) => ({
       intro="Raccontaci la tua attività: ti spieghiamo come entrare in Città Digitali."
       preselect={['citta-digitali']}
       messageHint="In quale città lavori e di cosa si occupa la tua attività?"
-      successActions={[{ label: 'Visita il portale', href: portal.url, srText: ' Città Digitali' }]}
+      successActions={[{ label: 'Visita il portale', href: portal.url, destinationId: 'citta-digitali', srText: ' Città Digitali' }]}
       columns={2}
     />
   </CTASection>

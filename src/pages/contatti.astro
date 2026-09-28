@@ -79,7 +79,7 @@ const portalRows = [
                 {site.address.street}<br />
                 {site.address.postalCode}
                 {site.address.locality} ({site.address.province})
-                <span class="ct-card__coords t-label">{office.name} · {formatCoords(office)}</span>
+                <span class="ct-card__coords t-label" aria-hidden="true">{office.name} · {formatCoords(office)}</span>
                 <a
                   class="ct-card__map"
                   href={mapsUrl}
@@ -146,12 +146,9 @@ const portalRows = [
       </figure>
       <div class="ct-person__body">
         <h2 id="persona-title" class="ct-person__name">
-          {founder.name}
+          {founder.name}<span class="sr-only">,</span>
           <span class="ct-person__role">{founder.role}</span>
         </h2>
-        <blockquote class="ct-person__quote">
-          <p>«È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno.»</p>
-        </blockquote>
       </div>
     </div>
   </section>
@@ -159,6 +156,7 @@ const portalRows = [
   <section id="portali" class="ct-portals surface-notte" aria-labelledby="portali-title">
     <div class="wrap">
       <h2 id="portali-title" class="ct-portals__title t-label">I portali</h2>
+      <span id="nuova-scheda" hidden>Si apre in una nuova scheda.</span>
       <ul role="list" class="ct-portals__list">
         {
           portalRows.map((p) => (
@@ -168,19 +166,19 @@ const portalRows = [
                   href={p.url}
                   target="_blank"
                   rel="noopener"
+                  aria-describedby="nuova-scheda"
                   data-track="outbound_click"
                   data-cta-id={`contatti-portale-${p.id}`}
                   data-cta-location="portali"
                   data-outbound-type="portale"
                   data-destination-id={p.id}
                 >
-                  {p.name}
-                  <span class="sr-only">, portale {p.display}{newTab}</span>
+                  {p.name}<span class="sr-only">, portale {p.display}</span>
                   <Arrow dir="external" class="ct-portal__arrow" />
                 </a>
               </h3>
               <p class="ct-portal__phrase">{p.phrase}</p>
-              <p class="ct-portal__url t-label" aria-hidden="true">
+              <p class="ct-portal__url t-label t-as-is" aria-hidden="true">
                 {p.display}
               </p>
               <a class="ct-portal__internal" href={p.internal.href}>
@@ -388,13 +386,6 @@ const portalRows = [
     letter-spacing: 0;
   }
 
-  .ct-person__quote {
-    margin: 0;
-    font-size: var(--fs-display-s);
-    line-height: var(--lh-display-s);
-    letter-spacing: var(--tr-display-s);
-    max-width: 30ch;
-  }
 
   @media (min-width: 64em) {
     .ct-person__figure {

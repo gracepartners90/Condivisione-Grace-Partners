@@ -82,7 +82,8 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
   // Hide the cover on the first rendered frame, not on 'play': no black flash.
   video.addEventListener('playing', () => (root.dataset.ready = ''), { once: true });
 
-  video.addEventListener('play', () => {
+  // Counted on the first rendered frame: 'play' fires even when the file then fails to load.
+  video.addEventListener('playing', () => {
     if (tracked) return;
     tracked = true;
     track('video_start', { video_id: videoId, video_title: videoTitle, video_trigger: startedBy ?? 'utente' });
