@@ -90,30 +90,28 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
 {
   variant === 'sticky' && (
     <script>
-      // Decorative 01/05 indicator: the last item whose top has passed the middle of the
-      // viewport. Recomputed from positions (also after jumps: anchors, Home key, history),
-      // at most once per frame and only while the section is on screen.
+      // Decorative 01/05 indicator: the last item whose top has passed the middle of the viewport.
+      // One IntersectionObserver whose root is the whole area above that line (huge top margin,
+      // bottom half cut off): an item intersects it exactly when its top is above the middle, also
+      // after jumps (anchors, Home key, history). No scroll listener, no layout reads.
       document.querySelectorAll<HTMLElement>('.benefits--sticky').forEach((section) => {
         const out = section.querySelector<HTMLElement>('[data-benefits-current]');
         const items = [...section.querySelectorAll<HTMLElement>('[data-benefit]')];
         if (!out || !items.length || !('IntersectionObserver' in window)) return;
-        let frame = 0;
-        const update = () => {
-          frame = 0;
-          const middle = window.innerHeight / 2;
-          const current = items.filter((item) => item.getBoundingClientRect().top < middle).at(-1) ?? items[0];
-          const value = current.dataset.benefit ?? '';
-          if (out.textContent !== value) out.textContent = value;
-        };
-        const onScroll = () => {
-          if (!frame) frame = requestAnimationFrame(update);
-        };
-        new IntersectionObserver(([entry]) => {
-          if (entry.isIntersecting) {
-            window.addEventListener('scroll', onScroll, { passive: true });
-            update();
-          } else window.removeEventListener('scroll', onScroll);
-        }).observe(section);
+        const passed = new Set<Element>();
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) passed.add(entry.target);
+              else passed.delete(entry.target);
+            }
+            const current = items.filter((item) => passed.has(item)).at(-1) ?? items[0];
+            const value = current.dataset.benefit ?? '';
+            if (out.textContent !== value) out.textContent = value;
+          },
+          { rootMargin: '100000px 0px -50% 0px' },
+        );
+        items.forEach((item) => observer.observe(item));
       });
     </script>
   )

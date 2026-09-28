@@ -612,6 +612,9 @@ Esempio per Cloudflare (file `public/_headers`) [DA VERIFICARE sull'account scel
 - **`Cache-Control` sulla regola `/*`: no.** Se due regole impostano lo stesso header, i valori si uniscono [DA VERIFICARE su Workers].
 - **Protocolli e compressione:** Brotli o zstd per i testi, HTTP/2 e HTTP/3 attivi.
 - **Redirect e normalizzazioni:** secondo le specifiche SEO §1.4.
+- **Server Node dell'anteprima (`scripts/serve.mjs`, ADR 004).** Verificato il 2026-09-28: applica le regole di questa tabella da `_headers`, comprime all'avvio (TTFB locale circa 1 ms) e risponde con ETag e 304.
+  - Non gestisce ancora le richieste `Range`: prima di servire il video da `/video/` va aggiunto il blocco della rimisura, osservazione 6.
+  - Il TTFB reale da Railway (una sola regione) si misura sull'anteprima pubblicata.
 
 ## 12. Adeguamenti al codice esistente (per la sessione principale)
 

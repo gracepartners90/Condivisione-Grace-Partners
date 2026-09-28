@@ -14,7 +14,9 @@ fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, d
 
 **In breve**
 - **Bloccante 1 risolto.** Su `/siii/`, con throttling applicato, l'LCP passa da 1,98 a **1,04 s** e l'LCP − FCP da 935 a **0 ms**, in 5 corse su 5. Tutte e cinque le pagine misurate hanno LCP = FCP. Nessun elemento `[data-reveal]` o `.aperture` risulta nascosto nella prima viewport, in nessun fotogramma del caricamento (5 pagine × 4 viewport).
-- **Budget rispettato su tutti i template:** tempi, pesi, JavaScript, font, terze parti e gli 8 controlli statici. Nessuna regressione oltre il 10% su LCP o INP.
+- **Budget rispettato su tutti i template:** tempi, pesi, JavaScript, font, terze parti e gli 8 controlli statici.
+  - Nessuna regressione dell'LCP.
+  - Sull'INP il caso peggiore sale da 128 a 200 ms solo perché ora il campione è più ampio: la build della review, rimisurata nelle stesse condizioni, arriva a 184 ms (§5).
 - **Preload del font: decido di toglierlo** (riga 42 di `BaseLayout.astro`).
   - Con throttling applicato l'LCP migliora di 151 ms sulla home e di 177 ms su `/siii/`. Con quello simulato resta pari sulla home e migliora di 145 ms su `/siii/`.
   - Il sorgente di Chromium spiega perché: un font in preload blocca il primo rendering.
@@ -23,9 +25,11 @@ fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, d
 - **Contatore 01/05 di Città Digitali:** conforme al budget. Costa 37–116 ms di main thread ogni 2 s circa di scroll nella sezione (CPU 4x), senza task lunghi. Propongo una variante senza listener di scroll, provata: stesso comportamento, circa due terzi di costo in meno.
 - **Variante «in pubblicazione»:** non cambia né l'LCP né il CLS. Stesse scatole, stesse immagini, 0 byte per i segnaposto.
 - **Nuovo, non bloccante.** Il reveal a righe genera piccoli spostamenti di layout durante la lettura (CLS fino a 0,016), già presenti nella build della review. Una correzione CSS di 4 righe, provata, li azzera.
-- **Due correzioni alla review:**
+- **Anteprima su Railway (ADR 004):** il server è conforme su cache e compressione, e con esso i tempi di Lighthouse restano gli stessi. Manca il supporto alle richieste `Range`, che servirà quando il video passerà in `/video/` (osservazione 6, correzione provata).
+- **Tre correzioni alla review** (§11):
   - la traccia dello scroll del §2.6 era stata fatta su una pagina ferma: lo scroll touch sintetico non scorre (§6);
-  - il costo per l'identità del preload era una stima: ora è misurato (§4).
+  - il costo per l'identità del preload era una stima: ora è misurato (§4);
+  - il caso peggiore dell'INP del menu si basava su un solo campione (§5).
 
 ## 1. Condizioni di test
 
@@ -48,9 +52,10 @@ fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, d
   - INP secondo il metodo del `budget.md` §6.4;
   - tracce del main thread;
   - controllo del reveal fotogramma per fotogramma, con la rete del throttling applicato di Lighthouse (latenza 562,5 ms, 1,47 Mbit/s).
-- **Limiti noti, invariati rispetto alla review:**
-  - il TTFB di laboratorio (65–234 ms) comprende la compressione Brotli fatta a ogni richiesta;
-  - il video su `railway.app` non è raggiungibile (403 dal proxy).
+- **Limiti noti:**
+  - il TTFB di laboratorio (65–234 ms) comprende la compressione Brotli fatta a ogni richiesta. Non sposta le mediane: con `scripts/serve.mjs` dell'ADR 004, che comprime all'avvio (TTFB locale circa 1 ms), home e `/siii/` danno gli stessi tempi (§9);
+  - il video su `railway.app` non è raggiungibile (403 dal proxy);
+  - **commit arrivati durante le misure.** `c025181` (12:33, fedeltà UI e accessibilità) e `9703461` (12:45, anteprima su Railway) cambiano `src/`, ma `dist/` non è stato ricostruito: tutte le misure riguardano `7c5f747`. Le modifiche sono piccole e non toccano `reveal.ts`, `BaseLayout.astro`, il contatore né lo script del menu; `Passage` riceve solo `overflow-wrap: anywhere`. Il rischio per le conclusioni è basso; la rimisura breve dopo la prossima build lo chiude.
 
 ## 2. Osservazione 1 della review: verifica
 
@@ -85,9 +90,11 @@ fonti: [docs/review/2026-09-28-sito-performance-web-performance-specialist.md, d
 
 - **Budget §2:** tutti i limiti e gli obiettivi sono rispettati.
 - **LCP simulato.** Il modello restituisce valori a gradini (1,36, 1,51, 1,59, 1,66 e 1,73 s): scarti di un gradino tra review e rimisura non indicano una modifica.
-- **FCP di Città Digitali:** +0,08 s rispetto alla review (mediana di 10 corse; valori tra 1,27 e 1,54 s). L'LCP è invariato e l'obiettivo di 1,5 s è rispettato. Due cause misurate:
-  - la risposta del server di laboratorio, 175–225 ms contro 128–164 ms (la Brotli q11 sull'HTML più grande);
-  - in 3 corse su 10, il reflow forzato di `reveal.ts` prima del primo layout (§9).
+- **FCP di Città Digitali:** +0,08 s rispetto alla review (mediana di 10 corse). L'LCP è invariato e l'obiettivo di 1,5 s è rispettato.
+  - Le corse si dividono in due gruppi: 1,27–1,30 s e 1,37–1,41 s, più una anomala a 1,54 s con `benchmarkIndex` 1798.
+  - La causa non è isolata. Non dipende dal reflow forzato di `reveal.ts` (§9): le corse con il reflow valgono 1,30, 1,38 e 1,54 s, quelle senza arrivano anche a 1,37–1,41 s.
+  - Il TTFB del server di laboratorio non sposta le mediane di home e `/siii/` (§1); su questa pagina non l'ho verificato.
+  - Con throttling applicato l'FCP di Città Digitali è 1,01 s, contro 1,06 s nella review: nessun peggioramento reale.
 
 ### 3.2 Throttling applicato: la riga LCP − FCP
 
@@ -238,8 +245,8 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
 - **Contatore: conforme al budget.**
   - Nessun task oltre 50 ms è attribuibile: quello da 135 ms non si è ripetuto in altre 4 corse, dove il massimo è 17–22 ms.
   - Il costo, a coppie alternate nello stesso lotto, è di 37–116 ms ogni 2 s circa di scroll nella sezione, cioè 2–6 punti di main thread con CPU 4x, circa 1 ms per frame.
-  - Sull'INP l'effetto è trascurabile: lo scroll non è un'interazione, e il ritardo d'ingresso di un tap durante lo scroll è al massimo di un rAF (≤ 14 ms).
-- **Motion durante lo scroll.** Il `architettura.md` §6.5 dava le animazioni legate allo scroll come «sul compositor». Lo scroll resta fluido e senza task lunghi, ma il main thread ricalcola lo stile a ogni frame: circa 6,5 ms per frame con CPU 4x sulla home, contro 2 ms con movimento ridotto. È un costo accettabile e invariato rispetto alla build della review. Lo annoto nell'architettura e non propongo interventi per G4.
+  - Sull'INP l'effetto è trascurabile: lo scroll non è un'interazione, e il contatore aggiunge al ritardo d'ingresso di un tap durante lo scroll al massimo un rAF (≤ 14 ms).
+- **Motion durante lo scroll.** In `architettura.md` §6.5 le animazioni legate allo scroll erano date «sul compositor». Lo scroll resta fluido e senza task lunghi, ma il main thread ricalcola lo stile a ogni frame: circa 6,5 ms per frame con CPU 4x sulla home, contro 2 ms con movimento ridotto. È un costo accettabile e invariato rispetto alla build della review. Lo annoto nell'architettura e non propongo interventi per G4.
 
 ## 7. Variante «in pubblicazione» dei segnaposto
 
@@ -305,7 +312,7 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
 - **Motivazione.**
   - Il CLS sul campo conta anche gli spostamenti durante la lettura: lo scroll non è un input che li esclude.
   - Oggi siamo molto sotto l'obiettivo di 0,05, quindi non blocca.
-  - La correzione però costa 4 righe, ed era presente già nella build della review (0,0042 per spostamento sulla home).
+  - Il difetto c'era già nella build della review (0,0042 per spostamento sulla home), e la correzione costa 4 righe.
 - **Proposta.** Due varianti provate, entrambe con CLS 0, nessun ridimensionamento e layout finale identico al pixel (altezze di pagina e di ogni passage) su 7 combinazioni di pagina e viewport. Consiglio la prima, che lascia intatta la geometria della maschera.
 
 ```css
@@ -320,19 +327,19 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
 ```
 
   - Alternativa: sostituire padding e margini negativi con `clip-path: inset(-0.12em -0.5em)` sulla `.line`.
-  - ui-designer dia un'occhiata all'animazione una volta applicata: durante la salita le righe stanno già alla distanza finale, invece che 0,12 em più larghe.
+  - ui-designer dia un'occhiata all'animazione una volta applicata: durante la salita le righe stanno già alla distanza finale, invece che 0,12 em più distanziate.
 
 ### 3. [SUGGERIMENTO] Contatore 01/05: stessa funzione senza listener di scroll
 
 - **Dove.** `src/components/sections/BenefitsSection.astro:90-120`.
 - **Problema.**
   - Il costo è dentro il budget (§6).
-  - Il listener di scroll, però, fa `getBoundingClientRect()` di 5 voci a ogni frame e forza il ricalcolo dello stile dentro il rAF (93–95 volte in 2 s).
+  - Il listener di scroll, però, fa `getBoundingClientRect()` di 5 voci a ogni frame e forza il ricalcolo dello stile dentro il rAF (92–95 volte in 2 s).
   - Contraddice la regola 9 di `architettura.md`: «Nessun listener di scroll».
 - **Motivazione.** Variante provata su una copia della build, con 1440×900 e 1024×768:
   - stessi valori del contatore in circa 30 posizioni e dopo ogni salto (Home, End, àncora, ritorno in cima, cronologia);
   - main thread 479–557 ms contro 517–580 ms del contatore attuale e 432–493 ms senza contatore;
-  - in ognuna delle 3 coppie la variante costa meno, cioè circa due terzi del costo del contatore in meno.
+  - in ognuna delle 3 coppie la variante costa meno. In mediana aggiunge 24 ms alla pagina senza contatore, contro i 68 ms del contatore attuale: circa due terzi in meno.
 - **Proposta.** Sostituire lo `<script>` con:
 
 ```astro
@@ -388,14 +395,64 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
   - nessun elemento nascosto nella prima viewport, fotogramma per fotogramma;
   - CLS durante uno scroll completo con la rotella.
   - Li scrivo io su richiesta: gli script di questa rimisura sono pronti.
+  - Non serve più un `scripts/perf/serve.mjs`: il server di misura può essere `scripts/serve.mjs` dell'ADR 004, che dà gli stessi tempi (§9). Ho aggiornato il `budget.md` §6.
+
+### 6. [IMPORTANTE] `scripts/serve.mjs` (anteprima su Railway) ignora le richieste `Range`
+
+- **Dove.** `scripts/serve.mjs`, funzione `send()`; ADR 004.
+- **Problema.**
+  - Una richiesta `Range: bytes=0-1023` riceve 200 con il file intero, senza `Accept-Ranges`. Verificato con un MP4 di prova da 300 000 byte in `/video/`.
+  - Oggi il video viene ancora da `railway.app`, quindi non incide.
+  - Diventa un difetto quando il video passerà in `/video/` servito da questo server, come raccomandano l'osservazione 2 della review e l'ADR 001: Safari su iOS riproduce un video solo se il server risponde 206, e senza `Range` ogni spostamento nel video riscarica il file dall'inizio.
+- **Motivazione.** `architettura.md` §4.3 (`Range` → 206, obbligatorio per Safari su iOS) e osservazione 2 della review.
+- **Proposta.** Aggiungere in `send()`, subito prima di `const [encoding, body] = encodingFor(req, file);`, il blocco seguente. È provato su una copia:
+  - 206 con i byte giusti (verificati con `cmp`) per `0-1023`, `1000-` e `-500`;
+  - estremo oltre la fine ridotto alla dimensione del file;
+  - 416 per `300000-` e `5-2`;
+  - l'HTML compresso ignora `Range`, come consentito.
+
+```js
+  // Media (never compressed): single byte ranges. Safari on iOS plays a video only with 206.
+  if (!file.br) headers['Accept-Ranges'] = 'bytes';
+  const range = !file.br && status === 200 && /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range ?? ''));
+  if (range && (range[1] || range[2])) {
+    const size = file.body.length;
+    const start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2]));
+    const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+    if (start > end || start >= size) {
+      res.writeHead(416, { ...headers, 'Content-Range': `bytes */${size}` });
+      return res.end();
+    }
+    headers['Content-Range'] = `bytes ${start}-${end}/${size}`;
+    headers['Content-Length'] = end - start + 1;
+    res.writeHead(206, headers);
+    return res.end(req.method === 'HEAD' ? undefined : file.body.subarray(start, end + 1));
+  }
+```
+
+- Un file video da 25 MiB resta in memoria come il resto del sito: con un solo video è accettabile.
 
 ## 9. Note senza intervento
 
+- **ADR 004, anteprima su Railway: conferma di dominio su cache e compressione.** Ho misurato `scripts/serve.mjs` in locale sul `dist/` di `7c5f747`, con `DIST_DIR` e `PORT`.
+  - Header corretti:
+    - HTML con Brotli, `must-revalidate`, ETag e 304;
+    - gzip come ripiego;
+    - `/_astro/*` con `max-age=31536000, immutable`; OG e favicon a 86 400 s;
+    - 404 vera e 301 per la barra finale;
+    - `X-Robots-Tag: noindex` nell'anteprima.
+  - La compressione avviene all'avvio, non a ogni richiesta: TTFB locale 0,7–1,1 ms, contro 164–217 ms del mio server di laboratorio.
+  - Lighthouse con questo server (3 corse per metodo):
+    - home: simulato 1,18 / 1,65 s, applicato 1,04 s;
+    - `/siii/`: simulato 1,25 / 1,65 s, applicato 1,07 s.
+    - Sono gli stessi valori del server di laboratorio.
+  - **Conforme**, con la sola condizione dell'osservazione 6 per il video. Il TTFB reale da Railway (una sola regione) resta da misurare sull'anteprima pubblicata (osservazione 3 della review).
+
 - **Reflow forzato di `reveal.ts`.**
   - L'insight `forced-reflow` di Lighthouse lo segnala in 4 corse simulate su 35 (3 su Città Digitali, 1 sulla home) e in nessuna delle 19 corse con throttling applicato: 30–37 ms senza rallentamento, quando il modulo gira prima del primo layout.
-  - Con throttling applicato il modulo esegue dopo il primo paint (BaseLayout arriva a 0,68–1,27 s, `track.js` a 1,28–1,85 s, FCP a circa 1,0 s) e non incide su FCP, LCP e TBT.
+  - Con throttling applicato il modulo esegue dopo il primo paint e non incide su FCP, LCP e TBT: BaseLayout si scarica tra 0,68 e 1,27 s, `track.js` tra 1,28 e 1,85 s, e l'FCP è a circa 1,0 s.
   - Se il RUM mostrerà un FCP peggiore nelle visite ripetute, esiste un'alternativa senza letture di layout: un IntersectionObserver per la prima passata.
-- **Catena dei moduli `BaseLayout` → `track.js`.** `track.js` parte solo dopo l'arrivo di `BaseLayout`: 0,57 s di catena con throttling applicato. Il menu diventa utilizzabile a circa 1,85 s su 4G lenta. Nessun effetto su LCP e CLS (il pulsante compare senza spostamenti). Da valutare dopo il lancio.
+- **Catena dei moduli `BaseLayout` → `track.js`.** `track.js` parte solo dopo l'arrivo di `BaseLayout`: 0,57 s di catena con throttling applicato. Il menu diventa utilizzabile a circa 1,85 s su 4G lenta. Nessun effetto su LCP e CLS: il CLS è 0 anche nelle corse applicate, che comprendono quel momento. Da valutare dopo il lancio.
 - **Osservazione 9 (video in `loop`):** risolta. `video_complete` scatta al 97% dentro il listener `timeupdate` già esistente; il costo è trascurabile.
 - **`form.ts`:** `form_view` usa un IntersectionObserver a 21 soglie, che si disconnette alla prima vista. Nessun costo misurabile nelle interazioni (§5).
 
@@ -405,7 +462,7 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
 |---|---|---|
 | 1 | Reveal dello statement SIII [BLOCCANTE] | **risolta** (§2) |
 | 2 | Video su Railway non verificabile | **aperta**: condizione per il go-live, invariata |
-| 3 | Hosting e verifiche dopo il deploy | **aperta**: condizione per il go-live, invariata |
+| 3 | Hosting e verifiche dopo il deploy | **aperta**: condizione per il go-live. Il server dell'anteprima su Railway è conforme su cache e compressione (§9); il TTFB reale va misurato sull'anteprima pubblicata |
 | 4 | Automazione dei controlli | aperta (osservazione 5 qui) |
 | 5 | Preload del font | **decisa**: togliere (osservazione 1 qui) |
 | 6 | Prima apertura del menu | aggiornata con più campioni (osservazione 4 qui) |
@@ -426,8 +483,8 @@ Gli SVG inline pesano al massimo 7,0 KB (carta dell'Italia, limite 20 KB).
 **Conforme per G4.** Il bloccante è risolto, e tempi, pesi, JavaScript, font, terze parti, INP, CLS e controlli statici sono dentro il budget su tutti i template.
 
 Restano due condizioni per il go-live, invariate rispetto alla review:
-- i quattro controlli sul file video (osservazione 2 della review);
-- le verifiche sull'anteprima dell'hosting scelto (osservazione 3 della review).
+- i quattro controlli sul file video (osservazione 2 della review). Se il video passa in `/video/` servito da `scripts/serve.mjs`, la condizione comprende il supporto alle richieste `Range` (osservazione 6);
+- le verifiche sull'anteprima dell'hosting scelto (osservazione 3 della review), compreso il TTFB reale da Railway se la produzione resterà lì.
 
 Consigliati prima del go-live, non bloccanti:
 - togliere il preload, dopo l'assenso di creative-director (osservazione 1);
@@ -453,7 +510,8 @@ Consigliati prima del go-live, non bloccanti:
 - **creative-director:** accettare che, senza preload, il carattere di ripiego resti visibile 0,4–0,5 s in più sulla prima pagina con rete lenta (osservazione 1). In alternativa, chiedere di mantenere il preload: resta dentro soglie e obiettivi.
 - **Sessione principale:**
   - applicare l'osservazione 1 dopo l'assenso di creative-director e l'osservazione 2 dopo un'occhiata di ui-designer all'animazione; facoltativamente l'osservazione 3;
-  - poi richiamarmi per una rimisura breve di `/` e `/siii/`;
+  - applicare l'osservazione 6 a `scripts/serve.mjs` prima di spostare il video in `/video/`;
+  - poi ricostruire `dist/`, che comprenderà anche `c025181`, e richiamarmi per una rimisura breve di `/` e `/siii/`;
   - eseguire o far eseguire i controlli sul video (osservazione 2 della review).
 - **ui-designer, creative-director e l'owner dell'ADR 001:** allineare i propri documenti se il preload viene tolto (osservazione 1).
 - **Utente:** hosting e sede definitiva del video.

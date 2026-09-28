@@ -3,7 +3,7 @@
  * Serves the Astro build with the rules the site already declares for any host:
  * - dist/_headers (cache and security headers) and dist/_redirects (301s);
  * - trailing slashes (trailingSlash: 'always'), directory index, 404.html with status 404;
- * - brotli or gzip for text, compressed once at start-up; ETag and 304.
+ * - brotli or gzip for text, compressed once at start-up; ETag and 304; byte ranges for media.
  * Preview safety: `X-Robots-Tag: noindex` unless INDEXING=on; optional Basic auth with
  * PREVIEW_AUTH=user:password. /healthz answers without auth for the platform health check.
  * No dependencies. Usage: `npm start` (PORT from the environment, DIST_DIR to serve another build).
@@ -120,6 +120,22 @@ const send = (req, res, status, file, pathname) => {
   if (status === 200 && req.headers['if-none-match'] === file.etag) {
     res.writeHead(304, headers);
     return res.end();
+  }
+  // Media (never compressed): single byte ranges. Safari on iOS plays a video only with 206.
+  if (!file.br) headers['Accept-Ranges'] = 'bytes';
+  const range = !file.br && status === 200 && /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range ?? ''));
+  if (range && (range[1] || range[2])) {
+    const size = file.body.length;
+    const start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2]));
+    const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+    if (start > end || start >= size) {
+      res.writeHead(416, { ...headers, 'Content-Range': `bytes */${size}` });
+      return res.end();
+    }
+    headers['Content-Range'] = `bytes ${start}-${end}/${size}`;
+    headers['Content-Length'] = end - start + 1;
+    res.writeHead(206, headers);
+    return res.end(req.method === 'HEAD' ? undefined : file.body.subarray(start, end + 1));
   }
   const [encoding, body] = encodingFor(req, file);
   if (encoding) headers['Content-Encoding'] = encoding;

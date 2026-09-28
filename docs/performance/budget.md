@@ -133,7 +133,9 @@ Si verifica in Fase 5 e, durante lo sviluppo, a ogni modifica che tocca media, f
 
 ### 6.1 Condizioni di test (da riportare in ogni audit)
 
-- **Build di produzione** (`npm run build`), servita in locale con **Brotli** e con gli header di cache di produzione (`scripts/perf/serve.mjs`, §6.6).
+- **Build di produzione** (`npm run build`), servita in locale con **Brotli** e con gli header di cache di produzione.
+  - Dal 2026-09-28 il server di misura è `scripts/serve.mjs` dell'ADR 004: applica `_headers` e `_redirects` e comprime all'avvio.
+  - Verificato: dà le stesse mediane di Lighthouse del server del §6.6, che resta come riserva.
   - `astro preview` non va bene: non comprime e manda `Cache-Control: no-cache` (verificato).
 - **Strumenti:**
   - Lighthouse 13.5.0 via `npx`;
@@ -151,7 +153,7 @@ Si verifica in Fase 5 e, durante lo sviluppo, a ogni modifica che tocca media, f
 
 ```bash
 npm run build
-node scripts/perf/serve.mjs dist 8080 &   # Brotli + production cache headers
+DIST_DIR=dist PORT=8080 node scripts/serve.mjs &   # ADR 004: _headers, Brotli computed at start-up
 
 # 5 runs per URL, simulated throttling: take the median
 for i in 1 2 3 4 5; do
@@ -196,7 +198,7 @@ CHROME_PATH=/opt/pw-browsers/chromium npx -y lighthouse@13.5.0 http://127.0.0.1:
 | 7 | Nessun `rel="preload"` (§3; fino alla modifica è ammesso il solo preload di Schibsted); al massimo 2 file `.woff2` | come il n. 1, con `grep -o 'rel="preload"'` → ogni valore 0; `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
 | 8 | Nessun AVIF o WebP sopra i 200 KB, nessun JPEG di fallback sopra i 300 KB; nessuna foto in `public/` | `find dist -type f \( -name '*.avif' -o -name '*.webp' \) -size +200k` → vuoto |
 
-### 6.4 INP in laboratorio (Playwright)
+### 6.4 INP, scroll e reveal in laboratorio (Playwright)
 
 ```js
 // scripts/perf/inp.mjs — usage: node scripts/perf/inp.mjs <url> <selector> [<selector>…]
@@ -259,7 +261,9 @@ Riferimento del 2026-09-28, home a 412×823 su 3000 px: main thread al 37–39% 
   - problemi ordinati per impatto;
   - correzioni con il guadagno misurato.
 
-### 6.6 Server locale di misura (`scripts/perf/serve.mjs`)
+### 6.6 Server locale di misura di riserva
+
+Da usare solo se `scripts/serve.mjs` (ADR 004) non è disponibile. Comprime a ogni richiesta, quindi il TTFB locale sale a 65–234 ms, ma le mediane di Lighthouse restano le stesse (verificato il 2026-09-28).
 
 ```js
 // Minimal static server that mimics production: Brotli for text, long cache for hashed assets.
@@ -375,4 +379,7 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 - **creative-director:** assenso alla rimozione del preload del font (§3): il ripiego resta visibile 0,4–0,5 s in più sulla prima pagina con rete lenta.
 - **ui-designer:** la qualità AVIF q50 resta confermata; tabella dei font del design system da allineare se il preload viene tolto.
 - **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve anche per l'INP del menu e per il font senza preload.
-- **Sessione principale:** creare prima del lancio `scripts/perf/serve.mjs`, `lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura). `.perf/` è già in `.gitignore`.
+- **Sessione principale:**
+  - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4: reveal fotogramma per fotogramma e CLS durante la lettura;
+  - il server di misura c'è già: `scripts/serve.mjs`, a cui manca solo il supporto alle richieste `Range` per il video (rimisura, osservazione 6);
+  - `.perf/` è già in `.gitignore`.
