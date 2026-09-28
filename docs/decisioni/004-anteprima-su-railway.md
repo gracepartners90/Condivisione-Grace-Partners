@@ -1,7 +1,7 @@
 ---
 titolo: "ADR 004 · Anteprima del sito su Railway"
 owner: sessione principale
-contributi: [web-performance-specialist, seo-technical]
+contributi: [web-performance-specialist, seo-technical, brand-strategist]
 stato: accettata
 versione: 1.0
 aggiornato: 2026-09-28
@@ -43,19 +43,18 @@ Per il server su Railway:
 - Anteprima su Railway con il repository collegato: build `npm run build`, avvio `npm start`, controllo di salute su `/healthz` (`railway.json`); Node 22 (`.node-version`).
 - Il server applica `_headers` e `_redirects`, gestisce la barra finale (`trailingSlash: 'always'`) e serve `404.html` con stato 404.
 - Anteprima fuori dai motori di ricerca: `X-Robots-Tag: noindex, nofollow` di default, tolto solo con `INDEXING=on`.
-- Password facoltativa con `PREVIEW_AUTH=utente:password`, consigliata finché mancano le conferme di ADR 002.
+- Accesso protetto da password con `PREVIEW_AUTH=utente:password`. Su Railway l'anteprima senza password non si apre (503): è la prima condizione del brand-strategist per lo staging (review di veridicità §4, «non indicizzabile e con accesso protetto»). In locale il server resta aperto, perché è anche il server di misura della performance (`budget.md` §6).
 
 ## Conseguenze
 - Le istruzioni per l'utente sono nel README, sezione «Anteprima su Railway».
 - Se la produzione andrà su Railway: dominio personalizzato, `INDEXING=on`, e una verifica del TTFB fuori dall'Italia da parte di web-performance-specialist (origine in una sola regione, ADR 001). Se andrà altrove, il server resta solo per le anteprime.
 - Il video di Città Digitali resta su un host esterno (ADR 001, punto 7): condizione di go-live invariata.
-- Da far confermare a web-performance-specialist (cache e compressione) e a seo-technical (politica di indicizzazione dell'anteprima).
+- web-performance-specialist ha confermato cache, compressione e tempi del server (rimisura del 2026-09-28, §9); il supporto alle richieste `Range` per il video è stato aggiunto (osservazione 6). Resta la conferma di seo-technical sulla politica di indicizzazione dell'anteprima.
 
 ## Ipotesi da validare
 - Railway costruisce il progetto con le impostazioni di `railway.json` e `.node-version` senza configurazioni aggiuntive nel pannello [DA VERIFICARE al primo deploy].
 
 ## Domande aperte
-- L'anteprima va protetta da password? Consigliato sì.
 - Il servizio va nel progetto Railway del sito attuale o in un progetto nuovo? Decide l'utente.
 
 ## Decisioni richieste
