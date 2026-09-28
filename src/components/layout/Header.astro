@@ -199,6 +199,27 @@ const menuItems = [
     text-decoration-color: var(--link-underline);
   }
 
+  /* Without JavaScript there is no menu dialog: the links wrap under the logo and the
+     taller header scrolls away with the page instead of sticking. */
+  @media (max-width: 63.99em) {
+    :global(html:not(.js)) .site-header {
+      position: relative;
+    }
+
+    :global(html:not(.js)) .site-header__bar {
+      flex-wrap: wrap;
+      padding-block: var(--space-2xs);
+    }
+
+    :global(html:not(.js)) .site-header__nav {
+      flex-basis: 100%;
+    }
+
+    :global(html:not(.js)) .site-header__nav ul {
+      gap: 0 var(--space-m);
+    }
+  }
+
   @media (max-width: 63.99em) {
     :global(.js) .site-header__nav {
       display: none;

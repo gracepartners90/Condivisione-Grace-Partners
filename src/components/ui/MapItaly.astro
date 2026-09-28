@@ -168,9 +168,12 @@ if (!data) {
     border-radius: 50%;
   }
 
+  /* Area names (sea, uplands) may break over two lines, like on a printed map: at 320 px
+     «MARE ADRIATICO» would otherwise run past the edge. */
   .map__area {
     position: absolute;
-    white-space: nowrap;
+    width: max-content;
+    max-width: 8em;
     color: var(--fg-2);
     transform: translateY(-50%);
   }

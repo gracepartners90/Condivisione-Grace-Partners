@@ -1,0 +1,4 @@
+# Redirect 301 from the current site (docs/seo/redirect-map.csv). PARTIAL map: the full URL
+# inventory of itnode.it is [DA FORNIRE]. Protocol and www normalisation live in the host settings.
+/informativa-privacy/  /privacy-policy/  301
+/informativa-privacy   /privacy-policy/  301
