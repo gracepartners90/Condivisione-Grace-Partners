@@ -1,0 +1,26 @@
+{
+  "name": "itnode-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sito corporate di ITnode: esperienze digitali immersive, SIII, Puglia Digitale e Città Digitali.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "assets": "node scripts/prepare-assets.mjs"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.5",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

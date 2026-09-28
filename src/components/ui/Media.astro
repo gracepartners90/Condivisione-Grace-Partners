@@ -1,0 +1,74 @@
+---
+/**
+ * Media: renders an optimised <picture> when the client asset exists,
+ * otherwise an intentional placeholder "slot" that states which asset is needed.
+ * Slots are listed in src/data/asset-slots.ts so the missing-asset list stays in one place.
+ */
+import type { ImageMetadata } from 'astro';
+import { Picture } from 'astro:assets';
+import { assetSlots, type AssetSlotId } from '../../data/asset-slots';
+
+interface Props {
+  image?: ImageMetadata;
+  alt?: string;
+  /** Required when `image` is missing: which asset this space is waiting for. */
+  slot?: AssetSlotId;
+  sizes?: string;
+  widths?: number[];
+  /** CSS aspect-ratio, e.g. "16 / 9". Defaults to the image ratio or the slot ratio. */
+  ratio?: string;
+  priority?: boolean;
+  /** Art-directed treatment defined in the global styles. */
+  treatment?: 'none' | 'mono' | 'mono-soft';
+  position?: string;
+  class?: string;
+}
+
+const {
+  image,
+  alt = '',
+  slot,
+  sizes = '100vw',
+  widths = [480, 768, 1080, 1440, 1920],
+  ratio,
+  priority = false,
+  treatment = 'none',
+  position = '50% 50%',
+  class: className,
+} = Astro.props;
+
+const slotData = slot ? assetSlots[slot] : undefined;
+const aspect = ratio ?? (image ? `${image.width} / ${image.height}` : slotData?.ratio ?? '4 / 3');
+const usableWidths = image ? widths.filter((w) => w <= image.width).concat(widths.some((w) => w > image.width) ? [image.width] : []) : [];
+---
+
+{image ? (
+  <Picture
+    src={image}
+    alt={alt}
+    widths={[...new Set(usableWidths)]}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    fallbackFormat="jpg"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding={priority ? 'sync' : 'async'}
+    class:list={['media', `media--${treatment}`, className]}
+    pictureAttributes={{ class: 'media-picture', style: `--media-ratio: ${aspect}` }}
+    style={`object-position: ${position}`}
+  />
+) : (
+  <div
+    class:list={['media-slot', className]}
+    style={`--media-ratio: ${aspect}`}
+    role="img"
+    aria-label={slotData?.alt ?? alt}
+    data-asset-slot={slot}
+  >
+    <span class="media-slot__label" aria-hidden="true">
+      <span class="media-slot__kind">Asset in arrivo</span>
+      <span class="media-slot__name">{slotData?.label}</span>
+      <span class="media-slot__spec">{slotData?.spec}</span>
+    </span>
+  </div>
+)}

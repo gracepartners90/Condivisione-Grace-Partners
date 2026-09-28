@@ -1,0 +1,26 @@
+export {};
+
+/**
+ * Scroll reveal: elements marked [data-reveal] get `is-inview` when they enter the viewport.
+ * Content stays visible without JavaScript: CSS hides elements only once `reveal-ready`
+ * is set on <html>, which happens here. Above-the-fold content should use CSS load
+ * animations instead of [data-reveal] to avoid a flash.
+ */
+const root = document.documentElement;
+const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (elements.length > 0 && 'IntersectionObserver' in window && !reduceMotion) {
+  root.classList.add('reveal-ready');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-inview');
+        observer.unobserve(entry.target);
+      }
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.1 },
+  );
+  elements.forEach((el) => observer.observe(el));
+}
