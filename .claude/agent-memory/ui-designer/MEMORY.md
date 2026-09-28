@@ -18,3 +18,10 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 ## Feedback e scelte
 - **Utente, 2026-09-28** (via sessione principale): le foto del fondatore si usano con il trattamento «inchiostro» (DR3-b). Il logo web senza trama poligonale resta una proposta da confermare al cliente.
 - Nessun feedback visivo ancora ricevuto sul design system.
+
+## Review di fedeltà del sito (lezioni del 2026-09-28)
+- **Metodo efficiente (circa 35 chiamate):** un solo script in scratchpad (`ui-review.mjs`) che, per pagina e larghezza, scorre (attiva i reveal), torna in cima, salva la pagina intera e lancia una sonda DOM: gradino di token per ogni testo (via `var(--fs-*)` risolti in un div), pesi e famiglie, contrasto, accenti fuori posto, raggi, ombre, gradienti, filtri, overflow a 320, caratteri per riga, bersagli, giro di tastiera e testo nascosto con reduced motion e senza JS. Poi fogli con sharp: 390 px a scala 1 (5 strisce da 1800), 1440 a 0,3 per la composizione, ritagli nativi per i dettagli.
+- **Falsi positivi della sonda da non riportare:** input nascosti (radio e checkbox a pillola) risultano «senza focus» ma l'anello sta sulla label con `:has(:focus-visible)`: controllare il codice. Lo skip link risulta «coperto dall'header» se non si guarda lo `z-index`. Nei fogli ridotti a 0,3 compaiono parole «colorate»: sono artefatti di crominanza del ridimensionamento, da ricontrollare a risoluzione nativa.
+- **Il reflow a 320 va rimisurato sul copy definitivo**, compresi i rientri del Passaggio: la tabella del DS non conteneva «Cominciamo» (display-xl più rientro 1,2 em = +42 px).
+- **L'`h1` che contiene i registri del Passaggio mantiene il 2em del browser** (la sonda lo vede a 40 px): non è visibile, ma inganna chi misura il titolo sull'elemento invece che sugli span.
+- **Da controllare sempre nelle review future:** colori-segno usati come decorazione (`--place` su frecce, punti o avvisi; `--node` su punti non interattivi), gerarchia dei registri (mai salire), sequenze di titoli sullo stesso gradino, segnaposto con il formato giusto anche nel taglio mobile.

@@ -1,0 +1,144 @@
+---
+/**
+ * SlotPending: the publication variant of a missing asset (visual direction §4.5, UI review
+ * of 2026-09-28). Rendered by Media when PUBLIC_SLOT_MODE=publish, in place of the declared
+ * placeholder: same box and ratio (no CLS), no service text, zero image bytes.
+ * - place (Porta 3:5): a horizon at 58% (the hero's sky/ground ratio), the name standing on
+ *   it, the place node on the thread; bearing, distance and coordinates below.
+ * - experience (Schermo 16:10): the comparison figure without labels: a graduated horizon
+ *   at 62%, three still hotspot rings, name and place top left.
+ * Decorative: name and place are already in the text next to it, nothing is focusable.
+ */
+import type { SlotPublish } from '../../data/asset-slots';
+import { nb } from '../../lib/text';
+
+interface Props extends SlotPublish {
+  ratio: string;
+  asset: string;
+  class?: string;
+}
+
+const { kind, ratio, name, meta = [], nodes = [], asset, class: className } = Astro.props;
+// Each mono line breaks only between its « · » segments, never inside a coordinate.
+const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
+---
+
+<div class:list={['slot-pub', `slot-pub--${kind}`, className]} style={`--media-ratio: ${ratio}`} aria-hidden="true" data-asset-pending={asset}>
+  <span class="slot-pub__horizon"></span>
+  {kind === 'place' && <span class="slot-pub__node" />}
+  {kind === 'experience' && nodes.map((n) => <span class="slot-pub__hot" style={`left: ${n.x}%; top: ${n.y}%`} />)}
+  {
+    (name || lines.length > 0) && (
+      <span class="slot-pub__text">
+        {name && <span class="slot-pub__name">{name}</span>}
+        {lines.length > 0 && (
+          <span class="slot-pub__meta t-label">
+            {lines.map((line) => (
+              <span>{line}</span>
+            ))}
+          </span>
+        )}
+      </span>
+    )
+  }
+</div>
+
+<style>
+  .slot-pub {
+    --sky: 58%;
+    position: relative;
+    display: block;
+    overflow: clip;
+    container-type: inline-size;
+    aspect-ratio: var(--media-ratio);
+    background: var(--slot-bg);
+    color: var(--fg);
+  }
+
+  .slot-pub--experience {
+    --sky: 62%;
+  }
+
+  /* 1 px thread with ticks below it: short ones every 4cqi, longer ones every third. */
+  .slot-pub__horizon {
+    position: absolute;
+    inset-inline: 0;
+    top: var(--sky);
+    height: 12px;
+    border-top: var(--hairline) solid var(--fg);
+    background:
+      repeating-linear-gradient(to right, var(--fg) 0 1px, transparent 1px 12cqi) top left / 100% 12px no-repeat,
+      repeating-linear-gradient(to right, var(--fg) 0 1px, transparent 1px 4cqi) top left / 100% 6px no-repeat;
+  }
+
+  /* Dot Ø 10 px and ring Ø 26 px, like the Node component; still, no ping. */
+  .slot-pub__node,
+  .slot-pub__hot {
+    position: absolute;
+    width: 0.625rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    translate: -50% -50%;
+    background: currentColor;
+    outline: var(--hairline) solid currentColor;
+    outline-offset: 7px;
+  }
+
+  .slot-pub__node {
+    left: 78%;
+    top: var(--sky);
+    color: var(--place);
+  }
+
+  .slot-pub__hot {
+    color: var(--node);
+  }
+
+  .slot-pub__text {
+    position: absolute;
+    inset: 0;
+  }
+
+  .slot-pub__name {
+    display: block;
+    font-weight: var(--fw-regular);
+    text-wrap: balance;
+  }
+
+  .slot-pub__meta {
+    display: grid;
+    gap: 0.25em;
+    color: var(--fg-2);
+  }
+
+  /* Place: the name stands on the horizon, the bearing hangs below it. */
+  .slot-pub--place .slot-pub__name {
+    position: absolute;
+    inset-inline: 8cqi;
+    bottom: calc(100% - var(--sky) + 1.25rem);
+    font-size: clamp(var(--fs-display-s), 11cqi, var(--fs-display-m));
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .slot-pub--place .slot-pub__meta {
+    position: absolute;
+    inset-inline: 8cqi;
+    top: calc(var(--sky) + 1.5rem);
+  }
+
+  /* Experience: name and place top left, in the sky of the figure. */
+  .slot-pub--experience .slot-pub__text {
+    inset: 6cqi 8cqi auto;
+    display: grid;
+    gap: var(--space-2xs);
+    justify-items: start;
+  }
+
+  .slot-pub--experience .slot-pub__name {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    font-weight: var(--fw-strong);
+  }
+</style>

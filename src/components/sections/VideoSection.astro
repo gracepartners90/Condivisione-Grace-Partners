@@ -40,7 +40,6 @@ const titleId = `${id}-title`;
     </video>
 
     <div class="video__cover" data-video-cover aria-hidden="true">
-      <p class="video__cover-title">{title}</p>
       <span class="video__cover-play">
         <svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg>
       </span>
@@ -166,14 +165,6 @@ const titleId = `${id}-title`;
     pointer-events: none;
   }
 
-  .video__cover-title {
-    font-size: var(--fs-display-m);
-    line-height: var(--lh-display-m);
-    letter-spacing: var(--tr-display-m);
-    font-weight: var(--fw-strong);
-    text-align: center;
-    max-width: 18ch;
-  }
 
   .video__cover-play {
     display: grid;
@@ -268,21 +259,16 @@ const titleId = `${id}-title`;
     color: var(--calce);
   }
 
-  /* Phones: the 16:9 stage is short, so the cover keeps only the title above the controls. */
+  /* Phones: the 16:9 stage is short, so the cover keeps only the play node above the controls. */
   @media (max-width: 43.74em) {
-    .video__cover {
-      align-content: start;
-      padding-top: var(--space-l);
-    }
-
-    .video__cover-play,
     .video__cover-horizon {
       display: none;
     }
 
-    .video__cover-title {
-      font-size: var(--fs-display-s);
-      line-height: var(--lh-display-s);
+    .video__cover-play {
+      width: 3.5rem;
+      height: 3.5rem;
+      margin-bottom: var(--space-xl);
     }
 
     .video__controls {

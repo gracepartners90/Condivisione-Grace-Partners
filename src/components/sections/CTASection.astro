@@ -72,7 +72,7 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
             <ul role="list" class="cta-section__contacts t-label">
               <li>
                 <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id={`${trackPrefix}-email`} data-cta-location={location} data-contact-method="email">
-                  Scrivi a <span class="t-as-is">{site.email}</span>
+                  <span>Scrivi a <span class="t-as-is">{site.email}</span></span>
                 </a>
               </li>
               <li>
@@ -134,6 +134,7 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
     padding: 0;
   }
 
+  /* Flex trims the spaces at the edges of its items: keep each label in one span. */
   .cta-section__contacts a {
     display: inline-flex;
     align-items: center;

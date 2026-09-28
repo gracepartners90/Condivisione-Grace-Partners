@@ -26,7 +26,7 @@ const copies = [0, 1, 2];
           {items.map((item) => (
             <span class="marquee__item">
               {item}
-              {separator === 'arrow' ? <Arrow dir="right" class="marquee__arrow" /> : <span class="marquee__dot" />}
+              {separator === 'arrow' ? <Arrow dir="right" class="marquee__arrow" /> : <span class="marquee__sep">·</span>}
             </span>
           ))}
         </span>
@@ -72,18 +72,16 @@ const copies = [0, 1, 2];
     padding-right: 0.4em;
   }
 
-  /* A place-coloured node between verbs. */
-  .marquee__dot {
-    width: 0.16em;
-    height: 0.16em;
-    border-radius: 50%;
-    background: var(--place);
+  /* Separators are glyphs in the secondary colour: orange marks places only (§2), and a
+     node is never a bullet (§1.3). */
+  .marquee__sep {
+    color: var(--fg-2);
   }
 
   .marquee__item :global(.marquee__arrow) {
     width: 0.62em;
     height: 0.62em;
-    color: var(--place);
+    color: var(--fg-2);
   }
 
   @media (prefers-reduced-motion: no-preference) {

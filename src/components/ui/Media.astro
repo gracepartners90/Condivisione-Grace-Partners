@@ -4,11 +4,13 @@
  * placeholder that states which asset is needed (docs/creativa/direzione-visiva.md §4.5):
  * same format as the final asset (no CLS on replacement), crop marks, kind, brief, format
  * and, for places, coordinates. Slots are listed in src/data/asset-slots.ts.
+ * With PUBLIC_SLOT_MODE=publish the placeholder becomes its typographic variant (SlotPending).
  * Rectangles are space: radius 0, no shadows (§1.2).
  */
 import type { ImageMetadata } from 'astro';
 import { Picture } from 'astro:assets';
-import { assetSlots, type AssetSlotId } from '../../data/asset-slots';
+import SlotPending from './SlotPending.astro';
+import { assetSlots, SLOT_MODE, type AssetSlotId } from '../../data/asset-slots';
 import { formatCoords } from '../../lib/geo';
 
 interface Props {
@@ -63,6 +65,8 @@ const usableWidths = image
       pictureAttributes={{ class: 'media-picture', style: `--media-ratio: ${aspect}` }}
       style={`object-position: ${position}`}
     />
+  ) : SLOT_MODE === 'publish' && slot && asset ? (
+    <SlotPending {...slot.publish} ratio={aspect} asset={asset} class={className} />
   ) : (
     <div class:list={['media-slot', className]} style={`--media-ratio: ${aspect}`} aria-hidden="true" data-asset-slot={asset}>
       <span class="media-slot__inner">

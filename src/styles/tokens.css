@@ -38,7 +38,8 @@
    */
   /* 3.5 rem minimum: «~200.000» must fit a 320 px screen (WCAG 1.4.10); 72 px at 390, 259 at 1440. */
   --fs-display-xxl: clamp(3.5rem, 0.16rem + 17.8vw, 17.5rem); /* 72 → 259 */
-  --fs-display-xl: clamp(3.25rem, 1.79rem + 6vw, 9.375rem); /* 52 → 115, max 150 */
+  /* 2.75 rem minimum: the longest display-xl word («Cominciamo») fits 280 px at 320 px (WCAG 1.4.10); 52 px from 390 up. */
+  --fs-display-xl: clamp(2.75rem, 1.79rem + 6vw, 9.375rem); /* 52 → 115, max 150 */
   --fs-display-l: clamp(2.5rem, 1.43rem + 4.38vw, 6.25rem); /* 40 → 86, max 100 */
   --fs-display-m: clamp(1.75rem, 1rem + 3.05vw, 4.75rem); /* 28 → 60 */
   --fs-display-s: clamp(1.375rem, 1.14rem + 0.95vw, 2.25rem); /* 22 → 32 */

@@ -21,7 +21,9 @@ fonti: [docs/performance/budget.md, docs/performance/architettura.md, docs/decis
 
 ## 1. Condizioni di test
 
-- **Build:** `dist/` del 2026-09-28 alle 10:32, commit `a6de19d`. Nessun file di `src/` risulta più recente della build.
+- **Build:** `dist/` del 2026-09-28 alle 10:32, commit `a6de19d`, per la serie completa (corse tra le 10:37 e le 10:50).
+  - Nel frattempo la sessione principale ha rigenerato `dist/` alle 10:58.
+  - Sulla nuova build ho ripetuto le 3 corse con throttling applicato su `/siii/`: il bloccante resta (osservazione 1).
 - **Server:** server di misura del `budget.md` §6.6 (copia nella scratchpad: `scripts/perf/` non esiste ancora nel repository, vedi osservazione 4).
   - Brotli q11 calcolato a ogni richiesta, `immutable` su `/_astro/*`, HTTP/1.1, 127.0.0.1:8080.
   - Non ho usato `astro preview`: non comprime e manda `no-cache`.
@@ -164,12 +166,14 @@ Anche gli SVG inline sono dentro i limiti:
 - **Motivazione.**
   - `budget.md` §2: LCP − FCP con throttling applicato ≤ 200 ms. Misurato: **935 ms** (mediana di 3; singole esecuzioni 916, 980 e 935 ms). L'LCP applicato è 1,98 s, contro 1,00 s della home e 1,06 s di Città Digitali, che non hanno il difetto.
   - `architettura.md` regola 3 e §6.2: l'LCP è visibile dal primo frame; niente `data-reveal` sugli elementi visibili al caricamento.
+  - **Riverificato sulla build delle 10:58:** FCP 1,02 s, LCP 1,98 s, LCP − FCP **956 ms** (953, 958 e 957 ms). Lo statement ha ancora `data-reveal="lines"`.
   - Sul campo, con un FCP al 75° percentile di 1,6–1,8 s, 0,9 s in più portano l'LCP oltre la soglia di 2,5 s.
 - **Proposta.** Due interventi, entrambi piccoli.
   - **(a) Correzione generale in `reveal.ts`.** Gli elementi già in vista all'avvio non vengono mai nascosti. Protegge tutte le pagine e tutte le altezze di viewport, compresi l'H2 della home su mobile e la porta SIII.
 
 ```ts
-// src/scripts/reveal.ts — inside the existing `if (...)`, replacing the current body
+// src/scripts/reveal.ts — inside the existing `if (...)`: replaces `root.classList.add('reveal-ready')` at the top
+// and `elements.forEach((el) => observer.observe(el))`; keep the `focusin` handler added on 2026-09-28
 const observer = new IntersectionObserver(/* unchanged callback and options */);
 // Elements already on screen at start-up are shown as they are: never hidden, never re-animated
 // (LCP visible from the first frame). Read every position first, then write: one layout, no thrashing.

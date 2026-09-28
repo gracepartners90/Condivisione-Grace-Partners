@@ -21,9 +21,11 @@ interface Props {
   intro?: string;
   items: Item[];
   surface?: 'calce' | 'pietra' | 'notte';
+  /** Scale of the H2: consecutive sections never share a step (visual direction §7.2). */
+  titleSize?: 'l' | 'm';
 }
 
-const { variant, id, eyebrow, title, intro, items, surface = 'calce' } = Astro.props;
+const { variant, id, eyebrow, title, intro, items, surface = 'calce', titleSize = 'l' } = Astro.props;
 const pad = (n: number) => String(n).padStart(2, '0');
 const total = pad(items.length);
 const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && f.period);
@@ -34,7 +36,7 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
     <header class="benefits__head">
       <div class="benefits__head-inner">
         {eyebrow && <p class="benefits__eyebrow t-label">{eyebrow}</p>}
-        <h2 id={`${id}-title`} class="benefits__title" tabindex="-1" data-anchor-focus>{title}</h2>
+        <h2 id={`${id}-title`} class:list={['benefits__title', `benefits__title--${titleSize}`]} tabindex="-1" data-anchor-focus>{title}</h2>
         {intro && variant !== 'sticky' && <p class="benefits__intro" set:html={intro} />}
         {
           variant === 'sticky' && (
@@ -88,18 +90,30 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
 {
   variant === 'sticky' && (
     <script>
-      // Decorative 01/05 indicator: follows the item closest to the middle of the viewport.
+      // Decorative 01/05 indicator: the last item whose top has passed the middle of the
+      // viewport. Recomputed from positions (also after jumps: anchors, Home key, history),
+      // at most once per frame and only while the section is on screen.
       document.querySelectorAll<HTMLElement>('.benefits--sticky').forEach((section) => {
         const out = section.querySelector<HTMLElement>('[data-benefits-current]');
         const items = [...section.querySelectorAll<HTMLElement>('[data-benefit]')];
         if (!out || !items.length || !('IntersectionObserver' in window)) return;
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) if (entry.isIntersecting) out.textContent = (entry.target as HTMLElement).dataset.benefit ?? '';
-          },
-          { rootMargin: '-45% 0px -45% 0px' },
-        );
-        items.forEach((item) => io.observe(item));
+        let frame = 0;
+        const update = () => {
+          frame = 0;
+          const middle = window.innerHeight / 2;
+          const current = items.filter((item) => item.getBoundingClientRect().top < middle).at(-1) ?? items[0];
+          const value = current.dataset.benefit ?? '';
+          if (out.textContent !== value) out.textContent = value;
+        };
+        const onScroll = () => {
+          if (!frame) frame = requestAnimationFrame(update);
+        };
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            window.addEventListener('scroll', onScroll, { passive: true });
+            update();
+          } else window.removeEventListener('scroll', onScroll);
+        }).observe(section);
       });
     </script>
   )
@@ -139,6 +153,12 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
     font-size: var(--fs-display-l);
     line-height: var(--lh-display-l);
     letter-spacing: var(--tr-display-l);
+  }
+
+  .benefits__title--m {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
   }
 
   .benefits__title:focus {
@@ -251,12 +271,7 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
       grid-row: 1;
     }
 
-    .benefits--zigzag .benefits__name {
-      font-size: var(--fs-display-m);
-      line-height: var(--lh-display-m);
-      letter-spacing: var(--tr-display-m);
-      font-weight: var(--fw-strong);
-    }
+
   }
 
   /* ─── scala: every item one column further in ─── */
@@ -268,6 +283,13 @@ const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && 
 
   .benefits--scala .benefits__num {
     min-width: 2.2ch;
+  }
+
+  @media (max-width: 43.74em) {
+    .benefits--scala .benefits__item {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-2xs);
+    }
   }
 
   @media (min-width: 43.75em) {

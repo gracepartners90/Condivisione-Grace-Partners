@@ -12,6 +12,7 @@ import Media from '../ui/Media.astro';
 import MapItaly from '../ui/MapItaly.astro';
 import Arrow from '../ui/Arrow.astro';
 import { formatCoords } from '../../lib/geo';
+import maps from '../../data/maps.json';
 import type { AssetSlotId } from '../../data/asset-slots';
 
 type Location = {
@@ -53,8 +54,11 @@ const doors = west.map((l) => ({
   y: maxLat === minLat ? 0 : (maxLat - l.lat) / (maxLat - minLat),
 }));
 
-// Italy: north → south.
-const north = [...locations].sort((a, b) => b.lat - a.lat);
+// Italy: north → south, each city at the height of its node on the map (yPct of maps.json).
+const italyPoints: { id: string; yPct: number }[] = (maps as { maps?: { italia?: { places?: { id: string; yPct: number }[] } } }).maps?.italia?.places ?? [];
+const north = [...locations]
+  .sort((a, b) => b.lat - a.lat)
+  .map((l) => ({ ...l, y: italyPoints.find((p) => p.id === l.id)?.yPct }));
 ---
 
 <section id={id} class:list={['places', `places--${variant}`, `surface-${surface}`]} aria-labelledby={`${id}-title`}>
@@ -117,7 +121,7 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
           </div>
           <ol role="list" class="places__cities">
             {north.map((c) => (
-              <li class="city" data-place-link={c.id}>
+              <li class="city" data-place-link={c.id} style={c.y !== undefined ? `--y: ${c.y}` : undefined}>
                 <h3 class="city__name">{c.name}</h3>
                 <p class="city__meta t-label">
                   {c.region && <span>{c.region}</span>}
@@ -222,7 +226,7 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
     display: none;
   }
 
-  .door__frame :global(.media-slot) {
+  .door__frame :global(:is(.media-slot, .slot-pub)) {
     --media-ratio: 3 / 5;
   }
 
@@ -367,27 +371,37 @@ const north = [...locations].sort((a, b) => b.lat - a.lat);
 
   @media (min-width: 64em) {
     .places__italy {
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto auto;
+      row-gap: var(--space-2xl);
     }
 
     .places__copy {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 7;
       grid-row: 1;
     }
 
+    /* The stage: the map on a tall column on the right... */
     .places__map {
-      grid-column: 8 / -1;
-      grid-row: 1 / span 2;
+      grid-column: 7 / -1;
+      grid-row: 2;
       max-width: none;
     }
 
-    /* Cities follow the latitude of their node: Varese high, Caltanissetta low. */
+    /* ...and each city at the latitude of its node: Varese high, Caltanissetta low. */
     .places__cities {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 5;
       grid-row: 2;
-      align-content: space-between;
-      gap: var(--space-2xl);
-      padding-block: var(--space-xl);
+      position: relative;
+      align-self: stretch;
+      display: block;
+      padding: 0;
+    }
+
+    .city {
+      position: absolute;
+      inset-inline: 0;
+      top: calc(var(--y, 0) * 1%);
+      translate: 0 -1.2rem;
     }
 
     .city {

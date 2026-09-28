@@ -119,7 +119,7 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
         layout="b"
         surface="calce"
         number="02"
-        bearing="120° · ESE"
+        bearing="120°"
         name="Puglia Digitale"
         statement={['Un territorio.', 'Migliaia di storie.']}
         text="Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive."
@@ -132,7 +132,7 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
         layout="c"
         surface="pietra"
         number="03"
-        bearing="240° · OSO"
+        bearing="240°"
         name="Città Digitali"
         statement={['Le attività del territorio,', 'online senza perdere radici.']}
         text="Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per imprese e attività. Varese, Altamura, Caltanissetta: città diverse, un unico portale."
@@ -252,6 +252,11 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
     .worlds__screen:has(:global(.media-slot)) :global(.worlds__hot) {
       display: none;
     }
+  }
+
+  /* The publication variant draws its own still hotspots. */
+  .worlds__screen:has(:global(.slot-pub)) :global(.worlds__hot) {
+    display: none;
   }
 
   .worlds :global(.worlds__map) {

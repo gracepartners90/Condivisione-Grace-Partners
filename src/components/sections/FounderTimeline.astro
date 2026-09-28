@@ -43,13 +43,14 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
       <p class="founder__lead" data-reveal>{lead}</p>
     </div>
 
-    <ol role="list" class="founder__timeline" style={`--stages: ${stages.length}`}>
+    <ol role="list" class="founder__timeline" style={`--stages: ${stages.length + 1}`}>
       {
         stages.map((stage, i) => (
           <li class:list={['founder__stage', { 'founder__stage--now': stage.now }]} data-reveal style={`--stagger: ${i}`}>
             <span class="founder__tick" aria-hidden="true" />
-            <p class="founder__when t-label" aria-hidden={stage.when === '—' ? 'true' : undefined}>
-              {stage.datetime ? <time datetime={stage.datetime}>{stage.when}</time> : stage.when}
+            {/* A missing date shows nothing: the tick is enough while it is DA FORNIRE. */}
+            <p class="founder__when t-label">
+              {stage.when === '—' ? '' : stage.datetime ? <time datetime={stage.datetime}>{stage.when}</time> : stage.when}
             </p>
             {stage.links ? (
               <ul role="list" class="founder__what founder__links">
@@ -158,13 +159,19 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
   }
 
   .founder__stage--now .founder__tick {
-    left: calc(-1 * var(--space-l) - 6px);
+    left: calc(-1 * var(--space-l) - 5px);
     top: 0.1em;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--node);
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--node) 16%, transparent);
+    /* Node anatomy: dot Ø 10 and a 1 px ring Ø 26. */
+    outline: 1px solid var(--node);
+    outline-offset: 7px;
+  }
+
+  .founder__stage--now {
+    margin-top: var(--space-2xl);
   }
 
   .founder__when {
@@ -218,14 +225,16 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
     grid-column: 1 / span 3;
     display: grid;
     gap: var(--space-2xs);
+    /* Never larger than the 400 px source (design system §1.7). */
+    max-width: 25rem;
   }
 
   /* The portrait melts into the paper on the right (visual direction §4.3). */
   .founder__portrait :global(.founder__img) {
     width: 100%;
     height: auto;
-    -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 48%, transparent 86%);
+    mask-image: linear-gradient(to right, #000 48%, transparent 86%);
   }
 
   .founder__portrait-note {
@@ -303,8 +312,14 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
     }
 
     .founder__stage--now .founder__tick {
-      left: -6px;
-      top: calc(-1 * var(--space-l) - 6px);
+      left: -5px;
+      top: calc(-1 * var(--space-l) - 5px);
+    }
+
+    /* «10.000+» never sits next to «oggi» (visual direction §7.3, register N5): one empty
+       step of horizon between them. */
+    .founder__stage--now {
+      grid-column: -2 / -1;
     }
 
     .founder__portrait {

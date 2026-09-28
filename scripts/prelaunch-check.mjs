@@ -38,6 +38,11 @@ for (const c of checks) {
   if (!c.ok) failed++;
   console.log(`${c.ok ? 'OK  ' : 'NO  '} ${c.name}${!c.ok && c.detail?.length ? ` → ${c.detail.join(', ')}` : ''}`);
 }
+
+// Not blocking: the typographic variant (PUBLIC_SLOT_MODE=publish) is accepted at go-live,
+// but the assets are still owed by the client.
+const pending = pages.flatMap((p) => [...p.html.matchAll(/data-asset-pending="([^"]+)"/g)].map((m) => m[1]));
+if (pending.length) console.log(`INFO Varianti «in pubblicazione» al posto degli asset (${pending.length}): ${[...new Set(pending)].join(', ')}`);
 console.log(
   failed
     ? `\n${failed} controlli non superati: il go-live (G4) resta bloccato. Vedi le review in docs/review/.`

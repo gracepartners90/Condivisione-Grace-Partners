@@ -125,14 +125,14 @@ const regs = registers.map((text, r) => ({
     letter-spacing: var(--tr-display-s);
   }
 
-  /* Second register offset: 1.2em on mobile (at most 3 rem, so the largest sizes still fit
-     at 320 px), one column on tablet, two on desktop. */
+  /* Second register offset: on phones 1.2em (at most 3 rem), shrinking to 0 at 320 px so the
+     longest words still fit; one column on tablet, two on desktop. */
   .passage--indent-default .passage__reg + .passage__reg {
-    padding-left: min(1.2em, 3rem);
+    padding-left: clamp(0px, (100vw - 20rem) * 0.7, min(1.2em, 3rem));
   }
 
   .passage--cascade .passage__reg {
-    padding-left: calc(var(--reg) * min(1.2em, 3rem));
+    padding-left: calc(var(--reg) * clamp(0px, (100vw - 20rem) * 0.7, min(1.2em, 3rem)));
   }
 
   @media (min-width: 43.75em) {

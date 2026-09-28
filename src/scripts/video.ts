@@ -103,9 +103,13 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
         track('video_progress', { video_id: videoId, video_percent: mark });
       }
     }
+    // The video loops, so 'ended' never fires: completion is counted once, near the end.
+    if (percent >= 97 && !milestones.has(100)) {
+      milestones.add(100);
+      track('video_complete', { video_id: videoId });
+    }
   });
 
-  video.addEventListener('ended', () => track('video_complete', { video_id: videoId }));
   video.addEventListener('error', () => {
     root.dataset.state = 'error';
     if (errorBox) errorBox.textContent = errorBox.dataset.text ?? '';

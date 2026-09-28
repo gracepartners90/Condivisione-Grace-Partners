@@ -383,7 +383,7 @@ a:hover {
 @media (prefers-reduced-motion: no-preference) {
   .aperture::before,
   .aperture::after,
-  .aperture :is(img, .media-slot) {
+  .aperture :is(img, .media-slot, .slot-pub) {
     transition: transform var(--dur-1000) var(--ease-in-out);
   }
 
@@ -392,7 +392,7 @@ a:hover {
     transform: none;
   }
 
-  .reveal-ready .aperture:not(.is-inview) :is(img, .media-slot) {
+  .reveal-ready .aperture:not(.is-inview) :is(img, .media-slot, .slot-pub) {
     transform: scale(1.06);
   }
 }

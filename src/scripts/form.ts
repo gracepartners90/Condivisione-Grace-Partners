@@ -66,12 +66,19 @@ function initForm(form: HTMLFormElement) {
 
   // Measurement: form_view (once) when half of the form is visible, or when the form fills
   // half of the viewport (tall forms on small screens never reach 50%), and form_start.
+  // An interaction before the observer fires counts as a view: form_view always comes first.
+  let viewed = false;
+  const markViewed = () => {
+    if (viewed) return;
+    viewed = true;
+    track('form_view', { form_id: formId, interest_preselected: preselected });
+  };
   if ('IntersectionObserver' in window) {
     const viewObserver = new IntersectionObserver(
       ([entry]) => {
         const rootH = entry.rootBounds?.height ?? window.innerHeight;
         if (entry.intersectionRatio < 0.5 && entry.intersectionRect.height < rootH * 0.5) return;
-        track('form_view', { form_id: formId, interest_preselected: preselected });
+        markViewed();
         viewObserver.disconnect();
       },
       { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
@@ -82,6 +89,7 @@ function initForm(form: HTMLFormElement) {
   const onStart = () => {
     if (started) return;
     started = true;
+    markViewed();
     track('form_start', { form_id: formId, interest_preselected: preselected });
   };
   form.addEventListener('input', onStart);
@@ -194,6 +202,7 @@ function initForm(form: HTMLFormElement) {
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    markViewed();
     if (form.dataset.state === 'sending') return;
     if (failure) failure.hidden = true;
 

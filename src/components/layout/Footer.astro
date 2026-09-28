@@ -101,7 +101,7 @@ const portalLinks = [
     </div>
 
     <p class="site-footer__sign t-label" aria-hidden="true">
-      ITnode · {office.name} · {formatCoords(office)}
+      ITnode · {office.name} · <span class="site-footer__coords">{formatCoords(office)}</span>
     </p>
   </div>
 </footer>
@@ -180,6 +180,10 @@ const portalLinks = [
     align-items: center;
     min-height: var(--tap-min);
     color: var(--fg);
+  }
+
+  .site-footer__coords {
+    white-space: nowrap;
   }
 
   .site-footer__sign {

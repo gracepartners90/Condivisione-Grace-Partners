@@ -65,6 +65,8 @@ Pagine: `/`, `/siii/`, `/puglia-digitale/`, `/citta-digitali/`, `/contatti/`, `/
 
 Ogni spazio in attesa di un asset mostra un segnaposto dichiarato con formato e contenuto richiesti. L'elenco completo, con specifiche, è in [`src/data/asset-slots.ts`](src/data/asset-slots.ts); le priorità e la direzione fotografica sono in [`docs/creativa/direzione-visiva.md`](docs/creativa/direzione-visiva.md) §4.6.
 
+Se al go-live alcuni asset mancano ancora, la build con `PUBLIC_SLOT_MODE=publish` sostituisce i segnaposto con la loro variante tipografica «in pubblicazione» (direzione visiva §4.5): stesso formato, nessuna richiesta visibile, zero byte di immagini. `npm run check:launch` elenca queste varianti come informazione, senza bloccare.
+
 | Asset | Formato | Dove |
 |---|---|---|
 | Schermate delle esperienze SIII: Masseria Santella, Maison Miminà, D.L. Natura Dentro | 16:10, almeno 2560 × 1600 px, più la vista mobile | Home (capitolo SIII), /siii/ (esempi) |
