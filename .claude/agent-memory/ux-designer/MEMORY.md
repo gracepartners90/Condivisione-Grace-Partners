@@ -42,6 +42,7 @@ Lezioni apprese e pattern. Fatti e decisioni ufficiali stanno in `docs/` (soprat
   - Le caselle hanno sempre un `value`: `value !== ''` non indica un'interazione (errore prematuro, O1).
   - Prova di 1.4.13: hover sul nodo, poi puntatore sulla didascalia; focus sul nodo, poi Esc.
   - Prima di proporre una correzione, provala in pagina iniettando CSS e DOM: così la review dice «provata», non «dovrebbe». Controlla anche che non cambi il layout normale (confronto di box e righe con e senza la regola).
+  - **Ricontrolli:** la build aggiornata può essere servita su un'altra porta (es. `python3 -m http.server` su 4323/4324, con gli URL con la barra finale), mentre 4321 resta sulla build vecchia. Prima di misurare, cerca nei file serviti i marcatori delle correzioni (CSS minificato, bundle JS, HTML) e confronta `src/` con il commit. Script del ricontrollo del 2026-09-28: `ux-verifica/recheck-fixes.mjs` più `breaks.mjs`, `clip.mjs`, `flows.mjs` e `axe.mjs` con l'URL come argomento.
 
 ## Pattern approvati o condivisi
 - CTA dell'header «Parliamone» → `#richiesta` sulle pagine con form, `/contatti/` altrove (condiviso con cro-specialist).

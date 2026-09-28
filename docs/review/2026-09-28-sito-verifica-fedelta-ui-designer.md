@@ -3,9 +3,9 @@ titolo: Verifica di fedeltà UI dopo le correzioni (verso G4)
 owner: ui-designer
 contributi: []
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
+fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, build del commit c025181 su http://localhost:4323 e http://localhost:4324 (ricontrollo), docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
 ---
 
 # Verifica di fedeltà UI dopo le correzioni (verso G4)
@@ -398,3 +398,35 @@ Il verdetto di gate spetta al creative-director.
 4. **V7 e O6, se il go-live usa `PUBLIC_SLOT_MODE=publish`:**
    - applicare le due regole di contenitore (senza, a 320–345 px il nome di Acquaviva e le coordinate restano tagliati);
    - usare nella Home una variante senza nome e luogo.
+
+---
+
+## Ricontrollo dopo c025181
+
+**Dove e come.** Build aggiornata del commit c025181 su http://localhost:4323 (staging) e http://localhost:4324 (variante «in pubblicazione»). Ho confrontato il diff con gli snippet di §2: V1, V2, V3, V5, V7, V8, V12, V16 e O6 corrispondono. V13 usa spazi non separabili (`nb()`) invece di `nowrap`: effetto equivalente. Poi ho rimisurato con le stesse sonde della verifica e guardato i ritagli, a 3× per le tacche.
+
+| # | Esito | Misura sulla build nuova |
+|---|---|---|
+| **V1** | **Chiusa** | Centro del nodo «oggi» a 1 px dalla linea, a 1024 e 1440 px. Le quattro tappe partono alla stessa quota (33 px sotto la linea) |
+| **V2** | **Chiusa** | 1024 e 1152 px: elenco accanto alla carta, stacchi 48/48 px, aria sotto l'ultima riga 116 e 125 px, pari al padding di sezione.<br>1280 e 1440 px: palco per latitudine, stacchi 165/34 e 201/56 px, aria 130 e 144 px (padding 134 e 146), filetto 19 px sopra il nodo.<br>Nessun contatto tra nome ed «Esplora» |
+| **V5** | **Chiusa** | Zero incroci richiamo/etichetta sui due orizzonti (hero e Città Digitali) a 320, 390, 768, 1024, 1280, 1440 e 1920 px, a riposo e con lo scorrimento (0, 150, 300, 450 px) |
+| **V3** | **Chiusa** | Tacca da 1 a 21 px sotto la linea, etichetta da 28 a 43 px: 7 px di stacco su «000° · N», «120°» e «240°» |
+| **V7** | **Chiusa** | 320–340 px: filo, nodo e rilevamento, margine sul fondo 14–36 px.<br>360–375 px: nome e rilevamento, margine 42–46 px.<br>Da 390 px: invariato, margine 14 px.<br>Nessun testo tagliato |
+| **O6** | **Chiusa** | Capitolo 01 della Home, variante «in pubblicazione»: nessun testo, 3 hotspot, nodi di pagina nascosti, a 390 e 1440 px |
+| **O4** | **Chiusa** | Titolo di chiusura di `/siii/`: 3 righe, nessuna parola spezzata, con e senza movimento; 37 px dal form a 1024 px, 119 a 1440 |
+| V16 | Chiusa | «acquavivadigitale / .com»: va a capo prima del dominio di primo livello |
+| Non regressione | Superata | 34 combinazioni pagina × larghezza (8 pagine, 320–1440 px): nessuno scorrimento orizzontale, nessuna riga di testo fuori viewport, nessun errore JavaScript |
+
+**Verdetto di dominio (UI) aggiornato per il G4: approvabile.**
+- Le condizioni del verdetto precedente sono soddisfatte:
+  - V1, V2 e O4 sono chiuse;
+  - V7 e O6 lo sono anche per un go-live con la variante «in pubblicazione».
+- In più sono chiusi V3 e V5, due dei quattro punti consigliati.
+- **Restano al creative-director, da accettare o rimandare** (nessuno è un difetto di soglia):
+  - V4: arrivo in `display-m` e `balance` negli statement dei capitoli;
+  - V6: maschera dei ritratti;
+  - i suggerimenti V9, V10, V14, V15, V17 e S1;
+  - le decisioni I4 e I11.
+
+  Tra questi raccomando ancora V4 e V6 prima del lancio: gli statement del capitolo 03 vanno a capo per il browser (fino a 6 righe a 1024 px), e lo skyline resta leggibile nei ritratti.
+- Il verdetto di gate spetta al creative-director.

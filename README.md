@@ -51,6 +51,7 @@ npm install
 npm run dev       # sviluppo su http://localhost:4321
 npm run build     # build statica in dist/
 npm run preview   # anteprima della build
+npm start         # server della build per Railway (scripts/serve.mjs, porta da PORT)
 npm run assets    # rigenera i ritagli e i ritratti da src/assets/images/
 npm run brand     # rigenera favicon e logo PNG dal wordmark SVG
 npm run maps      # rigenera le carte (Natural Earth) in src/data/maps.json
@@ -60,6 +61,23 @@ npm run og        # rigenera l'immagine social public/og/default.jpg
 Pagine: `/`, `/siii/`, `/puglia-digitale/`, `/citta-digitali/`, `/contatti/`, `/privacy-policy/`, `/cookie-policy/` e la pagina 404.
 
 **Modulo di contatto.** L'indirizzo che riceve le richieste si imposta con la variabile d'ambiente `PUBLIC_FORM_ENDPOINT` al momento della build (POST `multipart/form-data`, risposta 2xx). Finché è vuota, il sito lo dichiara prima dei campi e all'invio prepara un'email già compilata: nessun invio viene simulato.
+
+### Anteprima su Railway
+
+Il repository è pronto per Railway ([ADR 004](docs/decisioni/004-anteprima-su-railway.md)): Railway installa le dipendenze, esegue `npm run build` e avvia `npm start`. Il server (`scripts/serve.mjs`, senza dipendenze) applica `_headers` e `_redirects` come farebbe un altro host, comprime con brotli o gzip e risponde al controllo di salute su `/healthz`.
+
+1. In Railway: **New Project → Deploy from GitHub repo**, scegli questo repository (oppure aggiungi un servizio al progetto esistente).
+2. Nel servizio: **Settings → Source → Branch**, scegli il branch da mostrare (oggi `claude/itnode-site-team-build-u58cb9`). A ogni push Railway ricostruisce l'anteprima.
+3. **Settings → Networking → Generate Domain** per avere l'indirizzo `….up.railway.app`.
+
+| Variabile | Effetto |
+|---|---|
+| `PREVIEW_AUTH=utente:password` | Anteprima protetta da password (consigliato: contiene testi e dati ancora da confermare) |
+| `PUBLIC_SLOT_MODE=publish` | Variante «in pubblicazione» al posto dei segnaposto degli asset |
+| `PUBLIC_FORM_ENDPOINT` | Indirizzo che riceve il modulo, quando esiste |
+| `INDEXING=on` | Solo in produzione: toglie l'intestazione `X-Robots-Tag: noindex, nofollow`, presente di default |
+
+Le variabili `PUBLIC_*` entrano nella build: dopo averle cambiate serve un nuovo deploy.
 
 ### Asset da fornire
 
@@ -90,7 +108,7 @@ src/
   styles/            token e stili globali
   assets/            immagini del cliente e derivati, wordmark
 public/              favicon, logo PNG, immagine social, robots.txt, _headers, _redirects
-scripts/             generatori di derivati, favicon, carte e immagine social
+scripts/             generatori di derivati, favicon, carte e immagine social; controlli SEO e di go-live; server per Railway
 .claude/
   agents/            il team: un file per membro
   agent-memory/      memoria di progetto dei membri (feedback e lezioni apprese)

@@ -248,20 +248,20 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 
 | Data | Pagina e stato | Problema | Criterio | Gravità | Soluzione | Owner | Verificato |
 |---|---|---|---|---|---|---|---|
-| 2026-09-28 | `/`, punti caldi (A1) | Didascalie su hover e focus, non chiudibili con Esc | 1.4.13 | bloccante | Didascalia solo con `aria-expanded="true"` | sviluppo | sì, desktop; mobile → O3 |
+| 2026-09-28 | `/`, punti caldi (A1) | Didascalie su hover e focus, non chiudibili con Esc | 1.4.13 | bloccante | Didascalia solo con `aria-expanded="true"` | sviluppo | sì, desktop; mobile con O3, verificata dopo c025181 |
 | 2026-09-28 | `/puglia-digitale/`, statistiche (A2) | Numeri tagliati con le spaziature | 1.4.12 | bloccante | `<wbr>` e `white-space: normal` | sviluppo | sì |
 | 2026-09-28 | tutte (A3) | Video, endpoint, asset | 1.2.x, 2.3.1; 3.3; 1.1.1 | condizione di go-live | Alternative al video; endpoint; asset o variante «publish» con O6 | cliente, sessione principale | aperto |
 | 2026-09-28 | tutte, movimento attivo (A4) | Focus su blocchi non ancora rivelati | 2.4.7 | suggerimento | Reveal al `focusin` | sviluppo | sì: visibile al 65–70% dopo 150 ms |
-| 2026-09-28 | 320 px con spaziature (A5) | Parole lunghe fuori colonna | 1.4.12 | suggerimento | Rete di sicurezza `overflow-wrap` | sviluppo | applicata; effetti collaterali → O4, S1 |
-| 2026-09-28 | form (A6) | Link nell'etichetta privacy, casella piccola, telefono | 2.5.8 (rispettato), usabilità | suggerimento | Link nell'aiuto, casella 24 px, area del telefono | sviluppo | etichetta e telefono sì; casella → S2 |
+| 2026-09-28 | 320 px con spaziature (A5) | Parole lunghe fuori colonna | 1.4.12 | suggerimento | Rete di sicurezza `overflow-wrap` | sviluppo | sì; effetti collaterali risolti con O4 e S1 (c025181); residuo accettato: tempo del video a 320 px con spaziature |
+| 2026-09-28 | form (A6) | Link nell'etichetta privacy, casella piccola, telefono | 2.5.8 (rispettato), usabilità | suggerimento | Link nell'aiuto, casella 24 px, area del telefono | sviluppo | sì; casella da 24 px con S2 (c025181) |
 | 2026-09-28 | `/contatti/`, portali (A7) | «Nuova scheda» nei titoli | 2.4.6, usabilità | suggerimento | `aria-describedby` | sviluppo | sì |
-| 2026-09-28 | form (O1) | Errore prematuro sulla casella privacy passando con Tab | 3.3.1, §7.4 | importante | Casella «toccata» solo dopo una modifica | sviluppo | provata in pagina |
-| 2026-09-28 | form (O2) | Bordo d'errore non applicato (specificità) | DS §3.15, usabilità | importante | Selettore con la stessa forma della regola base, ombra interna | sviluppo | provata in pagina |
-| 2026-09-28 | `/`, mobile (O3) | Nodo che si espande senza mostrare nulla | 4.1.2, usabilità | importante | Didascalia anche sotto i 700 px, `max-width: min(16rem, 60vw)` | sviluppo | provata in pagina |
-| 2026-09-28 | `/siii/`, ≥ 1024 px, movimento ridotto (O4) | Titolo di chiusura spezzato a metà parola | leggibilità | importante | Titolo sulle colonne 1–6 | ui-designer, sviluppo | provata in pagina |
-| 2026-09-28 | Passaggi, 320–390 px con spaziature (O5) | Righe fuori colonna, pagina che scorre in orizzontale | 1.4.12 (nessuna perdita) | importante | `overflow-wrap: anywhere` su `.passage` | sviluppo | provata in pagina |
-| 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live | Variante senza nome in Home, o nome esposto | sviluppo, creative-director | aperto |
-| 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S5 e V7 provati in pagina |
+| 2026-09-28 | form (O1) | Errore prematuro sulla casella privacy passando con Tab | 3.3.1, §7.4 | importante | Casella «toccata» solo dopo una modifica | sviluppo | sì (c025181) |
+| 2026-09-28 | form (O2) | Bordo d'errore non applicato (specificità) | DS §3.15, usabilità | importante | Selettore con la stessa forma della regola base, ombra interna | sviluppo | sì (c025181) |
+| 2026-09-28 | `/`, mobile (O3) | Nodo che si espande senza mostrare nulla | 4.1.2, usabilità | importante | Didascalia anche sotto i 700 px, `max-width: min(16rem, 60vw)` | sviluppo | sì (c025181) |
+| 2026-09-28 | `/siii/`, ≥ 1024 px, movimento ridotto (O4) | Titolo di chiusura spezzato a metà parola | leggibilità | importante | Titolo sulle colonne 1–6 | ui-designer, sviluppo | sì (c025181) |
+| 2026-09-28 | Passaggi, 320–390 px con spaziature (O5) | Righe fuori colonna, pagina che scorre in orizzontale | 1.4.12 (nessuna perdita) | importante | `overflow-wrap: anywhere` su `.passage` | sviluppo | sì (c025181) |
+| 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live (chiuso) | Variante senza nome in Home (`pendingText={false}`) | sviluppo | sì (c025181) |
+| 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S3 (V7), S4, S5 applicati e verificati (c025181); S6 dopo il lancio |
 
 ## Ipotesi da validare
 - Lo skip link senza `tabindex` permanente funziona con i browser e i lettori di schermo di riferimento: verificato solo in Chromium.
@@ -279,12 +279,10 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 
 ## Decisioni richieste
 - **Sessione principale (sviluppo)**:
-  - applicare O1–O5 e S1 (= V16), S2, S4, S5 della review di verifica, più V7 della verifica UI al posto di S3;
-  - con asset mancanti, build di produzione con `PUBLIC_SLOT_MODE=publish`, dopo O6.
-- **creative-director**:
-  - problema 14 (I11): una delle due alternative di `struttura-pagine.md` PD-5. Per l'accessibilità è consigliata ovest → est a tutte le larghezze;
-  - O6: variante senza nome in Home, oppure nome esposto;
-  - accettare esplicitamente le voci O1–O5 che non si correggono prima del go-live.
+  - O1–O6, S1–S5 e V7 applicati e verificati (commit c025181);
+  - al go-live: endpoint del form configurato; con asset mancanti, build di produzione con `PUBLIC_SLOT_MODE=publish`.
+- **Cliente, tramite la sessione principale**: informazioni sul video di Città Digitali (parlato, musica, lampeggiamenti, durata) per decidere sottotitoli e descrizione (condizione A3, presidiata dal controllo pre-lancio).
+- **creative-director**: problema 14 (I11), una delle due alternative di `struttura-pagine.md` PD-5. Per l'accessibilità è consigliata ovest → est a tutte le larghezze.
 
 ## Appendice A · `tests/a11y.mjs`
 Provato il 2026-09-28 su pagine di test:

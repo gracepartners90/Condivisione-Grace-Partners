@@ -3,15 +3,16 @@ titolo: Verifica di accessibilità dopo le correzioni (verso il G4)
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-09-28
-fonti: [http://localhost:4321/ (build statica del commit 7c5f747, dist/ delle 11:30), http://localhost:4322/ (stesso commit con PUBLIC_SLOT_MODE=publish), docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, docs/ui/design-system.md, docs/creativa/direzione-visiva.md, docs/contenuti/copy-deck/puglia-digitale.md, src/, scripts/prelaunch-check.mjs, CLAUDE.md]
+fonti: [http://localhost:4321/ (build statica del commit 7c5f747, dist/ delle 11:30), http://localhost:4323/ e http://localhost:4324/ (commit c025181, ricontrollo), http://localhost:4322/ (stesso commit con PUBLIC_SLOT_MODE=publish), docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, docs/ui/design-system.md, docs/creativa/direzione-visiva.md, docs/contenuti/copy-deck/puglia-digitale.md, src/, scripts/prelaunch-check.mjs, CLAUDE.md]
 oggetto: verifica di A1–A7 e B1, giro da tastiera, variante «in pubblicazione» dei segnaposto, form su mobile dopo un invio vuoto, I11
 ---
 
 # Verifica di accessibilità dopo le correzioni · verso il G4
 
 ## In sintesi
+- **Aggiornamento dopo c025181:** O1–O6 e i suggerimenti S1–S5 sono applicati e verificati. Il verdetto aggiornato è in fondo, in «Ricontrollo dopo c025181».
 - **Le correzioni reggono.** A1 (didascalie dei punti caldi) e A2 (numeri delle statistiche) sono chiuse e verificate sul codice costruito, non più con correzioni iniettate. Il reflow a 320 px (B1) è pulito su tutte le 8 pagine, da 320 a 1440 px e a 320 × 256.
 - **Tastiera superata** su Home, /puglia-digitale/, /siii/, /citta-digitali/ e /contatti/, a 390 e 1440 px.
   - Focus non coperto (2.4.11): 159 prove pulite.
@@ -349,3 +350,42 @@ Il verdetto di gate spetta al creative-director.
 - **web-performance-specialist:**
   - chiudere la segnalazione sul `tap`: non si riproduce, è un effetto del test;
   - usare `reducedMotion: 'reduce'` nelle prove con tocchi ripetuti.
+
+## Ricontrollo dopo c025181
+- **Build verificate.**
+  - Commit c025181: staging su http://localhost:4323/ (`dist-next`) e variante `PUBLIC_SLOT_MODE=publish` su http://localhost:4324/ (`dist-next-pub`), entrambe costruite alle 12:28.
+  - Prima di misurare ho controllato che i file serviti contengano le correzioni (O1–O6, S1, S2, S5, V7) e che `src/` coincida con il commit. La porta 4321 serve ancora la build precedente e non è stata usata.
+- **Controlli rifatti:**
+  - parole spezzate da 320 a 2560 px, con e senza movimento, su staging e «publish»;
+  - testo tagliato con e senza le spaziature di 1.4.12, con il movimento ridotto e attivo, da 320 a 1440 px e a 320 × 256;
+  - percorso del form da tastiera e al tocco;
+  - prove mirate delle correzioni;
+  - axe-core e focus non coperto (2.4.11).
+
+| Voce | Esito | Evidenza |
+|---|---|---|
+| O1 · errore prematuro | Chiusa | Tab sulla casella non toccata: nessun errore e nessun `aria-invalid` (4 pagine × 2 larghezze). Spuntata e tolta: errore; spuntata di nuovo: l'errore sparisce. Nei percorsi da tastiera, 0 errori prematuri. |
+| O2 · bordo d'errore | Chiusa | 1 px di bordo più 1 px di ombra interna in `--error`: #B42318 sulle superfici chiare, #FF8A7A sulle superfici notte di Puglia Digitale e Città Digitali. Il campo non cambia altezza per il bordo. |
+| O3 · nodo su mobile | Chiusa | A 320, 390 e 414 px, con e senza spaziature, il tocco mostra la didascalia dentro la foto e il secondo tocco la chiude. A1 su desktop invariata: hover 0, focus 0, Invio 1, Esc 0 con il focus sul nodo. |
+| O4 · titolo di /siii/ | Chiusa | Nessuna parola spezzata da 320 a 2560 px, con e senza movimento |
+| O5 · Passaggi e spaziatura | Chiusa | Con movimento e spaziature nessun Passaggio fuori colonna, da 320 a 1440 px |
+| O6 · variante in Home | Chiusa | La variante della Home non mostra testo. Su /siii/ nomi e luoghi sono negli H3 e nelle righe accanto. Su /puglia-digitale/ restano fuori dall'albero di accessibilità solo rilevamenti e coordinate, il segno grafico di T10. Nessun «Asset richiesto». |
+| S1 (= V16) · dominio | Chiusa | A 320 px «acquavivadigitale / .com» |
+| S2 · casella privacy | Chiusa | 24 × 24 px |
+| S3 (→ V7) · porte strette | Chiusa | A 320 e 340 px nome e coordinate sono nascosti; a 360 px solo le coordinate; tutto il testo mostrato sta dentro la porta. A 360–390 px, solo con le spaziature dell'utente, resta un taglio su testo decorativo duplicato: residuo accettato. |
+| S4 · controllo pre-lancio | Applicata | Sulla nuova build la voce del video risponde «NO», come deve finché mancano sottotitoli o descrizione |
+| S5 · icona e prefisso | Chiusa | Descrizione accessibile del campo «Errore: Scrivi nome e cognome.»; icona con `content: "!" / ""`, non letta; prefisso nascosto alla vista; link del riepilogo senza prefisso |
+| Regressioni | Nessuna | **axe-core 4.13:** 0 violazioni su 64 esecuzioni (staging e «publish», con menu aperto e form con errori). **2.4.11:** 159 prove pulite. **Percorsi da tastiera:** invariati (skip link, menu, «Parliamone», riepilogo, correzione dal vivo, pannello senza endpoint). **Tocchi ripetuti dopo un invio vuoto:** 36 su 36. **Unico residuo:** il tempo del video (`aria-hidden`) a 320 px con le spaziature. |
+
+**Nota fuori dal mio dominio, per ui-designer.**
+- **Cosa succede.** Nel form a due colonne, da 1024 px, «Nome» e «Azienda» sono alti 68 px contro i 52 di «Email» e «Telefono»: la griglia li allunga per pareggiare la riga d'aiuto del campo accanto. Dopo un invio vuoto «Nome» passa a 63 px. Era così anche nella build precedente.
+- **Correzione provata.** `.contact__field { align-content: start; }` porta tutti i campi a 52 px, e con gli errori niente si muove. In cambio, le cime dei campi di una riga non sono più allineate: è una scelta visiva.
+- Per l'accessibilità non cambia nulla.
+
+### Verdetto di dominio aggiornato (accessibilità) per il G4
+**Conforme a WCAG 2.2 AA nel perimetro verificato (Chromium).** O1–O6 sono chiuse: nel mio dominio non restano osservazioni importanti aperte. Restano le condizioni di go-live di A3, che non dipendono dal codice:
+1. **Video di Città Digitali:** sottotitoli e/o descrizione secondo il contenuto, e nessun lampeggiamento oltre 3 volte al secondo. Il controllo pre-lancio ora lo presidia (S4).
+2. **Endpoint del form:** configurato e provato.
+3. **Asset:** se ne manca anche uno, build di produzione con `PUBLIC_SLOT_MODE=publish`, che ora è conforme anche nella Home.
+
+S6 resta per dopo il lancio. Restano valide le ipotesi da validare sopra: screen reader reali, Safari e Firefox. Il verdetto di gate spetta al creative-director.

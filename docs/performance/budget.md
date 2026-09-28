@@ -3,9 +3,9 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7)]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1)]
 ---
 
 # Budget di performance
@@ -40,19 +40,22 @@ Lighthouse 13.5.0 in emulazione mobile, throttling simulato, mediana di 5 esecuz
 
 Le soglie valgono per tutti i template:
 
-| Metrica | Limite | Obiettivo | Prototipo (§7) |
+| Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1) |
 |---|---|---|---|
-| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,35 s |
-| FCP | ≤ 1,8 s | ≤ 1,5 s | 0,90 s |
+| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,67 s |
+| FCP | ≤ 1,8 s | ≤ 1,5 s | 1,34 s (1,51 s senza preload, vedi sotto) |
 | TBT | ≤ 200 ms | ≤ 100 ms | 0 ms |
 | CLS | ≤ 0,1 | ≤ 0,05 | 0 |
-| Speed Index | ≤ 3,4 s | ≤ 2,5 s | 0,90 s |
-| Punteggio Performance | ≥ 90 | ≥ 95 | 100 |
+| Speed Index | ≤ 3,4 s | ≤ 2,5 s | 1,34 s |
+| Punteggio Performance | ≥ 90 | ≥ 95 | 99 |
 | **LCP − FCP** con throttling applicato (`devtools`) | ≤ 200 ms | ≤ 100 ms | 0 ms |
 
 **Perché serve la riga LCP − FCP.** Il throttling simulato non vede i ritardi dovuti alle animazioni.
-- Un H1 che entra da `opacity: 0` sposta l'LCP di +0,66 s con throttling applicato, e di soli +0,05 s in quello simulato (§7).
+- Un H1 che entra da `opacity: 0` sposta l'LCP di +0,66 s con throttling applicato, e di soli +0,05 s in quello simulato (§7.2).
+- Sul sito costruito lo statement di `/siii/`, nascosto dal reveal, ha dato LCP − FCP = 935 ms con throttling applicato e 373 ms in quello simulato, dovuti al font (review del 2026-09-28).
 - Su tutte le pagine la hero è senza foto e l'LCP è testo: LCP e FCP devono quindi coincidere.
+
+**FCP simulato e font.** Il modello simulato (Lantern) tratta il font come una dipendenza dell'FCP, mentre con `font-display: swap` il testo si dipinge con il ripiego. Per questo, senza preload del font (§3), l'FCP simulato cresce di 0,23–0,33 s, mentre quello applicato scende di 0,15–0,27 s: in 20 corse su 20 l'FCP applicato precede l'arrivo del font. L'obiettivo di FCP resta 1,5 s. Lo scarto della home senza preload (1,51 s simulato) è motivato qui e nella rimisura del 2026-09-28, §4.
 
 **Altre categorie di Lighthouse (mobile).** Sono obiettivi proposti; soglia e verdetto spettano agli owner.
 
@@ -79,8 +82,11 @@ Le soglie valgono per tutti i template:
 **Regole collegate**
 - **Font.**
   - Al massimo **2 file** per pagina: Schibsted Grotesk variabile, 45,9 KB, e Fragment Mono 400, 24,8 KB (misurati).
-  - **Un solo preload**, Schibsted Grotesk. È un compromesso misurato (§7, variante D): con throttling applicato il preload ritarda l'FCP di circa 0,1 s, ma porta prima il carattere che fa l'identità.
-  - In Fase 5 si confronta con e senza preload sulle pagine vere e si tiene la variante con l'LCP migliore.
+  - **Nessun preload dei font.** Decisione del 2026-09-28, dopo il confronto sulle pagine vere previsto per la Fase 5 (rimisura, §4).
+    - Perché: in Chromium un preload di font nel `<head>` blocca il primo rendering. Il blocco dura fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dall'avvio della navigazione (sorgente di Chromium, consultato il 2026-09-28).
+    - Guadagno misurato, throttling applicato: LCP −151 ms sulla home e −177 ms su `/siii/`. Con throttling simulato: LCP pari sulla home e −145 ms su `/siii/`. CLS invariato (0–0,002).
+    - Costo: sulla prima pagina di una visita, con rete lenta, il carattere di ripiego resta visibile 0,4–0,5 s in più.
+    - La decisione attende l'assenso di creative-director, perché tocca l'identità. Fino alla modifica in `BaseLayout.astro`, o se l'assenso non arriva, è ammesso un solo preload: Schibsted Grotesk.
   - Niente corsivi né altri pesi statici. Un terzo file richiede un'eccezione (§8).
 - **CSS.** Resta tutto inline finché sta entro 15 KB per pagina. Oltre, si torna a `inlineStylesheets: 'auto'` e si rimisura.
 - **JavaScript.**
@@ -138,8 +144,8 @@ Si verifica in Fase 5 e, durante lo sviluppo, a ogni modifica che tocca media, f
   - 3 con throttling applicato (`--throttling-method=devtools`), per la riga LCP − FCP e per il CLS dei font.
 - **Dati da annotare:** `benchmarkIndex` (1950–2420 in questo ambiente il 2026-09-28) e il commit misurato.
 - **Limiti noti del laboratorio:**
-  - il server locale va in HTTP/1.1;
-  - l'ambiente non ha Arial, Roboto né Helvetica: il CLS dello swap dei font è **sovrastimato** rispetto ai dispositivi reali, dove il fallback metrico si applica.
+  - il server locale va in HTTP/1.1, e il TTFB comprende la compressione Brotli q11 fatta a ogni richiesta (65–234 ms);
+  - l'ambiente non ha Arial, Roboto né Helvetica, ma ha **Liberation Sans**, che la faccia di ripiego intercetta con le metriche di Arial (verificato il 2026-09-28). Il CLS dello swap misurato qui rappresenta quindi un ripiego con metriche di Arial: non è sovrastimato. Resta da verificare su Android (Roboto) e iPhone (Helvetica).
 
 ### 6.2 Procedura
 
@@ -187,7 +193,7 @@ CHROME_PATH=/opt/pw-browsers/chromium npx -y lighthouse@13.5.0 http://127.0.0.1:
 | 4 | Nessun `<iframe>` nell'HTML (solo facade) | `grep -rl '<iframe' dist --include='*.html'` → vuoto |
 | 5 | `<video>` senza `autoplay` e senza `poster` | `grep -rhoE '<video[^>]*>' dist --include='*.html' \| grep -E 'autoplay\|poster='` → vuoto |
 | 6 | Nessuno script, CSS, font o preconnect esterno | `grep -rhoE '<script[^>]+src="https?://[^"]*"\|<link[^>]+rel="(stylesheet\|preload\|modulepreload\|preconnect\|dns-prefetch)"[^>]*href="https?://[^"]*"' dist --include='*.html'` → vuoto |
-| 7 | Un solo `rel="preload"` per pagina (il font); al massimo 2 file `.woff2` | come il n. 1, con `grep -o 'rel="preload"'`; `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
+| 7 | Nessun `rel="preload"` (§3; fino alla modifica è ammesso il solo preload di Schibsted); al massimo 2 file `.woff2` | come il n. 1, con `grep -o 'rel="preload"'` → ogni valore 0; `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
 | 8 | Nessun AVIF o WebP sopra i 200 KB, nessun JPEG di fallback sopra i 300 KB; nessuna foto in `public/` | `find dist -type f \( -name '*.avif' -o -name '*.webp' \) -size +200k` → vuoto |
 
 ### 6.4 INP in laboratorio (Playwright)
@@ -220,6 +226,27 @@ Taratura del 2026-09-28:
 - un gestore con 150 ms di lavoro sincrono misura **176 ms**.
 
 Il metodo distingue quindi bene i casi.
+
+**Prima apertura del menu.** Il caso peggiore dell'INP è la prima interazione su una pagina nuova. Si misura su almeno 6 caricamenti distinti, non con le ripetizioni sulla stessa pagina. Riferimento del 2026-09-28: mediana 128 ms, massimo 200 ms su 19 caricamenti.
+
+**Traccia dello scroll** (main thread durante lo scroll, CPU 4x):
+- si usa `Input.synthesizeScrollGesture` con `gestureSourceType: 'mouse'` (rotella) e `browser.startTracing`;
+- **non** la sorgente `touch`: con Chromium 141 headless e l'emulazione mobile di Playwright non scorre la pagina (0 px in 12 prove su 12, verificato il 2026-09-28);
+- si controlla sempre che `scrollY` sia cambiato;
+- si contano i task oltre 50 ms (limite: nessuno) e gli eventi `UpdateLayoutTree`, `Layout` e `Paint`.
+
+```js
+await cdp.send('Input.synthesizeScrollGesture', { x: 206, y: 411, yDistance: -3000, speed: 1500, gestureSourceType: 'mouse' });
+```
+
+Riferimento del 2026-09-28, home a 412×823 su 3000 px: main thread al 37–39% con il motion e al 12% con movimento ridotto; nessun task lungo.
+
+**Reveal e CLS durante la lettura** (Playwright):
+- **Reveal:** a ogni fotogramma del caricamento, con CPU 4x e la rete del throttling applicato, nessun `[data-reveal]` o `.aperture` nella viewport deve avere opacità sotto 1, righe traslate o otturatori chiusi. Si controlla a 412×823, 390×844, 768×1024 e 1440×900.
+- **CLS durante la lettura:** Layout Instability API durante uno scroll completo con la rotella, a scatti di 400 px ogni 120 ms.
+  - Il valore si somma al CLS del caricamento, e il totale ha gli stessi limite (0,1) e obiettivo (0,05) del §2.
+  - Ogni spostamento con una causa individuabile si corregge anche se il totale è sotto l'obiettivo.
+  - Riferimento del 2026-09-28: fino a 0,016, dovuto al reveal a righe (rimisura, osservazione 2).
 
 ### 6.5 Esito e report
 
