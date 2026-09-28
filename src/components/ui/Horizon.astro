@@ -17,10 +17,12 @@ interface Props {
   places: HorizonPlace[];
   /** Degrees of rotation while the hero scrolls out. */
   rotate?: number;
+  /** Bearing at the centre of the view per breakpoint (mobile, tablet, desktop). */
+  centers?: { m: number; t: number; d: number };
   class?: string;
 }
 
-const { places, rotate = 60, class: className } = Astro.props;
+const { places, rotate = 60, centers, class: className } = Astro.props;
 
 const START = -90;
 const SPAN = 540;
@@ -53,7 +55,7 @@ type Label = { at: number; end: number; row: number; full: string; compact: stri
 
 // Centre bearing per breakpoint (must match the CSS below): labels past the centre hang to the
 // left of their node, so they never run off the right edge.
-const CENTERS = { m: 250, t: 170, d: 170 };
+const CENTERS = centers ?? { m: 250, t: 170, d: 170 };
 const anchorClasses = (b: number) =>
   (Object.entries(CENTERS) as [string, number][])
     .filter(([, c]) => b > c)
@@ -85,7 +87,11 @@ groups.forEach((group, gi) => {
 });
 ---
 
-<div class:list={['horizon', className]} style={`--rotate: ${rotate}`} aria-hidden="true">
+<div
+  class:list={['horizon', className]}
+  style={`--rotate: ${rotate}; --center-m: ${CENTERS.m}; --center-t: ${CENTERS.t}; --center-d: ${CENTERS.d}`}
+  aria-hidden="true"
+>
   <div class="horizon__view">
   <div class="horizon__strip">
     <svg class="horizon__ticks" viewBox={`${START} 0 ${SPAN} 20`} preserveAspectRatio="none" focusable="false">
@@ -118,7 +124,7 @@ groups.forEach((group, gi) => {
   .horizon {
     /* Field of view and centre bearing per breakpoint (visual direction §5). */
     --fov: 100;
-    --center: 250;
+    --center: var(--center-m, 250);
     position: relative;
     width: 100vw;
     margin-left: calc(50% - 50vw);
@@ -130,14 +136,14 @@ groups.forEach((group, gi) => {
   @media (min-width: 43.75em) {
     .horizon {
       --fov: 150;
-      --center: 170;
+      --center: var(--center-t, 170);
     }
   }
 
   @media (min-width: 64em) {
     .horizon {
       --fov: 200;
-      --center: 170;
+      --center: var(--center-d, 170);
     }
   }
 

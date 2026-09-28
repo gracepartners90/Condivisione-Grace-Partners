@@ -66,6 +66,32 @@ function ellipseBox({ cx, cy, rx, ry }, rotateDeg) {
   return { x1: cx - hw, y1: cy - hh, x2: cx + hw, y2: cy + hh };
 }
 
+/** Compact SVG path data: relative commands on points rounded to 0.1 units (no drift), h/v shortcuts. */
+function compactPath(commands) {
+  const r = (v) => Math.round(v * 10);
+  const f = (n) => {
+    let t = (n / 10).toFixed(1).replace(/\.0$/, '');
+    if (t === '-0') t = '0';
+    return t.replace(/^(-?)0\./, '$1.');
+  };
+  const join = (nums) => nums.reduce((out, n, i) => (i === 0 || n.startsWith('-') || (n.startsWith('.') && /\.\d*$/.test(nums[i - 1])) ? out + n : `${out} ${n}`), '');
+  let d = '', cx = 0, cy = 0, sx = 0, sy = 0;
+  for (const c of commands) {
+    if (c.type === 'Z') { d += 'z'; cx = sx; cy = sy; continue; }
+    const x = r(c.x), y = r(c.y);
+    if (c.type === 'M') { d += 'M' + join([f(x), f(y)]); sx = x; sy = y; }
+    else if (c.type === 'L') {
+      if (x === cx && y === cy) continue; // zero-length segments emitted by opentype.js
+      if (y === cy) d += 'h' + f(x - cx);
+      else if (x === cx) d += 'v' + f(y - cy);
+      else d += 'l' + join([f(x - cx), f(y - cy)]);
+    } else if (c.type === 'Q') d += 'q' + join([f(r(c.x1) - cx), f(r(c.y1) - cy), f(x - cx), f(y - cy)]);
+    else if (c.type === 'C') d += 'c' + join([f(r(c.x1) - cx), f(r(c.y1) - cy), f(r(c.x2) - cx), f(r(c.y2) - cy), f(x - cx), f(y - cy)]);
+    cx = x; cy = y;
+  }
+  return d;
+}
+
 async function loadFont(weight) {
   const buf = await readFile(fontFile(weight));
   return opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
@@ -90,16 +116,16 @@ async function buildWordmark() {
         for (const k of ['x', 'x1', 'x2']) if (k in c) c[k] -= dx;
         for (const k of ['y', 'y1', 'y2']) if (k in c) c[k] -= dy;
       });
-      return p.toPathData({ decimalPlaces: 1, flipY: false, optimize: true });
+      return compactPath(p.commands);
     })
     .join('');
   const ringPath =
     ellipsePath(RING.outer, RING.rotate, false, dx, dy, SCALE) + ellipsePath(RING.inner, RING.rotate, true, dx, dy, SCALE);
 
-  // No role/aria-label/title here: the Wordmark component adds the accessible name when inlining.
+  // No role/aria-label/title/comments here: the Wordmark component inlines this file in every page
+  // and adds the accessible name. Provisional status is documented in docs/ui/design-system.md §5.1.
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">` +
-    `<!-- itNode wordmark: provisional redraw (2026-09-28), replace with the official vector logo. -->` +
     `<path fill="currentColor" d="${letters}"/>` +
     `<path fill="${BLUE}" fill-rule="evenodd" d="${ringPath}"/>` +
     `</svg>\n`;

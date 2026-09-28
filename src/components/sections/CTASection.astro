@@ -17,21 +17,56 @@ interface Props {
   location?: string;
   surface?: 'calce' | 'pietra' | 'notte';
   id?: string;
+  size?: 'xl' | 'l' | 'm';
+  secondSize?: 'xl' | 'l' | 'm' | 's' | 'same';
+  /** Secondary link under the statement (e.g. the portal on line pages). */
+  secondary?: { label: string; href: string; id: string; srText?: string; destinationId?: string };
+  /** form variant: statement beside the form (`side`) or above it (`stack`). */
+  layout?: 'side' | 'stack';
 }
 
-const { variant = 'band', eyebrow, title, text, cta, location = 'chiusura', surface = 'notte', id } = Astro.props;
+const {
+  variant = 'band',
+  eyebrow,
+  title,
+  text,
+  cta,
+  location = 'chiusura',
+  surface = 'notte',
+  id,
+  size = variant === 'band' ? 'xl' : 'l',
+  secondSize = 'same',
+  secondary,
+  layout = 'side',
+} = Astro.props;
 const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
 ---
 
-<section id={id} class:list={['cta-section', `cta-section--${variant}`, `surface-${surface}`]} aria-labelledby={`${id ?? 'chiusura'}-title`}>
+<section
+  id={id}
+  class:list={['cta-section', `cta-section--${variant}`, `cta-section--${layout}`, `surface-${surface}`]}
+  aria-labelledby={`${id ?? 'chiusura'}-title`}
+>
   <div class="wrap grid cta-section__grid">
     {eyebrow && <p class="cta-section__eyebrow t-label">{eyebrow}</p>}
-    <Passage as="h2" id={`${id ?? 'chiusura'}-title`} registers={title} size={variant === 'band' ? 'xl' : 'l'} class="cta-section__title" />
+    <Passage as="h2" id={`${id ?? 'chiusura'}-title`} registers={title} size={size} secondSize={secondSize} class="cta-section__title" />
     {
-      (text || cta) && (
+      (text || cta || secondary) && (
         <div class="cta-section__body" data-reveal>
           {text && <p class="cta-section__text">{text}</p>}
           {cta && <Cta href={cta.href} label={cta.label} variant="primary" size="large" ctaId={cta.id} location={location} />}
+          {secondary && (
+            <Cta
+              href={secondary.href}
+              label={secondary.label}
+              srText={secondary.srText}
+              variant="link"
+              ctaId={secondary.id}
+              location={location}
+              destinationId={secondary.destinationId}
+              outboundType="portale"
+            />
+          )}
           {variant === 'band' && (
             <ul role="list" class="cta-section__contacts t-label">
               <li>
@@ -49,7 +84,13 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
         </div>
       )
     }
-    <slot />
+    {
+      Astro.slots.has('default') && (
+        <div class="cta-section__form">
+          <slot />
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -105,9 +146,38 @@ const trackPrefix = cta?.id.replace(/-[^-]+$/, '') ?? 'chiusura';
     }
   }
 
+  .cta-section__form {
+    grid-column: 1 / -1;
+  }
+
   @media (min-width: 64em) {
     .cta-section--band .cta-section__body {
       grid-column: 7 / span 6;
+    }
+
+    /* SIII: statement on columns 1–5, form on 7–12 (visual direction §7.4). */
+    .cta-section--form.cta-section--side .cta-section__eyebrow,
+    .cta-section--form.cta-section--side :global(.cta-section__title),
+    .cta-section--form.cta-section--side .cta-section__body {
+      grid-column: 1 / span 5;
+    }
+
+    .cta-section--form.cta-section--side .cta-section__form {
+      grid-column: 7 / -1;
+      grid-row: 1 / span 4;
+    }
+
+    .cta-section--form .cta-section__grid {
+      align-items: start;
+    }
+
+    /* Puglia Digitale and Città Digitali: statement across, the form below it (§7.5–7.6). */
+    .cta-section--form.cta-section--stack :global(.cta-section__title) {
+      grid-column: 1 / span 11;
+    }
+
+    .cta-section--form.cta-section--stack .cta-section__form {
+      margin-top: var(--space-xl);
     }
   }
 </style>

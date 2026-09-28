@@ -9,7 +9,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "assets": "node scripts/prepare-assets.mjs"
+    "assets": "node scripts/prepare-assets.mjs",
+    "brand": "node scripts/generate-brand.mjs",
+    "maps": "node scripts/generate-maps.mjs",
+    "og": "node scripts/og/build-og.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

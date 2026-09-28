@@ -19,6 +19,9 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
   const toggle = root.querySelector<HTMLButtonElement>('[data-video-toggle]');
   const mute = root.querySelector<HTMLButtonElement>('[data-video-mute]');
   const time = root.querySelector<HTMLElement>('[data-video-time]');
+  const cover = root.querySelector<HTMLElement>('[data-video-cover]');
+  const fullscreen = root.querySelector<HTMLButtonElement>('[data-video-fullscreen]');
+  const errorBox = root.querySelector<HTMLElement>('[data-video-error]');
   if (!video || !toggle) return;
 
   const labels = {
@@ -58,6 +61,16 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
     }
   });
 
+  // The cover is a large pointer target for the same action as the play button.
+  cover?.addEventListener('click', () => toggle.click());
+
+  fullscreen?.addEventListener('click', () => {
+    const v = video as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+    if (video.requestFullscreen) video.requestFullscreen().catch(() => v.webkitEnterFullscreen?.());
+    else v.webkitEnterFullscreen?.();
+    if (video.paused) play('utente');
+  });
+
   mute?.addEventListener('click', () => {
     video.muted = !video.muted;
     if (!video.muted) track('video_unmute', { video_id: videoId, video_current_time: Math.round(video.currentTime) });
@@ -92,7 +105,10 @@ document.querySelectorAll<HTMLElement>('[data-video]').forEach((root) => {
   });
 
   video.addEventListener('ended', () => track('video_complete', { video_id: videoId }));
-  video.addEventListener('error', () => (root.dataset.state = 'error'));
+  video.addEventListener('error', () => {
+    root.dataset.state = 'error';
+    if (errorBox) errorBox.textContent = errorBox.dataset.text ?? '';
+  });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(

@@ -1,0 +1,175 @@
+---
+/**
+ * Città Digitali — the national network. Copy: docs/contenuti/copy-deck/citta-digitali.md.
+ * Structure: docs/ux/struttura-pagine.md §4. Rhythm and order: docs/creativa/direzione-visiva.md
+ * §7.6 (the hero ends on a horizon that opens into the video; the map continues the dark).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Cta from '../components/ui/Cta.astro';
+import Horizon from '../components/ui/Horizon.astro';
+import VideoSection from '../components/sections/VideoSection.astro';
+import LocationShowcase from '../components/sections/LocationShowcase.astro';
+import BenefitsSection from '../components/sections/BenefitsSection.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
+import Bridge from '../components/sections/Bridge.astro';
+import { italyPlaces, office, portals, video } from '../data/site';
+import { bearing, distanceKm } from '../lib/geo';
+import { pageGraph, videoObject, ids } from '../lib/structured-data';
+
+const portal = portals.cittaDigitali;
+const videoTitle = 'Città Digitali, in movimento.';
+const videoText = 'Il progetto Città Digitali, raccontato per immagini.';
+
+// VideoObject only when thumbnail and upload date exist (docs/seo/dati-strutturati.md).
+const videoNode = videoObject({ name: videoTitle.replace(/\.$/, ''), description: videoText });
+const schema = pageGraph('citta-digitali', videoNode ? [videoNode] : [], {
+  about: ids.cittaBrand,
+  videoId: videoNode ? ids.video : undefined,
+});
+
+// The three cities on the horizon, at their true bearing and distance from the office.
+const horizonCities = italyPlaces.map((p) => ({ id: p.id, name: p.name, bearing: bearing(office, p), km: distanceKm(office, p) }));
+
+const lines: Record<string, string> = {
+  varese: 'La città giardino, tra il lago e le Prealpi.',
+  altamura: 'Sull’altopiano dell’Alta Murgia, nell’entroterra barese.',
+  caltanissetta: 'Capoluogo di provincia nel cuore della Sicilia.',
+};
+const cities = italyPlaces.map((p) => ({
+  id: p.id,
+  name: p.name,
+  region: p.region,
+  line: lines[p.id],
+  lat: p.lat,
+  lon: p.lon,
+  url: p.url!,
+  display: p.display!,
+  ctaId: `cd-citta-${p.id}`,
+}));
+---
+
+<BaseLayout page="citta-digitali" schema={schema} hasForm>
+  <Hero variant="line" surface="calce" name="Città Digitali" descriptor="Le attività del territorio, online senza perdere radici." class="cd-hero">
+    <p class="cd-hero__subtitle">Tour virtuali, Siti Immersivi Interattivi e strumenti digitali per il tessuto imprenditoriale e commerciale italiano.</p>
+    <div class="cd-hero__ctas">
+      <Cta
+        href={portal.url}
+        label="Visita il portale"
+        srText=" Città Digitali"
+        variant="primary"
+        ctaId="cd-hero-portale"
+        location="hero"
+        outboundType="portale"
+        destinationId="citta-digitali"
+      />
+      <Cta href="#richiesta" label="Aderisci a Città Digitali" variant="link" ctaId="cd-hero-richiesta" location="hero" interest="citta-digitali" />
+    </div>
+  </Hero>
+
+  <div class="cd-horizon surface-calce">
+    <Horizon places={horizonCities} rotate={40} centers={{ m: 263, t: 263, d: 263 }} />
+  </div>
+
+  <VideoSection id="video" eyebrow="Video" title={videoTitle} text={videoText} src={video.cittaDigitali} videoId="citta-digitali" />
+
+  <LocationShowcase
+    variant="italy"
+    id="portale"
+    title="L’Italia in un unico portale."
+    text="Città Digitali è la rete e il portale nazionale con cui ITnode porta online le attività del territorio, senza che perdano le proprie radici. Offre al tessuto imprenditoriale e commerciale italiano tour virtuali, Siti Interattivi Immersivi e strumenti digitali. Riunisce in un unico portale, cittadigitali.it, città come Varese, Altamura e Caltanissetta."
+    statement="Da Varese a Caltanissetta, passando per Altamura: città diverse, un’unica rete da esplorare."
+    locations={cities}
+    surface="notte"
+    location="portale"
+  />
+
+  <BenefitsSection
+    variant="sticky"
+    id="come-funziona"
+    eyebrow="Come funziona"
+    title="Dal locale al nazionale."
+    intro={'Con un tour virtuale o un <a href="/siii/">Sito Interattivo Immersivo (SIII)</a>, la tua attività resta radicata nel suo territorio e, dentro un portale nazionale, diventa visitabile da chiunque, ovunque si trovi.'}
+    surface="calce"
+    items={[
+      {
+        title: 'Distanze ridotte, fiducia immediata',
+        text: 'Chi ti trova online può entrare nella tua attività prima di raggiungerla. Vedere il luogo reale accorcia le distanze e rende più semplice il primo contatto.',
+      },
+      {
+        title: 'Maggiore coinvolgimento',
+        text: 'Una pagina si scorre, uno spazio si esplora. Chi ti visita decide il percorso e ti scopre un dettaglio alla volta.',
+      },
+      {
+        title: 'Visibilità digitale',
+        text: 'Sei online con i tuoi spazi reali, dentro un portale dedicato al territorio. Chi esplora la tua città può incontrare anche te.',
+      },
+      {
+        title: 'Differenziazione',
+        text: 'Una foto mostra, un’esperienza immersiva fa entrare. È ciò che rende la tua attività riconoscibile, oltre la semplice presenza online.',
+      },
+      {
+        title: 'La forza di un portale ad alto traffico',
+        text: 'Non parti da zero: entri in un portale che riunisce città e imprese. I visitatori che arrivano per un luogo possono fermarsi anche da te.',
+      },
+    ]}
+  />
+
+  <Bridge
+    text={'Dalla rete di città alla singola impresa: la stessa visione si ritrova in <a href="/puglia-digitale/">Puglia Digitale</a> e nei <a href="/siii/">Siti Interattivi Immersivi (SIII)</a>.'}
+  />
+
+  <CTASection
+    variant="form"
+    id="chiusura"
+    title={['La tua azienda merita più di una presenza online.', 'Merita di essere esplorata.']}
+    size="m"
+    secondSize="xl"
+    surface="notte"
+    location="chiusura"
+    layout="stack"
+  >
+    <ContactForm
+      formId="richiesta-citta-digitali"
+      title="Entra in Città Digitali"
+      intro="Raccontaci la tua attività: ti spieghiamo come entrare in Città Digitali."
+      preselect={['citta-digitali']}
+      messageHint="In quale città lavori e di cosa si occupa la tua attività?"
+      successActions={[{ label: 'Visita il portale', href: portal.url, srText: ' Città Digitali' }]}
+      columns={2}
+    />
+  </CTASection>
+</BaseLayout>
+
+<style>
+  .cd-hero :global(.hero-line__descriptor) {
+    max-width: 20ch;
+  }
+
+  .cd-hero__subtitle {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  .cd-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s) var(--space-l);
+  }
+
+  /* The hero ends on the horizon; below it, the video opens. */
+  .cd-horizon {
+    position: relative;
+    height: 9rem;
+    overflow-x: clip;
+    padding-top: var(--space-s);
+  }
+
+  /* Closing: the first sentence as a lead, the second as the statement. */
+  :global(#chiusura .passage__reg--1) {
+    font-weight: var(--fw-regular);
+  }
+</style>

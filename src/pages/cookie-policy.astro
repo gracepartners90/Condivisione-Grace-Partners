@@ -1,0 +1,34 @@
+---
+/**
+ * Cookie Policy — launch version (docs/contenuti/microcopy.md §10.1). The site sets no cookies
+ * of its own and loads no analytics (src/scripts/track.ts keeps events in memory): no banner.
+ * The list of any technical cookies set by the hosting is [DA VERIFICARE] after the audit.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPage from '../components/sections/LegalPage.astro';
+import { site } from '../data/site';
+import { pageGraph } from '../lib/structured-data';
+
+const schema = pageGraph('cookie-policy');
+---
+
+<BaseLayout page="cookie-policy" schema={schema}>
+  <LegalPage title="Cookie Policy" updated={{ label: '28 settembre 2026', datetime: '2026-09-28' }}>
+    <p>Questa pagina spiega quali cookie e strumenti simili usa il sito di ITnode, a che cosa servono e come puoi gestirli.</p>
+
+    <h2>Cookie usati dal sito</h2>
+    <p>
+      Il sito non usa cookie di profilazione né cookie di statistica. Gli unici cookie che può usare sono tecnici, necessari al suo funzionamento: non
+      richiedono il tuo consenso.
+    </p>
+
+    <h2>Siti collegati</h2>
+    <p>
+      Le esperienze immersive e i portali collegati, come Città Digitali e Puglia Digitale, si aprono in una nuova scheda e sono siti distinti, ciascuno
+      con la propria informativa.
+    </p>
+
+    <h2>Domande</h2>
+    <p>Per domande sui cookie e sui tuoi dati scrivi a <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  </LegalPage>
+</BaseLayout>

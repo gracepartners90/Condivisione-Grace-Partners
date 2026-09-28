@@ -36,7 +36,8 @@
    * Fluid scale: the preferred value mixes rem and vw so text still grows with browser zoom
    * (WCAG 1.4.4). Each step matches the measured sizes of the visual direction at 390 and 1440 px.
    */
-  --fs-display-xxl: clamp(4.5rem, 0.16rem + 17.8vw, 17.5rem); /* 72 → 259 */
+  /* 3.5 rem minimum: «~200.000» must fit a 320 px screen (WCAG 1.4.10); 72 px at 390, 259 at 1440. */
+  --fs-display-xxl: clamp(3.5rem, 0.16rem + 17.8vw, 17.5rem); /* 72 → 259 */
   --fs-display-xl: clamp(3.25rem, 1.79rem + 6vw, 9.375rem); /* 52 → 115, max 150 */
   --fs-display-l: clamp(2.5rem, 1.43rem + 4.38vw, 6.25rem); /* 40 → 86, max 100 */
   --fs-display-m: clamp(1.75rem, 1rem + 3.05vw, 4.75rem); /* 28 → 60 */
@@ -105,6 +106,20 @@
   --dur-1000: 1000ms;
   --dur-1400: 1400ms;
 
+  /* ─── Thresholds (La Soglia): the formats of visual direction §1.2 ─── */
+  --ratio-porta: 3 / 5;
+  --ratio-ritratto: 4 / 5;
+  --ratio-schermo: 16 / 10;
+  --ratio-panorama: 1272 / 560;
+  --ratio-panorama-21: 21 / 9;
+  --ratio-video: 16 / 9;
+
+  /* ─── Focus ─── */
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  /* Double ring on photos and video: readable on any image (docs/ux/accessibilita.md §2.2). */
+  --focus-ring-media: 0 0 0 2px var(--calce), 0 0 0 4px var(--inchiostro);
+
   /* ─── Layers and chrome ─── */
   --header-h: 4rem;
   --z-header: 50;
@@ -147,6 +162,8 @@
   --success: var(--successo);
   --slot-bg: var(--pietra);
   --wordmark: var(--inchiostro);
+  --node-ink: var(--calce);
+  --btn-ghost-border: var(--field-border);
 }
 
 .surface-pietra {
@@ -166,6 +183,8 @@
   --success: var(--successo);
   --slot-bg: var(--calce);
   --wordmark: var(--inchiostro);
+  --node-ink: var(--calce);
+  --btn-ghost-border: var(--field-border);
 }
 
 .surface-notte {
@@ -185,4 +204,8 @@
   --success: var(--successo-notte);
   --slot-bg: var(--notte-2);
   --wordmark: var(--calce);
+  --node-ink: var(--notte);
+  --btn-ghost-border: var(--field-border);
+  /* Native controls, textarea scrollbars and autofill follow the dark surface. */
+  color-scheme: dark;
 }

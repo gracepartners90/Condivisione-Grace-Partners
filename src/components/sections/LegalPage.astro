@@ -1,0 +1,107 @@
+---
+/**
+ * LegalPage — T4 template (docs/ux/sitemap.md): quiet page on calce, text on 7 columns,
+ * section numbers in mono, last update in <time>, no signature devices and no motion.
+ */
+interface Props {
+  title: string;
+  updated: { label: string; datetime: string };
+  /** A visible status note, e.g. while the text awaits legal validation. */
+  status?: string;
+}
+
+const { title, updated, status } = Astro.props;
+---
+
+<article class="legal surface-calce" aria-labelledby="hero-title">
+  <div class="wrap grid">
+    <header class="legal__head">
+      <h1 id="hero-title" class="legal__title">{title}</h1>
+      <p class="legal__updated t-label">Ultimo aggiornamento: <time datetime={updated.datetime}>{updated.label}</time></p>
+      {status && <p class="legal__status">{status}</p>}
+    </header>
+    <div class="legal__body">
+      <slot />
+    </div>
+  </div>
+</article>
+
+<style>
+  .legal {
+    padding-block: var(--space-xl) var(--section-pad);
+  }
+
+  .legal__head,
+  .legal__body {
+    grid-column: 1 / -1;
+  }
+
+  .legal__head {
+    display: grid;
+    gap: var(--space-s);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .legal__title {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .legal__updated {
+    color: var(--fg-2);
+  }
+
+  .legal__status {
+    max-width: 62ch;
+    padding: var(--space-s) var(--space-m);
+    border-left: 2px solid var(--place);
+    background: var(--slot-bg);
+    font-size: var(--fs-small);
+  }
+
+  .legal__body {
+    max-width: 68ch;
+    counter-reset: section;
+  }
+
+  .legal__body :global(h2) {
+    margin: var(--space-2xl) 0 var(--space-s);
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    counter-increment: section;
+  }
+
+  .legal__body :global(h2)::before {
+    content: counter(section, decimal-leading-zero);
+    display: block;
+    margin-bottom: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--tr-label);
+    color: var(--fg-2);
+  }
+
+  .legal__body :global(p),
+  .legal__body :global(ul) {
+    margin-bottom: var(--space-s);
+  }
+
+  .legal__body :global(ul) {
+    padding-left: 1.2rem;
+  }
+
+  .legal__body :global(li + li) {
+    margin-top: var(--space-3xs);
+  }
+
+  @media (min-width: 64em) {
+    .legal__head,
+    .legal__body {
+      grid-column: 1 / span 7;
+    }
+  }
+</style>

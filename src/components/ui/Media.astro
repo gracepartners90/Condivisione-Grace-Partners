@@ -158,6 +158,24 @@ const usableWidths = image
     color: var(--fg-2);
   }
 
+  /* Very narrow slots (doors on phones): kind, name and format only. */
+  @container (max-width: 12rem) {
+    .media-slot__inner {
+      padding: calc(8px + var(--space-2xs));
+      gap: var(--space-2xs);
+    }
+
+    .media-slot__spec,
+    .media-slot__meta span + span {
+      display: none;
+    }
+
+    .media-slot__brief {
+      font-size: 0.8125rem;
+      line-height: 1.35;
+    }
+  }
+
   /* Narrow slots (portrait doors on mobile): stack the corners. */
   @container (max-width: 22rem) {
     .media-slot__inner {

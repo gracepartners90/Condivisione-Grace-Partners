@@ -1,0 +1,540 @@
+---
+/**
+ * Contatti. Copy: docs/contenuti/copy-deck/contatti.md. Structure: docs/ux/struttura-pagine.md §5.
+ * Rhythm: docs/creativa/direzione-visiva.md §7.7 (with DR3-b: the portrait in «inchiostro»).
+ * Direct channels first, then the form (docs/cro/strategia-conversione.md §4). No embedded map:
+ * a link to Google Maps, so nothing third-party loads before consent.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Media from '../components/ui/Media.astro';
+import Arrow from '../components/ui/Arrow.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
+import { site, founder, office, portals } from '../data/site';
+import { founderPortraitContacts } from '../data/media';
+import { formatCoords } from '../lib/geo';
+import { pageGraph } from '../lib/structured-data';
+
+const schema = pageGraph('contatti', [], { type: 'ContactPage' });
+const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Via%20Sant%27Anna%2034%2C%2070021%20Acquaviva%20delle%20Fonti%20BA';
+const newTab = ' (si apre in una nuova scheda)';
+const nb = (s: string) => s.replace(/ /g, ' ');
+
+const portalRows = [
+  {
+    id: 'citta-digitali',
+    name: portals.cittaDigitali.name,
+    phrase: 'Le attività del territorio, online senza perdere radici.',
+    url: portals.cittaDigitali.url,
+    display: portals.cittaDigitali.display,
+    internal: { label: 'Esplora Città Digitali', href: '/citta-digitali/' },
+  },
+  {
+    id: 'puglia-digitale',
+    name: portals.pugliaDigitale.name,
+    phrase: 'Una piattaforma interattiva immersiva per la valorizzazione territoriale.',
+    url: portals.pugliaDigitale.url,
+    display: portals.pugliaDigitale.display,
+    internal: { label: 'Scopri Puglia Digitale', href: '/puglia-digitale/' },
+  },
+];
+---
+
+<BaseLayout page="contatti" schema={schema} hasForm>
+  <section class="ct-hero surface-calce" aria-labelledby="hero-title">
+    <div class="wrap grid ct-hero__grid">
+      <h1 id="hero-title" class="ct-hero__title">Parliamo del prossimo spazio digitale.</h1>
+      <p class="ct-hero__lead">Hai un’impresa da rendere esplorabile o un territorio da valorizzare? Raccontacelo: scrivici o chiamaci.</p>
+
+      <section id="recapiti" class="ct-card" aria-labelledby="recapiti-title">
+        <h2 id="recapiti-title" class="sr-only">Recapiti</h2>
+        <address>
+          <dl class="ct-card__list">
+            <div class="ct-card__row">
+              <dt class="t-label">Telefono</dt>
+              <dd>
+                <a href={site.phone.href} data-track="contact_click" data-cta-id="contatti-telefono" data-cta-location="recapiti" data-contact-method="telefono"
+                  >{nb(site.phone.display)}</a
+                >
+              </dd>
+            </div>
+            <div class="ct-card__row">
+              <dt class="t-label">Mobile</dt>
+              <dd>
+                <a href={site.mobile.href} data-track="contact_click" data-cta-id="contatti-mobile" data-cta-location="recapiti" data-contact-method="cellulare"
+                  >{nb(site.mobile.display)}</a
+                >
+              </dd>
+            </div>
+            <div class="ct-card__row">
+              <dt class="t-label">Email</dt>
+              <dd>
+                <a href={`mailto:${site.email}`} data-track="contact_click" data-cta-id="contatti-email" data-cta-location="recapiti" data-contact-method="email"
+                  >{site.email}</a
+                >
+              </dd>
+            </div>
+            <div class="ct-card__row">
+              <dt class="t-label">{site.address.label}</dt>
+              <dd>
+                {site.address.street}<br />
+                {site.address.postalCode}
+                {site.address.locality} ({site.address.province})
+                <span class="ct-card__coords t-label">{office.name} · {formatCoords(office)}</span>
+                <a
+                  class="ct-card__map"
+                  href={mapsUrl}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id="contatti-mappa"
+                  data-cta-location="recapiti"
+                  data-outbound-type="mappa"
+                  data-destination-id="google-maps"
+                >
+                  Apri in Google Maps<span class="sr-only"> la sede operativa di ITnode{newTab}</span>
+                  <Arrow dir="external" />
+                </a>
+              </dd>
+            </div>
+            <div class="ct-card__row">
+              <dt class="t-label">LinkedIn</dt>
+              <dd>
+                <a
+                  href={founder.linkedin}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id="contatti-linkedin"
+                  data-cta-location="recapiti"
+                  data-outbound-type="social"
+                  data-destination-id="linkedin-fondatore"
+                >
+                  {founder.name}<span class="sr-only"> su LinkedIn{newTab}</span>
+                  <Arrow dir="external" />
+                </a>
+                <span class="ct-card__note">Profilo personale del fondatore</span>
+              </dd>
+            </div>
+          </dl>
+        </address>
+      </section>
+
+      <div class="ct-form">
+        <ContactForm
+          formId="richiesta-contatti"
+          title="Scrivici"
+          headingLevel="h2"
+          intro="Scrivici di cosa hai bisogno: ti ricontattiamo noi."
+          messageHint="Raccontaci che cosa vuoi rendere esplorabile: uno spazio, un’attività, un territorio."
+          successActions={[
+            { label: 'Esplora SIII', href: '/siii/' },
+            { label: 'Scopri Puglia Digitale', href: '/puglia-digitale/' },
+            { label: 'Esplora Città Digitali', href: '/citta-digitali/' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="ct-person surface-calce" aria-labelledby="persona-title">
+    <div class="wrap grid ct-person__grid">
+      <figure class="ct-person__figure">
+        <div class="ct-person__portrait">
+          <Media image={founderPortraitContacts.image} alt={founderPortraitContacts.alt} sizes="(min-width: 64em) 320px, 60vw" />
+        </div>
+        {founderPortraitContacts.aiNote && <figcaption class="ct-person__note t-label">{founderPortraitContacts.aiNote}</figcaption>}
+      </figure>
+      <div class="ct-person__body">
+        <h2 id="persona-title" class="ct-person__name">
+          {founder.name}
+          <span class="ct-person__role">{founder.role}</span>
+        </h2>
+        <blockquote class="ct-person__quote">
+          <p>«È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno.»</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="portali" class="ct-portals surface-notte" aria-labelledby="portali-title">
+    <div class="wrap">
+      <h2 id="portali-title" class="ct-portals__title t-label">I portali</h2>
+      <ul role="list" class="ct-portals__list">
+        {
+          portalRows.map((p) => (
+            <li class="ct-portal">
+              <h3 class="ct-portal__name">
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id={`contatti-portale-${p.id}`}
+                  data-cta-location="portali"
+                  data-outbound-type="portale"
+                  data-destination-id={p.id}
+                >
+                  {p.name}
+                  <span class="sr-only">, portale {p.display}{newTab}</span>
+                  <Arrow dir="external" class="ct-portal__arrow" />
+                </a>
+              </h3>
+              <p class="ct-portal__phrase">{p.phrase}</p>
+              <p class="ct-portal__url t-label" aria-hidden="true">
+                {p.display}
+              </p>
+              <a class="ct-portal__internal" href={p.internal.href}>
+                {p.internal.label}
+                <Arrow dir="right" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="dati-societari" class="ct-company surface-calce" aria-labelledby="dati-societari-title">
+    <div class="wrap grid">
+      <h2 id="dati-societari-title" class="ct-company__title t-label">Dati societari</h2>
+      <dl class="ct-company__list">
+        <div>
+          <dt>Ragione sociale</dt>
+          <dd>{site.legalName}</dd>
+        </div>
+        <div>
+          <dt>Partita IVA</dt>
+          <dd>{site.vatId}</dd>
+        </div>
+        <div>
+          <dt>{site.address.label}</dt>
+          <dd>{site.address.street} · {site.address.postalCode} {site.address.locality} ({site.address.province})</dd>
+        </div>
+        {
+          site.rea && (
+            <div>
+              <dt>Registro delle imprese e REA</dt>
+              <dd>{site.rea}</dd>
+            </div>
+          )
+        }
+        {
+          site.shareCapital && (
+            <div>
+              <dt>Capitale sociale</dt>
+              <dd>{site.shareCapital}</dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ─── Hero with contacts and form ─── */
+  .ct-hero {
+    padding-block: var(--space-xl) var(--section-pad);
+  }
+
+  .ct-hero__grid {
+    row-gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .ct-hero__title,
+  .ct-hero__lead,
+  .ct-card,
+  .ct-form {
+    grid-column: 1 / -1;
+  }
+
+  .ct-hero__title {
+    margin: 0;
+    font-size: var(--fs-display-xl);
+    line-height: var(--lh-display-xl);
+    letter-spacing: var(--tr-display-xl);
+    max-width: 16ch;
+  }
+
+  .ct-hero__lead {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+    margin-top: calc(-1 * var(--space-m));
+  }
+
+  .ct-card__list {
+    display: grid;
+    gap: 0;
+    margin: 0;
+  }
+
+  .ct-card__row {
+    display: grid;
+    gap: var(--space-3xs);
+    padding-block: var(--space-s);
+    border-top: 1px solid var(--line);
+  }
+
+  .ct-card__row dt {
+    color: var(--fg-2);
+  }
+
+  .ct-card__row dd {
+    margin: 0;
+    display: grid;
+    justify-items: start;
+    gap: var(--space-3xs);
+    font-size: var(--fs-body);
+  }
+
+  .ct-card__row dd > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    min-height: var(--tap-min);
+    font-size: var(--fs-lead);
+    font-weight: var(--fw-strong);
+  }
+
+  .ct-card__coords,
+  .ct-card__note {
+    color: var(--fg-2);
+    font-size: var(--fs-small);
+  }
+
+  .ct-card__coords {
+    font-size: var(--fs-label);
+  }
+
+  .ct-card__row dd > .ct-card__map {
+    font-size: var(--fs-body);
+  }
+
+  @media (min-width: 64em) {
+    .ct-hero__title {
+      grid-column: 1 / -1;
+      max-width: none;
+    }
+
+    .ct-hero__lead {
+      grid-column: 1 / span 6;
+    }
+
+    .ct-card {
+      grid-column: 1 / span 4;
+      grid-row: 3;
+    }
+
+    .ct-form {
+      grid-column: 6 / -1;
+      grid-row: 3;
+    }
+  }
+
+  /* ─── Person ─── */
+  .ct-person {
+    padding-block: 0 var(--section-pad);
+  }
+
+  .ct-person__grid {
+    row-gap: var(--space-l);
+    align-items: end;
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--line);
+  }
+
+  .ct-person__figure,
+  .ct-person__body {
+    grid-column: 1 / -1;
+  }
+
+  .ct-person__figure {
+    margin: 0;
+    max-width: 60%;
+  }
+
+  .ct-person__portrait :global(img) {
+    -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+  }
+
+  .ct-person__note {
+    margin-top: var(--space-2xs);
+    color: var(--fg-2);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .ct-person__body {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .ct-person__name {
+    margin: 0;
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .ct-person__role {
+    display: block;
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    font-weight: var(--fw-regular);
+    color: var(--fg-2);
+    letter-spacing: 0;
+  }
+
+  .ct-person__quote {
+    margin: 0;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    max-width: 30ch;
+  }
+
+  @media (min-width: 64em) {
+    .ct-person__figure {
+      grid-column: 1 / span 3;
+      max-width: 20rem;
+    }
+
+    .ct-person__body {
+      grid-column: 6 / -1;
+    }
+  }
+
+  /* ─── Portals: two typographic rows ─── */
+  .ct-portals {
+    padding-block: var(--section-pad);
+  }
+
+  .ct-portals__title {
+    margin: 0 0 var(--space-xl);
+    color: var(--fg-2);
+  }
+
+  .ct-portals__list {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ct-portal {
+    display: grid;
+    gap: var(--space-xs);
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--line);
+  }
+
+  .ct-portal__name {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .ct-portal__name a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    text-decoration: none;
+  }
+
+  .ct-portal__name a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .ct-portal__name :global(.ct-portal__arrow) {
+    width: 0.5em;
+    height: 0.5em;
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .ct-portal__name a:hover :global(.ct-portal__arrow),
+  .ct-portal__name a:focus-visible :global(.ct-portal__arrow) {
+    transform: translate(4px, -4px);
+  }
+
+  .ct-portal__phrase {
+    font-size: var(--fs-lead);
+    max-width: 44ch;
+  }
+
+  .ct-portal__url {
+    color: var(--fg-2);
+  }
+
+  .ct-portal__internal {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
+  }
+
+  @media (min-width: 64em) {
+    .ct-portal {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: var(--gutter);
+      align-items: baseline;
+    }
+
+    .ct-portal__name {
+      grid-row: 1 / span 2;
+    }
+
+    .ct-portal__phrase,
+    .ct-portal__url,
+    .ct-portal__internal {
+      grid-column: 2;
+    }
+  }
+
+  /* ─── Company data ─── */
+  .ct-company {
+    padding-block: var(--section-pad-tight);
+  }
+
+  .ct-company__title,
+  .ct-company__list {
+    grid-column: 1 / -1;
+  }
+
+  .ct-company__title {
+    margin: 0 0 var(--space-m);
+    color: var(--fg-2);
+  }
+
+  .ct-company__list {
+    display: grid;
+    gap: var(--space-s);
+    margin: 0;
+    font-size: var(--fs-small);
+  }
+
+  .ct-company__list div {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .ct-company__list dt {
+    color: var(--fg-2);
+  }
+
+  .ct-company__list dd {
+    margin: 0;
+  }
+
+  @media (min-width: 64em) {
+    .ct-company__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--gutter);
+    }
+  }
+</style>

@@ -8,14 +8,17 @@ import Arrow from '../ui/Arrow.astro';
 
 interface Props {
   items: string[];
+  /** Arrows for the chain of the Home, dots for a list of verbs. */
+  separator?: 'arrow' | 'dot';
+  size?: 'm' | 'xl';
   class?: string;
 }
 
-const { items, class: className } = Astro.props;
+const { items, separator = 'arrow', size = 'm', class: className } = Astro.props;
 const copies = [0, 1, 2];
 ---
 
-<div class:list={['marquee', className]} aria-hidden="true">
+<div class:list={['marquee', `marquee--${size}`, className]} aria-hidden="true">
   <div class="marquee__track">
     {
       copies.map(() => (
@@ -23,7 +26,7 @@ const copies = [0, 1, 2];
           {items.map((item) => (
             <span class="marquee__item">
               {item}
-              <Arrow dir="right" class="marquee__arrow" />
+              {separator === 'arrow' ? <Arrow dir="right" class="marquee__arrow" /> : <span class="marquee__dot" />}
             </span>
           ))}
         </span>
@@ -59,6 +62,22 @@ const copies = [0, 1, 2];
     line-height: 1.1;
     letter-spacing: var(--tr-display-m);
     white-space: nowrap;
+  }
+
+  .marquee--xl .marquee__item {
+    font-size: var(--fs-display-xl);
+    letter-spacing: var(--tr-display-xl);
+    font-weight: var(--fw-strong);
+    gap: 0.4em;
+    padding-right: 0.4em;
+  }
+
+  /* A place-coloured node between verbs. */
+  .marquee__dot {
+    width: 0.16em;
+    height: 0.16em;
+    border-radius: 50%;
+    background: var(--place);
   }
 
   .marquee__item :global(.marquee__arrow) {

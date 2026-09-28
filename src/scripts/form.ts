@@ -32,6 +32,9 @@ function describedBy(field: FieldElement, errorId: string, add: boolean) {
 }
 
 function initForm(form: HTMLFormElement) {
+  // Custom validation replaces the browser bubbles only when this script runs;
+  // without JavaScript the native validation still applies.
+  form.noValidate = true;
   const container = form.closest<HTMLElement>('[data-contact]') ?? form.parentElement!;
   const summary = form.querySelector<HTMLElement>('[data-form-summary]');
   const summaryList = summary?.querySelector<HTMLElement>('[data-form-summary-list]');
@@ -172,10 +175,13 @@ function initForm(form: HTMLFormElement) {
     return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
   };
 
+  // Panels replace the form or appear after it; focus goes to their title (microcopy §4.4).
   const reveal = (panel: HTMLElement | null) => {
     if (!panel) return;
     panel.hidden = false;
-    panel.focus();
+    const title = panel.querySelector<HTMLElement>('[data-panel-title]') ?? panel;
+    if (!title.hasAttribute('tabindex')) title.tabIndex = -1;
+    title.focus();
   };
 
   const optionalFilled = (data: FormData) =>

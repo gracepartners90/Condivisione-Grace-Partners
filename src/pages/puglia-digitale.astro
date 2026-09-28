@@ -1,0 +1,314 @@
+---
+/**
+ * Puglia Digitale — destination marketing. Copy: docs/contenuti/copy-deck/puglia-digitale.md.
+ * Structure: docs/ux/struttura-pagine.md §3. Rhythm: docs/creativa/direzione-visiva.md §7.5.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Passage from '../components/ui/Passage.astro';
+import Cta from '../components/ui/Cta.astro';
+import Media from '../components/ui/Media.astro';
+import MapItaly from '../components/ui/MapItaly.astro';
+import Stats from '../components/sections/Stats.astro';
+import LocationShowcase from '../components/sections/LocationShowcase.astro';
+import BenefitsSection from '../components/sections/BenefitsSection.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
+import Bridge from '../components/sections/Bridge.astro';
+import { portals, pugliaPlaces } from '../data/site';
+import { figures } from '../data/figures';
+import { pageGraph, ids } from '../lib/structured-data';
+import eventoSchermo from '../assets/images/derivate/evento-schermo.jpg';
+
+const schema = pageGraph('puglia-digitale', [], { about: ids.pugliaBrand });
+const portal = portals.pugliaDigitale;
+
+const lines: Record<string, string> = {
+  monopoli: 'Sulla costa adriatica, tra il porto antico e il centro storico.',
+  acquaviva: 'Nell’entroterra barese, la città in cui ha sede ITnode.',
+  gravina: 'La città che prende il nome dalla sua gravina, nell’Alta Murgia.',
+};
+const locations = pugliaPlaces.map((p) => ({
+  id: p.id,
+  name: p.name,
+  line: lines[p.id],
+  lat: p.lat,
+  lon: p.lon,
+  url: p.url!,
+  display: p.display!,
+  ctaId: `pd-luoghi-${p.id}`,
+  asset: `luogo-${p.id}` as const,
+}));
+---
+
+<BaseLayout page="puglia-digitale" schema={schema} hasForm>
+  <Hero variant="line" surface="calce" name="Puglia Digitale" descriptor="Una piattaforma interattiva immersiva per la valorizzazione territoriale." class="pd-hero">
+    <div class="pd-hero__ctas">
+      <Cta
+        href={portal.url}
+        label="Visita il portale"
+        srText=" Puglia Digitale"
+        variant="primary"
+        ctaId="pd-hero-portale"
+        location="hero"
+        outboundType="portale"
+        destinationId="puglia-digitale"
+      />
+      <Cta href="#richiesta" label="Aderisci a Puglia Digitale" variant="link" ctaId="pd-hero-richiesta" location="hero" interest="puglia-digitale" />
+    </div>
+  </Hero>
+
+  <!-- The coast of the Terra di Bari as one line across the page, drawn on entry. -->
+  <div class="pd-coast surface-calce" aria-hidden="true">
+    <div class="wrap">
+      <div class="pd-coast__draw">
+        <MapItaly map="puglia" places={pugliaPlaces} home="acquaviva" frame="0 24 1600 716" class="pd-coast__map pd-coast__map--wide" />
+        <MapItaly map="puglia" places={pugliaPlaces} home="acquaviva" compact class="pd-coast__map pd-coast__map--compact" />
+      </div>
+    </div>
+  </div>
+
+  <section id="progetto" class="project surface-pietra" aria-labelledby="progetto-title">
+    <div class="wrap grid project__grid">
+      <Passage
+        as="h2"
+        id="progetto-title"
+        registers={['Dalla costa all’entroterra.', 'Un territorio da esplorare.']}
+        size="l"
+        class="project__title"
+        tabindex={-1}
+      />
+      <div class="project__text" data-reveal>
+        <p>
+          Puglia Digitale è una piattaforma interattiva immersiva per la valorizzazione territoriale, online su
+          <a href={portal.url} target="_blank" rel="noopener">{portal.display}<span class="sr-only"> (si apre in una nuova scheda)</span></a>. È un
+          progetto di destination marketing che digitalizza e valorizza città, borghi e imprese della Puglia attraverso esperienze immersive, dalla costa
+          all’entroterra. Tra i luoghi da esplorare ci sono Acquaviva delle Fonti, Gravina in Puglia e Monopoli. Con Puglia Digitale, ITnode porta online
+          luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.
+        </p>
+        <p>
+          Fare destination marketing significa promuovere un territorio come destinazione. Puglia Digitale lo fa mettendo in rete luoghi e imprese: chi
+          cerca la Puglia non si limita a leggerla, la esplora prima di partire e la ritrova dopo il ritorno.
+        </p>
+      </div>
+      <figure class="project__photo">
+        <div class="aperture">
+          <Media
+            image={eventoSchermo}
+            alt="La platea dell’evento Puglia Digitale davanti al maxischermo con il tour virtuale di una piazza storica."
+            sizes="(min-width: 64em) 36vw, 100vw"
+          />
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <Stats
+    id="numeri"
+    title="I numeri dei territori coinvolti"
+    surface="notte"
+    source={figures.puglia.source}
+    stats={[
+      { value: '30', suffix: '+', label: 'città coinvolte', srText: 'Più di 30 città coinvolte' },
+      { prefix: '~', value: '200.000', label: 'partite IVA nei territori coinvolti', srText: 'Circa 200.000 partite IVA nei territori coinvolti' },
+      { value: '60', suffix: '%', label: 'del tessuto produttivo pugliese', srText: 'Il 60% del tessuto produttivo pugliese' },
+    ]}
+  />
+
+  <LocationShowcase
+    variant="doors"
+    id="luoghi"
+    title="I luoghi"
+    text="Tre città, tre porte d’accesso al territorio. Scegli da dove entrare."
+    locations={locations}
+    surface="calce"
+  />
+
+  <BenefitsSection
+    variant="scala"
+    id="perche-aderire"
+    eyebrow="Per le imprese"
+    title="Perché aderire a Puglia Digitale"
+    surface="pietra"
+    items={[
+      {
+        title: 'Aperti al mondo, 24/7',
+        text: 'La tua impresa resta visitabile a ogni ora, da chiunque e da qualunque luogo. Il portale è aperto anche quando tu hai chiuso.',
+      },
+      {
+        title: 'Vendere attraverso l’esperienza',
+        text: 'Chi esplora i tuoi spazi scopre prodotti e servizi nel loro contesto reale. La vendita comincia da un’esperienza, non da una vetrina.',
+      },
+      {
+        title: 'La forza della rete',
+        text: 'La tua attività non è sola online: entra in un portale che riunisce città, borghi e imprese del territorio. Chi arriva per un luogo può scoprire anche te.',
+      },
+      {
+        title: 'Continuare la relazione oltre il viaggio',
+        text: 'Il viaggio finisce, il legame no. Chi ti ha conosciuto in Puglia può tornare a trovarti online, rivedere i tuoi spazi e ricontattarti da casa.',
+      },
+    ]}
+  />
+
+  <Bridge
+    text={'Dalla singola impresa alla rete di città: la stessa visione si ritrova nei <a href="/siii/">Siti Interattivi Immersivi (SIII)</a> e in <a href="/citta-digitali/">Città Digitali</a>.'}
+  />
+
+  <CTASection
+    variant="form"
+    id="chiusura"
+    title={['Porta la tua impresa', 'dentro Puglia Digitale.']}
+    surface="notte"
+    location="chiusura"
+    layout="stack"
+    secondary={{
+      label: 'Visita il portale',
+      srText: ' Puglia Digitale',
+      href: portal.url,
+      id: 'pd-chiusura-portale',
+      destinationId: 'puglia-digitale',
+    }}
+  >
+    <ContactForm
+      formId="richiesta-puglia-digitale"
+      title="Contattaci"
+      intro="Raccontaci la tua impresa: ti spieghiamo come entrare in Puglia Digitale."
+      preselect={['puglia-digitale']}
+      messageHint="In quale città lavori e di cosa si occupa la tua attività?"
+      successActions={[{ label: 'Visita il portale', href: portal.url, srText: ' Puglia Digitale' }]}
+      columns={2}
+    />
+  </CTASection>
+</BaseLayout>
+
+<style>
+  .pd-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s) var(--space-l);
+  }
+
+  /* The hero ends on the coast: descriptor at lead scale under the name. */
+  .pd-hero :global(.hero-line__descriptor) {
+    max-width: 30ch;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  .pd-hero :global(.hero-line) {
+    padding-bottom: var(--space-l);
+  }
+
+  .pd-coast {
+    padding-bottom: var(--section-pad-tight);
+    overflow-x: clip;
+  }
+
+  .pd-coast__draw {
+    position: relative;
+  }
+
+  .pd-coast :global(.pd-coast__map--wide) {
+    display: none;
+  }
+
+  @media (min-width: 43.75em) {
+    .pd-coast :global(.pd-coast__map--wide) {
+      display: block;
+    }
+
+    .pd-coast :global(.pd-coast__map--compact) {
+      display: none;
+    }
+  }
+
+  /* The coast crosses the page from the third column to the right edge. */
+  @media (min-width: 64em) {
+    .pd-coast__draw {
+      margin-left: calc((100% + var(--gutter)) / 12 * 2);
+    }
+  }
+
+  /* Drawn on entry: a shutter in the surface colour slides off to the right (transform only). */
+  @media (prefers-reduced-motion: no-preference) {
+    .pd-coast__draw::after {
+      content: '';
+      position: absolute;
+      inset: -1rem -2rem;
+      background: var(--bg);
+      transform-origin: right center;
+      animation-name: coast-draw;
+      animation-duration: var(--dur-1400);
+      animation-timing-function: var(--ease-in-out);
+      animation-delay: 200ms;
+      animation-fill-mode: both;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes coast-draw {
+    from {
+      transform: scaleX(1);
+    }
+
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  /* ─── Project ─── */
+  .project {
+    padding-block: var(--section-pad);
+  }
+
+  .project__grid {
+    row-gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .project :global(.project__title),
+  .project__text,
+  .project__photo {
+    grid-column: 1 / -1;
+  }
+
+  .project__text {
+    display: grid;
+    gap: var(--space-m);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+  }
+
+  .project__text p {
+    max-width: 58ch;
+  }
+
+  .project__text p + p {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+  }
+
+  .project__photo {
+    margin: 0;
+  }
+
+  @media (min-width: 64em) {
+    .project :global(.project__title) {
+      grid-column: 1 / span 11;
+      grid-row: 1;
+    }
+
+    .project__photo {
+      grid-column: 1 / span 5;
+      grid-row: 2;
+    }
+
+    .project__text {
+      grid-column: 7 / span 5;
+      grid-row: 2;
+      align-self: end;
+    }
+  }
+</style>

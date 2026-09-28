@@ -1,0 +1,878 @@
+---
+/**
+ * SIII — Siti Interattivi Immersivi. Copy: docs/contenuti/copy-deck/siii.md.
+ * Structure: docs/ux/struttura-pagine.md §2. Rhythm: docs/creativa/direzione-visiva.md §7.4.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Passage from '../components/ui/Passage.astro';
+import Cta from '../components/ui/Cta.astro';
+import Media from '../components/ui/Media.astro';
+import Node from '../components/ui/Node.astro';
+import Arrow from '../components/ui/Arrow.astro';
+import Marquee from '../components/sections/Marquee.astro';
+import BenefitsSection from '../components/sections/BenefitsSection.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import ContactForm from '../components/sections/ContactForm.astro';
+import Bridge from '../components/sections/Bridge.astro';
+import { siiiShowcase } from '../data/site';
+import { formatCoords } from '../lib/geo';
+import { pageGraph, siiiService, ids } from '../lib/structured-data';
+
+const schema = pageGraph('siii', [siiiService()], { about: ids.siiiService });
+
+const actions = [
+  ['Esplorare gli ambienti', 'spostandosi liberamente da uno spazio all’altro.'],
+  ['Interagire con gli hotspot', 'i punti attivi che aprono contenuti e azioni.'],
+  ['Vedere i prodotti', 'nello spazio in cui li proponi.'],
+  ['Guardare i video', 'dentro l’esperienza.'],
+  ['Richiedere informazioni', 'nel momento in cui nasce l’interesse.'],
+  ['Prenotare i servizi', 'mentre li sta scoprendo.'],
+  ['Accedere alle azioni commerciali', 'che hai scelto di proporre.'],
+];
+
+const comparison = [
+  {
+    aspect: 'A cosa serve',
+    tour: 'Soprattutto a mostrare un ambiente.',
+    siii: 'A far esplorare l’impresa e a trasformare la visita in una richiesta, una prenotazione o un’azione commerciale.',
+  },
+  {
+    aspect: 'Cosa fa chi visita',
+    tour: 'Si guarda intorno e passa da un punto di vista all’altro.',
+    siii: 'Esplora gli ambienti, interagisce con gli hotspot, vede prodotti e video.',
+  },
+  { aspect: 'Azioni previste', tour: 'Di norma rimanda ad altri canali.', siii: 'Richiede informazioni, prenota servizi, accede ad azioni commerciali.' },
+  { aspect: 'Ruolo', tour: 'Un contenuto da guardare.', siii: 'Uno strumento commerciale sempre accessibile.' },
+];
+
+// Hotspots of the SIII view in the comparison figure: what the visitor can do.
+const hotspots = [
+  { label: 'Prodotto', x: 18, y: 38 },
+  { label: 'Video', x: 41, y: 26 },
+  { label: 'Informazioni', x: 63, y: 44 },
+  { label: 'Prenotazione', x: 83, y: 30 },
+];
+
+const phrases: Record<string, string> = {
+  'masseria-santella': 'Varca l’ingresso di una masseria e attraversane gli spazi, ambiente dopo ambiente.',
+  'maison-mimina': 'Entra in Maison Miminà e scoprine gli ambienti come se fossi lì.',
+  'dl-natura-dentro': 'Muoviti negli spazi di D.L. Natura Dentro senza spostarti da dove sei.',
+};
+---
+
+<BaseLayout page="siii" schema={schema} theme="dark" hasForm>
+  <Hero variant="line" surface="notte" name="SIII" nameSize="xxl" descriptor="Siti Interattivi Immersivi" class="siii-hero">
+    <Passage as="p" registers={['Non raccontare la tua azienda.', 'Falla esplorare.']} size="m" class="siii-hero__statement" />
+    <div class="siii-hero__ctas">
+      <Cta href="#esempi" label="Esplora gli esempi" variant="primary" ctaId="siii-hero-esempi" location="hero" />
+      <Cta href="#richiesta" label="Richiedi un’offerta" variant="link" ctaId="siii-hero-offerta" location="hero" interest="siii" />
+    </div>
+    <div slot="visual" class="siii-hero__door aperture">
+      <Media asset="siii-anteprima" class="siii-hero__media" />
+      <Node kind="hotspot" class="siii-hero__node" style="left: 30%; top: 30%" ping />
+      <Node kind="hotspot" class="siii-hero__node" style="left: 68%; top: 46%" ping />
+      <Node kind="hotspot" class="siii-hero__node" style="left: 42%; top: 64%" ping />
+    </div>
+  </Hero>
+
+  <!-- 2 · Definition: the answer block comes first after the H2 in the HTML. -->
+  <section id="cos-e" class="define surface-calce" aria-labelledby="cos-e-title">
+    <div class="wrap grid define__grid">
+      <h2 id="cos-e-title" class="t-label define__label" tabindex="-1" data-anchor-focus>Cos’è un Sito Interattivo Immersivo</h2>
+      <p class="define__text" data-reveal>
+        Un Sito Interattivo Immersivo (SIII) replica digitalmente gli spazi fisici di un’impresa e li trasforma in un ambiente navigabile da
+        desktop e da smartphone. Chi lo visita non legge una pagina: entra, esplora gli ambienti e trova al loro interno prodotti, video,
+        informazioni e azioni commerciali. È la soluzione di ITnode per le aziende che, invece di raccontarsi, vogliono farsi esplorare.
+      </p>
+      <Passage as="p" registers={['Il sito diventa un luogo.']} size="l" class="define__statement" />
+    </div>
+  </section>
+
+  <!-- 3 · Tour 360° or SIII: two-state figure (radio buttons, works without JavaScript) and a real table. -->
+  <section id="tour-360" class="compare surface-pietra" aria-labelledby="tour-360-title">
+    <div class="wrap grid compare__grid">
+      <h2 id="tour-360-title" class="t-label compare__label" tabindex="-1" data-anchor-focus>Tour 360° o Sito Interattivo Immersivo?</h2>
+      <p class="compare__text">
+        Un tour 360° è pensato soprattutto per mostrare un ambiente: chi lo visita si guarda intorno e passa da un punto di vista all’altro. Un Sito
+        Interattivo Immersivo (SIII) parte dall’esplorazione degli spazi, ma è un sito a tutti gli effetti. Nell’ambiente si interagisce con hotspot,
+        prodotti e video, e da lì si chiedono informazioni, si prenotano servizi e si accede ad azioni commerciali. Il tour 360° fa vedere uno spazio;
+        il SIII lo trasforma in uno strumento commerciale sempre accessibile.
+      </p>
+      <Passage as="p" registers={['Un tour 360° è una visita.', 'Un SIII è un sito.']} size="l" class="compare__statement" />
+
+      <figure class="compare__figure">
+        <fieldset class="compare__switch">
+          <legend class="sr-only">Che cosa mostrare nella figura</legend>
+          <label class="compare__option">
+            <input type="radio" name="vista" value="tour" />
+            <span>Tour 360° <span class="compare__verb">guardi</span></span>
+          </label>
+          <label class="compare__option">
+            <input type="radio" name="vista" value="siii" checked />
+            <span>SIII <span class="compare__verb">agisci</span></span>
+          </label>
+        </fieldset>
+        <div class="compare__screen" aria-hidden="true">
+          <span class="compare__horizon"></span>
+          {
+            [0, 45, 90, 135, 180, 225, 270, 315].map((d, i) => (
+              <span class="compare__deg t-label" style={`left: ${6 + i * 12.5}%`}>
+                {String(d).padStart(3, '0')}°
+              </span>
+            ))
+          }
+          {
+            hotspots.map((h, i) => (
+              <span class="compare__hot" style={`left: ${h.x}%; top: ${h.y}%; --i: ${i}`}>
+                <Node kind="hotspot" ping />
+                <span class="compare__hot-label t-label">{h.label}</span>
+              </span>
+            ))
+          }
+          <span class="compare__mode t-label compare__mode--tour">Tour 360° · ti guardi intorno</span>
+          <span class="compare__mode t-label compare__mode--siii">SIII · apri, guardi, chiedi, prenoti</span>
+        </div>
+        <figcaption class="compare__caption">
+          <span class="compare__cap compare__cap--tour">Nel tour 360° chi visita si guarda intorno e passa da un punto di vista all’altro.</span>
+          <span class="compare__cap compare__cap--siii"
+            >Nel SIII chi visita interagisce con gli hotspot, vede prodotti e video, chiede informazioni e prenota.</span
+          >
+        </figcaption>
+      </figure>
+
+      <!-- Explicit roles: the table keeps its semantics when mobile CSS changes its display. -->
+      <table class="compare__table" role="table">
+        <caption class="sr-only">Differenze tra tour 360° e Sito Interattivo Immersivo</caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <td role="cell"></td>
+            <th scope="col" role="columnheader">Tour 360°</th>
+            <th scope="col" role="columnheader">Sito Interattivo Immersivo (SIII)</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {
+            comparison.map((row) => (
+              <tr role="row">
+                <th scope="row" role="rowheader">
+                  {row.aspect}
+                </th>
+                <td role="cell" data-label="Tour 360°">
+                  {row.tour}
+                </td>
+                <td role="cell" data-label="SIII">
+                  {row.siii}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4 · What you can do: verbs marquee (decorative) and the accessible list. -->
+  <section id="cosa-si-puo-fare" class="actions surface-notte" aria-labelledby="cosa-si-puo-fare-title">
+    <div class="wrap grid actions__grid">
+      <h2 id="cosa-si-puo-fare-title" class="t-label actions__label" tabindex="-1" data-anchor-focus>Cosa si può fare dentro un SIII</h2>
+      <Passage as="p" registers={['Una visita che diventa azione.']} size="l" class="actions__statement" />
+    </div>
+    <Marquee items={['Esplora', 'Interagisci', 'Guarda', 'Richiedi', 'Prenota']} separator="dot" size="xl" class="actions__marquee" />
+    <div class="wrap grid actions__grid">
+      <p class="actions__intro">Nel tuo SIII, chi ti visita può:</p>
+      <ul role="list" class="actions__list">
+        {
+          actions.map(([verb, rest], i) => (
+            <li class="actions__item" data-reveal style={`--stagger: ${i % 2}`}>
+              <span class="actions__verb">{verb}</span> <span class="actions__rest">{rest}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BenefitsSection
+    variant="zigzag"
+    id="benefici"
+    title="Perché scegliere un SIII"
+    surface="calce"
+    items={[
+      {
+        title: 'Fiducia istantanea',
+        text: 'Chi entra nei tuoi spazi online sa già cosa troverà dal vivo. Mostrare il luogo reale, così com’è, crea fiducia fin dal primo contatto.',
+      },
+      {
+        title: 'Più coinvolgimento',
+        text: 'Un ambiente da esplorare invita a restare. Chi visita sceglie il percorso, apre i contenuti e si sofferma sui dettagli che preferisce.',
+      },
+      {
+        title: 'Vendita diretta',
+        text: 'Prodotti e servizi si mostrano nel loro contesto reale, e il passo successivo parte dallo stesso ambiente: una richiesta, una prenotazione, un’azione commerciale.',
+      },
+      {
+        title: 'Uno strumento commerciale sempre accessibile',
+        text: 'Il tuo spazio resta aperto anche quando la sede è chiusa, da desktop e da smartphone. E per farlo visitare a un cliente basta un link.',
+      },
+    ]}
+  >
+    <div class="benefits-cta">
+      <Cta href="#richiesta" label="Richiedi un’offerta" variant="ghost" ctaId="siii-benefici-offerta" location="benefici" interest="siii" />
+    </div>
+  </BenefitsSection>
+
+  <!-- 6 · Examples: three thresholds of different widths, each opening the real experience. -->
+  <section id="esempi" class="examples surface-notte" aria-labelledby="esempi-title">
+    <div class="wrap grid examples__head">
+      <p class="t-label examples__eyebrow">Esempi</p>
+      <Passage as="h2" id="esempi-title" registers={['Entra.', 'Esplora.', 'Interagisci.']} size="l" cascade class="examples__title" tabindex={-1} />
+      <p class="examples__text">Tre Siti Interattivi Immersivi già online. Aprili ed esplorali, da desktop o da smartphone.</p>
+    </div>
+    <ol role="list" class="examples__list">
+      {
+        siiiShowcase.map((ex, i) => (
+          <li class:list={['example', `example--${i + 1}`]}>
+            <div class="wrap grid example__grid">
+              <div class="example__screen aperture">
+                <Media asset={ex.slot} />
+              </div>
+              <div class="example__body" data-reveal>
+                <h3 class="example__name">{ex.name}</h3>
+                <p class="example__place t-label">
+                  <span>{ex.place}</span>
+                  <span>{formatCoords(ex)}</span>
+                  <span>{ex.portal}</span>
+                </p>
+                <p class="example__phrase">{phrases[ex.id]}</p>
+                <a
+                  class="example__cta"
+                  href={ex.url}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id={`siii-showcase-${ex.id}`}
+                  data-cta-location="esempi"
+                  data-outbound-type="esperienza-siii"
+                  data-destination-id={ex.id}
+                >
+                  Entra nell’esperienza<span class="sr-only"> di {ex.name} (si apre in una nuova scheda)</span>
+                  <Arrow dir="external" />
+                </a>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <Bridge
+    text={'Dalla singola impresa all’intero territorio: la stessa visione si ritrova in <a href="/puglia-digitale/">Puglia Digitale</a> e <a href="/citta-digitali/">Città Digitali</a>.'}
+  />
+
+  <CTASection variant="form" id="chiusura" title={['La tua azienda può diventare un’esperienza.']} surface="calce" location="chiusura">
+    <ContactForm
+      formId="richiesta-siii"
+      title="Richiedi un’offerta"
+      intro="Raccontaci il tuo spazio: ti ricontattiamo per capire cosa far esplorare e prepararti un’offerta."
+      preselect={['siii']}
+      messageHint="Che spazio vorresti far esplorare? Per esempio una struttura ricettiva, un negozio, uno showroom."
+      successActions={[{ label: 'Torna agli esempi', href: '#esempi' }]}
+    />
+  </CTASection>
+</BaseLayout>
+
+<style>
+  /* ─── Hero ─── */
+  .siii-hero :global(.siii-hero__statement) {
+    color: var(--fg);
+  }
+
+  .siii-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s) var(--space-l);
+  }
+
+  .siii-hero__door {
+    position: relative;
+    max-width: 26rem;
+  }
+
+  /* Porta 3:5 on desktop, 4:5 below the text on mobile (visual direction §7.4). */
+  .siii-hero__door :global(.media-slot) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .siii-hero__door :global(.siii-hero__node) {
+    position: absolute;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: 43.74em) {
+    .siii-hero__door :global(.siii-hero__node) {
+      display: none;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .siii-hero__door {
+      margin-left: auto;
+      width: 100%;
+    }
+
+    .siii-hero__door :global(.media-slot) {
+      aspect-ratio: 3 / 5;
+    }
+  }
+
+  /* ─── Definition ─── */
+  .define {
+    padding-block: var(--section-pad);
+  }
+
+  .define__grid {
+    row-gap: var(--space-l);
+  }
+
+  .define__label,
+  .define__text,
+  .define :global(.define__statement) {
+    grid-column: 1 / -1;
+  }
+
+  .define__label {
+    margin: 0;
+    color: var(--fg-2);
+  }
+
+  .define__label:focus,
+  .compare__label:focus,
+  .actions__label:focus {
+    outline: none;
+  }
+
+  /* Visually the statement comes first; in the HTML the definition follows the H2. */
+  .define :global(.define__statement) {
+    grid-row: 2;
+  }
+
+  .define__text {
+    grid-row: 3;
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: 60ch;
+  }
+
+  @media (min-width: 64em) {
+    .define :global(.define__statement) {
+      grid-column: 1 / span 9;
+    }
+
+    .define__text {
+      grid-column: 5 / span 7;
+    }
+  }
+
+  /* ─── Comparison ─── */
+  .compare {
+    padding-block: var(--section-pad);
+  }
+
+  .compare__grid {
+    row-gap: var(--space-l);
+  }
+
+  .compare__label,
+  .compare__text,
+  .compare__figure,
+  .compare__table,
+  .compare :global(.compare__statement) {
+    grid-column: 1 / -1;
+  }
+
+  .compare__label {
+    margin: 0;
+    color: var(--fg-2);
+  }
+
+  .compare :global(.compare__statement) {
+    grid-row: 2;
+  }
+
+  .compare__text {
+    grid-row: 3;
+    font-size: var(--fs-body);
+    max-width: 64ch;
+  }
+
+  .compare__figure {
+    display: grid;
+    gap: var(--space-s);
+    margin-top: var(--space-xl);
+  }
+
+  @media (min-width: 64em) {
+    .compare__figure {
+      grid-column: 1 / span 8;
+    }
+  }
+
+  .compare__switch {
+    display: inline-flex;
+    justify-self: start;
+    margin: 0;
+    padding: 4px;
+    border: 1px solid var(--fg);
+    border-radius: var(--radius-pill);
+  }
+
+  .compare__option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0.4rem 1.2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-weight: var(--fw-strong);
+  }
+
+  .compare__option input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .compare__option:has(input:checked) {
+    background: var(--inchiostro);
+    color: var(--calce);
+  }
+
+  .compare__option:has(input:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .compare__verb {
+    font-weight: var(--fw-regular);
+    opacity: 0.8;
+  }
+
+  .compare__verb::before {
+    content: '— ';
+  }
+
+  /* A Schermo 16:10 on night: the horizon of a 360° view, with nodes only in SIII mode. */
+  .compare__screen {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: clip;
+    background: var(--notte);
+    color: var(--calce);
+    --node: var(--blu-node-chiaro);
+  }
+
+  .compare__horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 62%;
+    height: 12px;
+    border-top: 1px solid rgb(243 241 236 / 0.7);
+    background-image: repeating-linear-gradient(to right, rgb(243 241 236 / 0.4) 0 1px, transparent 1px 2.5%);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+  }
+
+  .compare__deg {
+    position: absolute;
+    top: calc(62% + 18px);
+    transform: translateX(-50%);
+    color: var(--testo-notte-2);
+  }
+
+  .compare__hot {
+    position: absolute;
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    transform: translate(-50%, -13px);
+    transition:
+      opacity var(--dur-500) var(--ease-out),
+      transform var(--dur-500) var(--ease-out);
+    transition-delay: calc(var(--i) * 80ms);
+  }
+
+  .compare__hot-label {
+    padding: 0.2rem 0.45rem;
+    background: var(--calce);
+    color: var(--inchiostro);
+    white-space: nowrap;
+  }
+
+  .compare__mode {
+    position: absolute;
+    left: 4%;
+    top: 7%;
+    color: var(--testo-notte-2);
+  }
+
+  .compare__mode--tour,
+  .compare__cap--tour {
+    display: none;
+  }
+
+  .compare:has(input[value='tour']:checked) .compare__hot {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+
+  .compare:has(input[value='tour']:checked) :is(.compare__mode--tour, .compare__cap--tour) {
+    display: inline;
+  }
+
+  .compare:has(input[value='tour']:checked) :is(.compare__mode--siii, .compare__cap--siii) {
+    display: none;
+  }
+
+  .compare__caption {
+    font-size: var(--fs-small);
+    color: var(--fg-2);
+  }
+
+  @media (max-width: 43.74em) {
+    .compare__hot-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.02em;
+    }
+
+    .compare__deg:nth-child(even) {
+      display: none;
+    }
+  }
+
+  /* Table: SIII column dominant; on mobile each row becomes a block with column labels. */
+  .compare__table {
+    width: 100%;
+    margin-top: var(--space-xl);
+    text-align: left;
+    font-size: var(--fs-body);
+  }
+
+  .compare__table th,
+  .compare__table td {
+    padding: var(--space-s) var(--space-s) var(--space-s) 0;
+    vertical-align: top;
+    border-top: 1px solid var(--line);
+  }
+
+  .compare__table thead th {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--tr-label);
+    text-transform: uppercase;
+    color: var(--fg-2);
+    border-top: 0;
+  }
+
+  .compare__table tbody th {
+    font-weight: var(--fw-strong);
+    width: 20%;
+  }
+
+  .compare__table td:nth-child(2) {
+    color: var(--fg-2);
+    width: 32%;
+  }
+
+  .compare__table td:nth-child(3) {
+    font-weight: var(--fw-strong);
+  }
+
+  @media (max-width: 47.99em) {
+    .compare__table,
+    .compare__table tbody,
+    .compare__table tr,
+    .compare__table tbody th,
+    .compare__table tbody td {
+      display: block;
+      width: auto;
+    }
+
+    .compare__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .compare__table tr {
+      padding-block: var(--space-m);
+      border-top: 1px solid var(--line);
+    }
+
+    .compare__table tbody th,
+    .compare__table tbody td {
+      border-top: 0;
+      padding: var(--space-3xs) 0;
+    }
+
+    .compare__table tbody th {
+      padding-bottom: var(--space-2xs);
+    }
+
+    .compare__table td::before {
+      content: attr(data-label) / '';
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--fs-label);
+      font-weight: var(--fw-regular);
+      letter-spacing: var(--tr-label);
+      text-transform: uppercase;
+      color: var(--fg-2);
+    }
+  }
+
+  @media (min-width: 64em) {
+    .compare :global(.compare__statement) {
+      grid-column: 1 / span 10;
+    }
+
+    .compare__text {
+      grid-column: 6 / span 6;
+    }
+  }
+
+  /* ─── Actions ─── */
+  .actions {
+    padding-block: var(--section-pad);
+    overflow-x: clip;
+  }
+
+  .actions__grid {
+    row-gap: var(--space-l);
+  }
+
+  .actions__label,
+  .actions :global(.actions__statement),
+  .actions__intro,
+  .actions__list {
+    grid-column: 1 / -1;
+  }
+
+  .actions__label {
+    margin: 0;
+    color: var(--fg-2);
+  }
+
+  .actions :global(.actions__marquee) {
+    margin-block: var(--space-2xl);
+  }
+
+  .actions__intro {
+    font-size: var(--fs-lead);
+    color: var(--fg-2);
+  }
+
+  .actions__list {
+    display: grid;
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    counter-reset: action;
+  }
+
+  .actions__item {
+    display: grid;
+    gap: var(--space-3xs);
+    padding-top: var(--space-s);
+    border-top: 1px solid var(--line);
+  }
+
+  .actions__verb {
+    font-size: var(--fs-lead);
+    line-height: 1.25;
+    font-weight: var(--fw-strong);
+  }
+
+  .actions__rest {
+    color: var(--fg-2);
+  }
+
+  @media (min-width: 64em) {
+    .actions__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      row-gap: var(--space-l);
+    }
+
+    /* Second column sits half a step lower: an offset list, not a grid of cards. */
+    .actions__item:nth-child(even) {
+      transform: translateY(var(--space-xl));
+    }
+
+    .actions__verb {
+      font-size: var(--fs-display-s);
+    }
+  }
+
+  /* ─── Benefits CTA ─── */
+  .benefits-cta {
+    grid-column: 1 / -1;
+  }
+
+  /* ─── Examples ─── */
+  .examples {
+    padding-block: var(--section-pad) var(--section-pad-tight);
+  }
+
+  .examples__head {
+    row-gap: var(--space-m);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .examples__eyebrow,
+  .examples :global(.examples__title),
+  .examples__text {
+    grid-column: 1 / -1;
+  }
+
+  .examples__eyebrow {
+    color: var(--fg-2);
+  }
+
+  .examples__text {
+    font-size: var(--fs-lead);
+    max-width: var(--measure-lead);
+  }
+
+  .examples__list {
+    display: grid;
+    gap: var(--space-4xl);
+    margin: 0;
+    padding: 0;
+  }
+
+  .example__grid {
+    row-gap: var(--space-l);
+  }
+
+  .example__screen,
+  .example__body {
+    grid-column: 1 / -1;
+  }
+
+  .example__body {
+    display: grid;
+    gap: var(--space-s);
+    justify-items: start;
+  }
+
+  .example__name {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .example__place {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-m);
+    color: var(--fg-2);
+  }
+
+  .example__phrase {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: 36ch;
+  }
+
+  .example__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: var(--tap-min);
+    padding: 0.7em 1.3em;
+    border-radius: var(--radius-pill);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-weight: var(--fw-strong);
+    text-decoration: none;
+  }
+
+  .example__cta:hover {
+    background: transparent;
+    color: var(--fg);
+    outline: 1px solid var(--fg);
+  }
+
+  @media (max-width: 43.74em) {
+    .example__cta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Three thresholds of different widths: 12 columns; 8 on the right; 8 on the left. */
+  @media (min-width: 64em) {
+    .examples :global(.examples__title) {
+      grid-column: 1 / span 8;
+    }
+
+    .examples__text {
+      grid-column: 1 / span 6;
+    }
+
+    .example--1 .example__screen {
+      grid-column: 1 / -1;
+    }
+
+    /* Wide threshold: name on the left half, details and CTA on the right half. */
+    .example--1 .example__body {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      align-items: start;
+    }
+
+    .example--1 .example__name {
+      grid-column: 1 / span 6;
+      grid-row: 1 / span 3;
+    }
+
+    .example--1 :is(.example__place, .example__phrase, .example__cta) {
+      grid-column: 7 / -1;
+    }
+
+    .example--2 .example__screen {
+      grid-column: 5 / -1;
+      grid-row: 1;
+    }
+
+    .example--2 .example__body {
+      grid-column: 1 / span 4;
+      grid-row: 1;
+      align-self: end;
+    }
+
+    .example--3 .example__screen {
+      grid-column: 1 / span 8;
+      grid-row: 1;
+    }
+
+    .example--3 .example__body {
+      grid-column: 9 / -1;
+      grid-row: 1;
+      align-self: end;
+    }
+  }
+</style>

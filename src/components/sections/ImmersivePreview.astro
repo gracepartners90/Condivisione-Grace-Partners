@@ -209,9 +209,13 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
     transform: scale(1.4);
   }
 
+  /* Double ring: readable on light and dark parts of the photo. */
   .document__btn:focus-visible {
-    outline-color: var(--calce);
-    outline-offset: 0;
+    outline: none;
+  }
+
+  .document__btn:focus-visible .document__ring {
+    box-shadow: var(--focus-ring-media);
   }
 
   .document__callout {

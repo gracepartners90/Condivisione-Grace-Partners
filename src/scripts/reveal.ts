@@ -16,8 +16,14 @@ if (elements.length > 0 && 'IntersectionObserver' in window && !reduceMotion) {
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        entry.target.classList.add('is-inview');
-        observer.unobserve(entry.target);
+        const el = entry.target as HTMLElement;
+        el.classList.add('is-inview');
+        observer.unobserve(el);
+        // Line reveals: drop the mask once the last line has landed.
+        if (el.dataset.reveal === 'lines') {
+          const lines = el.querySelectorAll('.line').length;
+          window.setTimeout(() => el.classList.add('is-revealed'), 700 + lines * 90 + 100);
+        }
       }
     },
     { rootMargin: '0px 0px -8% 0px', threshold: 0.1 },

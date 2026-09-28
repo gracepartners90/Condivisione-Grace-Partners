@@ -322,8 +322,9 @@ a:hover {
     transform: translate3d(0, 1.5rem, 0);
   }
 
-  /* Text reveal: each authored line rises from a mask; the mask is removed afterwards (WCAG 1.4.12). */
-  .reveal-ready [data-reveal='lines'] .line {
+  /* Text reveal: each authored line rises from a mask. reveal.ts removes the mask once the
+     lines have landed (.is-revealed), so user text spacing is never clipped (WCAG 1.4.12). */
+  .reveal-ready [data-reveal='lines']:not(.is-revealed) .line {
     overflow: clip;
     padding-block: 0.12em;
     margin-block: -0.12em;
@@ -339,15 +340,6 @@ a:hover {
     transform: translate3d(0, 110%, 0);
   }
 
-  .reveal-ready [data-reveal='lines'].is-inview .line {
-    animation: unclip 0s 1.2s forwards;
-  }
-}
-
-@keyframes unclip {
-  to {
-    overflow: visible;
-  }
 }
 
 [data-reveal='lines'] .line {

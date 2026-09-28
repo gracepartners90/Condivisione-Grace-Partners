@@ -67,7 +67,7 @@ export const pages: Record<PageId, PageMeta> = {
     path: '/cookie-policy/',
     title: 'Cookie Policy | ITnode',
     description:
-      'Quali cookie e tecnologie simili usa il sito di ITnode, per quali finalità, per quanto tempo e come dare, negare o revocare il consenso in ogni momento.',
+      'Quali cookie usa il sito di ITnode e a che cosa servono: nessun cookie di profilazione né di statistica, solo eventuali cookie tecnici necessari.',
     crumb: 'Cookie Policy',
   },
   '404': {

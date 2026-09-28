@@ -1,0 +1,404 @@
+---
+/**
+ * LocationShowcase — real places, never a grid of cards (guidelines §15, §18).
+ * - `doors` (Puglia Digitale): Porte 3:5 hanging from a horizon thread, placed by real
+ *   longitude (west → east) and latitude (north higher). DOM order is west → east too, so
+ *   focus order always matches what is seen (WCAG 2.4.3).
+ * - `italy` (Città Digitali): outline map of Italy on the right, cities on the left aligned
+ *   to the latitude of their node; hovering or focusing a city lights its node.
+ * Every «Esplora ↗» opens the town portal in a new tab, announced to assistive technology.
+ */
+import Media from '../ui/Media.astro';
+import MapItaly from '../ui/MapItaly.astro';
+import Arrow from '../ui/Arrow.astro';
+import { formatCoords } from '../../lib/geo';
+import type { AssetSlotId } from '../../data/asset-slots';
+
+type Location = {
+  id: string;
+  name: string;
+  region?: string;
+  line: string;
+  lat: number;
+  lon: number;
+  url: string;
+  display: string;
+  ctaId: string;
+  asset?: AssetSlotId;
+};
+
+interface Props {
+  variant: 'doors' | 'italy';
+  id: string;
+  title: string;
+  /** Paragraph right under the H2 (answer block); plain text. */
+  text?: string;
+  statement?: string;
+  locations: Location[];
+  surface?: 'calce' | 'pietra' | 'notte';
+  location?: string;
+}
+
+const { variant, id, title, text, statement, locations, surface = 'calce', location = 'luoghi' } = Astro.props;
+
+// Doors: west → east, positions from real coordinates.
+const west = [...locations].sort((a, b) => a.lon - b.lon);
+const minLon = Math.min(...locations.map((l) => l.lon));
+const maxLon = Math.max(...locations.map((l) => l.lon));
+const maxLat = Math.max(...locations.map((l) => l.lat));
+const minLat = Math.min(...locations.map((l) => l.lat));
+const doors = west.map((l) => ({
+  ...l,
+  x: maxLon === minLon ? 0 : (l.lon - minLon) / (maxLon - minLon),
+  y: maxLat === minLat ? 0 : (maxLat - l.lat) / (maxLat - minLat),
+}));
+
+// Italy: north → south.
+const north = [...locations].sort((a, b) => b.lat - a.lat);
+---
+
+<section id={id} class:list={['places', `places--${variant}`, `surface-${surface}`]} aria-labelledby={`${id}-title`}>
+  <div class="wrap">
+    {
+      variant === 'doors' ? (
+        <>
+          <div class="grid places__head">
+            <h2 id={`${id}-title`} class="places__title" tabindex="-1" data-anchor-focus>
+              {title}
+            </h2>
+            {text && <p class="places__text">{text}</p>}
+          </div>
+          <ol role="list" class="places__doors">
+            {doors.map((d) => (
+              <li class="door" style={`--x: ${d.x.toFixed(3)}; --y: ${d.y.toFixed(3)}`} data-reveal>
+                <span class="door__leader" aria-hidden="true" />
+                <div class="door__frame aperture">
+                  <Media asset={d.asset} class="door__media" />
+                </div>
+                <div class="door__body">
+                  <h3 class="door__name">{d.name}</h3>
+                  <p class="door__coords t-label">{formatCoords(d)}</p>
+                  <p class="door__line">{d.line}</p>
+                  <a
+                    class="door__cta"
+                    href={d.url}
+                    target="_blank"
+                    rel="noopener"
+                    data-track="outbound_click"
+                    data-cta-id={d.ctaId}
+                    data-cta-location={location}
+                    data-outbound-type="portale-luogo"
+                    data-destination-id={d.id}
+                  >
+                    Esplora<span class="sr-only"> {d.name} su {d.display} (si apre in una nuova scheda)</span>
+                    <Arrow dir="external" />
+                  </a>
+                  <p class="door__domain t-label" aria-hidden="true">
+                    {d.display}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </>
+      ) : (
+        <div class="grid places__italy" data-places>
+          <div class="places__copy">
+            <h2 id={`${id}-title`} class="places__title" tabindex="-1" data-anchor-focus>
+              {title}
+            </h2>
+            {text && <p class="places__text">{text}</p>}
+            {statement && <p class="places__statement">{statement}</p>}
+          </div>
+          <div class="places__map">
+            <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
+          </div>
+          <ol role="list" class="places__cities">
+            {north.map((c) => (
+              <li class="city" data-place-link={c.id}>
+                <h3 class="city__name">{c.name}</h3>
+                <p class="city__meta t-label">
+                  {c.region && <span>{c.region}</span>}
+                  <span>{formatCoords(c)}</span>
+                </p>
+                <p class="city__line">{c.line}</p>
+                <a
+                  class="city__cta"
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id={c.ctaId}
+                  data-cta-location={location}
+                  data-outbound-type="portale-luogo"
+                  data-destination-id={c.id}
+                >
+                  Esplora<span class="sr-only"> {c.name} su {c.display} (si apre in una nuova scheda)</span>
+                  <Arrow dir="external" />
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+{
+  variant === 'italy' && (
+    <script>
+      // Light the node of the city being hovered or focused (decorative, the map is aria-hidden).
+      document.querySelectorAll<HTMLElement>('[data-places]').forEach((root) => {
+        root.querySelectorAll<HTMLElement>('[data-place-link]').forEach((city) => {
+          const node = root.querySelector<HTMLElement>(`[data-place="${city.dataset.placeLink}"]`);
+          if (!node) return;
+          const on = () => node.classList.add('is-active');
+          const off = () => node.classList.remove('is-active');
+          city.addEventListener('pointerenter', on);
+          city.addEventListener('pointerleave', off);
+          city.addEventListener('focusin', on);
+          city.addEventListener('focusout', off);
+        });
+      });
+    </script>
+  )
+}
+
+<style>
+  .places {
+    padding-block: var(--section-pad);
+  }
+
+  .places__head {
+    row-gap: var(--space-m);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .places__title {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .places__title:focus {
+    outline: none;
+  }
+
+  .places__head > *,
+  .places__copy,
+  .places__map,
+  .places__cities {
+    grid-column: 1 / -1;
+  }
+
+  .places__text {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  /* ─── Doors ─── */
+  .places__doors {
+    display: grid;
+    gap: var(--space-2xl);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Mobile: door (3:5) on the left, text on the right; no thread. */
+  .door {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-m);
+    align-items: start;
+  }
+
+  .door__leader {
+    display: none;
+  }
+
+  .door__frame :global(.media-slot) {
+    --media-ratio: 3 / 5;
+  }
+
+  .door__body {
+    display: grid;
+    gap: var(--space-2xs);
+    justify-items: start;
+  }
+
+  .door__name {
+    margin: 0;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  .door__coords,
+  .door__domain {
+    color: var(--fg-2);
+  }
+
+  .door__line {
+    font-size: var(--fs-body);
+    max-width: 30ch;
+  }
+
+  .door__cta,
+  .city__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
+  }
+
+  @media (min-width: 64em) {
+    .places__head > * {
+      grid-column: 1 / span 7;
+    }
+
+    /* Desktop: doors hang from a horizon thread, placed by real longitude (x) and dropped
+       by latitude (y): all three share one grid cell and are offset with margins. */
+    .places__doors {
+      --door-w: 26%;
+      --thread: var(--space-2xl);
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding-top: var(--thread);
+      border-top: 1px solid var(--fg);
+    }
+
+    .door {
+      grid-row: 1;
+      grid-column: 1;
+      grid-template-columns: minmax(0, 1fr);
+      width: var(--door-w);
+      margin-left: calc(var(--x) * (100% - var(--door-w)));
+      margin-top: calc(var(--y) * var(--space-4xl));
+    }
+
+    .door__leader {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: calc(-1 * (var(--thread) + var(--y) * var(--space-4xl)) - 5px);
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      border-radius: 50%;
+      background: var(--place);
+    }
+
+    .door__leader::after {
+      content: '';
+      position: absolute;
+      left: 4.5px;
+      top: 10px;
+      width: 1px;
+      height: calc(var(--thread) + var(--y) * var(--space-4xl) - 5px);
+      background: var(--place);
+    }
+  }
+
+  /* ─── Italy ─── */
+  .places__italy {
+    row-gap: var(--space-xl);
+  }
+
+  .places__copy {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .places__statement {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    font-weight: var(--fw-strong);
+    max-width: 24ch;
+  }
+
+  .places__map {
+    max-width: 22rem;
+  }
+
+  .places__cities {
+    display: grid;
+    gap: var(--space-xl);
+    margin: 0;
+    padding: 0;
+  }
+
+  .city {
+    display: grid;
+    gap: var(--space-2xs);
+    justify-items: start;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+  }
+
+  .city__name {
+    margin: 0;
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .city__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-s);
+    color: var(--fg-2);
+  }
+
+  .city__line {
+    max-width: 34ch;
+  }
+
+  @media (min-width: 64em) {
+    .places__italy {
+      grid-template-rows: auto 1fr;
+    }
+
+    .places__copy {
+      grid-column: 1 / span 6;
+      grid-row: 1;
+    }
+
+    .places__map {
+      grid-column: 8 / -1;
+      grid-row: 1 / span 2;
+      max-width: none;
+    }
+
+    /* Cities follow the latitude of their node: Varese high, Caltanissetta low. */
+    .places__cities {
+      grid-column: 1 / span 6;
+      grid-row: 2;
+      align-content: space-between;
+      gap: var(--space-2xl);
+      padding-block: var(--space-xl);
+    }
+
+    .city {
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: var(--space-m);
+      align-items: baseline;
+    }
+
+    .city__name,
+    .city__meta,
+    .city__line {
+      grid-column: 1;
+    }
+
+    .city__cta {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+</style>

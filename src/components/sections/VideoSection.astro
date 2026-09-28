@@ -1,0 +1,314 @@
+---
+/**
+ * VideoSection — variant `full-bleed` (Città Digitali, visual direction §7.6).
+ * - preload="none" and no poster attribute: nothing is downloaded before play. The cover is a
+ *   designed typographic poster (visual direction §4.5, «poster del video») until the client
+ *   provides a frame; it hides on the first rendered frame (src/scripts/video.ts).
+ * - Minimal controls: play/pause node, audio, full screen, time in mono. Buttons of 44 px,
+ *   names that change with the state (no aria-pressed).
+ * - Muted autoplay only on desktop with the section half in view, never with reduced motion,
+ *   Save-Data or 2G (video.ts). The description block renders only when written.
+ */
+import Horizon from '../ui/Horizon.astro';
+
+interface Props {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  text: string;
+  src: string;
+  videoId: string;
+  description?: string;
+  captions?: string;
+  autoplay?: boolean;
+}
+
+const { id, eyebrow, title, text, src, videoId, description, captions, autoplay = true } = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<section id={id} class="video surface-notte" aria-labelledby={titleId}>
+  <div class="wrap grid video__head">
+    {eyebrow && <p class="video__eyebrow t-label">{eyebrow}</p>}
+    <h2 id={titleId} class="video__title" tabindex="-1" data-anchor-focus>{title}</h2>
+    <p class="video__text">{text}</p>
+  </div>
+
+  <div class="video__stage aperture" data-video data-autoplay={String(autoplay)} data-video-id={videoId} data-video-title={title} data-state="paused">
+    <video class="video__media" preload="none" playsinline loop aria-labelledby={titleId} src={src}>
+      {captions && <track kind="captions" srclang="it" label="Italiano" src={captions} default />}
+    </video>
+
+    <div class="video__cover" data-video-cover aria-hidden="true">
+      <p class="video__cover-title">{title}</p>
+      <span class="video__cover-play">
+        <svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg>
+      </span>
+      <div class="video__cover-horizon">
+        <Horizon places={[]} rotate={0} />
+      </div>
+    </div>
+
+    <div class="video__controls">
+      <button
+        type="button"
+        class="video__btn video__btn--toggle"
+        data-video-toggle
+        data-label-play="Riproduci il video"
+        data-label-pause="Metti in pausa il video"
+        aria-label="Riproduci il video"
+      >
+        <svg class="video__icon video__icon--play" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"
+          ><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg
+        >
+        <svg class="video__icon video__icon--pause" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"
+          ><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"></path></svg
+        >
+      </button>
+      <button type="button" class="video__btn video__btn--text" data-video-mute data-label-mute="Disattiva l’audio" data-label-unmute="Attiva l’audio" aria-label="Attiva l’audio">
+        <span aria-hidden="true">Audio</span>
+      </button>
+      <button type="button" class="video__btn video__btn--text" data-video-fullscreen aria-label="Guarda a schermo intero">
+        <span aria-hidden="true">Schermo intero</span>
+      </button>
+      <span class="video__time t-label" data-video-time aria-hidden="true">00:00</span>
+    </div>
+
+    <p class="video__error" role="status" data-video-error data-text="Il video non si è caricato. Ricarica la pagina o riprova più tardi."></p>
+  </div>
+
+  {
+    description && (
+      <div class="wrap video__desc">
+        <details>
+          <summary>Leggi la descrizione del video</summary>
+          <p>{description}</p>
+        </details>
+      </div>
+    )
+  }
+</section>
+
+<script>
+  import '../../scripts/video';
+</script>
+
+<style>
+  .video {
+    padding-block: var(--section-pad-tight) var(--section-pad);
+  }
+
+  .video__head {
+    row-gap: var(--space-s);
+    margin-bottom: var(--space-xl);
+  }
+
+  .video__eyebrow,
+  .video__title,
+  .video__text {
+    grid-column: 1 / -1;
+  }
+
+  .video__eyebrow {
+    color: var(--fg-2);
+  }
+
+  .video__title {
+    margin: 0;
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+  }
+
+  .video__title:focus {
+    outline: none;
+  }
+
+  .video__text {
+    color: var(--fg-2);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+  }
+
+  /* Full width, nearly full screen: min(100svh − header, 16:9 of the width). */
+  .video__stage {
+    position: relative;
+    width: 100%;
+    height: min(calc(100svh - var(--header-h)), 56.25vw);
+    min-height: 12rem;
+    background: var(--notte-2);
+  }
+
+  .video__media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--notte-2);
+  }
+
+  .video__cover {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: var(--space-l);
+    padding: var(--space-l);
+    background: var(--notte-2);
+    color: var(--calce);
+    cursor: pointer;
+    transition: opacity var(--dur-500) var(--ease-out);
+  }
+
+  .video__stage[data-ready] .video__cover {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .video__cover-title {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    letter-spacing: var(--tr-display-m);
+    font-weight: var(--fw-strong);
+    text-align: center;
+    max-width: 18ch;
+  }
+
+  .video__cover-play {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--calce);
+    color: var(--calce);
+    transition: transform var(--dur-250) var(--ease-out);
+  }
+
+  .video__cover:hover .video__cover-play {
+    transform: scale(1.08);
+  }
+
+  .video__cover-horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 28%;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .video__controls {
+    position: absolute;
+    left: var(--page-margin);
+    bottom: var(--space-m);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+
+  .video__btn {
+    display: inline-grid;
+    place-items: center;
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    padding: 0;
+    border: 1px solid rgb(243 241 236 / 0.6);
+    border-radius: var(--radius-pill);
+    background: rgb(15 19 23 / 0.72);
+    color: var(--calce);
+  }
+
+  .video__btn--text {
+    padding-inline: 1rem;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-strong);
+  }
+
+  .video__btn:hover {
+    background: var(--calce);
+    color: var(--inchiostro);
+  }
+
+  .video__btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-media);
+  }
+
+  .video__icon--pause,
+  .video__stage[data-state='playing'] .video__icon--play {
+    display: none;
+  }
+
+  .video__stage[data-state='playing'] .video__icon--pause {
+    display: block;
+  }
+
+  .video__time {
+    padding-inline: var(--space-2xs);
+    color: var(--calce);
+  }
+
+  .video__error {
+    position: absolute;
+    left: var(--page-margin);
+    right: var(--page-margin);
+    top: var(--space-m);
+    z-index: 3;
+    margin: 0;
+  }
+
+  .video__error:not(:empty) {
+    justify-self: start;
+    width: fit-content;
+    padding: var(--space-xs) var(--space-s);
+    background: var(--notte);
+    color: var(--calce);
+  }
+
+  /* Phones: the 16:9 stage is short, so the cover keeps only the title above the controls. */
+  @media (max-width: 43.74em) {
+    .video__cover {
+      align-content: start;
+      padding-top: var(--space-l);
+    }
+
+    .video__cover-play,
+    .video__cover-horizon {
+      display: none;
+    }
+
+    .video__cover-title {
+      font-size: var(--fs-display-s);
+      line-height: var(--lh-display-s);
+    }
+
+    .video__controls {
+      bottom: var(--space-s);
+    }
+  }
+
+  .video__desc {
+    margin-top: var(--space-l);
+  }
+
+  .video__desc summary {
+    cursor: pointer;
+    min-height: var(--tap-min);
+    display: flex;
+    align-items: center;
+    font-weight: var(--fw-strong);
+  }
+
+  @media (min-width: 64em) {
+    .video__title {
+      grid-column: 1 / span 8;
+    }
+
+    .video__text {
+      grid-column: 1 / span 6;
+    }
+  }
+</style>

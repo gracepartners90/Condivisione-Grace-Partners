@@ -1,0 +1,140 @@
+---
+/**
+ * Stats — variant `impact` (Puglia Digitale «I numeri»): a staircase of display numbers,
+ * each two columns further right and lower (visual direction §7.5).
+ * - Numbers are client data: the component refuses to render without a source note
+ *   (docs/cro/strategia-conversione.md §9).
+ * - The visual value is aria-hidden; a plain sentence is read instead («Circa 200.000…»).
+ * - Symbols (+ ~ %) take the place colour.
+ */
+type Stat = { prefix?: string; value: string; suffix?: string; label: string; srText: string };
+
+interface Props {
+  id: string;
+  title: string;
+  stats: Stat[];
+  source: string;
+  surface?: 'calce' | 'pietra' | 'notte';
+}
+
+const { id, title, stats, source, surface = 'notte' } = Astro.props;
+if (!source.trim()) throw new Error('Stats: numbers need a source note.');
+---
+
+<section id={id} class:list={['stats', `surface-${surface}`]} aria-labelledby={`${id}-title`}>
+  <div class="wrap grid stats__grid">
+    <h2 id={`${id}-title`} class="stats__title" tabindex="-1" data-anchor-focus>{title}</h2>
+    <ul role="list" class="stats__list">
+      {
+        stats.map((s, i) => (
+          <li class="stat" style={`--i: ${i}`} data-reveal>
+            {/* One line on purpose: whitespace here would split «30 +». */}
+            <span class="stat__value" aria-hidden="true">{s.prefix && <span class="stat__sym">{s.prefix}</span>}{s.value}{s.suffix && <span class="stat__sym">{s.suffix}</span>}</span>
+            <span class="stat__label t-label" aria-hidden="true">
+              {s.label}
+            </span>
+            <span class="sr-only">{s.srText}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="stats__source t-label">{source}</p>
+  </div>
+</section>
+
+<style>
+  .stats {
+    padding-block: var(--section-pad);
+    overflow-x: clip;
+  }
+
+  .stats__grid {
+    row-gap: var(--space-2xl);
+  }
+
+  .stats__title,
+  .stats__list,
+  .stats__source {
+    grid-column: 1 / -1;
+  }
+
+  .stats__title {
+    margin: 0;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    max-width: 24ch;
+  }
+
+  .stats__title:focus {
+    outline: none;
+  }
+
+  .stats__list {
+    display: grid;
+    gap: var(--space-xl);
+    margin: 0;
+    padding: 0;
+  }
+
+  .stat {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  /* 4 rem minimum: «~200.000» fits a 320 px screen (docs/ux/struttura-pagine.md §0.3). */
+  .stat__value {
+    font-size: clamp(4rem, 0.16rem + 17.8vw, 15rem);
+    line-height: 0.86;
+    letter-spacing: var(--tr-display-xxl);
+    font-weight: var(--fw-strong);
+    /* Proportional figures: a tabular «.» is as wide as a digit and opens gaps. */
+    font-variant-numeric: proportional-nums lining-nums;
+    white-space: nowrap;
+  }
+
+  .stat__sym {
+    color: var(--place);
+  }
+
+  .stat__label {
+    color: var(--fg-2);
+    font-size: var(--fs-small);
+    letter-spacing: var(--tr-label);
+  }
+
+  .stats__source {
+    color: var(--fg-2);
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-s);
+  }
+
+  @media (min-width: 64em) {
+    .stats__title {
+      grid-column: 1 / span 6;
+    }
+
+    /* Staircase: two columns to the right and one step down per number. */
+    .stats__list {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      row-gap: var(--space-l);
+    }
+
+    .stat {
+      grid-column: 1 / -1;
+    }
+
+    .stat:nth-child(2) {
+      grid-column: 3 / -1;
+    }
+
+    .stat:nth-child(3) {
+      grid-column: 5 / -1;
+    }
+
+    .stats__source {
+      grid-column: 5 / -1;
+    }
+  }
+</style>

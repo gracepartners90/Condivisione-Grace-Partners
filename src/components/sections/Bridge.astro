@@ -1,0 +1,61 @@
+---
+/**
+ * Bridge — «Gli altri mondi ITnode»: one editorial line with two internal links, at the end
+ * of each line page (copy decks, section «Gli altri mondi ITnode»).
+ * `text` may contain inline HTML for the links.
+ */
+interface Props {
+  title?: string;
+  text: string;
+  surface?: 'calce' | 'pietra' | 'notte';
+}
+
+const { title = 'Gli altri mondi ITnode', text, surface = 'calce' } = Astro.props;
+---
+
+<section class:list={['bridge', `surface-${surface}`]} aria-labelledby="altri-mondi-title">
+  <div class="wrap grid bridge__grid">
+    <h2 id="altri-mondi-title" class="bridge__title t-label">{title}</h2>
+    <p class="bridge__text" set:html={text} />
+  </div>
+</section>
+
+<style>
+  .bridge {
+    padding-block: var(--section-pad-tight);
+    border-top: 1px solid var(--line);
+  }
+
+  .bridge__grid {
+    row-gap: var(--space-s);
+  }
+
+  .bridge__title {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--fg-2);
+  }
+
+  .bridge__text {
+    grid-column: 1 / -1;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    max-width: 36ch;
+  }
+
+  .bridge__text :global(a) {
+    text-decoration-thickness: 2px;
+  }
+
+  @media (min-width: 64em) {
+    .bridge__title {
+      grid-column: 1 / span 3;
+      padding-top: 0.6em;
+    }
+
+    .bridge__text {
+      grid-column: 4 / span 8;
+    }
+  }
+</style>

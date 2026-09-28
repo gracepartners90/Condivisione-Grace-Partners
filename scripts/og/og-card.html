@@ -1,0 +1,132 @@
+<!doctype html>
+<!--
+  Social card template (Open Graph / X), 1200 × 630.
+  Built by scripts/og/build-og.mjs, which injects the wordmark and renders it with Playwright.
+  Layout is drawn at 2× the design system (1 system px = 2 card px), because feeds show the
+  card at about 500–600 px wide. Fonts are the site's own, self-hosted from node_modules.
+  Variants: ?theme=notte, ?line1=…, ?line2=… (see build-og.mjs).
+-->
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <title>ITnode · social card</title>
+    <style>
+      @font-face {
+        font-family: 'Schibsted Grotesk Variable';
+        src: url('../../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2') format('woff2');
+        font-weight: 400 900;
+      }
+      @font-face {
+        font-family: 'Fragment Mono';
+        src: url('../../node_modules/@fontsource/fragment-mono/files/fragment-mono-latin-400-normal.woff2') format('woff2');
+        font-weight: 400;
+      }
+
+      :root {
+        --sky: #f3f1ec; /* calce */
+        --earth: #e4dfd5; /* pietra */
+        --fg: #141413; /* inchiostro */
+        --fg-2: #55514a; /* inchiostro-2 */
+        --horizon-y: 378px; /* 60% of 630 */
+        --margin: 56px;
+        --col: calc((1200px - 2 * var(--margin) - 11 * 24px) / 12);
+      }
+      :root[data-theme='notte'] {
+        --sky: #0f1317; /* notte */
+        --earth: #1a2027; /* notte-2 */
+        --fg: #f3f1ec; /* calce */
+        --fg-2: #a9afb6; /* testo-notte-2 */
+      }
+
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        position: relative;
+        background: linear-gradient(to bottom, var(--sky) 0 var(--horizon-y), var(--earth) var(--horizon-y) 100%);
+        color: var(--fg);
+        font-family: 'Schibsted Grotesk Variable', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wordmark { position: absolute; left: var(--margin); top: 52px; height: 48px; color: var(--fg); }
+      .wordmark svg { display: block; height: 100%; width: auto; }
+
+      .mono {
+        font-family: 'Fragment Mono', monospace;
+        font-size: 24px;
+        line-height: 1.4;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--fg-2);
+      }
+      .coords { position: absolute; right: var(--margin); top: 60px; }
+
+      /* Il Passaggio: first register stands on the horizon, second register drops into the earth, 2 columns in. */
+      .line1 {
+        position: absolute;
+        left: var(--margin);
+        bottom: calc(630px - var(--horizon-y));
+        font-size: 80px;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        white-space: nowrap;
+      }
+      .line2 {
+        position: absolute;
+        left: calc(var(--margin) + 2 * (var(--col) + 24px));
+        top: calc(var(--horizon-y) + 120px);
+        font-size: 56px;
+        font-weight: 400;
+        line-height: 1.04;
+        letter-spacing: -0.022em;
+        white-space: nowrap;
+      }
+
+      .horizon { position: absolute; left: 0; top: var(--horizon-y); width: 1200px; height: 90px; overflow: visible; }
+      .horizon line { stroke: var(--fg); stroke-width: 2; shape-rendering: crispEdges; }
+      .horizon text { fill: var(--fg-2); font-family: 'Fragment Mono', monospace; font-size: 22px; letter-spacing: 0.06em; }
+    </style>
+  </head>
+  <body>
+    <div class="wordmark" aria-label="ITnode"><!-- WORDMARK --></div>
+    <p class="mono coords">40.8957° N · 16.8412° E</p>
+
+    <svg class="horizon" viewBox="0 0 1200 90" aria-hidden="true"></svg>
+
+    <p class="line1" data-slot="line1">Esperienze digitali immersive</p>
+    <p class="line2" data-slot="line2">per imprese e territori.</p>
+
+    <script>
+      // Variants from the query string (theme, line1, line2).
+      const params = new URLSearchParams(location.search);
+      if (params.get('theme') === 'notte') document.documentElement.dataset.theme = 'notte';
+      for (const slot of ['line1', 'line2']) {
+        if (params.has(slot)) document.querySelector(`[data-slot="${slot}"]`).textContent = params.get(slot);
+      }
+
+      // L'Orizzonte: 200° field of view (060°–260°), so every 45° label fits inside the card. Ticks every 5° (6 px), 15° (12 px)
+      // and 45° (20 px) in system px, doubled here; mono labels only every 45°.
+      const svg = document.querySelector('.horizon');
+      const NS = 'http://www.w3.org/2000/svg';
+      const FROM = 60, TO = 260, W = 1200;
+      const x = (deg) => ((deg - FROM) / (TO - FROM)) * W;
+      const cardinal = { 0: 'N', 90: 'E', 180: 'S', 270: 'O' };
+      const add = (name, attrs, text) => {
+        const el = document.createElementNS(NS, name);
+        for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+        if (text) el.textContent = text;
+        svg.append(el);
+      };
+      add('line', { x1: 0, x2: W, y1: 1, y2: 1 });
+      for (let d = FROM; d <= TO; d += 5) {
+        const len = d % 45 === 0 ? 40 : d % 15 === 0 ? 24 : 12;
+        add('line', { x1: x(d), x2: x(d), y1: 1, y2: 1 + len });
+        if (d % 45 === 0) {
+          const label = String(d % 360).padStart(3, '0') + '°' + (cardinal[d % 360] ? ' ' + cardinal[d % 360] : '');
+          add('text', { x: x(d) - 1, y: 70 }, label);
+        }
+      }
+    </script>
+  </body>
+</html>

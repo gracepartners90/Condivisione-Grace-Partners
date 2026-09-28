@@ -19,10 +19,23 @@ interface Props {
   places?: HorizonPlace[];
   caption?: string;
   surface?: 'calce' | 'pietra' | 'notte';
+  /** line: scale of the name. «SIII» (four letters) can be huge. */
+  nameSize?: 'xl' | 'xxl';
   class?: string;
 }
 
-const { variant = 'line', eyebrow, registers = [], name, descriptor, places = [], caption, surface = 'calce', class: className } = Astro.props;
+const {
+  variant = 'line',
+  eyebrow,
+  registers = [],
+  name,
+  descriptor,
+  places = [],
+  caption,
+  surface = 'calce',
+  nameSize = 'xl',
+  class: className,
+} = Astro.props;
 const [first = '', second = ''] = registers;
 const secondLines = second.split('\n');
 ---
@@ -62,7 +75,7 @@ const secondLines = second.split('\n');
       <div class="wrap hero-line grid">
         {eyebrow && <p class="hero-line__eyebrow t-label">{eyebrow}</p>}
         <h1 id="hero-title" class="hero-line__title">
-          <span class="hero-line__name">{name}</span>
+          <span class:list={['hero-line__name', `hero-line__name--${nameSize}`]}>{name}</span>
           {descriptor && (
             <>
               {' '}
@@ -234,6 +247,12 @@ const secondLines = second.split('\n');
     font-size: var(--fs-display-xl);
     line-height: var(--lh-display-xl);
     letter-spacing: var(--tr-display-xl);
+  }
+
+  .hero-line__name--xxl {
+    font-size: var(--fs-display-xxl);
+    line-height: var(--lh-display-xxl);
+    letter-spacing: var(--tr-display-xxl);
   }
 
   .hero-line__descriptor {

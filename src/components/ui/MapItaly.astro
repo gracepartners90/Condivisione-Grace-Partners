@@ -27,10 +27,12 @@ interface Props {
   compact?: boolean;
   /** Id of the place drawn as the office (ring around the node). */
   home?: string;
+  /** Custom viewBox (a crop of the map's own coordinates), e.g. a wide band of coast. */
+  frame?: string;
   class?: string;
 }
 
-const { map, places, showLabels = true, compact = false, home, class: className } = Astro.props;
+const { map, places, showLabels = true, compact = false, home, frame, class: className } = Astro.props;
 
 const files = import.meta.glob<{ default: Record<string, unknown> }>('../../data/maps.json', { eager: true });
 const raw = Object.values(files)[0]?.default as { maps?: Record<string, MapData> } & Record<string, MapData> | undefined;
@@ -49,7 +51,7 @@ const project = (lat: number, lon: number) => ({
   y: ((BOUNDS.maxLat - lat) / (BOUNDS.maxLat - BOUNDS.minLat)) * H,
 });
 
-const viewBox = (compact && data?.viewBoxCompact) || data?.viewBox || `0 0 ${W} ${H}`;
+const viewBox = (data && frame) || (compact && data?.viewBoxCompact) || data?.viewBox || `0 0 ${W} ${H}`;
 const [vbX, vbY, vbW, vbH] = viewBox.split(/\s+/).map(Number);
 const pct = (x: number, y: number) => ({ left: ((x - vbX) / vbW) * 100, top: ((y - vbY) / vbH) * 100 });
 
@@ -81,7 +83,7 @@ if (!data) {
 }
 ---
 
-<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`} aria-hidden="true">
+<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`} aria-hidden="true">
   <svg class="map__svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet" focusable="false">
     {data ? <path class="map__coast" d={data.path} vector-effect="non-scaling-stroke" /> : <path class="map__grid" d={graticule.join('')} vector-effect="non-scaling-stroke" />}
   </svg>

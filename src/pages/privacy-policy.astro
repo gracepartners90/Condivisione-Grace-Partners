@@ -1,0 +1,53 @@
+---
+/**
+ * Privacy Policy — draft with verified facts only. The full informativa (legal bases,
+ * retention, processors, transfers) is [DA FORNIRE] by the client's privacy counsel:
+ * the page says so instead of inventing it (docs/ux/sitemap.md T4, soglia 5).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPage from '../components/sections/LegalPage.astro';
+import { site } from '../data/site';
+import { pageGraph } from '../lib/structured-data';
+
+const schema = pageGraph('privacy-policy');
+---
+
+<BaseLayout page="privacy-policy" schema={schema}>
+  <LegalPage
+    title="Privacy Policy"
+    updated={{ label: '28 settembre 2026', datetime: '2026-09-28' }}
+    status="Testo in preparazione. Qui trovi ciò che è già certo; l’informativa completa, validata dal consulente privacy di ITnode, sarà pubblicata prima del lancio del sito."
+  >
+    <h2>Chi tratta i dati</h2>
+    <p>
+      Il titolare del trattamento è {site.legalName}, {site.address.street}, {site.address.postalCode}
+      {site.address.locality} ({site.address.province}), partita IVA {site.vatId}. Per qualunque domanda sui tuoi dati puoi scrivere a
+      <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+
+    <h2>Quali dati raccoglie il sito</h2>
+    <p>Il sito raccoglie dati personali solo quando compili il modulo di contatto. I campi sono:</p>
+    <ul>
+      <li>nome e cognome, obbligatorio;</li>
+      <li>indirizzo email, obbligatorio;</li>
+      <li>telefono, facoltativo;</li>
+      <li>azienda o ente, facoltativo;</li>
+      <li>i progetti che ti interessano, facoltativo;</li>
+      <li>il messaggio, facoltativo.</li>
+    </ul>
+    <p>
+      Il sito non usa strumenti di statistica né cookie di profilazione. Per i cookie trovi i dettagli nella <a href="/cookie-policy/"
+        >Cookie Policy</a
+      >.
+    </p>
+
+    <h2>Perché li usiamo</h2>
+    <p>Usiamo i dati del modulo solo per rispondere alla tua richiesta e, se ce lo chiedi, per ricontattarti.</p>
+
+    <h2>I tuoi diritti</h2>
+    <p>
+      Puoi chiedere in ogni momento di accedere ai tuoi dati, di correggerli o di cancellarli scrivendo a
+      <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  </LegalPage>
+</BaseLayout>

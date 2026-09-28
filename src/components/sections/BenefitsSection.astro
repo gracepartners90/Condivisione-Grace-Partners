@@ -1,0 +1,353 @@
+---
+/**
+ * BenefitsSection — numbered benefits, never a grid of cards (guidelines §11, §16, §20).
+ * Variants (visual direction §7.4–7.6):
+ * - `zigzag` (SIII): large numbers alternating left and right, one idea per band.
+ * - `scala` (Puglia Digitale): each item indented one column more than the previous one.
+ * - `sticky` (Città Digitali): heading and a 01/05 indicator held on the left while the
+ *   items scroll on the right; only from 1024 × 720 px, never with the form inside.
+ * Numbers are decorative (aria-hidden): the order comes from the <ol>.
+ * A «documented figure» shows only when value, label, source and period are all present.
+ */
+type Figure = { value: string; label: string; source: string; period: string; srText?: string };
+type Item = { title: string; text: string; figure?: Figure };
+
+interface Props {
+  variant: 'zigzag' | 'scala' | 'sticky';
+  id: string;
+  eyebrow?: string;
+  title: string;
+  /** Intro paragraph; may contain inline HTML (links). */
+  intro?: string;
+  items: Item[];
+  surface?: 'calce' | 'pietra' | 'notte';
+}
+
+const { variant, id, eyebrow, title, intro, items, surface = 'calce' } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+const total = pad(items.length);
+const complete = (f?: Figure) => Boolean(f && f.value && f.label && f.source && f.period);
+---
+
+<section id={id} class:list={['benefits', `benefits--${variant}`, `surface-${surface}`]} aria-labelledby={`${id}-title`}>
+  <div class="wrap grid benefits__grid">
+    <header class="benefits__head">
+      <div class="benefits__head-inner">
+        {eyebrow && <p class="benefits__eyebrow t-label">{eyebrow}</p>}
+        <h2 id={`${id}-title`} class="benefits__title" tabindex="-1" data-anchor-focus>{title}</h2>
+        {intro && variant !== 'sticky' && <p class="benefits__intro" set:html={intro} />}
+        {
+          variant === 'sticky' && (
+            <p class="benefits__counter t-label" aria-hidden="true">
+              <span data-benefits-current>01</span> / {total}
+            </p>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="benefits__main">
+    {
+      /* Sticky variant: the intro holds a link, so it stays out of the sticky column. */
+      intro && variant === 'sticky' && <p class="benefits__intro" set:html={intro} />
+    }
+    <ol role="list" class="benefits__list">
+      {
+        items.map((item, i) => (
+          <li class="benefits__item" style={`--i: ${i}`} data-reveal data-benefit={pad(i + 1)}>
+            <span class="benefits__num" aria-hidden="true">
+              {pad(i + 1)}
+            </span>
+            <div class="benefits__body">
+              <h3 class="benefits__name">{item.title}</h3>
+              <p class="benefits__text">{item.text}</p>
+              {complete(item.figure) && (
+                <p class="benefits__figure">
+                  <span class="benefits__figure-value" aria-hidden="true">
+                    {item.figure!.value}
+                  </span>
+                  <span class="benefits__figure-label" aria-hidden="true">
+                    {item.figure!.label}
+                  </span>
+                  <span class="sr-only">{item.figure!.srText ?? `${item.figure!.value} ${item.figure!.label}`}</span>
+                  <span class="benefits__figure-source t-label">
+                    Fonte: {item.figure!.source}, {item.figure!.period}
+                  </span>
+                </p>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    </div>
+    <slot />
+  </div>
+</section>
+
+{
+  variant === 'sticky' && (
+    <script>
+      // Decorative 01/05 indicator: follows the item closest to the middle of the viewport.
+      document.querySelectorAll<HTMLElement>('.benefits--sticky').forEach((section) => {
+        const out = section.querySelector<HTMLElement>('[data-benefits-current]');
+        const items = [...section.querySelectorAll<HTMLElement>('[data-benefit]')];
+        if (!out || !items.length || !('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) if (entry.isIntersecting) out.textContent = (entry.target as HTMLElement).dataset.benefit ?? '';
+          },
+          { rootMargin: '-45% 0px -45% 0px' },
+        );
+        items.forEach((item) => io.observe(item));
+      });
+    </script>
+  )
+}
+
+<style>
+  .benefits {
+    padding-block: var(--section-pad);
+  }
+
+  .benefits__grid {
+    row-gap: var(--space-2xl);
+  }
+
+  .benefits__head,
+  .benefits__main {
+    grid-column: 1 / -1;
+  }
+
+  .benefits__main {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .benefits__head-inner {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .benefits__eyebrow,
+  .benefits__counter {
+    color: var(--fg-2);
+  }
+
+  .benefits__title {
+    margin: 0;
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+  }
+
+  .benefits__title:focus {
+    outline: none;
+  }
+
+  .benefits__intro {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  .benefits__list {
+    display: grid;
+    gap: var(--space-2xl);
+    margin: 0;
+    padding: 0;
+  }
+
+  .benefits__item {
+    display: grid;
+    gap: var(--space-s);
+    align-items: start;
+  }
+
+  .benefits__num {
+    font-size: var(--fs-display-xl);
+    line-height: var(--lh-display-xl);
+    letter-spacing: var(--tr-display-xl);
+    font-weight: var(--fw-strong);
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+  }
+
+  .benefits__body {
+    display: grid;
+    gap: var(--space-xs);
+    max-width: 34rem;
+  }
+
+  .benefits__name {
+    margin: 0;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  .benefits__text {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--fg);
+  }
+
+  .benefits__figure {
+    display: grid;
+    gap: var(--space-3xs);
+    margin-top: var(--space-s);
+  }
+
+  .benefits__figure-value {
+    font-size: var(--fs-display-l);
+    line-height: var(--lh-display-l);
+    letter-spacing: var(--tr-display-l);
+    font-weight: var(--fw-strong);
+  }
+
+  .benefits__figure-source {
+    color: var(--fg-2);
+  }
+
+  /* ─── zigzag: one band per benefit, number and text swap sides ─── */
+  .benefits--zigzag .benefits__num {
+    font-size: var(--fs-display-xxl);
+    line-height: var(--lh-display-xxl);
+    letter-spacing: var(--tr-display-xxl);
+  }
+
+  .benefits--zigzag .benefits__item + .benefits__item {
+    padding-top: var(--space-2xl);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 64em) {
+    .benefits--zigzag .benefits__head {
+      grid-column: 1 / span 7;
+    }
+
+    .benefits--zigzag .benefits__item {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      align-items: end;
+    }
+
+    .benefits--zigzag .benefits__item:nth-child(odd) .benefits__num {
+      grid-column: 1 / span 5;
+    }
+
+    .benefits--zigzag .benefits__item:nth-child(odd) .benefits__body {
+      grid-column: 7 / span 5;
+    }
+
+    .benefits--zigzag .benefits__item:nth-child(even) .benefits__num {
+      grid-column: 8 / -1;
+      grid-row: 1;
+      text-align: right;
+    }
+
+    .benefits--zigzag .benefits__item:nth-child(even) .benefits__body {
+      grid-column: 2 / span 5;
+      grid-row: 1;
+    }
+
+    .benefits--zigzag .benefits__name {
+      font-size: var(--fs-display-m);
+      line-height: var(--lh-display-m);
+      letter-spacing: var(--tr-display-m);
+      font-weight: var(--fw-strong);
+    }
+  }
+
+  /* ─── scala: every item one column further in ─── */
+  .benefits--scala .benefits__item {
+    padding-left: calc(var(--i) * var(--space-s));
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-m);
+  }
+
+  .benefits--scala .benefits__num {
+    min-width: 2.2ch;
+  }
+
+  @media (min-width: 43.75em) {
+    .benefits--scala .benefits__item {
+      padding-left: calc(var(--i) * (100% + var(--gutter)) / var(--cols));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .benefits--scala .benefits__head {
+      grid-column: 1 / span 8;
+    }
+
+    .benefits--scala .benefits__main {
+      grid-column: 1 / span 11;
+    }
+
+    .benefits--scala .benefits__item {
+      padding-left: calc(var(--i) * (100% + var(--gutter)) / 11);
+    }
+  }
+
+  /* ─── sticky: heading held on the left, items scroll on the right ─── */
+  .benefits--sticky .benefits__item {
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-m);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--line);
+  }
+
+  .benefits--sticky .benefits__num {
+    font-size: var(--fs-display-m);
+    line-height: var(--lh-display-m);
+    font-family: var(--font-mono);
+    font-weight: var(--fw-regular);
+    letter-spacing: 0;
+    color: var(--fg-2);
+  }
+
+  .benefits__counter {
+    display: none;
+  }
+
+  @media (min-width: 64em) {
+    .benefits--sticky .benefits__head {
+      grid-column: 1 / span 5;
+    }
+
+    .benefits--sticky .benefits__main {
+      grid-column: 7 / -1;
+    }
+
+    .benefits--sticky .benefits__list {
+      gap: var(--space-3xl);
+    }
+
+    .benefits--sticky .benefits__grid {
+      align-items: start;
+    }
+  }
+
+  @media (min-width: 64em) and (min-height: 45em) {
+    .benefits--sticky .benefits__head-inner {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-2xl));
+    }
+
+    .benefits--sticky .benefits__head {
+      align-self: stretch;
+    }
+
+    .benefits--sticky .benefits__counter {
+      display: block;
+      margin-top: var(--space-xl);
+      font-size: var(--fs-display-s);
+      letter-spacing: 0;
+    }
+
+    .benefits--sticky .benefits__list {
+      padding-block: var(--space-2xl) 20vh;
+    }
+  }
+</style>

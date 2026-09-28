@@ -1,0 +1,631 @@
+---
+/**
+ * ContactForm — the one contact form of the site (docs/ux/struttura-pagine.md §7,
+ * docs/contenuti/microcopy.md §4, docs/cro/strategia-conversione.md §6–7).
+ * - Anchor `#richiesta` on the block; its H3 title receives focus when reached from a link.
+ * - Endpoint from PUBLIC_FORM_ENDPOINT at build time. Without it the form is declared
+ *   inactive before the fields and never pretends to send (src/scripts/form.ts prepares an
+ *   email draft instead). Without JavaScript and without endpoint the form posts to mailto.
+ * - Consent: the privacy box is an acknowledgement, required and never preselected.
+ */
+import { interests, site, type InterestValue } from '../../data/site';
+import Arrow from '../ui/Arrow.astro';
+
+type Action = { label: string; href: string; srText?: string };
+
+interface Props {
+  /** Analytics id of the form, e.g. `richiesta-siii`. */
+  formId: string;
+  title?: string;
+  intro: string;
+  preselect?: InterestValue[];
+  /** Hint under «Messaggio», page by page (microcopy §4.2). */
+  messageHint: string;
+  /** Page-specific action in the success panel (microcopy §4.4). */
+  successActions?: Action[];
+  headingLevel?: 'h2' | 'h3';
+  /** 2: wide form, fields in two columns on desktop (under a full-width statement). */
+  columns?: 1 | 2;
+  class?: string;
+}
+
+const {
+  formId,
+  title = 'Richiedi un’offerta',
+  intro,
+  preselect = [],
+  messageHint,
+  successActions = [],
+  headingLevel: Heading = 'h3',
+  columns = 1,
+  class: className,
+} = Astro.props;
+
+const endpoint = (import.meta.env.PUBLIC_FORM_ENDPOINT ?? '').trim();
+const ids = {
+  title: 'richiesta-title',
+  summary: 'richiesta-summary-title',
+};
+const labelFor: Record<InterestValue, string> = {
+  siii: 'SIII – Sito Interattivo Immersivo',
+  'puglia-digitale': 'Puglia Digitale',
+  'citta-digitali': 'Città Digitali',
+};
+const newTab = ' (si apre in una nuova scheda)';
+---
+
+<div id="richiesta" class:list={['contact', { 'contact--wide': columns === 2 }, className]} data-contact>
+  <Heading id={ids.title} class="contact__title" tabindex="-1" data-anchor-focus>{title}</Heading>
+  <p class="contact__intro">{intro}</p>
+
+  {
+    !endpoint && (
+      <p class="contact__notice" data-form-inactive>
+        Il modulo online non è ancora attivo. Per ora scrivici a <a href={`mailto:${site.email}`}>{site.email}</a> o chiamaci al{' '}
+        <a href={site.phone.href} class="contact__nowrap">
+          {site.phone.display}
+        </a>
+        . Se compili i campi, all’invio prepariamo un’email già pronta da spedire.
+      </p>
+    )
+  }
+
+  <form
+    class="contact__form"
+    data-contact-form
+    data-form-id={formId}
+    data-endpoint={endpoint}
+    data-fallback-email={site.email}
+    data-msg-required="Compila questo campo."
+    data-msg-sending="Invio in corso…"
+    action={endpoint || `mailto:${site.email}`}
+    method="post"
+    enctype={endpoint ? 'multipart/form-data' : 'text/plain'}
+    aria-labelledby={ids.title}
+  >
+    <p class="contact__note">La richiesta è senza impegno. I campi con * sono obbligatori.</p>
+
+    <div class="contact__summary" data-form-summary tabindex="-1" role="group" aria-labelledby={ids.summary} hidden>
+      <p id={ids.summary} class="contact__summary-title">Per inviare la richiesta, controlla questi campi:</p>
+      <ul data-form-summary-list></ul>
+    </div>
+
+    <fieldset class="contact__interests">
+      <legend class="contact__label">Mi interessa (facoltativo)</legend>
+      <p class="contact__help" id="f-interesse-help">Puoi sceglierne più di uno.</p>
+      <div class="contact__choices">
+        {
+          interests.map((item) => (
+            <label class="contact__choice">
+              <input
+                type="checkbox"
+                name="interesse"
+                value={item.value}
+                data-label={item.label}
+                checked={preselect.includes(item.value)}
+                aria-describedby="f-interesse-help"
+              />
+              <span>{labelFor[item.value]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="contact__field contact__field--half">
+      <label class="contact__label" for="f-nome">Nome e cognome <span aria-hidden="true">*</span></label>
+      <input
+        id="f-nome"
+        name="nome"
+        type="text"
+        required
+        autocomplete="name"
+        maxlength="100"
+        data-msg-required="Scrivi nome e cognome."
+        data-msg-long="Nome e cognome: usa al massimo 100 caratteri."
+      />
+      <p class="contact__error" id="f-nome-error" hidden></p>
+    </div>
+
+    <div class="contact__field contact__field--half">
+      <label class="contact__label" for="f-email">Email aziendale <span aria-hidden="true">*</span></label>
+      <p class="contact__help" id="f-email-help">Va bene anche un indirizzo personale: ti risponderemo lì.</p>
+      <input
+        id="f-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        spellcheck="false"
+        autocapitalize="off"
+        inputmode="email"
+        pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}"
+        maxlength="254"
+        aria-describedby="f-email-help"
+        data-msg-required="Scrivi il tuo indirizzo email."
+        data-msg-type="Controlla l’email: per esempio nome@azienda.it."
+        data-msg-pattern="Controlla l’email: per esempio nome@azienda.it."
+      />
+      <p class="contact__error" id="f-email-error" hidden></p>
+    </div>
+
+    <div class="contact__field contact__field--half">
+      <label class="contact__label" for="f-telefono">Telefono (facoltativo)</label>
+      <p class="contact__help" id="f-telefono-help">Se preferisci, ti richiamiamo noi.</p>
+      <input
+        id="f-telefono"
+        name="telefono"
+        type="tel"
+        autocomplete="tel"
+        pattern="[0-9 +\-\.\(\)\/]{6,20}"
+        aria-describedby="f-telefono-help"
+        data-msg-pattern="Controlla il numero: puoi usare cifre, spazi e il segno + del prefisso internazionale."
+      />
+      <p class="contact__error" id="f-telefono-error" hidden></p>
+    </div>
+
+    <div class="contact__field contact__field--half">
+      <label class="contact__label" for="f-azienda">Azienda o ente (facoltativo)</label>
+      <input id="f-azienda" name="azienda" type="text" autocomplete="organization" maxlength="150" data-msg-long="Azienda o ente: usa al massimo 150 caratteri." />
+      <p class="contact__error" id="f-azienda-error" hidden></p>
+    </div>
+
+    <div class="contact__field">
+      <label class="contact__label" for="f-messaggio">Messaggio (facoltativo)</label>
+      <p class="contact__help" id="f-messaggio-help">{messageHint}</p>
+      <textarea
+        id="f-messaggio"
+        name="messaggio"
+        rows="5"
+        maxlength="2000"
+        aria-describedby="f-messaggio-help"
+        data-msg-long="Il messaggio è troppo lungo: usa al massimo 2.000 caratteri."></textarea>
+      <p class="contact__error" id="f-messaggio-error" hidden></p>
+    </div>
+
+    <div class="contact__field contact__field--check">
+      <input
+        id="f-privacy"
+        name="privacy"
+        type="checkbox"
+        value="letta"
+        required
+        aria-describedby="f-privacy-help"
+        data-msg-required="Per inviare la richiesta, conferma di aver letto l’informativa privacy."
+      />
+      <label for="f-privacy">
+        Ho letto l’<a href="/privacy-policy/" target="_blank" rel="noopener"
+          >informativa privacy<span class="sr-only">{newTab}</span></a
+        >
+        <span aria-hidden="true">*</span>
+      </label>
+      <p class="contact__help" id="f-privacy-help">Usiamo i tuoi dati solo per rispondere a questa richiesta.</p>
+      <p class="contact__error" id="f-privacy-error" hidden></p>
+    </div>
+
+    <div class="contact__trap" aria-hidden="true">
+      <label for="f-gotcha">Non compilare questo campo</label>
+      <input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" data-honeypot />
+    </div>
+
+    <div class="contact__submit">
+      <button type="submit" class="contact__button">
+        Invia richiesta
+        <Arrow dir="right" />
+      </button>
+      <p class="contact__status t-label" data-form-status role="status"></p>
+    </div>
+
+    <p class="contact__alt">
+      Preferisci parlarne a voce? Chiamaci al <a href={site.phone.href} data-track="contact_click" data-cta-id={`${formId}-telefono`} data-cta-location="form" data-contact-method="telefono" class="contact__nowrap">{site.phone.display}</a>.
+    </p>
+  </form>
+
+  <div class="contact__panel" data-form-success hidden>
+    <p class="contact__panel-title" tabindex="-1" data-panel-title>Richiesta inviata. Grazie.</p>
+    <p>
+      Abbiamo ricevuto la tua richiesta e ti risponderemo a <strong data-success-email></strong>. Se l’indirizzo non è giusto, scrivici a
+      <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+    <p>Vuoi parlarne subito? Chiamaci al <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a>.</p>
+    {
+      successActions.length > 0 && (
+        <ul role="list" class="contact__actions">
+          {successActions.map((a) => {
+            const external = /^https?:/.test(a.href);
+            return (
+              <li>
+                <a href={a.href} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+                  {a.label}
+                  {a.srText && <span class="sr-only">{a.srText}</span>}
+                  {external && <span class="sr-only">{newTab}</span>}
+                  <Arrow dir={external ? 'external' : a.href.startsWith('#') ? 'up' : 'right'} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+  </div>
+
+  <div class="contact__panel contact__panel--error" data-form-failure hidden>
+    <p class="contact__panel-title" tabindex="-1" data-panel-title>La richiesta non è stata inviata.</p>
+    <p>Non siamo riusciti a inviarla: può dipendere dalla connessione o dai nostri sistemi. I tuoi dati sono ancora qui: riprova tra poco.</p>
+    <p>
+      Se non funziona, mandaci la stessa richiesta via email o chiamaci al <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a>.
+    </p>
+    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft>Apri l’email già compilata</a>
+  </div>
+
+  <div class="contact__panel" data-form-fallback hidden>
+    <p class="contact__panel-title" tabindex="-1" data-panel-title>Il modulo online non è ancora attivo.</p>
+    <p>
+      La tua richiesta non è stata inviata, ma non devi riscriverla: abbiamo preparato un’email con i dati che hai inserito. Aprila e inviala dal tuo
+      programma di posta.
+    </p>
+    <a class="contact__draft" href={`mailto:${site.email}`} data-mailto-draft>Apri l’email già compilata</a>
+    <p>
+      Se non si apre nulla, scrivici a <a href={`mailto:${site.email}`}>{site.email}</a> o chiamaci al
+      <a href={site.phone.href} class="contact__nowrap">{site.phone.display}</a> (mobile <a href={site.mobile.href} class="contact__nowrap"
+        >{site.mobile.display}</a
+      >).
+    </p>
+  </div>
+</div>
+
+<script>
+  import '../../scripts/form';
+</script>
+
+<style>
+  .contact {
+    display: grid;
+    gap: var(--space-m);
+    max-width: 40rem;
+    scroll-margin-top: calc(var(--header-h) + var(--space-l));
+  }
+
+  .contact__title {
+    margin: 0;
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+  }
+
+  .contact__title:focus,
+  .contact__panel-title:focus {
+    outline: none;
+  }
+
+  .contact__intro {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: var(--measure-lead);
+  }
+
+  /* Declared before the fields, only when the form cannot send. */
+  .contact__notice {
+    padding: var(--space-s) var(--space-m);
+    border-left: 2px solid var(--place);
+    background: var(--slot-bg);
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+  }
+
+  .contact__nowrap {
+    white-space: nowrap;
+  }
+
+  .contact__form {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .contact__note,
+  .contact__help,
+  .contact__alt {
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+    color: var(--fg-2);
+  }
+
+  .contact__alt {
+    color: var(--fg);
+  }
+
+  .contact__field {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .contact__label {
+    font-weight: var(--fw-strong);
+    font-size: var(--fs-body);
+    line-height: 1.3;
+  }
+
+  /* Rectangles are space: fields have radius 0 (visual direction §1.2). */
+  .contact input:is([type='text'], [type='email'], [type='tel']),
+  .contact textarea {
+    width: 100%;
+    min-height: var(--tap-min);
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--field-border);
+    border-radius: 0;
+    background: var(--field-bg);
+    color: var(--fg);
+    font-size: max(1rem, var(--fs-body));
+    line-height: 1.4;
+  }
+
+  .contact textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .contact input:focus-visible,
+  .contact textarea:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 0;
+    border-color: var(--focus);
+  }
+
+  .contact [aria-invalid='true'] {
+    border-color: var(--error);
+    border-width: 2px;
+  }
+
+  .contact__error {
+    color: var(--error);
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+    font-weight: var(--fw-strong);
+  }
+
+  .contact__interests {
+    display: grid;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  .contact__interests legend {
+    padding: 0;
+    margin-bottom: var(--space-2xs);
+    float: left;
+    width: 100%;
+  }
+
+  .contact__interests legend + * {
+    clear: both;
+  }
+
+  .contact__choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-top: var(--space-2xs);
+  }
+
+  /* Choices are pills: the circle is interaction. The native checkbox stays visible. */
+  .contact__choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: var(--tap-min);
+    padding: 0.35rem 1rem 0.35rem 0.8rem;
+    border: 1px solid var(--field-border);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-size: var(--fs-small);
+    line-height: 1.3;
+  }
+
+  .contact__choice:has(input:checked) {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .contact__choice:has(input:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .contact input[type='checkbox'] {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    accent-color: var(--fg);
+  }
+
+  .contact__choice input[type='checkbox'] {
+    accent-color: var(--bg);
+  }
+
+  .contact__choice input:focus-visible {
+    outline: none;
+  }
+
+  .contact__field--check {
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    align-items: start;
+  }
+
+  .contact__field--check input {
+    margin-top: 0.2rem;
+  }
+
+  .contact__field--check label {
+    font-size: var(--fs-body);
+    line-height: 1.45;
+  }
+
+  .contact__field--check .contact__help,
+  .contact__field--check .contact__error {
+    grid-column: 2;
+  }
+
+  /* Honeypot: off screen, out of the accessibility tree and the tab order. */
+  .contact__trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact__submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .contact__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 3.25rem;
+    padding: 0.85em 1.6em;
+    border: 1px solid var(--btn-bg);
+    border-radius: var(--radius-pill);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-weight: var(--fw-strong);
+    font-size: var(--fs-body);
+    line-height: 1.2;
+    transition:
+      background-color var(--dur-250) var(--ease-out),
+      color var(--dur-250) var(--ease-out);
+  }
+
+  .contact__button:hover {
+    background: transparent;
+    color: var(--fg);
+  }
+
+  .contact__button[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .contact__summary {
+    padding: var(--space-m);
+    border: 2px solid var(--error);
+  }
+
+  .contact__summary:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .contact__summary-title {
+    font-weight: var(--fw-strong);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .contact__summary ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .contact__summary a {
+    color: var(--error);
+    text-decoration-color: currentColor;
+  }
+
+  .contact__panel {
+    display: grid;
+    gap: var(--space-s);
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--success);
+    font-size: var(--fs-body);
+  }
+
+  .contact__panel--error {
+    border-left-color: var(--error);
+  }
+
+  .contact__panel-title {
+    font-size: var(--fs-display-s);
+    line-height: var(--lh-display-s);
+    letter-spacing: var(--tr-display-s);
+    font-weight: var(--fw-strong);
+  }
+
+  .contact__actions {
+    display: grid;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+  }
+
+  .contact__actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
+  }
+
+  .contact__draft {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0.7em 1.4em;
+    border-radius: var(--radius-pill);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-weight: var(--fw-strong);
+    text-decoration: none;
+  }
+
+  /* Wide form: title and notice on the left, fields in two columns on the right. */
+  @media (min-width: 64em) {
+    .contact--wide {
+      max-width: none;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: calc(var(--gutter) * 2);
+      align-items: start;
+    }
+
+    .contact--wide > :is(.contact__title, .contact__intro, .contact__notice) {
+      grid-column: 1;
+    }
+
+    .contact--wide > :is(.contact__form, .contact__panel) {
+      grid-column: 2;
+      grid-row: 1 / span 4;
+    }
+
+    .contact--wide .contact__form {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--gutter);
+    }
+
+    .contact--wide .contact__form > * {
+      grid-column: 1 / -1;
+    }
+
+    .contact--wide .contact__form > .contact__field--half {
+      grid-column: auto;
+    }
+  }
+
+  .contact__panel[hidden],
+  .contact__form[hidden],
+  .contact__summary[hidden],
+  .contact__error[hidden] {
+    display: none;
+  }
+</style>
