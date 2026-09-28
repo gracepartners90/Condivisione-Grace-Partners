@@ -3,15 +3,15 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ al 2026-09-28, prototipo di misura del 2026-09-28]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ al 2026-09-28, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
 
 **A chi serve.** È il documento operativo per chi sviluppa: regole numerate e snippet pronti.
-- Gli snippet marcati **(verificato)** sono stati compilati con Astro 7.3.5 e misurati il 2026-09-28 nel prototipo descritto in `budget.md` §7.
+- Gli snippet marcati **(verificato)** sono stati compilati con Astro 7.3.5 e misurati il 2026-09-28 nel prototipo descritto in `budget.md` §7.2.
 - I limiti numerici stanno in `budget.md`; lo stack in `docs/decisioni/001-stack-tecnologico.md`.
 
 ## 0. Le dieci regole
@@ -19,7 +19,7 @@ fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs
 1. **HTML statico e completo;** il JS migliora, non costruisce.
 2. **Zero terze parti al caricamento.** Nessuna richiesta verso altri domini prima di un gesto dell'utente.
 3. **L'LCP è il testo dell'H1:** visibile dal primo frame. Mai `opacity: 0`, `visibility: hidden`, `clip` totale o testo diviso in parole.
-4. **Font:** due file, un solo preload (Schibsted Grotesk), `font-display: swap`, fallback metrici generati da Astro.
+4. **Font:** due file, **nessun preload** (in Chromium il preload blocca il primo rendering: `budget.md` §3), `font-display: swap`, fallback metrici.
 5. **Immagini** solo con `Media.astro` o `ArtDirectedMedia.astro`: AVIF e WebP, `sizes` corretto, `width` e `height`, `lazy` di default.
 6. **Video:** 0 byte finché non serve. Niente attributo `poster`: la copertina è un `<picture>` lazy.
 7. **Iframe** solo dopo un clic (facade); `preconnect` solo all'intenzione.
@@ -108,7 +108,7 @@ export default defineConfig({
 // src/layouts/BaseLayout.astro (head)
 import { Font } from 'astro:assets';
 ---
-<Font cssVariable="--font-sans" preload />   <!-- the only preload: the H1 font -->
+<Font cssVariable="--font-sans" />   <!-- no preload: in Chromium it blocks the first render (budget.md §3) -->
 <Font cssVariable="--font-mono" />
 ```
 
@@ -120,7 +120,13 @@ body { font-family: var(--font-sans); }
 **Cosa produce il componente `<Font>`** (verificato)
 - un `@font-face` con `font-display: swap`;
 - cinque `@font-face` di ripiego (BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial) con `size-adjust`, `ascent-override` e `descent-override` calcolati;
-- un solo `<link rel="preload">`.
+- un `<link rel="preload">` solo se si passa l'attributo `preload`, che non si usa.
+
+**Perché niente preload** (misurato il 2026-09-28 sulle pagine vere; rimisura, §4):
+- In Chromium un `<link rel="preload">` di font dichiarato prima del `<body>` blocca il primo rendering. Il blocco dura fino all'arrivo del font, oppure fino a 100 ms dopo l'inserimento del `<body>`, oppure fino a 1,5 s dalla navigazione. Vale anche con `font-display: swap`.
+- Senza preload, con throttling applicato, l'LCP migliora di 151 ms (home) e di 177 ms (`/siii/`), con CLS invariato.
+- Costo: il ripiego resta visibile 0,4–0,5 s in più sulla prima pagina con rete lenta.
+- Il throttling simulato di Lighthouse dà il risultato opposto sull'FCP (+0,23–0,33 s) perché modella il font come bloccante: per i font si decide con il throttling applicato.
 
 **Regole**
 - **Pesi.** Solo il file latino variabile `wght` 400–900 e il mono 400: niente corsivi, niente altri file.
@@ -377,7 +383,16 @@ Lo script esistente, `src/scripts/reveal.ts`, fa già la cosa giusta:
 - lo stato nascosto dipende da `.reveal-ready`, che mette lo script stesso: senza JS il contenuto è visibile;
 - usa un solo IntersectionObserver.
 
-Non si mette `data-reveal` sugli elementi visibili al caricamento.
+Non si mette `data-reveal` sugli elementi visibili al caricamento. In più, dal 2026-09-28, `reveal.ts` non nasconde mai ciò che è già a schermo all'avvio, a qualsiasi altezza di viewport:
+- legge le posizioni di tutti gli elementi;
+- marca con `is-inview` quelli già visibili;
+- solo alla fine aggiunge `reveal-ready`.
+
+Verificato fotogramma per fotogramma su 5 pagine e 4 viewport (`budget.md` §6.4).
+
+**Lo stato nascosto non deve cambiare l'altezza del blocco.** Se la maschera cambia le dimensioni, il blocco si accorcia o si allunga quando la maschera viene tolta, e il contenuto sotto si sposta durante la lettura (CLS).
+- Esempio misurato: la maschera del reveal a righe usa padding e margini negativi; tra una riga e l'altra i margini collassano, e il passage mascherato risulta più alto di 3–20 px.
+- Correzione provata: `.passage__reg` in flex a colonna mentre la maschera è attiva (rimisura del 2026-09-28, osservazione 2).
 
 ```css
 @media (prefers-reduced-motion: no-preference) {
@@ -447,6 +462,12 @@ const words = text.trim().split(/\s+/);
 - Lo split si fa al build, per parole. Mai per righe o per lettere: le righe richiedono misure a runtime, le lettere sono vietate dalla direzione visiva.
 
 ### 6.5 Parallax, rotazione dell'orizzonte, marquee: scroll-driven in longhand (verificato)
+
+**Costo misurato sul sito** (2026-09-28, CPU 4x, scroll con la rotella). Lo scroll resta fluido e senza task lunghi, ma non è a costo zero sul main thread:
+- con il motion attivo lo stile si ricalcola a ogni frame, circa 6,5 ms per frame sulla home (37–39% di main thread occupato);
+- con movimento ridotto il costo scende a circa 2 ms per frame (12%).
+
+Ogni nuovo effetto legato allo scroll si misura con la traccia del `budget.md` §6.4.
 
 ```css
 /* Parallax: max ±6% (48 px), at most 1 image per screen, inside an overflow: clip frame */
@@ -527,6 +548,8 @@ const words = text.trim().split(/\s+/);
   - Uno `<script>` per componente, con import dei moduli di `src/scripts/`. Astro li raggruppa e li carica solo nelle pagine che usano il componente.
   - Gli script piccoli, sotto circa 4 KB, vengono inseriti nell'HTML: nessuna richiesta (verificato con lo script di reveal).
 - **Niente listener di `scroll`, `resize` o `mousemove` per gli effetti.** Si usano IntersectionObserver, ResizeObserver, `matchMedia` e il CSS scroll-driven.
+  - **«Voce corrente» di un elenco** (per esempio il contatore 01/05): un solo IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'`. La radice è tutta l'area sopra la metà della viewport, quindi una voce la interseca esattamente quando il suo bordo superiore ha superato la metà, anche dopo i salti.
+  - Provato il 2026-09-28: stesso comportamento del listener di scroll, nessuna lettura di layout, circa due terzi di costo in meno (rimisura, osservazione 3).
 - **Gestori.** Fanno subito solo ciò che l'utente vede (classe, attributo, testo). Il resto (tracciamento, lavoro non urgente) va dopo aver ceduto il main thread:
 
 ```ts
@@ -594,6 +617,11 @@ Esempio per Cloudflare (file `public/_headers`) [DA VERIFICARE sull'account scel
 
 Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. Il codice cambia in parallelo: ricontrollare prima di intervenire.
 
+**Aggiornamento del 2026-09-28, rimisura sul commit `7c5f747`.** Gli interventi di questa sezione risultano applicati: review di performance del 2026-09-28, §4. Restano tre punti, descritti in `docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md` §8:
+- togliere il preload del font (`src/layouts/BaseLayout.astro:42`), dopo l'assenso di creative-director;
+- la maschera del reveal a righe, che cambia l'altezza dei passage (§6.2);
+- facoltativo: il contatore di `BenefitsSection` con IntersectionObserver invece del listener di scroll (§9).
+
 **Da correggere subito: rotazione dell'orizzonte non funzionante.**
 - In `src/components/ui/Horizon.astro`, `.horizon__strip` usa `animation: horizon-rotate linear both;` più `animation-timeline: scroll(root block)`.
 - Nella build diventa `animation:linear both horizon-rotate scroll(root)`, che il browser scarta: oggi la rotazione non parte (verificato su `dist/`).
@@ -610,7 +638,7 @@ Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. 
 ```
 
 **Da correggere: fallback metrico dei font su Android.**
-- `src/layouts/BaseLayout.astro` scrive i `@font-face` a mano: preload e `swap` sono corretti.
+- `src/layouts/BaseLayout.astro` scrive i `@font-face` a mano: `swap` è corretto. Il preload si toglie (`budget.md` §3, decisione del 2026-09-28).
 - Il ripiego `'Schibsted Grotesk Fallback'` in `global.css` usa solo `local('Arial' | 'ArialMT' | 'Liberation Sans' | 'Helvetica')`, nessuno dei quali esiste su Android. Sul telefono di riferimento lo swap non è compensato.
 - I valori per Arial coincidono con quelli calcolati da Astro. Le soluzioni sono due:
   - (a) passare alla Fonts API del §1, che genera tutti i ripieghi;
@@ -650,7 +678,8 @@ Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. 
 - [ ] **Animazioni:**
   - [ ] dentro `no-preference`, solo `transform` e `opacity`;
   - [ ] scroll-driven in longhand;
-  - [ ] niente `data-reveal` sopra la piega.
+  - [ ] niente `data-reveal` sopra la piega;
+  - [ ] lo stato nascosto ha le stesse dimensioni di quello finale (nessun CLS durante la lettura).
 - [ ] **Script:** nessun listener di scroll; gestori con feedback immediato; tracciamento dopo `yieldToMain()`.
 - [ ] **Terze parti:** nessuna risorsa esterna al caricamento; iframe solo dopo un clic.
 - [ ] **Verifica:** controlli di `budget.md` §6.3 verdi; mediana di Lighthouse entro il budget del template.

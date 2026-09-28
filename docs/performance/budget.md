@@ -302,7 +302,30 @@ http.createServer(async (req, res) => {
   - Proposta: un invio senza cookie né identificatori all'endpoint del sito, da valutare nell'ADR sull'analytics con cro-specialist [DA VERIFICARE la base giuridica].
 - **Controllo mensile** con la procedura del §6.2 sul sito in produzione, più un confronto con i valori di questo documento.
 
-## 7. Misure di riferimento: prototipo del 2026-09-28
+## 7. Misure di riferimento
+
+### 7.1 Sito costruito (rimisura del 2026-09-28, commit `7c5f747`)
+
+Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con Lighthouse 13.5.0, Chromium 141, `benchmarkIndex` 1642–2690 e build con il preload del font. Dettaglio e confronti in `docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md`.
+
+| URL (template) | Simulato: FCP / LCP (corse) | Applicato: FCP = LCP (corse) | TBT sim. / appl. | CLS | Peso, richieste | JS | Elemento LCP |
+|---|---|---|---|---|---|---|---|
+| `/` (T1) | 1,18 / 1,66 s (5) | 1,01 s (5) | 0 / 52 ms | 0 | 113,2 KB, 7 | 2,0 KB | riga dell'H1 |
+| `/siii/` (T2) | 1,28 / 1,66 s (5) | 1,04 s (5) | 0 / 54 ms | 0 | 95,3 KB, 7 | 4,2 KB | statement della hero |
+| `/puglia-digitale/` (T2) | 1,16 / 1,59 s (3) | 1,02 s (3) | 0 / 36 ms | 0 | 111,2 KB, 8 | 4,2 KB | descrittore dell'H1 |
+| `/citta-digitali/` (T2) | 1,34 / 1,67 s (10) | 1,01 s (3) | 0 / 30 ms | 0 | 98,7 KB, 8 | 5,5 KB | sottotitolo della hero |
+| `/contatti/` (T3) | 1,14 / 1,51 s (3) | 0,93 s (3) | 0 / 7 ms | 0 | 89,6 KB, 7 | 4,2 KB | H1 |
+| T4 (privacy, cookie, 404) | 0,99–1,03 / 1,36–1,51 s (3) | — | 0 / — | 0 | 81,8–82,6 KB, 6 | 2,0 KB | paragrafo |
+
+- **Senza preload del font** (copia della stessa build, §3):
+  - `/`: simulato 1,51 / 1,66 s; applicato 0,86 s.
+  - `/siii/`: simulato 1,51 / 1,51 s; applicato FCP 0,78 s e LCP 0,86 s.
+  - Quando la modifica sarà applicata, questi valori sostituiscono le prime due righe; le altre pagine si rimisurano al primo audit successivo.
+- **INP**, caso peggiore: prima apertura del menu, mediana 128 ms e massimo 200 ms su 19 caricamenti. Le altre interazioni restano tra 32 e 112 ms.
+- **Scroll:** nessun task oltre 50 ms. Main thread al 37–39% sulla home e al 25–31% su Città Digitali, con CPU 4x e motion attivo.
+- **Pesi:** HTML 8,7–22,1 KB, di cui CSS inline 4,9–10,1 KB con Brotli; DOM 179–583 elementi; zero terze parti.
+
+### 7.2 Prototipo del 2026-09-28
 
 **Il prototipo:** scheletro Astro 7.3.5 costruito nella scratchpad con gli asset reali.
 - HTML statico, CSS inline, uno script di reveal inline (IntersectionObserver).
@@ -339,15 +362,17 @@ http.createServer(async (req, res) => {
 - **Regressioni.** Se una modifica peggiora LCP o INP di oltre il 10% rispetto all'audit precedente, va giustificata anche se resta sotto il limite.
 
 ## Ipotesi da validare
-- [IPOTESI: i numeri del prototipo sono un pavimento; con tutte le sezioni reali ci aspettiamo HTML di 15–30 KB e JS di 4–8 KB, dentro il budget.]
-- [IPOTESI: nessuna pagina avrà una foto come LCP, come prevede la direzione visiva. Se una pagina la avrà, vale la riga «Immagine LCP» del §4.]
-- [DA VERIFICARE: CLS dello swap dei font su un Android di fascia media reale (Roboto) e su iPhone (Helvetica Neue), in Fase 5.]
+- [IPOTESI: nessuna pagina avrà una foto come LCP, come prevede la direzione visiva. Vale per tutte le pagine attuali (verificato il 2026-09-28). Se una pagina futura la avrà, vale la riga «Immagine LCP» del §4.]
+- [IPOTESI: il blocco del rendering dovuto al preload dei font (§3) riguarda Chrome, quindi i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato.]
+- [DA VERIFICARE: CLS dello swap dei font su un Android di fascia media reale (Roboto) e su iPhone (Helvetica Neue). In laboratorio, con Liberation Sans, è 0–0,002.]
+- [DA VERIFICARE: INP della prima apertura del menu su un Android di fascia media reale (in laboratorio fino a 200 ms).]
 
 ## Domande aperte
 1. È disponibile un Android di fascia media per una verifica sul campo prima del lancio, oppure un servizio di test su dispositivi reali?
 2. Il cliente ha una chiave API di PageSpeed Insights o un accesso a Search Console per i dati sul campo del sito attuale?
 
 ## Decisioni richieste
-- **ui-designer e creative-director:** confermare i font entro questo budget (2 file, 70,7 KB, un solo preload) e la qualità AVIF q50.
-- **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics.
-- **Sessione principale:** creare in Fase 4 `scripts/perf/serve.mjs` e `scripts/perf/inp.mjs` (§6) e aggiungere `.perf/` a `.gitignore`.
+- **creative-director:** assenso alla rimozione del preload del font (§3): il ripiego resta visibile 0,4–0,5 s in più sulla prima pagina con rete lenta.
+- **ui-designer:** la qualità AVIF q50 resta confermata; tabella dei font del design system da allineare se il preload viene tolto.
+- **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve anche per l'INP del menu e per il font senza preload.
+- **Sessione principale:** creare prima del lancio `scripts/perf/serve.mjs`, `lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura). `.perf/` è già in `.gitignore`.
