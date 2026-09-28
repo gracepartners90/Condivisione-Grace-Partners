@@ -303,7 +303,7 @@ Le quattro foto hanno fondali con skyline di grattacieli e reti luminose: è l'e
 - Nel frattempo la review di veridicità ha messo la stessa nota AI anche sotto la foto dell'evento (B4): il vantaggio di (a), «un documento invece di un ritratto», vale solo quando arriva l'originale dello scatto.
 - **Parere aggiornato: (b) per il lancio, con le maschere più strette qui sotto; (c) appena possibile.** Il ritratto reale resta il miglioramento più forte dell'intero sito: toglie le note AI, lo skyline e l'aria da ritratto aziendale.
 
-**Parere del creative-director: opzione (a) subito, (c) appena possibile.**
+**Parere iniziale del creative-director (Fase 2, superato dall'aggiornamento qui sopra): opzione (a) subito, (c) appena possibile.**
 - **(a)** La sezione del fondatore si chiude sulla foto reale: il ritaglio «Palco», con il fondatore sul palco davanti a una sala piena. Che sia lui lo dice la descrizione degli asset `[DA VERIFICARE: D6]`. È un documento, non un ritratto, ed è più forte di un ritratto da studio. In Contatti la sezione «Persona» diventa tipografica (§7.7).
 - **(c)** Uno shooting reale (§4.6, priorità 4) sostituisce o affianca il «Palco».
 - **Perché non (b).** Un'immagine realistica di una persona reale in una scena generata:
@@ -320,7 +320,7 @@ Le quattro foto hanno fondali con skyline di grattacieli e reti luminose: è l'e
 | `fondatore-palco-citta-digitali.jpg` | Scartata anche con (b) | — | Palco, platea e schermo con marchio la farebbero leggere come documentazione di un evento che non possiamo verificare; porta il simbolo ✦ |
 | `fondatore-presentazione-platea.webp` | Scartata anche con (b) | — | Stessa ragione |
 
-Con (b), sotto ogni ritratto va una nota mono: «Immagine elaborata con strumenti di intelligenza artificiale», con testo definitivo e verifica legale a cura di brand-strategist e consulente.
+Con (b), sotto ogni ritratto va una nota mono: «Immagine generata o elaborata con strumenti di intelligenza artificiale» finché il cliente non chiarisce la provenienza (review di veridicità, I5), con testo definitivo e verifica legale a cura di brand-strategist e consulente.
 
 **Trattamento «inchiostro»** (testato), solo con (b):
 1. Luminanza pesata sul canale blu (0,15 R + 0,25 G + 0,6 B), con contrasto ×1,2 e −30: lo skyline azzurro si schiarisce quasi fino alla carta.
@@ -432,7 +432,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 ### Tablet (700–1023 px)
 
 - Stessa struttura.
-- Campo visivo di 200°, come su desktop (G4). Con 150° erano in vista solo Caltanissetta e due etichette tagliate dal bordo, tra cui «— 081° · 39 KM» senza il nome di Monopoli. Con 200°, da 768 a 1023 px, le tre etichette sono intere e nessun richiamo attraversa un'etichetta, a riposo e durante la rotazione. Tra 700 e 767 px il richiamo del gruppo murgiano tocca il frammento di «Varese» che entra dal bordo destro, dentro la dissolvenza (§2): residuo accettato. Vale per l'orizzonte della hero della Home; quello di Città Digitali resta a 150° su tablet, perché le sue tre città stanno già in vista.
+- Campo visivo di 200°, come su desktop (G4). Con 150° erano in vista solo Caltanissetta e due etichette tagliate dal bordo, tra cui «— 081° · 39 KM» senza il nome di Monopoli. Con 200°, da 768 a 1023 px, a riposo le tre etichette sono intere, e nessun richiamo attraversa un'etichetta né a riposo né durante la rotazione. Tra 700 e 767 px il richiamo del gruppo murgiano tocca il frammento di «Varese» che entra dal bordo destro, dentro la dissolvenza (§2): residuo accettato. Vale solo per l'orizzonte della hero della Home. Quello di Città Digitali resta a 150° su tablet: le sue tre città stanno già in vista, e con 200° le etichette di Caltanissetta e Varese si sovrappongono da 700 a 900 px (misurato).
 - Secondo registro dalla colonna 3 di 8.
 
 ### Mobile (< 700 px)

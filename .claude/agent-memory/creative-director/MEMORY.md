@@ -3,25 +3,36 @@
 Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/decisioni/`: qui non si duplicano.
 
 ## Ambiente e strumenti (lezioni del 2026-09-28)
-- **Bloccati** (sia curl sia WebFetch): aprildunford.com, web.archive.org, archive.ph, itnode.it, i portali *digitale.*, railway.app, LinkedIn e molte rassegne di design (nanoglobals, knapsackcreative, sitebuilderreport).
-- **Funzionano:** WebSearch (restituisce solo sintesi testuali, mai il layout), il registry npm, Google Fonts.
+- **Bloccati** (sia curl sia WebFetch): aprildunford.com, web.archive.org, archive.ph, itnode.it, i portali *digitale.*, railway.app, LinkedIn, nominatim.openstreetmap.org, wikidata.org e molte rassegne di design (nanoglobals, knapsackcreative, sitebuilderreport).
+- **Funzionano:** WebSearch (restituisce solo sintesi testuali, mai il layout; per le coordinate dà valori discordanti tra fonti), il registry npm, Google Fonts.
 - **Non interrogare lo stato del proxy** (`/__agentproxy/status`): la richiesta è stata negata. Se una fonte è bloccata, dichiararlo e chiedere screenshot o materiali.
-- **Analisi immagini:** installare `sharp` nella scratchpad.
+- **Mai mettere l'email dell'utente in una richiesta di rete** (header User-Agent compreso). Il 2026-09-28 è successo una volta verso Nominatim: il proxy ha rifiutato il CONNECT prima del tunnel TLS, quindi l'header non è partito. Per le richieste usare solo un User-Agent generico.
+- **Analisi immagini:** `sharp` è già in `/home/user/itnode/node_modules/sharp`; per i fogli di confronto si compone con `sharp({create})` più `composite`.
   - L'ordine interno delle operazioni di sharp non segue quello delle chiamate: estrarre i canali dal buffer raw in JS.
   - Per un composite seguito da un resize servono due passaggi.
-- **Misure tipografiche:** fontkit fallisce su `getVariation` con i WOFF2. Si misura in Chromium con la libreria Playwright globale (`require(\`${npm root -g}/playwright\`)`), aprendo un file HTML via `file://`: con `setContent` i font locali non si caricano.
+- **Misure tipografiche:** fontkit fallisce su `getVariation` con i WOFF2. Si misura in Chromium con Playwright globale (`/opt/node22/lib/node_modules/playwright`), aprendo un file HTML via `file://`: con `setContent` i font locali non si caricano.
+- **Screenshot di pagine intere:** prima scorrere tutta la pagina e aspettare le immagini, altrimenti le `lazy` restano vuote. Con `reducedMotion: 'reduce'` reveal e aperture sono già aperti.
+- **Prove in pagina sul sito Astro:** gli stili dei componenti sono scoped e pesano più di un selettore iniettato. Per emulare una correzione servono `!important` o un selettore più pesante, altrimenti la prova non si applica e sembra fallire.
+- **Server con Brotli per misure:** `PORT=… node scripts/serve.mjs` serve `dist/` come in anteprima (in locale senza password).
+- **Misura dello scambio di font:** evento `loadingdone` di `document.fonts` più rete emulata via CDP (`Network.emulateNetworkConditions`) e HTML intercettato con `page.route` per togliere un `<link>`.
 - **Test visivi:** schizzi HTML in scratchpad più `npx playwright screenshot` a 1440 e 390 px, osservati con Read. Mostrano problemi che a memoria non si vedono: overflow dei numeri giganti su mobile, ambiguità I/l.
 
 ## Insidie scoperte sugli asset e sui font
 - **Logo PNG:** completamente opaco, con fondo bianco (non trasparente); la «o» è un anello #3C71A5 con il vuoto spostato in alto a destra.
 - **Foto evento:** la sovrimpressione con il simbolo ✦ in basso a destra può essere un segno di editing generativo. Chiedere sempre l'originale.
-- **Foto del fondatore:** fondali generati (skyline). Una monocromia pesata sul canale blu li schiarisce; una maschera verso la carta li assorbe.
+- **Foto del fondatore:** fondali generati (skyline e «reti luminose» con nodi). Una monocromia pesata sul canale blu li schiarisce; una maschera verso la carta li assorbe, ma non del tutto: in Contatti le linee a nodi restano come tracce dietro il braccio.
 - **Sottoinsiemi latini @fontsource:** non includono → ↗ ≈ e spesso nemmeno ′ ″. Frecce in SVG, coordinate in gradi decimali.
 - **La «I» maiuscola** di Schibsted Grotesk ha le grazie: è il motivo per cui è stato scelto (disambigua «Il SIII»). Con qualunque alternativa, verificare sempre la resa di «Il SIII».
+- **Coordinate:** alcune erano arrotondate (Monopoli 40.95 · 17.3) e mostrate con 4 decimali. Controllare sempre gli zeri finali.
 
 ## Lezioni di processo
 - **Prima di chiudere un deliverable, rileggere `docs/` per intero.** Altri membri lavorano in parallelo e possono aver registrato regole vincolanti nel frattempo: registro dei claim e decisioni DR nel brief consolidato, vincoli di motion e menu nella sitemap UX, elementi della hero nel copy deck. Il 2026-09-28 la bozza andava contro DR3, A4 e N5 e i vincoli UX, ed è stata riallineata prima della consegna.
+- **Prima di decidere, `git log`.** La sessione principale applica correzioni mentre lavoro: al G4 i campi del form erano già stati sistemati da ui-designer (846f142) durante la mia review. Se un owner ha già deciso con un'analisi, si conferma, salvo un motivo forte e nuovo.
+- **La build servita può essere più vecchia dei commit:** controllare l'ora di `dist/` e cercare nel bundle le correzioni attese prima di giudicarle.
 - **Istruzioni in conflitto.** Quando un'istruzione della sessione principale confligge con una decisione aperta nel brief (per esempio «usare i ritratti» contro DR3), si danno il parere e le specifiche per entrambe le opzioni e si segnala il conflitto nella consegna.
+- **Decidere su prove, non su stime.** Al G4 ogni decisione visiva (riga della hero, statement, maschere, campo visivo, cascata) è stata provata in pagina prima di scriverla, e due affermazioni sono state corrette dalla misura (Città Digitali a 200°, incroci delle etichette).
+- **Le misure degli specialisti possono avere un punto cieco.** La rimisura del preload considerava solo la rete lenta; la misura su connessione veloce ha rovesciato la raccomandazione (ADR 005).
 
-## Preferenze e feedback del cliente
-- Nessun feedback diretto ancora ricevuto sul piano creativo. Aggiornare dopo il gate G2.
+## Preferenze e feedback del cliente e dell'utente
+- Nessun feedback diretto del cliente sul piano creativo. L'utente ha voluto vedere il sito online prima del G4 (anteprima su Railway, ADR 004).
+- G1–G3 non sono mai stati approvati formalmente: il lavoro ha seguito il metodo delle linee guida (§34). Al G4 ho chiesto un'approvazione retroattiva. Aggiornare dopo la risposta dell'utente.
