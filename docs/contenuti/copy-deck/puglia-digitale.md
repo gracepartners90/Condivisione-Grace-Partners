@@ -16,7 +16,7 @@ Pagina `/puglia-digitale`. Copre le sezioni 13, 14, 15 e 16 delle linee guida, l
 
 - **Testo da pubblicare**: è nei blocchi citati (`>`) e nelle tabelle marcate come copy. Tutto il resto sono note per design e sviluppo.
 - **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi, pensati per la scala della sez. 04. **verbatim**: frase delle linee guida da non modificare.
-- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile.
+- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3).
 - **Microcopy del form**: è di copywriter-brand.
 
 ## Metadati
@@ -220,8 +220,10 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | — | — | — | — |
-| Tutti i testi principali | — | — | — | — |
+| Paragrafi e tabelle | 19 | 229 | 1.138 | **64,2** |
+| Tutti i testi principali | 38 | 307 | 1.592 | 74,3 |
+
+Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 35 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 

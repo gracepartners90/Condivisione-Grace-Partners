@@ -16,7 +16,7 @@ Pagina `/citta-digitali`. Copre le sezioni 17, 18, 19, 20 e 21 delle linee guida
 
 - **Testo da pubblicare**: è nei blocchi citati (`>`) e nelle tabelle marcate come copy. Tutto il resto sono note per design e sviluppo.
 - **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi, pensati per la scala della sez. 04. **verbatim**: frase delle linee guida da non modificare.
-- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile.
+- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3).
 - **Microcopy del form e dei controlli video**: è di copywriter-brand. Le etichette predefinite sono in `src/scripts/video.ts`.
 
 ## Metadati
@@ -120,7 +120,7 @@ Note:
 > Dal locale al nazionale.
 
 **Testo** · p · max 200 · link interno su «Sito Interattivo Immersivo» → `/siii`
-> Con un tour virtuale o un Sito Interattivo Immersivo, la tua attività resta radicata nel suo territorio e, dentro un portale nazionale, diventa visitabile da ovunque.
+> Con un tour virtuale o un Sito Interattivo Immersivo, la tua attività resta radicata nel suo territorio e, dentro un portale nazionale, diventa visitabile da chiunque, ovunque si trovi.
 
 **Concetto 01** · H3 · verbatim · max 45
 > Distanze ridotte, fiducia immediata
@@ -132,13 +132,13 @@ Note:
 > Maggiore coinvolgimento
 
 **Testo 02** · p · max 180
-> Una pagina si scorre, uno spazio si esplora. Chi ti visita decide il percorso e scopre la tua attività un dettaglio alla volta.
+> Una pagina si scorre, uno spazio si esplora. Chi ti visita decide il percorso e ti scopre un dettaglio alla volta.
 
 **Concetto 03** · H3 · verbatim · max 45
 > Visibilità digitale
 
 **Testo 03** · p · max 180
-> La tua attività è online con i suoi spazi reali, dentro un portale dedicato al territorio. Chi esplora la tua città può incontrare anche te.
+> Sei online con i tuoi spazi reali, dentro un portale dedicato al territorio. Chi esplora la tua città può incontrare anche te.
 
 **Concetto 04** · H3 · verbatim · max 45
 > Differenziazione
@@ -150,7 +150,7 @@ Note:
 > La forza di un portale ad alto traffico
 
 **Testo 05** · p · max 180
-> Non parti da zero: entri in un portale che riunisce città e imprese. I visitatori che arrivano per un luogo possono scoprire anche la tua attività.
+> Non parti da zero: entri in un portale che riunisce città e imprese. I visitatori che arrivano per un luogo possono fermarsi anche da te.
 
 Note:
 - Numerazione 01–05 decorativa (`aria-hidden="true"`). Sezione sticky o composizione editoriale numerata, non cinque card (sez. 20).
@@ -216,8 +216,10 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | — | — | — | — |
-| Tutti i testi principali | — | — | — | — |
+| Paragrafi e tabelle | 17 | 199 | 1.003 | **64,2** |
+| Tutti i testi principali | 34 | 274 | 1.463 | 72,8 |
+
+Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 37 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 

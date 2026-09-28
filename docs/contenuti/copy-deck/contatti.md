@@ -16,7 +16,7 @@ Pagina `/contatti`. Copre la sezione 22 delle linee guida e l'introduzione al fo
 
 - **Testo da pubblicare**: è nei blocchi citati (`>`) e nelle tabelle marcate come copy. Tutto il resto sono note per design e sviluppo.
 - **Tag**: livello semantico, non dimensione visiva. **max**: caratteri, spazi inclusi. **verbatim**: frase delle linee guida da non modificare.
-- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile.
+- **Link esterni**: nuova scheda (`target="_blank" rel="noopener"`), dichiarata nel nome accessibile. Il nome accessibile inizia con il testo visibile (WCAG 2.5.3).
 - **Microcopy del form** (etichette, errori, stati, conferma, consenso privacy): è di copywriter-brand.
 
 ## Metadati
@@ -91,7 +91,7 @@ Note:
 | Nome · H3 · max 20 | Città Digitali | Puglia Digitale |
 | Frase · p · max 80 | Le attività del territorio, online senza perdere radici. | Una piattaforma interattiva immersiva per la valorizzazione territoriale. |
 | Link esterno · a | cittadigitali.it ↗ | lapugliadigitale.it ↗ |
-| Nome accessibile del link esterno | Portale Città Digitali, cittadigitali.it (si apre in una nuova scheda) | Portale Puglia Digitale, lapugliadigitale.it (si apre in una nuova scheda) |
+| Nome accessibile del link esterno | cittadigitali.it, portale Città Digitali (si apre in una nuova scheda) | lapugliadigitale.it, portale Puglia Digitale (si apre in una nuova scheda) |
 | URL esterno | https://www.cittadigitali.it | https://www.lapugliadigitale.it |
 | Link interno · a · max 24 | Scopri il progetto → | Scopri il progetto → |
 | Nome accessibile del link interno | Scopri il progetto Città Digitali | Scopri il progetto Puglia Digitale |
@@ -154,8 +154,10 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | — | — | — | — |
-| Tutti i testi principali | — | — | — | — |
+| Paragrafi e tabelle | 6 | 56 | 317 | **64,5** |
+| Tutti i testi principali | 13 | 71 | 414 | 85,6 |
+
+Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 16 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 

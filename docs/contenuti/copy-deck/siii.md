@@ -18,7 +18,7 @@ Pagina `/siii`. Copre le sezioni 10, 11 e 12 delle linee guida, la CTA finale e 
 - **Tag** (H1, H2, H3, p, a, button): indica il livello semantico, non la dimensione visiva.
 - **max**: lunghezza massima consigliata in caratteri, spazi inclusi. Tiene conto della scala della sez. 04 (H1 fino a 150 px, titoli di sezione fino a 100 px, minimo 44 px su mobile). Oltre questa soglia il testo va a capo troppe volte su uno schermo da 390 px.
 - **verbatim**: frase fornita dalle linee guida. Non si modifica.
-- **Link esterni**: si aprono in una nuova scheda (`target="_blank" rel="noopener"`) e il nome accessibile lo dichiara. Per tre CTA con lo stesso testo visibile, il nome accessibile deve essere diverso (WCAG 2.4.4).
+- **Link esterni**: si aprono in una nuova scheda (`target="_blank" rel="noopener"`) e il nome accessibile lo dichiara. Il nome accessibile inizia sempre con il testo visibile (WCAG 2.5.3) e si ottiene con testo visivamente nascosto o `aria-label`. Per tre CTA con lo stesso testo visibile, il nome accessibile deve essere diverso (WCAG 2.4.4).
 - **Microcopy del form** (etichette, errori, stati, consenso privacy): è di copywriter-brand. Qui ci sono solo titolo e introduzione del form di questa pagina.
 
 ## Metadati
@@ -94,7 +94,7 @@ Note:
 > Un tour 360° è una visita. Un SIII è un sito.
 
 **Testo** · p · max 320
-> Un tour 360° permette di guardare un luogo da ogni angolazione. Il SIII parte dagli spazi reali della tua impresa e li trasforma in un sito: chi lo visita esplora, interagisce e, dallo stesso ambiente, chiede informazioni, prenota o accede alle tue azioni commerciali.
+> Un tour 360° permette di guardare un luogo da ogni angolazione. Il SIII parte dagli spazi reali della tua impresa e ne fa un sito: chi lo visita esplora, interagisce e, dallo stesso ambiente, chiede informazioni, prenota o accede alle tue azioni commerciali.
 
 **Tabella di confronto** · table · copy · celle max 110
 | | Tour 360° | Sito Interattivo Immersivo (SIII) |
@@ -127,7 +127,7 @@ Note:
 | 4 | Guardare i video | dentro l’esperienza. |
 | 5 | Richiedere informazioni | nel momento in cui nasce l’interesse. |
 | 6 | Prenotare i servizi | mentre li sta scoprendo. |
-| 7 | Accedere alle azioni commerciali | che scegli di attivare per chi ti visita. |
+| 7 | Accedere alle azioni commerciali | che hai scelto di proporre. |
 
 Note:
 - Le sette azioni sono quelle della sez. 10, con i soli articoli aggiunti. Il complemento spiega l'azione senza aggiungere funzioni.
@@ -180,7 +180,7 @@ Note:
 > Entra. Esplora. Interagisci.
 
 **Testo** · p · max 140
-> Tre Siti Interattivi Immersivi già online. Aprili e muoviti negli spazi, da desktop o da smartphone.
+> Tre Siti Interattivi Immersivi già online. Aprili ed esplorali, da desktop o da smartphone.
 
 **Schede degli esempi** · copy · una colonna per esempio
 | Campo | Esempio 1 | Esempio 2 | Esempio 3 |
@@ -257,8 +257,10 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 
 | Insieme | Frasi | Parole | Lettere | Gulpease |
 |---|---|---|---|---|
-| Paragrafi e tabelle | — | — | — | — |
-| Tutti i testi principali | — | — | — | — |
+| Paragrafi e tabelle | 32 | 404 | 1.983 | **63,7** |
+| Tutti i testi principali | 55 | 482 | 2.389 | 73,7 |
+
+Obiettivo: almeno 60 per il grande pubblico, almeno 50 per i testi tecnici B2B. Esito: obiettivo raggiunto; il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 69 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description.
 
 ## Ipotesi da validare
 
