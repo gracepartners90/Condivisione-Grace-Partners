@@ -304,9 +304,11 @@ Note:
 - **Per il cliente** (tramite la sessione principale): nome e ruolo del fondatore; il testo narrativo del § 09; ruolo in IBM e anno di inizio dei 36 anni; nome e anno della prima azienda; anni di MyComm, iComm Lab e Leadstone; perimetro e fonte di «10.000+ clienti»; ruolo di ITnode in Puglia Digitale (D1); luogo, data e autore della foto dell’evento, con le città sugli schermi.
 - **Per seo-content**: va bene l’accorciamento dei blocchi A, F e G? E la regola «un segnaposto aperto non si pubblica» applicata a «prima azienda · 2002»?
 - **Per creative-director e copywriter-content**: un solo testo alternativo per il ritratto del fondatore.
+- **Per creative-director, con ux-designer e ui-designer**: la direzione visiva (§ 5), la struttura UX (HM-1) e il design system prevedono sotto la didascalia «Scorri per esplorare», indicato come testo «dal copy deck». Il copy deck non l’ha mai previsto e il sito non lo mostra. Propongo di toglierlo dai tre documenti: con la riga di posizionamento la hero ha già quattro livelli di testo, e con il movimento ridotto l’orizzonte non ruota, quindi l’invito prometterebbe qualcosa che non succede. Se invece si tiene, il testo è «Scorri per esplorare», `aria-hidden` e nascosto con `prefers-reduced-motion: reduce`.
 
 ## Decisioni richieste
 
-- **«10.000+ clienti» al lancio** (creative-director, sentiti brand-strategist e seo-content). Opzione A: pubblicarlo con «prima di ITnode» mentre la verifica è in corso; è un dato del cliente, utilizzabile secondo il brief (N5). Opzione B: toglierlo finché non è documentato, come propone seo-content. Proposta: A, se il cliente conferma il perimetro prima del go-live; altrimenti B.
+- **«10.000+ clienti» al lancio**: decisa al G4 (verdetto del creative-director, § 3.8). Con la conferma del perimetro vale l’opzione A, con l’etichetta confermata; senza, l’opzione B: il numero si toglie e la tappa resta.
+- **Varianti B e C della riga di posizionamento** (cro-specialist): se includerle nel test E1 dopo il lancio (sezione 1).
 - **Titolo del fondatore** (utente): «36 anni…», da aggiornare ogni anno, oppure l’alternativa senza numero.
 - **Immagine della sezione fondatore** (utente, sentito creative-director): DR3 del brief. La direzione visiva propone il ritratto a braccia conserte, trattato a inchiostro.

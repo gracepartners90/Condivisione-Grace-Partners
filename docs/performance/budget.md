@@ -212,7 +212,7 @@ CHROME_PATH=/opt/pw-browsers/chromium npx -y lighthouse@13.5.0 http://127.0.0.1:
 | 4 | Nessun `<iframe>` nell'HTML (solo facade) | `grep -rl '<iframe' dist --include='*.html'` → vuoto |
 | 5 | `<video>` senza `autoplay` e senza `poster` | `grep -rhoE '<video[^>]*>' dist --include='*.html' \| grep -E 'autoplay\|poster='` → vuoto |
 | 6 | Nessuno script, CSS, font o preconnect esterno | `grep -rhoE '<script[^>]+src="https?://[^"]*"\|<link[^>]+rel="(stylesheet\|preload\|modulepreload\|preconnect\|dns-prefetch)"[^>]*href="https?://[^"]*"' dist --include='*.html'` → vuoto |
-| 7 | Nessun `rel="preload"` (§3; fino alla modifica è ammesso il solo preload di Schibsted); al massimo 2 file `.woff2` | come il n. 1, con `grep -o 'rel="preload"'` → ogni valore 0; `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
+| 7 | Esattamente un `rel="preload"` per pagina: il WOFF2 di Schibsted Grotesk, con `as="font"`, `type="font/woff2"` e `crossorigin` (§3, ADR 005; senza `crossorigin` il font si scarica due volte). Al massimo 2 file `.woff2` | `for f in $(find dist -name '*.html'); do echo "$f $(grep -oE '<link[^>]*rel="preload"[^>]*>' "$f" \| grep -c 'schibsted-grotesk[^"]*\.woff2" as="font" type="font/woff2" crossorigin') $(grep -o 'rel="preload"' "$f" \| wc -l)"; done` → ogni riga finisce con `1 1` (provato il 2026-09-28: 8 pagine su 8; senza `crossorigin` dà `0 1`); `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
 | 8 | Nessun AVIF o WebP sopra i 200 KB, nessun JPEG di fallback sopra i 300 KB; nessuna foto in `public/` | `find dist -type f \( -name '*.avif' -o -name '*.webp' \) -size +200k` → vuoto |
 
 ### 6.4 INP, scroll e reveal in laboratorio (Playwright)
@@ -270,6 +270,7 @@ Riferimento del 2026-09-28, home a 412×823 su 3000 px: main thread al 37–39% 
 ### 6.5 Esito e report
 
 - **Superato:** tutti i limiti del §2 e del §3, tutti i controlli del §6.3 e tutte le interazioni del §5 sotto il limite.
+- **Per il go-live** servono anche le verifiche sull'hosting del §6.8 (condizione C08 del verdetto G4).
 - **Obiettivi mancati:** motivazione nell'audit e correzione pianificata. **Limiti mancati:** blocco del gate G4.
 - **Contenuto dell'audit** (`docs/performance/audit/`):
   - condizioni di test;
@@ -321,7 +322,11 @@ http.createServer(async (req, res) => {
 - **RUM con `web-vitals` 6.2.2** (3,0 KB con Brotli), caricato dopo `load`: si attiva solo con una decisione.
   - Il piano CRO prevede zero script di misura al lancio.
   - Proposta: un invio senza cookie né identificatori all'endpoint del sito, da valutare nell'ADR sull'analytics con cro-specialist [DA VERIFICARE la base giuridica].
-- **Controllo mensile** con la procedura del §6.2 sul sito in produzione, più un confronto con i valori di questo documento.
+  - Misura LCP, INP, CLS e TTFB degli utenti reali. È anche l'unico modo di sorvegliare la prima condizione di riapertura dell'ADR 005 (§3).
+- **Controllo mensile** sul sito in produzione, confrontato con i valori di questo documento:
+  - procedura del §6.2;
+  - script e Lighthouse del §6.8, dall'Italia;
+  - PageSpeed Insights sul dominio pubblico.
 
 ## 7. Misure di riferimento
 
