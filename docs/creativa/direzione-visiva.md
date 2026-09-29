@@ -3,9 +3,9 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.4
+versione: 0.5
 aggiornato: 2026-09-29
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -39,6 +39,12 @@ Tutto il resto è tipografia e aria.
 - §4.2: nodo 2 della foto dell'evento sul leggio (36%, 31%), non sul busto dell'oratore (N7).
 - §5, mobile: centro dell'orizzonte a 238° invece di 250° (C14-1); orizzonte al 42% della prima schermata, valore misurato al posto della stima del 55%.
 
+**Modifiche della versione 0.5 (dopo il ricontrollo UI e il parere di accessibilità su R1, 2026-09-29).**
+- §5, mobile: la rotazione della hero si compie nei primi `max(60svh, 60vw)` di scorrimento invece che in 100svh. Così Varese entra intera mentre l'orizzonte è ancora in vista sotto l'header (R1 di ui-designer), e la striscia non va mai più veloce della pagina, nemmeno con il telefono in orizzontale (limite di ux-designer).
+- §5 «Movimento», §1.1 e §6: descritta l'implementazione reale, cioè `scroll(root block)` con un intervallo e non `view()`. Documentata la rotazione di +40° dell'orizzonte di Città Digitali. Aggiunta la regola «mai più veloce della pagina» (`docs/ux/accessibilita.md` §2.6).
+- §3.2: i ponti «Gli altri mondi ITnode» escono dagli usi di `display-m`, perché la loro frase è in `display-s` a 400 (R2).
+- Ipotesi da validare e Decisioni richieste: verifiche della rotazione su Safari iOS; la versione da approvare è la 0.5.
+
 ---
 
 ## 1. Quattro dispositivi firma
@@ -61,6 +67,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - Sopra la linea c'è il cielo, lo spazio del titolo; sotto c'è la terra, lo spazio dei dati.
 - **Dove.**
   - Hero della Home: in movimento, vedi §5.
+  - Fine della hero di Città Digitali: centrato su 263°, a metà tra Caltanissetta (213°) e Varese (313°); ruota di +40° allo scroll (§5, «Movimento») e si apre nel video (§7.6).
   - Apertura dei tre capitoli in Home: statica, con il rilevamento del capitolo (01 = 000°, 02 = 120°, 03 = 240°: tre direzioni della stessa visione).
   - Timeline del fondatore: diventa orizzonte del tempo.
   - Pagina 404.
@@ -259,7 +266,7 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 | `display-xl` | H1 delle hero | `clamp(2.75rem, 1.79rem + 6vw, 9.375rem)` (G4: minimo di 44 px sotto i 390 px, per il reflow a 320 px) | 52 | 115 | 600 | 0,92 | −0,035em |
 | `display-l` | H2 di sezione, statement principali | `clamp(2.5rem, 6vw, 6.25rem)` | 40 | 86 | 600 | 0,98 | −0,03em |
 | `display-m` | Seconda riga del Passaggio, statement secondari, nomi dei capitoli | `clamp(1.75rem, 4.2vw, 4.75rem)` | 28 | 60 | 400; 600 come partenza di un Passaggio o come titolo (vedi Regole) | 1,04 | −0,022em |
-| `display-s` | Titoli di voce: benefici, luoghi, tappe, step | `clamp(1.375rem, 2.2vw, 2.25rem)` | 22 | 32 | 600 | 1,1 | −0,015em |
+| `display-s` | Titoli di voce: benefici, luoghi, tappe, step; frase dei ponti «Gli altri mondi ITnode» | `clamp(1.375rem, 2.2vw, 2.25rem)` | 22 | 32 | 600; 400 nella frase dei ponti, che non è un titolo | 1,1 | −0,015em |
 | `lead` | Paragrafi d'apertura | `clamp(1.25rem, 1.6vw, 1.625rem)` | 20 | 23 | 400 | 1,4 | −0,005em |
 | `body` | Testo corrente | `clamp(1.0625rem, 0.95rem + 0.35vw, 1.25rem)` | 17 | 20 | 400 | 1,55 | 0 |
 | `small` | Didascalie, microcopy, note legali | `0.9375rem` | 15 | 15 | 400 | 1,5 | 0 |
@@ -274,8 +281,9 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
   - **Peso di `display-m`** (G4, suggerimento S4 della review UI; precisato dopo la verifica C14).
     - **600** quando è la partenza di un Passaggio. I Passaggi composti interamente in `display-m` stanno a 600 in tutti e due i registri, perché l'arrivo non scende di gradino e quindi non cambia voce: su `/siii/` «Non raccontare la tua azienda. / Falla esplorare.», «Il sito diventa un luogo.», «Una visita che diventa azione.».
     - **600** anche quando è il titolo (H2 o H3) di una sezione o di una voce: il titolo del video, i nomi delle città, «Perché aderire a Puglia Digitale».
-    - **400** quando è l'arrivo che scende da una partenza più grande (hero della Home, capitoli), un descrittore («Siti Interattivi Immersivi»), il nome di un capitolo, una citazione, o una frase di raccordo non composta come Passaggio («Un’impresa. Un territorio. Una rete di città.», i ponti «Gli altri mondi ITnode»).
+    - **400** quando è l'arrivo che scende da una partenza più grande (hero della Home, capitoli), un descrittore («Siti Interattivi Immersivi»), il nome di un capitolo, una citazione, o una frase di raccordo non composta come Passaggio («Un’impresa. Un territorio. Una rete di città.»).
     - Nel sito costruito la resa è già questa.
+    - I ponti «Gli altri mondi ITnode» non usano `display-m` (R2 del ricontrollo UI, 2026-09-29). Hanno l'occhiello in `label` mono e la frase in `display-s` a 400, perché la frase non è un titolo: vale la regola generale dei pesi. La versione 0.4 li citava qui per errore.
 - **Scala tra sezioni.** Due titoli consecutivi non usano mai lo stesso gradino di scala (vedi la colonna «Titolo» in §7).
 - **Misura.** Il body sta al massimo a 66 caratteri, il lead a 42. I titoli si governano con colonne e a capo d'autore.
 - **A capo.** `text-wrap: balance` sui titoli, `text-wrap: pretty` sui paragrafi; nessuna sillabazione automatica nei titoli; `lang="it"` sul documento.
@@ -488,7 +496,14 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
     - Tra 238° e 250° non c'è nessun luogo, quindi nessun'altra etichetta cambia lato. Tablet e desktop non cambiano.
     - Se cambiano i luoghi o le coordinate, si rimisura (design system §2.1).
   - Al massimo 2 etichette visibili alla volta, in formato compatto (nome e rilevamento, senza distanza) e su due file alternate. Nello schizzo a 390 px le etichette complete si sovrapponevano.
-  - Scorrendo entra Varese.
+  - **Scorrendo entra Varese** (G4, R1 del ricontrollo UI, 2026-09-29).
+    - Su mobile i +60° si compiono nei primi `max(60svh, 60vw)` di scorrimento, non in 100svh. Con il telefono in verticale vale 60svh.
+    - **Perché.** L'orizzonte passa sotto l'header sticky dopo 240–330 px di scorrimento, le sue etichette dopo 290–380 px. Con 100svh, a quel punto la rotazione era tra 24° e 34° dei 60°, e Varese restava sfumata sul bordo («VARES») fino a sparire sotto l'header. Il centro a 238° (C14-1) aveva spostato proprio questo momento.
+    - **Con 60svh** Varese è intera, fuori dalla dissolvenza e sotto l'header per 70–130 px di scorrimento: per esempio 260–330 px a 390 × 844, 200–280 a 360 × 640, 290–360 a 430 × 932. A riposo non cambia nulla: C14-1 resta com'è.
+    - **Perché `60vw`.** È la corsa della striscia: 60° su un campo di 100°. Così l'intervallo non è mai più corto della corsa e la striscia non va mai più veloce della pagina (parere di ux-designer).
+      - Con il telefono in verticale la striscia va a 0,46–0,56 px per pixel di scorrimento, 0,83 a 699 × 844. Con 100svh andava a 0,28–0,34.
+      - Sui telefoni in orizzontale sotto i 700 px l'header non è sticky e il motivo di R1 non c'è. Lì il limite porta la striscia a 1,00 px per pixel, invece di 1,78 con 60svh e di 1,07 con 100svh.
+    - **Quando si rimisura.** Se cambiano il campo visivo mobile, la rotazione, la quota dell'orizzonte o l'altezza dell'header. Con un altro campo, `60vw` diventa (rotazione ÷ campo) × 100vw.
 - **Sotto l'orizzonte**, in ordine: secondo registro, riga di posizionamento (20 px), didascalia dell'osservatore. Il totale misurato sta in una schermata da 390 × 844.
 - **Header.** Segue la sitemap UX (§4): logo, «Parliamone» compatto e «Menu».
 
@@ -499,10 +514,18 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - Tacche ed etichette compaiono in dissolvenza (500 ms, dopo il primo rendering).
   - Ogni nodo fa un solo «ping» (l'anello si espande e svanisce, 1000 ms, a cascata di 120 ms).
 - **Allo scroll.**
-  - La riga graduata trasla orizzontalmente: +60° di rotazione mentre la hero esce dalla viewport, in modo lineare e legato allo scroll.
-  - Si ferma quando l'utente si ferma.
+  - La riga graduata trasla orizzontalmente, in modo lineare e legato allo scroll, a partire dalla cima della pagina:
+    - hero della Home: +60° nei primi 100svh su tablet e desktop, nei primi `max(60svh, 60vw)` su mobile (vedi sopra);
+    - orizzonte di Città Digitali: +40° nei primi 100svh.
+  - Si ferma quando l'utente si ferma, senza inerzia propria.
+  - **L'intervallo si sceglie guardando la finestra visibile.** Conta la parte di rotazione che si vede mentre l'orizzonte è in vista sotto l'header, non quella che si compie dopo.
+  - **Mai più veloce della pagina**: al massimo 1 px di spostamento per pixel di scorrimento, anche con il telefono in orizzontale (`docs/ux/accessibilita.md` §2.6).
+    - Misura del 2026-09-29, con R1 provata in pagina: da 0,18 a 1,00 px per pixel sui due orizzonti. I formati sono 9, da 360 × 640 a 1440 × 900, con quattro telefoni in orizzontale (568 × 320, 640 × 360, 667 × 375, 915 × 412).
+    - Nella hero della Home su mobile il limite è scritto nella regola (`max(…)`). Altrove lo garantiscono campo visivo e rotazione: se cambiano, si rimisura.
 - **Implementazione.**
-  - CSS scroll-driven animations (`animation-timeline: view()`) dentro `@supports`.
+  - CSS scroll-driven animations: `animation-timeline: scroll(root block)` con `animation-range: 0 100svh`, dentro `@supports (animation-timeline: scroll())` e `prefers-reduced-motion: no-preference`. Nella hero della Home su mobile vale `animation-range-end: max(60svh, 60vw)`.
+  - Proprietà sempre scritte una per una, mai con lo shorthand `animation`: il minificatore lo fonderebbe con `animation-timeline` in una regola non valida.
+  - La versione 0.1 indicava `view()`, che non si usa. L'orizzonte è già in vista al caricamento: con l'intervallo predefinito di una timeline di vista la rotazione partirebbe già avanzata, e l'inquadratura a riposo misurata (C14-1) non sarebbe più quella. La timeline dello scorrimento della pagina parte da zero in cima alla pagina e rende l'intervallo esplicito.
   - Dove non sono supportate, orizzonte statico e nessun polyfill.
   - Un eventuale fallback in JavaScript vanilla (listener passivo più `requestAnimationFrame`, al massimo 1 KB) lo decide `web-performance-specialist`.
 - **`prefers-reduced-motion`.** Orizzonte statico sull'inquadratura iniziale, niente ping né dissolvenze.
@@ -539,7 +562,7 @@ Quando arriverà un panorama equirettangolare reale (per esempio una piazza di A
 | **Text reveal** | Statement a registri (Il Passaggio) | Ogni riga d'autore sale da una maschera (`translateY` 105%→0); cascata di 90 ms | 700 ms | ease-out |
 | **Apertura** (movimento firma) | Immagini, video, showcase | `clip-path: inset(46% 0 46% 0)` → `inset(0)`, con l'immagine che scala 1,06→1: si apre dall'orizzonte | 1000 ms | ease-in-out |
 | **Parallax controllato** | Al massimo 1 immagine per schermata | `translateY` dell'immagine dentro la sua soglia, ±6% (massimo 48 px), legato allo scroll | scroll | lineare |
-| **Rotazione dell'orizzonte** | Hero Home | Vedi §5 | scroll | lineare |
+| **Rotazione dell'orizzonte** | Hero della Home; fine della hero di Città Digitali | `translateX` della striscia graduata legato allo scroll: +60° nella Home, +40° su Città Digitali; mai più veloce della pagina. Vedi §5 | scroll | lineare |
 | **Marquee tipografico** | Al massimo 1 per pagina | `translateX` legato allo scroll (circa 0,4× la velocità di scroll); mai moto autonomo | scroll | lineare |
 | **Disegno di linea** | Carte, costa pugliese, orizzonte del tempo | `stroke-dashoffset` 100%→0, una volta | 1400 ms | ease-in-out |
 | **Ping del nodo** | Nodi, all'ingresso della sezione | Anello che scala 1→1,8 con `opacity` 1→0, una volta | 1000 ms | ease-out |
@@ -559,6 +582,7 @@ Quando arriverà un panorama equirettangolare reale (per esempio una piazza di A
 - `will-change` solo durante l'animazione.
 - Un unico IntersectionObserver condiviso.
 - Il legato allo scroll passa da CSS scroll-driven animations dentro `@supports`, con un fallback statico.
+- Nessun movimento legato allo scroll va più veloce della pagina: al massimo 1 px di spostamento per pixel di scorrimento, anche con il telefono in orizzontale (`docs/ux/accessibilita.md` §2.6). Se l'intervallo è in `svh`, lo si limita con la corsa dell'elemento, come nella hero della Home (§5).
 - **Senza JavaScript tutto il contenuto è visibile.** Lo stato nascosto iniziale si applica solo quando lo script conferma il supporto.
 
 **Da evitare.**
@@ -724,6 +748,7 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 - **Motion.** CSS scroll-driven animations e view transition cross-document come miglioramento progressivo, senza polyfill.
   - Stato al 2026-09-28, da fonti web: supportate in Chromium e in Safari 26 (le view transition da Safari 18.2).
   - Su Firefox le fonti sono discordanti `[DA VERIFICARE]`: lì l'esperienza resta statica.
+  - Le misure della rotazione (§5) sono in Chromium. Su Safari iOS vanno riverificate `[DA VERIFICARE]`: la resa, l'unità `svh` dentro `max()` negli intervalli e la sensazione con lo scorrimento a inerzia, che la striscia segue.
 - **Coordinate, rilevamenti e distanze** (§1.4): 2 decimali da una fonte unica, il riquadro di Wikipedia in inglese. I valori sono letti tramite WebSearch e superano un controllo incrociato. Resta `[DA VERIFICARE]`, non bloccante, la lettura diretta delle sette pagine. Il rilevamento di Cassano delle Murge è incerto di circa ±10°.
 - **Dimensioni tipografiche** (§3.2 e §5): verificate su Chromium con i font reali, da riverificare su Safari iOS nei prototipi del `ui-designer`.
 - **Anteprima immersiva «Prova qui»** (iframe dell'esperienza SIII caricato solo al clic), in aggiunta all'apertura in nuova scheda chiesta dalle linee guida. Dipende da due verifiche:
@@ -766,4 +791,4 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.2)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.5)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».

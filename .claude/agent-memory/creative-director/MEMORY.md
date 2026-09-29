@@ -16,6 +16,10 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Server con Brotli per misure:** `PORT=… node scripts/serve.mjs` serve `dist/` come in anteprima (in locale senza password).
 - **Misura dello scambio di font:** evento `loadingdone` di `document.fonts` più rete emulata via CDP (`Network.emulateNetworkConditions`) e HTML intercettato con `page.route` per togliere un `<link>`.
 - **Test visivi:** schizzi HTML in scratchpad più `npx playwright screenshot` a 1440 e 390 px, osservati con Read. Mostrano problemi che a memoria non si vedono: overflow dei numeri giganti su mobile, ambiguità I/l.
+- **Misure durante lo scorrimento** (2026-09-29).
+  - Il sito ha lo scroll fluido. Negli script servono `document.documentElement.style.scrollBehavior = 'auto'` e `scrollTo({ top, behavior: 'instant' })`, più due `requestAnimationFrame` prima di leggere; altrimenti `scrollY` non arriva al valore.
+  - La striscia dell'orizzonte copre da −90° a 450°, quindi alcune etichette esistono due volte (Varese, Monopoli): si misura la copia più vicina alla finestra.
+  - La traslazione si legge da `new DOMMatrix(getComputedStyle(strip).transform).m41`.
 
 ## Insidie scoperte sugli asset e sui font
 - **Logo PNG:** completamente opaco, con fondo bianco (non trasparente); la «o» è un anello #3C71A5 con il vuoto spostato in alto a destra.
@@ -37,6 +41,9 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Un testo attribuito a un altro documento va controllato lì.** Nella DV 0.1 «Scorri per esplorare» era indicato come testo «dal copy deck», ma il copy deck non l'ha mai previsto. L'errore si è propagato alla struttura UX e al design system.
 - **I dati muovono la composizione.** Cambiando le coordinate (C11), il gruppo murgiano ha superato il centro mobile dell'orizzonte e la sua etichetta è uscita dal bordo (C14-1). Dopo ogni cambio di luoghi o coordinate vanno rimisurati centri ed etichette.
 - **Scrivere una regola guardando la resa, non a memoria.** Al G4 ho scritto la regola del peso di `display-m` dichiarando il codice conforme, ma il testo metteva a 400 gli statement secondari che su `/siii/` sono Passaggi a 600. Se ne è accorta ui-designer. Le regole si scrivono dall'elenco degli usi reali.
+- **Gli effetti legati allo scorrimento si giudicano nella finestra in cui si vedono.** Non basta il loro stato finale: conta il tratto in cui l'elemento è in vista sotto l'header sticky. ui-designer aveva visto Varese «entrare» alla fine della rotazione, quando l'orizzonte era già sotto l'header (R1). Inoltre un valore a riposo (il centro a 238°) sposta anche i momenti dell'animazione: dopo averlo cambiato si rimisurano tutti e due.
+- **Un limite si scrive come l'invariante, non come un sostituto.** `max(60svh, 60vw)` dice «intervallo mai più corto della corsa, quindi velocità mai sopra la pagina» e vale in ogni finestra. `orientation: portrait` ci arrivava solo in parte. La proposta era di ux-designer ed è stata adottata.
+- **Prima di estendere una correzione alle altre istanze di un componente, misurarle.** Avevo dato per scontato che l'orizzonte di Città Digitali andasse a 1,07 px/px in orizzontale come la Home. Invece ruota di +40° (prop `rotate`) e va a 0,71: la correzione nel componente non serviva.
 - **Le regole «opzione principale / ripiego» funzionano.** Per le coordinate la fonte a 4 decimali non era raggiungibile: il ripiego a 2 decimali, scritto nella DV, ha chiuso C11 senza un nuovo arbitrato.
 
 ## Preferenze e feedback del cliente e dell'utente
