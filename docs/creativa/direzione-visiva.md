@@ -3,8 +3,8 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.3
-aggiornato: 2026-09-28
+versione: 0.4
+aggiornato: 2026-09-29
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3)]
 ---
 
@@ -33,6 +33,11 @@ Tutto il resto è tipografia e aria.
 **Modifiche della versione 0.3 (dopo il G4, 2026-09-28).**
 - §1.4, §5, §7.8, Ipotesi: coordinate pubblicate a 2 decimali da una fonte unica, con i nuovi rilevamenti e il limite noto sul rilevamento di Cassano delle Murge. La condizione C11 è chiusa (`docs/strategia/coordinate-luoghi.md`).
 - §5: niente invito allo scorrimento («Scorri per esplorare») e didascalia dell'osservatore su tre righe; parere sulle varianti della riga di posizionamento per il test E1.
+
+**Modifiche della versione 0.4 (dopo la verifica C14 di ui-designer, 2026-09-29).**
+- §1.5 e §3.2: peso di `display-m` precisato. I Passaggi interamente in `display-m` stanno a 600 in tutti e due i registri; l'arrivo è a 400 solo quando scende di gradino.
+- §4.2: nodo 2 della foto dell'evento sul leggio (36%, 31%), non sul busto dell'oratore (N7).
+- §5, mobile: centro dell'orizzonte a 238° invece di 250° (C14-1); orizzonte al 42% della prima schermata, valore misurato al posto della stima del 55%.
 
 ---
 
@@ -167,6 +172,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - Massimo 2 registri; 3 solo per «Entra. / Esplora. / Interagisci.», a cascata: ogni registro rientra di un passo in più del precedente (desktop 2 e 4 colonne, tablet 1 e 2, mobile 1,2 em e 2,4 em; a 320 px nessun rientro).
   - Mai centrato.
   - La seconda riga può scendere di un gradino di scala (§3), mai salire.
+  - **Il peso segue il gradino.** La partenza è sempre a 600. L'arrivo è a 400 quando scende a `display-m`; resta a 600 quando resta allo stesso gradino della partenza, anche se questa è in `display-m` (§3.2).
   - **Statement dei capitoli della Home:** partenza in `display-l` 600, arrivo in `display-m` 400, come il secondo registro della hero. In `display-l` pieno l'arrivo andava a capo per il browser fino a 6 righe (verifica UI, V4).
 
 ---
@@ -252,7 +258,7 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 | `display-xxl` | Numeri giganti, «SIII», numerazione dei capitoli | `clamp(4.5rem, 18vw, 17.5rem)` | 72 | 259 | 600 | 0,82 | −0,045em |
 | `display-xl` | H1 delle hero | `clamp(2.75rem, 1.79rem + 6vw, 9.375rem)` (G4: minimo di 44 px sotto i 390 px, per il reflow a 320 px) | 52 | 115 | 600 | 0,92 | −0,035em |
 | `display-l` | H2 di sezione, statement principali | `clamp(2.5rem, 6vw, 6.25rem)` | 40 | 86 | 600 | 0,98 | −0,03em |
-| `display-m` | Seconda riga del Passaggio, statement secondari, nomi dei capitoli | `clamp(1.75rem, 4.2vw, 4.75rem)` | 28 | 60 | 400 | 1,04 | −0,022em |
+| `display-m` | Seconda riga del Passaggio, statement secondari, nomi dei capitoli | `clamp(1.75rem, 4.2vw, 4.75rem)` | 28 | 60 | 400; 600 come partenza di un Passaggio o come titolo (vedi Regole) | 1,04 | −0,022em |
 | `display-s` | Titoli di voce: benefici, luoghi, tappe, step | `clamp(1.375rem, 2.2vw, 2.25rem)` | 22 | 32 | 600 | 1,1 | −0,015em |
 | `lead` | Paragrafi d'apertura | `clamp(1.25rem, 1.6vw, 1.625rem)` | 20 | 23 | 400 | 1,4 | −0,005em |
 | `body` | Testo corrente | `clamp(1.0625rem, 0.95rem + 0.35vw, 1.25rem)` | 17 | 20 | 400 | 1,55 | 0 |
@@ -265,7 +271,11 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 
 **Regole.**
 - **Pesi.** Due soli: 600 per i titoli e il grassetto nel testo, 400 per tutto il resto. Niente corsivi. Maiuscolo solo nelle etichette mono.
-  - `display-m` è a 400 quando fa da voce d'arrivo del Passaggio, descrittore, nome di capitolo o statement secondario. È ammesso a 600 quando è il titolo (H2 o H3) di una sezione o di una voce: il titolo del video, i nomi delle città, «Perché aderire a Puglia Digitale» (G4, suggerimento S4 della review UI).
+  - **Peso di `display-m`** (G4, suggerimento S4 della review UI; precisato dopo la verifica C14).
+    - **600** quando è la partenza di un Passaggio. I Passaggi composti interamente in `display-m` stanno a 600 in tutti e due i registri, perché l'arrivo non scende di gradino e quindi non cambia voce: su `/siii/` «Non raccontare la tua azienda. / Falla esplorare.», «Il sito diventa un luogo.», «Una visita che diventa azione.».
+    - **600** anche quando è il titolo (H2 o H3) di una sezione o di una voce: il titolo del video, i nomi delle città, «Perché aderire a Puglia Digitale».
+    - **400** quando è l'arrivo che scende da una partenza più grande (hero della Home, capitoli), un descrittore («Siti Interattivi Immersivi»), il nome di un capitolo, una citazione, o una frase di raccordo non composta come Passaggio («Un’impresa. Un territorio. Una rete di città.», i ponti «Gli altri mondi ITnode»).
+    - Nel sito costruito la resa è già questa.
 - **Scala tra sezioni.** Due titoli consecutivi non usano mai lo stesso gradino di scala (vedi la colonna «Titolo» in §7).
 - **Misura.** Il body sta al massimo a 66 caratteri, il lead a 42. I titoli si governano con colonne e a capo d'autore.
 - **A capo.** `text-wrap: balance` sui titoli, `text-wrap: pretty` sui paragrafi; nessuna sillabazione automatica nei titoli; `lang="it"` sul documento.
@@ -306,7 +316,7 @@ In Home la foto compare al massimo due volte, in ritagli con soggetti diversi.
 - **Limite di risoluzione.** Il ritaglio pulito misura 1272 px: la foto non va mai a tutto schermo e resta al massimo a 1200 px CSS. Sugli schermi ad alta densità si ammorbidisce, quindi l'originale è la prima richiesta (§4.6).
 - **Nodi sul Panorama.** Sono pulsanti numerati, con una legenda sotto la foto sempre visibile su mobile. La legenda descrive solo ciò che si vede, senza fatti da verificare. Posizioni in percentuale del ritaglio:
   1. Schermo sinistro (13%, 18%): «Una città vista dall'alto a 360°: le attività sono punti da aprire».
-  2. Palco (44%, 30%): «Il palco». Il nome di chi parla si aggiunge solo dopo la conferma (registro F7).
+  2. Palco, sul leggio accanto all'oratore (36%, 31%): «Il palco». Il nome di chi parla si aggiunge solo dopo la conferma (registro F7). Nella versione 0.1 il nodo stava a (44%, 30%), sul busto di una persona non identificata: un segno d'interazione non va sul corpo di qualcuno (G4, N7; posizione misurata da ui-designer, C14-2).
   3. Schermo destro (84%, 17%): «Una piazza storica esplorabile a 360°».
 - **Didascalia.** Nessuna finché data e luogo non sono confermati (brief consolidato, registro A4). Poi, in mono: «Puglia Digitale, evento regionale · [luogo] · [data] · foto [autore]». Nessun numero di partecipanti se non documentato.
 - **Persone in platea (A4).** I ritagli scelti mostrano la platea di spalle, ma la liberatoria o l'informativa dell'evento va comunque verificata. Senza, si stringono i ritagli sui due schermi e sul palco, escludendo i profili ai margini.
@@ -466,10 +476,17 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 
 ### Mobile (< 700 px)
 
-- **Altezza.** Sul contenuto più 96 px, non forzata a 100svh; l'orizzonte cade a circa il 55% della prima schermata.
-- **H1.** «La tecnologia / cambia.» su due righe (52 px; «La tecnologia» occupa 310 px su 350). Il secondo registro è a 28 px su tre righe, senza rientro: lo separa l'orizzonte.
+- **Altezza.** Sul contenuto più 96 px, non forzata a 100svh.
+  - L'orizzonte cade a circa il 42% della prima schermata: 352 px su 844 a 390 × 844, misurato al G4 (verifica UI, C14).
+  - È la quota che lascia stare nella stessa schermata secondo registro, riga di posizionamento e didascalia. Il 55% della versione 0.1 era una stima dello schizzo, prima della riga di posizionamento e della didascalia su tre righe.
+- **H1.** «La tecnologia / cambia.» su due righe (52 px; «La tecnologia» occupa 310 px su 350). Il secondo registro è a 28 px, su due righe a 390 px («La curiosità ci accompagna / da sempre.»), senza rientro: lo separa l'orizzonte.
 - **Orizzonte.**
-  - Campo visivo di 100°, centrato su 250° (il gruppo murgiano, con Caltanissetta al margine).
+  - Campo visivo di 100°, centrato su 238° (G4, C14-1).
+    - Con le coordinate di C11 il gruppo murgiano parte da 251°. Con il centro a 250° stava oltre il centro, e la sua etichetta, che in quel caso pende a sinistra del nodo, usciva dal bordo: di 6 px a 390 px («LTAMURA…») e di 46 px a 320.
+    - A 238° l'etichetta è intera e fuori dalla dissolvenza da 390 px in su. Tra 340 e 375 px è intera dentro la dissolvenza; a 320 px sporge di 7 px, residuo accettato.
+    - Caltanissetta resta in vista a sinistra; nessun incrocio da 320 a 699 px, anche durante la rotazione.
+    - Tra 238° e 250° non c'è nessun luogo, quindi nessun'altra etichetta cambia lato. Tablet e desktop non cambiano.
+    - Se cambiano i luoghi o le coordinate, si rimisura (design system §2.1).
   - Al massimo 2 etichette visibili alla volta, in formato compatto (nome e rilevamento, senza distanza) e su due file alternate. Nello schizzo a 390 px le etichette complete si sovrapponevano.
   - Scorrendo entra Varese.
 - **Sotto l'orizzonte**, in ordine: secondo registro, riga di posizionamento (20 px), didascalia dell'osservatore. Il totale misurato sta in una schermata da 390 × 844.

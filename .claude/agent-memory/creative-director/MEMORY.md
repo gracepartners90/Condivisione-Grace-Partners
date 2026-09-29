@@ -35,6 +35,8 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Confronti di laboratorio: almeno 6 corse per variante.** Con 3 corse le coppie oscillano da 106 a 361 ms, e la stima del ritardo del preload su `/siii/` passava da 201 a 282 ms. Lo stesso vale per i miei confronti visivi o temporali: poche corse fanno sembrare vicina una soglia che non lo è.
 - **Anche le mie sintesi vanno ricalcolate.** Intervalli e rapporti che riassumono una tabella si calcolano dalla tabella, non a occhio. Nell'ADR 005 v1.0 due valori erano imprecisi: 100–280 ms invece di 72–280, e «3–6 volte» invece di 2,7–14. Li ha trovati web-performance-specialist.
 - **Un testo attribuito a un altro documento va controllato lì.** Nella DV 0.1 «Scorri per esplorare» era indicato come testo «dal copy deck», ma il copy deck non l'ha mai previsto. L'errore si è propagato alla struttura UX e al design system.
+- **I dati muovono la composizione.** Cambiando le coordinate (C11), il gruppo murgiano ha superato il centro mobile dell'orizzonte e la sua etichetta è uscita dal bordo (C14-1). Dopo ogni cambio di luoghi o coordinate vanno rimisurati centri ed etichette.
+- **Scrivere una regola guardando la resa, non a memoria.** Al G4 ho scritto la regola del peso di `display-m` dichiarando il codice conforme, ma il testo metteva a 400 gli statement secondari che su `/siii/` sono Passaggi a 600. Se ne è accorta ui-designer. Le regole si scrivono dall'elenco degli usi reali.
 - **Le regole «opzione principale / ripiego» funzionano.** Per le coordinate la fonte a 4 decimali non era raggiungibile: il ripiego a 2 decimali, scritto nella DV, ha chiuso C11 senza un nuovo arbitrato.
 
 ## Preferenze e feedback del cliente e dell'utente
