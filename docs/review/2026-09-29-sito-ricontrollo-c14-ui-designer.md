@@ -3,9 +3,9 @@ titolo: Ricontrollo UI delle correzioni approvate dopo C14 (C14-1, N7, N8, C14-4
 owner: ui-designer
 contributi: []
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-09-29
-fonti: [docs/creativa/direzione-visiva.md (0.4), docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md (sezione «Verifica C14 dopo il verdetto G4»), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/ui/design-system.md, commit 4674f8a e 100b578, staging http://localhost:4321 (dist, commit 100b578), variante «in pubblicazione» http://localhost:4322 (dist-publish, commit 100b578), script c14fix.mjs della sessione principale (scratchpad/tools), misure Playwright (Chromium) del 2026-09-29]
+fonti: [docs/creativa/direzione-visiva.md (0.4 e 0.5, commit 00a3b81), docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), commit df66be6, misure sulla build del creative-director (scratchpad/cd-r1/verify-build.mjs) e della sessione principale (scratchpad/tools/c14fix.mjs), docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md (sezione «Verifica C14 dopo il verdetto G4»), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/ui/design-system.md, commit 4674f8a e 100b578, staging http://localhost:4321 (dist, commit 100b578), variante «in pubblicazione» http://localhost:4322 (dist-publish, commit 100b578), script c14fix.mjs della sessione principale (scratchpad/tools), misure Playwright (Chromium) del 2026-09-29]
 ---
 
 # Ricontrollo UI delle correzioni approvate dopo C14
@@ -145,3 +145,59 @@ In `docs/ui/design-system.md`:
 
 1. **R1** (creative-director): su mobile, +60° nei primi 60svh di scorrimento nella hero della Home. In alternativa, accettare che Varese entri solo sfumata.
 2. **R2** (creative-director): togliere i ponti dall'elenco di `display-m` nella DV §3.2.
+
+---
+
+## Chiusura di R1 e R2
+
+**Decisioni del creative-director** (DV 0.5, commit 00a3b81).
+- **R1**, nella forma con il limite di ux-designer: nella hero della Home su mobile i +60° si compiono in `max(60svh, 60vw)` di scorrimento. Scartate 50svh, il centro a 250° e +80°.
+  - Il limite serve ai telefoni in orizzontale. Con il solo 60svh la striscia avrebbe corso a 1,78 px per pixel di scorrimento, quasi il doppio della pagina, senza nemmeno il motivo di R1: sotto i 480 px di altezza l'header non è sticky (parere di ux-designer, `docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md`).
+  - La mia proposta non lo vedeva: avevo provato solo telefoni in verticale. `60vw` è la corsa della striscia (60° su un campo di 100°), quindi con `max()` la velocità resta al massimo di 1 px per pixel su qualunque formato.
+  - Ora è una regola del progetto: nessun movimento legato allo scorrimento va più veloce della pagina (`docs/ux/accessibilita.md` §2.6, DV §6).
+- **R2** approvata: i ponti escono dall'elenco di `display-m`; nella scala `display-s` è «400 nella frase dei ponti, che non è un titolo».
+- **DV §5 «Movimento»** descrive ora l'implementazione: `scroll(root block)` con `animation-range: 0 100svh`, e `max(60svh, 60vw)` nella hero della Home su mobile.
+
+**Applicata** in df66be6: `src/components/sections/Hero.astro`, regola `@media (max-width: 43.74em) and (prefers-reduced-motion: no-preference)` con `@supports (animation-timeline: scroll())`, dopo il blocco V14. Corrisponde allo snippet, con il limite.
+
+**Esiti sulla build** (misure del creative-director e della sessione principale):
+
+| Pagina e formato | Fine dell'intervallo | Velocità (px per pixel di scorrimento) | Varese intera, fuori dalla dissolvenza e sotto l'header |
+|---|---|---|---|
+| Home 390 × 844 | 506,4 px | 0,46 | 260–330 px |
+| Home 360 × 640 | 384 px | 0,56 | 200–280 px |
+| Home 667 × 375 (telefono in orizzontale) | 400,2 px | 1,00 | — (header non sticky: il motivo di R1 non c'è) |
+| Home 768 × 1024 | 1024 px, invariato | — | — |
+| Home 1440 × 900 | 900 px, invariato | — | — |
+| Città Digitali 390 × 844 e 667 × 375 | invariato | 0,18 e 0,71 | — |
+
+- Con il movimento ridotto `animation-name: none`: l'orizzonte resta fermo.
+- Nessun incrocio tra richiami ed etichette da 320 a 699 px, a scroll 0, 150, 300 e 450. Reflow pulito su Home e Città Digitali (staging) e sulla Home (pubblicazione); axe 0 violazioni sulla Home.
+- **Non ho ripetuto le misure**, per tre ragioni:
+  - in verticale `max(60svh, 60vw)` vale 60svh, cioè lo snippet che avevo provato, e le finestre coincidono con le mie (260–340 px a 390 × 844 con il criterio di questa review, 260–330 nella misura del creative-director);
+  - in orizzontale il limite garantisce per costruzione al massimo 1 px per pixel;
+  - le fini dell'intervallo misurate (506,4 = 0,6 × 844; 400,2 = 0,6 × 667) confermano che la regola è attiva nella build servita.
+
+**Design system alla versione 0.5** (`docs/ui/design-system.md`):
+- R1 e R2 da proposte a decisioni applicate (§1.2, §1.6, §2.1, §3.4);
+- movimento dell'orizzonte descritto come nella DV 0.5 (§1.6): timeline dello scorrimento della pagina con un intervallo, +60° nella Home e +40° su Città Digitali, «mai più veloce della pagina», intervallo scelto sulla finestra visibile sotto l'header, formula del limite ((rotazione ÷ campo) × 100vw);
+- nuova riga in §6, domande e decisioni aggiornate.
+
+### Verdetto di dominio (UI) aggiornato
+
+**Conforme.** C14-1, N7, N8, C14-4, C14-5 e ora R1 e R2 corrispondono alla DV 0.5.
+- Dalle verifiche di fedeltà non resta nessun punto aperto prima del lancio.
+- Restano i suggerimenti per dopo il lancio (V15, V17, S5, S8 con le foto dei luoghi) e le verifiche su Safari iOS e Firefox.
+- Nessun bloccante di soglia. Il verdetto di gate spetta al creative-director.
+
+### Ipotesi da validare (chiusura)
+
+- Misure in Chromium. Su Safari iOS vanno riverificati la resa della rotazione, l'unità `svh` dentro `max()` negli intervalli e la sensazione con lo scorrimento a inerzia, che la striscia segue `[DA VERIFICARE]` (DV 0.5).
+
+### Domande aperte (chiusura)
+
+- Nessuna: le domande e le decisioni richieste delle sezioni precedenti su R1, R2 e sulla DV §5 «Movimento» sono chiuse dalla DV 0.5.
+
+### Decisioni richieste (chiusura)
+
+- Nessuna.
