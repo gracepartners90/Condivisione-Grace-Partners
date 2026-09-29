@@ -2,7 +2,7 @@
 
 Repository di progetto per il nuovo sito di ITNODE. Il lavoro è svolto da un team di specialisti: subagent di Claude Code definiti in [`.claude/agents/`](.claude/agents/) e coordinati dalla sessione principale di Claude.
 
-> **Stato:** G4 approvato con condizioni dal creative-director: build approvata, pubblicazione non ancora (condizioni C01–C14 nel [verdetto](docs/review/2026-09-28-sito-verdetto-g4-creative-director.md)) · in attesa dell'approvazione dell'utente (G4 e, retroattivamente, G1–G3) · anteprima protetta su Railway ([ADR 004](docs/decisioni/004-anteprima-su-railway.md)).
+> **Stato:** G4 approvato con condizioni dal creative-director: build approvata, pubblicazione non ancora ([verdetto](docs/review/2026-09-28-sito-verdetto-g4-creative-director.md)) · condizioni a carico del team (C10–C14) chiuse, salvo la prova dei dati strutturati con gli strumenti di Google (C13), da fare nello staging dell'hosting scelto · restano le condizioni che dipendono dal cliente e dall'utente (C01–C09) · in attesa dell'approvazione dell'utente (G4 e, retroattivamente, G1–G3) · anteprima su Railway aperta a chi ha il link e fuori dai motori di ricerca ([ADR 004](docs/decisioni/004-anteprima-su-railway.md)).
 
 ## Il team
 
@@ -72,7 +72,7 @@ Il repository è pronto per Railway ([ADR 004](docs/decisioni/004-anteprima-su-r
 
 | Variabile | Effetto |
 |---|---|
-| `PREVIEW_AUTH` | **Obbligatoria per l'anteprima** su Railway (senza, e senza `INDEXING=on`, ogni pagina risponde 503): `utente:password` la protegge; `off` la apre a chiunque abbia il link, sempre fuori dai motori di ricerca. Dal 2026-09-28 l'anteprima è aperta (`off`) per decisione dell'utente (ADR 004) |
+| `PREVIEW_AUTH` | **Obbligatoria per l'anteprima** su Railway (senza, e senza `INDEXING=on`, ogni pagina risponde 503): `utente:password` la protegge; `off` la apre a chiunque abbia il link, sempre fuori dai motori di ricerca. Dal 2026-09-29 l'anteprima è aperta (`off`), per decisione dell'utente del 2026-09-28 (ADR 004) |
 | `PUBLIC_SLOT_MODE=publish` | Variante «in pubblicazione» al posto dei segnaposto degli asset |
 | `PUBLIC_FORM_ENDPOINT` | Indirizzo che riceve il modulo, quando esiste |
 | `INDEXING=on` | Solo in produzione: toglie l'intestazione `X-Robots-Tag: noindex, nofollow`, presente di default |
