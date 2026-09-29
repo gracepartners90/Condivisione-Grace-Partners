@@ -50,3 +50,12 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Server di verifica:** tra una sessione e l'altra possono spegnersi. Scrivere gli esiti nella review appena misurati; se il diff dopo la build misurata tocca solo commenti, dichiararlo invece di ricostruire.
 - **Script riusabili C14** in `scratchpad/ui-verifica/`: c14, c14b, rows2 (incroci e tagli a riposo), v14b (700–767 fine), center2 (prova dei centri), pub14 (variante in pubblicazione), reflow14, s4 e s4b (pesi di `display-m`), n8b e n8c (etichette della carta), n7grid e n7check (posizione del nodo sulla foto).
 
+## Ricontrollo dopo le correzioni di C14 (lezioni del 2026-09-29)
+- **Esito delle mie proposte:** il creative-director ha approvato C14-1 (centro mobile a 238°), N7, N8 (soglia sulla larghezza della carta) e C14-4, e ha scritto la DV 0.4 con la regola del peso di `display-m` («il peso segue il gradino») e l'orizzonte mobile al 42%.
+- **Errore mio da non ripetere:** nella verifica C14 ho scritto «Varese entra ancora» guardando la fine della rotazione (+60°). Su mobile la rotazione è legata a 0–100svh di scorrimento, ma l'orizzonte passa sotto l'header sticky dopo circa 300 px: se ne vedono solo circa 24°. Per ogni effetto legato allo scorrimento si misura **ciò che è visibile sotto l'header**, passo per passo, non lo stato finale.
+- **Un cambio di centro sposta due momenti:** il riposo e l'ingresso durante la rotazione. Per separarli la leva è l'intervallo della rotazione (`animation-range-end`), non il centro.
+- **Striscia dell'orizzonte:** copre 540°, quindi ogni luogo compare due volte nel DOM. Quando si cerca un'etichetta per nome, prendere la copia più vicina alla finestra.
+- **Scroll-driven animations in Chromium headless:** funzionano con `scrollTo({ behavior: 'instant' })` e due `requestAnimationFrame` di attesa prima di leggere i rettangoli.
+- **Snippet per un componente figlio:** provarlo iniettato così com'è, longhand e senza `!important`, per verificare che vinca per peso del selettore e che non tocchi le altre istanze (qui Città Digitali e il tablet).
+- **Script del ricontrollo** in `scratchpad/ui-ricontrollo/`: rest (etichette a riposo), rot (ingresso di Varese sotto l'header), opts (alternative a confronto), heights (formati di telefono), heights2 (snippet esatto), applied (N7, N8, C14-4), bridge, shots.
+
