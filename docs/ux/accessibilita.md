@@ -3,9 +3,9 @@ titolo: Requisiti e verifica di accessibilità (WCAG 2.2 AA)
 owner: ux-designer
 contributi: [ui-designer, web-performance-specialist, cro-specialist, seo-technical, copywriter-content]
 stato: in revisione
-versione: 0.2
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
+versione: 0.3
+aggiornato: 2026-09-29
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
 ---
 
 # Requisiti e verifica di accessibilità (WCAG 2.2 AA)
@@ -91,6 +91,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 - Il movimento è un miglioramento: lo attiva `@media (prefers-reduced-motion: no-preference)`.
 - Senza JavaScript tutto è visibile: gli stati iniziali nascosti valgono solo con `reveal-ready`, come già in `reveal.ts`.
 - Nessun lampeggiamento sopra le 3 volte al secondo, anche nel video (2.3.1).
+- **Movimento legato allo scorrimento** (orizzonte, marquee): lineare, senza inerzia propria, fermo quando l'utente smette di scorrere. **Mai più veloce della pagina:** al massimo 1 px di spostamento per px di scorrimento, anche sui telefoni in orizzontale. Se l'intervallo è in `svh`, va limitato con la corsa dell'elemento, per esempio `max(60svh, 60vw)`. Parere del 2026-09-29 su R1 in `docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md`.
 
 | Movimento | Con `reduce` |
 |---|---|
