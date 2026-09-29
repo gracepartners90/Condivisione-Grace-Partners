@@ -3,9 +3,9 @@ titolo: Verifica di fedeltà UI dopo le correzioni (verso G4)
 owner: ui-designer
 contributi: []
 stato: bozza
-versione: 0.3
+versione: 0.4
 aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, build del commit c025181 su http://localhost:4323 e http://localhost:4324 (ricontrollo), build del commit 007956d su http://localhost:4321 (reveal e campi del form), docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
+fonti: [docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, build del commit c025181 su http://localhost:4323 e http://localhost:4324 (ricontrollo), build del commit 007956d su http://localhost:4321 (reveal e campi del form), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/creativa/direzione-visiva.md (0.3), docs/strategia/coordinate-luoghi.md (0.3), build con i commit da195cb, bd78d79 e f1b6780 su http://localhost:4321 e http://localhost:4322 (verifica C14; fino a d0b88ab in src/ cambiano solo commenti), docs/creativa/direzione-visiva.md, docs/ui/design-system.md, docs/contenuti/copy-deck/home.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, src/data/asset-slots.ts, staging http://localhost:4321 (build dei commit c67aa8e, e5cfc5b, 7c5f747), variante «in pubblicazione» http://localhost:4322 (PUBLIC_SLOT_MODE=publish), screenshot e misure Playwright (Chromium) del 2026-09-28]
 ---
 
 # Verifica di fedeltà UI dopo le correzioni (verso G4)
@@ -497,3 +497,144 @@ Il verdetto di gate spetta al creative-director.
 - **Quando.** Consigliata prima del G4 perché costa una riga, ma non è bloccante.
 
 **Verdetto UI.** Invariato: approvabile per il G4. Il reveal è approvato; per i campi del form raccomando `align-content: end`.
+
+---
+
+## Verifica C14 dopo il verdetto G4
+
+**Dove e come.**
+- Staging http://localhost:4321 con le correzioni decise al G4 (commit da195cb, bd78d79 e f1b6780) e variante «in pubblicazione» http://localhost:4322 (`PUBLIC_SLOT_MODE=publish`).
+  - Da f1b6780 a d0b88ab in `src/` cambiano solo commenti (`site.ts`, `SlotPending.astro`): gli esiti valgono anche per d0b88ab.
+  - Alla ripresa, dopo l'interruzione, i due server non rispondevano. Le misure sono quelle prese prima, tutte con gli strumenti di questa verifica.
+- Larghezze 320, 390, 768, 1024 e 1440 px. Sonde DOM su posizioni, righe visive e stili calcolati; prima schermata fotografata a scroll 0, perché nelle catture a pagina intera l'orizzonte compare già ruotato.
+- Misura degli incroci rifatta con le coordinate nuove: 20 larghezze da 320 a 1920 px, a scroll 0, 150, 300 e 450 px; tra 700 e 767 px ogni 10 px, a scroll da 0 a 700 px ogni 50.
+
+### Esito delle correzioni
+
+| # | Esito | Misura |
+|---|---|---|
+| **I4** · riga di posizionamento | **Conforme** | Occhiello «ITnode — oltre i confini del Web tradizionale»: una riga da 1024 px, due sotto.<br>Riga in `lead` (20 → 23 px), un `<p>` dopo l'H1, 25 px sotto il secondo registro a ogni larghezza (DV: 24–32 px). Parte dalla colonna 5 a 1024 (x 361) e a 1440 (x 506), dalla colonna 3 a 768 (x 212); una riga da 1024 px, due sotto.<br>Didascalia allineata in basso con la riga da 1024 px (scarto 2–3 px); sotto i 1024 px viene dopo la riga.<br>1440 × 900: orizzonte al 56,7% (DV 57%), riga nella prima schermata (fondo a 851 px). 1024 × 768: testo entro 721 px. 390 × 844: hero intera nella prima schermata (fondo a 789 px). 320 px: testo entro 790 px |
+| **V4** · statement dei capitoli | **Conforme** | Capitoli 01 e 02 su 2 righe a ogni larghezza. Capitolo 03 su 4 righe bilanciate a 320, 390, 1024 e 1440 px, su 2 a 768. Arrivo in `display-m` 400 (da 28 a 60 px) |
+| **V6** · maschere dei ritratti | **Conforme** | Stili calcolati alle cinque larghezze: Home 40% → 74%, Contatti 36% → 68% |
+| **V10** · copertina del video | **Conforme** | Nella copertina c'è solo il nodo di riproduzione. Nella pagina resta un solo orizzonte, quello di fine hero, a ogni larghezza |
+| **V14** · 200° sul tablet | **Conforme** | `--fov: 200` solo nella hero della Home, da 700 px. Città Digitali resta a 150° sul tablet (100° su mobile, 200° su desktop).<br>Nessun richiamo attraversa un'etichetta, su nessuno dei due orizzonti, a riposo e con lo scorrimento. Tra 700 e 767 px non compare nemmeno il contatto con il frammento di «Varese» che la DV §5 accetta come residuo (misura sull'inchiostro delle etichette, tolleranza 2 px).<br>Da 768 a 1023 px, a riposo, le tre etichette sono intere |
+| **N1** · cascata | **Conforme** | Rientri 0 / 48 / 96 px a 390, 0 / 91 / 181 a 768, 0 / 108 / 215 a 1024, 0 / 152 / 303 a 1440; nessun rientro a 320. «Interagisci.» finisce dentro la colonna a ogni larghezza |
+| **N5** · Contatti, Persona | **Conforme** | «Scopri il suo percorso nella home →» verso `/#fondatore`: alto 44 px, 32 px sotto nome e ruolo, alle cinque larghezze |
+| **S10 + N6** · 404 | **Conforme** | Da 1024 px le tacche lunghe di 120° e 240° cadono esattamente all'inizio della seconda e della terza colonna (323 e 646 px a 1024; 455 e 910 a 1440).<br>Ogni nodo sta dentro il link del suo mondo e mostra l'anello su hover e focus. I nomi dei tre mondi stanno alla stessa quota (678 px a 1024, 758 a 1440).<br>Sotto i 1024 px i mondi vanno in pila, con un solo nodo sulla linea. Un dettaglio in C14-4 |
+| **C11** · coordinate | **Conforme** | Nell'HTML delle 8 pagine nessuna coordinata con più di 2 decimali.<br>Coppie pubblicate: 40.90 · 16.85, 40.82 · 16.42, 40.95 · 17.30, 45.82 · 8.83, 40.82 · 16.55, 37.49 · 14.06.<br>Orizzonte della Home: «Monopoli — 081° · 38 km», «Caltanissetta — 213° · 449 km», «Altamura · Cassano · Gravina — 251–256° · 7–37 km», «Varese — 313° · 848 km».<br>Un effetto sulla composizione mobile: C14-1 |
+| **C12 · N3** | **Conforme** | Nessun testo dentro i pannelli delle esperienze, in Home e su `/siii/`, a tutte le larghezze; tre hotspot per pannello |
+| **C12 · V9** | **Conforme** | Otto gradi, da «000° N» a «315°», nei pannelli larghi 706 px o più, sotto le tacche lunghe (scarto 0,0 px). Nessun grado sotto i 700 px né nella hero di SIII (382–416 px) |
+| **C12 · N9** | **Conforme** | Dentro le porte restano nome, nodo e rilevamento: «256° · 37 KM» a Gravina, «SEDE» ad Acquaviva, «081° · 38 KM» a Monopoli, come atteso da brand-strategist. Nessuna coordinata dentro la porta: stanno sotto l'H3. A 320 px il nome si toglie (V7) |
+| Non regressione | Superata | 80 combinazioni (8 pagine × 5 larghezze, staging e pubblicazione): nessuno scorrimento orizzontale, nessuna riga di testo fuori viewport |
+
+### C14-1 [IMPORTANTE] Hero della Home su mobile: l'etichetta del gruppo murgiano esce dal bordo sinistro
+
+- **Dove.** `/`, orizzonte della hero, da 320 a 414 px, a riposo. `src/components/sections/Hero.astro`, riga 66: `<Horizon places={places} />` usa i centri di default di `Horizon.astro` (mobile 250°).
+- **Problema.**
+  - Con le coordinate di C11 il gruppo murgiano parte da 251°, cioè oltre il centro mobile. `Horizon.astro` appende a sinistra del nodo le etichette dei luoghi oltre il centro, e questa etichetta è larga 226 px.
+  - A riposo esce dal bordo sinistro di 46 px a 320, 34 a 340, 23 a 360, 15 a 375 e 6 a 390. A 414 px rientra, ma resta nella dissolvenza.
+  - A 390 px si legge «LTAMURA · CASSANO · GRAVINA / 51–256°»: è l'etichetta principale della prima schermata mobile.
+- **Motivazione.**
+  - DV §5, mobile: campo di 100° centrato sul gruppo murgiano, etichette compatte e intere.
+  - La dissolvenza ai bordi (DV §2) serve ai luoghi fuori campo, non all'etichetta al centro dell'inquadratura.
+  - DS §2.1: se cambiano le coordinate, si rimisura. Questa è la rimisura.
+- **Proposta** (provata in pagina): centro mobile a 238°.
+  - Da 390 px in su l'etichetta è intera e fuori dalla dissolvenza (41 px dal bordo a 390).
+  - A 340, 360 e 375 px è intera, dentro la dissolvenza (7, 20 e 30 px dal bordo). A 320 px sporge di 7 px, contro 46.
+  - Caltanissetta resta intera. Nessun incrocio da 320 a 699 px, a scroll 0, 150, 300 e 450. Con la rotazione (+60°) Varese entra ancora.
+  - Nessun luogo sta tra 238° e 250°: nessun'altra etichetta cambia lato. Tablet e desktop non cambiano.
+  ```astro
+  <!-- src/components/sections/Hero.astro, line 66. Mobile centre from 250° to 238°: the Murgia group
+       (251–256°) hangs to the left of its node and must stay inside the window (UI verification C14-1). -->
+  <Horizon places={places} centers={{ m: 238, t: 170, d: 170 }} />
+  ```
+- **Chi decide.** Il creative-director, perché «centrato su 250°» è un valore della DV §5. La sessione principale applica.
+- **Quando.** Prima del lancio: costa una riga. Non è un difetto di soglia, perché l'orizzonte è `aria-hidden`.
+
+### C14-2 [SUGGERIMENTO] N7 · Il nodo 2 della foto dell'evento sul leggio
+
+- **Dove.** `src/pages/index.astro`, riga 66, nodi del Documento; DV §4.2, posizioni dei nodi.
+- **Misura.** Ho sovrapposto al ritaglio Panorama una griglia all'1% e l'ho letta a 2×. Il piano del leggio, a sinistra dell'oratore, ha il centro a (36%, 30,7%). Lì il nodo sta su un oggetto del palco, a lato della figura, e non copre il marchio né la platea.
+- **Proposta.** Il nodo resta solo nel Panorama (senza `small`), come oggi; la legenda non cambia.
+  ```ts
+  // src/pages/index.astro, hotspot 2: on the lectern beside the speaker, not on his torso (G4 verdict, N7).
+  { x: 36, y: 31, label: 'Il palco dell’evento Puglia Digitale' },
+  ```
+- **Dopo.** Nella DV §4.2 «Palco (44%, 30%)» diventa «Palco, sul leggio (36%, 31%)» (creative-director).
+
+### C14-3 [SUGGERIMENTO] N8 · Carta della hero di Puglia Digitale: nomi su una riga
+
+- **Dove.** `src/components/ui/MapItaly.astro`, dopo la regola `.map__label > span:first-child`.
+- **Proposta** (provata iniettando la regola, da 720 a 1920 px). Una query di contenitore sulla carta, non sul viewport: le carte piccole non cambiano.
+  ```css
+  /* Wide maps (the Puglia Digitale hero from ~800 px): place names on one line, as on a printed
+     map at this scale (G4 verdict, N8). Small maps keep their two-line names. */
+  @container (min-width: 45rem) {
+    .map__label > span:first-child {
+      max-width: none;
+      white-space: nowrap;
+    }
+  }
+  ```
+- **Esito.**
+  - «ACQUAVIVA DELLE FONTI» e «GRAVINA IN PUGLIA» stanno su una riga quando la carta è larga almeno 720 px: da 800 px di viewport (carta di 736 px) fino a 1920.
+  - A 768 px (carta di 706 px) Acquaviva resta su due righe, come su mobile.
+  - Nessuna sovrapposizione tra testi e nodi, niente fuori carta né fuori schermo. Il punto più stretto è a 1024 px, tra le coordinate di Monopoli e il nome di Acquaviva: circa 12 px, leggibile.
+  - Le carte dei capitoli della Home, larghe al massimo 480 px, non cambiano.
+- **Nota.**
+  - Il verdetto chiede «da 1024 px», ma la regola vale anche tra 800 e 1023 px. Lì la carta è più larga che a 1024 px (924 px a 1000), perché da 1024 parte dalla colonna 3. Una query sulla larghezza della carta è più robusta di una sul viewport, e non ho trovato effetti negativi.
+  - Nello scope del componente la regola vince per ordine di dichiarazione. Iniettata da fuori, per provarla, serve un selettore più pesante.
+
+### C14-4 [SUGGERIMENTO] 404: nodo centrato sulla tacca
+
+- **Dove.** `src/pages/404.astro`, `.nf__node`.
+- **Problema.** Il centro del nodo sta 4,5 px a destra della tacca lunga del suo rilevamento: il nodo ha `left: 0`, la tacca è larga 1 px a partire da 0. Nell'Orizzonte i nodi sono centrati sul rilevamento.
+- **Proposta.**
+  ```css
+  /* 404.astro, .nf__node: centred on the 1 px tick of its bearing, like the Horizon nodes. */
+  left: -4.5px;
+  ```
+- **Dopo il lancio, facoltativo.** Su mobile solo il primo mondo ha il nodo sulla linea. Ogni mondo potrebbe aprirsi con un proprio tratto d'orizzonte e il suo nodo, come i capitoli della Home. Non è una regressione: è l'adattamento scelto con S10.
+
+### C14-5 [SUGGERIMENTO] `SlotPending.astro`: commento d'intestazione
+
+In d0b88ab i commenti interni sono sistemati. Resta il commento in testa al file, che descrive ancora le coordinate sotto il filo delle porte (tolte con N9) e il nome e il luogo in alto a sinistra nei pannelli (tolti con N3). Non ha effetti visivi: si allinea alla prossima modifica del file.
+
+### Design system allineato (versione 0.3)
+
+`docs/ui/design-system.md` segue ora la DV 0.3, la regola S4 e gli esiti di C14:
+- **coordinate** a 2 decimali da fonte unica, in §2.4, nella firma del footer, in Contatti, nelle porte e nell'immagine social: sede «40.90° N · 16.85° E», rilevamenti «da Acquaviva delle Fonti, il comune della sede» (`coordinate-luoghi.md` §5);
+- **hero della Home** senza invito allo scorrimento, con occhiello, riga di posizionamento, didascalia su tre righe e limiti della riga: al massimo 54 caratteri, su una riga da 1024 px (le varianti di E1 ci stanno);
+- **peso di `display-m`** secondo S4, con gli usi misurati sul sito;
+- **le due sfumature ammesse**, compresa la dissolvenza dell'Orizzonte (S1);
+- **decisioni del G4**: maschere, cascata, arrivo degli statement dei capitoli, 200° sul tablet solo in Home, nodi calce sulle foto, porte da ovest a est, copertina del video senza orizzonte, variante 404, campi del form allineati in basso (`end`), variante «in pubblicazione» con N3, V9 e N9, «10.000+» solo con conferma, numeri con il solo «30+»;
+- **proposte aperte**: C14-1, N7, N8 e S5 (nuovo token `--fs-ui`).
+
+### Prima del lancio e dopo
+
+- **Prima del lancio, consigliati e non bloccanti:** C14-1 (una riga), N7 (una riga), N8 (una regola), C14-4 (una riga).
+- **Dopo il lancio, a carico di ui-designer:** V15, V17, S5 (`.stat__value` sul token e `--fs-ui`), S8 con le foto dei luoghi, verifica su Safari iOS e Firefox.
+- **Quando arrivano i materiali:** copertina del video da un fotogramma reale, in AVIF e WebP (N4, C05); ritagli stretti della foto dell'evento, se manca la conferma dell'informativa sulle riprese (C07).
+
+### Verdetto di dominio (UI) dopo C14
+
+**Conforme. La verifica di fedeltà che C10 e C12 chiedono a ui-designer è chiusa.**
+- Le correzioni di C10 (I4, V4, V6, V10, V14, N1), di C11 e di C12 (N3, V9, N9), e i consigliati già applicati (S10, N6, N5), corrispondono alla DV 0.3 e al verdetto. Vale a tutte le larghezze provate, in staging e in pubblicazione.
+- C14-1 è un punto nuovo, nato da C11: lo raccomando prima del lancio. Il valore lo decide il creative-director.
+- Nessun bloccante di soglia. Il verdetto di gate spetta al creative-director.
+
+### Ipotesi da validare (C14)
+
+- Gli esiti valgono per d0b88ab perché da f1b6780 in `src/` cambiano solo commenti: l'ho verificato sul diff, non su una build nuova, perché alla ripresa i server non rispondevano.
+- Misure in Chromium. Il centro di C14-1 e la query di contenitore di N8 vanno riverificati su Safari iOS e Firefox `[DA VERIFICARE]`.
+
+### Domande aperte (C14)
+
+- **creative-director, DV §5, mobile.** «L'orizzonte cade a circa il 55% della prima schermata» non è più compatibile con la riga di posizionamento e la didascalia su tre righe. Misurato: 42% (352 px su 844 a 390). Propongo di scrivere il valore misurato.
+- **creative-director, DV §3.2.** Scrivere che i Passaggi interamente in `display-m` stanno a 600 in tutti e due i registri? Il verdetto dice il codice conforme, ma il testo della regola mette a 400 gli «statement secondari».
+
+### Decisioni richieste (C14)
+
+1. **C14-1** (creative-director): centro mobile dell'orizzonte della Home a 238° invece di 250° (DV §5). Consigliato prima del lancio.
+2. **N7** (creative-director): nodo 2 sul leggio (36%, 31%) e riga della DV §4.2.
+3. **N8** (creative-director): nomi su una riga con la soglia sulla larghezza della carta (45rem), invece che sul viewport (1024 px).

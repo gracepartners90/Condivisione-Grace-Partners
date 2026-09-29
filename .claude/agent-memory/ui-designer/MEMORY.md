@@ -16,9 +16,9 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Misurare il reflow a 320 px con il font reale** per ogni token display: la direzione visiva misura a 390 e 1440 e non vede l'uscita di «~200.000» a 320.
 
 ## Feedback e scelte
-- **Utente, 2026-09-28** (via sessione principale): le foto del fondatore si usano con il trattamento «inchiostro» (DR3-b). Il logo web senza trama poligonale resta una proposta da confermare al cliente.
+- **DR3 (ritratti del fondatore):** la build applica (b), trattamento «inchiostro», per scelta della sessione principale **in attesa della conferma dell'utente** (DV §4.3, ADR 002): non è una decisione dell'utente, non scriverlo così nei documenti. Il logo web senza trama poligonale resta una proposta da confermare al cliente.
 - Nessun feedback visivo ancora ricevuto sul design system.
-- **Sessione principale, 2026-09-28:** applicate quasi tutte le osservazioni della review di fedeltà e la variante «in pubblicazione» dei segnaposto. Scostamenti dalle mie proposte che ho accettato: statement di «Cosa si può fare» in `m` invece di `s`; righe mono dei segnaposto su due righe; hotspot a y 44–53%. I11 (ordine delle porte) resta ovest → est per scelta di ux-designer: decide il creative-director.
+- **Sessione principale, 2026-09-28:** applicate quasi tutte le osservazioni della review di fedeltà e la variante «in pubblicazione» dei segnaposto. Scostamenti dalle mie proposte che ho accettato: statement di «Cosa si può fare» in `m` invece di `s`; righe mono dei segnaposto su due righe; hotspot a y 44–53%. I11 (ordine delle porte): ovest → est, proposta di ux-designer confermata al G4.
 
 ## Review di fedeltà del sito (lezioni del 2026-09-28)
 - **Metodo efficiente (circa 35 chiamate):** un solo script in scratchpad (`ui-review.mjs`) che, per pagina e larghezza, scorre (attiva i reveal), torna in cima, salva la pagina intera e lancia una sonda DOM: gradino di token per ogni testo (via `var(--fs-*)` risolti in un div), pesi e famiglie, contrasto, accenti fuori posto, raggi, ombre, gradienti, filtri, overflow a 320, caratteri per riga, bersagli, giro di tastiera e testo nascosto con reduced motion e senza JS. Poi fogli con sharp: 390 px a scala 1 (5 strisce da 1800), 1440 a 0,3 per la composizione, ritagli nativi per i dettagli.
@@ -39,3 +39,14 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Animazioni con timer:** per osservare la fine di un'animazione prima di un timer JS (es. `.is-revealed`), si rinviano i `setTimeout` lunghi con un `addInitScript`, poi si confronta al pixel lo stato congelato con quello finale. `Animation.setPlaybackRate` rallenta le transizioni CSS ma non i timer, e falsa la sequenza.
 - **Form a due colonne:** tra `align-content` `start`, `end` e subgrid ho scelto `end`. Riquadri allineati a riposo e dopo un invio vuoto, etichette vicine, ritmo invariato. La subgrid con traccia del messaggio variabile rompe il posizionamento automatico con un solo errore.
 - **Bash:** il classificatore a volte non risponde; riprovare dopo qualche lettura. Script riusabili in `scratchpad/ui-verifica/` (verify, pubcheck, elshot, crop, sbs, sheet, rows, chaptest, i8test).
+
+## Verifica C14 dopo il verdetto G4 (lezioni del 2026-09-28)
+- **Esito delle mie proposte al G4:** accolte V4, V6, V9, V10, V14 (solo nella hero della Home: su Città Digitali 200° sovrapponeva le etichette) e `align-content: end` nel form; S1 (togliere la dissolvenza dell'orizzonte) superata: il creative-director la tiene come eccezione registrata. S4 è diventata una regola della DV §3.2.
+- **Un cambio di dati sposta la composizione:** con le coordinate a 2 decimali (C11) il gruppo murgiano è passato da un lato all'altro del centro mobile e la sua etichetta si è appesa a sinistra, uscendo dal bordo. Dopo ogni cambio di luoghi, coordinate o centri si rimisurano sia gli incroci sia le etichette tagliate a riposo, non solo gli incroci.
+- **Snippet per stili con scope di Astro:** i selettori compilati (`.x[data-astro-cid-…]`) pesano più di una regola iniettata da fuori. Per simulare una regola che nel componente vincerebbe per ordine, iniettarla con un selettore più pesante o con `!important`; altrimenti la prova sembra senza effetto.
+- **Sovrapposizioni vere:** i box delle etichette (`width: max-content`, griglia) si toccano anche quando i testi no. Misurare sugli `getClientRects()` di un Range del testo.
+- **Soglie di componente:** la larghezza di una carta non cresce sempre con il viewport (a 1000 px è più larga che a 1024, dove parte dalla colonna 3). Per le soglie di un componente meglio una query di contenitore.
+- **Hero con orizzonte ruotato dallo scroll:** gli screenshot a pagina intera lo mostrano già ruotato; la prima schermata va fotografata nel viewport a scroll 0.
+- **Server di verifica:** tra una sessione e l'altra possono spegnersi. Scrivere gli esiti nella review appena misurati; se il diff dopo la build misurata tocca solo commenti, dichiararlo invece di ricostruire.
+- **Script riusabili C14** in `scratchpad/ui-verifica/`: c14, c14b, rows2 (incroci e tagli a riposo), v14b (700–767 fine), center2 (prova dei centri), pub14 (variante in pubblicazione), reflow14, s4 e s4b (pesi di `display-m`), n8b e n8c (etichette della carta), n7grid e n7check (posizione del nodo sulla foto).
+
