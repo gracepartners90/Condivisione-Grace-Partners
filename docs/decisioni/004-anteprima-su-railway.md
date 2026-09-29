@@ -51,7 +51,7 @@ Per il server su Railway:
 - **Configurazione creata il 2026-09-28** con il connettore Railway autorizzato dall'utente:
   - progetto `itnode-anteprima` (workspace personale di gracepartners90), ambiente `production`;
   - servizio `itnode-sito`, collegato al repository `gracepartners90/Condivisione-Grace-Partners`, branch `claude/itnode-site-team-build-u58cb9`: ogni push ricostruisce l'anteprima;
-  - variabile `PREVIEW_AUTH` impostata prima del primo deploy (utente `itnode`; la password non è nel repository: si legge tra le variabili del servizio);
+  - variabile `PREVIEW_AUTH` impostata prima del primo deploy (utente `itnode`; la password non è nel repository: si legge tra le variabili del servizio); dal 2026-09-29 vale `off` per decisione dell'utente: anteprima aperta, sempre `noindex` (deploy 11d0c9b4, log «public preview»);
   - il progetto `itnode-website`, che ospita il video, non è stato toccato;
   - indirizzo generato dall'utente: https://itnode-sito-production.up.railway.app (porta 8080).
 - Se la produzione andrà su Railway: dominio personalizzato, `INDEXING=on`, e una verifica del TTFB fuori dall'Italia da parte di web-performance-specialist (origine in una sola regione, ADR 001). Se andrà altrove, il server resta solo per le anteprime.
