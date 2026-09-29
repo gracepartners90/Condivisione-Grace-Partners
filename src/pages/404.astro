@@ -153,7 +153,8 @@ const worlds = [
   .nf__node {
     position: absolute;
     top: calc(-1 * var(--space-xl) - 5px);
-    left: 0;
+    /* Centred on the 1 px tick of its bearing, like the Horizon nodes (C14-4). */
+    left: -4.5px;
     width: 10px;
     height: 10px;
     border-radius: 50%;

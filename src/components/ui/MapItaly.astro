@@ -209,6 +209,15 @@ if (!data) {
     white-space: normal;
   }
 
+  /* Wide maps (the Puglia Digitale hero from ~800 px): place names on one line, as on a printed
+     map at this scale (N8). Small maps keep their two-line names. */
+  @container (min-width: 45rem) {
+    .map__label > span:first-child {
+      max-width: none;
+      white-space: nowrap;
+    }
+  }
+
   .map__place--label-left .map__label {
     left: auto;
     right: 14px;

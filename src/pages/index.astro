@@ -63,7 +63,8 @@ const schema = pageGraph('home', [person()], { about: ids.organization });
     surface="pietra"
     hotspots={[
       { x: 13.3, y: 18, small: { x: 37.7, y: 18 }, label: 'Vista aerea a 360° di una città, con le attività in evidenza' },
-      { x: 44, y: 30, label: 'Il palco dell’evento Puglia Digitale' },
+      // On the lectern beside the speaker, not on a person (visual direction §4.2, N7).
+      { x: 36, y: 31, label: 'Il palco dell’evento Puglia Digitale' },
       { x: 85, y: 16, label: 'Una piazza storica esplorabile a 360°' },
     ]}
   />

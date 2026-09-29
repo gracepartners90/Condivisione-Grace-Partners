@@ -63,7 +63,9 @@ const secondLines = second.split('\n');
         </h1>
         {lead && <p class="hero-home__lead t-lead">{lead}</p>}
         <div class="hero-home__horizon">
-          <Horizon places={places} />
+          {/* Mobile centre 238° instead of 250°: the Murgia group (251–256°) hangs to the left of its
+              node and must stay inside the window (visual direction §5, C14-1). */}
+          <Horizon places={places} centers={{ m: 238, t: 170, d: 170 }} />
         </div>
         {caption && (
           <p class="hero-home__caption t-label">

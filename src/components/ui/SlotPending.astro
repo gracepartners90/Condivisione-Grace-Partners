@@ -4,10 +4,12 @@
  * of 2026-09-28). Rendered by Media when PUBLIC_SLOT_MODE=publish, in place of the declared
  * placeholder: same box and ratio (no CLS), no service text, zero image bytes.
  * - place (Porta 3:5): a horizon at 58% (the hero's sky/ground ratio), the name standing on
- *   it, the place node on the thread; bearing, distance and coordinates below.
+ *   it, the place node on the thread; bearing and distance below (the coordinates are already
+ *   under the H3 beside the door, N9).
  * - experience (Schermo 16:10): the comparison figure without labels: a graduated horizon
- *   at 62% with degrees every 45° on wide screens, three still hotspot rings, name and place
- *   top left (pages that do not name them pass no text: Media `pendingText={false}`).
+ *   at 62% with degrees every 45° on wide screens, three still hotspot rings. Name and place
+ *   top left only where the page does not already name them: Home and /siii/ pass no text
+ *   (Media `pendingText={false}`, N3).
  * Decorative: name and place are already in the text next to it, nothing is focusable.
  */
 import type { SlotPublish } from '../../data/asset-slots';
