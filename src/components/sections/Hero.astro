@@ -230,6 +230,20 @@ const secondLines = second.split('\n');
     }
   }
 
+  /* Phones: the +60° happen in the first 60svh of scroll, while the horizon is still visible
+     below the sticky header; with 100svh only 24–34° are seen before it goes under the header,
+     and Varese never leaves the edge fade (UI recheck R1). Never over less scroll than the strip
+     travels (60vw = 60° of the 100° mobile field), so the strip never moves faster than the page,
+     also on landscape phones (ux-designer, a11y §2.6). Heavier than the component's own rule:
+     tablets, desktop and the Città Digitali horizon keep 0–100svh. */
+  @media (max-width: 43.74em) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .hero--home .hero-home__horizon :global(.horizon__strip) {
+        animation-range-end: max(60svh, 60vw);
+      }
+    }
+  }
+
   @media (min-width: 64em) {
     /* Earth and lead are sized by their content: the horizon sits at ~57% at 1440 × 900. */
     .hero-home {
