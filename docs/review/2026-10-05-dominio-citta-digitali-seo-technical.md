@@ -3,9 +3,9 @@ titolo: Review del dominio del portale Città Digitali
 owner: seo-technical
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md (§22), docs/brief/brief-consolidato.md (glossario, S7), docs/strategia/citta-digitali-elenco.md (§1, §5), conferma dell'utente del 2026-10-05 riferita dalla sessione principale, commit eb691ee e 9b7c5c4, src/data/site.ts, src/lib/structured-data.ts, src/scripts/track.ts, scripts/seo-check.mjs, dist/ (build del 2026-10-05), fonti web elencate in fondo]
+fonti: [docs/brief/linee-guida.md (§22), docs/brief/brief-consolidato.md (glossario, S7, omonimie), docs/strategia/citta-digitali-elenco.md (§1, §5), conferme dell'utente del 2026-10-05 sui domini di Città Digitali e Puglia Digitale, riferite dalla sessione principale, commit eb691ee, 9b7c5c4, 0a61546 e d419d0d, src/data/site.ts, src/lib/structured-data.ts, src/scripts/track.ts, scripts/seo-check.mjs, dist/ (build del 2026-10-05), fonti web elencate in fondo]
 ---
 
 # Review · dominio del portale Città Digitali (Fase 5, dopo G4)
@@ -71,30 +71,44 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
 | Totale | 18 occorrenze del punycode (11 link più 7 JSON-LD), le stesse contate dalla sessione principale |
 | `npm run check:seo` | Nessun problema |
 
+**Aggiornamento del 2026-10-05, versione 1.1.** Ho ricostruito la build dopo i commit `0a61546` e `d419d0d`.
+- **Città Digitali.**
+  - I link al portale sono 12: in più c'è «Tutte le città sul portale», su `/citta-digitali/`, verso `https://xn--cittdigitali-19a.it/tutte-le-citta/`. È conforme: https, punycode, senza www, con la barra finale come nell'indice, `_blank` e `noopener`.
+  - Le occorrenze del punycode sono 19.
+  - Il JSON-LD non cambia: `brand.url` resta `https://xn--cittdigitali-19a.it/` (oss. 5).
+- **`check:seo`**, che ora contiene la guardia dell'oss. 4: nessun problema.
+- **Puglia Digitale.**
+  - 12 link in 8 pagine: footer (8), Contatti (1), e su `/puglia-digitale/` CTA dell'hero, link nel testo e azione dopo l'invio del modulo (3).
+  - Tutti puntano a `https://www.lapugliadigitale.it`, con `_blank` e `noopener`.
+  - Nessun valore nel JSON-LD.
+  - `puglia-digitale.it` non compare.
+
 ## Osservazioni
 
-### 1. [BLOCCANTE per il go-live] Verifica del portale da una rete normale
-- **Dove**: link e JSON-LD del portale su 8 pagine; `src/data/site.ts`, riga 58.
-- **Problema**: da qui il portale è bloccato. Non posso verificare:
+### 1. [BLOCCANTE per il go-live] Verifica dei portali da una rete normale
+**Estesa il 2026-10-05 a Puglia Digitale**, dopo la conferma del dominio (oss. 2). Lo script qui sotto copre i due portali.
+- **Dove**:
+  - Città Digitali: link e JSON-LD su 8 pagine, compreso `/tutte-le-citta/`; `src/data/site.ts`, riga 58;
+  - Puglia Digitale: 12 link su 8 pagine; `portals.pugliaDigitale` in `src/data/site.ts`.
+- **Problema**: da qui i portali sono bloccati. Per ciascuno non posso verificare:
   - che il dominio si risolva;
   - che risponda in HTTPS con un certificato valido;
   - come si comportano `www.` e `http://`;
   - quale forma canonica dichiara.
 - **Motivazione**:
   - specifiche 5.2 e controllo 13: link diretti all'URL finale, che risponde 200;
-  - il portale è la CTA primaria della pagina Città Digitali e compare nel footer di ogni pagina;
+  - ogni portale è la CTA primaria della propria pagina e compare nel footer di ogni pagina;
   - un dominio delle linee guida che non si risolveva è già passato inosservato fino al 2026-10-05.
-- **Proposta**: chi ha una rete senza blocchi, per esempio l'utente, esegue lo script e gira l'output a seo-technical. Io chiudo la verifica e, se serve, indico la riga da cambiare. Lo script verifica anche gli altri link esterni (oss. 2) ed è collaudato su un host raggiungibile; sul portale non l'ho eseguito.
+- **Proposta**: chi ha una rete senza blocchi, per esempio l'utente, esegue lo script e gira l'output a seo-technical. Io chiudo la verifica e, se serve, indico la riga da cambiare. Lo script verifica anche gli altri link esterni (oss. 2). La versione 1.1 è collaudata solo su host raggiungibili: sui portali non l'ho eseguita.
 
   ```bash
   #!/usr/bin/env bash
   # External links of the new ITnode site: checks from a network without blocks
   # (docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, obs. 1 and 2).
-  H="${1:-xn--cittdigitali-19a.it}"   # cittàdigitali.it
 
   hop() {   # one request, no redirects followed: status code and Location
     local out rc
-    printf '%-50s ' "$1"
+    printf '%-55s ' "$1"
     out=$(curl -s -o /dev/null -m 15 -w '%{http_code} -> %{redirect_url}' "$1"); rc=$?
     case $rc in
       0) echo "$out" ;;
@@ -105,33 +119,40 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
     esac
   }
 
-  echo "== 1. Città Digitali portal: each variant, one hop at a time"
-  for u in "https://$H/" "http://$H/" "https://www.$H/" "http://www.$H/"; do hop "$u"; done
+  portal() {   # $1 = registered domain, $2 = URL linked by the site
+    local d="$1" link="$2" host="${2#*://}"
+    host="${host%%/*}"
+    echo "== $d: each variant, one hop at a time"
+    for u in "https://$d/" "http://$d/" "https://www.$d/" "http://www.$d/"; do hop "$u"; done
+    echo "== $d: full chain from the site's link ($link)"
+    curl -sL -o /dev/null -m 30 -w '%{http_code}, %{num_redirects} redirect(s), final URL: %{url_effective}\n' "$link" || echo "curl error $?"
+    echo "== $d: canonical and URLs declared by the home page"
+    curl -sL -m 30 "$link" | grep -ioE "<link[^>]*canonical[^>]*>|<meta[^>]*og:url[^>]*>|\"url\" *: *\"[^\"]*\"" | sort -u | head -n 10
+    echo "== $d: TLS certificate of $host (names covered, expiry)"
+    echo | openssl s_client -connect "$host:443" -servername "$host" 2>/dev/null | openssl x509 -noout -subject -enddate -ext subjectAltName 2>/dev/null || echo "certificate not readable"
+  }
 
-  echo "== 2. Full chain from the site's link"
-  curl -sL -o /dev/null -m 30 -w '%{http_code}, %{num_redirects} redirect(s), final URL: %{url_effective}\n' "https://$H" || echo "curl error $?"
+  portal xn--cittdigitali-19a.it https://xn--cittdigitali-19a.it   # cittàdigitali.it
+  portal lapugliadigitale.it https://www.lapugliadigitale.it
 
-  echo "== 3. Canonical and URLs declared by the portal's home page"
-  curl -sL -m 30 "https://$H/" | grep -ioE "<link[^>]*canonical[^>]*>|<meta[^>]*og:url[^>]*>|\"url\" *: *\"[^\"]*\"" | sort -u | head -n 10
-
-  echo "== 4. TLS certificate: names covered and expiry"
-  echo | openssl s_client -connect "$H:443" -servername "$H" 2>/dev/null | openssl x509 -noout -subject -enddate -ext subjectAltName 2>/dev/null || echo "certificate not readable"
-
-  echo "== 5. Other external links in the build: expected 200 with no Location (LinkedIn often answers 999 to scripts: open it in a browser)"
-  for u in https://www.lapugliadigitale.it https://www.varesedigitale.it https://www.altamuradigitale.com \
-           https://www.caltanissettadigitale.it https://www.acquavivadigitale.com https://www.gravinadigitale.it \
-           https://www.monopolidigitale.it https://www.acquavivadigitale.com/dielle/ \
-           https://www.cassanodigitale.it/masseriasantella/ https://www.monopolidigitale.it/maisonmimina/ \
-           https://www.linkedin.com/in/giacomo-lenoci/; do hop "$u"; done
+  echo "== Other external links in the build: expected 200 with no Location (LinkedIn often answers 999 to scripts: open it in a browser)"
+  for u in https://xn--cittdigitali-19a.it/tutte-le-citta/ \
+           https://www.varesedigitale.it https://www.altamuradigitale.com https://www.caltanissettadigitale.it \
+           https://www.acquavivadigitale.com https://www.gravinadigitale.it https://www.monopolidigitale.it \
+           https://www.acquavivadigitale.com/dielle/ https://www.cassanodigitale.it/masseriasantella/ \
+           https://www.monopolidigitale.it/maisonmimina/ https://www.linkedin.com/in/giacomo-lenoci/; do hop "$u"; done
   ```
 
-  **Esiti attesi per il portale e cosa fare se sono diversi:**
+  **Esiti attesi per Puglia Digitale** e cosa fare se sono diversi: specifiche, sezione 5.4. Il link usa il www, come nelle linee guida, perché nell'indice non c'è un host da seguire.
+
+  **Esiti attesi per Città Digitali e cosa fare se sono diversi:**
 
   | Verifica | Atteso | Se diverso |
   |---|---|---|
   | `https://xn--cittdigitali-19a.it/` | `200 ->`, senza Location | **Redirect verso `https://www.…/`**: in `src/data/site.ts` `url` diventa `'https://www.xn--cittdigitali-19a.it'`, e il JSON-LD lo segue da solo. Il testo visibile resta `cittàdigitali.it`. **DNS, TLS o 5xx**: il go-live si blocca finché il cliente non sistema il dominio, oppure finché creative-director non decide di togliere il link |
   | `http://…`, `https://www.…`, `http://www.…` | `301` o `308` verso `https://xn--cittdigitali-19a.it/`, oppure `www.` che non si risolve | Si segnala al cliente: il nostro link non cambia. Se `www.` risponde 200 senza redirect, il portale ha due copie della home: è un problema del portale, non del sito |
   | Catena dal link del sito | `200, 0 redirect(s)`, URL finale `https://xn--cittdigitali-19a.it/` | Il link si allinea all'URL finale |
+  | `https://xn--cittdigitali-19a.it/tutte-le-citta/` (blocco degli altri link) | `200 ->`, senza Location | Il link si allinea all'URL finale, per esempio senza la barra finale se il portale reindirizza lì |
   | Canonical della home del portale | `https://xn--cittdigitali-19a.it/`, oppure la stessa forma in Unicode | Il link segue l'URL che il portale serve senza redirect; l'incoerenza si segnala al cliente |
   | Certificato | Il nome `xn--cittdigitali-19a.it` è tra i SAN, e la scadenza non è vicina al lancio | Si segnala al cliente |
   | Browser | Il link del footer e «Visita il portale» aprono la home del portale in una nuova scheda, e la barra degli indirizzi mostra `cittàdigitali.it` | Si segnala a seo-technical |
@@ -145,18 +166,24 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
 
   | Link del sito | Indizio |
   |---|---|
-  | `https://www.lapugliadigitale.it` (8 pagine) | La ricerca non restituisce pagine di questo dominio, come già per brand-strategist (elenco, §1). Nell'indice c'è invece `https://puglia-digitale.it/`, «Puglia Digitale», una piattaforma di esperienze immersive sulle città pugliesi `[DA VERIFICARE: se è del cliente]` |
+  | `https://www.lapugliadigitale.it` (8 pagine) | **Chiuso il 2026-10-05** (nota sotto la tabella). Indizio di partenza: la ricerca non restituisce pagine di questo dominio, come già per brand-strategist (elenco, §1). Nell'indice c'è invece `https://puglia-digitale.it/`, «Puglia Digitale» |
   | `https://www.varesedigitale.it` | Nell'indice c'è il dominio senza www, `https://varesedigitale.it/` («Varese Virtual Tour»): il link con www passa probabilmente da un redirect |
   | `https://www.altamuradigitale.com` | Nessuna pagina del dominio. «Altamura Digitale» nell'indice è un portale di servizi del Comune per cittadini e imprese, quindi un probabile omonimo `[DA VERIFICARE]`. La pagina di Altamura del cliente sta su `www2.cittàdigitali.it` (elenco, §2) |
   | `https://www.caltanissettadigitale.it` | Nessuna pagina del dominio. Esiste invece `https://xn--cittdigitali-19a.it/caltanissetta/` |
   | acquavivadigitale.com, gravinadigitale.it, monopolidigitale.it, cassanodigitale.it | La ricerca combinata non restituisce nulla: indizio non conclusivo |
 
+  **Nota di chiusura per Puglia Digitale (2026-10-05).**
+  - L'utente ha confermato che il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida (§22). Il sito lo usa già: nessuna modifica in `src/`.
+  - `puglia-digitale.it` è il portale dell'associazione culturale Campo&Controcampo: non si cita né si linka. Era già registrato così tra le omonimie del brief consolidato prima di questa review. Non avrei dovuto presentarlo come possibile portale del cliente.
+  - Resta da verificare da una rete normale il www o il dominio senza www e la risposta in HTTPS: oss. 1 e specifiche, sez. 5.4.
+  - La parte sui portali delle città resta aperta: l'utente non ha ancora risposto.
+
 - **Motivazione**:
   - specifiche 5.2 e controllo 13: 200 senza redirect;
   - soglia 1 (veridicità): un link verso un omonimo o un dominio scaduto presenta come del cliente un sito che non lo è.
 - **Proposta**:
-  1. Stessa verifica da una rete normale: è il blocco 5 dello script dell'oss. 1.
-  2. Due domande al cliente (vedi Domande aperte): il dominio di Puglia Digitale e i portali delle città.
+  1. Stessa verifica da una rete normale: è il blocco «Other external links» dello script dell'oss. 1.
+  2. Una domanda al cliente sui portali delle città (vedi Domande aperte). Quella sul dominio di Puglia Digitale è chiusa il 2026-10-05.
   3. Se un indirizzo risponde con un redirect verso un altro URL del cliente, il link passa all'URL finale. Basta una riga in `src/data/site.ts`, che indico io dopo la verifica.
   4. Se un dominio non risponde o è di altri, il link passa alla pagina della città su cittàdigitali.it, se esiste e il cliente la conferma, oppure si toglie.
      - Il testo visibile lo decidono copywriter-content e brand-strategist.
@@ -164,6 +191,10 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
      - La forma dell'URL spetta a me.
 
 ### 3. [IMPORTANTE] Documenti di altri membri con il dominio senza accento
+**Stato al 2026-10-05, versione 1.1: allineati.**
+- In tutti e 7 i documenti della tabella il dominio senza accento compare ormai solo come forma da non usare o nelle note di modifica.
+- I due copy deck di copywriter-content sono modificati ma non ancora committati.
+
 - **Dove**, per owner:
 
   | Owner | File e righe |
@@ -189,6 +220,18 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
   - `utm_source` `cittadigitali` in `docs/cro/piano-misurazione.md`: è un'etichetta, non un dominio.
 
 ### 4. [SUGGERIMENTO] Guardia contro il ritorno del dominio sbagliato in `scripts/seo-check.mjs`
+**Applicata il 2026-10-05**, nel commit `d419d0d`.
+
+**Aggiunta proposta il 2026-10-05**, dopo la conferma su Puglia Digitale: mettere in `FORBIDDEN_HOSTS` anche l'omonimo `puglia-digitale.it`. Ho provato la modifica su una copia dello script:
+- sulla build attuale: nessun problema, quindi nessun falso positivo sui percorsi `/puglia-digitale/`;
+- su una copia alterata, con l'omonimo in un `href` e nel testo: i 2 casi vengono segnalati.
+
+```diff
+-const FORBIDDEN_HOSTS = [/(?<![\w.-])(?:www\.)?cittadigitali\.it/i];
++const FORBIDDEN_HOSTS = [/(?<![\w.-])(?:www\.)?cittadigitali\.it/i, /(?<![\w.-])(?:www\.)?puglia-digitale\.it/i];
+```
+
+Testo originale dell'osservazione:
 - **Dove**: `scripts/seo-check.mjs`.
 - **Problema**: oggi nessun controllo impedisce che `cittadigitali.it` torni nel sito, per esempio copiando un copy deck non ancora allineato (oss. 3). Nessun controllo verifica neppure che gli URL siano in ASCII.
 - **Motivazione**: specifiche 5.3 e controllo 13.
@@ -220,6 +263,8 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
   ```
 
 ### 5. [SUGGERIMENTO] `brand.url` costruito con `abs()`
+**Applicata il 2026-10-05**, nel commit `d419d0d`. Nella build `brand.url` resta `https://xn--cittdigitali-19a.it/`.
+
 - **Dove**: `src/lib/structured-data.ts`, riga 67.
 - **Problema**: oggi `url` è `${portals.cittaDigitali.url}/`. Funziona finché in `site.ts` l'URL è senza barra e in ASCII. Ho verificato due casi:
   - se qualcuno scrivesse `'https://xn--cittdigitali-19a.it/'`, il JSON-LD diventerebbe `https://xn--cittdigitali-19a.it//`, cioè un URL diverso;
@@ -255,13 +300,20 @@ Decido io, come owner della SEO tecnica. La regola è registrata nelle specifich
   - valori confermati;
   - nota sul Brand Puglia Digitale, che il codice non pubblica finché il cliente non risponde a D1, per cui la WebPage di `/puglia-digitale/` esce senza `about`;
   - validazione, fonti, ipotesi, domande e decisioni.
-- **Checklist di lancio**: `docs/seo/checklist-lancio.md` non esiste ancora. Si scrive con lo staging sull'hosting scelto (verdetto G4, passo 3). Le verifiche del portale sono nella sezione 5.3 delle specifiche e nell'oss. 1, pronte per entrarci.
+- **Versioni 0.3, del 2026-10-05, dopo la conferma su Puglia Digitale**:
+  - specifiche: nuova sezione 5.4 per Puglia Digitale, con il fatto confermato, la forma dell'indirizzo e le verifiche da una rete normale. La domanda 9 è chiusa con una nota datata; aggiornati 5.2, il controllo 13, la domanda 11, le ipotesi e le decisioni;
+  - dati strutturati: `url` del Brand Puglia Digitale confermato nel dominio, con il www da verificare; aggiornate ipotesi e domande.
+- **Checklist di lancio**: `docs/seo/checklist-lancio.md` non esiste ancora. Si scrive con lo staging sull'hosting scelto (verdetto G4, passo 3). Le verifiche dei due portali sono nelle sezioni 5.3 e 5.4 delle specifiche e nell'oss. 1, pronte per entrarci.
 
 ## Verdetto di dominio (SEO tecnica)
-**Correzione conforme. Per questo punto la build è approvata; il go-live del link dipende dall'oss. 1.**
-- La forma applicata nel commit `eb691ee` coincide con la mia decisione: nessuna modifica obbligatoria in `src/`.
-- In `dist/` il dominio senza accento non compare più. Link, attributi, JSON-LD e testo visibile sono coerenti.
-- Prima del go-live vanno chiuse l'oss. 1 (bloccante) e le oss. 2 e 3. Le oss. 4–6 sono miglioramenti.
+**Correzione conforme. Per questo punto la build è approvata; il go-live dei link ai due portali dipende dall'oss. 1.**
+- La forma applicata nel commit `eb691ee` coincide con la mia decisione: nessuna modifica obbligatoria in `src/`. Per Puglia Digitale il dominio confermato è quello già in uso.
+- In `dist/` il dominio senza accento non compare più, e l'omonimo `puglia-digitale.it` non compare. Link, attributi, JSON-LD e testo visibile sono coerenti (verifica ripetuta nella versione 1.1).
+- Prima del go-live vanno chiuse:
+  - l'oss. 1, bloccante, per entrambi i portali;
+  - l'oss. 2, per i portali delle città.
+- L'oss. 3 è chiusa nei documenti; resta il commit dei copy deck.
+- Le oss. 4 e 5 sono applicate. Restano l'aggiunta proposta all'oss. 4 e l'oss. 6, entrambe miglioramenti.
 - Il verdetto di gate spetta al creative-director.
 
 ## Fonti
@@ -271,29 +323,32 @@ Consultate il 2026-10-05 tramite gli estratti dei risultati di ricerca: develope
 - W3C, IDN in forma ASCII negli URI: https://www.w3.org/International/articles/idn-and-iri/
 - Portale nell'indice, dominio senza www: https://xn--cittdigitali-19a.it/ · https://xn--cittdigitali-19a.it/il-progetto/ · https://xn--cittdigitali-19a.it/contatti/ · https://xn--cittdigitali-19a.it/dati-aziendali/ · https://xn--cittdigitali-19a.it/caltanissetta/
 - Omonimo sul dominio senza accento: http://www.cittadigitali.it/ («CITTA' DIGITALI»)
-- Puglia Digitale: https://puglia-digitale.it/ («Puglia Digitale»); nessun risultato per lapugliadigitale.it
+- Puglia Digitale: nessun risultato per lapugliadigitale.it. Omonimo dell'associazione Campo&Controcampo (brief consolidato, omonimie): https://puglia-digitale.it/ («Puglia Digitale»)
 - Varese: https://varesedigitale.it/ («Varese Virtual Tour»)
 - Altamura Digitale, servizi del Comune: https://www.altamuralife.it/notizie/arriva-altamura-digitale-il-comune-a-portata-di-clik/
 
 ## Ipotesi da validare
 - La forma canonica del portale Città Digitali è il dominio senza www, `https://xn--cittdigitali-19a.it/` (oss. 1).
-- `puglia-digitale.it` è il portale di Puglia Digitale del cliente e non un omonimo (oss. 2).
+- La forma canonica del portale Puglia Digitale è con www, `https://www.lapugliadigitale.it/`, come nelle linee guida (oss. 1; specifiche, sez. 5.4).
 - I domini delle città indicati dalle linee guida sono ancora attivi e del cliente (oss. 2).
 
 ## Domande aperte
 - **Chiusa il 2026-10-05**. La domanda era «Il portale è cittàdigitali.it? Il dominio cittadigitali.it, senza accento, è vostro?». Risposta dell'utente: il portale è cittàdigitali.it; il dominio senza accento non è del cliente.
+- **Chiusa il 2026-10-05**. La domanda era «Il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida, oppure puglia-digitale.it?». Risposta dell'utente: il portale è lapugliadigitale.it; puglia-digitale.it è dell'associazione Campo&Controcampo.
 - **Utente**, o chiunque abbia una rete senza blocchi: eseguire lo script dell'oss. 1 e girare l'output a seo-technical.
 - **Cliente**:
-  1. Il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida, oppure puglia-digitale.it?
+  1. *Chiusa il 2026-10-05: dominio di Puglia Digitale (vedi sopra).*
   2. I portali delle città (varesedigitale.it, altamuradigitale.com, caltanissettadigitale.it, gravinadigitale.it, monopolidigitale.it, acquavivadigitale.com) sono attivi e vostri? Per le città che ora hanno una pagina su cittàdigitali.it, quale indirizzo preferite che il sito linki?
-  3. Solo se la verifica lo rende necessario: il portale risponde sia con www sia senza, senza redirect. Quale dei due è l'indirizzo ufficiale?
+  3. Solo se la verifica lo rende necessario: un portale (cittàdigitali.it o lapugliadigitale.it) risponde sia con www sia senza, senza redirect. Quale dei due è l'indirizzo ufficiale?
 
 ## Decisioni richieste
-- **seo-technical (presa)**: forma dell'indirizzo del portale e regola sugli IDN, registrate nelle specifiche, sezione 5.3.
+- **seo-technical (presa)**:
+  - forma dell'indirizzo di Città Digitali e regola sugli IDN (specifiche, sezione 5.3);
+  - per Puglia Digitale, forma con www fino alla verifica (sezione 5.4).
 - **Sessione principale**:
-  - oss. 4 e 5, facoltative;
+  - oss. 4 e 5, applicate nel commit `d419d0d`; l'aggiunta di `puglia-digitale.it` all'oss. 4 è facoltativa;
   - dopo l'output dell'oss. 1, l'eventuale modifica di una riga in `src/data/site.ts` che indicherò io;
-  - le domande al cliente nell'elenco del verdetto G4, §6.
-- **copywriter-content, copywriter-brand, ux-designer e cro-specialist**: allineare i propri documenti (oss. 3).
+  - la domanda sui portali delle città nell'elenco del verdetto G4, §6.
+- **copywriter-content, copywriter-brand, ux-designer e cro-specialist**: allineare i propri documenti (oss. 3). Fatto al 2026-10-05; copywriter-content deve ancora committare i copy deck.
 - **cro-specialist**: oss. 6.
 - **creative-director**: nessuna decisione nuova se la verifica dà gli esiti attesi. Altrimenti decide se togliere i link che non funzionano (oss. 1 e 2).

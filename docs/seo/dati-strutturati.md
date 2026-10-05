@@ -3,9 +3,9 @@ titolo: Piano dei dati strutturati (JSON-LD)
 owner: seo-technical
 contributi: [seo-content, copywriter-content]
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/seo/specifiche-tecniche.md, docs/seo/ricerca-keyword.md, conferma dell'utente del 2026-10-05 sul dominio di Città Digitali, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, fonti web elencate in fondo]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (omonimie), docs/seo/specifiche-tecniche.md, docs/seo/ricerca-keyword.md, conferme dell'utente del 2026-10-05 sui domini di Città Digitali e Puglia Digitale, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, fonti web elencate in fondo]
 ---
 
 # Piano dei dati strutturati (JSON-LD)
@@ -189,7 +189,10 @@ Valori da confermare prima della pubblicazione:
   - Il dominio è confermato dall'utente il 2026-10-05. Il dominio senza accento, `cittadigitali.it`, non è del cliente e non va mai usato.
   - Prima del go-live resta da verificare da una rete normale la forma canonica del portale (specifiche, sez. 5.3).
   - Nel codice l'URL viene da `portals.cittaDigitali.url` (`src/data/site.ts`): nessun indirizzo scritto a mano nel markup.
-- **Brand Puglia Digitale**: nel codice non si pubblica finché il cliente non conferma il ruolo di ITnode (brief D1; `src/lib/structured-data.ts`). Per questo la WebPage di `/puglia-digitale/` esce senza `about`. L'esempio mostra il nodo come sarà dopo la conferma; il suo `url` è `[DA VERIFICARE]` (specifiche, domanda 9).
+- **Brand Puglia Digitale**: nel codice non si pubblica finché il cliente non conferma il ruolo di ITnode (brief D1; `src/lib/structured-data.ts`). Per questo la WebPage di `/puglia-digitale/` esce senza `about`. L'esempio mostra il nodo come sarà dopo la conferma.
+  - Il suo `url`, `https://www.lapugliadigitale.it/`, ha il dominio confermato dall'utente il 2026-10-05.
+  - La forma con www resta da verificare da una rete normale (specifiche, sez. 5.4).
+  - `puglia-digitale.it` è un omonimo, dell'associazione Campo&Controcampo, e non va mai usato.
 - **`logo`**: file stabile in `public/brand/` (specifiche, sez. 2.4). Niente `width` e `height` nel markup: per schema.org non sono numeri semplici, e Google ricava le dimensioni dal file. Quando arriva il logo vettoriale si sostituisce il PNG, con lo stesso URL.
 - **`sameAs` di Organization**: si aggiunge quando il cliente conferma i profili ufficiali di ITnode, per esempio Instagram @itnodedigital segnalato da seo-content `[DA FORNIRE]`. Il LinkedIn personale del fondatore non va usato qui, perché appartiene alla persona.
 - **Proprietà escluse**: `foundingDate`, `numberOfEmployees` e `geo`, perché sono dati non verificati.
@@ -441,11 +444,12 @@ Consultate il 2026-10-05, tramite gli estratti dei risultati di ricerca:
 - `contentUrl` e `thumbnailUrl` del video su itnode.it (dipende dall'hosting del video).
 - La sede di Via Sant'Anna 34 è insieme sede legale e operativa.
 - La forma canonica del portale Città Digitali è il dominio senza www (specifiche, sez. 5.3).
+- La forma canonica del portale Puglia Digitale è con www, come nelle linee guida (specifiche, sez. 5.4).
 
 ## Domande aperte
 1. **Cliente.** Nome e ruolo esatti del fondatore come devono apparire in pagina? Quale foto è un ritratto reale utilizzabile?
 2. **Cliente.** Video: file originale, data di prima pubblicazione, presenza di parlato (per i sottotitoli), fotogramma preferito per il poster.
-3. **Cliente.** Quali sono i profili social ufficiali di ITnode (`sameAs`)? Qual è il dominio del portale di Puglia Digitale (specifiche, domanda 9)? Il dominio di Città Digitali è chiuso dal 2026-10-05.
+3. **Cliente.** Quali sono i profili social ufficiali di ITnode (`sameAs`)? I domini dei due portali sono chiusi il 2026-10-05: cittàdigitali.it e lapugliadigitale.it, confermati dall'utente.
 4. **Cliente.** Ragione sociale nella forma esatta, REA e capitale sociale: servono al footer (soglia legale) e a `legalName`.
 5. **copywriter-content.** Titolo e descrizione visibili del video; testo definitivo della descrizione del SIII.
 

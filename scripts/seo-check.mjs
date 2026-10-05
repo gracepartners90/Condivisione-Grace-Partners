@@ -12,8 +12,9 @@ const problems = [];
 const warn = (f, m) => problems.push(`${f}: ${m}`);
 const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`, 'i')) || [])[1];
 // Hosts that are not the client's: the Città Digitali portal is cittàdigitali.it, with the accent
-// (xn--cittdigitali-19a.it); cittadigitali.it is a homonymous project (specifiche-tecniche.md §5.3).
-const FORBIDDEN_HOSTS = [/(?<![\w.-])(?:www\.)?cittadigitali\.it/i];
+// (xn--cittdigitali-19a.it), and cittadigitali.it is a homonymous project; the Puglia Digitale portal
+// is lapugliadigitale.it, and puglia-digitale.it belongs to an association (specifiche-tecniche.md §5.3–5.4).
+const FORBIDDEN_HOSTS = [/(?<![\w.-])(?:www\.)?cittadigitali\.it/i, /(?<![\w.-])(?:www\.)?puglia-digitale\.it/i];
 for (const f of files) {
   const rel = '/' + relative(dist, f).replace(/index\.html$/, '').replace(/\\/g, '/');
   const html = readFileSync(f, 'utf8');

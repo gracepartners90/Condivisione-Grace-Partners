@@ -3,9 +3,9 @@ titolo: Specifiche tecniche SEO
 owner: seo-technical
 contributi: [seo-content, ux-designer, web-performance-specialist, copywriter-content]
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/seo/ricerca-keyword.md, docs/strategia/citta-digitali-elenco.md (§1, §5), conferma dell'utente del 2026-10-05 sul dominio di Città Digitali, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, pacchetti npm astro@7.3.5 e @astrojs/sitemap@3.7.4, fonti web elencate in fondo]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (omonimie), docs/seo/ricerca-keyword.md, docs/strategia/citta-digitali-elenco.md (§1, §5), conferme dell'utente del 2026-10-05 sui domini di Città Digitali e Puglia Digitale, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, pacchetti npm astro@7.3.5 e @astrojs/sitemap@3.7.4, fonti web elencate in fondo]
 ---
 
 # Specifiche tecniche SEO
@@ -348,13 +348,13 @@ Matrice minima:
 | Tipo | Esempi | Apertura | `rel` |
 |---|---|---|---|
 | Esperienze SIII | cassanodigitale.it/masseriasantella/, monopolidigitale.it/maisonmimina/, acquavivadigitale.com/dielle/ | Nuova scheda (linee guida, sez. 12) | `noopener` |
-| Portali di ITnode | cittàdigitali.it (sezione 5.3), lapugliadigitale.it, portali delle città | Nuova scheda | `noopener` |
+| Portali di ITnode | cittàdigitali.it (sezione 5.3), lapugliadigitale.it (sezione 5.4), portali delle città | Nuova scheda | `noopener` |
 | Profili | LinkedIn del fondatore, profili ufficiali di ITnode | Nuova scheda | `noopener` |
 
 - **Niente `nofollow`**: sono link editoriali verso progetti di ITnode.
 - **Niente `noreferrer`**: toglierebbe ai portali il dato sulle visite provenienti da itnode.it.
 - **Nuova scheda dichiarata**: icona con testo alternativo, oppure testo nascosto «(si apre in una nuova scheda)». Il dettaglio lo decide ux-designer.
-- **URL finali**: i link puntano direttamente all'URL finale (protocollo, www, barra finale) per evitare redirect. `[DA VERIFICARE da una rete senza blocchi: URL finali dei portali e delle esperienze, controllo 13. Per Città Digitali la procedura è nella sezione 5.3]`
+- **URL finali**: i link puntano direttamente all'URL finale (protocollo, www, barra finale) per evitare redirect. `[DA VERIFICARE da una rete senza blocchi: URL finali dei portali e delle esperienze, controllo 13. Per i due portali le procedure sono nelle sezioni 5.3 e 5.4]`
 - **Domini internazionalizzati (IDN)**: negli `href` e nel JSON-LD l'host si scrive in ASCII (punycode, `xn--…`); i percorsi con caratteri non ASCII si codificano in percentuale (UTF-8). Nel testo visibile il dominio si scrive con gli accenti. Dettagli nella sezione 5.3.
 - **Email e telefono**: link `mailto:` e `tel:` in chiaro nell'HTML, senza offuscare l'email con JavaScript (per esempio va disattivata l'«Email Address Obfuscation» di Cloudflare). Sono i dati visibili su cui si basa il markup Organization.
 
@@ -387,6 +387,30 @@ Matrice minima:
 | Redirect tra varianti | `http://`, `https://www.` e `http://www.` rispondono 301 o 308 verso `https://xn--cittdigitali-19a.it/`, oppure `www.` non esiste | Si segnala al cliente; il nostro link non cambia |
 | Forma canonica | Il canonical della home del portale è `https://xn--cittdigitali-19a.it/`, oppure la stessa forma in Unicode | Il link segue l'URL che il portale serve senza redirect; l'incoerenza si segnala al cliente |
 | Browser | Il link del footer e «Visita il portale» aprono la home del portale in una nuova scheda, e la barra degli indirizzi mostra `cittàdigitali.it` | Si segnala a seo-technical |
+
+### 5.4 Portale Puglia Digitale: dominio e forma dell'indirizzo
+**Fatto confermato.** Il portale di Puglia Digitale è `lapugliadigitale.it`, come nelle linee guida (§22): lo ha confermato l'utente il 2026-10-05. `puglia-digitale.it` è il portale di un'altra organizzazione, l'associazione culturale Campo&Controcampo (brief consolidato, omonimie): il sito non lo cita e non lo linka.
+
+**Forma dell'indirizzo:**
+
+| Dove | Valore |
+|---|---|
+| `href` dei link | `https://www.lapugliadigitale.it`, con www, come nelle linee guida |
+| JSON-LD | Nessun valore: il Brand Puglia Digitale non si pubblica finché il cliente non chiarisce il ruolo di ITnode (brief, D1; `dati-strutturati.md`, §5.1) |
+| Testo visibile | `lapugliadigitale.it` |
+
+- **Niente regola IDN.** Il dominio non ha caratteri accentati.
+- **www o dominio senza www: non verificato.** Nell'indice di ricerca non ci sono pagine di lapugliadigitale.it (2026-10-05), quindi non c'è un host indicizzato da seguire come per Città Digitali. Fino alla verifica resta la forma delle linee guida `[DA VERIFICARE da una rete normale]`.
+- **Assenza dall'indice.** Se il portale risponde, che non sia indicizzato è un tema del portale, non del sito: si segnala al cliente.
+
+**Verifiche da una rete normale, prima del go-live.** Lo script è lo stesso della sezione 5.3 (review, oss. 1).
+
+| Verifica | Esito atteso | Se l'esito è diverso |
+|---|---|---|
+| Risoluzione e HTTPS | `https://www.lapugliadigitale.it/` risponde 200 senza redirect, con un certificato valido per `www.lapugliadigitale.it` | Con un redirect verso il dominio senza www, `portals.pugliaDigitale.url` in `src/data/site.ts` diventa `'https://lapugliadigitale.it'`. Con un errore DNS, TLS o 5xx, il go-live si blocca finché il cliente non sistema il dominio, oppure finché creative-director non decide di togliere i link |
+| Redirect tra varianti | `https://lapugliadigitale.it/`, `http://lapugliadigitale.it/` e `http://www.lapugliadigitale.it/` rispondono 301 o 308 verso `https://www.lapugliadigitale.it/`, oppure il dominio senza www non si risolve | Si segnala al cliente; il nostro link non cambia, salvo il caso della riga precedente |
+| Forma canonica | Il canonical della home del portale è `https://www.lapugliadigitale.it/` | Il link segue l'URL che il portale serve senza redirect; l'incoerenza si segnala al cliente |
+| Browser | Il link del footer e «Visita il portale» di `/puglia-digitale/` aprono la home del portale in una nuova scheda | Si segnala a seo-technical |
 
 ## 6. Migrazione dal sito attuale
 - **Cosa sappiamo.** Dalla ricerca web del 2026-09-28 (itnode.it e la Wayback Machine non sono raggiungibili dall'ambiente):
@@ -426,7 +450,7 @@ Script (Node o Bash) su `dist/` e sull'anteprima locale o sullo staging. Ogni co
 | 10 | Lingua | `<html lang="it">` su ogni pagina |
 | 11 | JSON-LD | JSON valido, `@id` coerenti e riferimenti risolti nella pagina, campi richiesti presenti. Valori uguali al contenuto visibile (breadcrumb, nomi, indirizzo, telefono). Nessun segnaposto `[DA …]` residuo. Verifica manuale su 2 pagine con Rich Results Test e validator.schema.org |
 | 12 | Immagini | Ogni `<img>` ha `alt` (vuoto solo se decorativa), `width` e `height`; nessuna immagine rotta |
-| 13 | Link esterni | Ogni `target="_blank"` ha un `rel` che contiene `noopener`; niente `nofollow` né `noreferrer` sui link del network; URL assoluti in ASCII, con gli IDN in punycode, e nessun dominio escluso dalla sezione 5.3; ogni link esterno risponde 200 senza redirect (verifica da una rete senza blocchi) |
+| 13 | Link esterni | Ogni `target="_blank"` ha un `rel` che contiene `noopener`; niente `nofollow` né `noreferrer` sui link del network; URL assoluti in ASCII, con gli IDN in punycode, e nessun dominio escluso dalle sezioni 5.3 e 5.4; ogni link esterno risponde 200 senza redirect (verifica da una rete senza blocchi) |
 | 14 | 404 | Un URL inventato risponde 404 con la pagina personalizzata, non 200 |
 | 15 | Normalizzazioni | http → https, www → senza www, senza barra → con barra: 301 (o 308 automatico) in un salto |
 | 16 | Redirect | Per ogni riga di `redirect-map.csv`: codice e `Location` attesi, destinazione che risponde 200, un salto (al massimo due per le varianti http) |
@@ -468,6 +492,7 @@ Consultate il 2026-10-05 (sezione 5.3), tramite gli estratti dei risultati di ri
 - Hosting del video fuori da Railway (4.5).
 - Sito attuale su WordPress (6).
 - Forma canonica del portale Città Digitali: `https://xn--cittdigitali-19a.it/`, senza www (5.3).
+- Forma canonica del portale Puglia Digitale: `https://www.lapugliadigitale.it/`, con www, come nelle linee guida (5.4).
 
 ## Domande aperte
 1. **Cliente.** Export di Search Console (o accesso in lettura), sitemap attuale, accesso al CMS o all'hosting attuale. Il sito risponde anche su www?
@@ -478,9 +503,12 @@ Consultate il 2026-10-05 (sezione 5.3), tramite gli estratti dei risultati di ri
 6. **Cliente.** Quali sono i profili ufficiali di ITnode (seo-content segnala Instagram @itnodedigital)? Esiste un account X?
 7. **web-performance-specialist.** Quale hosting? Da questo dipendono il formato dei redirect, gli header e la gestione della 404.
 8. **ux-designer.** Posizione e stile dei breadcrumb, e avviso di apertura in una nuova scheda.
-9. **Cliente.** Il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida, oppure puglia-digitale.it? Nell'indice di ricerca il primo non ha pagine, il secondo sì `[DA VERIFICARE]`.
+9. **Chiusa il 2026-10-05.** La domanda era: «Il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida, oppure puglia-digitale.it?».
+   - Risposta dell'utente: il portale è lapugliadigitale.it.
+   - puglia-digitale.it è dell'associazione Campo&Controcampo, ed era già registrato tra le omonimie del brief consolidato.
+   - Restano da verificare da una rete normale il www e la risposta in HTTPS (sezione 5.4).
 10. **Cliente.** I portali delle città linkati dal sito (varesedigitale.it, altamuradigitale.com, caltanissettadigitale.it, gravinadigitale.it, monopolidigitale.it, acquavivadigitale.com) sono attivi? Con quale indirizzo finale? Alcune città hanno ora una pagina su cittàdigitali.it.
-11. **Utente, o chi ha una rete senza blocchi.** Eseguire le verifiche della sezione 5.3 e il controllo 13, poi girare l'output a seo-technical.
+11. **Utente, o chi ha una rete senza blocchi.** Eseguire le verifiche delle sezioni 5.3 e 5.4 e il controllo 13, poi girare l'output a seo-technical.
 
 Chiusa il 2026-10-05: il dominio del portale Città Digitali (5.3).
 
@@ -493,5 +521,6 @@ Chiusa il 2026-10-05: il dominio del portale Città Digitali (5.3).
   - redirect 301 lato server, senza l'opzione `redirects` di Astro;
   - staging con autenticazione e `X-Robots-Tag`;
   - nessun `noindex` legato all'ambiente nel codice;
-  - IDN in ASCII negli `href` e nel JSON-LD, con gli accenti nel testo visibile; portale Città Digitali senza www (5.3, 2026-10-05).
+  - IDN in ASCII negli `href` e nel JSON-LD, con gli accenti nel testo visibile; portale Città Digitali senza www (5.3, 2026-10-05);
+  - portale Puglia Digitale con www, come nelle linee guida, fino alla verifica da una rete normale (5.4, 2026-10-05).
 - **web-performance-specialist, con seo-technical**: hosting del video.

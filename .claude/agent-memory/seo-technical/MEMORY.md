@@ -37,6 +37,8 @@ Lezioni e vincoli tecnici. Fatti e decisioni ufficiali stanno in `docs/seo/` e `
 - Negli script di audit il breadcrumb si seleziona con `nav.breadcrumbs`. Anche il menu dell'header è un `nav[aria-label]` con un `ol`, e un selettore generico dà falsi negativi.
 - La coerenza tra JSON-LD e pagina si controlla confrontando i testi del markup con `innerText`, dopo aver normalizzato apostrofi e spazi. Ha rivelato descrizioni prese dalle linee guida e mai allineate al copy (review del 2026-09-28).
 - Nel CSV dei redirect le righe segnaposto hanno `codice` vuoto e vanno saltate nei test. Le varianti (senza barra, www, http) vanno in righe separate e si testano: non si dà per scontato il comportamento dell'hosting.
+- **Prima di proporre un dominio come possibile portale del cliente, controllare le omonimie del brief consolidato** e le sezioni A e D. Il 2026-10-05 ho presentato puglia-digitale.it come alternativa, ma il brief lo registrava già come omonimo (Campo&Controcampo).
+- **Dopo una review, ricostruire la build prima di aggiornarla.** Il 2026-10-05 la sessione aveva aggiunto un link profondo al portale (`/tutte-le-citta/`) che i miei conteggi non includevano.
 - **I domini delle linee guida possono essere superati o omonimi** (caso Città Digitali, 2026-10-05). Ogni dominio esterno va cercato nell'indice con WebSearch: l'URL dei risultati mostra anche l'host indicizzato (www o dominio senza www). Nel WebFetch, «ENOTFOUND» vuol dire che il nome non si risolve; «EGRESS_BLOCKED» è un blocco di policy e non dice nulla sul dominio.
 - **IDN**:
   - per Google punycode e Unicode sono lo stesso host;
