@@ -64,7 +64,7 @@ export function organization({ withFounder = false } = {}) {
         '@type': 'Brand',
         '@id': ids.cittaBrand,
         name: portals.cittaDigitali.name,
-        url: `${portals.cittaDigitali.url}/`,
+        url: abs(portals.cittaDigitali.url), // serialised URL: ASCII host, exactly one trailing slash
         description: 'Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per il tessuto imprenditoriale e commerciale italiano.',
       },
     ],

@@ -11,6 +11,9 @@ const pages = {};
 const problems = [];
 const warn = (f, m) => problems.push(`${f}: ${m}`);
 const attr = (tag, name) => (tag.match(new RegExp(`\\s${name}="([^"]*)"`, 'i')) || [])[1];
+// Hosts that are not the client's: the Città Digitali portal is cittàdigitali.it, with the accent
+// (xn--cittdigitali-19a.it); cittadigitali.it is a homonymous project (specifiche-tecniche.md §5.3).
+const FORBIDDEN_HOSTS = [/(?<![\w.-])(?:www\.)?cittadigitali\.it/i];
 for (const f of files) {
   const rel = '/' + relative(dist, f).replace(/index\.html$/, '').replace(/\\/g, '/');
   const html = readFileSync(f, 'utf8');
@@ -42,6 +45,10 @@ for (const f of files) {
   for (const img of html.match(/<img\b[^>]*>/g) || []) if (!/\salt=/.test(img)) warn(rel, `img without alt: ${img.slice(0, 80)}`);
   // External links in a new tab need rel=noopener.
   for (const a of html.match(/<a\b[^>]*target="_blank"[^>]*>/g) || []) if (!/rel="[^"]*noopener/.test(a)) warn(rel, `_blank without noopener: ${a.slice(0, 80)}`);
+  // Absolute URLs in ASCII: IDN hosts in punycode, in attributes and in JSON-LD (specifiche §5.3).
+  for (const m of html.matchAll(/\s(?:href|src|content)="(https?:[^"]*)"/g)) if (/[^\x00-\x7f]/.test(m[1])) warn(rel, `non-ASCII URL: ${m[1]}`);
+  for (const j of jsonld) { try { (function visit(o) { if (typeof o === 'string') { if (/^https?:/.test(o) && /[^\x00-\x7f]/.test(o)) warn(rel, `non-ASCII URL in JSON-LD: ${o}`); } else if (o && typeof o === 'object') Object.values(o).forEach(visit); })(JSON.parse(j)); } catch {} }
+  for (const host of FORBIDDEN_HOSTS) if (host.test(html)) warn(rel, `forbidden host ${host.source}`);
 }
 // Duplicates.
 const dup = (key) => { const seen = {}; for (const [p, d] of Object.entries(pages)) if (d[key]) (seen[d[key]] ??= []).push(p); for (const [v, ps] of Object.entries(seen)) if (ps.length > 1) problems.push(`duplicate ${key} on ${ps.join(', ')}`); };
