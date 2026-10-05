@@ -191,7 +191,8 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - Con il nome, il punto diventa il nodo-luogo del §1.3 (Ø 10), con lo stesso anello. Senza nome resta Ø 5: metà del nodo, stessa famiglia, gerarchia leggibile.
 - **Comportamento.** Non è interattivo e non si muove: niente anello esterno, ping, hover, focus né comparsa a cascata.
 - **Accessibilità** (decisione di ux-designer, owner dell'accessibilità: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` §3.1).
-  - La carta del capitolo 03 è un'immagine con una descrizione costruita dagli stessi dati (`role="img"` e `aria-label`): le regioni da nord a sud, la regione con più città, i nomi disegnati sulla carta larga. Nessun numero.
+  - La carta del capitolo 03 è un'immagine con una descrizione costruita dagli stessi dati (`role="img"` e `aria-label`): le regioni da nord a sud, la regione con più città, i nomi disegnati sulla carta larga. Nessun numero. Oggi la descrizione è di 255 caratteri; le due frasi su regioni e nomi le può rifinire copywriter-brand.
+  - È una condizione di soglia (WCAG 1.1.1 e 1.3.1): con 45 punti, una carta `aria-hidden` darebbe solo a chi vede dove stanno le città.
   - L'`<svg>` della costa è `aria-hidden`, e i nomi disegnati non si leggono una seconda volta.
   - Legenda ed elenco in testo completano l'informazione (sotto).
   - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Puglia e quella di `/citta-digitali/`.
@@ -235,7 +236,9 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - **Nessun numero nella Home.** Quando ci saranno le tre condizioni di brand-strategist (testo della pagina confermato, data, stesso numero di punti), il numero va nell'elenco di `/citta-digitali/`, con la data: si aggiorna in un posto solo.
   - **Nessun link nella legenda.** Il capitolo resta con una sola CTA, come i capitoli 01 e 02 (ux-designer, HM-5), e «Esplora Città Digitali» porta già alla pagina dell'elenco.
 - **Elenco in testo** (posto deciso da ux-designer: `/citta-digitali/`, sezione «L'Italia in un unico portale», ancora `#portale`).
-  - **Subito:** un link alla fonte del cliente, «Tutte le città sul portale ↗», nella colonna del testo (ux-designer §3.2, testo di copywriter-brand L2-b). Rimanda alla pagina da cui vengono punti e nomi.
+  - **Subito:** un link alla fonte del cliente, «Tutte le città sul portale ↗», nella colonna del testo, dopo lo statement (ux-designer §3.2, testo di copywriter-brand L2-b). Rimanda alla pagina da cui vengono punti e nomi.
+    - Posizione confermata dal creative-director, con una prova in pagina a 1440 e 390 px: il link chiude lo statement «… un'unica rete da esplorare.» e precede le tre città.
+    - Dopo l'elenco delle città no: da 1280 px l'ordine a schermo non sarebbe più quello del DOM (ux-designer).
   - **Con il testo della pagina confermato:** l'elenco completo in testo, visibile a tutti, con i criteri di seo-content (review del 2026-10-05, §5):
     - un solo elenco, su quella pagina;
     - per regione, con le regioni da nord a sud come sulla carta (Lombardia, Lazio, Campania, Puglia, Calabria, Sicilia);
