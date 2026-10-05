@@ -3,16 +3,19 @@ titolo: Design system
 owner: ui-designer
 contributi: [creative-director, ux-designer, web-performance-specialist]
 stato: bozza
-versione: 0.5
-aggiornato: 2026-09-29
-fonti: [docs/creativa/direzione-visiva.md (0.5), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md (0.3), docs/decisioni/005-preload-del-font.md, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md, docs/performance/budget.md, docs/performance/architettura.md, docs/contenuti/microcopy.md, docs/contenuti/copy-deck/home.md, docs/seo/specifiche-tecniche.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, misure Playwright 1.56 e sharp 0.35 del 2026-09-28 (staging http://localhost:4321, variante «in pubblicazione» http://localhost:4322)]
+versione: 0.6
+aggiornato: 2026-10-05
+fonti: [docs/creativa/direzione-visiva.md (0.6), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md, docs/strategia/citta-digitali-elenco.md (0.2), src/data/citta-digitali.json, scripts/generate-maps.mjs, commit 0a61546 e 2a038de, docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md (0.3), docs/decisioni/005-preload-del-font.md, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md, docs/performance/budget.md, docs/performance/architettura.md, docs/contenuti/microcopy.md, docs/contenuti/copy-deck/home.md, docs/seo/specifiche-tecniche.md, docs/review/2026-09-28-sito-fedelta-ui-designer.md, docs/review/2026-09-28-sito-verifica-fedelta-ui-designer.md, src/styles/tokens.css, src/styles/global.css, src/components/, src/pages/, misure Playwright 1.56 e sharp 0.35 del 2026-09-28 (staging http://localhost:4321, variante «in pubblicazione» http://localhost:4322)]
 ---
 
-> **Versione 0.5.** Allineata alla direzione visiva 0.5. Rispetto alla 0.4 sono chiuse R1 e R2 del ricontrollo del 2026-09-29 (`docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md`):
-> - **R1:** nella hero della Home su mobile i +60° della rotazione si compiono in `max(60svh, 60vw)` di scorrimento, con il limite di ux-designer: la striscia non va mai più veloce della pagina. Applicata in df66be6.
-> - **R2:** la frase dei ponti è in `display-s` a 400, non in `display-m`.
+> **Versione 0.6.** Allineata alla direzione visiva 0.6 e alla carta del capitolo 03 della Home applicata in 0a61546 e 2a038de.
+> - **Il punto-città** è un nuovo segno del dispositivo delle Coordinate: un punto Ø 5 px per ogni città di Città Digitali, con l'anello nel colore della superficie (§1.5, §2.4).
+> - **I nomi** si scelgono al build per due classi di larghezza della carta: 5 sulle carte strette, 9 sulle larghe, senza sovrapposizioni.
+> - **Legenda e accessibilità:** la legenda è «Ogni punto è una città di Città Digitali». La carta è un'immagine con una descrizione costruita dagli stessi dati (`role="img"`, `aria-label`).
+> - **Dati:** un file solo, `src/data/citta-digitali.json`, letto dal generatore delle carte (§5.4).
+> - **Aperto:** per la carta di `/citta-digitali/` c'è una proposta per il creative-director (`docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`).
 >
-> Il movimento dell'orizzonte è descritto come nella direzione 0.5: timeline dello scorrimento della pagina con un intervallo (§1.6, §2.1). La 0.4 aveva reso decisioni applicate C14-1, N7, N8 e C14-4 e aveva adottato la regola del peso di `display-m`; la 0.3 aveva allineato il sistema al verdetto del G4. Le proposte ancora aperte portano il numero dell'osservazione (S5 e i token di §7): restano proposte finché il creative-director non le decide.
+> La 0.5 aveva chiuso R1 e R2 (rotazione mobile dell'orizzonte in `max(60svh, 60vw)`, ponti in `display-s`). La 0.4 aveva reso decisioni applicate C14-1, N7, N8 e C14-4; la 0.3 aveva allineato il sistema al verdetto del G4. Le proposte ancora aperte portano il numero dell'osservazione (S5, i token di §7, la carta di `/citta-digitali/`): restano proposte finché il creative-director non le decide.
 
 # Design system ITnode
 
@@ -213,11 +216,11 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 |---|---|
 | Raggio 0 | immagini e soglie, campi, pannelli del form, tabelle, segnaposto, banner |
 | Pillola (`--radius-pill`) | pulsanti e CTA con fondo o bordo, interruttore del confronto, toggle delle preferenze cookie |
-| Cerchio (50%) | nodi, pulsanti dei controlli video (44 px) |
+| Cerchio (50%) | nodi, punti-città delle carte (Ø 5), pulsanti dei controlli video (44 px) |
 | Filetto decorativo | 1 px `--line`: divisori, righe di tabella, contorno dei segnaposto |
 | Bordo di controllo | 1 px `--field-border` (≥ 3:1); 2 px `--error` in errore, senza spostamenti di layout (ombra interna o bordo già riservato) |
 | Focus | contorno 2 px `--focus`, scostamento 3 px; su foto e video doppio anello calce + inchiostro (`--focus-ring-media`) |
-| Ombre, gradienti, sfocature | nessuno. Due tecniche accettate perché disegnano un tratto, non una sfumatura: le tacche con `repeating-linear-gradient` a stop netti; l'anello scuro di 1 px (ombra a raggio pieno, senza sfocatura) attorno ai nodi su foto |
+| Ombre, gradienti, sfocature | nessuno. Tre tecniche accettate perché disegnano un tratto, non una sfumatura: le tacche con `repeating-linear-gradient` a stop netti; l'anello scuro di 1 px (ombra a raggio pieno, senza sfocatura) attorno ai nodi su foto; l'anello di 1,5 px nel colore della superficie (`box-shadow: 0 0 0 1.5px var(--bg)`) attorno ai punti-città e ai nodi delle carte con i punti, che li ritaglia dalla costa e dai vicini (direzione 0.6 §1.4) |
 
 **Icone.** Solo funzionali, mai decorative. SVG inline 24 × 24, tratto 1,5 px, terminazioni squadrate, `fill: none`, `currentColor`, `aria-hidden="true"`; il nome sta nel testo del controllo.
 
@@ -322,18 +325,22 @@ Base 4/8 px. I token di spazio sono fissi; i padding di sezione sono fluidi.
 | **Su foto** | il nodo deve reggere su ogni zona dell'immagine. Decisione del G4 (verdetto §3.8): **calce sulle foto**, per il contrasto su sfondi variabili; **blu sulle superfici piatte**. Sulle foto (`ImmersivePreview`, Documento): punto calce con cifra notte, anello calce con un tratto scuro di 1 px (ombra a raggio pieno, senza sfocatura: accettato come tratto, §1.5). Il nodo sta su un oggetto o un luogo della scena, mai sul corpo di una persona (N7) |
 | **Cifra del nodo numerato** | calce su punto blu-node (4,54:1) sulle superfici chiare; notte su punto blu-node-chiaro sulle scure. Mai `--bg` su pietra (3,86:1) |
 | **Accessibilità** | sempre `<button>` o `<a>` reale; area di tocco ≥ 44 × 44 px attorno al disegno di 26 px; il contenuto dell'etichetta è anche nella legenda sempre visibile; niente informazioni solo all'hover |
-| **Non si fa** | nodi decorativi o come puntini d'elenco, reti di nodi collegati (plexus), pulsazioni infinite, più di 5 nodi per immagine |
+| **Non si fa** | nodi decorativi o come puntini d'elenco, reti di nodi collegati (plexus), pulsazioni infinite, più di 5 hotspot su una foto o un'anteprima. I luoghi sulle carte non contano: sono nodi-luogo e punti-città, non hotspot (direzione 0.6 §1.3) |
 
-### 2.4 Le Coordinate (`ui/MapItaly.astro`, `lib/geo.ts`, `data/maps.json`)
+### 2.4 Le Coordinate (`ui/MapItaly.astro`, `lib/geo.ts`, `data/maps.json`, `data/citta-digitali.json`)
 
 | | |
 |---|---|
-| **Anatomia** | riga mono: «40.90° N · 16.85° E» (gradi decimali, 2 cifre: la precisione della fonte); rilevamento e distanza da Acquaviva delle Fonti, il comune della sede: «MONOPOLI · 081° · 38 KM»; cartografia a filo (§5.4) |
-| **Varianti** | *riga* (didascalie, sotto l'H3 delle porte, città, footer: «ITnode · Acquaviva delle Fonti · 40.90° N · 16.85° E»; Contatti: «Acquaviva delle Fonti · 40.90° N · 16.85° E» sotto l'indirizzo); *carta Puglia* (costa aperta, nodi `--place`, etichette «MARE ADRIATICO», «MURGIA»; nomi dei luoghi su una riga nelle carte larghe almeno 45rem: N8, applicata in 100b578); *carta Italia* (contorno chiuso, 3 nodi) |
-| **Stati** | la carta si disegna una volta all'ingresso; il nodo di una città si accende quando il suo link in lista riceve hover o focus (`:has()`, niente JS) |
-| **Accessibilità** | carta `aria-hidden`; le città e i luoghi sono link reali nel testo accanto; coordinate in testo reale |
+| **Anatomia** | riga mono: «40.90° N · 16.85° E» (gradi decimali, 2 cifre: la precisione della fonte); rilevamento e distanza da Acquaviva delle Fonti, il comune della sede: «MONOPOLI · 081° · 38 KM»; cartografia a filo (§5.4); nodo-luogo Ø 10 in `--place`; **punto-città** Ø 5 in `--place` (sotto) |
+| **Varianti** | *riga* (didascalie, sotto l'H3 delle porte, città, footer: «ITnode · Acquaviva delle Fonti · 40.90° N · 16.85° E»; Contatti: «Acquaviva delle Fonti · 40.90° N · 16.85° E» sotto l'indirizzo); *carta Puglia* (costa aperta, nodi `--place`, etichette «MARE ADRIATICO», «MURGIA»; nomi dei luoghi su una riga nelle carte larghe almeno 45rem: N8, applicata in 100b578); *carta Italia del capitolo 03 della Home* (contorno chiuso, tutte le città di Città Digitali con il punto-città, nomi dove c'è spazio, legenda, nessuna coordinata: prop `cities` e `label`, applicata in 0a61546); *carta Italia di `/citta-digitali/`* (contorno chiuso, i 3 nodi delle schede accanto; la versione con i punti è proposta in `docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`) |
+| **Punto-città** (direzione 0.6 §1.4) | Un punto per ogni luogo reale di un elenco con una fonte dichiarata, nella sua posizione vera: è un dato, non una trama. Cerchio pieno Ø 5 px in `--place` (`terra` su chiaro, 4,09:1 su `pietra`; `arancio-segnale` su notte), con un anello pieno di 1,5 px nel colore della superficie (§1.5). Con il nome diventa il nodo-luogo Ø 10, con lo stesso anello: metà del nodo, stessa famiglia. Non è interattivo e non si muove: niente anello esterno, ping, hover, focus né comparsa a cascata. Dove i punti si sovrappongono si impilano come monete, dipinti da nord a sud, poi i nodi con nome. Mai spostati per fare spazio, mai aggregati in bolle o in numeri |
+| **Nomi sulle carte con il punto-città** | Scelti e posizionati al build da `scripts/generate-maps.mjs` (§5.4), senza JavaScript in pagina. Ordine dei candidati in `nomi` del file dati: obbligatori (le città nominate dal testo accanto: Varese, Altamura, Caltanissetta), poi un nome per regione o gruppo con la fonte più solida, poi gli altri. Un nome compare solo se non copre punti, nodi, altri nomi o richiami e resta dentro la carta, a ogni larghezza della sua classe; non deve nascondere il punto di un'altra città (tranne gli obbligatori); mai per una lettura ambigua («Polignano», «San Cataldo»). Forma: `label` mono `--fg`, su una riga, con il fondo `--bg`; accanto al nodo (e, w), su un angolo (ne, se, nw, sw) o appeso sotto con un richiamo verticale di 1 px in `--place` a 24 o 40 px (drop, drop2), il gesto dell'Orizzonte. Due classi annidate: carte strette fino a 25rem, larghe oltre; quando la carta cresce un nome può solo comparire. Risultato al 2026-10-05: 5 nomi sulle strette (Varese, Altamura appeso, Caltanissetta, Itri, Cosenza), 9 sulle larghe (più Manfredonia, Bari, Massafra appeso, Caltagirone); sulle strette questi quattro sono punti |
+| **Legenda** | «Ogni punto è una città di Città Digitali» (copywriter-brand, L1): una riga di testo reale in `<figcaption>`, `label` mono `--fg-2`, `--space-s` sotto la carta, con spazi unificatori in «di Città Digitali»; una riga da 360 px, due a 320. Nessun numero e nessun link |
+| **Stati** | la carta si disegna una volta all'ingresso; su `/citta-digitali/` il nodo di una città si accende (×1,5, 250 ms) quando la sua scheda riceve hover o focus (`pointerenter` e `focusin` in `LocationShowcase.astro`: uno script di poche righe); i punti-città non hanno stati |
+| **Accessibilità** | Una carta i cui luoghi sono tutti nominati dal testo accanto è decorativa: `aria-hidden` (carta della Puglia, carta di `/citta-digitali/` di oggi). Una carta che mostra più di quanto dice il testo è un'immagine con un nome: `role="img"` e `aria-label` costruito dagli stessi dati (regioni da nord a sud, la regione con più città, i nomi disegnati sulla carta larga; forma L4 di copywriter-brand, nessun numero); l'`<svg>` della costa è sempre `aria-hidden` e i nomi disegnati non si leggono una seconda volta (ux-designer, review del 2026-10-05 §3.1). Coordinate in testo reale. L'elenco completo in testo andrà su `/citta-digitali/`, sezione «L'Italia in un unico portale» |
 | **Dati** (direzione §1.4, `docs/strategia/coordinate-luoghi.md`; C11 chiusa) | Una sola fonte e una sola precisione per tutti i luoghi: riquadro della voce di Wikipedia in inglese di ogni comune, convertito e arrotondato a 2 decimali (circa 1 km). Valori in `src/data/site.ts`, con la fonte in commento; formattazione solo da `formatCoords` (`toFixed(2)`); rilevamenti e distanze calcolati in `lib/geo.ts`, mai scritti a mano. Gli zeri di «40.90» e «17.30» sono cifre vere, non riempimento. Mai precisioni diverse nella stessa pagina: il controllo di go-live blocca qualunque coordinata con più di 2 decimali. Il rilevamento di Cassano delle Murge (7 km, incerto di circa ±10°) non si cita mai da solo. Le coordinate della sede sono quelle del comune: nessun testo le presenta come posizione della sede (mai «Sede · [coordinate]»; «SEDE» nella porta di Acquaviva va bene, perché nomina la città). Dopo il lancio, facoltativo: 4 decimali reali per tutti dai nodi `place` di OpenStreetMap |
-| **Non si fa** | pattern topografici, mappe a puntini, pin in stile Google, campiture che suggeriscano una copertura dell'Italia intera (N12) |
+| **Dati delle città di Città Digitali** | `src/data/citta-digitali.json`: le 45 città della pagina «Tutte le città» di cittàdigitali.it (`id`, `name`, `province`, `region`, `lat`, `lon`), con la stessa fonte e gli stessi 2 decimali degli altri luoghi; Martina Franca da Wikidata P625, eccezione accettata, con `coordSource` accanto al dato. Lo stesso file alimenterà l'elenco in testo, così punti ed elenco non possono divergere |
+| **Non si fa** | pattern topografici, mappe a puntini, pin in stile Google, campiture che suggeriscano una copertura dell'Italia intera (N12); punti spostati o aggregati per fare spazio; bolle con numeri; numeri o conteggi senza le condizioni di brand-strategist (testo della pagina confermato, data, stesso numero di punti); nomi su letture ambigue |
 
 ### 2.5 Il Passaggio (`ui/Passage.astro`, `sections/LargeStatement.astro`)
 
@@ -423,7 +430,7 @@ Limiti: statement ≤ 90 caratteri, lead ≤ 280. Il livello (`h2` o `p`) lo dec
 
 | Variante | Anatomia | Composizione |
 |---|---|---|
-| `chapter` (layout a/b/c) | tratto d'orizzonte con rilevamento (tacca da 20 px, etichetta sotto) · numero `display-xxl` (`aria-hidden`) · nome `display-m` 400 (H3), descrittore `display-s` `--fg-2` · statement: Passaggio `display-l` con arrivo `display-m` (§2.5, V4) · visual · micro `lead` (≤ 160 caratteri) · CTA → | a = 01 SIII su notte, numero colonne 1–4, soglia Schermo 16:10 con 3 nodi; b = 02 Puglia Digitale su calce, carta Puglia colonne 1–5, testo 7–12; c = 03 Città Digitali su pietra, carta Italia colonne 8–12, testo 1–6 |
+| `chapter` (layout a/b/c) | tratto d'orizzonte con rilevamento (tacca da 20 px, etichetta sotto) · numero `display-xxl` (`aria-hidden`) · nome `display-m` 400 (H3), descrittore `display-s` `--fg-2` · statement: Passaggio `display-l` con arrivo `display-m` (§2.5, V4) · visual · micro `lead` (≤ 160 caratteri) · CTA → | a = 01 SIII su notte, numero colonne 1–4, soglia Schermo 16:10 con 3 nodi; b = 02 Puglia Digitale su calce, carta Puglia colonne 1–5, testo 7–12; c = 03 Città Digitali su pietra, carta Italia colonne 8–12 con il punto-città, i nomi dove c'è spazio e la legenda sotto, in una `<figure>` larga al massimo 30rem (§2.4), testo 1–6. Una sola CTA nel capitolo |
 | `experience` | soglia Schermo 16:10 · nome `display-l` (H3) · luogo e coordinate mono · frase · «Entra nell'esperienza ↗» · eventuale «Avvia l'anteprima» | tre larghezze diverse: 12 colonne; 8 a destra; 8 a sinistra |
 | `compact` | numero · nome · statement · link | «Continua a esplorare» e 404: una riga tipografica, non una card |
 
@@ -434,9 +441,9 @@ Stati: hover della soglia 1,03 (puntatore fine); focus sulla CTA; il visual clic
 | Variante | Anatomia | Desktop | Mobile |
 |---|---|---|---|
 | `doors` (Puglia Digitale) | per luogo: Porta 3:5 · nome `display-s` (H3) · coordinate · dominio · «Esplora ↗»; un filo d'orizzonte comune in `--fg`, nodi-luogo e richiami verso le porte in `--place` | tre porte in orizzontale secondo la **longitudine reale** (Gravina, Acquaviva, Monopoli), lieve sfalsamento verticale | pila **da ovest a est** (Gravina → Acquaviva → Monopoli), come la fila desktop e l'ordine del focus: un solo ordine a tutte le larghezze (decisione del G4 su I11, direzione §7.5; WCAG 1.3.2 e 2.4.3). Con le foto dei luoghi, sotto i 1024 px porta a tutta colonna in 4:5 e testo sotto (S8, quando arrivano le foto) |
-| `italy` (Città Digitali; carte dei capitoli in Home) | carta a filo (§5.4) + lista delle città con coordinate e «Esplora ↗» | Carta Italia sulle colonne 7–12. Da 1280 px (80em) le città stanno sulle colonne 1–5 **alla latitudine del loro nodo** (`top: yPct%` di `maps.json`, filetto ~20 px sopra il nodo), con 96 px riservati sotto la carta per Caltanissetta. Tra 1024 e 1279 px, elenco accanto alla carta: lì il 31,6% tra Altamura e Caltanissetta (173 px a 1024) è meno di un blocco città (~190 px) (V2, applicato) | carta piccola in alto, città in pila nord → sud |
+| `italy` (Città Digitali) | carta a filo (§5.4) + testo con il link «Tutte le città sul portale ↗» (prop `allPlaces`: nella colonna del testo, dopo lo statement, 44 px; ux-designer §3.2) + lista delle città con coordinate e «Esplora ↗». Proposta per la carta con i punti: `docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md` | Carta Italia sulle colonne 7–12. Da 1280 px (80em) le città stanno sulle colonne 1–5 **alla latitudine del loro nodo** (`top: yPct%` di `maps.json`, filetto ~20 px sopra il nodo), con 96 px riservati sotto la carta per Caltanissetta. Tra 1024 e 1279 px, elenco accanto alla carta: lì il 31,6% tra Altamura e Caltanissetta (173 px a 1024) è meno di un blocco città (~190 px) (V2, applicato) | carta piccola in alto, città in pila nord → sud |
 
-Stati: hover/focus sulla città → il suo nodo si accende (anello ×1,4). Nome e CTA sempre visibili. Lista `<ul>`; se l'immagine della porta è cliccabile, `alt=""` e duplicato inerte.
+Stati: hover/focus sulla città → il suo nodo si accende (×1,5, script con `pointerenter` e `focusin`). Nome e CTA sempre visibili. Lista `<ol>`; se l'immagine della porta è cliccabile, `alt=""` e duplicato inerte. Le carte dei capitoli della Home usano `ui/MapItaly.astro` direttamente, non questo componente.
 
 ### 3.9 ImmersivePreview
 
@@ -623,10 +630,24 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 
 | Carta | viewBox | Tracciato | Contenuto |
 |---|---|---|---|
-| `italia` | `0 0 1000 1180.8` | 6,9 KB, 15 sottotracciati chiusi | Italia con San Marino e Vaticano fusi (niente buchi), isole ≥ 18 km² (le più piccole diventano puntini); Douglas–Peucker a ~1 km. Luoghi: Varese, Altamura, Caltanissetta |
+| `italia` | `0 0 1000 1180.8` | 6,9 KB, 15 sottotracciati chiusi | Italia con San Marino e Vaticano fusi (niente buchi), isole ≥ 18 km² (le più piccole diventano puntini); Douglas–Peucker a ~1 km. Luoghi: le 45 città di Città Digitali da `src/data/citta-digitali.json`, divise in `places` (9 con nome e posizione del nome) e `dots` (36) |
 | `puglia` | `0 0 1600 857.2` (desktop) · `viewBoxCompact` `273.6 59.8 1059.2 721.1` (mobile, Home 02) | 0,5 KB, **una sola linea aperta** | costa della Terra di Bari da Barletta a oltre Monopoli; Visvalingam–Whyatt (toglie i moli del porto di Bari) e curva di Catmull-Rom centripeta sui vertici Natural Earth. Luoghi: Gravina, Acquaviva (sede), Monopoli; etichette «MARE ADRIATICO», «MURGIA» |
 
-**Struttura dei dati** (per carta): `viewBox`, `width`, `height`, `kmPerUnit`, `path`, `bytes`, `places[]` (`id`, `name`, `lat`, `lon`, `x`, `y`, `xPct`, `yPct`, eventuale `role: "sede"`), `labels[]` (`text`, `x`, `y`, `xPct`, `yPct`, `anchor`); per `puglia` anche `window` (gradi della finestra) e `viewBoxCompact`.
+**Struttura dei dati** (per carta): `viewBox`, `width`, `height`, `kmPerUnit`, `path`, `bytes`, `places[]` (`id`, `name`, `lat`, `lon`, `x`, `y`, `xPct`, `yPct`, eventuale `role: "sede"`; per `italia` anche `anchor: { wide, narrow }`, con `narrow: "none"` dove il nome non c'è sulle carte strette), `labels[]` (`text`, `x`, `y`, `xPct`, `yPct`, `anchor`); per `italia` anche `dots[]` (`id`, `x`, `y`, `xPct`, `yPct`, da nord a sud); per `puglia` anche `window` (gradi della finestra) e `viewBoxCompact`.
+
+**File dati delle città: `src/data/citta-digitali.json`.**
+- `fonte`: pagina «Tutte le città» di cittàdigitali.it e documento delle coordinate.
+- `citta[]`: `id`, `name`, `province`, `region`, `lat`, `lon`; `coordSource` quando la fonte è un'eccezione (Martina Franca).
+- `nomi`: ordine editoriale dei nomi (`obbligatori`, `gruppi`, `poi`) e letture ambigue senza nome (`senzaNome`). Lo approva il creative-director.
+- Il generatore si ferma su id doppi, coordinate con più di 2 decimali, nomi riferiti a città che non esistono, città fuori dalla carta.
+
+**Nomi sulla carta d'Italia** (calcolo al build, `generate-maps.mjs`; regole in §2.4).
+- **Classi:** strette 280–400 px di carta, larghe 400–480 px (`.worlds__map`: 280 px a 320 di finestra, 30rem al massimo). Controllo ogni 5 px.
+- **Misure del nome:** 9,6 px per carattere, riga di 19,5 px, 2 px di fondo per lato. È il caso peggiore dell'etichetta mono a 13 px con la spaziatura di WCAG 1.4.12; in Chromium l'avanzamento dei glifi di Fragment Mono è arrotondato al pixel.
+- **Raggi:** nodo 6,5 px, punto 4 px, entrambi con l'anello; 1 px di margine.
+- **Posizioni** (spostamenti dal centro del nodo, uguali alle regole CSS di `MapItaly.astro`): e e w a 14 px; angoli a 8 px; drop e drop2 con la prima riga a 24 e 40 px sotto il nodo e il richiamo dal bordo dell'anello.
+- **Scelta:** ricerca con ritorno indietro tra le posizioni di tutti i nomi della classe, prima i più vincolati. Le carte larghe partono dai nomi delle strette.
+- **Errori:** un nome obbligatorio senza spazio sulle carte larghe ferma il build; sulle strette si nasconde con un avviso. L'intero generatore impiega circa mezzo secondo.
 
 **Come si usa.**
 - SVG `aria-hidden` con un solo `<path>`: `fill: none; stroke: var(--fg); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-linejoin: round`.
@@ -634,7 +655,8 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 - Colore dei nodi: `--place` (terra su chiaro, arancio su notte).
 - Etichette d'area in `label` mono con tracking largo; su mobile si tolgono o diventano legenda: in 390 px si sovrappongono alla costa.
 - **Disegno della linea:** con `vector-effect: non-scaling-stroke` il tratteggio si calcola in px dello schermo e `pathLength` non vale (verificato in Chromium: con `stroke-dashoffset` a metà la costa resta intera). Due strade: (a) raccomandata, un otturatore nel colore della superficie che scorre in `transform` nella direzione della linea (ovest → est per la Puglia, nord → sud per l'Italia), come le aperture; (b) `pathLength="1"` e `stroke-dashoffset` **senza** `non-scaling-stroke`, con `stroke-width` in unità del viewBox per ogni breakpoint.
-- Città Digitali: l'ordine verticale delle città si allinea a `yPct` dei nodi (Varese 12,9%, Altamura 59,2%, Caltanissetta 90,8%).
+- Città Digitali: l'ordine verticale delle città si allinea a `yPct` dei nodi (Varese 12,9%, Altamura 59,2%, Caltanissetta 90,8%). Le tre sono obbligatorie, quindi stanno sempre in `places`; la proposta per la pagina legge anche `dots`.
+- Punti-città e nomi in HTML sopra l'SVG, come i nodi: 36 punti e 9 luoghi con nome aggiungono 9,4 KB all'HTML della Home, 1,1 KB con gzip.
 - Peso: 7 KB e 0,5 KB inline, dentro i limiti di `budget.md` (≤ 20 KB) e della direzione (≤ 8 KB).
 - Coordinate dei luoghi dalla fonte unica a 2 decimali (§2.4; `generate-maps.mjs` legge gli stessi valori, `maps.json` rigenerato con C11). Per un confine regionale ufficiale servirebbero i limiti ISTAT (con attribuzione).
 - **Etichette dei luoghi:** i nomi lunghi vanno a capo nelle carte piccole («Acquaviva delle / Fonti»); nelle carte larghe almeno 45rem (720 px) stanno su una riga (N8, applicata in 100b578 con `@container (min-width: 45rem)` in `MapItaly.astro`: hero di `/puglia-digitale/` da 800 px di viewport; a 768 px Acquaviva resta su due righe; le carte dei capitoli in Home, al massimo 480 px, non cambiano). Le coordinate si tolgono sotto i 25rem.
@@ -653,7 +675,7 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 
 ---
 
-## 6. Verifiche eseguite (2026-09-28)
+## 6. Verifiche eseguite (2026-09-28 – 2026-10-05)
 
 | Oggetto | Come | Esito |
 |---|---|---|
@@ -679,6 +701,8 @@ Rigenerazione: `node scripts/generate-brand.mjs` (riscrive anche wordmark e logo
 | Nodo 2 del Documento (N7) | griglia al 1% sul ritaglio Panorama, anteprima a 2× | leggio a (36%, 30,7%): il nodo cade sul piano del leggio, di lato alla figura |
 | **Ricontrollo del 2026-09-29** (commit 100b578) | etichette a riposo da 320 a 699 px ogni 10; rotazione da 0 a 700 px di scorrimento ogni 10, sotto l'header sticky, su 9 larghezze e 7 formati di telefono; N7, N8, C14-4 e reflow su staging e pubblicazione | C14-1, N7, N8, C14-4 conformi; Varese non esce dalla dissolvenza mentre è in vista (R1); reflow 80 su 80 |
 | Chiusura di R1 (commit df66be6) | misura del creative-director (`verify-build.mjs`) e della sessione principale (`c14fix.mjs`) sulla build, riletta da ui-designer | fine dell'intervallo 506,4 px a 390 × 844, 384 a 360 × 640, 400,2 a 667 × 375; tablet, desktop e Città Digitali invariati. Varese intera 260–330 px a 390 × 844 e 200–280 a 360 × 640; velocità 0,46, 0,56 e 1,00 px per pixel; nessun incrocio da 320 a 699 px; `animation-name: none` con il movimento ridotto |
+| Carta del capitolo 03, proposta (2026-10-05) | build completa di una copia del sito con le modifiche e l'elenco reale; nomi, fondi e richiami contro punti, nodi, altri nomi e bordo a 18 larghezze da 320 a 1920 px, con e senza la spaziatura di WCAG 1.4.12; reflow; peso | nessuna sovrapposizione; reflow pulito; Home +1,1 KB gzip; stress test a 10–50 posizioni di prova senza errori |
+| Carta del capitolo 03, applicata (commit 0a61546 e 2a038de) | sonda del creative-director a 16 larghezze, con e senza 1.4.12 (32 combinazioni); `maps.json` confrontato con l'uscita provata | nessuna sovrapposizione; 5 nomi fino a 397 px di carta, 9 da 404; 36 punti; legenda su una riga da 360 px; `maps.json` identico a quello provato |
 
 ---
 
@@ -721,19 +745,25 @@ Nota fuori dai token, per la sessione principale: in `global.css` la maschera de
 - Le coordinate dei sette luoghi sono state lette dal riquadro di Wikipedia tramite WebSearch e superano un controllo incrociato entro 1,4 km; la lettura diretta delle pagine resta `[DA VERIFICARE]`, non bloccante (direzione §1.4). Che le coordinate della sede siano quelle del comune, non dell'indirizzo, è deciso (`coordinate-luoghi.md` §5).
 - Le regole dalla versione 0.2 in poi sono misurate in Chromium: `text-wrap: balance`, file delle etichette, centri dell'orizzonte, soglia di 1280 px delle città, varianti strette delle porte, gradi della variante «esperienza» e query di contenitore delle carte vanno riverificate su Safari iOS e Firefox `[DA VERIFICARE]`. Per la rotazione anche la resa, l'unità `svh` dentro `max()` negli intervalli e la sensazione con lo scorrimento a inerzia, che la striscia segue (direzione 0.5).
 - La regola delle file delle etichette (§2.1), i centri dell'orizzonte e la soglia delle città (§3.8) dipendono dai luoghi, dalle coordinate e dal copy attuali: se cambiano, si rimisura (C11 lo ha dimostrato: C14-1).
+- La carta delle città è misurata in Chromium. Le misure del nome nel generatore hanno margine (spaziatura di 1.4.12), ma Safari iOS e Firefox `[DA VERIFICARE]`.
+- Se l'utente ingrandisce solo il testo dalle impostazioni del browser, i nomi della carta crescono più della carta e i margini potrebbero non bastare. Lo zoom della pagina non cambia nulla.
+- I nomi della pagina «Tutte le città» sono quelli letti da brand-strategist: fino al testo della pagina restano `[DA VERIFICARE]`, anche sulla carta.
 
 ## Domande aperte
 
 - **Cliente:** logo vettoriale ufficiale (positivo e negativo) e codici colore; conferma che la trama poligonale resta fuori dalla versione web; dati societari mancanti del footer.
 - **creative-director:**
+  - proposta per la carta di `/citta-digitali/` con i punti (`docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`);
   - descrizione dell'anello nella direzione §4.4 (la misura dice «vuoto a destra e un poco in basso»);
   - durata del disegno di linea (§7, n. 12);
   - tecnica del disegno delle carte (otturatore o tratteggio, §5.4).
 - **ux-designer:** conferma dell'area di tocco di 44 px attorno ai nodi da 26 px. Decisi: rotazione mobile con il limite `max(60svh, 60vw)` (parere del 2026-09-29); messaggi di errore sotto il campo con «!»; allineamento `end` dei campi appaiati (G4).
+- **ux-designer:** elenco completo delle città in testo su `/citta-digitali/`, quando il testo della pagina del cliente è confermato (direzione 0.6 §1.4).
 - **web-performance-specialist:** fallback con metriche per Fragment Mono (§7, n. 3).
 - **brand-strategist e consulente legale:** testo della nota di trasparenza sotto i ritratti a inchiostro.
 
 ## Decisioni richieste
 
 1. **Adozione dei token ancora aperti** (§7, nn. 3, 4 per la parte mancante, 6, 9, 11 e 12): nessuno cambia valori della direzione, li mette in un solo posto.
-2. **Logo provvisorio in produzione:** va online il ridisegno finché non arriva il vettoriale ufficiale? Proposta: sì, con sostituzione allo stesso percorso (`src/assets/brand/itnode-wordmark.svg`, `public/brand/logo-itnode.png`), rigenerando favicon e immagine social con i due script.
+2. **Carta di `/citta-digitali/` con i punti** (creative-director, prima del go-live): proposta e snippet in `docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`.
+3. **Logo provvisorio in produzione:** va online il ridisegno finché non arriva il vettoriale ufficiale? Proposta: sì, con sostituzione allo stesso percorso (`src/assets/brand/itnode-wordmark.svg`, `public/brand/logo-itnode.png`), rigenerando favicon e immagine social con i due script.
