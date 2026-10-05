@@ -5,7 +5,7 @@ contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-de
 stato: in revisione
 versione: 1.5
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3, §5.4), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§5, §6), src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md (0.4), docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3, §5.4), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§5, §6), src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
 ---
 
 # Copy deck · Contatti
@@ -13,6 +13,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omo
 Pagina `/contatti/`. Copre la sezione 22 delle linee guida (LG) e l'introduzione al form (§23). I recapiti sono quelli forniti dal cliente, senza modifiche. I testi sono pronti da impaginare.
 
 **Novità della v1.5 (2026-10-05)**
+- **Metadati**: la mappa 0.4 di seo-content adotta title e meta del sito (V1 chiusa); la sezione Metadati ha ora una sola tabella.
 - **Risposte di ux-designer** (review della carta della pagina, §5 e §6): composizione di recapiti e form e testo nascosto « nella home» confermati come nel sito; `struttura-pagine.md` 0.5 allineata (V3 chiusa).
 
 **Novità della v1.4 (2026-10-05)**
@@ -36,19 +37,13 @@ Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comod
 
 | Campo | Testo | Limite |
 |---|---|---|
-| Title | Contatti \| ITnode, Acquaviva delle Fonti (BA) | ≤ 60 |
-| Meta description | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. | 140–155 |
+| Title | Contatti, Acquaviva delle Fonti (BA) \| ITnode | ≤ 60 |
+| Meta description | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna, 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. | 140–155 |
 | Breadcrumb | Home › Contatti | — |
 
-**Nel sito** (`src/data/pages.ts`, build del 2026-10-05) title e meta sono diversi:
-| Campo | Testo | Caratteri |
-|---|---|---|
-| Title | Contatti, Acquaviva delle Fonti (BA) \| ITnode | 45 |
-| Meta description | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna, 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. | 155 |
-
 Note:
-- **Raccomando la versione del sito** (vedi «Verifica sul sito», V1). Il title segue lo schema delle specifiche SEO (§2.1, «‹Titolo pagina› | ITnode»), da cui si ricava anche `og:title`. L'indirizzo con la virgola è quello di footer, pagina e dati strutturati. L'avevo proposto il 2026-09-28 (review di bozze, K3 e K4), e lo chiede anche seo-technical (specifiche §2.2).
-- Decide seo-content, owner dei metadati. Il sito non va riportato alla versione della mappa. Nella mappa 0.4, in lavorazione il 2026-10-05, seo-content ha già adottato la versione del sito: quando la mappa è pubblicata, la prima tabella qui sopra si allinea alla seconda.
+- **Mappa e sito ora coincidono** (mappa 0.4, commit 2f5853a): title di 45 caratteri e meta di 155, come in `src/data/pages.ts`. Il title segue lo schema delle specifiche SEO (§2.1, «‹Titolo pagina› | ITnode»), da cui si ricava anche `og:title`. L'indirizzo con la virgola è quello di footer, pagina e dati strutturati.
+- Fino alla v1.5 la mappa aveva «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34» senza virgola. Avevo proposto la versione del sito il 2026-09-28 (review di bozze, K3 e K4), come seo-technical (specifiche §2.2).
 
 ## Struttura della pagina
 
@@ -236,7 +231,7 @@ Link esterni: Google Maps e LinkedIn nei recapiti, i due portali nella sezione 5
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/contatti.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
 
-**Esito.** I testi da pubblicare di questo documento sono nel sito, identici, con due eccezioni: title e meta, che nel sito sono diversi da quelli della mappa (V1), e i dati societari che il cliente deve ancora fornire (V2). Lo script trova 58 testi su 62: i 4 mancanti sono le voci dei dati societari senza valore. Rispetto alla v1.3 ho allineato sei punti: in ognuno il sito seguiva una decisione registrata.
+**Esito.** I testi da pubblicare di questo documento sono nel sito, identici, salvo i dati societari che il cliente deve ancora fornire (V2). Title e meta coincidono anche con la mappa 0.4 (V1, chiusa). Lo script trova 58 testi su 62: i 4 mancanti sono le voci dei dati societari senza valore. Rispetto alla v1.3 ho allineato sei punti: in ognuno il sito seguiva una decisione registrata.
 
 | Punto | v1.3 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -251,7 +246,7 @@ Link esterni: Google Maps e LinkedIn nei recapiti, i due portali nella sezione 5
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
-| V1 | Title e meta: `src/data/pages.ts` e mappa SEO §2 | Sito: «Contatti, Acquaviva delle Fonti (BA) \| ITnode» e «Via Sant’Anna, 34,». Mappa 0.3: «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34,» | **In chiusura**: la mappa 0.4, in lavorazione il 2026-10-05, ha già title e meta del sito (K3, K4; specifiche SEO §2.2). Il sito non cambia | seo-content |
+| V1 | Title e meta: `src/data/pages.ts` e mappa SEO §2 | Nella mappa 0.3: «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34,», diversi dal sito | **Chiusa il 2026-10-05**: la mappa 0.4 (commit 2f5853a) ha title e meta del sito (K3, K4; specifiche SEO §2.2) | seo-content |
 | V2 | Dati societari | Mancano sede legale, Registro delle imprese e REA, capitale sociale (soglia 5) | Dati dal cliente con la visura; poi i valori in `site.ts` e, se la sede legale è diversa, un campo per mostrarla | Cliente (C02); sessione principale |
 | V3 | `docs/ux/struttura-pagine.md` CT-1 | Citava l'occhiello nella hero | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
 
@@ -268,7 +263,7 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, paragrafi
 | Paragrafi e tabelle | 5 | 38 | 241 | **65,1** |
 | Tutti i testi principali | 13 | 58 | 368 | 92,8 |
 
-Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 14 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description, sia nella versione della mappa (45 e 154 caratteri) sia in quella del sito (45 e 155). Ricalcolato il 2026-10-05: il totale comprende ora la sezione Persona, aggiunta nella v1.2.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. Lo stesso script ha controllato 14 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description (45 e 155 caratteri). Ricalcolato il 2026-10-05: il totale comprende ora la sezione Persona, aggiunta nella v1.2.
 
 ## Ipotesi da validare
 
@@ -287,6 +282,5 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 ## Decisioni richieste
 
-- **seo-content**: chiudere l'allineamento di title e meta nella mappa (V1), già in corso nella versione 0.4.
 - **cro-specialist**: conferma del lead senza CTA.
 - **creative-director**: forma del link della sezione Persona, «Scopri il suo percorso →» (proposta) o «Il suo percorso →».

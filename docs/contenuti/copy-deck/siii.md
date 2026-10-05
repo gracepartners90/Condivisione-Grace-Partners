@@ -5,7 +5,7 @@ contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
 versione: 1.2
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/ux/struttura-pagine.md (0.5, §2), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit c98f565)]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/ux/struttura-pagine.md (0.5, §2), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit c98f565)]
 ---
 
 # Copy deck · SIII
@@ -15,6 +15,7 @@ Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusur
 **Novità della v1.2 (2026-10-05)**
 - **Verifica sul sito costruito.** Il documento ora descrive la pagina com'è: hero senza occhiello, frecce ↓ sulle CTA che portano al form, testi della figura di confronto e marquee dei verbi, ponte prima della chiusura, «Richiedi un’offerta» come titolo del form, anteprima immersiva non al lancio.
 - **Beneficio 03** in due frasi, come nel sito: la correzione che avevo proposto nella review di bozze del 2026-09-28 (S3).
+- **Riserve di go-live** dell'ADR 002 che toccano questa pagina (I7, I8, A7), annotate nelle sezioni 3–6, con una proposta per la didascalia della figura.
 - Le differenze ancora aperte sono nella sezione «Verifica sul sito».
 
 ## Come leggere questo documento
@@ -77,7 +78,7 @@ Nota: il ponte viene prima della chiusura (`struttura-pagine.md` SI-7): il form 
 Note:
 - La seconda riga dell'H1 non può stare alla scala piena: «Interattivi» (11 caratteri) a 64 px supera la larghezza utile di uno schermo da 390 px. Tra le due righe c'è un separatore nascosto alla vista (`<span class="sr-only"> – </span>`): il nome accessibile dell'H1 è «SIII – Siti Interattivi Immersivi» (review di accessibilità del 2026-09-28, T6).
 - Nessun paragrafo nella hero: la definizione arriva subito dopo.
-- CTA confermate dalla strategia di conversione §4: la prova più forte del SIII è provarlo. La CTA secondaria porta al form della stessa pagina, quindi la sua icona è ↓, non → (tone of voice §6, regola 4: le parole del cliente restano identiche).
+- CTA confermate dalla strategia di conversione §4: la prova più forte del SIII è provarlo. La CTA secondaria porta al form della stessa pagina, quindi la sua icona è ↓, non →; le parole del cliente restano identiche (tone of voice §6, regole 3 e 4).
 - **Visual.** A destra una soglia 3:5 con lo slot `siii-anteprima` (un'esperienza SIII vista da smartphone) e tre nodi hotspot decorativi. [DA FORNIRE: schermata, almeno 1200 × 2000 px] Finché manca, il segnaposto è nascosto agli screen reader. Il testo alternativo per quando arriva è in `docs/contenuti/alt-text.md`.
 
 ## 2. Cos’è un Sito Interattivo Immersivo
@@ -129,7 +130,7 @@ Note:
 
 Note:
 - **Figura.** È la composizione della direzione visiva (§7.4, riga 3): una schermata 16:10 con un orizzonte graduato, che nello stato «SIII» mostra i punti interattivi. Il trattino lungo delle due opzioni lo disegna il CSS, e il nome accessibile lo comprende. Gradi, etichette dei punti e righe mono sono decorativi; ciò che serve lo dicono la didascalia e la tabella. I testi li ho rivisti nella review di bozze del 2026-09-28 (S2: «apri, esplori, chiedi, prenoti», al posto di «guardi», per non indebolire il contrasto con il tour 360°).
-- **Veridicità.** La didascalia dello stato «SIII» descrive la categoria, come la tabella. Vale la stessa riserva sulle funzioni sempre incluse (review di veridicità, I7; brief N13; condizione C06 del verdetto G4): se le funzioni dipendono dalla configurazione, la frase si adatta insieme all'elenco della sezione 4.
+- **Veridicità.** La didascalia dello stato «SIII» descrive la categoria, come la tabella. Vale la stessa riserva sulle funzioni sempre incluse (review di veridicità, I7; brief N13; condizione C06 del verdetto G4). Se al go-live si applica la riserva I7 (ADR 002), propongo che la didascalia segua la frase della Home rifinita da copywriter-brand: «Nel SIII chi visita interagisce con gli hotspot, vede prodotti e video, chiede informazioni e, dove previsto, prenota.» (118 caratteri). Decide brand-strategist, owner del registro dei claim.
 - Tabella HTML vera (`<table>`, `<th scope="col">`, `<th scope="row">`), con ruoli ARIA espliciti e `<caption>` visivamente nascosta: «Differenze tra tour 360° e Sito Interattivo Immersivo». Su mobile le righe si impilano e ogni cella ripete l'intestazione di colonna.
 - Il Testo è il Blocco C della mappa SEO, con le frasi spezzate per la leggibilità (Gulpease) e «da lì» per la prenotazione (N13). Righe e contenuti della tabella sono quelli della mappa SEO §3.2, con ritocchi di stile. Il confronto riguarda la categoria, non concorrenti. Le formule prudenti («soprattutto», «di norma») restano: molti tour 360° hanno punti interattivi. I criteri vanno confermati da ITnode (brief D4).
 - «Da lì si prenotano servizi»: la prenotazione parte dall'ambiente, anche se si conclude su un sistema esterno (brief N13).
@@ -164,6 +165,7 @@ Note:
 - Markup: `<ul>`, con azione e complemento nello stesso `<li>`. Resa: elenco tipografico, non sette card con icona.
 - Tra azione e complemento c'è una virgola nascosta alla vista (`sr-only`): lo screen reader legge «Interagire con gli hotspot, i punti attivi…» (review di bozze, S1). In Chromium il nome calcolato ha uno spazio prima della virgola; non si sente, ed è il caso che ux-designer ha deciso di non toccare (verifica di accessibilità, A7).
 - **Marquee.** Cinque delle sette azioni, all'imperativo, come chiede la direzione visiva (§7.4, riga 4: nessun verbo può promettere più di quanto il SIII fa). È decorativo: lo screen reader legge l'elenco.
+- **Riserva di go-live I7** (ADR 002, in stato di proposta). Se il cliente non conferma che tutte le funzioni sono sempre incluse, l'introduzione diventa «Nel tuo SIII, in base alle funzioni che scegli, chi ti visita può:». Ha 66 caratteri, oltre il massimo di 60: l'a capo va provato a 390 px quando si applica.
 
 ## 5. Perché scegliere un SIII
 
@@ -200,7 +202,7 @@ Note:
 Note:
 - Numerazione 01–04 decorativa (`aria-hidden="true"`).
 - Solo benefici qualitativi (§11; brief N6, N9): niente «5–10 volte più tempo», niente «migliore posizionamento Google». Se arriva un dato documentato, si aggiunge sotto il beneficio con il modulo «Dato documentato» di Città Digitali (valore, etichetta, fonte, periodo).
-- «Vendita diretta» dice che il passo successivo «parte» dall'ambiente, non che l'acquisto avvenga dentro il SIII (brief N13). Il Testo 03 è in due frasi dalla review di bozze del 2026-09-28 (S3): una frase di 25 parole aveva Gulpease 44, così è a 57, con le stesse parole.
+- «Vendita diretta» dice che il passo successivo «parte» dall'ambiente, non che l'acquisto avvenga dentro il SIII (brief N13). Riserva di go-live I7 (ADR 002): se il cliente non conferma che prenotazione o vendita partono dall'esperienza, il titolo diventa «Dalla visita alla vendita»; il testo non cambia. Il Testo 03 è in due frasi dalla review di bozze del 2026-09-28 (S3): una frase di 25 parole aveva Gulpease 44, così è a 57, con le stesse parole.
 - «Uno strumento commerciale sempre accessibile» (44 caratteri) è il titolo più lungo: su mobile va su tre righe alla scala H3.
 - La CTA dopo i benefici è nel sito, come pulsante secondario (`ghost`).
 
@@ -241,6 +243,7 @@ Note:
 - Nel sito luogo e portale stanno sulla stessa riga mono, sotto il nome.
 - Luogo di Masseria Santella: il dominio dice solo «Cassano», ma Cassano delle Murge risulta da più schede pubbliche della struttura (brief §8). [DA VERIFICARE con il cliente]
 - Le schermate mancano: i segnaposto sono nascosti agli screen reader e, nella variante «in pubblicazione», non ripetono nome e luogo, che sono già nel testo accanto. [DA FORNIRE]
+- **Riserve di go-live** (ADR 002, in stato di proposta). I8: un'esperienza che al lancio non risponde si toglie, e «Tre Siti Interattivi Immersivi già online» si adegua al numero vero. A7: senza il consenso delle imprese, nessuna schermata delle loro esperienze; restano la variante «in pubblicazione», i nomi e i link (LG §12).
 - **Anteprima immersiva: non al lancio.** Al lancio ci sono schermata e link (`struttura-pagine.md` SI-6). Il pulsante compare solo da 1024 px, e solo dopo tre verifiche: i portali permettono l'incorporamento, non impostano cookie non tecnici senza consenso, il viewer non trattiene il focus. Quando si attiva, ux-designer chiede anche un pulsante «Chiudi l’anteprima» subito dopo l'iframe. La nota sotto il pulsante serve alla trasparenza, perché l'anteprima carica un sito di terze parti (vedi Rischi).
 
 ## 7. Chiusura e form
@@ -303,7 +306,7 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 1440 px.
 - Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
 
-**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici (88 testi su 88 trovati dallo script; title e meta controllati a parte). Fanno eccezione solo i testi dell'anteprima immersiva, che non è al lancio. Rispetto alla v1.1 ho allineato questi punti: in ognuno il sito seguiva una decisione registrata.
+**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici (96 testi su 96 trovati dallo script, compresa la figura di confronto; title e meta controllati a parte). Fanno eccezione solo i testi dell'anteprima immersiva, che non è al lancio. Rispetto alla v1.1 ho allineato questi punti: in ognuno il sito seguiva una decisione registrata.
 
 | Punto | v1.1 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -361,6 +364,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 ## Decisioni richieste
 
+- **brand-strategist**: forma della didascalia della figura se si applica la riserva I7 (proposta nella sezione 3).
 - **creative-director**: approvazione dello statement «Un tour 360° è una visita. Un SIII è un sito.» e della regola «H2 piccolo + statement grande»; allineamento della direzione visiva (V2).
 - **ux-designer**: allineamento di `struttura-pagine.md` SI-1 (V1).
 - **seo-content**: allineare l'ancora `#richiesta` e l'H2 della sezione 4 nella mappa (V3).

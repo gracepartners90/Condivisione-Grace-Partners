@@ -3,9 +3,9 @@ titolo: Carta di /citta-digitali/ · colori forzati (P6) e descrizione della car
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-05
-fonti: [docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P6, commit f5f28fe), docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (v1.2, L4 e L6, commit e13e717), docs/creativa/direzione-visiva.md (0.7, §1.4 «Il punto-città» e §7.6, commit c60fb3e), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/contenuti/copy-deck/citta-digitali.md (1.2, V2), docs/contenuti/copy-deck/contatti.md (1.4, V3 e «Decisioni richieste»), docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, src/components/ (MapItaly, Horizon, Node, SlotPending, Header, LocationShowcase, ProjectShowcase, FounderTimeline, VideoSection, ImmersivePreview), staging http://localhost:4321, copia del sito con le patch 1–6 di ui-designer, L6 e la patch 6 bis (build servita su http://localhost:4341; variante «publish» su 4342), Playwright 1.56 con Chromium 141 (colori forzati emulati, palette chiara e scura), albero di accessibilità via CDP, axe-core 4.13 del 2026-10-05]
+fonti: [docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P6, commit f5f28fe), docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (v1.2, L4 e L6, commit e13e717), docs/creativa/direzione-visiva.md (0.7, §1.4 «Il punto-città» e §7.6, commit c60fb3e), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/contenuti/copy-deck/citta-digitali.md (1.2, V2), docs/contenuti/copy-deck/contatti.md (1.4, V3 e «Decisioni richieste»), docs/ux/accessibilita.md, docs/ux/struttura-pagine.md, src/components/ (MapItaly, Horizon, Node, SlotPending, Header, LocationShowcase, ProjectShowcase, FounderTimeline, VideoSection, ImmersivePreview), staging http://localhost:4321, copia del sito con le patch 1–6 di ui-designer, L6 e la patch 6 bis (build servita su http://localhost:4341; variante «publish» su 4342), Playwright 1.56 con Chromium 141 (colori forzati emulati, palette chiara e scura), albero di accessibilità via CDP, axe-core 4.13 del 2026-10-05; ricontrollo sulla staging dopo i commit c98f565 e 5c4a6cb, http://localhost:4321 e «in pubblicazione» su http://localhost:4322]
 oggetto: decisione su P6 (colori forzati) estesa al resto del sito; descrizione della carta di /citta-digitali/ tra P3 (ui-designer) e L6 (copywriter-brand); regola per quando arriva l'elenco in testo; allineamento di struttura-pagine.md al sito costruito
 ---
 
@@ -362,7 +362,7 @@ Se una condizione manca, la carta tiene la descrizione di L6.
   6. Varese (H3), «Lombardia», riga, «Esplora Varese su varesedigitale.it (si apre in una nuova scheda)», e così le altre due.
 - **Stato futuro** (carta e figura `aria-hidden`): la lettura passa dal link alle schede, e nessuna immagine resta senza nome.
 - **Due precisazioni sulle misure, anche rispetto alla mia review della carta della Home.**
-  - **Nomi disegnati.** Nell'albero interno che CDP restituisce, sotto l'immagine compaiono ancora come testo i nomi disegnati: sulla Home a 390 px Varese, Itri, Altamura, Cosenza e Caltanissetta. Chromium però espone `role="img"` come foglia alle API di accessibilità, perché per ARIA i figli di un'immagine sono solo presentazionali. Lo conferma anche l'albero ARIA di Playwright: un'immagine con il suo nome e nient'altro. La conclusione della review della Home resta valida (i nomi non si leggono una seconda volta), ma l'osservazione «nessun figlio» va letta così. Da confermare con NVDA e VoiceOver (vedi «Ipotesi da validare»).
+  - **Nomi disegnati.** Nell'albero interno che CDP restituisce, sotto l'immagine compaiono ancora come testo i nomi disegnati: sulla Home a 390 px Varese, Itri, Altamura, Cosenza e Caltanissetta. Chromium però espone `role="img"` come foglia alle API di accessibilità, perché per ARIA i figli di un'immagine sono solo presentazionali. Lo snapshot ARIA di Playwright, invece, elenca i nomi come contenuto dell'immagine: la versione 1.0 di questa review diceva il contrario (correzione e suggerimento in §7.1). La conclusione della review della Home resta valida (i nomi non si leggono una seconda volta), ma l'osservazione «nessun figlio» va letta così. Da confermare con NVDA e VoiceOver (vedi «Ipotesi da validare»).
   - **Nome della figura.** In Chromium 141 la figura non prende il nome dalla `<figcaption>`, e la legenda si legge una volta, come contenuto. Altri browser possono dare alla figura il nome della didascalia: allora la legenda si sentirebbe due volte, entrando nella figura e leggendola. È il comportamento normale delle figure e non richiede interventi.
 
 ## 4. Prove
@@ -414,10 +414,92 @@ Le schermate prima e dopo (colori forzati, palette chiara e scura) sono nello sc
   - Accessibilità: non aggiunge fermate al Tab. Può restare leggibile dagli screen reader, perché il nome della CTA non contiene il dominio.
   - Decide il creative-director, perché cambia la composizione della hero.
 
+## 7. Ricontrollo sulla staging (commit c98f565 e 5c4a6cb)
+Staging http://localhost:4321 e variante «in pubblicazione» http://localhost:4322, dopo le quattro patch (c98f565) e dopo O4 (5c4a6cb). Il codice di `src/` al commit c98f565 è identico, file per file, a quello della copia provata.
+
+| Prova | Esito |
+|---|---|
+| Colori forzati, script dell'Appendice D: 7 pagine, a 390 e 1440 px, staging e «in pubblicazione» | Nessuna fermata del Tab senza contorno. Nessun segno che sparisce, salvo la sottolineatura dei link dell'header al passaggio del mouse (residuo accettato). Ripetuto su `/citta-digitali/` dopo O4: stesso esito |
+| Carte nei colori forzati, palette chiara e scura, a 390 e 1440 px | Capitoli 02 e 03 della Home, hero di Puglia Digitale, `/citta-digitali/`: nessun nodo o punto nel colore della tela (0 su 45, 0 su 3), richiami in `CanvasText`, anello della sede visibile, costa continua |
+| Variante «in pubblicazione» nei colori forzati | Nodi e punti caldi in `CanvasText` su Home, SIII e Puglia Digitale |
+| Albero di accessibilità della carta del capitolo 03 (CDP, 390 e 1440 px) | Figura → immagine con la descrizione di 241 caratteri, identica a prima → legenda. Nessun elemento focalizzabile nella figura; `<svg>` `aria-hidden` |
+| Albero di accessibilità della carta di `/citta-digitali/` | Figura → immagine con la descrizione L6, 138 caratteri → legenda. Ordine della sezione: H2, paragrafo, statement, «Tutte le città sul portale…», carta, legenda, poi Varese (H3) con regione, riga ed «Esplora…», Altamura e Caltanissetta. Uguale nella variante «in pubblicazione» |
+| O4, giro di Tab nella hero di `/citta-digitali/`: 8 larghezze da 320 a 1920 px, con e senza le spaziature di 1.4.12, staging e «in pubblicazione» | Sempre 2 fermate: «Visita il portale» → «Aderisci a Città Digitali». Il dominio non è focalizzabile e non è nascosto. Ordine del focus uguale a quello visivo: in pila fino a 639 px, affiancati da 640 |
+| O4, albero di accessibilità della hero (390 e 1440 px) | H1 → sottotitolo → link «Visita il portale Città Digitali (si apre in una nuova scheda)» → testo «cittàdigitali.it» → link «Aderisci a Città Digitali» |
+
+**O4 e l'ordine di lettura.** Da 640 px «Aderisci» sta accanto al pulsante e il dominio sotto: a schermo, riga per riga, l'ordine sarebbe pulsante, «Aderisci», dominio. Nel DOM, invece, il dominio viene prima di «Aderisci». Va bene così:
+- il dominio è la didascalia del pulsante, e leggerlo subito dopo è l'ordine che ha senso (1.3.2);
+- l'ordine del focus, l'unico che passa da un elemento all'altro, coincide con quello visivo (2.4.3).
+
+### 7.1 [SUGGERIMENTO] Testi disegnati sulle carte: `aria-hidden`
+- **Dove.** `src/components/ui/MapItaly.astro`: `.map__label` (nomi e coordinate) e `.map__area` (nomi di mari e altopiani).
+- **Problema.** In §3.5 (versione 1.0) ho scritto che lo snapshot ARIA di Playwright mostra la carta del capitolo 03 come un'immagine senza figli. Non è così: elenca i nomi disegnati come contenuto dell'immagine, 5 a 390 px e 9 a 1440, come l'albero interno di CDP. Avevo letto una riga troncata.
+  - La conclusione resta: per ARIA i figli di un'immagine sono solo presentazionali, e Chromium espone l'immagine come foglia alle API di accessibilità.
+  - Oggi però il risultato dipende da come ogni browser e ogni screen reader applica la regola.
+- **Motivazione.** Non è un'inadempienza: un browser che leggesse i nomi ripeterebbe ciò che la descrizione dice già. È però una dipendenza che si toglie con un attributo, e rende pulito anche l'albero degli strumenti di verifica.
+- **Proposta.** `aria-hidden="true"` sui due tipi di testo disegnato. Senza `label` la carta è già tutta nascosta, quindi l'attributo può restare sempre.
+- **Provato** su una copia al commit c98f565 con la patch, build servita in locale:
+  - nell'albero di CDP e nello snapshot di Playwright l'immagine ha solo la sua descrizione, senza testo sotto;
+  - le quattro carte sono identiche pixel per pixel alla stessa build senza patch, nel modo normale e nei colori forzati, a 390 e 1440 px;
+  - axe: 0 violazioni in 32 esecuzioni;
+  - la patch si applica pulita sul commit 0de043c.
+- **Patch** (copia: `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ux-p6/diff/names-hidden.patch`):
+
+```diff
+diff --git a/src/components/ui/MapItaly.astro b/src/components/ui/MapItaly.astro
+index 5a4038a..aefc403 100644
+--- a/src/components/ui/MapItaly.astro
++++ b/src/components/ui/MapItaly.astro
+@@ -121,13 +121,15 @@ if (!data) {
+ <div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame), 'map--cities': Boolean(cities) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
+   {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' })}
+ >
++  {/* Drawn text is aria-hidden too: with `label` the description says it (children of role="img" are
++      presentational, and this keeps it so in every browser); without `label` the whole map is hidden. */}
+   <svg class="map__svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
+     {data ? <path class="map__coast" d={data.path} vector-effect="non-scaling-stroke" /> : <path class="map__grid" d={graticule.join('')} vector-effect="non-scaling-stroke" />}
+   </svg>
+   {
+     showLabels &&
+       labels.map((l) => (
+-        <span class:list={['map__area t-label', `map__area--${l.anchor ?? 'start'}`]} style={`left: ${l.left}%; top: ${l.top}%`}>
++        <span class:list={['map__area t-label', `map__area--${l.anchor ?? 'start'}`]} style={`left: ${l.left}%; top: ${l.top}%`} aria-hidden="true">
+           {l.text}
+         </span>
+       ))
+@@ -143,7 +145,7 @@ if (!data) {
+       >
+         <span class="map__node" />
+         {showLabels && (
+-          <span class="map__label t-label" data-anchor={p.anchor?.wide} data-anchor-narrow={p.anchor && p.anchor.narrow !== p.anchor.wide ? p.anchor.narrow : undefined}>
++          <span class="map__label t-label" data-anchor={p.anchor?.wide} data-anchor-narrow={p.anchor && p.anchor.narrow !== p.anchor.wide ? p.anchor.narrow : undefined} aria-hidden="true">
+             <span>{p.name}</span>
+             {!cities && <span class="map__coords">{formatCoords(p)}</span>}
+           </span>
+```
+
+### 7.2 Risposte al ricontrollo di ui-designer (CF1–CF3)
+Fonte: `docs/review/2026-10-05-carta-citta-digitali-ricontrollo-ui-designer.md`. Le prime due prove della tabella di §7 non vedevano questi casi: lo script dell'Appendice D cercava solo i colori di fondo, e la mia lista di pagine non comprendeva la 404.
+- **CF1, pagina 404: approvata, da applicare con la stessa priorità di F2–F4.** È il difetto di F4: a riposo ogni mondo mostra un anello vuoto, il segno della sede, e al passaggio del mouse e al focus il nodo non cambia più.
+  - Ricontrollato sullo staging con il CSS iniettato, palette chiara e scura, a 390 e 1440 px.
+  - Oggi il punto ha il colore della tela, l'anello è dipinto a riposo e le tacche della scala spariscono.
+  - Con CF1 il punto è in `LinkText`, l'anello è trasparente a riposo e in `LinkText` al focus, e le tacche tornano.
+  - Il link ha sempre il suo contorno di sistema di 2 px.
+  - Nel modo normale la pagina non cambia di un pixel.
+- **CF2, tacche disegnate con gradienti: residui accettati.** Sono trame di una linea che resta, non segni che portano un dato:
+  - le tacche minori in `--line` sono decorative per regola;
+  - la tacca del rilevamento del capitolo è un segno a sé, già corretto dalla 6 bis;
+  - la variante «publish» è `aria-hidden`;
+  - i segni di taglio non vanno in produzione.
+
+  Aggiunti ai residui di `accessibilita.md` §2.14.
+- **CF3, controllo dell'Appendice D: adottato.** Lo script di ui-designer diventa l'Appendice D.2. La pagina 404 entra nella lista di D.1. Ho ripetuto entrambi gli script sullo staging e sulla variante «in pubblicazione», con l'esito descritto da ui-designer.
+
 ## Verdetto di dominio (accessibilità)
 **P1–P5 con L6 al posto della descrizione a tre nomi: conformi a WCAG 2.2 AA.**
 - **Colori forzati, sopra la soglia.** P6 e F1 vanno applicati prima del go-live. F2–F4 sono consigliati nella stessa patch, perché non costano nulla nel modo normale.
 - **Nessuna di queste decisioni cambia qualcosa a schermo nel modo normale.**
+- **Verificato sulla staging** (c98f565 e 5c4a6cb, §7): colori forzati, alberi di accessibilità delle due carte e O4 senza problemi. Restano due suggerimenti non bloccanti: §7.1 (testi disegnati `aria-hidden`) e CF1 sulla 404 (§7.2).
 - Il verdetto di gate spetta al creative-director.
 
 ## Ipotesi da validare
@@ -432,16 +514,21 @@ Le schermate prima e dopo (colori forzati, palette chiara e scura) sono nello sc
 - **creative-director:**
   - allineare la direzione visiva 0.7, §1.4 («Accessibilità») e §7.6, sezione 3, punto 2: la carta di `/citta-digitali/` ha la descrizione L6, senza «Tra queste»;
   - nello stesso paragrafo la descrizione della Home oggi è di 241 caratteri, non 255;
-  - dominio visibile sotto le CTA della hero di Città Digitali (§6).
+  - dominio visibile sotto le CTA della hero di Città Digitali (§6): applicato con O4 (5c4a6cb), verificato in §7.
 - **copywriter-content:** nel copy deck di Città Digitali (sezione 2), legenda L1 e descrizione L6 al posto della descrizione a tre nomi.
 - **ui-designer:** P6 e 6 bis nel design system: i segni delle Coordinate e gli anelli di focus nei colori forzati.
 
 ## Decisioni richieste
-- **Sessione principale.** Nell'ordine, ciascuna con `git apply`:
+- **Sessione principale, dopo il ricontrollo (§7):**
+  - applicare la patch CF1 di ui-designer su `src/pages/404.astro` (§7.2);
+  - applicare, se si vuole, il suggerimento §7.1 (`aria-hidden` sui testi disegnati, una patch su `MapItaly.astro`).
+
+  Le due patch toccano file diversi e sono indipendenti.
+- **Sessione principale, fatto (commit c98f565).** Nell'ordine, ciascuna con `git apply`:
   1. patch 1–5 di ui-designer (P1–P5, adottate nella direzione visiva 0.7);
   2. patch L6 (§3.3);
   3. patch 6 di ui-designer (P6);
   4. patch 6 bis (§2).
 
-  Poi la build. Le patch 6 e 6 bis si possono applicare anche da sole, se P1–P5 slittano. Dopo l'applicazione rifaccio il giro di Tab nei colori forzati e l'albero di accessibilità sulla build di staging.
+  Poi la build. Le patch 6 e 6 bis si possono applicare anche da sole, se P1–P5 slittano. Giro di Tab nei colori forzati e alberi di accessibilità rifatti sulla staging: §7.
 - **creative-director:** allineare la direzione visiva su L6 (vedi «Domande aperte»).

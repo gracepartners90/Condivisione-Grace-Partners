@@ -37,6 +37,11 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Il dominio omonimo (senza accento) non va scritto alla lettera nemmeno nelle note: descriverlo («il dominio senza accento delle LG §22»), così né un copia-incolla né una ricerca lo ripescano.
 - Metodo collaudato: copiare `dist/` in `scratchpad/copywriter-content/` e servirla con `DIST_DIR=… PREVIEW_AUTH=off PORT=4391 node scripts/serve.mjs` (niente corse con le build degli altri). `verify-deck.mjs` controlla ogni blocco `>` e ogni tabella di copy contro `textContent`, nomi e descrizioni dell'albero di accessibilità (CDP), `href`, `data-cta-id` e `alt`.
 - `copycheck.py` non legge come metadati una tabella che segue un'etichetta in grassetto: le lunghezze di una seconda tabella di title e meta vanno contate a parte.
+- Lo staging di riferimento è `astro preview` su http://localhost:4321, che serve `dist/`: prima di usarlo controllare con `find src -newer dist/…` che la build sia aggiornata. Il mio server su 4391 va fermato con `kill <PID>`: `pkill -f "PORT=4391"` uccide la mia stessa shell.
+- Lo script nel senso inverso (`reverse-check.mjs`) trova i testi del sito che il deck non riporta, fuori dal form: figure, marquee, didascalie, righe mono. `verify-deck2.mjs <porta> <deck>=<percorso>` è la versione con parametri. `alts.mjs` raccoglie alt, didascalie e `role="img"` di tutte le pagine.
+- Riaprire anche le mie review precedenti: nella review di bozze del 2026-09-28 avevo scritto «allineo io il copy deck» (S3, Testo 03 di SIII), ed era rimasto da fare.
+- L'ADR 002 (riserve di go-live, brand-strategist) contiene testi di riserva per i miei deck (B2, B3, I6, I7, I8, A7): riportarli nelle note delle sezioni e controllarne la lunghezza. La riserva I6 «Porta la tua impresa in Puglia Digitale» supera i 28 caratteri.
+- La sessione principale committa versioni intermedie dei miei file mentre lavoro («lavoro in corso»): normale. Prima di consegnare, rileggere `git log` e le review nuove (es. direzione visiva 0.8, mappa 0.4 in corso) e aggiornare lo stato delle differenze aperte.
 
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

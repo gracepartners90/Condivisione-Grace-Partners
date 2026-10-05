@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.5
+versione: 0.6
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -358,10 +358,11 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
   - **H1 su due registri**, con il separatore nascosto « – »: il nome accessibile è «Città Digitali – Le attività del territorio, online senza perdere radici.» (T6).
   - **Sottotitolo** `<p>`, verbatim dalle LG («Siti Immersivi Interattivi»). Se l'utente approva la DR2 del brief, diventa «Siti Interattivi Immersivi», con link a `/siii/` (copy deck §1).
   - **CTA primaria** «Visita il portale ↗» → cittàdigitali.it, con il link in punycode `https://xn--cittdigitali-19a.it`. Nome accessibile: «Visita il portale Città Digitali (si apre in una nuova scheda)». cittadigitali.it senza accento è un progetto omonimo di altri.
+  - **Dominio sotto la CTA primaria** (O4 di seo-content, commit 5c4a6cb): «cittàdigitali.it» in mono, come testo semplice e non come link. Aiuta a riconoscere il dominio con l'accento e a distinguerlo dall'omonimo.
   - **Link secondario** «Aderisci a Città Digitali ↓» → `#richiesta`. È la forma breve del copy deck, entro i 28 caratteri della guida di stile.
+  - **Ordine del DOM:** pulsante, dominio, «Aderisci». Da 640 px «Aderisci» sta accanto al pulsante e il dominio sotto il pulsante. Il dominio si legge subito dopo il suo pulsante, come una didascalia, e non aggiunge fermate al Tab: l'ordine del focus resta uguale a quello visivo (verifica del 2026-10-05).
   - **Visual.** L'Orizzonte di Città Digitali chiude la hero: rilevamenti e distanze dalla sede verso Varese, Altamura e Caltanissetta. È `aria-hidden`, perché le tre città sono nel testo della pagina. Nella hero non ci sono né foto né poster.
-- **Mobile.** Breadcrumb → H1 → sottotitolo → CTA → link secondario → Orizzonte.
-- `[PROPOSTA O4 di seo-content, aperta]` **Dominio «cittàdigitali.it» in mono sotto le CTA**, come testo semplice e non come link. Per l'usabilità sono favorevole: aiuta a riconoscere il dominio con l'accento e a distinguerlo dall'omonimo. Decide il creative-director, perché cambia la composizione della hero (`docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §6).
+- **Mobile.** Breadcrumb → H1 → sottotitolo → CTA → dominio → link secondario → Orizzonte.
 
 ### CD-3 · Video — `VideoSection` variante `full-bleed`
 - **Contenuti.**

@@ -3,7 +3,7 @@ titolo: Requisiti e verifica di accessibilità (WCAG 2.2 AA)
 owner: ux-designer
 contributi: [ui-designer, web-performance-specialist, cro-specialist, seo-technical, copywriter-content]
 stato: in revisione
-versione: 0.5
+versione: 0.6
 aggiornato: 2026-10-05
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
 ---
@@ -124,7 +124,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 | Requisito | Regola operativa | Criteri |
 |---|---|---|
 | Testi alternativi | Quelli di `alt-text.md`. Decorative: `alt=""`. Logo: `alt="ITnode"`. Immagine dentro un link che ha già testo: `alt=""`. | 1.1.1 |
-| Carte | **Decorative** (`aria-hidden`) quando i luoghi che mostrano sono già scritti nel testo accanto: oggi la carta della Puglia (capitolo 02 della Home e hero di Puglia Digitale). **Con informazione propria**: `role="img"` con una descrizione costruita dagli stessi dati della carta, e l'`<svg>` interno `aria-hidden`. La descrizione dice ciò che la carta aggiunge al testo accanto, e nessun nome che la carta non disegni:<br>• **capitolo 03 della Home**: regioni da nord a sud, regione più fitta, poi «Tra queste:» con i nomi disegnati sulla carta larga;<br>• **`/citta-digitali/` con il punto-città**: solo regioni e regione più fitta (L6). La carta non disegna nomi, e le tre città sono nel testo prima e nelle schede subito dopo.<br>Quando l'elenco completo sta accanto alla carta, carta e legenda tornano insieme `aria-hidden`. Condizioni: stessa sezione, tutte le città, raggruppate per regione, visibile o in un `<details>` con un sommario chiaro. Mai un elenco nascosto di nomi. Nessun numero finché il conteggio non è confermato. Decisioni del 2026-10-05: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` e `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3. | 1.1.1, 1.3.1 |
+| Carte | **Decorative** (`aria-hidden`) quando i luoghi che mostrano sono già scritti nel testo accanto: oggi la carta della Puglia (capitolo 02 della Home e hero di Puglia Digitale). **Con informazione propria**: `role="img"` con una descrizione costruita dagli stessi dati della carta, e dentro la carta `<svg>` e testi disegnati (nomi, coordinate, nomi di aree) `aria-hidden`, così nessun browser li legge dopo la descrizione. La descrizione dice ciò che la carta aggiunge al testo accanto, e nessun nome che la carta non disegni:<br>• **capitolo 03 della Home**: regioni da nord a sud, regione più fitta, poi «Tra queste:» con i nomi disegnati sulla carta larga;<br>• **`/citta-digitali/` con il punto-città**: solo regioni e regione più fitta (L6). La carta non disegna nomi, e le tre città sono nel testo prima e nelle schede subito dopo.<br>Quando l'elenco completo sta accanto alla carta, carta e legenda tornano insieme `aria-hidden`. Condizioni: stessa sezione, tutte le città, raggruppate per regione, visibile o in un `<details>` con un sommario chiaro. Mai un elenco nascosto di nomi. Nessun numero finché il conteggio non è confermato. Decisioni del 2026-10-05: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` e `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3. | 1.1.1, 1.3.1 |
 | Testo nelle immagini | Niente testo significativo dentro le immagini. La foto dell'evento ha cornice e scritta sovrimpresse: si usano i ritagli in `derivate/`, e l'originale resta `[DA FORNIRE]`. | 1.4.5 |
 | Veridicità | Tre immagini hanno il segno di Gemini e tutte e quattro le foto del fondatore sembrano elaborate. Alt e didascalie descrivono ciò che si vede, senza presentare come reali eventi non documentati (soglia 1; brief DR3). | 1.1.1 |
 | **Slot vuoti (decisione)** | Finché un asset manca, il segnaposto di `Media.astro` ha `aria-hidden="true"`, senza `role="img"` né `aria-label`: prima annunciava l'alt dell'immagine futura, cioè un'immagine che non c'era. Già corretto. L'etichetta visiva «Asset richiesto» serve solo a chi rivede lo staging. **In produzione nessun segnaposto di staging:** si pubblica l'asset oppure la variante tipografica «in pubblicazione» (`SlotPending`, build con `PUBLIC_SLOT_MODE=publish`). Anche la variante è `aria-hidden` e senza elementi focalizzabili, ed è ammessa a una condizione: il testo che mostra è già scritto nella pagina (H3, righe di luogo) oppure è il segno grafico dei rilevamenti (rilevamento, distanza, coordinate: decisione T10). Sulla Home il nome dell'esperienza non è nel testo, quindi lì la variante va senza nome o con un nome esposto (verifica del 2026-09-28, O6). | 1.1.1, 1.3.1, 4.1.2 |
@@ -186,12 +186,15 @@ Requisito di progetto oltre WCAG 2.2 AA, deciso dall'owner dell'accessibilità i
 - **Dove si applica.**
   - Carte: P6 di ui-designer.
   - Orizzonte, porte, Nodo, tacche dei capitoli, timeline del fondatore, voce corrente dell'header e del menu, variante «publish» dei segnaposto, focus dei controlli del video e dei nodi della foto: patch 6 bis.
+  - Pagina 404: punto dei mondi in `LinkText`, anello solo al passaggio del mouse e al focus, tacche della scala in `CanvasText` (CF1 di ui-designer).
   - Ogni nuovo segno disegnato come sfondo nasce con il suo blocco.
+- **Anche gradienti e contorni trasparenti.** Nei colori forzati i gradienti (`background-image`) spariscono. Un contorno trasparente usato per nascondere un anello a riposo, invece, viene dipinto e resta sempre acceso. Per i segni che portano un dato o uno stato vale la stessa tecnica: `forced-color-adjust: none` e colori di sistema.
 - **Residui accettati.**
   - Sottolineatura dei link dell'header al passaggio del mouse.
   - Cerchio dell'icona d'errore: il «!» resta come testo.
   - Fondo della pillola selezionata: la casella nativa resta.
   - Fondo dei pulsanti: resta il bordo.
+  - Tacche disegnate con gradienti che fanno da trama a una linea che resta (CF2 di ui-designer): tacche minori del filo dei capitoli, tacche dell'orizzonte nel confronto di SIII, filo della variante «publish», segni di taglio dei segnaposto (solo in staging). La tacca del rilevamento del capitolo è un segno a sé e resta (6 bis).
 - **Prova:** §4.3.
 
 ## 3. Problemi già individuati (prima della build)
@@ -268,11 +271,12 @@ Va eseguito a 1280 px e a 390 px (con l'emulazione del dispositivo o il ridimens
   - Sottotitoli e descrizione del video presenti, se servono.
   - Controlli ripetuti sulla build di produzione: `clipped()` e `midWordBreaks()` dell'Appendice C, con e senza le spaziature e con e senza movimento; percorso del form da tastiera e al tocco.
 - **Colori forzati (§2.14).** Emulazione con Playwright (`forcedColors: 'active'`), palette chiara e scura, a 390 e 1440 px:
-  - giro di Tab su ogni pagina: ogni fermata ha un contorno (`outline-style` diverso da `none`), oppure ce l'ha l'etichetta che la contiene;
+  - giro di Tab su ogni pagina, 404 compresa: ogni fermata ha un contorno (`outline-style` diverso da `none`), oppure ce l'ha l'etichetta che la contiene;
   - ricerca dei segni disegnati solo come sfondo che prendono il colore della tela;
+  - confronto tra modo normale e colori forzati: gradienti persi e contorni trasparenti che diventano visibili;
   - confronto delle schermate nel modo normale, che non devono cambiare.
 
-  Script collaudato il 2026-10-05 in Appendice D. Su Windows con un tema reale `[DA FORNIRE: dispositivo o servizio di test]`.
+  Script collaudati il 2026-10-05 in Appendice D (D.1 e D.2). Su Windows con un tema reale `[DA FORNIRE: dispositivo o servizio di test]`.
 - **Limiti dell'ambiente.** Qui c'è solo Chromium: le prove con Firefox, WebKit, VoiceOver e dispositivi reali richiedono un altro ambiente `[DA FORNIRE: dispositivi o servizio di test]`.
 
 ### 4.4 Registro dei problemi (Fase 5 e verifica verso il G4)
@@ -296,10 +300,14 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 | 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live (chiuso) | Variante senza nome in Home (`pendingText={false}`) | sviluppo | sì (c025181) |
 | 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S3 (V7), S4, S5 applicati e verificati (c025181); S6 dopo il lancio |
 | 2026-09-28 | Home, `/siii/` e modifiche di C10–C12 (verifica C14) | Riga della hero, cascata, 404, link di Contatti, copertina del video, variante «publish» | 1.4.10, 1.4.12, 2.4.3, 2.4.11, 4.1.2 | verifica | Nessuna correzione necessaria | ux-designer | sì, nessun problema (f1b6780) |
-| 2026-10-05 | `/citta-digitali/`, carta con il punto-città (P3, L6) | Descrizione della carta: con i tre nomi (P3) o senza (L6) | 1.1.1, 1.3.1 | decisione | L6, senza nomi; con l'elenco accanto, carta e legenda `aria-hidden` alle condizioni di §2.8 | ux-designer; sessione principale | provata su una copia: albero di accessibilità e axe; da applicare con P1–P5 |
-| 2026-10-05 | tutte le carte, colori forzati (P6) | Nodi, punti e richiami spariscono; i punti aprono buchi nella costa | §2.14 (oltre AA) | importante | Patch 6 di ui-designer | sessione principale | provata su una copia; da applicare prima del go-live |
-| 2026-10-05 | `/citta-digitali/` (video) e Home (nodi della foto), colori forzati (F1) | Focus invisibile su 6 pulsanti: l'anello è un'ombra | 2.4.7 rispettato nel modo normale; §2.14 | importante | `outline: 2px solid transparent` al posto di `none` (patch 6 bis) | sessione principale | provata su una copia; da applicare prima del go-live |
-| 2026-10-05 | vari, colori forzati (F2–F4) | Spariscono la voce corrente del menu, nodi e richiami di Orizzonte e porte, il Nodo, le tacche e i segni della variante «publish» | §2.14 | suggerimento | Patch 6 bis | sessione principale | provata su una copia |
+| 2026-10-05 | `/citta-digitali/`, carta con il punto-città (P3, L6) | Descrizione della carta: con i tre nomi (P3) o senza (L6) | 1.1.1, 1.3.1 | decisione | L6, senza nomi; con l'elenco accanto, carta e legenda `aria-hidden` alle condizioni di §2.8 | ux-designer; sessione principale | sì, staging c98f565: albero di accessibilità e ordine di lettura |
+| 2026-10-05 | tutte le carte, colori forzati (P6) | Nodi, punti e richiami spariscono; i punti aprono buchi nella costa | §2.14 (oltre AA) | importante | Patch 6 di ui-designer | sessione principale | sì, staging c98f565: 4 carte, palette chiara e scura, 390 e 1440 px |
+| 2026-10-05 | `/citta-digitali/` (video) e Home (nodi della foto), colori forzati (F1) | Focus invisibile su 6 pulsanti: l'anello è un'ombra | 2.4.7 rispettato nel modo normale; §2.14 | importante | `outline: 2px solid transparent` al posto di `none` (patch 6 bis) | sessione principale | sì, staging c98f565 e «in pubblicazione» (Appendice D) |
+| 2026-10-05 | vari, colori forzati (F2–F4) | Spariscono la voce corrente del menu, nodi e richiami di Orizzonte e porte, il Nodo, le tacche e i segni della variante «publish» | §2.14 | suggerimento | Patch 6 bis | sessione principale | sì, staging c98f565 e «in pubblicazione» (Appendice D) |
+| 2026-10-05 | Home, capitolo 03: nomi disegnati sotto `role="img"` | CDP e Playwright li mostrano come contenuto dell'immagine; Chromium espone l'immagine come foglia | nessuno (figli presentazionali per ARIA) | suggerimento | `aria-hidden` su `.map__label` e `.map__area` (§2.8; review della pagina §7.1) | sessione principale | provata su una copia; da applicare |
+| 2026-10-05 | 404, colori forzati (CF1 di ui-designer) | Il punto dei mondi sparisce e l'anello, un contorno trasparente, resta sempre acceso; le tacche della scala (gradienti) spariscono | §2.14 | suggerimento | Patch CF1 di ui-designer: punto in `LinkText`, anello solo al passaggio del mouse e al focus, tacche in `CanvasText` | sessione principale | provata da ui-designer su una build e da ux-designer con CSS iniettato; da applicare |
+| 2026-10-05 | vari, colori forzati (CF2 di ui-designer) | Tacche disegnate con gradienti che spariscono, mentre la linea resta | §2.14 | residuo accettato | Nessuna correzione: sono trame, non dati | ux-designer | sì (Appendice D.2) |
+| 2026-10-05 | `/citta-digitali/`, hero: dominio sotto il pulsante (O4) | Riga di testo nuova tra due link | 1.3.2, 2.4.3 | verifica | Nessuna correzione: 2 fermate a ogni larghezza, dominio letto subito dopo il suo pulsante | ux-designer | sì, staging 5c4a6cb e «in pubblicazione», con e senza 1.4.12 |
 
 ## Ipotesi da validare
 - Lo skip link senza `tabindex` permanente funziona con i browser e i lettori di schermo di riferimento: verificato solo in Chromium.
@@ -517,6 +525,8 @@ const midWordBreaks = () => {
 
 ## Appendice D · Colori forzati: focus e segni
 
+### D.1 · Fermate del Tab e segni disegnati come sfondo
+
 Collaudato il 2026-10-05, uso: `node fc-check.mjs http://localhost:4321` (Playwright come in §4.1, con il Chromium già installato).
 - **Sullo staging** trova i 6 pulsanti con il focus fatto solo di ombre e i segni che prendono il colore della tela.
 - **Su una copia con le patch 6 e 6 bis** (§2.14) resta solo `a::after`: è la sottolineatura dei link dell'header al passaggio del mouse, un residuo accettato.
@@ -528,7 +538,7 @@ Collaudato il 2026-10-05, uso: `node fc-check.mjs http://localhost:4321` (Playwr
 // (no text, border or outline) do not take the canvas colour.
 import { chromium } from 'playwright';
 const base = process.argv[2] ?? 'http://localhost:4321';
-const pages = ['/', '/siii/', '/puglia-digitale/', '/citta-digitali/', '/contatti/', '/privacy-policy/', '/cookie-policy/'];
+const pages = ['/', '/siii/', '/puglia-digitale/', '/citta-digitali/', '/contatti/', '/privacy-policy/', '/cookie-policy/', '/404.html'];
 const browser = await chromium.launch();
 for (const w of [390, 1440]) for (const path of pages) {
   const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce', forcedColors: 'active', colorScheme: 'dark' });
@@ -570,6 +580,58 @@ for (const w of [390, 1440]) for (const path of pages) {
   });
   console.log(`${path} @${w}: senza contorno ${noOutline.size ? [...noOutline].join(', ') : '—'} · segni che spariscono ${vanishing.length ? vanishing.join(', ') : '—'}`);
   await ctx.close();
+}
+await browser.close();
+```
+
+### D.2 · Gradienti e contorni trasparenti (di ui-designer)
+
+D.1 non vede due casi: i segni disegnati con un gradiente, che nei colori forzati spariscono, e gli anelli nascosti con un contorno trasparente, che vengono dipinti e restano sempre accesi. Questo script confronta modo normale e colori forzati sugli stessi elementi. Viene dal ricontrollo di ui-designer del 2026-10-05 (CF3), adottato così com'è. Uso: `node fc-extra.mjs http://localhost:4321`.
+- **Esito sullo staging del 2026-10-05:** sulla 404 le tacche della scala e l'anello dei mondi (CF1). Sulle altre pagine solo i residui accettati di §2.14: `.chapter__rule`, `.compare__horizon`, `.media-slot::before` (solo staging) e `.slot-pub__horizon` (solo «publish»).
+- **Esito atteso dopo CF1:** solo quei residui.
+
+```js
+// fc-extra.mjs: what the Appendix D scan cannot see, comparing normal mode and forced colors.
+// (a) marks drawn with a gradient: forced colors set background-image to none;
+// (b) rings hidden with a transparent outline at rest: forced colors paint them, always on.
+import { chromium } from 'playwright';
+const base = process.argv[2] ?? 'http://localhost:4321';
+const pages = ['/', '/siii/', '/puglia-digitale/', '/citta-digitali/', '/contatti/', '/privacy-policy/', '/cookie-policy/', '/404.html'];
+const collect = () => {
+  const out = {};
+  document.querySelectorAll('body *').forEach((el, i) => {
+    for (const pseudo of [null, '::before', '::after']) {
+      const s = getComputedStyle(el, pseudo);
+      if (s.display === 'none' || (pseudo && s.content === 'none')) continue;
+      out[`${i}${pseudo ?? ''}`] = {
+        sig: `${el.tagName.toLowerCase()}.${el.classList[0] ?? ''}${pseudo ?? ''}`,
+        grad: s.backgroundImage.includes('gradient') && s.maskImage === 'none',
+        noImage: s.backgroundImage.split(',').every((x) => x.trim() === 'none'),
+        outline: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 ? s.outlineColor : null,
+      };
+    }
+  });
+  return out;
+};
+const clear = (c) => !c || c === 'transparent' || /rgba\(.*,\s*0\)$/.test(c);
+const browser = await chromium.launch();
+for (const w of [390, 1440]) for (const path of pages) {
+  const snap = {};
+  for (const forced of ['none', 'active']) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce', forcedColors: forced });
+    const page = await ctx.newPage();
+    await page.goto(base + path, { waitUntil: 'networkidle' });
+    snap[forced] = await page.evaluate(collect);
+    await ctx.close();
+  }
+  const lost = new Set(), ringOn = new Set();
+  for (const [k, n] of Object.entries(snap.none)) {
+    const f = snap.active[k];
+    if (!f) continue;
+    if (n.grad && f.noImage) lost.add(n.sig);
+    if (n.outline && clear(n.outline) && f.outline && !clear(f.outline)) ringOn.add(n.sig);
+  }
+  console.log(`${path} @${w}: gradienti persi ${[...lost].join(', ') || '—'} · contorni trasparenti dipinti ${[...ringOn].join(', ') || '—'}`);
 }
 await browser.close();
 ```

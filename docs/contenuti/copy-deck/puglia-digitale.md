@@ -5,7 +5,7 @@ contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, brand-s
 stato: in revisione
 versione: 1.3
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Puglia Digitale
@@ -15,6 +15,7 @@ Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (
 **Novità della v1.3 (2026-10-05)**
 - **Verifica sul sito costruito.** Il documento ora descrive la pagina com'è: hero senza occhiello e chiusa dalla linea della costa, link al portale nel primo paragrafo, foto dell'evento nella sezione 2 con la nota di trasparenza, luoghi da ovest a est, ponte prima della chiusura, «Contattaci» come titolo del form.
 - **Dominio del portale** confermato dall'utente il 2026-10-05: lapugliadigitale.it, come nelle LG (brief S7).
+- **Riserva di go-live I6** dell'ADR 002 annotata nella hero, con una forma breve entro i 28 caratteri.
 - Le differenze ancora aperte sono nella sezione «Verifica sul sito».
 
 ## Come leggere questo documento
@@ -76,6 +77,7 @@ Note:
 Note:
 - H1 composto da nome e descrittore, come nella mappa SEO §2: distingue il progetto dai programmi omonimi della Regione. Tra le due righe c'è un separatore nascosto alla vista (`<span class="sr-only"> – </span>`): il nome accessibile dell'H1 è «Puglia Digitale – Una piattaforma interattiva immersiva per la valorizzazione territoriale.» (review di accessibilità del 2026-09-28, T6).
 - CTA secondaria: la strategia di conversione propone «Porta la tua impresa in Puglia Digitale» (39 caratteri). La guida di stile fissa un massimo di 28 caratteri: propongo «Aderisci a Puglia Digitale ↓», che riprende la sezione «Perché aderire». Da confermare con cro-specialist.
+- **Riserva di go-live I6** (ADR 002, in stato di proposta). Se il cliente risponde a D1 che ITnode è partner tecnologico, e non conferma di gestire le adesioni, la CTA diventa «Porta la tua impresa in Puglia Digitale». Con la freccia sono 41 caratteri, oltre i 28 della guida di stile. In quel caso propongo «Contattaci ↓» (12): è la CTA delle LG per questa pagina (§16), porta allo stesso form e non dice chi gestisce le adesioni. Decidono brand-strategist e cro-specialist.
 - **Dominio del portale**: lapugliadigitale.it, confermato dall'utente il 2026-10-05 (brief S7). Il link resta con www, come nelle LG, finché la verifica da una rete normale non dice altro (specifiche SEO §5.4).
 - **Visual.** Nessuna foto: la hero finisce sulla costa della Terra di Bari, un'unica linea con i nodi di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» (direzione visiva §7.5, riga 1). È decorativa (`aria-hidden`): i luoghi sono nominati nel testo e nella sezione 4. Lo slot `puglia-paesaggio` della v1.2 non esiste più.
 
@@ -108,8 +110,8 @@ Note:
 - Il Testo 1 è il Blocco D della mappa SEO, con le stesse parole; una frase è spezzata in due per la leggibilità (Gulpease). È il primo paragrafo sotto l'H2, nell'HTML statico. Nel sito il dominio è un link al portale: il testo visibile non cambia, e il testo nascosto « (si apre in una nuova scheda)» sta dentro il link.
 - «destination marketing» in minuscolo nel testo corrente, come propone il brief (DR2).
 - Parola lunga nel titolo: «all’entroterra.» è un blocco di 15 caratteri. A 44 px su 390 px rischia di uscire dalla colonna: prevedere `hyphens: auto` con `lang="it"` o una scala minima più bassa per questo titolo.
-- **Foto.** È la composizione della direzione visiva (§7.5, riga 2): persone davanti al maxischermo con il tour virtuale di una piazza. Sul palco non c'è nessuno in questo ritaglio, quindi la didascalia della v1.2 con il nome del fondatore non vale più. Il testo alternativo è in `docs/contenuti/alt-text.md`.
-- **Didascalia: solo la nota di trasparenza** (review di veridicità, B4). Il file sorgente porta il segno di un editor generativo, quindi la foto ha la stessa nota dei ritratti. Niente data, luogo, numero di partecipanti né nome dell'oratore: le didascalie restano così finché il cliente non manda l'originale dello scatto.
+- **Foto.** È la composizione della direzione visiva (§7.5, riga 2): persone davanti al maxischermo con il tour virtuale di una piazza. In questo ritaglio il palco non si vede, quindi la didascalia della v1.2, con il fondatore sul palco, non vale più. Il testo alternativo è in `docs/contenuti/alt-text.md`.
+- **Didascalia: solo la nota di trasparenza** (review di veridicità, B4). Il file sorgente porta il segno di un editor generativo, quindi la foto ha una nota di trasparenza, come i ritratti. Niente data, luogo, numero di partecipanti né nome dell'oratore: le didascalie restano così finché il cliente non manda l'originale dello scatto.
   - Con l'originale la nota si toglie (B4). Luogo e data si aggiungono solo se confermati (A4): «[DA FORNIRE: luogo], [DA FORNIRE: mese e anno]».
   - In platea c'è almeno un volto riconoscibile di profilo (B4): servono l'informativa sulle riprese o un ritaglio più stretto (condizione C07 del verdetto G4).
 
@@ -351,6 +353,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 ## Decisioni richieste
 
+- **brand-strategist e cro-specialist**: «Contattaci ↓» come forma breve della riserva I6 (proposta nelle note della hero).
 - **seo-content**: allineare nella mappa l'ancora `#richiesta` e l'H2 dei numeri (V2).
 - **cro-specialist**: etichetta della CTA secondaria della hero.
 - **brand-strategist e creative-director**: variante di riserva a un numero (sezione 3). Il titolo proposto è «Puglia Digitale in un numero», l'alternativa «Il territorio di Puglia Digitale». Si applica solo alle condizioni di B3.
