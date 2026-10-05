@@ -89,7 +89,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 ## 6. CTA
 
 **Regole**
-1. **Verbo e oggetto.** Imperativo alla seconda persona più un oggetto: la CTA dice dove porta o che cosa succede. Niente punto finale; al massimo 28 caratteri, freccia compresa.
+1. **Verbo e oggetto.** Imperativo alla seconda persona più un oggetto: la CTA dice dove porta o che cosa succede. Niente punto finale; al massimo 28 caratteri, freccia compresa. Fanno eccezione i link che nominano la loro destinazione: il dominio di un portale («cittàdigitali.it ↗») o il titolo della pagina d’arrivo («Tutte le città sul portale ↗»).
 2. **Le frecce sono icone.** Nei documenti si scrivono → ↓ ↗ ↑ per dire quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri, perché i font scelti non li contengono (direzione visiva, § 3). L’icona non va mai a capo da sola: resta attaccata all’ultima parola.
 3. **Quale freccia.** È la convenzione condivisa con cro-specialist e ux-designer:
    - **→** porta a un’altra pagina del sito: «Esplora SIII →».
@@ -118,6 +118,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 | Scrivere se il form non è attivo | Apri l’email già compilata | pulsante nel pannello di ripiego |
 | Tornare alla home dalla 404 | Torna alla home → | 404 |
 | Leggere il racconto del fondatore | Scopri il suo percorso → | Contatti, sezione Persona, verso `/#fondatore`; nome accessibile «Scopri il suo percorso nella home» (copy deck di Contatti, sezione 4) |
+| Aprire l’elenco delle città sul portale | Tutte le città sul portale ↗ | `/citta-digitali/`, sezione «L’Italia in un unico portale.», con la nuova carta della Home; nome accessibile «Tutte le città sul portale Città Digitali (si apre in una nuova scheda)». Mai nei capitoli della Home (review del 2026-10-05 sulla legenda della carta, L2) |
 
 ## 7. Numeri, date e simboli
 
@@ -125,6 +126,7 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 - Percentuali senza spazio: 60%.
 - I numeri grafici del cliente («30+», «~200.000», «10.000+») si usano solo come numeri grandi da impaginare, con un testo accessibile sciolto: «più di 30», «circa 200.000», «oltre 10.000». Nel testo corrente: «oltre 10.000», «circa 200.000». La tilde mai.
 - Date: 28 settembre 2026, con i mesi minuscoli. Decenni: «anni ’90», con l’apostrofo tipografico, nelle etichette; «anni Novanta» nel testo corrente. Intervalli con il trattino medio: 2002–2026.
+- Date di aggiornamento: «aggiornati a settembre 2026», «ad aprile 2026», «ad agosto 2026». «Al» solo con il giorno: «al 5 ottobre 2026», mai «al ottobre 2026».
 - Capitoli e punti numerati sempre a due cifre: 01, 02, 03. Il numero è decorativo: `aria-hidden` oppure fuori dall’heading.
 - Telefoni: +39 080 2466520 e +39 335 1229785, con spazi non separabili perché non vadano a capo; nei link `tel:+390802466520`.
 - Simbolo di grado attaccato: 360°. «24/7» è ammesso nei titoli (testo del cliente, § 16).

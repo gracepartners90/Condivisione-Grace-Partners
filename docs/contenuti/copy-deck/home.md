@@ -3,9 +3,9 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.3
+versione: 1.4
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/data/site.ts, src/components/ui/Horizon.astro]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/data/site.ts, src/components/ui/Horizon.astro]
 ---
 
 # Copy deck · Home
@@ -195,7 +195,7 @@ Alternativa, se la composizione chiede un titolo più forte: H2 «Un’impresa. 
 | CTA | a · verbatim · 28 | Esplora SIII → | Scopri Puglia Digitale → | Esplora Città Digitali → |
 | Destinazione | — | `/siii/` | `/puglia-digitale/` | `/citta-digitali/` |
 | `data-track` | — | `home-capitolo-siii` | `home-capitolo-puglia-digitale` | `home-capitolo-citta-digitali` |
-| Visual | — | Schermo 16:10 con tre nodi: schermata di un SIII `[DA FORNIRE]` (slot `siii-*`) | Ritaglio «Schermo» 4:5 della foto dell’evento | Carta d’Italia con tre nodi: Varese, Altamura, Caltanissetta |
+| Visual | — | Schermo 16:10 con tre nodi: schermata di un SIII `[DA FORNIRE]` (slot `siii-*`) | Ritaglio «Schermo» 4:5 della foto dell’evento | Carta d’Italia con le città del portale, un punto ciascuna, e i nomi dove c’è spazio, sempre Varese, Altamura e Caltanissetta (direzione visiva 0.6, § 1.4). Legenda e descrizione: blocco «Capitolo 03 con la carta di tutte le città», qui sotto |
 
 Note:
 - Gli statement sono gli esempi del § 08, invariati, con l’a capo d’autore dopo il primo punto (01 e 02) e dopo la virgola (03).
@@ -207,13 +207,13 @@ Note:
 - Visual: la direzione visiva (§ 7.3) e la struttura UX (HM-3) indicano soluzioni diverse per i capitoli 02 e 03 (ritaglio «Schermo» e carta d’Italia contro foto intera e poster del video). I testi valgono in entrambi i casi; decide creative-director.
 - Niente link esterni nei capitoli: prima si approfondisce sul sito (cro-specialist). Le CTA hanno testi diversi tra loro, quindi non serve un nome accessibile aggiuntivo.
 
-**Capitolo 03 con la carta di tutte le città** · da applicare solo con la nuova carta (proposta di ui-designer del 2026-10-05, in attesa del creative-director) · motivazioni e misure: `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`
+**Capitolo 03 con la carta di tutte le città** · da applicare solo con la nuova carta (proposta di ui-designer del 2026-10-05, decisa nella direzione visiva 0.6; alternativa testuale di ux-designer) · motivazioni e misure: `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`
 
 | Elemento | Tag e stile | Testo | Note |
 |---|---|---|---|
-| Legenda | `figcaption` · `t-label` · max 45 (40) | Ogni punto è una città di Città Digitali | Spazi unificatori tra «di» e «Città» e tra «Città» e «Digitali». Una riga da 360 px; a 320 px «Ogni punto è una città / di Città Digitali». Nessun numero finché non ci sono le condizioni di brand-strategist; non «Un punto per ogni città», che dichiara la completezza dell’elenco |
-| Link all’elenco, consigliato | a → `/citta-digitali/#portale` `[IPOTESI: ancora da ux-designer]` · seconda riga della `figcaption` | Tutte le città → | Solo quando l’elenco sarà su `/citta-digitali/`. Nome accessibile «Tutte le città di Città Digitali» (testo nascosto « di Città Digitali»). Decidono ux-designer e cro-specialist |
-| Link al portale, in alternativa | a ↗ `https://xn--cittdigitali-19a.it/tutte-le-citta/` `[DA VERIFICARE]` · nuova scheda | Tutte le città sul portale ↗ | Solo con un’eccezione di cro-specialist alla regola «niente link esterni nei capitoli». Nome accessibile «Tutte le città sul portale Città Digitali (si apre in una nuova scheda)» |
+| Legenda | `figcaption` · `t-label` · max 40 (40) | Ogni punto è una città di Città Digitali | Adottata dal creative-director (direzione visiva 0.6, § 1.4). Spazi unificatori tra «di», «Città» e «Digitali» (`di&nbsp;Città&nbsp;Digitali`). Una riga da 360 px; a 320 px «Ogni punto è una città / di Città Digitali». Nessun numero nella Home: quando si potrà, va nell’elenco di `/citta-digitali/`. Mai «Un punto per ogni città», che dichiara la completezza dell’elenco |
+| Descrizione della carta | `aria-label` della carta con `role="img"` (decisione di ux-designer) · costruita dai dati | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Manfredonia, Itri, Bari, Altamura, Massafra, Cosenza, Caltanissetta e Caltagirone. | Modello: «… Sono in {regioni da nord a sud}, {quota} {regione con più città}. Tra queste: {nomi della carta larga, da nord a sud}.» «la maggior parte in» solo se quella regione ha più della metà delle città, altrimenti «più che altrove in». Niente numeri, mai «ogni» o «tutte» (review, L4) |
+| Link | — | Nessuno nel capitolo | Una sola CTA per capitolo (ux-designer, HM-5) e niente link esterni nei capitoli della Home (strategia di conversione). Il link «Tutte le città sul portale ↗» va su `/citta-digitali/`, sezione «L’Italia in un unico portale.» (review, L2) |
 | Microdescrizione | p | Invariata | Resta vera con la carta piena: le tre città del testo sono i nomi obbligatori della carta, visibili a ogni larghezza |
 
 ## 6. Il fondatore

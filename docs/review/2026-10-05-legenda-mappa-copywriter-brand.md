@@ -3,18 +3,23 @@ titolo: Legenda della carta del capitolo 03 della Home e testi collegati
 owner: copywriter-brand
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-05
-fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/cro/piano-misurazione.md (§ eventi, valori di data-cta-location), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro, src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
+fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
 ---
 
 # Legenda della carta del capitolo 03 · testi
 
-**Oggetto.** I testi che accompagnano la nuova carta di Città Digitali nel capitolo 03 della Home: un puntino per città e il nome solo dove c’è spazio (proposta di ui-designer, P4). Riguarda la legenda sotto la carta, il link verso l’elenco delle città e il testo del capitolo. In fondo c’è l’allineamento dei miei documenti al dominio cittàdigitali.it.
+**Oggetto.** I testi che accompagnano la nuova carta di Città Digitali nel capitolo 03 della Home: un puntino per città e il nome solo dove c’è spazio (proposta di ui-designer, P4). Riguarda la legenda sotto la carta, il link verso l’elenco delle città, il testo del capitolo e la descrizione della carta per chi usa uno screen reader. In fondo c’è l’allineamento dei miei documenti al dominio cittàdigitali.it.
+
+**Versione 1.1: allineata alle decisioni del 2026-10-05.**
+- **creative-director** (direzione visiva 0.6, §1.4): adotta la legenda della versione 1.0, «Ogni punto è una città di Città Digitali». Accetta la ripetizione come costo del nome del marchio. Niente numero nella Home, niente link nella legenda.
+- **ux-designer** (review della carta, §3): la carta diventa un’immagine con una descrizione costruita dai dati (`role="img"`). Il link all’elenco va su `/citta-digitali/`, con il mio testo. Le due frasi della descrizione su regioni e nomi le rifinisco io (L4).
+- Il mio link interno dalla Home, proposto nella versione 1.0, cade (L2).
 
 **Come ho lavorato.**
-- Ho letto la proposta di ui-designer, l’elenco di brand-strategist (§4, veridicità), le review di seo-content e seo-technical sul dominio e la regola sui link esterni della strategia di conversione.
-- Ho servito in locale la build di prova di ui-designer, con la carta a 45 puntini, e ho iniettato i testi candidati nella `figcaption`. Ho misurato gli a capo con uno script a 13 larghezze, da 320 a 1920 px; con la spaziatura del testo di WCAG 1.4.12, a 5 larghezze.
+- Ho letto la proposta di ui-designer, la review di ux-designer, la direzione visiva 0.6, l’elenco di brand-strategist (§4, veridicità), le review di seo-content e seo-technical sul dominio e la regola sui link esterni della strategia di conversione.
+- Ho servito in locale la build di prova di ui-designer, con la carta a 45 puntini, e ho iniettato i testi candidati nella `figcaption`. Ho misurato gli a capo con uno script fino a 13 larghezze, da 320 a 1920 px, e a 8 larghezze anche con la spaziatura del testo di WCAG 1.4.12.
 - Lunghezze e Gulpease sono calcolati con uno script.
 - Nessun file in `src/` modificato.
 
@@ -22,65 +27,53 @@ fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-
 
 | Elemento | Testo | Car. | Stato |
 |---|---|---|---|
-| Legenda, `figcaption`, `t-label` | Ogni punto è una città di Città Digitali | 40 | **Pronta.** Spazi unificatori (U+00A0) tra «di» e «Città» e tra «Città» e «Digitali» |
-| Link all’elenco su `/citta-digitali/` (consigliato) | Tutte le città → | 14 (16 con l’icona) | Solo quando l’elenco sarà sulla pagina. Nome accessibile: «Tutte le città di Città Digitali» |
-| Link alla pagina del portale (se scelto) | Tutte le città sul portale ↗ | 26 (28 con l’icona) | Solo se cro-specialist accetta un’eccezione alla sua regola. Nome accessibile: «Tutte le città sul portale Città Digitali (si apre in una nuova scheda)» |
+| Legenda, `figcaption`, `t-label` | Ogni punto è una città di Città Digitali | 40 | **Adottata** (direzione visiva 0.6). Spazi unificatori tra «di», «Città» e «Digitali». Già così nelle modifiche in corso di `index.astro` |
+| Descrizione della carta (`aria-label`) | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Manfredonia, Itri, Bari, Altamura, Massafra, Cosenza, Caltanissetta e Caltagirone. | 241 | **Da applicare.** Rifinitura della terza frase, con le regole di L4. Il codice in corso ha ancora «Hanno il nome sulla carta…» |
+| Link all’elenco, su `/citta-digitali/` | Tutte le città sul portale ↗ | 26 (28 con l’icona) | **Adottato** (ux-designer, direzione visiva 0.6). Nome accessibile: «Tutte le città sul portale Città Digitali (si apre in una nuova scheda)» |
+| Link nella Home | Nessuno | — | Decisione di ux-designer e del creative-director; sono d’accordo (L2) |
 | Testo del capitolo | Invariato | 152 | Non va ritoccato (L3) |
-| Etichetta della carta come immagine (facoltativa) | Carta d’Italia con le città di Città Digitali | 45 | Solo se ux-designer dà alla carta `role="img"` (L4) |
 
-Gli stessi testi sono nel copy deck della Home (v1.3, § 5, «Capitolo 03 con la carta di tutte le città»), da cui la sessione principale li applica.
+Gli stessi testi sono nel copy deck della Home (v1.4, § 5, «Capitolo 03 con la carta di tutte le città»), da cui la sessione principale li applica.
 
 ---
 
-## L1 · [IMPORTANTE] Legenda: «Ogni punto è una città di Città Digitali»
+## L1 · [IMPORTANTE] Legenda: «Ogni punto è una città di Città Digitali» (adottata)
 
-- **Dove.** `src/pages/index.astro`, capitolo 03, `<figcaption class="worlds__atlas-note t-label">` (proposta di ui-designer, P4 e patch 4).
-- **Problema.** Le due proposte di ui-designer hanno un limite ciascuna.
+- **Dove.** `src/pages/index.astro`, capitolo 03, `<figcaption class="worlds__atlas-note t-label">`.
+- **Problema.** Le due proposte di ui-designer avevano un limite ciascuna.
   - «Un punto per ogni città di Città Digitali» dichiara che l’elenco è completo: ogni città ha il suo punto.
-    - È vera solo se passa l’eccezione su Martina Franca; altrimenti i puntini sono 44 su 45.
+    - È vera solo finché ogni città dell’elenco ha il suo punto. Oggi sono 45 su 45, con l’eccezione su Martina Franca.
     - Si regge su un elenco letto da un riassunto dell’indice, ancora `[DA VERIFICARE]`.
     - Diventa falsa il giorno in cui il portale aggiunge una città e la carta non viene aggiornata. Il portale ha una pagina «Franchising»: l’elenco è fatto per crescere.
   - «Le città di Città Digitali» è sempre vera, ma è un titolo, non una legenda: lascia indovinare che i puntini senza nome sono città.
 - **Motivazione.**
   - Soglia 1, veridicità: una dichiarazione di completezza è un claim quantitativo implicito. Vale la stessa regola del numero (`citta-digitali-elenco.md` §4).
-  - «Ogni punto è una città…» rovescia la frase: dice qualcosa di ogni punto, non di ogni città. È vera per ciascun puntino pubblicato, con o senza Martina Franca, e resta vera se il portale cresce.
-  - Spiega il segno: chi vede i puntini senza nome sa che cosa sono. «Punto» vale anche per i nodi con il nome, che sono punti più grandi.
-  - Voce: è testo d’interfaccia, funzionale e senza battute (tone of voice, § 4). Niente numero, niente superlativo, niente punto finale, come le etichette (§ 8). Il maiuscolo lo applica il CSS: nel sorgente «è», «città» e «Città Digitali» si scrivono come in tabella.
-  - La ripetizione «città di Città Digitali» è il costo del nome del marchio. L’alternativa «Ogni punto è una città del portale» riprende «un unico portale» del testo, ma da sola non dice quale portale: lo screen reader la legge come didascalia della figura, fuori contesto. Scartata.
-- **Proposta.**
+  - «Ogni punto è una città…» rovescia la frase: dice qualcosa di ogni punto, non di ogni città. È vera per ciascun punto pubblicato e resta vera se il portale cresce. «Punto» vale anche per i nodi con il nome, che sono punti più grandi.
+  - Voce: è testo d’interfaccia, funzionale e senza battute (tone of voice, § 4). Niente numero, niente superlativo, niente punto finale, come le etichette (§ 8). Il maiuscolo lo applica il CSS.
+- **Testo.**
   > Ogni punto è una città di Città Digitali
-  - Nel sorgente, come per la hero: `{'Ogni punto è una città di\u00a0Città\u00a0Digitali'}`. Il nome del marchio non si spezza, e la preposizione resta con il nome.
-  - **Misure sulla build di prova**, con la carta a 45 puntini:
+  - Nel sorgente: `Ogni punto è una città di&nbsp;Città&nbsp;Digitali`, come nelle modifiche in corso di `index.astro`. Il nome del marchio non si spezza, e la preposizione resta con il nome.
+  - **Misure sulla build di prova**, con la carta a 45 puntini (tabella «Misure»):
     - una riga da 360 a 1920 px; a 390 px occupa 309 px su 350, a 1440 px 351 su 480;
-    - a 320 px, con gli spazi unificatori, due righe: «Ogni punto è una città / di Città Digitali». Senza, l’a capo cadrebbe dopo «di»;
-    - con la spaziatura di WCAG 1.4.12 va su due righe dove la carta è larga fino a circa 400 px (misurato a 320, 360, 390 e 1024 px), con lo stesso a capo, e su una dove è larga 480 px (1440 px). Mai testo tagliato o fuori dalla carta.
+    - a 320 px due righe: «Ogni punto è una città / di Città Digitali». Senza gli spazi unificatori l’a capo cadrebbe dopo «di»;
+    - con la spaziatura di WCAG 1.4.12 va su due righe dove la carta è larga fino a circa 400 px, e su una da 435 px. Mai testo tagliato o fuori dalla carta.
   - Gulpease 85.
-- **Quando il numero si potrà pubblicare.** Le condizioni sono quelle di brand-strategist: testo della pagina confermato, data, stesso numero di puntini.
-  - Consiglio di tenerlo fuori dalla Home e di metterlo solo nell’elenco di `/citta-digitali/`, con la data (seo-content, §5.4). Così il numero si aggiorna in un posto solo.
-  - Se il creative-director lo vuole anche qui: seconda riga «[N] città · elenco al [mese anno]», sotto la legenda, con lo stesso numero dei puntini.
+- **Numero.** La direzione visiva 0.6 lo tiene fuori dalla Home: quando ci saranno le condizioni di brand-strategist, andrà nell’elenco di `/citta-digitali/`, con la data. È quello che avevo proposto.
+  - Per la data vale la nuova regola del tone of voice (§ 7): «aggiornato a ottobre 2026», «ad aprile 2026»; «al» solo con il giorno. La forma «elenco al [mese anno]» della proposta di ui-designer non va usata.
+- **[SUGGERIMENTO] Nota per il creative-director, non bloccante.** Con la carta diventata immagine, lo screen reader legge «Città Digitali» due volte di fila: la descrizione comincia con «Carta d’Italia con le città di Città Digitali.», poi arriva la legenda.
+  - Se si vuole evitarlo, la correzione più economica è nella legenda: «Ogni punto è una città del portale» (34 caratteri).
+    - Il nome del progetto lo dà già la descrizione, e «del portale» riprende «un unico portale» del testo.
+    - Sta su una riga a tutte le larghezze misurate, anche a 320 px.
+  - Non lo chiedo: la ripetizione è breve e la decisione è presa. Lo segnalo perché la descrizione è stata decisa in parallelo alla legenda.
 
-## L2 · [IMPORTANTE] Link verso l’elenco: interno, non al portale
+## L2 · [IMPORTANTE] Link all’elenco: su `/citta-digitali/`, non nella Home (adottato)
 
-- **Dove.** La stessa `figcaption`, su una seconda riga sotto la legenda. L’alternativa testuale della carta la decide ux-designer; i link esterni nei capitoli li decide cro-specialist.
-- **Problema.**
-  - La carta è `aria-hidden` e mostra solo 5–9 nomi: serve una strada verso l’elenco completo.
-  - Il link alla pagina «Tutte le città» del portale va contro una regola della strategia di conversione: «Nei capitoli della home niente link esterni: prima si approfondisce sul sito, i portali stanno nelle pagine dedicate» (`strategia-conversione.md`, riga 68).
-  - seo-content raccomanda un solo elenco, su `/citta-digitali/`, e nessun elenco di nomi nella Home, né visibile né nascosto (review sull’omonimia, §3 e §5).
-- **Motivazione.** Un link esterno nel capitolo porterebbe fuori dal sito chi non ha ancora visto `/citta-digitali/`. La CTA del capitolo, «Esplora Città Digitali →», fa già l’altra strada.
-- **Proposta (a), consigliata: link interno**, solo quando l’elenco sarà su `/citta-digitali/`.
-
-  | Campo | Valore |
-  |---|---|
-  | Testo visibile | Tutte le città |
-  | Icona | → in SVG, `aria-hidden="true"`, attaccata all’ultima parola: porta a un’altra pagina del sito (tone of voice, § 6, regola 3) |
-  | Testo nascosto, dopo il testo visibile | « di Città Digitali», con lo spazio iniziale, in `<span class="sr-only">` |
-  | Nome accessibile | Tutte le città di Città Digitali |
-  | Destinazione | `/citta-digitali/#portale`, se l’elenco va nella sezione «L’Italia in un unico portale.»; altrimenti l’ancora della sezione dell’elenco `[IPOTESI: la decide ux-designer]` |
-  | Tracciamento | `data-track="cta_click"`, `data-cta-id="home-capitolo-citta-digitali-elenco"`, `data-cta-location="capitolo"` `[IPOTESI: da confermare con cro-specialist]` |
-
-  - La CTA del capitolo e questo link vanno sulla stessa pagina ma in punti diversi, con etichette diverse: non sono la stessa azione.
-  - Finché l’elenco non c’è, niente link. La legenda basta per chi vede la carta; l’alternativa testuale la decide ux-designer (L4).
-- **Proposta (b): link alla pagina del portale**, solo se ux-designer la sceglie e cro-specialist accetta l’eccezione alla riga 68.
+- **Dove.** Home, capitolo 03; `/citta-digitali/`, sezione «L’Italia in un unico portale.» (`#portale`).
+- **Decisione** di ux-designer (review della carta, §3.2 e §3.3), confermata dal creative-director (direzione visiva 0.6). La condivido.
+  - Nella Home nessun link nel capitolo: resta una sola CTA, come nei capitoli 01 e 02 (HM-5). La regola della strategia di conversione è rispettata: «Nei capitoli della home niente link esterni: prima si approfondisce sul sito, i portali stanno nelle pagine dedicate» (riga 68).
+  - Su `/citta-digitali/`, nella colonna del testo di «L’Italia in un unico portale.», dopo lo statement, un link alla pagina «Tutte le città» del portale, con il mio testo.
+- **Il mio link interno della versione 1.0** («Tutte le città →» dalla Home all’elenco) cade. Avrebbe aggiunto un secondo elemento focalizzabile al capitolo, e la CTA «Esplora Città Digitali →» porta già alla pagina dell’elenco.
+- **Testo del link su `/citta-digitali/`.**
 
   | Campo | Valore |
   |---|---|
@@ -88,45 +81,58 @@ Gli stessi testi sono nel copy deck della Home (v1.3, § 5, «Capitolo 03 con la
   | Icona | **↗, non →**: esce dal sito e apre una nuova scheda (tone of voice, § 6, regola 3). L’esempio della richiesta aveva → |
   | Testo nascosto, dopo il testo visibile | « Città Digitali (si apre in una nuova scheda)» |
   | Nome accessibile | Tutte le città sul portale Città Digitali (si apre in una nuova scheda) |
-  | Destinazione | `https://xn--cittdigitali-19a.it/tutte-le-citta/`: punycode, `https`, senza www, come vuole seo-technical (specifiche, §5.3) `[DA VERIFICARE: indirizzo esatto da una rete che raggiunge il portale]` |
+  | Destinazione | `https://xn--cittdigitali-19a.it/tutte-le-citta/`: punycode, `https`, senza www (specifiche SEO, §5.3) `[DA VERIFICARE: indirizzo esatto da una rete che raggiunge il portale]` |
   | Attributi | `target="_blank" rel="noopener"`, senza `noreferrer` (strategia di conversione, riga 38) |
-  | Tracciamento | `data-track="outbound_click"`, `data-cta-id="home-capitolo-citta-digitali-elenco"`, `data-cta-location="capitolo"`, `data-outbound-type="portale"`, `data-destination-id="citta-digitali-elenco"` `[IPOTESI: da confermare con cro-specialist]` |
+  | Tracciamento | Quello dello snippet di ux-designer (`cd-portale-tutte-le-citta`, posizione `portale`), da confermare con cro-specialist |
 
-- **Perché un’etichetta senza verbo.** La regola delle CTA chiede verbo e oggetto (tone of voice, § 6, regola 1). Qui però il link è una voce della legenda, e il testo nomina ciò che si trova all’arrivo: l’elenco di tutte le città.
-  - Per il link al portale è anche il titolo della pagina, «Tutte le città» (indice di ricerca, `citta-digitali-elenco.md` §1). È lo stesso schema dei link che nominano un portale, come «cittàdigitali.it ↗» nel footer: chi clicca trova il titolo che il link gli ha promesso.
-  - Le due etichette stanno nei 28 caratteri della regola, icona compresa: 16 e 28. Con un verbo diventerebbero «Vedi tutte le città →» e «Vedi tutte le città sul portale ↗» (33 caratteri con l’icona, oltre il limite): più lunghe, senza dire di più.
-- **Misure.** Con il testo in `t-label` e l’icona, i due link stanno su una riga da 320 a 1920 px: 125–140 px il link interno, 218–245 px quello esterno.
-- **Per ux-designer e ui-designer.** L’area di tocco è di almeno 24 × 24 px (WCAG 2.5.8). Il link sta su una riga sua, così la legenda resta su una riga da 360 px.
+- **Perché un’etichetta senza verbo.** La regola delle CTA chiede verbo e oggetto (tone of voice, § 6, regola 1). Qui il testo nomina la destinazione: la pagina del portale si chiama «Tutte le città» (indice di ricerca, `citta-digitali-elenco.md` §1).
+  - È lo stesso schema dei link che nominano un portale, come «cittàdigitali.it ↗» nel footer: chi clicca trova il titolo che il link gli ha promesso.
+  - Sta nei 28 caratteri della regola, icona compresa. Con un verbo, «Vedi tutte le città sul portale ↗», arriverebbe a 33, senza dire di più.
+- **Accanto a «Visita il portale ↗»** della hero le due etichette non si confondono: una porta alla home del portale, l’altra al suo elenco delle città.
+- **Registrato nel tone of voice** (v1.3, § 6): la riga del link nella tabella delle CTA e, nella regola 1, l’eccezione dei link che nominano la loro destinazione.
+- **Per copywriter-content:** il link va anche nel copy deck di Città Digitali, nella sezione «L’Italia in un unico portale».
 
 ## L3 · [SUGGERIMENTO] Testo del capitolo: resta com’è
 
 - **Dove.** `src/pages/index.astro`, capitolo 03, `text`; copy deck della Home, § 5.
 - **Testo.** «Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per imprese e attività. Varese, Altamura, Caltanissetta: città diverse, un unico portale.» (152 caratteri su 160, Gulpease 56).
 - **Perché non cambia.**
-  - Resta vero con la carta piena. Le tre città del testo sono i nomi obbligatori della carta, visibili a ogni larghezza (proposta di ui-designer, P2): testo e carta dicono la stessa cosa.
+  - Resta vero con la carta piena. Le tre città del testo sono i nomi obbligatori della carta, visibili a ogni larghezza (proposta di ui-designer, P2; direzione visiva 0.6): testo e carta dicono la stessa cosa.
   - Non contiene numeri e non suggerisce una copertura dell’Italia intera (brief, N12).
   - Nomina solo le tre città certe, quelle delle linee guida (§ 18). Le altre restano `[DA VERIFICARE]` finché non arriva il testo della pagina del portale (`citta-digitali-elenco.md`, §4).
   - seo-content arriva alla stessa conclusione (review sull’omonimia, §3).
 - **Scartate.**
   - «Da Varese a Caltanissetta…»: suggerisce una copertura continua da nord a sud (N12).
   - «… e molte altre»: una quantità vaga è comunque un claim.
-  - «… e le altre città sulla carta»: rimanda a una carta che gli screen reader non leggono.
+  - «… e le altre città sulla carta»: rimanda a una carta che non tutti vedono.
 
-## L4 · [SUGGERIMENTO] Se la carta diventa un’immagine: il testo dell’etichetta
+## L4 · [IMPORTANTE] Descrizione della carta: rifinitura
 
-- **Dove.** `MapItaly.astro`, carta del capitolo 03. La scelta è di ux-designer.
-- **Problema.** Con la carta `aria-hidden`, lo screen reader legge solo la didascalia, «Ogni punto è una città di Città Digitali», cioè la legenda di un’immagine che non percepisce.
-- **Proposta.** Due strade, per ux-designer:
-  - la carta resta `aria-hidden`, e l’equivalente testuale è il link all’elenco (L2);
-  - la carta diventa `role="img"` con un’etichetta, e la didascalia ne è la legenda. Il testo dell’etichetta è «Carta d’Italia con le città di Città Digitali» (45 caratteri).
-- In entrambi i casi niente elenco di nomi nascosto (seo-content, §5) e nessun numero.
+- **Dove.** `src/pages/index.astro`, `mapLabel` (snippet di ux-designer, §3.1, già nelle modifiche in corso), passato a `MapItaly` come `aria-label` di un `role="img"`.
+- **Decisione di ux-designer:** la carta è un’immagine con una descrizione costruita dagli stessi dati della carta. La prima frase è la mia etichetta della versione 1.0, «Carta d’Italia con le città di Città Digitali.»; le altre due le rifinisco io (anche la direzione visiva 0.6 lo prevede).
+- **Testo di ux-designer** (255 caratteri, Gulpease 58,5): «… Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Hanno il nome sulla carta Varese, Manfredonia, Itri, Bari, Altamura, Massafra, Cosenza, Caltanissetta e Caltagirone.»
+- **Problema.** La terza frase ha due difetti.
+  - Il soggetto arriva dopo il verbo, in fondo a un elenco di nove nomi: all’ascolto si capisce tardi chi «ha il nome».
+  - Sulle carte strette, cioè sui telefoni, i nomi disegnati sono 5, non 9: su un telefono «hanno il nome sulla carta» è falso per quattro città. La scelta di ux-designer di dire comunque i 9 nomi è giusta: a chi non vede va almeno quello che vede chi ha la carta più ricca. È la frase che non deve legarli al disegno.
+- **Proposta.**
+  > Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Manfredonia, Itri, Bari, Altamura, Massafra, Cosenza, Caltanissetta e Caltagirone.
+  - 241 caratteri, Gulpease 59,3. «Tra queste» presenta i nomi come esempi: è vero a ogni larghezza.
+  - **Modello per il codice:** `Carta d’Italia con le città di Città Digitali. Sono in ${regioni}, ${quota} ${regione}. Tra queste: ${nomi}.`
+- **Regole, perché resti vera con qualunque dato.**
+  - **Regioni:** da nord a sud, con «e» prima dell’ultima, come nello snippet.
+  - **«la maggior parte in»** solo se quella regione ha più della metà delle città: oggi la Puglia ne ha 31 su 45 (69%). Altrimenti «più che altrove in», che è vera per costruzione.
+  - **Preposizione:** «in» va bene per le sei regioni di oggi. Se la regione con più città diventasse il Lazio, servirebbe «nel». Il controllo `REGIONS` dello snippet obbliga già a rivedere il codice quando entra una regione nuova: va rivista anche la frase.
+  - **Nomi:** quelli che il creative-director tiene sulla carta larga, da nord a sud. Se al go-live restano solo i tre obbligatori (direzione visiva 0.6, «Veridicità»), la frase diventa «Tra queste: Varese, Altamura e Caltanissetta.» (descrizione di 184 caratteri, Gulpease 69).
+  - **Mai un numero**, finché mancano le condizioni di brand-strategist. Mai «ogni città» o «tutte»: la descrizione, come la legenda, non dichiara che l’elenco è completo.
 
 ## L5 · [IMPORTANTE] Dominio nei miei documenti (osservazione O7 di seo-content)
 
 - **Dove.** `docs/contenuti/tone-of-voice.md`, § 5 (righe «Città Digitali» e «Domini»); `docs/contenuti/microcopy.md`, § 3 (footer, Portali).
 - **Problema.** I due documenti scrivevano il portale senza accento, «cittadigitali.it», come le linee guida (§ 22). È un progetto omonimo di altri. Il portale del cliente è cittàdigitali.it, confermato dall’utente il 2026-10-05.
 - **Fatto.**
-  - **Tone of voice, v1.3.** La riga «Domini» scrive cittàdigitali.it e dice da dove viene l’eccezione alle linee guida: testo visibile e nomi accessibili in Unicode, con la «à» composta; `href` in punycode (specifiche SEO, §5.3); mai la forma senza accento, nemmeno a stampa. La riga «Città Digitali» vieta «CITTA’ DIGITALI», che è il nome dell’omonimo.
+  - **Tone of voice, v1.3.**
+    - La riga «Domini» scrive cittàdigitali.it e spiega da dove viene l’eccezione alle linee guida: testo visibile e nomi accessibili in Unicode, con la «à» composta; `href` in punycode (specifiche SEO, §5.3); mai la forma senza accento, nemmeno a stampa.
+    - La riga «Città Digitali» vieta «CITTA’ DIGITALI», che è il nome dell’omonimo.
   - **Microcopy, v1.2.** Footer, blocco Portali: «cittàdigitali.it ↗». Nome accessibile: «cittàdigitali.it, portale di Città Digitali (si apre in una nuova scheda)». È come nel sito, verificato su `dist/` il 2026-10-05.
 - **Restano**, nei documenti di copywriter-content: `copy-deck/contatti.md`, righe 145–147 e 155, e `copy-deck/citta-digitali.md`, righe 57, 78 e 254. Li corregge il loro owner (O7).
 
@@ -134,21 +140,23 @@ Gli stessi testi sono nel copy deck della Home (v1.3, § 5, «Capitolo 03 con la
 
 Build di prova di ui-designer, carta a 45 puntini, larghezza della figura tra 280 e 480 px. Testi iniettati nella `figcaption`; Chromium.
 
-| Finestra (px) | Larghezza della carta (px) | Legenda proposta | «Un punto per ogni città…» | «Le città di Città Digitali» | Link interno · esterno |
-|---|---|---|---|---|---|
-| 320 | 280 | 2 righe: «Ogni punto è una città / di Città Digitali» | 2 righe | 1 riga | 1 riga · 1 riga |
-| 360–414 | 320–372 | 1 riga | 1 riga | 1 riga | 1 riga · 1 riga |
-| 480–768 | 435–480 | 1 riga | 1 riga | 1 riga | 1 riga · 1 riga |
-| 1024–1100 | 382–411 | 1 riga | 1 riga | 1 riga | 1 riga · 1 riga |
-| 1280–1920 | 480 | 1 riga | 1 riga | 1 riga | 1 riga · 1 riga |
+| Finestra (px) | Carta (px) | «Ogni punto è una città di Città Digitali» | Con la spaziatura di 1.4.12 | «Ogni punto è una città del portale» (nota di L1) |
+|---|---|---|---|---|
+| 320 | 280 | 2 righe: «Ogni punto è una città / di Città Digitali» | 2 righe | 1 riga |
+| 360–390 | 320–350 | 1 riga | 2 righe | 1 riga |
+| 480–768 | 435–480 | 1 riga | 1 riga | 1 riga |
+| 1024 | 382 | 1 riga | 2 righe | 1 riga |
+| 1440 | 480 | 1 riga | 1 riga | 1 riga |
 
-Con la spaziatura del testo di WCAG 1.4.12 la legenda proposta va su due righe a 320, 360, 390 e 1024 px (carta da 280 a 382 px) e su una a 1440 px (carta da 480 px), sempre senza testo tagliato. Le altre larghezze non le ho misurate con la spaziatura.
+- «… di Città Digitali» è misurata a 320, 360, 375, 390, 414, 480, 600, 768, 1024, 1100, 1280, 1440 e 1920 px; con la spaziatura di 1.4.12, a 320, 360, 375, 390, 480, 768, 1024 e 1440 px. «… del portale» a queste ultime otto larghezze. Mai testo tagliato o fuori dalla carta.
+- Le due proposte di ui-designer: «Un punto per ogni città di Città Digitali» va su due righe a 320 px; «Le città di Città Digitali» sta su una riga a ogni larghezza.
 
 ## Verdetto di dominio (copy)
 
 **Testi pronti.**
-- La legenda si può applicare subito, insieme alla carta. È vera qualunque sia la decisione su Martina Franca e sui nomi mostrati.
-- Il link aspetta due decisioni: l’alternativa testuale (ux-designer) e la regola dei link esterni nei capitoli (cro-specialist). Se dovesse prevalere un’altra disciplina, decide il creative-director.
+- La legenda adottata è vera qualunque sia la decisione su Martina Franca e sui nomi mostrati, e resta vera se il portale aggiunge città.
+- La descrizione della carta va aggiornata nella terza frase (L4).
+- Il link su `/citta-digitali/` è pronto, nella forma decisa da ux-designer e dal creative-director.
 - Il testo del capitolo resta com’è.
 
 Il verdetto di gate spetta al creative-director.
@@ -156,19 +164,17 @@ Il verdetto di gate spetta al creative-director.
 ## Ipotesi da validare
 
 - `[IPOTESI: la pagina del portale si intitola «Tutte le città» e il suo indirizzo è https://xn--cittdigitali-19a.it/tutte-le-citta/.]` Viene dall’indice di ricerca (`citta-digitali-elenco.md`, §1); si verifica da una rete che raggiunge il portale.
-- `[IPOTESI: l’elenco completo andrà su /citta-digitali/, nella sezione «L’Italia in un unico portale.» (#portale) o in una sezione sua.]` Lo decide ux-designer, con seo-content.
 - Le misure valgono in Chromium; Safari iOS e Firefox `[DA VERIFICARE]`, come per la carta (proposta di ui-designer, §4).
 
 ## Domande aperte
 
-- **ux-designer:** carta `aria-hidden` con un link all’elenco, oppure `role="img"` con l’etichetta di L4? Dove sta l’elenco, e con quale ancora?
-- **cro-specialist:** confermi «niente link esterni nei capitoli» anche per questo caso, e quindi il link interno? Confermi gli attributi di tracciamento di L2?
-- **brand-strategist:** la proposta di ui-designer mostra 9 nomi. La tua raccomandazione (§4) era di mostrare, fino al testo della pagina, solo Varese, Altamura e Caltanissetta. La legenda vale in entrambi i casi; la scelta è tua e del creative-director.
+- **creative-director:** la nota di L1 sulla doppia lettura di «Città Digitali» per gli screen reader. Non bloccante.
+- **cro-specialist:** confermi il tracciamento del link su `/citta-digitali/` (snippet di ux-designer)?
+- **brand-strategist:** la descrizione dice i nomi che il creative-director tiene sulla carta. Oggi sono 9 nell’anteprima, e al go-live 3 se il testo della pagina non arriva (direzione visiva 0.6). La tua raccomandazione (§4) era di tenere i tre delle linee guida fino al testo della pagina: la descrizione segue in automatico la scelta.
 
 ## Decisioni richieste
 
-- **creative-director:** adottare la legenda di L1 al posto delle due proposte di P4.
-- **ux-designer e cro-specialist:** link interno (a) o esterno (b), e da quando. Senza decisione, nessun link: la legenda resta da sola.
-- **Sessione principale:**
-  - nella patch 4 di ui-designer (`index.astro`), sostituire il testo della `figcaption` con quello di L1, con gli spazi unificatori;
-  - aggiungere il link solo dopo la decisione.
+- **Sessione principale**, nelle modifiche in corso di `index.astro`:
+  - in `mapLabel`, la terza frase diventa «Tra queste: ${nomi}.», e la quota segue la regola di L4 («la maggior parte in» solo sopra la metà, altrimenti «più che altrove in»);
+  - la `figcaption` è già giusta;
+  - su `/citta-digitali/`, il link di L2.
