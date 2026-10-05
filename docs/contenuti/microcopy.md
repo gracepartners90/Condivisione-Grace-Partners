@@ -3,9 +3,9 @@ titolo: Microcopy e UX writing
 owner: copywriter-brand
 contributi: [cro-specialist, ux-designer, creative-director, copywriter-content, seo-content, seo-technical, web-performance-specialist]
 stato: in revisione
-versione: 1.1
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/creativa/direzione-visiva.md, docs/cro/strategia-conversione.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/contenuti/alt-text.md, docs/contenuti/copy-deck/siii.md, docs/contenuti/copy-deck/contatti.md, docs/strategia/coordinate-luoghi.md, src/data/site.ts, src/components/layout/Footer.astro, src/scripts/form.ts, src/scripts/video.ts, src/scripts/marquee.ts, src/scripts/header.ts, src/scripts/immersive.ts, src/scripts/track.ts]
+versione: 1.2
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/creativa/direzione-visiva.md, docs/cro/strategia-conversione.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/contenuti/alt-text.md, docs/contenuti/copy-deck/siii.md, docs/contenuti/copy-deck/contatti.md, docs/strategia/coordinate-luoghi.md, docs/seo/specifiche-tecniche.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, src/data/site.ts, src/components/layout/Footer.astro, dist/ (2026-10-05), src/scripts/form.ts, src/scripts/video.ts, src/scripts/marquee.ts, src/scripts/header.ts, src/scripts/immersive.ts, src/scripts/track.ts]
 ---
 
 # Microcopy e UX writing
@@ -54,7 +54,7 @@ I blocchi, nell’ordine del DOM, sono quelli della sitemap UX (§ 6). I titoli 
 | 1 | Logo | immagine, `alt="ITnode"` | Link a `/`. |
 | 2 | Navigazione | Titolo: Navigazione<br>Voci: SIII · Puglia Digitale · Città Digitali · Contatti | `<nav aria-label="Piè di pagina">` |
 | 3 | Contatti | Titolo: Contatti<br>Sede operativa<br>Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA)<br>+39 080 2466520<br>info@itnode.it | In `<address>`. Telefono (`tel:+390802466520`, `footer-telefono`) ed email (`mailto:`, `footer-email`) sono link. Se sede legale e operativa coincidono: «Sede legale e operativa» (brief, S3). |
-| 4 | Portali | Titolo: Portali<br>cittadigitali.it ↗<br>lapugliadigitale.it ↗ | Nuova scheda. Nomi accessibili: «cittadigitali.it, portale di Città Digitali (si apre in una nuova scheda)» e «lapugliadigitale.it, portale di Puglia Digitale (si apre in una nuova scheda)». Il dominio evita due link con lo stesso nome («Città Digitali») e destinazioni diverse. `footer-portale-citta-digitali`, `footer-portale-puglia-digitale` |
+| 4 | Portali | Titolo: Portali<br>cittàdigitali.it ↗<br>lapugliadigitale.it ↗ | Nuova scheda. Nomi accessibili: «cittàdigitali.it, portale di Città Digitali (si apre in una nuova scheda)» e «lapugliadigitale.it, portale di Puglia Digitale (si apre in una nuova scheda)». Il dominio evita due link con lo stesso nome («Città Digitali») e destinazioni diverse. `footer-portale-citta-digitali`, `footer-portale-puglia-digitale`.<br>Il portale di Città Digitali è cittàdigitali.it, con l’accento (confermato dall’utente il 2026-10-05). Il «www.cittadigitali.it» delle linee guida (§ 22) è un progetto omonimo di altri: non si scrive né si linka mai. Testo visibile e nome accessibile con la «à»; `href` in punycode, `https://xn--cittdigitali-19a.it` (specifiche SEO, § 5.3; tone of voice, § 5). Nel sito è già così (verificato su `dist/` il 2026-10-05). |
 | 5 | Riga legale | vedi sotto | — |
 | 6 | Firma | ITnode · Acquaviva delle Fonti · 40.90° N · 16.85° E | Riga mono della direzione visiva (§ 7.8), `aria-hidden`: è una firma grafica, e nome e indirizzo sono già nel blocco Contatti. Coordinate del comune, non dell’indirizzo, a 2 decimali da una fonte unica (`docs/strategia/coordinate-luoghi.md`, §§ 2 e 5): non si presentano mai come posizione della sede. |
 

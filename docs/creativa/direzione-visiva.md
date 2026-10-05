@@ -3,9 +3,9 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.5
-aggiornato: 2026-09-29
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578)]
+versione: 0.6
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -44,6 +44,12 @@ Tutto il resto è tipografia e aria.
 - §5 «Movimento», §1.1 e §6: descritta l'implementazione reale, cioè `scroll(root block)` con un intervallo e non `view()`. Documentata la rotazione di +40° dell'orizzonte di Città Digitali. Aggiunta la regola «mai più veloce della pagina» (`docs/ux/accessibilita.md` §2.6).
 - §3.2: i ponti «Gli altri mondi ITnode» escono dagli usi di `display-m`, perché la loro frase è in `display-s` a 400 (R2).
 - Ipotesi da validare e Decisioni richieste: verifiche della rotazione su Safari iOS; la versione da approvare è la 0.5.
+
+**Modifiche della versione 0.6 (carta del capitolo 03 della Home con tutte le città di Città Digitali, 2026-10-05).** L'utente ha chiesto tutte le città del progetto: un punto per ognuna, il nome solo per alcune, senza sovrapposizioni, e più nomi oltre a Varese, Altamura e Caltanissetta. Le decisioni sulla proposta di ui-designer (P1–P5) sono motivate qui.
+- §1.4: nuovo segno del dispositivo delle Coordinate, il **punto-città**. Comprende le regole dei nomi, la legenda di copywriter-brand, l'alternativa testuale decisa da ux-designer e il posto dell'elenco in testo. Eccezione alla fonte unica per le coordinate di Martina Franca (Wikidata P625).
+- §1.3: il limite di 5 nodi riguarda gli hotspot su foto e anteprime, non i luoghi sulle carte.
+- §7.3: il capitolo 03 della Home passa alla nuova carta, con la legenda e senza coordinate sotto i nomi. §7.6: la sezione «L'Italia in un unico portale» va ripensata per l'elenco completo, con i criteri del §1.4.
+- Ipotesi da validare, Domande aperte e Decisioni richieste aggiornate.
 
 ---
 
@@ -111,6 +117,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - Hover e focus: l'anello cresce (×1,4) e compare un'etichetta mono con una sola linea di richiamo.
   - Focus visibile di 2 px.
 - **Non si fa.** Nodi decorativi o come puntini d'elenco; reti di nodi collegati da linee (l'estetica «plexus»); pulsazioni infinite; più di 5 nodi per immagine.
+  - Il limite di 5 vale per gli hotspot su foto e anteprime. Sulle carte i luoghi con nome non sono hotspot: quanti sono lo decidono le regole dei nomi del punto-città (§1.4).
 
 ### 1.4 Le Coordinate (territorio)
 
@@ -119,6 +126,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - rilevamento e distanza da Acquaviva delle Fonti, il comune della sede, per esempio «MONOPOLI · 081° · 38 KM»;
   - cartografia a filo.
 - **Dove.** Orizzonte della hero, carta della Puglia, porte dei luoghi, carta d'Italia, didascalie degli showcase (dove si trova l'impresa), Contatti (sede e link «Apri in Mappe»), firma del footer.
+  - Nel capitolo 03 della Home la carta d'Italia usa il punto-città, con i nomi senza coordinate (vedi «Il punto-città», in fondo al paragrafo).
 - **Come.**
   - Contorni da Natural Earth 1:10m (pubblico dominio), semplificati: al massimo 8 KB per carta.
   - Una sola proiezione per tutte le carte.
@@ -143,6 +151,8 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
 
   L'associazione tra showcase SIII e comune è dedotta dall'indirizzo del portale (acquavivadigitale, cassanodigitale, monopolidigitale). `[DA VERIFICARE]`
 
+  **Città di Città Digitali** (2026-10-05). Le 45 città della pagina «Tutte le città» del portale del cliente hanno coordinate dalla stessa fonte e con gli stessi 2 decimali, tranne Martina Franca (eccezione qui sotto). Elenco, fonti e controlli sono in `docs/strategia/citta-digitali-elenco.md` (brand-strategist). Sulla carta del capitolo 03 le coordinate non si stampano: posizionano i punti (vedi «Il punto-città»).
+
 - **Precisione (regola del G4).** Le cifre mostrate sono quelle della fonte, mai completate con zeri.
   - **Opzione principale:** tutti i luoghi dalla stessa fonte (nodo del centro del comune in OpenStreetMap, oppure Wikidata P625), con 4 decimali reali; la fonte si scrive in un commento accanto ai dati.
   - **Ripiego:** se la fonte unica non è disponibile prima del lancio, 2 decimali per tutti i luoghi (circa 1 km: la precisione onesta del «centro di un comune»).
@@ -157,8 +167,93 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
     - Per gli altri luoghi, da 27 km in su, l'incertezza è trascurabile.
     - Sull'orizzonte Cassano non ha un'etichetta propria, perché sta nel gruppo murgiano. Il suo rilevamento non va citato da solo in nessun testo.
   - **Dopo il lancio, facoltativo.** Si torna a 4 decimali reali per tutti, dai nodi `place` di OpenStreetMap, quando qualcuno del team lavora da una rete che li raggiunge (`coordinate-luoghi.md` §4). L'incertezza su Cassano scende sotto il grado.
+  - **Eccezione per Martina Franca** (accettata dal creative-director il 2026-10-05).
+    - Le coordinate vengono da Wikidata P625 (Q52020): 40.70 · 17.33. Il riquadro di Wikipedia in inglese non dava una lettura affidabile: in due ricerche su quattro riportava il valore di Mottola (`citta-digitali-elenco.md` §3).
+    - È accettabile per quattro motivi:
+      - Wikidata P625 è una delle due fonti dell'opzione principale, qui sopra;
+      - ha la stessa precisione al primo d'arco, quindi gli stessi 2 decimali, e la regola «mai precisioni diverse nella stessa pagina» resta rispettata;
+      - sui comuni vicini le due fonti differiscono al massimo di un primo, meno di 2 km;
+      - il punto cade dentro il territorio comunale, mentre il valore di Mottola ne restava fuori.
+    - Senza l'eccezione la carta avrebbe 44 punti su 45 città: una città del progetto mancherebbe, senza un motivo che il visitatore possa vedere.
+    - La fonte si scrive accanto al dato, nel file dati della carta.
+    - **Altre eccezioni**, se serviranno: solo dall'altra fonte dell'opzione principale, con la stessa precisione, con un controllo incrociato sui comuni vicini e con la fonte accanto al dato. Le decide il creative-director.
 
 - **Non si fa.** Pattern topografici decorativi, mappe del mondo a puntini, pin in stile Google, coordinate inventate o arrotondate per effetto.
+
+#### Il punto-città (2026-10-05)
+
+Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali. Le decisioni sulla proposta di ui-designer (`docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md`, P1–P5) sono queste.
+
+- **Cos'è.** Un punto per ogni luogo reale di un elenco con una fonte dichiarata, nella sua posizione vera. È un dato, non una trama: dice «qui c'è una città del progetto».
+- **Segno.**
+  - Cerchio pieno di Ø 5 px in `--place`: `terra` sulle superfici chiare (4,09:1 su `pietra`), `arancio-segnale` su `notte`.
+  - Anello pieno di 1,5 px nel colore della superficie. Ritaglia il punto dalla costa e dai vicini. È un tratto, non un'ombra: la stessa tecnica dell'anello dei nodi sulle foto.
+  - Con il nome, il punto diventa il nodo-luogo del §1.3 (Ø 10), con lo stesso anello. Senza nome resta Ø 5: metà del nodo, stessa famiglia, gerarchia leggibile.
+- **Comportamento.** Non è interattivo e non si muove: niente anello esterno, ping, hover, focus né comparsa a cascata.
+- **Accessibilità** (decisione di ux-designer, owner dell'accessibilità: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` §3.1).
+  - La carta del capitolo 03 è un'immagine con una descrizione costruita dagli stessi dati (`role="img"` e `aria-label`): le regioni da nord a sud, la regione con più città, i nomi disegnati sulla carta larga. Nessun numero.
+  - L'`<svg>` della costa è `aria-hidden`, e i nomi disegnati non si leggono una seconda volta.
+  - Legenda ed elenco in testo completano l'informazione (sotto).
+  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Puglia e quella di `/citta-digitali/`.
+  - Visivamente non cambia nulla.
+- **Posizioni vere.**
+  - Mai spostate per fare spazio, mai aggregate in bolle o in numeri.
+  - Dove i punti si sovrappongono si impilano come monete: ogni anello ritaglia il punto precedente, e il gruppo si legge come «tanti luoghi qui», non come una macchia. Si dipingono da nord a sud, poi i nodi con nome.
+  - Alla scala dell'Italia città a meno di circa 10 km coincidono. Limiti accettati al 2026-10-05, tutti con le città nell'elenco in testo:
+    - San Cataldo resta sotto il nodo di Caltanissetta;
+    - Gravina resta sotto quello di Altamura fino a 350 px di carta;
+    - Ercolano e Torre del Greco si leggono come un punto con uno spicchio.
+- **Dove.** Solo sulle carte. Oggi la carta d'Italia del capitolo 03 della Home, con le città di Città Digitali (§7.3); prima del go-live anche quella di `/citta-digitali/` (§7.6).
+- **Nomi.** Le regole valgono per ogni carta con il punto-città. Le applica il generatore delle carte al build, senza JavaScript in pagina.
+  1. **Obbligatori:** le città nominate dal testo accanto alla carta, oggi Varese, Altamura e Caltanissetta (LG §18). Se uno non entra sulle carte larghe il build si ferma. Sulle carte strette si nasconde con un avviso, e prima di pubblicare decide il creative-director.
+  2. **Poi un nome per regione o gruppo**, nell'ordine che racconta l'estensione del progetto: prima le regioni fuori dalla Puglia, poi i gruppi pugliesi, poi la seconda area siciliana.
+     - Dentro ogni gruppo vince la fonte più solida: prima linee guida e materiali di progetto, poi le pagine città trovate sul portale del cliente, poi le città grandi e senza ambiguità.
+     - L'ordine è una scelta editoriale. Sta nel file dati (`nomi`) e lo approva il creative-director: quello proposto da ui-designer è approvato.
+  3. **Spazio.** Un nome compare solo se non copre punti, nodi, altri nomi o richiami e se resta dentro la carta, a ogni larghezza della sua classe. Il controllo si fa ogni 5 px, con le misure peggiori dell'etichetta mono e con la spaziatura di WCAG 1.4.12.
+  4. **Un nome non nasconde un'altra città.** Il nodo con nome è più grande del punto: se coprirebbe il punto di un'altra città, il nome si scarta. Fanno eccezione solo gli obbligatori.
+  5. **Mai un nome per una lettura ambigua** finché il cliente non la chiarisce: oggi «Polignano» e «San Cataldo». Il punto resta.
+  6. **Forma.**
+     - Il nome sta accanto al nodo, su un angolo, oppure appeso sotto con un richiamo verticale di 1 px in `--place`, il gesto delle etichette dell'Orizzonte.
+     - È su una riga e mai sillabato, in `label` mono `--fg`, con il fondo nel colore della superficie.
+  7. **Due classi di larghezza della carta**, annidate: strette fino a 25rem, larghe oltre. Quando la carta cresce un nome può solo comparire, mai sparire.
+  8. **Niente coordinate sotto i nomi e niente numeri** su questa carta. Le coordinate restano negli altri usi del dispositivo (sopra, «Dove»).
+- **Risultato al 2026-10-05:** 45 città, cioè 36 punti e 9 nomi.
+  - Carte strette (finestre fino a circa 440 px e da 1024 a circa 1070 px): Varese, Altamura (appeso), Caltanissetta, Itri e Cosenza.
+  - Carte larghe: in più Manfredonia, Bari, Massafra (appeso) e Caltagirone. Sulle carte strette queste quattro sono punti.
+  - Nessuna sovrapposizione da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12. Le misure sono di ui-designer; il creative-director le ha ricontrollate a 16 larghezze.
+  - La Campania non ha un nome. Le sue quattro città distano tra 2,7 e 7,6 km, e il nodo con nome di una ne nasconderebbe un'altra. Si vede dai punti, e i nomi sono nell'elenco in testo.
+- **Niente terza classe per il desktop a 1024 px.**
+  - Tra 1024 e circa 1070 px la carta misura 382–400 px e mostra i 5 nomi delle carte strette: un insieme completo e leggibile.
+  - Una terza classe costa una regola per ogni posizione e un'altra serie di prove, per una fascia stretta di larghezze.
+  - Abbassare la soglia a 380, 370 o 360 px peggiora la scelta (prova con il generatore). Spariscono Massafra e Manfredonia, entrambe con la pagina sul portale, ed entra San Giovanni Rotondo, con una fonte più debole.
+  - Se in futuro servono più nomi a 1024 px, la leva è l'impaginato: una carta di almeno 400 px.
+- **Se cambiano elenco o coordinate,** si rigenera la carta e si rimisura. Se cambia la scelta dei nomi, la rivede il creative-director.
+- **Legenda: «Ogni punto è una città di Città Digitali»** (copywriter-brand, `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md` L1: adottata).
+  - Una riga di testo reale sotto la carta, in una `<figcaption>`, in `label` mono `--fg-2`, con spazi unificatori in «di Città Digitali». Sta su una riga da 360 px; a 320 px va su due.
+  - **Perché questa e non «Un punto per ogni città».** Descrive ogni punto e non promette che l'elenco sia completo, quindi resta vera se il portale aggiunge una città prima che la carta si aggiorni. Una dichiarazione di completezza è un claim quantitativo implicito. La ripetizione «città di Città Digitali» è il costo del nome del marchio.
+  - **Niente parole che dicano più di quanto sappiamo**, come «aderenti», «partner», «comuni» o «attive». La pagina del cliente si chiama «Tutte le città».
+  - **Nessun numero nella Home.** Quando ci saranno le tre condizioni di brand-strategist (testo della pagina confermato, data, stesso numero di punti), il numero va nell'elenco di `/citta-digitali/`, con la data: si aggiorna in un posto solo.
+  - **Nessun link nella legenda.** Il capitolo resta con una sola CTA, come i capitoli 01 e 02 (ux-designer, HM-5), e «Esplora Città Digitali» porta già alla pagina dell'elenco.
+- **Elenco in testo** (posto deciso da ux-designer: `/citta-digitali/`, sezione «L'Italia in un unico portale», ancora `#portale`).
+  - **Subito:** un link alla fonte del cliente, «Tutte le città sul portale ↗», nella colonna del testo (ux-designer §3.2, testo di copywriter-brand L2-b). Rimanda alla pagina da cui vengono punti e nomi.
+  - **Con il testo della pagina confermato:** l'elenco completo in testo, visibile a tutti, con i criteri di seo-content (review del 2026-10-05, §5):
+    - un solo elenco, su quella pagina;
+    - per regione, con le regioni da nord a sud come sulla carta (Lombardia, Lazio, Campania, Puglia, Calabria, Sicilia);
+    - dentro ogni regione le città in ordine alfabetico, con il nome ufficiale del comune e la sigla della provincia;
+    - lo stesso file dati della carta, così elenco e punti non possono divergere;
+    - link solo verso indirizzi verificati, mai dedotti;
+    - fonte e data dell'elenco, ed eventualmente il numero, alle condizioni di brand-strategist.
+  - **Mai nella Home** un elenco di nomi, né nascosto né in un `<details>`: romperebbe il ritmo del capitolo e pubblicherebbe in testo nomi ancora da verificare.
+  - La sezione va ridisegnata per un elenco lungo (§7.6). Un `<details>` sulla pagina si valuta con il disegno.
+- **Veridicità.**
+  - Punti e nomi vengono dalla pagina «Tutte le città» del portale del cliente, indicata dall'utente. La pagina è stata letta da un riassunto dell'indice di ricerca, quindi i nomi restano `[DA VERIFICARE]` (`docs/strategia/citta-digitali-elenco.md` §1, §4).
+  - **Anteprima:** la carta si mostra subito con i 9 nomi, come chiede l'utente.
+  - **Go-live:** serve il testo o uno screenshot della pagina. Se al lancio non c'è, si pubblicano i punti con i soli tre nomi obbligatori (`nomi` ridotto agli obbligatori). La descrizione della carta segue da sola, perché nasce dagli stessi dati.
+- **Non si fa.**
+  - Punti decorativi o a trama, come retini, griglie o «mappe a puntini»: quelle sono texture, non dati, e il divieto del dispositivo («Non si fa», sopra) resta.
+  - Punti senza un luogo reale dietro, o spostati per estetica.
+  - Bolle con numeri, cluster riassuntivi, heatmap, campiture di copertura (N12).
+  - Pin, aloni, pulsazioni.
 
 ### 1.5 Regola tipografica: Il Passaggio
 
@@ -652,7 +747,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 2 | Manifesto | Statement su 10 colonne: «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.»; sotto, sfalsato (colonne 7–11), il `lead` di sintesi su Città Digitali e Puglia Digitale | pietra (la terra continua) | `display-l` | statement e poi lead, senza sfalsamento |
 | 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda; didascalia solo con data e luogo confermati (A4) | pietra | — (legenda) | ritaglio «Città» 4:5; legenda sotto |
 | 4 | Infrastruttura | Passaggio «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.»; in basso, marquee legato allo scroll: «spazio fisico → spazio digitale → persone → imprese → territorio →» (frecce SVG) | **notte** (primo ingresso nel digitale) | `display-l`, marquee in `display-m` | statement su 4 righe; marquee più lento |
-| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo con 3 nodi sulle colonne 8–12, testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
+| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo sulle colonne 8–12, con un punto-città per ogni città del progetto e i nomi dove c'è spazio (5 sulle carte strette, 9 sulle larghe; §1.4), senza coordinate sotto i nomi e con una riga di legenda in mono sotto la carta; testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
 | 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`, agganciato alla tappa Leadstone con la sua attribuzione (registro N5: clienti delle aziende fondate prima di ITnode) e separato da «oggi» da almeno una tappa di spazio: mai vicino al logo o ai nomi dei prodotti ITnode. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sulla foto reale «Palco» (DR3-a; ritratto a inchiostro solo con DR3-b) e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
 | 7 | Chiusura | Passaggio, CTA «Parliamone» e contatti rapidi in mono (email, telefono) | notte | `display-xl` | CTA a tutta larghezza |
 | — | Footer | Vedi §7.8 | notte | — | colonne in pila |
@@ -692,7 +787,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 |---|---|---|---|---|---|
 | 1 | Hero | H1 «Città Digitali», Passaggio «Le attività del territorio, / online senza perdere radici.», sottotitolo, CTA «Visita il portale →»; nessuna immagine: la hero finisce su un orizzonte che si apre nel video | calce | `display-xl` | — |
 | 2 | Video | A tutta larghezza, altezza `min(100svh, 56.25vw)`; apertura dall'orizzonte; controlli minimi (un nodo play/pausa in basso a sinistra, audio, tempo in mono); poster sempre presente: un fotogramma reale del video, scelto dal creative-director quando arriva il file. La copertina non ha un proprio orizzonte (G4, V10): a 768–1024 px sarebbe il secondo nella stessa schermata (§1.1), e il gesto dell'orizzonte che si apre nel video lo fa già quello di fine hero | notte | — (etichetta mono) | 16:9 a tutta larghezza; niente autoplay con Save-Data o reduced motion |
-| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12) | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
+| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12). **In revisione (2026-10-05).** (1) Subito: nella colonna del testo, il link alla fonte «Tutte le città sul portale ↗» (ux-designer). (2) Prima del go-live: la carta passa al punto-città, perché la pagina del progetto non può mostrare meno città della Home. Le tre città delle linee guida restano in evidenza come nodi, allineate alla latitudine, con coordinate e «Esplora →». Finché l'elenco non le sta accanto, la carta ha una descrizione come quella della Home. Proposta di ui-designer, review del creative-director. (3) Con il testo della pagina confermato: l'elenco completo, con i criteri del §1.4 («Il punto-città», elenco in testo), e la sezione ridisegnata per un elenco lungo | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
 | 4 | Dal locale al nazionale | Elenco *sticky*: titolo e indicatore mono «01/05» fermi a sinistra, i 5 concetti scorrono a destra; spazio predisposto per dati documentati, nascosto finché non arrivano (linee guida §20) | calce | `display-l` | elenco numerato, niente sticky |
 | 5 | Chiusura | Passaggio «La tua azienda merita più di una presenza online. / Merita di essere esplorata.» in `display-xl`, CTA «Entra in Città Digitali →» e form sotto | notte | `display-xl` | form a una colonna |
 
@@ -757,6 +852,11 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 
   Finché non è validata, vale solo la nuova scheda. Al G4 resta un lavoro per dopo il lancio: è la leva più forte per far provare l'immersione sul sito, ma può far cadere la premessa «nessun banner cookie» se i portali impostano cookie di terze parti.
 - **Carte.** Natural Earth 1:10m è in pubblico dominio. Se servisse il confine regionale ufficiale, i limiti amministrativi ISTAT richiedono l'attribuzione.
+- **Città di Città Digitali** (§1.4, «Il punto-città»).
+  - I 45 nomi vengono dal riassunto dell'indice di ricerca della pagina «Tutte le città» `[DA VERIFICARE]`. Il testo o uno screenshot della pagina chiude il dubbio, ed è la condizione per pubblicare i nomi oltre ai tre delle linee guida.
+  - «Polignano» è letto come Polignano a Mare (BA) e «San Cataldo» come il comune in provincia di Caltanissetta `[IPOTESI]`. Sulla carta nessuno dei due ha il nome; il punto di San Cataldo resta comunque sotto il nodo di Caltanissetta.
+  - Le misure delle etichette sono in Chromium; Safari iOS e Firefox `[DA VERIFICARE]`.
+  - Con il testo ingrandito dalle sole impostazioni del browser, le etichette crescono più della carta e i margini potrebbero non bastare. Lo zoom della pagina, quello di WCAG 1.4.4, non cambia nulla.
 
 ## Domande aperte
 
@@ -773,6 +873,7 @@ Da aggiungere, per la parte visiva:
 - **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2). Serve il file per scegliere il fotogramma del poster.
 - **Riferimento.** Screenshot di aprildunford.com (vedi `analisi-riferimento.md`).
 - **Persone nella foto dell'evento.** Ai partecipanti è stata data un'informativa sulle riprese? Senza, i ritagli si stringono sui due schermi e sul palco, escludendo i profili riconoscibili ai margini (§4.2).
+- **Elenco delle città di Città Digitali.** Le domande al cliente (città attive, data dell'elenco, legame con le «30+ città» di Puglia Digitale) sono in `docs/strategia/citta-digitali-elenco.md` e non si duplicano qui. Per la parte visiva: se il cliente conferma che le «30+ città» di Puglia Digitale sono le 31 città pugliesi dell'elenco, anche la carta della Puglia del capitolo 02 può passare al punto-città. Lo decide il creative-director su una proposta di ui-designer.
 
 ## Decisioni richieste
 
@@ -791,4 +892,4 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.5)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.6)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».

@@ -3,9 +3,9 @@ titolo: Tone of voice e guida di stile
 owner: copywriter-brand
 contributi: [copywriter-content, brand-strategist, seo-content, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.2
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/strategia/coordinate-luoghi.md]
+versione: 1.3
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md]
 ---
 
 # Tone of voice e guida di stile
@@ -67,8 +67,8 @@ Le definizioni sono nel brief consolidato (sezione 4); qui si fissa solo come si
 | Categoria di confronto | **tour 360°** | Generico e minuscolo, con il simbolo attaccato al numero. Serve a spiegare la differenza con il SIII (§ 10). | «a 360 gradi» in senso figurato |
 | Termine di ricerca | **tour virtuale 3D** | Solo in modo descrittivo, e solo se la tecnologia lo è davvero `[DA VERIFICARE]`. | 3d, 3-D |
 | Puglia Digitale | **Puglia Digitale** | Nome di progetto, senza articolo: «dentro Puglia Digitale». Chi l’ha creato: vedi registro dei claim (A1). | Puglia digitale, La Puglia Digitale |
-| Città Digitali | **Città Digitali** | Sempre plurale, con l’accento anche in maiuscolo (CITTÀ). Verbo al singolare: «Città Digitali porta online…». | Citta Digitali, Città digitali, Città Digitale, CITTA’ |
-| Domini | **cittadigitali.it**, **lapugliadigitale.it**, **acquavivadigitale.com**… | Minuscolo, esattamente come nelle linee guida (alternano .it e .com). | www. nel testo visibile |
+| Città Digitali | **Città Digitali** | Sempre plurale, con l’accento anche in maiuscolo (CITTÀ), mai l’apostrofo al posto dell’accento. Verbo al singolare: «Città Digitali porta online…». «CITTA’ DIGITALI», con l’apostrofo, è il nome di un progetto omonimo di altri (brief, omonimie). | Citta Digitali, Città digitali, Città Digitale, Citta’ Digitali, CITTA’ DIGITALI |
+| Domini | **cittàdigitali.it**, **lapugliadigitale.it**, **acquavivadigitale.com**… | Minuscolo anche dentro le etichette in maiuscolo (classe `t-as-is`). Si scrivono come nelle linee guida, che alternano .it e .com, con un’eccezione. Le linee guida (§ 22) scrivono «www.cittadigitali.it», ma il portale del cliente è **cittàdigitali.it**, con l’accento (confermato dall’utente il 2026-10-05); cittadigitali.it, senza accento, è un progetto omonimo di altri. Nel testo visibile e nei nomi accessibili va la «à» composta (U+00E0); negli `href` il punycode `https://xn--cittdigitali-19a.it` (specifiche SEO, § 5.3). Sempre con l’accento anche a stampa, nei video e nei profili. | www. nel testo visibile; cittadigitali.it senza accento; la forma xn-- nel testo visibile |
 | Categorie generiche | **digitalizzazione territoriale**, **destination marketing** | Minuscolo. «Destination marketing» non si traduce; nel markup `lang="en"`. | Destination Marketing a metà frase |
 | Web | **il Web** | Maiuscolo come sostantivo («abitare il Web», § 07); minuscolo nei composti: sito web. | — |
 | Parole invariabili | **online**, **email**, **hotspot**, **desktop**, **smartphone**, **tablet**, **tour** | — | on-line, e-mail, mail, gli hotspots |
