@@ -40,13 +40,28 @@ const projection = geoConicConformal()
 // Coordinates of the places: same values and source as src/data/site.ts (visual direction §1.4,
 // docs/strategia/coordinate-luoghi.md). Keep the two lists aligned, then run `npm run maps`.
 const PLACES = {
-  varese: { name: 'Varese', lat: 45.82, lon: 8.83 },
-  altamura: { name: 'Altamura', lat: 40.82, lon: 16.55 },
-  caltanissetta: { name: 'Caltanissetta', lat: 37.49, lon: 14.06 },
   acquaviva: { name: 'Acquaviva delle Fonti', lat: 40.9, lon: 16.85 },
   gravina: { name: 'Gravina in Puglia', lat: 40.82, lon: 16.42 },
   monopoli: { name: 'Monopoli', lat: 40.95, lon: 17.3 },
 };
+
+// Città Digitali on the «italia» map (Home chapter 03): one dot per city, names where they fit.
+// Single source: src/data/citta-digitali.json (cities from the page «Tutte le città» of
+// cittàdigitali.it; coordinates from docs/strategia/citta-digitali-elenco.md). The order of the
+// candidate names is an editorial choice (`nomi`), the room for them is computed below.
+const CITIES = JSON.parse(await readFile('src/data/citta-digitali.json', 'utf8'));
+{
+  const ids = new Set();
+  for (const c of CITIES.citta) {
+    if (ids.has(c.id)) throw new Error(`citta-digitali.json: duplicate id ${c.id}`);
+    ids.add(c.id);
+    // Same precision rule as every other place (visual direction §1.4): at most 2 decimals.
+    for (const v of [c.lat, c.lon]) if (!/^-?\d+(\.\d{1,2})?$/.test(String(v))) throw new Error(`citta-digitali.json: ${c.id} has ${v}, use at most 2 decimals`);
+  }
+  const named = [...CITIES.nomi.obbligatori, ...CITIES.nomi.gruppi.flat(), ...CITIES.nomi.poi];
+  const unknown = named.filter((id) => !ids.has(id));
+  if (unknown.length) throw new Error(`citta-digitali.json: names for unknown cities ${unknown.join(', ')}`);
+}
 
 const geometries = topology.objects.countries.geometries;
 const byId = (id) => geometries.find((g) => g.id === id);
@@ -207,6 +222,114 @@ function toCurvePath(lines, decimals) {
   return d;
 }
 
+// ─── Names on the map of Città Digitali ───
+// Two classes of map width, the same 25rem threshold as the coordinates in MapItaly.astro:
+// narrow maps (phones, and the 1024 px desktop at 382 px) and wide maps (up to 30rem).
+// Each name takes one position around its node: beside it, on a corner, or hanging below it on a
+// vertical leader, the gesture of the Horizon labels (design system §2.1). A name is shown only if
+// it covers no dot, no node, no other name and no other leader at every width of its class.
+// Metrics: mono label at 13 px, uppercase, with the user text spacing of WCAG 1.4.12 (0.12em
+// tracking, line-height 1.5). Offsets match the anchor rules in MapItaly.astro.
+const LABEL = { advance: 9.6, pad: 2, line: 19.5, node: 6.5, dot: 4, clear: 1, indent: 8 }; // node and dot radii include the 1.5 px knockout ring
+const NAME_CLASSES = { narrow: [280, 400], wide: [400, 480] }; // px; .worlds__map is 280 px at 320 and 30rem at most
+const STEP = 5;
+const DROPS = { 'drop-r': 24, 'drop-l': 24, 'drop2-r': 40, 'drop2-l': 40 }; // px from the node centre to the first line
+const ANCHORS = {
+  e: (_w, h) => [14, -h / 2],
+  w: (w, h) => [-14 - w, -h / 2],
+  ne: (_w, h) => [8, -8 - h],
+  se: () => [8, 8],
+  nw: (w, h) => [-8 - w, -8 - h],
+  sw: (w) => [-8 - w, 8],
+  'drop-r': (_w, h) => [0, DROPS['drop-r'] - h / 2],
+  'drop-l': (w, h) => [-w, DROPS['drop-l'] - h / 2],
+  'drop2-r': (_w, h) => [0, DROPS['drop2-r'] - h / 2],
+  'drop2-l': (w, h) => [-w, DROPS['drop2-l'] - h / 2],
+};
+const anchorOrder = (p, view) => p.x / view.width > 0.55 // as on every map: eastern names hang left
+  ? ['w', 'e', 'ne', 'se', 'nw', 'sw', 'drop-l', 'drop-r', 'drop2-l', 'drop2-r']
+  : ['e', 'w', 'ne', 'se', 'nw', 'sw', 'drop-r', 'drop-l', 'drop2-r', 'drop2-l'];
+
+const circleHitsBox = (cx, cy, r, [x0, y0, x1, y1]) => {
+  const nx = Math.max(x0, Math.min(cx, x1)), ny = Math.max(y0, Math.min(cy, y1));
+  return (cx - nx) ** 2 + (cy - ny) ** 2 < r * r;
+};
+const boxesHit = (a, b, m) => a[0] < b[2] + m && a[2] > b[0] - m && a[1] < b[3] + m && a[3] > b[1] - m;
+const widthRange = ([from, to]) => { const r = []; for (let w = from; w <= to; w += STEP) r.push(w); return r; };
+
+/** Box (and leader, for drops) of the name of `p` with `anchor`, at map width `W`. */
+function nameGeometry(p, anchor, W, view) {
+  const k = W / view.width, cx = p.x * k, cy = p.y * k;
+  const w = p.name.length * LABEL.advance + 2 * LABEL.pad + (DROPS[anchor] ? LABEL.indent : 0), h = LABEL.line;
+  const [ox, oy] = ANCHORS[anchor](w, h);
+  return { k, box: [cx + ox, cy + oy, cx + ox + w, cy + oy + h], leader: DROPS[anchor] ? [cx - 0.5, cy + LABEL.node, cx + 0.5, cy + DROPS[anchor]] : null };
+}
+
+/** Anchors for every city of `named` together (backtracking), or null if they do not all fit at `widths`. */
+function placeNames(named, cities, view, widths, budget = 300000) {
+  const others = cities.filter((c) => !named.includes(c));
+  const free = (p, a) => widths.every((W) => {
+    const { k, box, leader } = nameGeometry(p, a, W, view);
+    if (box[0] < 0 || box[1] < 0 || box[2] > W || box[3] > view.height * k) return false;
+    const touches = (x, y, r) => circleHitsBox(x * k, y * k, r + LABEL.clear, box) || (leader && circleHitsBox(x * k, y * k, r + LABEL.clear, leader));
+    return !others.some((d) => touches(d.x, d.y, LABEL.dot)) && !named.some((q) => q !== p && touches(q.x, q.y, LABEL.node));
+  });
+  const options = named.map((p) => anchorOrder(p, view).filter((a) => free(p, a)).map((a) => ({ a, geo: widths.map((W) => nameGeometry(p, a, W, view)) })));
+  if (options.some((o) => o.length === 0)) return null;
+  const clash = (g1, g2) => g1.some((A, i) => { const B = g2[i]; return boxesHit(A.box, B.box, LABEL.clear) || (A.leader && boxesHit(A.leader, B.box, LABEL.clear)) || (B.leader && boxesHit(A.box, B.leader, LABEL.clear)); });
+  const order = named.map((_, i) => i).sort((i, j) => options[i].length - options[j].length); // most constrained first
+  const chosen = [];
+  let steps = 0;
+  const search = (n) => {
+    if (n === order.length) return true;
+    const i = order[n];
+    for (const o of options[i]) {
+      if (++steps > budget) return false;
+      if (order.slice(0, n).every((j) => !clash(chosen[j].geo, o.geo))) { chosen[i] = o; if (search(n + 1)) return true; }
+    }
+    return false;
+  };
+  return search(0) ? Object.fromEntries(named.map((p, i) => [p.id, chosen[i].a])) : null;
+}
+
+/**
+ * Names per class, in the editorial order of `nomi`: the required names (those of the chapter
+ * text), then one name per group (the first that fits), then the others. The wide class starts
+ * from the narrow names, so names only appear as the map grows. Returns { id: { wide, narrow } },
+ * 'none' where the name is not shown. A required name may be missing on narrow maps (warning:
+ * the chapter text names it beside the map); the build stops if it does not fit on wide maps.
+ */
+function chooseNames(cities, nomi, view) {
+  const byId = Object.fromEntries(cities.map((c) => [c.id, c]));
+  const excluded = new Set(nomi.senzaNome ?? []);
+  // A name turns its dot into a node (Ø 10 and its ring): it must not hide another city's dot.
+  const hidesDot = (c, widths) => widths.some((W) => cities.some((d) => d !== c && Math.hypot(d.x - c.x, d.y - c.y) * (W / view.width) + LABEL.dot - 1.5 <= LABEL.node));
+  const grow = (start, widths, strict) => {
+    let named = [], anchors = {};
+    const add = (id) => {
+      const c = byId[id];
+      if (!c || excluded.has(id) || named.includes(c)) return false;
+      if (!nomi.obbligatori.includes(id) && hidesDot(c, widths)) return false;
+      const r = placeNames([...named, c], cities, view, widths);
+      if (r) { named = [...named, c]; anchors = r; }
+      return Boolean(r);
+    };
+    for (const id of [...start, ...nomi.obbligatori]) {
+      if (add(id) || named.some((n) => n.id === id) || !nomi.obbligatori.includes(id)) continue;
+      if (strict) throw new Error(`italia: no room for the required name ${byId[id].name}`);
+      console.warn(`italia: no room for ${byId[id].name} on narrow maps: name hidden there`);
+    }
+    for (const group of nomi.gruppi) if (!group.some((id) => named.some((n) => n.id === id))) group.some(add);
+    nomi.poi.forEach(add);
+    return { ids: named.map((n) => n.id), anchors };
+  };
+  const narrow = grow([], widthRange(NAME_CLASSES.narrow), false);
+  const wide = grow(narrow.ids, widthRange(NAME_CLASSES.wide), true);
+  const lost = narrow.ids.filter((id) => !wide.ids.includes(id));
+  if (lost.length) console.warn(`italia: ${lost.join(', ')} named on narrow maps but not on wide ones`);
+  return Object.fromEntries(wide.ids.map((id) => [id, { wide: wide.anchors[id], narrow: narrow.anchors[id] ?? 'none' }]));
+}
+
 // ─── Map builders ───
 
 /** Linear window: projected km → viewBox units (origin top-left, `width` units wide). */
@@ -245,6 +368,16 @@ function buildItalia({ width = 1000, minIslandKm2 = 18, tolerance = 1.1, decimal
   const T = windowTransform([bx0 - padKm, by0 - padKm, bx1 + padKm, by1 + padKm], width);
   const lines = projected.map((ring) => simplifyRing(ring.map(T.apply), tolerance)).filter((r) => r.length >= 3);
   const path = toPath(lines, { closed: true, decimals });
+  // Città Digitali: every city a dot; names where they fit, per class of width.
+  const cities = CITIES.citta.map((c) => {
+    const [x, y] = T.apply(projection([c.lon, c.lat]));
+    return { id: c.id, name: c.name, lat: c.lat, lon: c.lon, x: +x.toFixed(1), y: +y.toFixed(1), xPct: +((x / T.width) * 100).toFixed(2), yPct: +((y / T.height) * 100).toFixed(2) };
+  });
+  const outside = cities.filter((c) => c.x < 0 || c.y < 0 || c.x > T.width || c.y > T.height);
+  if (outside.length) throw new Error(`italia: outside the map: ${outside.map((c) => c.id).join(', ')}`);
+  const anchors = chooseNames(cities, CITIES.nomi, { width: T.width, height: T.height });
+  const named = cities.filter((c) => anchors[c.id]);
+  const dots = cities.filter((c) => !anchors[c.id]).sort((a, b) => a.y - b.y); // north first: southern dots paint on top
   return {
     description: 'Italia con le isole maggiori e minori (≥ ' + minIslandKm2 + ' km²): contorno chiuso, solo tratto.',
     viewBox: `0 0 ${T.width} ${T.height}`,
@@ -253,7 +386,8 @@ function buildItalia({ width = 1000, minIslandKm2 = 18, tolerance = 1.1, decimal
     subpaths: lines.length,
     path,
     bytes: Buffer.byteLength(path),
-    places: ['varese', 'altamura', 'caltanissetta'].map((id) => placeEntry(id, T)),
+    places: named.map((p) => ({ ...p, anchor: anchors[p.id] })),
+    dots: dots.map(({ id, x, y, xPct, yPct }) => ({ id, x, y, xPct, yPct })),
   };
 }
 

@@ -38,9 +38,14 @@ interface Props {
   locations: Location[];
   surface?: 'calce' | 'pietra' | 'notte';
   location?: string;
+  /**
+   * Italy: link to the full list of places at its source, after the statement, in the text column so
+   * that DOM and visual order match at every width (ux-designer, chapter 03 map review §3.2).
+   */
+  allPlaces?: { href: string; label: string; srSuffix: string; ctaId: string; destinationId: string };
 }
 
-const { variant, id, title, text, statement, locations, surface = 'calce', location = 'luoghi' } = Astro.props;
+const { variant, id, title, text, statement, locations, surface = 'calce', location = 'luoghi', allPlaces } = Astro.props;
 
 // Doors: west → east, positions from real coordinates.
 const west = [...locations].sort((a, b) => a.lon - b.lon);
@@ -115,6 +120,24 @@ const north = [...locations]
             </h2>
             {text && <p class="places__text">{text}</p>}
             {statement && <p class="places__statement">{statement}</p>}
+            {allPlaces && (
+              <p class="places__all">
+                <a
+                  class="places__all-link"
+                  href={allPlaces.href}
+                  target="_blank"
+                  rel="noopener"
+                  data-track="outbound_click"
+                  data-cta-id={allPlaces.ctaId}
+                  data-cta-location="portale"
+                  data-outbound-type="portale"
+                  data-destination-id={allPlaces.destinationId}
+                >
+                  {allPlaces.label}<span class="sr-only">{allPlaces.srSuffix}</span>
+                  <Arrow dir="external" />
+                </a>
+              </p>
+            )}
           </div>
           <div class="places__map">
             <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
@@ -322,6 +345,15 @@ const north = [...locations]
   .places__copy {
     display: grid;
     gap: var(--space-m);
+  }
+
+  /* Standalone link: the same comfortable target as the «Esplora» CTAs (44 px). */
+  .places__all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: var(--tap-min);
+    font-weight: var(--fw-strong);
   }
 
   .places__statement {

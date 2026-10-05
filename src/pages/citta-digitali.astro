@@ -91,6 +91,14 @@ const cities = italyPlaces.map((p) => ({
     locations={cities}
     surface="notte"
     location="luoghi"
+    allPlaces={{
+      // Source of the full list of cities until it is confirmed and published here (citta-digitali-elenco.md §4).
+      href: `${portal.url}/tutte-le-citta/`,
+      label: 'Tutte le città sul portale',
+      srSuffix: ` ${portal.name} (si apre in una nuova scheda)`,
+      ctaId: 'cd-portale-tutte-le-citta',
+      destinationId: 'citta-digitali',
+    }}
   />
 
   <BenefitsSection
