@@ -52,7 +52,10 @@ export const nav = [
 ] as const;
 
 export const portals = {
-  cittaDigitali: { name: 'Città Digitali', url: 'https://www.cittadigitali.it', display: 'cittadigitali.it' },
+  // The client's portal is cittàdigitali.it, with the accent (written in punycode in links). The
+  // guidelines' «www.cittadigitali.it» does not resolve and is indexed as a homonymous project
+  // (docs/strategia/citta-digitali-elenco.md §5; address given by the user on 2026-10-05).
+  cittaDigitali: { name: 'Città Digitali', url: 'https://xn--cittdigitali-19a.it', display: 'cittàdigitali.it' },
   pugliaDigitale: { name: 'Puglia Digitale', url: 'https://www.lapugliadigitale.it', display: 'lapugliadigitale.it' },
 } as const;
 
