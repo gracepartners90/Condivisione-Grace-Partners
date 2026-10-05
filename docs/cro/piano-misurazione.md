@@ -3,9 +3,9 @@ titolo: Piano di misurazione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.2
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, inventario degli attributi data-* nella build del 2026-09-28]
+versione: 0.3
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, src/components/sections/LocationShowcase.astro, inventario degli attributi data-* nelle build del 2026-09-28 e del 2026-10-05]
 ---
 
 # Piano di misurazione
@@ -15,8 +15,12 @@ fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/revie
 > - Il markup nasce con gli attributi `data-*` già al loro posto e con una funzione `track()` che scrive solo in `window.dataLayer`, in memoria: nessuna richiesta di rete, nessuno storage. Quando si sceglierà uno strumento, basterà aggiungere un adattatore.
 > - Anche senza analytics si misura ciò che conta davvero: le richieste ricevute per pagina e per prodotto, e come vanno a finire (registro delle richieste, §2).
 > - Per attivare un analytics serve prima un ADR. Le strade sono due: uno strumento privacy-first configurato in modo da non richiedere consenso [DA VERIFICARE], oppure GA4 con un banner conforme al Garante e Consent Mode v2 in modalità Basic (§8).
-> - **v0.2: tassonomia allineata al codice.** `data-cta-location` ha un elenco chiuso di 15 valori, tutti già usati nella build (§5.1): **nessuna rinomina da fare nel codice**. `showcase`, `citta` e `contatti` escono dall'elenco. `form_view` ha la nuova definizione e `preview_start` è sospeso (§4).
+> - **v0.2 (2026-09-28): tassonomia allineata al codice.** `data-cta-location` ha un elenco chiuso di 15 valori, tutti già usati nella build (§5.1): a quella data, **nessuna rinomina da fare nel codice**. `showcase`, `citta` e `contatti` escono dall'elenco. `form_view` ha la nuova definizione e `preview_start` è sospeso (§4).
 > - **RUM delle prestazioni con `web-vitals`: sì, dopo il lancio e senza banner, ma solo alle dieci condizioni del §8.1**, compresa la conferma del consulente privacy. Se il consulente chiede il consenso, no.
+> - **v0.3 (2026-10-05).**
+>   - Nuovo link «Tutte le città sul portale ↗» su /citta-digitali/: `cta_id` e tipo confermati. `cta_location` va corretto da `portale` a `luoghi`, la sezione in cui sta (§5.1, snippet per la sessione principale).
+>   - I domini arrivano agli eventi in punycode: **report e segmenti sui portali filtrano su `destination_id`**, non sul dominio (§4).
+>   - Le etichette UTM dei portali diventano gli slug di `destination_id` (§7).
 
 ## 1. Al lancio: niente tracciamento, niente banner
 
@@ -60,7 +64,7 @@ Il limite va detto chiaramente: senza analytics non si costruisce una baseline d
 | Diagnosi | Completamento del form | `form_submit` / `form_start`; errori per campo da `form_error` | — | analytics |
 | Diagnosi | Raggiungimento del form | `form_view` / visite della pagina | — | analytics |
 | Micro | Prova del prodotto | `outbound_click` di tipo `esperienza-siii` su /siii (al lancio non ci sono anteprime in iframe) | — | analytics |
-| Micro | Interesse per i portali | `outbound_click` di tipo `portale` e `portale-luogo` | — | analytics |
+| Micro | Interesse per i portali | `outbound_click` di tipo `portale` e `portale-luogo`, contati per `destination_id` | — | analytics |
 | Micro | Video | `video_progress` al 50% / `video_start` | — | analytics |
 | Salute | Errori d'invio | `form_error` di tipo `rete`, `timeout` o `server`; obiettivo: zero | log dell'endpoint | analytics |
 | Salute | Tempo di prima risposta | ore tra la richiesta e il primo contatto | registro | registro |
@@ -97,6 +101,12 @@ Nessun target numerico finché non arrivano i dati di business [DA FORNIRE]. Pro
 | auto | `page_view` | lo gestisce lo strumento | `page_type` | — |
 
 Gli eventi video riprendono i nomi di GA4 (`video_start`, `video_progress`, `video_complete`, `video_percent`), così i report restano compatibili se si sceglie GA4.
+
+**Domini nei report: si filtra su `destination_id`** (review di seo-technical del 2026-10-05, oss. 6).
+- `link_url` e `link_domain` vengono da `el.href` e `el.hostname`, che il browser restituisce sempre in ASCII. Un dominio con caratteri accentati arriva in punycode: cittàdigitali.it diventa `xn--cittdigitali-19a.it`. Verificato con un clic sulla build del 2026-10-05: `"link_domain":"xn--cittdigitali-19a.it"`.
+- Un filtro su `cittàdigitali.it`, o su `cittadigitali.it` (senza accento, il dominio di un progetto omonimo di altri), non troverebbe nulla.
+- **Regola.** Report, segmenti, esplorazioni e conversioni sui portali si costruiscono su `destination_id` (`citta-digitali`, `puglia-digitale`, gli slug delle città), presente su ogni `outbound_click`, e su `outbound_type`. Il dominio si usa solo per un controllo puntuale, e in punycode.
+- Lo slug resta stabile anche se un dominio cambia o viene corretto, come è successo per Città Digitali.
 
 ## 5. Attributi `data-*` da predisporre nel markup
 
@@ -141,7 +151,7 @@ Esempio:
 
 `cta_location` dice **in che tipo di sezione** sta l'elemento; `page_type` dice in quale pagina. Insieme danno la posizione: per esempio `hero` su `siii`. L'elenco è chiuso: un valore nuovo si aggiunge prima qui, poi nel codice, e il test 2 del §9 fallisce sui valori fuori elenco.
 
-Inventario della build del 2026-09-28: 154 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine. Nessun valore è vuoto o fuori elenco.
+Inventario della build del 2026-10-05 (commit `2a038de`): 155 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine. L'unica novità rispetto al 2026-09-28 è il link `cd-portale-tutte-le-citta`, che oggi esce con un valore fuori elenco, `portale`: la correzione è in fondo a questo paragrafo.
 
 | Valore | Dove | `cta_id` | Pagine |
 |---|---|---|---|
@@ -151,7 +161,7 @@ Inventario della build del 2026-09-28: 154 elementi tracciati con `data-cta-loca
 | `capitolo` | i tre capitoli della Home | `home-capitolo-siii`, `home-capitolo-puglia-digitale`, `home-capitolo-citta-digitali` | Home |
 | `benefici` | CTA dopo i benefici | `siii-benefici-offerta` | SIII |
 | `esempi` | le tre esperienze, sezione `#esempi` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` | SIII |
-| `luoghi` | città con il loro portale: «I luoghi» su PD, «L'Italia in un unico portale» su CD | `pd-luoghi-gravina`, `pd-luoghi-acquaviva`, `pd-luoghi-monopoli`, `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` | PD, CD |
+| `luoghi` | città con il loro portale: «I luoghi» su PD; «L'Italia in un unico portale» (`#portale`) su CD, compreso il link «Tutte le città sul portale» | `pd-luoghi-gravina`, `pd-luoghi-acquaviva`, `pd-luoghi-monopoli`, `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta`, `cd-portale-tutte-le-citta` | PD, CD |
 | `sezione` | link nel testo di una sezione | `home-fondatore-linkedin`, `pd-progetto-portale`, `legale-email` | Home, PD, pagine legali |
 | `chiusura` | chiusura con CTA e recapiti | `home-chiusura-parliamone`, `home-chiusura-email`, `home-chiusura-telefono` | Home. Su SIII, PD e CD la chiusura è il form: nessun bottone |
 | `form` | ogni link dentro il componente del form: avviso, telefono sotto il form, pannelli di successo, errore e ripiego | `<form_id>-avviso-email`, `<form_id>-ripiego-bozza-email`, `<form_id>-successo-portale` e gli altri della strategia, §4 | SIII, PD, CD, Contatti |
@@ -166,9 +176,41 @@ Inventario della build del 2026-09-28: 154 elementi tracciati con `data-cta-loca
 - `citta` → `luoghi`: su PD e CD è lo stesso tipo di sezione, e nei report le due pagine si confrontano sulla stessa riga.
 - `contatti` → `recapiti`: `contatti` si confonderebbe con `page_type=contatti` e con la voce di menu.
 
-**Nel codice non va rinominato nessun valore di `data-cta-location`.** Una sola rinomina facoltativa, in codice oggi non incluso in nessuna pagina: in `src/scripts/immersive.ts`, riga 23, `cta_location: 'showcase'` diventa `'esempi'`. Va fatta solo se si riattiva l'anteprima.
+**Dei valori presenti al 2026-09-28 nessuno va rinominato nel codice.** L'unica correzione riguarda il link aggiunto il 2026-10-05, qui sotto. Resta una rinomina facoltativa, in codice oggi non incluso in nessuna pagina: in `src/scripts/immersive.ts`, riga 23, `cta_location: 'showcase'` diventa `'esempi'`. Va fatta solo se si riattiva l'anteprima.
 
 I `cta_id` con la vecchia parola di sezione (`siii-showcase-*`, `cd-citta-*`) restano come sono: sono chiavi, e cambiarle non porta alcun beneficio.
+
+**Link «Tutte le città sul portale ↗» su /citta-digitali/ (dal 2026-10-05)**
+
+Porta alla pagina del portale con l'elenco completo delle città (review di ux-designer del 2026-10-05, §3.2). È una prova dell'estensione della rete. Sta a metà pagina, lontano dal form, e si apre in una nuova scheda: va bene anche per la conversione.
+
+| Attributo | Nel codice | Esito |
+|---|---|---|
+| `data-track` | `outbound_click` | confermato |
+| `data-cta-id` | `cd-portale-tutte-le-citta` | **confermato**: pagina `cd`, sezione `portale` (l'ancora `#portale`), azione `tutte-le-citta`. Unico nel sito |
+| `data-cta-location` | `portale` | **da correggere in `luoghi`** |
+| `data-outbound-type` | `portale` | confermato: è una pagina del portale nazionale, non il portale di una città (`portale-luogo`) |
+| `data-destination-id` | `citta-digitali` | confermato: è lo stesso valore degli altri 11 link al portale |
+
+Perché `luoghi` e non `portale`:
+- **Stessa sezione, stesso valore.** Il link sta in «L'Italia in un unico portale», come le tre città, che hanno `luoghi`. Con `portale` i clic della stessa sezione finirebbero su due righe.
+- **Il tipo di destinazione c'è già.** `outbound_type` distingue il portale (`portale`) dai portali delle città (`portale-luogo`), e il `cta_id` distingue il link: non serve un valore di posizione in più.
+- **`portale` accanto a `portali`** (Contatti) sarebbero due valori quasi uguali per due cose diverse: nei report si confondono.
+- **È la stessa divisione già corretta** per questa sezione nella review di conversione del 2026-09-28 (oss. 6).
+- Con `portale` il test 2 del §9 fallisce: il valore è fuori elenco.
+
+**Snippet per la sessione principale.** In `src/components/sections/LocationShowcase.astro`, nel link `places__all-link`, il valore scritto a mano diventa quello della sezione, come per le città dello stesso componente. Sulla pagina vale `luoghi`, ed è anche il default.
+
+```diff
+-                  data-cta-location="portale"
++                  data-cta-location={location}
+```
+
+Provato il 2026-10-05 su una copia del codice: il link esce con `cta_location` `luoghi`. Il payload di un clic, a 390 e a 1440 px, è questo:
+
+```json
+{"event":"outbound_click","page_type":"citta-digitali","cta_id":"cd-portale-tutte-le-citta","cta_location":"luoghi","outbound_type":"portale","destination_id":"citta-digitali","cta_text":"Tutte le città sul portale","link_url":"https://xn--cittdigitali-19a.it/tutte-le-citta/","link_domain":"xn--cittdigitali-19a.it"}
+```
 
 ## 6. Regole di implementazione
 
@@ -195,7 +237,10 @@ I `cta_id` con la vecchia parola di sezione (`siii-showcase-*`, `cd-citta-*`) re
 ## 7. Convenzioni UTM
 
 - Tutto minuscolo, parole separate da `-`. Mai UTM sui link interni a itnode.it.
-- `utm_source`: `linkedin`, `newsletter`, `lapugliadigitale`, `cittadigitali`, `<città>digitale` (per esempio `monopolidigitale`), `evento-<nome>`, `brochure`.
+- `utm_source`: `linkedin`, `newsletter`, `evento-<nome>`, `brochure`. Per i portali di ITnode, **lo stesso valore di `destination_id`** (§5): `puglia-digitale`, `citta-digitali` e, per il portale di una città, lo slug della città (per esempio `monopoli`). Una pagina di città che sta sul portale di Città Digitali usa `citta-digitali`, con la città in `utm_content`.
+  - **Perché lo slug e non il dominio.** I domini cambiano o sono in verifica: Città Digitali è su cittàdigitali.it, mentre `cittadigitali` senza accento è il dominio di un progetto omonimo; il dominio di Puglia Digitale e quelli delle città sono in verifica (review di seo-technical del 2026-10-05, oss. 1 e 2). Lo slug invece resta.
+  - **Una sola chiave nei due sensi.** Lo stesso valore lega il traffico mandato a un portale (`outbound_click` con quel `destination_id`) e quello che ne arriva (sessioni con quella `utm_source`).
+  - **Sostituisce** `lapugliadigitale`, `cittadigitali` e `<città>digitale` della v0.2. Nessun link li usa ancora, e conviene cambiare adesso, prima che finiscano in QR code stampati.
 - `utm_medium`: `social`, `email`, `referral`, `qr`, `cpc`, `print`.
 - `utm_campaign`: `aaaa-mm-<nome>`, per esempio `2026-10-lancio-sito`.
 - `utm_content`: la posizione del link, per esempio `footer-credit` o `post-<id>`.
@@ -233,7 +278,7 @@ In GA4 i medium `qr` e `print` richiedono un gruppo di canali personalizzato, al
    - Conservazione dei dati a 14 mesi.
    - Google Signals e personalizzazione degli annunci spenti, salvo campagne Ads.
    - Filtri per il traffico interno e degli sviluppatori.
-   - Dimensioni personalizzate per i parametri del §4.
+   - Dimensioni personalizzate per i parametri del §4, compreso `destination_id`: su questa dimensione, non sul dominio, si costruiscono report e segmenti dei portali (§4, «Domini nei report»).
    - `form_submit` come evento chiave (`contact_click` eventualmente come secondario).
    - Nessun dato personale.
 4. **Google Ads**, solo se si fanno campagne: i segnali `ad_user_data` e `ad_personalization` servono per le funzioni di misurazione e remarketing sugli utenti del SEE. `form_submit` si importa come conversione.
@@ -279,7 +324,7 @@ Li scrivo io appena la build è pronta.
    - Ogni `[data-track]` ha `data-cta-id` e `data-cta-location`, tranne i `nav_click`, che hanno `data-nav-item` e `data-nav-location`.
    - Ogni valore di `data-cta-location`, `data-outbound-type`, `data-destination-id` e `data-contact-method` appartiene agli elenchi del §5 e del §5.1.
    - `<body>` ha `data-page-type`.
-3. **Eventi**: il clic su ogni elemento tracciato produce in `window.dataLayer` l'evento giusto, con i parametri obbligatori e **senza dati personali**.
+3. **Eventi**: il clic su ogni elemento tracciato produce in `window.dataLayer` l'evento giusto, con i parametri obbligatori e **senza dati personali**. Ogni `outbound_click` ha `destination_id` e `outbound_type`; i link ai domini con caratteri accentati hanno `link_domain` in punycode.
 4. **Form**
    - Endpoint vuoto: l'avviso è visibile prima dei campi; all'invio non parte alcuna richiesta di rete; viene registrato `form_error` con `error_type` `endpoint-assente`.
    - Endpoint simulato con `page.route`, risposta 200: compare il pannello di successo con il focus e viene registrato `form_submit`.
@@ -312,6 +357,11 @@ Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo �
   - Garante, linee guida del 10 giugno 2021 (link sopra), sull'assimilazione degli analytics ai cookie tecnici; sintesi in [Ratio Iuris](https://ratioiuris.it/ladeguamento-dei-siti-web-alle-linee-guida-sui-cookie-2021-del-garante-privacy/);
   - CNIL, [Cookies : solutions pour les outils de mesure d'audience](https://www.cnil.fr/fr/cookies-solutions-pour-les-outils-de-mesure-daudience), sulla misura delle prestazioni tra le finalità esenti;
   - Digital Omnibus, art. 88a del GDPR ancora in proposta: [Taylor Wessing](https://www.taylorwessing.com/en/global-data-hub/2026/the-digital-omnibus-proposal/gdh---the-digital-omnibus---cookies) e [Osborne Clarke](https://www.osborneclarke.com/insights/digital-omnibus-reshapes-eu-cookie-rules-leaves-banner-fatigue-largely-intact).
+- v0.3, 2026-10-05:
+  - dominio di Città Digitali confermato dall'utente il 2026-10-05 e forma dei link decisa da seo-technical: `docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md` (decisione di dominio e oss. 6);
+  - posto e testo del nuovo link: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`, §3.2;
+  - inventario sulla build del commit `2a038de`, generata in una cartella temporanea fuori da `dist/` e confrontata riga per riga con quella del 2026-09-28;
+  - correzione provata su una copia del codice, fuori dal repository: clic in Chromium 141 con Playwright 1.56, navigazione bloccata, lettura di `window.dataLayer`.
 
 ## Ipotesi da validare
 - Il traffico del sito non basta per test A/B né per la modellazione di Consent Mode (§8, §10).
@@ -334,3 +384,5 @@ Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo �
 4. **Anteprime immersive con iframe**: attivarle solo dopo la verifica dei cookie (§1, condizione 4). Decidono sessione principale e cliente.
 5. **RUM delle prestazioni** (§8.1): sì alle dieci condizioni, dopo la conferma del consulente privacy. Decide l'utente; owner cro-specialist e web-performance-specialist.
 6. **Endpoint del form**: opzioni nell'ADR 006 (proposta). Decide l'utente o il cliente prima del go-live (condizione C04 del G4).
+7. **`cta_location` del link «Tutte le città sul portale»**: da `portale` a `luoghi`, con lo snippet del §5.1. Decisione di cro-specialist; la applica la sessione principale.
+8. **Etichette UTM dei portali uguali a `destination_id`** (§7). Decisione di cro-specialist, prima di qualunque link o QR code con UTM.

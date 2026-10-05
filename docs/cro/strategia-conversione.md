@@ -3,9 +3,9 @@ titolo: Strategia di conversione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.2
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/006-endpoint-del-form.md, inventario dei cta_id nella build del 2026-09-28]
+versione: 0.3
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/006-endpoint-del-form.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, inventario dei cta_id nelle build del 2026-09-28 e del 2026-10-05]
 ---
 
 # Strategia di conversione
@@ -18,6 +18,7 @@ fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/da
 > - Se l'endpoint manca non si simula nulla: un avviso compare **prima dei campi**, e il fallback già presente in `form.ts` offre l'email precompilata e il telefono.
 > - La fiducia si costruisce solo con prove vere: esperienze e portali reali, il percorso del fondatore, la sede in Puglia. **Tre foto hanno un simbolo compatibile con il watermark di Google Gemini**: prima di usarle come prova serve una verifica (§9).
 > - **v0.2.** Le tabelle dei `cta_id` (§3–4) sono allineate alla build del 2026-09-28, con il nuovo `contatti-persona-percorso` e i link dentro il form. Le opzioni per l'endpoint sono nell'ADR 006, in stato di proposta (§7).
+> - **v0.3 (2026-10-05).** Il portale di Città Digitali è **cittàdigitali.it**, con l'accento; nei link si scrive in punycode, `https://xn--cittdigitali-19a.it`. `cittadigitali.it`, senza accento, è un progetto omonimo di altri. Su /citta-digitali/ c'è un nuovo link «Tutte le città sul portale ↗» (`cd-portale-tutte-le-citta`, §4).
 
 ## 1. Conversioni per audience
 
@@ -91,17 +92,23 @@ Perché la hero porta agli esempi: il SIII è un prodotto nuovo e la prova più 
 | Perché aderire (01–04) | nessuna all'interno | — | — | — |
 | Chiusura | «Porta la tua impresa dentro Puglia Digitale.» seguita dal form, **senza bottone e senza uscita verso il portale** (review di conversione, oss. 7, applicata) | primaria | form con Puglia Digitale preselezionato | nessun `cta_id`; evento `form_submit` |
 
+[DA VERIFICARE] Il dominio del portale di Puglia Digitale, lapugliadigitale.it nelle linee guida, è in verifica (review di seo-technical del 2026-10-05, oss. 2). Il sito usa quello di `src/data/site.ts`; per i report non cambia nulla, perché si filtra su `destination_id` `puglia-digitale` (piano di misurazione, §4).
+
 ### Città Digitali `/citta-digitali`
 | Sezione | CTA | Ruolo | Destinazione | `cta_id` |
 |---|---|---|---|---|
-| Hero | **Visita il portale ↗** | primaria (uscita, nuova scheda) | cittadigitali.it | `cd-hero-portale` |
+| Hero | **Visita il portale ↗** | primaria (uscita, nuova scheda) | cittàdigitali.it; nel link `https://xn--cittdigitali-19a.it` | `cd-hero-portale` |
 | Hero | link testuale verso il form (etichetta attuale nel copy deck: «Aderisci a Città Digitali ↓») | secondaria | `#richiesta` | `cd-hero-richiesta` |
-| L'Italia in un unico portale, tre città | Esplora ↗ | uscita; `cta_location` `luoghi`, come su PD | portali in `italyPlaces` | `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` |
+| L'Italia in un unico portale (`#portale`), tre città | Esplora ↗ | uscita; `cta_location` `luoghi`, come su PD | portali in `italyPlaces` | `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta` |
+| L'Italia in un unico portale, dopo lo statement | Tutte le città sul portale ↗ (dal 2026-10-05) | uscita, prova dell'estensione della rete; `cta_location` `luoghi` (correzione nel piano di misurazione, §5.1) | pagina «Tutte le città» del portale, `https://xn--cittdigitali-19a.it/tutte-le-citta/` | `cd-portale-tutte-le-citta` |
 | Video | avvio e audio | coinvolgimento | — | eventi `video_*` |
 | Dal locale al nazionale | nessuna | — | — | — |
 | Chiusura | «La tua azienda merita…» seguita dal form, **senza bottone** | primaria | form con Città Digitali preselezionato | nessun `cta_id`; evento `form_submit` |
 
 Il titolo del form di CD, «Entra in Città Digitali», si può leggere anche come «visita il portale». L'introduzione del form scioglie il dubbio dicendo cosa succede (§8).
+
+- **Dominio.** Nel testo si scrive «cittàdigitali.it»; nei link `https://xn--cittdigitali-19a.it`, la forma decisa da seo-technical. `cittadigitali.it`, senza accento, è di un progetto omonimo: non va mai né nei link né nei testi (conferma dell'utente del 2026-10-05).
+- **Il link «Tutte le città sul portale» va bene anche per la conversione.** Mostra l'estensione della rete con la fonte del cliente, senza numeri da verificare. Sta a metà pagina, lontano dal form, e si apre in una nuova scheda. La chiusura resta senza uscite verso il portale, come su PD. Nella Home, invece, nessun link esterno nel capitolo 03: resta la sola CTA «Esplora Città Digitali →».
 
 ### Contatti `/contatti`
 | Blocco | CTA | Ruolo | Destinazione | `cta_id` |
@@ -248,7 +255,7 @@ Esclusi: urgenza o scarsità, tempi di risposta non garantiti, confirmshaming.
 | Prova | Stato | Dove | Regola d'uso |
 |---|---|---|---|
 | Tre esperienze SIII reali | fornite dal cliente. [DA VERIFICARE] che siano online e che il cliente possa citarle. [DA FORNIRE] le schermate (gli slot sono già in `asset-slots.ts`) | showcase di /siii; anteprima nel capitolo 01 della home | è la prova più forte, perché si può provare. Indicare nome, tipo di attività e luogo; nessun risultato attribuito senza dati |
-| Portali reali: 2 principali e 6 cittadini | forniti. [DA VERIFICARE] che siano online e aggiornati: dall'ambiente di lavoro non sono raggiungibili | hero di PD e CD, «I luoghi», «L'Italia in un unico portale», Contatti, footer | la copertura da nord a sud (Varese, Altamura, Caltanissetta) dimostra «L'Italia in un unico portale». Tutti i link vanno controllati prima del lancio |
+| Portali reali: 2 principali e 6 cittadini | forniti. Città Digitali è su cittàdigitali.it (conferma dell'utente del 2026-10-05). [DA VERIFICARE] che tutti siano online e aggiornati: dall'ambiente di lavoro non sono raggiungibili | hero di PD e CD, «I luoghi», «L'Italia in un unico portale», Contatti, footer | la copertura da nord a sud (Varese, Altamura, Caltanissetta) dimostra «L'Italia in un unico portale». Dal 2026-10-05 la carta del capitolo 03 della Home mostra le città del portale, e /citta-digitali/ rimanda alla pagina «Tutte le città»: l'estensione della rete si vede senza pubblicare numeri da verificare. Tutti i link vanno controllati prima del lancio |
 | Numeri PD: 30+ città, ~200.000 partite IVA, 60% | forniti. [DA VERIFICARE] fonte e anno di riferimento | sezione Numeri di /puglia-digitale | sono dati **dei territori coinvolti, non clienti di ITnode**: le etichette non devono far pensare il contrario. Nota con fonte e anno. Il componente Stats non mostra un numero privo di fonte |
 | Percorso del fondatore: 36 anni, IBM, 2002, MyComm, IcommLab, Leadstone | fornito | sezione fondatore della home. Volto e nome anche su /contatti, ma solo se è lui a gestire le richieste [DA VERIFICARE] | senza superlativi |
 | «10.000+ clienti» | fornito. [DA VERIFICARE] a quale azienda e a quale periodo si riferisce | timeline del fondatore | va attribuito all'azienda giusta; mai a ITnode, se non è così |
@@ -283,6 +290,10 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 - Turnstile, cookie `cf_clearance` solo con pre-clearance: [Cloudflare Turnstile docs, pre-clearance](https://developers.cloudflare.com/turnstile/get-started/pre-clearance/), consultato il 2026-09-28 attraverso i risultati di ricerca (cloudflare.com è bloccato dall'ambiente).
 - Codice esistente letto il 2026-09-28: `src/scripts/form.ts`, `src/data/site.ts`, `src/data/asset-slots.ts`, `scripts/prepare-assets.mjs`.
 - v0.2: `cta_id` ricavati dalla build del commit `9948b57` (2026-09-28), generata in una cartella temporanea: ogni `a` e `button` con `data-track` nelle 8 pagine. Pagine lette: `src/pages/contatti.astro`, `siii.astro`, `puglia-digitale.astro`, `citta-digitali.astro`; `src/components/sections/ContactForm.astro`, `CTASection.astro`, `LocationShowcase.astro`.
+- v0.3, 2026-10-05:
+  - dominio di Città Digitali e forma dei link: conferma dell'utente del 2026-10-05 e decisione di seo-technical in `docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md`;
+  - nuovo link: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`, §3.2;
+  - inventario della build del commit `2a038de`: rispetto al 2026-09-28 cambia solo il nuovo link.
 
 ## Ipotesi da validare
 - Audience e peso relativo di imprese ed enti (§1).

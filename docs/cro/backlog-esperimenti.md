@@ -3,8 +3,8 @@ titolo: Backlog degli esperimenti
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.1
-aggiornato: 2026-09-28
+versione: 0.2
+aggiornato: 2026-10-05
 fonti: [docs/review/2026-09-28-sito-conversione-cro-specialist.md (§5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.4, §3.6, §3.8), docs/creativa/direzione-visiva.md (§5), docs/contenuti/copy-deck/home.md (§1), docs/cro/piano-misurazione.md (§8.1, §10), docs/cro/strategia-conversione.md]
 ---
 
@@ -127,7 +127,7 @@ Due persone codificano in modo indipendente, senza sapere quale variante ha vist
 
 ### E5 · Primaria della hero di PD e CD: la richiesta invece del portale
 - **Ipotesi.** Se la CTA primaria della hero di Puglia Digitale e Città Digitali diventa la richiesta, e il portale scende a link, allora salgono le richieste da queste pagine. Il costo sono meno visite ai portali, che però fanno da prova.
-- **Metrica.** `form_view` e `form_submit` di PD e CD, rispetto agli `outbound_click` di tipo `portale`.
+- **Metrica.** `form_view` e `form_submit` di PD e CD, rispetto agli `outbound_click` di tipo `portale`, contati per `destination_id` (`puglia-digitale`, `citta-digitali`) e non per dominio (piano di misurazione, §4). Su CD, dal 2026-10-05, tra le uscite verso il portale c'è anche «Tutte le città sul portale» (`cd-portale-tutte-le-citta`): va letta a parte, perché non è un'alternativa alla richiesta ma una prova.
 - **Metodo.** Decisione dopo 8–12 settimane di dati, non A/B. Richiede uno strumento di analytics (piano, §8).
 
 ## 5. Chiusi
