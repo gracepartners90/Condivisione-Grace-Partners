@@ -3,7 +3,7 @@ titolo: Piano di misurazione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.3
+versione: 0.4
 aggiornato: 2026-10-05
 fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, src/components/sections/LocationShowcase.astro, inventario degli attributi data-* nelle build del 2026-09-28 e del 2026-10-05]
 ---
@@ -199,14 +199,14 @@ Perché `luoghi` e non `portale`:
 - **È la stessa divisione già corretta** per questa sezione nella review di conversione del 2026-09-28 (oss. 6).
 - Con `portale` il test 2 del §9 fallisce: il valore è fuori elenco.
 
-**Snippet per la sessione principale.** In `src/components/sections/LocationShowcase.astro`, nel link `places__all-link`, il valore scritto a mano diventa quello della sezione, come per le città dello stesso componente. Sulla pagina vale `luoghi`, ed è anche il default.
+**Correzione applicata** dalla sessione principale nel commit `ce276be`. In `src/components/sections/LocationShowcase.astro`, nel link `places__all-link`, il valore scritto a mano è diventato quello della sezione, come per le città dello stesso componente. Sulla pagina vale `luoghi`, che è anche il default.
 
 ```diff
 -                  data-cta-location="portale"
 +                  data-cta-location={location}
 ```
 
-Provato il 2026-10-05 su una copia del codice: il link esce con `cta_location` `luoghi`. Il payload di un clic, a 390 e a 1440 px, è questo:
+Provata il 2026-10-05 prima su una copia del codice, poi ricontrollata sulla build del commit `ce276be`: il link esce con `cta_location` `luoghi`. Il payload di un clic, a 390 e a 1440 px, è questo:
 
 ```json
 {"event":"outbound_click","page_type":"citta-digitali","cta_id":"cd-portale-tutte-le-citta","cta_location":"luoghi","outbound_type":"portale","destination_id":"citta-digitali","cta_text":"Tutte le città sul portale","link_url":"https://xn--cittdigitali-19a.it/tutte-le-citta/","link_domain":"xn--cittdigitali-19a.it"}
@@ -361,7 +361,8 @@ Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo �
   - dominio di Città Digitali confermato dall'utente il 2026-10-05 e forma dei link decisa da seo-technical: `docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md` (decisione di dominio e oss. 6);
   - posto e testo del nuovo link: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`, §3.2;
   - inventario sulla build del commit `2a038de`, generata in una cartella temporanea fuori da `dist/` e confrontata riga per riga con quella del 2026-09-28;
-  - correzione provata su una copia del codice, fuori dal repository: clic in Chromium 141 con Playwright 1.56, navigazione bloccata, lettura di `window.dataLayer`.
+  - correzione provata su una copia del codice, fuori dal repository: clic in Chromium 141 con Playwright 1.56, navigazione bloccata, lettura di `window.dataLayer`;
+  - v0.4: inventario ricontrollato sulla build del commit `ce276be`, generata fuori da `dist/`; dominio di Puglia Digitale confermato dall'utente il 2026-10-05, riferito dalla sessione principale.
 
 ## Ipotesi da validare
 - Il traffico del sito non basta per test A/B né per la modellazione di Consent Mode (§8, §10).
