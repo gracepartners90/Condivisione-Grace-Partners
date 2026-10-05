@@ -17,8 +17,8 @@ fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/revie
 > - Per attivare un analytics serve prima un ADR. Le strade sono due: uno strumento privacy-first configurato in modo da non richiedere consenso [DA VERIFICARE], oppure GA4 con un banner conforme al Garante e Consent Mode v2 in modalità Basic (§8).
 > - **v0.2 (2026-09-28): tassonomia allineata al codice.** `data-cta-location` ha un elenco chiuso di 15 valori, tutti già usati nella build (§5.1): a quella data, **nessuna rinomina da fare nel codice**. `showcase`, `citta` e `contatti` escono dall'elenco. `form_view` ha la nuova definizione e `preview_start` è sospeso (§4).
 > - **RUM delle prestazioni con `web-vitals`: sì, dopo il lancio e senza banner, ma solo alle dieci condizioni del §8.1**, compresa la conferma del consulente privacy. Se il consulente chiede il consenso, no.
-> - **v0.3 (2026-10-05).**
->   - Nuovo link «Tutte le città sul portale ↗» su /citta-digitali/: `cta_id` e tipo confermati. `cta_location` va corretto da `portale` a `luoghi`, la sezione in cui sta (§5.1, snippet per la sessione principale).
+> - **v0.3 e 0.4 (2026-10-05).**
+>   - Nuovo link «Tutte le città sul portale ↗» su /citta-digitali/: `cta_id` e tipo confermati. `cta_location` corretto da `portale` a `luoghi`, la sezione in cui sta: applicato nel codice e verificato sulla build (§5.1).
 >   - I domini arrivano agli eventi in punycode: **report e segmenti sui portali filtrano su `destination_id`**, non sul dominio (§4).
 >   - Le etichette UTM dei portali diventano gli slug di `destination_id` (§7).
 
@@ -151,7 +151,7 @@ Esempio:
 
 `cta_location` dice **in che tipo di sezione** sta l'elemento; `page_type` dice in quale pagina. Insieme danno la posizione: per esempio `hero` su `siii`. L'elenco è chiuso: un valore nuovo si aggiunge prima qui, poi nel codice, e il test 2 del §9 fallisce sui valori fuori elenco.
 
-Inventario della build del 2026-10-05 (commit `2a038de`): 155 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine. L'unica novità rispetto al 2026-09-28 è il link `cd-portale-tutte-le-citta`, che oggi esce con un valore fuori elenco, `portale`: la correzione è in fondo a questo paragrafo.
+Inventario della build del 2026-10-05 (commit `ce276be`): 155 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine, con i 15 valori dell'elenco e nessuno fuori elenco. L'unica novità rispetto al 2026-09-28 è il link `cd-portale-tutte-le-citta`. Era uscito con `portale` ed è stato corretto in `luoghi` (in fondo a questo paragrafo).
 
 | Valore | Dove | `cta_id` | Pagine |
 |---|---|---|---|
@@ -188,7 +188,7 @@ Porta alla pagina del portale con l'elenco completo delle città (review di ux-d
 |---|---|---|
 | `data-track` | `outbound_click` | confermato |
 | `data-cta-id` | `cd-portale-tutte-le-citta` | **confermato**: pagina `cd`, sezione `portale` (l'ancora `#portale`), azione `tutte-le-citta`. Unico nel sito |
-| `data-cta-location` | `portale` | **da correggere in `luoghi`** |
+| `data-cta-location` | `luoghi` (prima `portale`) | **corretto** il 2026-10-05, commit `ce276be` |
 | `data-outbound-type` | `portale` | confermato: è una pagina del portale nazionale, non il portale di una città (`portale-luogo`) |
 | `data-destination-id` | `citta-digitali` | confermato: è lo stesso valore degli altri 11 link al portale |
 
@@ -238,7 +238,7 @@ Provato il 2026-10-05 su una copia del codice: il link esce con `cta_location` `
 
 - Tutto minuscolo, parole separate da `-`. Mai UTM sui link interni a itnode.it.
 - `utm_source`: `linkedin`, `newsletter`, `evento-<nome>`, `brochure`. Per i portali di ITnode, **lo stesso valore di `destination_id`** (§5): `puglia-digitale`, `citta-digitali` e, per il portale di una città, lo slug della città (per esempio `monopoli`). Una pagina di città che sta sul portale di Città Digitali usa `citta-digitali`, con la città in `utm_content`.
-  - **Perché lo slug e non il dominio.** I domini cambiano o sono in verifica: Città Digitali è su cittàdigitali.it, mentre `cittadigitali` senza accento è il dominio di un progetto omonimo; il dominio di Puglia Digitale e quelli delle città sono in verifica (review di seo-technical del 2026-10-05, oss. 1 e 2). Lo slug invece resta.
+  - **Perché lo slug e non il dominio.** I domini cambiano o sono in verifica: Città Digitali è su cittàdigitali.it, mentre `cittadigitali` senza accento è il dominio di un progetto omonimo; quelli delle città sono in verifica (review di seo-technical del 2026-10-05, oss. 2). Puglia Digitale resta su lapugliadigitale.it, confermato dall'utente il 2026-10-05. Lo slug invece resta in ogni caso.
   - **Una sola chiave nei due sensi.** Lo stesso valore lega il traffico mandato a un portale (`outbound_click` con quel `destination_id`) e quello che ne arriva (sessioni con quella `utm_source`).
   - **Sostituisce** `lapugliadigitale`, `cittadigitali` e `<città>digitale` della v0.2. Nessun link li usa ancora, e conviene cambiare adesso, prima che finiscano in QR code stampati.
 - `utm_medium`: `social`, `email`, `referral`, `qr`, `cpc`, `print`.
