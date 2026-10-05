@@ -3,9 +3,9 @@ titolo: Città Digitali · elenco delle città del progetto
 owner: brand-strategist
 contributi: [ui-designer, creative-director]
 stato: in revisione
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-consolidato.md (D5, D7, N1, P2; glossario e omonimie), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/strategia/coordinate-luoghi.md (tabella 1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, src/data/site.ts e dist/ (sola lettura), WebFetch e WebSearch del 2026-10-05 (URL nel testo)]
+fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-consolidato.md (D5, D7, N1, P2; glossario e omonimie), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/strategia/coordinate-luoghi.md (tabella 1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, src/data/site.ts e dist/ (sola lettura), WebFetch e WebSearch del 2026-10-05 (URL nel testo), risposte dell'utente del 2026-10-05 (dominio del portale, Martina Franca), commit eb691ee (dominio corretto nel sito), Wikidata Q52020 (Martina Franca), Q51863 e Q51822 (controllo incrociato)]
 ---
 
 # Città Digitali · elenco delle città del progetto
@@ -15,12 +15,15 @@ fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-con
 **In breve.**
 - **Le città sono 45**, tutte nella pagina «Tutte le città» di cittàdigitali.it: Puglia 31, Sicilia 6, Campania 4, Lazio 2, Calabria 1, Lombardia 1.
 - **La pagina non si può leggere direttamente da qui** (§1). L'elenco viene dal riassunto dell'indice di WebSearch e ha superato tre controlli. Per togliere il `[DA VERIFICARE]` basta il testo o uno screenshot della pagina.
-- **Coordinate pronte per 44 città su 45.** Fonte: riquadro di Wikipedia in inglese, 2 decimali, come per C11. Per Martina Franca la fonte restituisce le coordinate di Mottola: valore scartato (§3).
+- **Coordinate per tutte e 45 le città.**
+  - 44 vengono dal riquadro di Wikipedia in inglese, a 2 decimali, come per C11.
+  - Martina Franca viene da Wikidata (P625): **40.70 · 17.33**. Su Wikipedia la lettura non è affidabile.
+  - Per Martina Franca serve un'eccezione alla fonte unica, che decide il creative-director (§3).
 - **Raccomandazione:**
   - un puntino per ogni città;
   - in attesa del testo della pagina, il nome solo per Varese, Altamura e Caltanissetta;
   - nessun numero senza testo confermato e data (§4).
-- **Da girare subito, fuori dalla mappa.** Il portale che il sito linka, `www.cittadigitali.it`, non si risolve, e nell'indice quel dominio corrisponde a un progetto omonimo diverso. Il portale del cliente è `cittàdigitali.it`, con l'accento, come lo scrive anche l'utente (§5).
+- **Dominio del portale: chiuso.** L'utente ha confermato il 2026-10-05 che `cittadigitali.it`, senza accento, non è del cliente. Il portale è `cittàdigitali.it`, e il sito è già corretto (commit eb691ee, §5).
 
 ---
 
@@ -28,7 +31,7 @@ fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-con
 
 | Fonte | Esito |
 |---|---|
-| `https://www.cittadigitali.it/tutte-le-citta`, `https://cittadigitali.it/tutte-le-citta` | Non raggiungibili: il nome a dominio non si risolve. WebFetch ha dato «getaddrinfo ENOTFOUND» sulla radice di entrambi; non è un blocco di policy. Nell'indice di ricerca il dominio senza accento ha due pagine di «CITTA' DIGITALI», un progetto diverso, con Biella, Lecce, Salerno, Trento e Treviso |
+| `https://www.cittadigitali.it/tutte-le-citta`, `https://cittadigitali.it/tutte-le-citta` | Non raggiungibili: il nome a dominio non si risolve. WebFetch ha dato «getaddrinfo ENOTFOUND» sulla radice di entrambi; non è un blocco di policy. Nell'indice di ricerca il dominio senza accento ha due pagine di «CITTA' DIGITALI», un progetto diverso, con Biella, Lecce, Salerno, Trento e Treviso. **L'utente ha confermato il 2026-10-05 che il dominio non è del cliente** |
 | `https://xn--cittdigitali-19a.it/tutte-le-citta/`, cioè cittàdigitali.it | WebFetch bloccato dalla policy di rete. Per le regole del proxy non ho riprovato e non ho cercato copie in cache o archivi, che servirebbero ad aggirare il blocco. **Con WebSearch** la pagina è nell'indice («Tutte le città - Città Digitali») e il riassunto riporta l'elenco completo |
 | Altre pagine di cittàdigitali.it, con WebSearch | Pagine città: Massafra, Itri, Bitonto, Santeramo in Colle, Manfredonia, Caltanissetta. Le pagine «Il progetto», «Chi siamo», «Franchising», «Dati aziendali» e «Contatti» riportano ITNode Srl, Via Sant'Anna 34, Acquaviva delle Fonti, P.IVA IT08937270729 |
 | `www2.cittàdigitali.it` («Le Città Digitali»), con WebSearch | Pagine comune di Altamura e Martina Franca. `[IPOTESI: è la piattaforma precedente]` |
@@ -56,6 +59,7 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 - **Fonte:** riquadro di Wikipedia in inglese, `https://en.wikipedia.org/wiki/<Nome>`, letto con WebSearch il 2026-10-05. Per le sette città della tabella 1 di `coordinate-luoghi.md` la lettura è del 2026-09-28.
 - **Indirizzi che non seguono il nome:** `Gallipoli,_Apulia`, `San_Cataldo,_Sicily`, `Nard%C3%B2`.
 - **Calcolo:** valore del riquadro convertito in gradi decimali e arrotondato a 2 decimali.
+- **Eccezione:** Martina Franca viene da Wikidata P625 (https://www.wikidata.org/wiki/Q52020), letta il 2026-10-05 (§3).
 
 **Portale.** È quello delle linee guida o la pagina della città su cittàdigitali.it. «—» vuol dire che non l'ho trovato, non che manchi. Nessun indirizzo `<città>digitale.it` è dedotto.
 
@@ -90,7 +94,7 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 | 27 | Lecce | LE | Puglia | — | F | Portale cliente | 40.35 | 18.17 | 40°21′N 18°10′E |
 | 28 | Locorotondo | BA | Puglia | — | F | Portale cliente | 40.76 | 17.33 | 40°45′21″N 17°19′35″E |
 | 29 | Manfredonia | FG | Puglia | cittàdigitali.it/manfredonia | F | Portale cliente | 41.63 | 15.92 | 41°38′N 15°55′E |
-| 30 | Martina Franca | TA | Puglia | www2.cittàdigitali.it/comune/Martina_Franca | F | Portale cliente | — | — | scartato (§3) |
+| 30 | Martina Franca | TA | Puglia | www2.cittàdigitali.it/comune/Martina_Franca | F; indicazione dell'utente del 2026-10-05 | Portale cliente | 40.70 | 17.33 | Wikidata P625: 40°42′N 17°20′E (eccezione, §3) |
 | 31 | Massafra | TA | Puglia | cittàdigitali.it/massafra | F | Portale cliente | 40.58 | 17.12 | 40°35′N 17°07′E |
 | 32 | Monopoli | BA | Puglia | monopolidigitale.it (LG §15) | F; LG §12, §15 | Progetto: Puglia Digitale, esempi SIII | 40.95 | 17.30 | 40°57′N 17°18′E |
 | 33 | Nardò | LE | Puglia | — | F | Portale cliente | 40.18 | 18.03 | 40°10′47″N 18°02′00″E |
@@ -113,19 +117,33 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 
 Entrambe le letture restano `[DA VERIFICARE]`.
 
-## 3. Coordinate: controlli e un valore scartato
+## 3. Coordinate: controlli ed eccezione per Martina Franca
 
 - **Regola di C11:** una sola fonte, 2 decimali, cifre della fonte senza riempimento. Alla scala dell'Italia 0,01° vale circa 1 km: per posizionare un puntino basta e avanza.
 - **Controllo di plausibilità:** ho confrontato ogni punto con la posizione della città rispetto ai comuni vicini. Tutti tornano tranne uno.
-- **Martina Franca: valore scartato.**
-  - Due ricerche diverse restituiscono 40°38′N 17°02′E, lo stesso valore di Mottola (ricerca separata). Due comuni distinti non hanno lo stesso centro: o il riassunto confonde le voci, o il riquadro è sbagliato.
-  - Non uso un valore sostitutivo. Si chiude aprendo https://en.wikipedia.org/wiki/Martina_Franca da una rete normale; fino ad allora il puntino resta fuori.
+- **Martina Franca: coordinate da Wikidata, con un'eccezione alla fonte unica.**
+  - **Wikipedia in inglese non dà una lettura affidabile.** Su quattro ricerche diverse:
+    - in due il riassunto riporta 40°38′N 17°02′E, lo stesso valore di Mottola (ricerca separata);
+    - in due, compresa la ricerca sul solo nome, non riporta alcuna coordinata.
+  - **Fonte di riserva: Wikidata, proprietà P625** (https://www.wikidata.org/wiki/Q52020), letta con WebSearch il 2026-10-05: 40°42′N 17°20′E, quindi **40.70 · 17.33**.
+  - **Perché è accettabile.**
+    1. Wikidata P625 è una delle due fonti che la DV §1.4 indica per le coordinate.
+    2. Ha la precisione al primo d'arco, come i valori di Wikipedia usati per quasi tutte le altre città: i 2 decimali valgono anche qui.
+    3. Sui comuni vicini le due fonti differiscono al massimo di un primo, cioè meno di 2 km:
+       - Cisternino: Wikidata 40°45′N 17°25′E (Q51863), Wikipedia 40°44′N 17°26′E;
+       - Locorotondo: Wikidata 40°45′N 17°19′E (Q51822), Wikipedia 40°45′21″N 17°19′35″E.
+    4. Sulla mappa le coordinate non si stampano. Alla scala dell'Italia 0,01° vale circa 1 km, meno di un pixel.
+  - **Controllo di plausibilità.**
+    - Rispetto ai comuni vicini della tabella: circa 7 km a sud di Locorotondo, 9 km da Cisternino, 21 km da Ostuni, 22 km da Massafra.
+    - Il punto cade dentro il territorio comunale delimitato dai quattro punti estremi che Wikidata riporta per Martina Franca: latitudine da 40.58 a 40.80, longitudine da 17.17 a 17.48.
+    - Il valore di Mottola (longitudine 17.03) cade invece fuori dal territorio, circa 11 km a ovest del suo punto più occidentale: conferma che era sbagliato.
+  - **Eccezione alla DV §1.4** («tutti i luoghi dalla stessa fonte»). Riguarda una sola città e la decide il creative-director. Se non la accetta, il puntino resta fuori finché qualcuno non legge il riquadro di Wikipedia da una rete normale.
 - **Gruppi di puntini vicini**, fino a circa 15 km l'uno dall'altro: alla scala dell'Italia si sovrappongono. Indicazione per il disegno di ui-designer.
   - Area vesuviana: Ercolano, Torre del Greco, Torre Annunziata, Pompei.
   - Sicilia: Caltanissetta e San Cataldo (circa 7 km); Caltagirone e Grammichele; Comiso e Chiaramonte Gulfi.
   - Murgia: Acquaviva delle Fonti, Cassano delle Murge, Santeramo in Colle, Gioia del Colle; Altamura e Gravina in Puglia.
   - Costa a nord di Bari: Barletta, Andria, Trani, Bisceglie.
-  - Costa e Valle d'Itria: Polignano a Mare, Monopoli, Fasano, Putignano, Alberobello, Locorotondo, Cisternino, Ostuni, più Martina Franca quando avrà le coordinate.
+  - Costa e Valle d'Itria: Polignano a Mare, Monopoli, Fasano, Putignano, Alberobello, Locorotondo, Martina Franca, Cisternino, Ostuni.
   - Salento: Lecce, Copertino, Nardò.
   - Tra Taranto e Brindisi: Grottaglie e Francavilla Fontana.
 
@@ -135,26 +153,25 @@ L'utente ha indicato questa pagina come fonte primaria del cliente: le città ch
 
 | Domanda | Raccomandazione | Perché |
 |---|---|---|
-| Che cosa si pubblica subito come «città del progetto» | Un puntino per ciascuna delle 44 città con coordinate; Martina Franca dopo la verifica del §3 | Fonte primaria del cliente. Nel codice va un commento con fonte e data |
+| Che cosa si pubblica subito come «città del progetto» | Un puntino per ciascuna delle 45 città. Quello di Martina Franca usa la fonte di riserva, se il creative-director accetta l'eccezione del §3 | Fonte primaria del cliente. Nel codice va un commento con fonte e data |
 | Quali nomi in pagina | In attesa del testo della pagina: Varese, Altamura e Caltanissetta, già nominate dalle linee guida e nel testo del capitolo. Dopo la conferma, qualunque città dell'elenco; la scelta per leggibilità spetta a ui-designer e al creative-director | Un nome mostrato è una dichiarazione più esplicita di un puntino. I tre nomi delle linee guida sono certi |
-| Un numero («N città») | Non ancora. «45 città» si può pubblicare con il testo della pagina confermato, una data («Dati ITnode, [mese anno]») e lo stesso numero di puntini | Il numero non è nelle linee guida, invecchia e deve corrispondere alla mappa: oggi i puntini sarebbero 44. L'elenco può comprendere città della piattaforma precedente (www2) |
-| Città in attesa di conferma | Le 42 città fuori dalla §18 delle linee guida, per la lettura dei nomi; la coordinata di Martina Franca; le letture «Polignano» e «San Cataldo» | §1–§3 |
+| Un numero («N città») | Non ancora. «45 città» si può pubblicare con il testo della pagina confermato, una data («Dati ITnode, [mese anno]») e lo stesso numero di puntini | Il numero non è nelle linee guida, invecchia e deve corrispondere alla mappa: con Martina Franca i puntini sono 45. L'elenco può comprendere città della piattaforma precedente (www2) |
+| Città in attesa di conferma | Le 42 città fuori dalla §18 delle linee guida, per la lettura dei nomi; le letture «Polignano» e «San Cataldo» | §1–§2. Martina Franca ha ora le coordinate (§3) |
 | Legame con le «30+ città» di Puglia Digitale (N1) | Le città pugliesi dell'elenco sono 31, comprese le tre di Puglia Digitale (LG §15). `[IPOTESI: le «30+ città» di Puglia Digitale sono queste 31]`. La domanda al cliente diventa un sì o un no, con l'elenco allegato | Se il cliente conferma, i numeri di Puglia Digitale hanno elenco e perimetro (verdetto G4 §6, B5). Se no, sono due perimetri diversi da spiegare: le città pugliesi stanno in entrambi i mondi |
 
 ## 5. Scoperte da girare, fuori dalla mappa
 
-- **[BLOCCANTE per il go-live] Dominio del portale Città Digitali.**
-  - **Dove compare.** Il sito usa `https://www.cittadigitali.it` (`src/data/site.ts`, riga 55), preso dalle linee guida (§22). In `dist/` l'indirizzo compare 29 volte in 8 pagine:
-    - footer di tutte le pagine;
-    - Contatti;
-    - pagina Città Digitali, con la CTA «Visita il portale» e il testo «Riunisce in un unico portale, cittadigitali.it…»;
-    - JSON-LD (`brand.url`).
-  - **Il problema.** Da questo ambiente il nome non si risolve (2026-10-05), e l'indice di ricerca lo associa a un progetto omonimo diverso. Il portale del cliente è `cittàdigitali.it`: l'utente lo scrive così, e le sue pagine riportano i dati di ITNode Srl.
-  - **Proposta.**
-    1. Il cliente conferma il dominio canonico (verdetto G4 §6, B4).
-    2. seo-technical lo verifica da una rete normale.
-    3. La sessione principale aggiorna `portals.cittaDigitali` (`url` e `display`) e il testo della pagina.
-  - **Forma dell'indirizzo.** Nell'`href` l'indirizzo con l'accento si può scrivere anche in punycode, `xn--cittdigitali-19a.it`: la scelta spetta a seo-technical.
+- **Dominio del portale Città Digitali: chiuso il 2026-10-05.**
+  - **Il problema, come era.**
+    - Il sito usava `https://www.cittadigitali.it`, preso dalle linee guida (§22). In `dist/` l'indirizzo compariva 29 volte in 8 pagine: footer, Contatti, pagina Città Digitali (CTA e testo) e JSON-LD (`brand.url`).
+    - Il 2026-10-05 quel nome non si risolveva, e l'indice lo associava a un progetto omonimo.
+  - **Conferma dell'utente** (2026-10-05): «il dominio senza accento non è nostro». Il portale del cliente è `cittàdigitali.it`.
+  - **Sito corretto nel commit eb691ee**, verificato in sola lettura in `src/`:
+    - `portals.cittaDigitali` (`src/data/site.ts`, righe 55–58) ha `url` in punycode, `https://xn--cittdigitali-19a.it`, e `display` «cittàdigitali.it», con un commento sulla fonte;
+    - il testo della pagina Città Digitali usa `${portal.display}`;
+    - footer, Contatti, CTA e JSON-LD leggono lo stesso dato.
+  - **Ancora aperto:** seo-technical verifica la parte tecnica.
+  - **Registro:** l'omonimo senza accento è ora nel brief consolidato, tra le omonimie e alla riga S7.
 - **Dati societari (C02).** La pagina «Dati aziendali» di cittàdigitali.it riporta per ITNode Srl il REA «BA-660035» e la PEC «itnode@pec.it»; la P.IVA coincide con quella del sito. Il capitale sociale non c'è. I valori sono `[DA VERIFICARE]` con la visura prima dell'uso (verdetto G4 §6, B1).
 - **Fondatore (F7).** La pagina «Chi siamo» di cittàdigitali.it presenta Giacomo Lenoci come «CEO & Founder» `[DA VERIFICARE]`. Sostiene la parola «fondatore», ma riferita all'organizzazione di Città Digitali.
 
@@ -164,7 +181,8 @@ Gli stessi valori della tabella del §2, nella forma del tipo `Place` di `src/da
 
 ```ts
 // Città Digitali: page «Tutte le città», cittàdigitali.it (search-index summary, 2026-10-05).
-// Coordinates: English Wikipedia infobox, 2 decimals (docs/strategia/citta-digitali-elenco.md).
+// Coordinates: English Wikipedia infobox, 2 decimals; Martina Franca from Wikidata P625
+// (Q52020), an exception to the single source (docs/strategia/citta-digitali-elenco.md §3).
 // Fields: [id, name, province, region, lat, lon]
 [
   ['acquaviva', 'Acquaviva delle Fonti', 'BA', 'Puglia', 40.9, 16.85],
@@ -196,7 +214,7 @@ Gli stessi valori della tabella del §2, nella forma del tipo `Place` di `src/da
   ['lecce', 'Lecce', 'LE', 'Puglia', 40.35, 18.17],
   ['locorotondo', 'Locorotondo', 'BA', 'Puglia', 40.76, 17.33],
   ['manfredonia', 'Manfredonia', 'FG', 'Puglia', 41.63, 15.92],
-  ['martina-franca', 'Martina Franca', 'TA', 'Puglia', null, null], // DA VERIFICARE: coordinates (§3)
+  ['martina-franca', 'Martina Franca', 'TA', 'Puglia', 40.7, 17.33], // Wikidata P625: 40°42′N 17°20′E (§3)
   ['massafra', 'Massafra', 'TA', 'Puglia', 40.58, 17.12],
   ['monopoli', 'Monopoli', 'BA', 'Puglia', 40.95, 17.3],
   ['nardo', 'Nardò', 'LE', 'Puglia', 40.18, 18.03],
@@ -227,26 +245,21 @@ Gli id di Acquaviva, Altamura, Caltanissetta, Cassano, Gravina, Monopoli e Vares
 
 ## Domande aperte
 
-- **Per l'utente.**
-  - Testo o screenshot della pagina «Tutte le città»: chiude la lettura dei nomi.
-  - Aprire https://en.wikipedia.org/wiki/Martina_Franca e leggere le coordinate del riquadro.
+- **Per l'utente.** Testo o screenshot della pagina «Tutte le città»: chiude la lettura dei nomi.
 - **Per il cliente**, da aggiungere all'elenco del verdetto G4 §6:
-  1. Il portale di Città Digitali è cittàdigitali.it, con l'accento? cittadigitali.it, senza accento, è vostro? (B4)
-  2. Le 45 città della pagina «Tutte le città» sono tutte attive? A quale data è aggiornato l'elenco? (C7)
-  3. Le «30+ città» di Puglia Digitale sono le 31 città pugliesi di questo elenco? (B5)
-  4. REA e PEC della pagina «Dati aziendali» sono corretti? Qual è il capitale sociale? (B1)
+  1. Le 45 città della pagina «Tutte le città» sono tutte attive? A quale data è aggiornato l'elenco? (C7)
+  2. Le «30+ città» di Puglia Digitale sono le 31 città pugliesi di questo elenco? (B5)
+  3. REA e PEC della pagina «Dati aziendali» sono corretti? Qual è il capitale sociale? (B1)
+- **Per il creative-director.** Accetta l'eccezione del §3 per Martina Franca?
 - **Per ui-designer e creative-director.** Quali nomi mostrare oltre ai tre delle linee guida, dopo la conferma del testo.
 
 ## Decisioni richieste
 
-- **Utente:**
-  - approvare la regola del §4: puntini per tutte le città, nomi delle linee guida fino alla conferma del testo, numero solo con testo confermato e data;
-  - approvare la correzione del dominio del portale dopo la conferma del cliente (§5).
+- **Utente:** approvare la regola del §4: puntini per tutte le città, nomi delle linee guida fino alla conferma del testo, numero solo con testo confermato e data. La correzione del dominio è già decisa e applicata (§5).
+- **Creative-director:** eccezione alla DV §1.4 per Martina Franca (§3); revisione della proposta di mappa.
 - **Sessione principale:**
-  - inserire i dati dell'appendice con il commento sulla fonte;
-  - dopo la conferma, aggiornare `portals.cittaDigitali` e il testo della pagina Città Digitali;
+  - inserire i dati dell'appendice con il commento sulla fonte, compresa la riga di Martina Franca;
   - aggiungere le domande del cliente all'elenco del verdetto G4 §6.
 - **ui-designer:** disegno della mappa con i gruppi del §3.
-- **creative-director:** revisione della proposta.
-- **seo-technical:** verifica del dominio canonico da una rete normale.
+- **seo-technical:** verifica tecnica del dominio, in corso.
 - **brand-strategist:** dopo la conferma del testo, registrare l'elenco nel registro dei claim del brief consolidato.

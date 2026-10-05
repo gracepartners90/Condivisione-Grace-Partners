@@ -3,9 +3,9 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.1
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8)]
+versione: 0.2
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 (docs/strategia/citta-digitali-elenco.md)]
 ---
 
 # Brief consolidato · Nuovo sito ITnode
@@ -154,7 +154,7 @@ Dedotte dalle LG. Dove si parla di dubbi e di processo decisionale si tratta di 
 | **tour 360°** | Categoria generica: immagini panoramiche a 360° da navigare, con interazione limitata. È il termine di confronto per spiegare il SIII, non un prodotto ITnode. | Minuscolo nel testo; «360°» senza spazio. | LG §10 |
 | **hotspot** | Punto interattivo dentro l'ambiente che apre un contenuto o un'azione (scheda prodotto, video, richiesta). | Minuscolo e invariabile. | LG §10 |
 | **Puglia Digitale** | Piattaforma interattiva immersiva di destination marketing per valorizzare il territorio pugliese: digitalizza città, borghi e imprese con esperienze immersive. Il portale indicato è lapugliadigitale.it. | Per le omonimie vedi la tabella sotto. Il marchio porta il simbolo ® sulla foto dell'evento: registrazione `[DA VERIFICARE]` (A5). | LG §07, §13, §22 |
-| **Città Digitali** | Rete e portale nazionale che porta online le attività imprenditoriali e commerciali delle città italiane con tour virtuali, SIII e strumenti digitali («L’Italia in un unico portale»). | Sempre «Città Digitali»: accento, due maiuscole, plurale. Link: cittadigitali.it (§22). Risulta attivo anche cittàdigitali.it (dominio con accento): va verificato qual è quello canonico. Simbolo ®: `[DA VERIFICARE]` (A5). | LG §17–18, §22; ricerche web |
+| **Città Digitali** | Rete e portale nazionale che porta online le attività imprenditoriali e commerciali delle città italiane con tour virtuali, SIII e strumenti digitali («L’Italia in un unico portale»). | Sempre «Città Digitali»: accento, due maiuscole, plurale. Portale: **cittàdigitali.it**, con l'accento; nei link si scrive in punycode, `xn--cittdigitali-19a.it`. Le LG (§22) scrivono «www.cittadigitali.it», che non è del cliente (conferma dell'utente del 2026-10-05; vedi omonimie e S7). Simbolo ®: `[DA VERIFICARE]` (A5). | LG §17–18, §22; ricerche web; utente, 2026-10-05 |
 | **portale città** (per esempio «Acquaviva Digitale») | Il portale di una singola città della rete: luoghi, attività, esperienze. | Grafia dei nomi dei portali `[DA VERIFICARE]`. I domini alternano .it e .com: si usano esattamente come nelle LG. | LG §12, §15, §18 |
 | **digitalizzazione territoriale** | Portare online, in forma esplorabile, i luoghi, le imprese e le attività di un territorio. | Minuscolo. | LG premessa, §07 |
 | **destination marketing** | Promozione di una destinazione per attrarre visitatori. Per ITnode è la funzione di Puglia Digitale. | Le LG scrivono «Destination Marketing». Proposta: minuscolo nel testo corrente, maiuscole solo nei titoli (DR2). | LG §13, §26 |
@@ -169,6 +169,7 @@ Dedotte dalle LG. Dove si parla di dubbi e di processo decisionale si tratta di 
 | puglia-digitale.it · Associazione culturale Campo&Controcampo | Portale di tour virtuali delle città pugliesi, con contributo e patrocinio del Consiglio regionale | Non citarlo né linkarlo finché D1 non è chiarita |
 | «Puglia Digitale», «PugliaDigitale2030» (Regione Puglia) | Programmi regionali per la trasformazione digitale | Non suggerire mai un legame istituzionale (anche per la SEO: stessa query) |
 | «Città Digitale», cittadigitale.it | Un altro operatore, che fa siti per i Comuni | Scrivere sempre «Città Digitali», al plurale |
+| «CITTA' DIGITALI», cittadigitali.it (senza accento) | Progetto di altri, indicizzato con Biella, Lecce, Salerno, Trento e Treviso. Il 2026-10-05 il dominio non si risolveva | Non è del cliente (conferma dell'utente del 2026-10-05), anche se le LG §22 lo indicano. Non citarlo né linkarlo: il portale è cittàdigitali.it |
 | «Le Città Digitali», lecittadigitali.it | Iniziativa precedente di iComm Lab e Leadstone | Solo come riferimento storico (D5) |
 | iComm Lab, Leadstone, MyComm, IBM | Tappe del percorso del fondatore | Solo nella timeline, senza loghi di terzi |
 
@@ -230,10 +231,10 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 | S1 | Ragione sociale: ITNODE S.r.l. | ufficiocamerale.it, atoka.io | Da verificare (visura) | Footer, privacy, JSON-LD |
 | S2 | P.IVA 08937270729 | ufficiocamerale.it, atoka.io | Da verificare (visura) | Footer |
 | S3 | Sede legale: Via Sant'Anna 34, 70021 Acquaviva delle Fonti (BA) | ufficiocamerale.it | Da verificare | Le LG (§22) indicano lo stesso indirizzo come «Sede Operativa». Se coincidono: «Sede legale e operativa». |
-| S4 | REA, capitale sociale versato, PEC | PEC «itnode@pec.it» secondo ufficiocamerale.it | `[DA FORNIRE]` | Obbligatori |
+| S4 | REA, capitale sociale versato, PEC | PEC «itnode@pec.it» secondo ufficiocamerale.it e la pagina «Dati aziendali» di cittàdigitali.it; REA «BA-660035» dalla stessa pagina (WebSearch, 2026-10-05) | REA e PEC: da verificare (visura). Capitale sociale: `[DA FORNIRE]` | Obbligatori. La pagina del cliente riporta anche la P.IVA 08937270729, che coincide con S2 |
 | S5 | Tel. +39 080 2466520 · Mobile +39 335 1229785 · info@itnode.it | LG §22 | Utilizzabile | Altri indirizzi trovati online (g.lenoci@, contatti@itnode.it) non si usano senza indicazione del cliente. |
 | S6 | LinkedIn: https://www.linkedin.com/in/giacomo-lenoci/ | LG §22 | Utilizzabile | È un profilo personale: va etichettato come tale. Esiste una pagina aziendale? `[DA FORNIRE]` |
-| S7 | Portali e URL (cittadigitali.it, lapugliadigitale.it, portali città, esperienze) | LG §12, §15, §18, §22 | Utilizzabile; link da verificare | Dal nostro ambiente non sono raggiungibili: i link si controllano in QA. |
+| S7 | Portali e URL (cittàdigitali.it, lapugliadigitale.it, portali città, esperienze) | LG §12, §15, §18, §22; conferma dell'utente del 2026-10-05 | Città Digitali: confermato. Altri: utilizzabili, link da verificare | **Città Digitali:** il portale del cliente è **cittàdigitali.it**, con l'accento, che nei link si scrive `https://xn--cittdigitali-19a.it`. «www.cittadigitali.it» delle LG §22 non è del cliente (conferma dell'utente del 2026-10-05): il 2026-10-05 non si risolveva ed era indicizzato come un progetto omonimo. Il sito è corretto (commit eb691ee); seo-technical verifica la parte tecnica. Elenco delle città: `docs/strategia/citta-digitali-elenco.md`. **Gli altri portali e le esperienze** non sono raggiungibili dal nostro ambiente: i link si controllano in QA. |
 | S8 | Video: https://itnode-website-production.up.railway.app/public/video/citta-digitali.mp4?v=2 | LG §19 | Utilizzabile; hosting da verificare | Sta su un dominio di staging di terzi: chiedere il file per ospitarlo insieme al sito. |
 
 **Claim trovati online, assenti dalle LG: da non riprendere**
