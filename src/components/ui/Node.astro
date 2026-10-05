@@ -102,4 +102,17 @@ const { kind = 'hotspot', number, ping = false, class: className, style } = Astr
   :global(button:focus-visible) > .node .node__ring {
     transform: scale(1.4);
   }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .node__dot {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+
+    .node__num {
+      color: Canvas;
+    }
+  }
 </style>

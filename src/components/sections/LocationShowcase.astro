@@ -5,7 +5,8 @@
  *   longitude (west → east) and latitude (north higher). DOM order is west → east too, so
  *   focus order always matches what is seen (WCAG 2.4.3).
  * - `italy` (Città Digitali): outline map of Italy on the right, cities on the left aligned
- *   to the latitude of their node; hovering or focusing a city lights its node.
+ *   to the latitude of their node; hovering or focusing a city lights its node. With
+ *   `cityDots`, every other city of Città Digitali is a dot on the map (visual direction §1.4).
  * Every «Esplora ↗» opens the town portal in a new tab, announced to assistive technology.
  */
 import Media from '../ui/Media.astro';
@@ -43,9 +44,16 @@ interface Props {
    * that DOM and visual order match at every width (ux-designer, chapter 03 map review §3.2).
    */
   allPlaces?: { href: string; label: string; srSuffix: string; ctaId: string; destinationId: string };
+  /**
+   * Italy: every other city of Città Digitali as a dot (city dots, visual direction §1.4), with the
+   * legend under the map. `label` is the text alternative of the map while the full list of cities
+   * is not in the text beside it; without it the map and its legend stay aria-hidden (the legend only
+   * explains what is seen).
+   */
+  cityDots?: { legend: string; label?: string };
 }
 
-const { variant, id, title, text, statement, locations, surface = 'calce', location = 'luoghi', allPlaces } = Astro.props;
+const { variant, id, title, text, statement, locations, surface = 'calce', location = 'luoghi', allPlaces, cityDots } = Astro.props;
 
 // Doors: west → east, positions from real coordinates.
 const west = [...locations].sort((a, b) => a.lon - b.lon);
@@ -59,8 +67,11 @@ const doors = west.map((l) => ({
   y: maxLat === minLat ? 0 : (maxLat - l.lat) / (maxLat - minLat),
 }));
 
-// Italy: north → south, each city at the height of its node on the map (yPct of maps.json).
-const italyPoints: { id: string; yPct: number }[] = (maps as { maps?: { italia?: { places?: { id: string; yPct: number }[] } } }).maps?.italia?.places ?? [];
+// Italy: north → south, each city at the height of its node on the map (yPct of maps.json, named
+// places or dots: a city may be either, depending on the names of the Home map).
+type ItalyPoint = { id: string; yPct: number };
+const italia = (maps as { maps?: { italia?: { places?: ItalyPoint[]; dots?: ItalyPoint[] } } }).maps?.italia;
+const italyPoints: ItalyPoint[] = [...(italia?.places ?? []), ...(italia?.dots ?? [])];
 const north = [...locations]
   .sort((a, b) => b.lat - a.lat)
   .map((l) => ({ ...l, y: italyPoints.find((p) => p.id === l.id)?.yPct }));
@@ -140,7 +151,14 @@ const north = [...locations]
             )}
           </div>
           <div class="places__map">
-            <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
+            {cityDots ? (
+              <figure class="places__atlas" aria-hidden={cityDots.label ? undefined : 'true'}>
+                <MapItaly map="italia" places={north} cities="dots" showLabels={false} label={cityDots.label} class="places__map-svg" />
+                <figcaption class="places__atlas-note t-label">{cityDots.legend}</figcaption>
+              </figure>
+            ) : (
+              <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
+            )}
           </div>
           <ol role="list" class="places__cities">
             {north.map((c) => (
@@ -177,7 +195,7 @@ const north = [...locations]
 {
   variant === 'italy' && (
     <script>
-      // Light the node of the city being hovered or focused (decorative, the map is aria-hidden).
+      // Light the node of the city being hovered or focused (a visual echo: the cities are named in the list).
       document.querySelectorAll<HTMLElement>('[data-places]').forEach((root) => {
         root.querySelectorAll<HTMLElement>('[data-place-link]').forEach((city) => {
           const node = root.querySelector<HTMLElement>(`[data-place="${city.dataset.placeLink}"]`);
@@ -368,6 +386,16 @@ const north = [...locations]
     max-width: 22rem;
   }
 
+  /* City dots: the legend under the map, like the Home chapter 03 (visual direction §1.4). */
+  .places__atlas {
+    margin: 0;
+  }
+
+  .places__atlas-note {
+    margin-top: var(--space-s);
+    color: var(--fg-2);
+  }
+
   .places__cities {
     display: grid;
     gap: var(--space-xl);
@@ -442,6 +470,17 @@ const north = [...locations]
       padding: 0;
     }
 
+    /* The cities stand at the latitude of their node: the legend must not lengthen the map's row. */
+    .places__atlas {
+      position: relative;
+    }
+
+    .places__atlas-note {
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+    }
+
     .city {
       position: absolute;
       inset-inline: 0;
@@ -461,6 +500,16 @@ const north = [...locations]
     .city__cta {
       grid-column: 2;
       grid-row: 1;
+    }
+  }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .door__leader,
+    .door__leader::after {
+      forced-color-adjust: none;
+      background: CanvasText;
     }
   }
 </style>

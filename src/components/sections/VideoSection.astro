@@ -211,8 +211,11 @@ const titleId = `${id}-title`;
     color: var(--inchiostro);
   }
 
+  /* Double ring on the video. The transparent outline is the ring of forced colors (Windows contrast
+     themes), which drop shadows (accessibilita.md §2.14). */
   .video__btn:focus-visible {
-    outline: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
     box-shadow: var(--focus-ring-media);
   }
 

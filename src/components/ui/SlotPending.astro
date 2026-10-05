@@ -185,4 +185,15 @@ const lines = meta.map((line) => line.split(' · ').map(nb).join(' · '));
     letter-spacing: var(--tr-display-s);
     font-weight: var(--fw-strong);
   }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .slot-pub__node,
+    .slot-pub__hot {
+      forced-color-adjust: none;
+      background: CanvasText;
+      outline-color: CanvasText;
+    }
+  }
 </style>

@@ -212,9 +212,11 @@ const ratioSmall = smallImage ? `${smallImage.width} / ${smallImage.height}` : r
     transform: scale(1.4);
   }
 
-  /* Double ring: readable on light and dark parts of the photo. */
+  /* Double ring: readable on light and dark parts of the photo. The transparent outline is the ring of
+     forced colors (Windows contrast themes), which drop shadows (accessibilita.md §2.14). */
   .document__btn:focus-visible {
-    outline: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
   }
 
   .document__btn:focus-visible .document__ring {

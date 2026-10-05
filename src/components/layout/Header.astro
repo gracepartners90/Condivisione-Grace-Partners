@@ -391,4 +391,14 @@ const menuItems = [
       transform: none;
     }
   }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .site-header__nav a[aria-current='page']::before,
+    .mobile-menu__list a[aria-current='page'] .mobile-menu__name::before {
+      forced-color-adjust: none;
+      background: LinkText;
+    }
+  }
 </style>

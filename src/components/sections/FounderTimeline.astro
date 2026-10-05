@@ -333,4 +333,15 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
       padding-bottom: var(--space-xl);
     }
   }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .founder__tick,
+    .founder__stage--now .founder__tick {
+      forced-color-adjust: none;
+      background: CanvasText;
+      outline-color: CanvasText;
+    }
+  }
 </style>

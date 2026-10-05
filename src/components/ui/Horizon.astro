@@ -372,4 +372,14 @@ groups.forEach((group, gi) => {
       transform: translateX(calc(var(--rotate) / -540 * 100%));
     }
   }
+
+  /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+     so marks drawn as backgrounds would vanish. Draw them in a system colour (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .horizon__node,
+    .horizon__label::before {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
 </style>

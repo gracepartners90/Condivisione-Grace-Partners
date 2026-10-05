@@ -29,10 +29,13 @@ interface Props {
   /** Named places; with `cities` they come from maps.json. */
   places?: MapPlace[];
   /**
-   * Città Digitali (Home chapter 03): every city of src/data/citta-digitali.json, one dot each,
-   * names where they fit at every width (anchors computed by scripts/generate-maps.mjs). No coordinates.
+   * Città Digitali: every city of src/data/citta-digitali.json, one dot each (visual direction §1.4).
+   * - `true` (Home chapter 03): names where they fit at every width (anchors computed by
+   *   scripts/generate-maps.mjs). No coordinates.
+   * - `'dots'` (/citta-digitali/): the cities in `places` are the nodes, named by the cards beside the
+   *   map; every other city is a dot. Use with `showLabels={false}`.
    */
-  cities?: boolean;
+  cities?: boolean | 'dots';
   showLabels?: boolean;
   /** Puglia: crop to the stretch of coast around the places. */
   compact?: boolean;
@@ -78,17 +81,27 @@ const lookup = (id: string) => {
   return named ?? data?.dots?.find((d) => d.id === id);
 };
 
+// Places stored in maps.json for this map (Città Digitali: the cities named on the Home map).
+const mapPlaces = Array.isArray(data?.places) ? data.places : [];
 const placeList: MapPlace[] =
-  cities && Array.isArray(data?.places) ? data.places.map((p) => ({ id: p.id, name: p.name ?? p.id, lat: p.lat ?? 0, lon: p.lon ?? 0 })) : places;
+  cities === true && mapPlaces.length ? mapPlaces.map((p) => ({ id: p.id, name: p.name ?? p.id, lat: p.lat ?? 0, lon: p.lon ?? 0 })) : places;
 const points = placeList.map((p) => {
   const pt: Partial<PlacePoint> & { x: number; y: number } = lookup(p.id) ?? project(p.lat, p.lon);
   const pos = pct(pt.x, pt.y);
   // Names placed at build time (Città Digitali) carry an anchor per class of width; without one,
   // labels of places in the eastern part of the map hang to the left, so they stay inside it.
-  const anchor = cities ? pt.anchor : undefined;
+  const anchor = cities === true ? pt.anchor : undefined;
   return { ...p, ...pos, anchor, isHome: p.id === home, labelLeft: !anchor && pos.left > 55 };
 });
-const dots = cities ? (data?.dots ?? []).map((d) => pct(d.x, d.y)) : [];
+// Dots: with `cities` the unnamed cities; with `cities="dots"` every city that is not a node here.
+const nodeIds = new Set(placeList.map((p) => p.id));
+const dotPoints =
+  cities === 'dots'
+    ? [...mapPlaces, ...(data?.dots ?? [])].filter((c) => !nodeIds.has(c.id)).sort((a, b) => a.y - b.y)
+    : cities
+      ? (data?.dots ?? [])
+      : [];
+const dots = dotPoints.map((d) => pct(d.x, d.y));
 const labels = (data?.labels ?? []).map((l) => ({ ...l, ...pct(l.x, l.y) }));
 
 // Graticule every degree (fallback only).
@@ -105,7 +118,7 @@ if (!data) {
 }
 ---
 
-<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame), 'map--cities': cities }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
+<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame), 'map--cities': Boolean(cities) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
   {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' })}
 >
   <svg class="map__svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
@@ -255,9 +268,9 @@ if (!data) {
     text-align: right;
   }
 
-  /* Città Digitali (Home chapter 03): one dot per city without a name. Half the named node, same
-     colour: a place, not a hotspot. A knockout ring in the surface colour keeps every dot distinct
-     where they crowd and where they cross the coastline (a stroke, not a shadow: DS §1.5). */
+  /* Città Digitali (Home chapter 03, /citta-digitali/): one dot per city without a name. Half the
+     named node, same colour: a place, not a hotspot. A knockout ring in the surface colour keeps every
+     dot distinct where they crowd and where they cross the coastline (a stroke, not a shadow: DS §1.5). */
   .map__dot {
     position: absolute;
     width: 5px;
@@ -359,5 +372,27 @@ if (!data) {
   /* The compact frame crops the coastline: clip it to the frame. */
   .map--compact .map__svg {
     overflow: clip;
+  }
+
+  /* Windows contrast themes (forced colors): the system paints every background in its canvas
+     colour, so nodes, dots and leaders would vanish, and dots would cut gaps in the coastline. Draw
+     them in the text colour of the theme; the knockout ring takes the canvas colour. */
+  @media (forced-colors: active) {
+    .map__node,
+    .map__dot,
+    .map__label[data-anchor^='drop']::before,
+    .map__label[data-anchor-narrow^='drop']::before {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+
+    .map__dot,
+    .map--cities .map__node {
+      box-shadow: 0 0 0 1.5px Canvas;
+    }
+
+    .map__place--home .map__node::after {
+      border-color: CanvasText;
+    }
   }
 </style>
