@@ -46,7 +46,7 @@ export const pages: Record<PageId, PageMeta> = {
     path: '/citta-digitali/',
     title: 'Città Digitali: le attività del territorio online | ITnode',
     description:
-      'Città Digitali porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali, Siti Interattivi Immersivi e strumenti digitali.',
+      'Città Digitali è il portale con cui ITnode porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali e strumenti digitali.',
     crumb: 'Città Digitali',
   },
   contatti: {

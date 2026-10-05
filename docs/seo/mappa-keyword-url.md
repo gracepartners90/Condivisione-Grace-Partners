@@ -20,7 +20,7 @@ Documento operativo per lo sviluppo e il copy: title, meta description, H1, scal
 - **Title e meta description**
   - Title: massimo 60 caratteri, brand incluso: `ITnode | …` in home, `… | ITnode` altrove.
   - Meta description: 140–155 caratteri.
-  - Lunghezze e unicità sono verificate con uno script (2026-09-28). I testi usano l'apostrofo tipografico (’).
+  - Lunghezze e unicità sono verificate con uno script (2026-09-28), e ricontrollate il 2026-10-05 con la nuova meta di `/citta-digitali`. I testi usano l'apostrofo tipografico (’).
 - **Heading**
   - Un solo H1 per pagina.
   - Il livello dipende dalla struttura, non dalla dimensione visiva. Statement, numeri grandi, marquee e CTA non sono heading, salvo quando lo statement è il titolo della sezione.
@@ -50,7 +50,7 @@ Segue il glossario del brief (§4) e le proposte DR1–DR2, che l'utente deve an
 | Tecnologia | «Tour Virtuale Interattivo Immersivo», con le maiuscole, quando indica la tecnologia di ITnode (LG §07) | — | Rapporto con il SIII: I3, D4 |
 | Termini di ricerca | tour virtuale, tour virtuale interattivo, virtual tour, tour virtuale 3D, tour 360°: minuscolo, «360°» senza spazio | Usarli come nomi di prodotto | Sono le varianti viste in SERP. «3D» solo se la tecnologia lo è davvero (D4). |
 | Progetti | **Puglia Digitale**, **Città Digitali**: accento, due maiuscole, plurale; negli URL `/citta-digitali` | «Città Digitale», «Puglia digitale» | Omonimie: brief §4. Per ora non si scrive che ITnode ha «creato» Puglia Digitale (A1, DR4). |
-| Domini | lapugliadigitale.it, **cittàdigitali.it** (minuscolo, con l'accento; negli `href` `https://xn--cittdigitali-19a.it`) | cittadigitali.it senza accento: è «CITTA' DIGITALI», un progetto di altri | Dominio di Città Digitali confermato dall'utente il 2026-10-05 (brief: glossario, omonimie e S7). Nel testo visibile si scrive sempre con l'accento. |
+| Domini | lapugliadigitale.it, **cittàdigitali.it** (minuscolo, con l'accento; negli `href` `https://xn--cittdigitali-19a.it`) | cittadigitali.it senza accento: è «CITTA' DIGITALI», un progetto di altri | Dominio di Città Digitali confermato dall'utente il 2026-10-05 (brief: glossario, omonimie e S7). Nel testo visibile si scrive sempre con l'accento. Forma dell'indirizzo: specifiche tecniche §5.3. |
 | Altri termini | destination marketing, digitalizzazione territoriale: minuscolo nel testo. hotspot: invariabile. «partite IVA». «abitare il Web» | — | DR2 |
 
 ## 2. Quadro sintetico
@@ -60,7 +60,7 @@ Segue il glossario del brief (§4) e le proposte DR1–DR2, che l'utente deve an
 | `/` | Brand e categoria | ITnode \| Esperienze immersive per imprese e territori (53) | ITnode rende esplorabili sul Web gli spazi di imprese e territori con i Siti Interattivi Immersivi (SIII) e i progetti Puglia Digitale e Città Digitali. (152) | «La tecnologia cambia. La curiosità ci accompagna da sempre.» |
 | `/siii` | Commerciale e informativo | SIII, Siti Interattivi Immersivi oltre il tour 360° \| ITnode (60) | Il SIII replica gli spazi della tua azienda in un ambiente da esplorare da desktop e smartphone: hotspot, prodotti, video, richieste e prenotazioni. (148) | «SIII» + «Siti Interattivi Immersivi» |
 | `/puglia-digitale` | Brand del progetto e destination marketing | Puglia Digitale: destination marketing immersivo \| ITnode (57) | Puglia Digitale è una piattaforma di destination marketing che digitalizza e valorizza città, borghi e imprese pugliesi con esperienze immersive. (145) | «Puglia Digitale» + «Una piattaforma interattiva immersiva per la valorizzazione territoriale.» |
-| `/citta-digitali` | Brand del progetto e adesione delle attività | Città Digitali: le attività del territorio online \| ITnode (58) | Città Digitali porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali, Siti Interattivi Immersivi e strumenti digitali. (154) | «Città Digitali» + «Le attività del territorio, online senza perdere radici.» |
+| `/citta-digitali` | Brand del progetto e adesione delle attività | Città Digitali: le attività del territorio online \| ITnode (58) | Città Digitali è il portale con cui ITnode porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali e strumenti digitali. (154) | «Città Digitali» + «Le attività del territorio, online senza perdere radici.» |
 | `/contatti` | Navigazionale e locale | Contatti \| ITnode, Acquaviva delle Fonti (BA) (45) | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. (154) | «Parliamo del prossimo spazio digitale.» |
 
 Nella colonna H1, «+» indica un solo H1 su due righe: il nome grande, il descrittore più piccolo. Coincide con la gerarchia del brief (§2.4) e disambigua i nomi dagli omonimi in SERP. Title e meta di `/privacy-policy`, `/cookie-policy` e 404 sono nella sezione 3.6.
@@ -277,7 +277,7 @@ H2  La tua azienda merita più di una presenza online. Merita di essere esplorat
 | Anchor | Destinazione | Posizione |
 |---|---|---|
 | Siti Interattivi Immersivi | `/siii` | sottotitolo della hero |
-| Visita il portale (Città Digitali, nuova scheda) | cittàdigitali.it (`https://xn--cittdigitali-19a.it`; la forma finale dell'URL la verifica seo-technical) | hero |
+| Visita il portale (Città Digitali, nuova scheda) | cittàdigitali.it (`https://xn--cittdigitali-19a.it`; forma dell'indirizzo e verifiche nelle specifiche tecniche §5.3) | hero |
 | Varese · Altamura · Caltanissetta (+ dominio, nuova scheda) | portali delle città | «L’Italia in un unico portale» |
 | Puglia Digitale | `/puglia-digitale` | chiusura «Gli altri mondi ITnode» |
 | Entra in Città Digitali | `#entra` (form) oppure portale: sceglie cro-specialist | CTA finale |
@@ -290,15 +290,19 @@ H2  La tua azienda merita più di una presenza online. Merita di essere esplorat
   - la pagina non cita né linka cittadigitali.it, «CITTA' DIGITALI», lecittadigitali.it o Leadstone;
   - «Le Città Digitali» può comparire solo nella storia del fondatore, e solo se D5 conferma il legame.
 
-  Dettagli nella review del 2026-10-05.
-- **Meta description: variante proposta** (review del 2026-10-05, O3). «Città Digitali è il portale con cui ITnode porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali e strumenti digitali.» (154 caratteri). Se viene accettata, sostituisce quella del §2 e va in `src/data/pages.ts`. Title e H1 restano come sono.
+  Dettagli in `docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md`, a cui rimandano anche le note seguenti («review del 2026-10-05»).
+- **Meta description, aggiornata il 2026-10-05** (review dello stesso giorno, O3).
+  - Ora nomina ITnode, con la formula del Blocco E, e non contiene più «Siti Interattivi Immersivi», che resta nel testo.
+  - Prima era: «Città Digitali porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali, Siti Interattivi Immersivi e strumenti digitali.»
+  - Da applicare in `src/data/pages.ts` e nella copia del copy deck di Città Digitali.
+  - Title e H1 restano come sono.
 - **Elenco delle città** (`docs/strategia/citta-digitali-elenco.md`). Quando il testo della pagina «Tutte le città» è confermato:
   - un solo elenco, in questa pagina;
   - i nomi ufficiali dei comuni, con la sigla della provincia;
-  - il link alla pagina città del portale, quando esiste;
+  - il link alla pagina della città sul portale, o al portale della città, solo se l'indirizzo è verificato;
   - la data di aggiornamento.
 
-  Nessuna pagina locale su itnode.it. Regole complete nella review del 2026-10-05, §4.
+  Nessuna pagina locale su itnode.it. Regole complete nella review del 2026-10-05, §5.
 - **Franchising** (aggiornato il 2026-10-05). Sulla query «Città Digitali franchising» si posizionano già la pagina Franchising del portale e le schede delle directory. Se l'utente decide di rivolgersi ai potenziali affiliati (DR5), su itnode.it basta un link a quella pagina, senza riprendere i claim X1. Una pagina propria entrerebbe in concorrenza con il portale.
 - **Video** (S8). Per il markup VideoObject servono titolo, descrizione, data di pubblicazione, durata e poster `[DA FORNIRE]`. Il file va servito dal dominio definitivo (decidono web-performance-specialist e seo-technical).
 - **Materiali mancanti**: immagini dei territori `[DA FORNIRE]`.
@@ -431,3 +435,4 @@ Sono definizioni brevi e autosufficienti, scritte solo con i fatti delle LG e co
 1. **Composizione degli H1 su due livelli**: ux-designer e copywriter-brand; creative-director in caso di conflitto con il layout.
 2. **Grafie e convenzioni** (DR1, DR2): decide l'utente. Questo documento le applica già come proposta.
 3. **Blocchi A–G in un file di contenuti condiviso** in fase di sviluppo, accanto a `src/data/pages.ts` previsto dalle specifiche tecniche: sessione principale.
+4. **Nuova meta description di `/citta-digitali`** (§2): la sessione principale la applica in `src/data/pages.ts`, copywriter-content aggiorna la copia nel copy deck (review del 2026-10-05, O3).
