@@ -385,5 +385,5 @@ Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo �
 4. **Anteprime immersive con iframe**: attivarle solo dopo la verifica dei cookie (§1, condizione 4). Decidono sessione principale e cliente.
 5. **RUM delle prestazioni** (§8.1): sì alle dieci condizioni, dopo la conferma del consulente privacy. Decide l'utente; owner cro-specialist e web-performance-specialist.
 6. **Endpoint del form**: opzioni nell'ADR 006 (proposta). Decide l'utente o il cliente prima del go-live (condizione C04 del G4).
-7. **`cta_location` del link «Tutte le città sul portale»**: da `portale` a `luoghi`, con lo snippet del §5.1. Decisione di cro-specialist; la applica la sessione principale.
+7. **`cta_location` del link «Tutte le città sul portale»**: chiusa il 2026-10-05. Valore `luoghi`, applicato nel commit `ce276be` e verificato sulla build.
 8. **Etichette UTM dei portali uguali a `destination_id`** (§7). Decisione di cro-specialist, prima di qualunque link o QR code con UTM.

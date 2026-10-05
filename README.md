@@ -79,6 +79,8 @@ Il repository è pronto per Railway ([ADR 004](docs/decisioni/004-anteprima-su-r
 
 Le variabili `PUBLIC_*` entrano nella build: dopo averle cambiate serve un nuovo deploy.
 
+Railway ricostruisce l'anteprima solo quando un push cambia i file che entrano nella build (`watchPatterns` in `railway.json`: `src/`, `public/`, `scripts/`, configurazione e dipendenze). I commit di sola documentazione (`docs/`, `.claude/`) non avviano un deploy.
+
 ### Asset da fornire
 
 Ogni spazio in attesa di un asset mostra un segnaposto dichiarato con formato e contenuto richiesti. L'elenco completo, con specifiche, è in [`src/data/asset-slots.ts`](src/data/asset-slots.ts); le priorità e la direzione fotografica sono in [`docs/creativa/direzione-visiva.md`](docs/creativa/direzione-visiva.md) §4.6.

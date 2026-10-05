@@ -24,7 +24,6 @@ Solo lezioni apprese e note di lavoro. Fatti e decisioni ufficiali stanno in `do
 - 2026-10-05 · Lo scratchpad è condiviso con file di altri membri: usa nomi univoci per script e cartelle.
 
 ## Da riprendere
-- Dopo lo snippet del piano §5.1 (`data-cta-location={location}` in `LocationShowcase.astro`), ricontrollare con l'inventario che `cd-portale-tutte-le-citta` esca con `luoghi` e che non resti nessun valore fuori elenco.
 - Scrivere i test Playwright del piano (§9) nel repository, compresi il test 2 con gli elenchi chiusi, il 6 (RUM) e il 7 (endpoint). Base: gli script della review del 2026-09-28.
 - E1: quando il creative-director fissa il momento, preparare le due schermate A e B con Playwright sull'anteprima (sostituendo il testo in pagina), la traccia della sessione e la griglia di codifica con copywriter-brand.
 - ADR 006: dopo la scelta dell'utente, passarlo ad «accettata» e provare l'endpoint in staging (requisito 8).

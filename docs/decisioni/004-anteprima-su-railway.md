@@ -3,8 +3,8 @@ titolo: "ADR 004 · Anteprima del sito su Railway"
 owner: sessione principale
 contributi: [web-performance-specialist, seo-technical, brand-strategist]
 stato: accettata
-versione: 1.0
-aggiornato: 2026-09-28
+versione: 1.1
+aggiornato: 2026-10-05
 fonti: [docs/decisioni/001-stack-tecnologico.md, public/_headers, public/_redirects]
 ---
 
@@ -54,6 +54,7 @@ Per il server su Railway:
   - variabile `PREVIEW_AUTH` impostata prima del primo deploy (utente `itnode`; la password non è nel repository: si legge tra le variabili del servizio); dal 2026-09-29 vale `off` per decisione dell'utente: anteprima aperta, sempre `noindex` (deploy 11d0c9b4, log «public preview»);
   - il progetto `itnode-website`, che ospita il video, non è stato toccato;
   - indirizzo generato dall'utente: https://itnode-sito-production.up.railway.app (porta 8080).
+- **Aggiornamento del 2026-10-05: deploy solo per i file della build.** Con molti push ravvicinati, anche di sola documentazione, i deploy si accodavano e l'anteprima arrivava con decine di minuti di ritardo. `railway.json` dichiara ora `build.watchPatterns` (`src/**`, `public/**`, `scripts/**`, `astro.config.mjs`, `tsconfig.json`, `package.json`, `package-lock.json`, `railway.json`, `.node-version`): un push che cambia solo `docs/` o `.claude/` non avvia un deploy. Se un file nuovo entra nella build fuori da questi percorsi, va aggiunto all'elenco.
 - Se la produzione andrà su Railway: dominio personalizzato, `INDEXING=on`, e una verifica del TTFB fuori dall'Italia da parte di web-performance-specialist (origine in una sola regione, ADR 001). Se andrà altrove, il server resta solo per le anteprime.
 - Il video di Città Digitali resta su un host esterno (ADR 001, punto 7): condizione di go-live invariata.
 - web-performance-specialist ha confermato cache, compressione e tempi del server (rimisura del 2026-09-28, §9); il supporto alle richieste `Range` per il video è stato aggiunto (osservazione 6). Resta la conferma di seo-technical sulla politica di indicizzazione dell'anteprima.
