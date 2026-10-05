@@ -3,9 +3,9 @@ titolo: Legenda della carta del capitolo 03 della Home e testi collegati
 owner: copywriter-brand
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-10-05
-fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
+fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P4), dist/citta-digitali/index.html (testo della sezione e schede), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
 ---
 
 # Legenda della carta del capitolo 03 · testi
@@ -136,6 +136,23 @@ Gli stessi testi sono nel copy deck della Home (v1.4, § 5, «Capitolo 03 con la
   - **Microcopy, v1.2.** Footer, blocco Portali: «cittàdigitali.it ↗». Nome accessibile: «cittàdigitali.it, portale di Città Digitali (si apre in una nuova scheda)». È come nel sito, verificato su `dist/` il 2026-10-05.
 - **Restano**, nei documenti di copywriter-content: `copy-deck/contatti.md`, righe 145–147 e 155, e `copy-deck/citta-digitali.md`, righe 57, 78 e 254. Li corregge il loro owner (O7).
 
+## L6 · [IMPORTANTE] Descrizione della carta su `/citta-digitali/`: senza «Tra queste»
+
+- **Dove.** `/citta-digitali/`, «L’Italia in un unico portale.» (`#portale`): proposta di ui-designer (`docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`, P3), che dà alla carta `role="img"` con la forma di L4 a tre nomi.
+- **Problema.** Su questa pagina «Tra queste: Varese, Altamura e Caltanissetta.» ripete nomi che chi usa uno screen reader ha appena sentito, e che sente di nuovo subito dopo.
+  - Prima della carta: il paragrafo («… città come Varese, Altamura e Caltanissetta.») e lo statement («Da Varese a Caltanissetta, passando per Altamura…»).
+  - Subito dopo la carta e la legenda: le tre schede, ciascuna con il nome (H3) e la regione, letta anche dallo screen reader: «Lombardia», «Puglia», «Sicilia».
+  - Qui la carta non disegna nomi: i tre nodi più grandi corrispondono alle schede. «Tra queste» presenta i nomi come esempi presi dalla carta, ma la carta non ne mostra.
+- **Motivazione.**
+  - WCAG 1.1.1 si valuta nel contesto. La sola informazione che la carta aggiunge al testo accanto è dove stanno tutte le altre città. Che le tre in evidenza siano Varese, Altamura e Caltanissetta, e in quale regione, lo dicono il paragrafo e le schede.
+  - È anche il criterio di ux-designer: nessun nome che la carta non mostri (review della mappa, §1).
+  - Nella Home la terza frase serve, perché lì i nomi sono disegnati sulla carta e il testo accanto ne nomina solo tre.
+- **Testo per `/citta-digitali/`:**
+  > Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia.
+  - 138 caratteri, Gulpease 67. Valgono le regole di L4 per la quota e per la preposizione.
+- **Per la funzione condivisa** (`describeCittaDigitali`, P4 di ui-designer): la frase «Tra queste: …» si scrive solo quando la carta disegna dei nomi. La pagina passa un elenco vuoto, e la frase non c’è. La Home non cambia.
+- **Legenda:** L1 anche qui, «Ogni punto è una città di Città Digitali».
+
 ## Misure
 
 Build di prova di ui-designer, carta a 45 puntini, larghezza della figura tra 280 e 480 px. Testi iniettati nella `figcaption`; Chromium.
@@ -177,4 +194,5 @@ Il verdetto di gate spetta al creative-director.
 - **Sessione principale**, nelle modifiche in corso di `index.astro`:
   - in `mapLabel`, la terza frase diventa «Tra queste: ${nomi}.», e la quota segue la regola di L4 («la maggior parte in» solo sopra la metà, altrimenti «più che altrove in»);
   - la `figcaption` è già giusta;
-  - su `/citta-digitali/`, il link di L2.
+  - su `/citta-digitali/`, il link di L2;
+  - se passa la carta con i punti anche su `/citta-digitali/`, la descrizione di L6, senza «Tra queste».
