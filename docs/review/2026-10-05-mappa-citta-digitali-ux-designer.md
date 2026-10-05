@@ -3,7 +3,7 @@ titolo: Carta del capitolo 03 con tutte le città di Città Digitali · alternat
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-05
 fonti: [docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P1–P5), docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L1, L2, L4), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), docs/creativa/direzione-visiva.md (versione in corso del 2026-10-05, §1.4 punto-città), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4), docs/ux/struttura-pagine.md (HM-5, CD-1, CD-2), docs/ux/accessibilita.md (§2.8, §4.2 n. 4), docs/cro/strategia-conversione.md (§4), src/pages/index.astro, src/components/ui/MapItaly.astro, src/data/site.ts, build di prova della proposta UI su http://localhost:4333, staging su http://localhost:4321 (commit 73b041c), prove in pagina con Playwright (Chromium 141) e albero di accessibilità via CDP del 2026-10-05, WCAG 2.2 (1.1.1, 1.3.1, 1.3.2, 2.4.3, 2.4.4, 2.5.3, 2.5.8)]
 oggetto: alternativa testuale della carta del capitolo 03 della Home (un punto per ognuna delle 45 città, nomi dove c'è spazio); posto dell'elenco completo; dominio del portale nei documenti UX
@@ -177,7 +177,7 @@ CSS e attributi iniettati con Playwright, senza toccare `src/`. Capitolo 03 sull
 
 | Prova | Esito |
 |---|---|
-| Albero di accessibilità di Chromium (CDP), capitolo 03 con `role="img"`, descrizione finale e legenda L1, a 390 e 1440 px | La carta è un nodo `image` con la descrizione (255 caratteri) e nessun figlio. Senza `aria-hidden`, l'`<svg>` della costa compariva come immagine vuota dentro la carta; con `aria-hidden` sparisce. Nessuno dei nomi disegnati è esposto come testo. La legenda sta su una riga (350 e 480 px) |
+| Albero di accessibilità di Chromium (CDP), capitolo 03 con `role="img"`, descrizione finale e legenda L1, a 390 e 1440 px | La carta è un nodo `image` con la descrizione (255 caratteri). Senza `aria-hidden`, l'`<svg>` della costa compariva come immagine vuota dentro la carta; con `aria-hidden` sparisce. La legenda sta su una riga (350 e 480 px). **Precisazione del 2026-10-05, sulla build:** nell'albero interno di CDP i nomi disegnati compaiono ancora come testo sotto l'immagine. Chromium però espone `role="img"` come foglia alle API di accessibilità, quindi i nomi non arrivano allo screen reader (`docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3.5) |
 | Figura | Contiene l'immagine e la `<figcaption>`; Chromium espone la didascalia come contenuto, quindi la legenda si legge una volta |
 | Elementi focalizzabili nel capitolo | Uno solo, «Esplora Città Digitali», a 390 e 1440 px |
 | Link «Tutte le città» nella colonna del testo, a 320, 390, 768, 1024, 1280 e 1440 px, con e senza le spaziature di 1.4.12 | Ordine del focus uguale all'ordine visivo, prima delle tre «Esplora»; nessuno scorrimento orizzontale; nome unico nella pagina |

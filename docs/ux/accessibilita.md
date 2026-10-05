@@ -3,9 +3,9 @@ titolo: Requisiti e verifica di accessibilità (WCAG 2.2 AA)
 owner: ux-designer
 contributi: [ui-designer, web-performance-specialist, cro-specialist, seo-technical, copywriter-content]
 stato: in revisione
-versione: 0.4
+versione: 0.5
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
 ---
 
 # Requisiti e verifica di accessibilità (WCAG 2.2 AA)
@@ -44,7 +44,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 |---|---|---|
 | Tutto da tastiera | Menu, CTA, pulsanti del video, anteprime immersive, pausa del marquee, form. Niente scorciatoie da tastiera globali. | 2.1.1, 2.1.4 |
 | Nessuna trappola | Il menu è modale per scelta: Esc e «Chiudi» lo chiudono sempre. Iframe immersivi: pulsante «Chiudi l’anteprima» subito dopo, e verifica che il Tab esca dall'iframe. | 2.1.2 |
-| Focus visibile | `:focus-visible` su tutti gli elementi interattivi. Contorno di almeno 2 px, scostamento di almeno 2 px, contrasto di almeno 3:1 con i colori adiacenti. Su foto e video, doppio anello chiaro e scuro. Mai `outline: none` senza un sostituto. | 2.4.7, 1.4.11 |
+| Focus visibile | `:focus-visible` su tutti gli elementi interattivi. Contorno di almeno 2 px, scostamento di almeno 2 px, contrasto di almeno 3:1 con i colori adiacenti. Su foto e video, doppio anello chiaro e scuro. Mai `outline: none` senza un sostituto. **Anche nei colori forzati:** se l'anello è un'ombra (`box-shadow`), il contorno resta `2px solid transparent` invece di `none`, perché i colori forzati tolgono le ombre e disegnano il contorno (§2.14). | 2.4.7, 1.4.11 |
 | Focus non coperto | `html { scroll-padding-top: calc(var(--header-h) + 1rem) }` (applicato in `global.css`) e nessuno `scroll-margin-top` in aggiunta (tecnica C43). Le colonne sticky non contengono elementi interattivi e non si sovrappongono al contenuto che scorre. Un eventuale banner dei cookie non copre il focus: `scroll-padding-bottom` pari alla sua altezza, oppure spazio riservato. | 2.4.11 |
 | Menu mobile | È un `<dialog>` modale. Il focus parte da «Chiudi» e resta nel menu; Esc lo chiude e il focus torna su «Menu». Scegliendo un'ancora della stessa pagina, il focus va al bersaglio (già così in `header.ts`). Dettagli in `sitemap.md` §4. | 2.4.3, 4.1.2 |
 | Arrivo dalle ancore | `#richiesta`: focus sul titolo del form (`tabindex="-1"`), mai su un campo. `#esempi`: scroll alla sezione. | 2.4.3 |
@@ -124,7 +124,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 | Requisito | Regola operativa | Criteri |
 |---|---|---|
 | Testi alternativi | Quelli di `alt-text.md`. Decorative: `alt=""`. Logo: `alt="ITnode"`. Immagine dentro un link che ha già testo: `alt=""`. | 1.1.1 |
-| Carte | **Decorative** (`aria-hidden`) quando i luoghi che mostrano sono già scritti nel testo accanto: la carta della Puglia del capitolo 02 e quella di `/citta-digitali/`. **Con informazione propria**, come la carta del capitolo 03 con tutte le città di Città Digitali: `role="img"` con una descrizione costruita dagli stessi dati (regioni, regione più fitta, nomi disegnati sulla carta più ricca) e l'`<svg>` interno `aria-hidden`. Mai un elenco nascosto di nomi. Nessun numero finché il conteggio non è confermato. L'elenco completo sta nella pagina di linea, visibile a tutti, oppure come link alla fonte. Decisione del 2026-10-05 in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`. | 1.1.1, 1.3.1 |
+| Carte | **Decorative** (`aria-hidden`) quando i luoghi che mostrano sono già scritti nel testo accanto: oggi la carta della Puglia (capitolo 02 della Home e hero di Puglia Digitale). **Con informazione propria**: `role="img"` con una descrizione costruita dagli stessi dati della carta, e l'`<svg>` interno `aria-hidden`. La descrizione dice ciò che la carta aggiunge al testo accanto, e nessun nome che la carta non disegni:<br>• **capitolo 03 della Home**: regioni da nord a sud, regione più fitta, poi «Tra queste:» con i nomi disegnati sulla carta larga;<br>• **`/citta-digitali/` con il punto-città**: solo regioni e regione più fitta (L6). La carta non disegna nomi, e le tre città sono nel testo prima e nelle schede subito dopo.<br>Quando l'elenco completo sta accanto alla carta, carta e legenda tornano insieme `aria-hidden`. Condizioni: stessa sezione, tutte le città, raggruppate per regione, visibile o in un `<details>` con un sommario chiaro. Mai un elenco nascosto di nomi. Nessun numero finché il conteggio non è confermato. Decisioni del 2026-10-05: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` e `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3. | 1.1.1, 1.3.1 |
 | Testo nelle immagini | Niente testo significativo dentro le immagini. La foto dell'evento ha cornice e scritta sovrimpresse: si usano i ritagli in `derivate/`, e l'originale resta `[DA FORNIRE]`. | 1.4.5 |
 | Veridicità | Tre immagini hanno il segno di Gemini e tutte e quattro le foto del fondatore sembrano elaborate. Alt e didascalie descrivono ciò che si vede, senza presentare come reali eventi non documentati (soglia 1; brief DR3). | 1.1.1 |
 | **Slot vuoti (decisione)** | Finché un asset manca, il segnaposto di `Media.astro` ha `aria-hidden="true"`, senza `role="img"` né `aria-label`: prima annunciava l'alt dell'immagine futura, cioè un'immagine che non c'era. Già corretto. L'etichetta visiva «Asset richiesto» serve solo a chi rivede lo staging. **In produzione nessun segnaposto di staging:** si pubblica l'asset oppure la variante tipografica «in pubblicazione» (`SlotPending`, build con `PUBLIC_SLOT_MODE=publish`). Anche la variante è `aria-hidden` e senza elementi focalizzabili, ed è ammessa a una condizione: il testo che mostra è già scritto nella pagina (H3, righe di luogo) oppure è il segno grafico dei rilevamenti (rilevamento, distanza, coordinate: decisione T10). Sulla Home il nome dell'esperienza non è nel testo, quindi lì la variante va senza nome o con un nome esposto (verifica del 2026-09-28, O6). | 1.1.1, 1.3.1, 4.1.2 |
@@ -168,6 +168,31 @@ Tutto il comportamento è in `struttura-pagine.md` §7. Criteri coperti:
 - **3.3.4 Prevenzione degli errori**: il form non comporta impegni legali o finanziari.
 - **3.3.8 Autenticazione accessibile**: nessun login.
 - **2.5.4 Azionamento tramite movimento**: nessuna funzione del sito usa il movimento del dispositivo. Il viewer in iframe è di terzi e compare solo su desktop.
+
+### 2.14 Colori forzati (temi a contrasto di Windows)
+Requisito di progetto oltre WCAG 2.2 AA, deciso dall'owner dell'accessibilità il 2026-10-05 (`docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md`). I temi a contrasto servono a persone ipovedenti, spesso le stesse che navigano da tastiera. Firefox applica le stesse regole quando l'utente sostituisce i colori delle pagine.
+- **Regola.** Nei colori forzati (`@media (forced-colors: active)`) non sparisce nessun segno che porti informazione (nodi, punti, richiami, indicatori di stato) e nessun indicatore di focus.
+- **Perché sparirebbero.**
+  - Il sistema dipinge ogni sfondo nel colore della tela (`Canvas`). Un segno disegnato come sfondo, senza bordo né contorno, sparisce, e sopra una linea apre un buco.
+  - Le ombre (`box-shadow`) vengono tolte.
+  - Bordi, contorni e testo restano, nei colori del tema.
+- **Tecnica.**
+  - **Segni disegnati come sfondo:** nel blocco `@media (forced-colors: active)` del componente, `forced-color-adjust: none` solo sul segno, sempre con colori di sistema:
+    - `CanvasText` per il segno;
+    - `Canvas` per l'anello che lo ritaglia;
+    - `LinkText` per i segni dentro un link.
+  - **Mai colori del marchio** dentro questo blocco.
+  - **Focus disegnato con un'ombra:** `outline: 2px solid transparent` al posto di `outline: none`. Nel modo normale non si vede; nei colori forzati il sistema lo disegna.
+- **Dove si applica.**
+  - Carte: P6 di ui-designer.
+  - Orizzonte, porte, Nodo, tacche dei capitoli, timeline del fondatore, voce corrente dell'header e del menu, variante «publish» dei segnaposto, focus dei controlli del video e dei nodi della foto: patch 6 bis.
+  - Ogni nuovo segno disegnato come sfondo nasce con il suo blocco.
+- **Residui accettati.**
+  - Sottolineatura dei link dell'header al passaggio del mouse.
+  - Cerchio dell'icona d'errore: il «!» resta come testo.
+  - Fondo della pillola selezionata: la casella nativa resta.
+  - Fondo dei pulsanti: resta il bordo.
+- **Prova:** §4.3.
 
 ## 3. Problemi già individuati (prima della build)
 
@@ -242,6 +267,12 @@ Va eseguito a 1280 px e a 390 px (con l'emulazione del dispositivo o il ridimens
   - Endpoint del form configurato.
   - Sottotitoli e descrizione del video presenti, se servono.
   - Controlli ripetuti sulla build di produzione: `clipped()` e `midWordBreaks()` dell'Appendice C, con e senza le spaziature e con e senza movimento; percorso del form da tastiera e al tocco.
+- **Colori forzati (§2.14).** Emulazione con Playwright (`forcedColors: 'active'`), palette chiara e scura, a 390 e 1440 px:
+  - giro di Tab su ogni pagina: ogni fermata ha un contorno (`outline-style` diverso da `none`), oppure ce l'ha l'etichetta che la contiene;
+  - ricerca dei segni disegnati solo come sfondo che prendono il colore della tela;
+  - confronto delle schermate nel modo normale, che non devono cambiare.
+
+  Script collaudato il 2026-10-05 in Appendice D. Su Windows con un tema reale `[DA FORNIRE: dispositivo o servizio di test]`.
 - **Limiti dell'ambiente.** Qui c'è solo Chromium: le prove con Firefox, WebKit, VoiceOver e dispositivi reali richiedono un altro ambiente `[DA FORNIRE: dispositivi o servizio di test]`.
 
 ### 4.4 Registro dei problemi (Fase 5 e verifica verso il G4)
@@ -265,6 +296,10 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 | 2026-09-28 | `/` in modalità «publish» (O6) | Nome e luogo di Masseria Santella visibili ma nascosti | 1.3.1 | bloccante per quel go-live (chiuso) | Variante senza nome in Home (`pendingText={false}`) | sviluppo | sì (c025181) |
 | 2026-09-28 | vari (S1–S5) | Dominio spezzato (S1 = V16 della verifica UI), casella 20 px, testo della variante nelle porte strette (S3 → V7 della verifica UI), presidio del video, icona e prefisso d'errore | usabilità | suggerimento | Vedi review | sviluppo, ui-designer | S1, S2, S3 (V7), S4, S5 applicati e verificati (c025181); S6 dopo il lancio |
 | 2026-09-28 | Home, `/siii/` e modifiche di C10–C12 (verifica C14) | Riga della hero, cascata, 404, link di Contatti, copertina del video, variante «publish» | 1.4.10, 1.4.12, 2.4.3, 2.4.11, 4.1.2 | verifica | Nessuna correzione necessaria | ux-designer | sì, nessun problema (f1b6780) |
+| 2026-10-05 | `/citta-digitali/`, carta con il punto-città (P3, L6) | Descrizione della carta: con i tre nomi (P3) o senza (L6) | 1.1.1, 1.3.1 | decisione | L6, senza nomi; con l'elenco accanto, carta e legenda `aria-hidden` alle condizioni di §2.8 | ux-designer; sessione principale | provata su una copia: albero di accessibilità e axe; da applicare con P1–P5 |
+| 2026-10-05 | tutte le carte, colori forzati (P6) | Nodi, punti e richiami spariscono; i punti aprono buchi nella costa | §2.14 (oltre AA) | importante | Patch 6 di ui-designer | sessione principale | provata su una copia; da applicare prima del go-live |
+| 2026-10-05 | `/citta-digitali/` (video) e Home (nodi della foto), colori forzati (F1) | Focus invisibile su 6 pulsanti: l'anello è un'ombra | 2.4.7 rispettato nel modo normale; §2.14 | importante | `outline: 2px solid transparent` al posto di `none` (patch 6 bis) | sessione principale | provata su una copia; da applicare prima del go-live |
+| 2026-10-05 | vari, colori forzati (F2–F4) | Spariscono la voce corrente del menu, nodi e richiami di Orizzonte e porte, il Nodo, le tacche e i segni della variante «publish» | §2.14 | suggerimento | Patch 6 bis | sessione principale | provata su una copia |
 
 ## Ipotesi da validare
 - Lo skip link senza `tabindex` permanente funziona con i browser e i lettori di schermo di riferimento: verificato solo in Chromium.
@@ -282,6 +317,7 @@ Dettagli, prove e snippet nelle review `docs/review/2026-09-28-sito-accessibilit
 
 ## Decisioni richieste
 - **Sessione principale (sviluppo)**:
+  - patch 1–5 di ui-designer, L6, patch 6 (P6) e patch 6 bis, nell'ordine indicato in `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md`;
   - O1–O6, S1–S5 e V7 applicati e verificati (commit c025181);
   - al go-live: endpoint del form configurato; con asset mancanti, build di produzione con `PUBLIC_SLOT_MODE=publish`.
 - **Cliente, tramite la sessione principale**: informazioni sul video di Città Digitali (parlato, musica, lampeggiamenti, durata) per decidere sottotitoli e descrizione (condizione A3, presidiata dal controllo pre-lancio).
@@ -478,3 +514,63 @@ const midWordBreaks = () => {
   return out;
 };
 ```
+
+## Appendice D · Colori forzati: focus e segni
+
+Collaudato il 2026-10-05, uso: `node fc-check.mjs http://localhost:4321` (Playwright come in §4.1, con il Chromium già installato).
+- **Sullo staging** trova i 6 pulsanti con il focus fatto solo di ombre e i segni che prendono il colore della tela.
+- **Su una copia con le patch 6 e 6 bis** (§2.14) resta solo `a::after`: è la sottolineatura dei link dell'header al passaggio del mouse, un residuo accettato.
+- **Esito atteso** sulle build successive: nessun pulsante senza contorno, e al massimo quel residuo.
+
+```js
+// fc-check.mjs: forced colors (Windows contrast themes), emulated in Chromium.
+// 1) Every Tab stop draws an outline (or its <label> does). 2) Marks drawn only as a background
+// (no text, border or outline) do not take the canvas colour.
+import { chromium } from 'playwright';
+const base = process.argv[2] ?? 'http://localhost:4321';
+const pages = ['/', '/siii/', '/puglia-digitale/', '/citta-digitali/', '/contatti/', '/privacy-policy/', '/cookie-policy/'];
+const browser = await chromium.launch();
+for (const w of [390, 1440]) for (const path of pages) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce', forcedColors: 'active', colorScheme: 'dark' });
+  const page = await ctx.newPage();
+  await page.goto(base + path, { waitUntil: 'networkidle' });
+  const noOutline = new Set();
+  for (let i = 0; i < 200; i++) {
+    await page.keyboard.press('Tab');
+    await page.waitForTimeout(350); // let outline transitions end
+    const r = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body) return null;
+      if (el.dataset.fcSeen) return { done: true };
+      el.dataset.fcSeen = '1';
+      const has = (e) => { const s = getComputedStyle(e); return s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0; };
+      const label = el.closest('label');
+      return { ok: has(el) || (!!label && has(label)), sig: `${el.tagName.toLowerCase()}.${el.classList[0] ?? ''} «${(el.getAttribute('aria-label') ?? el.textContent).trim().slice(0, 40)}»` };
+    });
+    if (!r) continue;
+    if (r.done) break;
+    if (!r.ok) noOutline.add(r.sig);
+  }
+  const vanishing = await page.evaluate(() => {
+    const canvas = getComputedStyle(document.body).backgroundColor;
+    const out = new Set();
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.closest('svg, video') || el.matches('input, textarea, select, img')) continue;
+      for (const pseudo of [null, '::before', '::after']) {
+        const s = getComputedStyle(el, pseudo);
+        if (s.display === 'none' || (pseudo && s.content === 'none')) continue;
+        const text = pseudo ? s.content.replace(/["'\s]|\/.*$/g, '') : el.textContent.trim();
+        const edge = ['Top', 'Right', 'Bottom', 'Left'].some((k) => parseFloat(s[`border${k}Width`]) > 0 && s[`border${k}Style`] !== 'none') || (s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0);
+        const size = pseudo ? parseFloat(s.width) * parseFloat(s.height) : el.getBoundingClientRect().width * el.getBoundingClientRect().height;
+        // Small marks only: surfaces (panels, image shutters) legitimately take the canvas colour.
+        if (!text && !edge && size > 0 && size < 2500 && s.backgroundColor === canvas && s.forcedColorAdjust !== 'none') out.add(`${el.tagName.toLowerCase()}.${el.classList[0] ?? ''}${pseudo ?? ''}`);
+      }
+    }
+    return [...out];
+  });
+  console.log(`${path} @${w}: senza contorno ${noOutline.size ? [...noOutline].join(', ') : '—'} · segni che spariscono ${vanishing.length ? vanishing.join(', ') : '—'}`);
+  await ctx.close();
+}
+await browser.close();
+```
+

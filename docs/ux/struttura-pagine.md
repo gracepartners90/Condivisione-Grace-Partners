@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.4
+versione: 0.5
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -122,9 +122,9 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
   - **Visual**
     - 01: soglia «Schermo» 16:10, slot `siii-masseria-santella`;
     - 02: carta della Puglia, finché non arriva una foto del territorio;
-    - 03: carta d'Italia con un punto per ogni città di Città Digitali e i nomi dove c'è spazio (proposta di ui-designer del 2026-10-05), con una legenda di una riga in `<figcaption>`.
-    - Le carte 02 e 03 di oggi sono decorative (`aria-hidden`): i loro luoghi sono nominati come testo accanto o nelle pagine di linea.
-    - **La carta 03 con tutte le città non è decorativa.** Mostra dove sta la rete, e il testo del capitolo non lo dice. È un'immagine (`role="img"`) con una descrizione costruita dagli stessi dati: regioni da nord a sud, la regione più fitta, i nomi disegnati sulla carta larga. Nessun numero finché il conteggio non è confermato. Nella Home niente elenco dei nomi, né nascosto né in un `<details>`. Decisione in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`.
+    - 03: carta d'Italia con un punto per ogni città di Città Digitali e i nomi dove c'è spazio, con la legenda di una riga in `<figcaption>` (nel sito dal commit 0a61546).
+    - La carta 02 è decorativa (`aria-hidden`): i suoi luoghi sono nominati nella pagina di linea.
+    - **La carta 03 non è decorativa.** Mostra dove sta la rete, e il testo del capitolo non lo dice. È un'immagine (`role="img"`) con una descrizione costruita dagli stessi dati: regioni da nord a sud, la regione più fitta, poi «Tra queste:» con i nomi disegnati sulla carta larga (forma L4 di copywriter-brand). Nessun numero finché il conteggio non è confermato. Nella Home niente elenco dei nomi, né nascosto né in un `<details>`. Decisione in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`.
 - **Desktop.** Tre capitoli grandi, non tre card, con composizioni speculari (direzione visiva). Dentro ogni capitolo, numero o visual possono essere sticky.
 - **Mobile.** Per ogni capitolo: numero → nome → statement → visual → microdescrizione → CTA a tutta larghezza. Niente sticky, niente swipe.
 - **Interazione e accessibilità.**
@@ -340,32 +340,28 @@ Stessa struttura di SI-8: H2 verbatim, poi il blocco `#richiesta` con il titolo 
 
 ```text
 H1  Città Digitali · Le attività del territorio, online senza perdere radici.
-H2  L’Italia in un unico portale.          (#portale)        → H3 ×3
-H2  [titolo del video, copy deck §3]        (#video)
+H2  Città Digitali, in movimento.           (#video)
+H2  L’Italia in un unico portale.           (#portale)        → H3 ×3
 H2  Dal locale al nazionale.                (#come-funziona)  → H3 ×5
-H2  La tua azienda merita più di una presenza online. Merita di essere esplorata.
+H2  Gli altri mondi ITnode                  (ponte)
+H2  La tua azienda merita più di una presenza online. Merita di essere esplorata.   (#chiusura)
     H3  Entra in Città Digitali             (#richiesta: titolo del form)
-H2  Continua a esplorare                    [PROPOSTA]
 ```
-Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo statement sta dentro l'H1.
+Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo statement sta dentro l'H1, dopo un separatore nascosto alla vista (T6).
+
+**Ordine del sito** (direzione visiva §7.6; copy deck, «Struttura della pagina»): CD-1, CD-3, CD-2, CD-4, CD-6, CD-5. Il video viene prima del portale, e il ponte prima della chiusura, così il form resta l'ultima sezione. Gli ID restano quelli delle versioni precedenti, perché altri documenti li citano; qui le schede seguono l'ordine del sito.
 
 ### CD-1 · Hero — `Hero` variante `line`
-- **Contenuti.**
-  - Breadcrumb ed eyebrow.
-  - H1 su due righe.
-  - Sottotitolo `<p>`: «Siti Interattivi Immersivi» va nella forma di SIII (brief DR2).
-  - CTA primaria «Visita il portale ↗» → cittàdigitali.it (link `https://xn--cittdigitali-19a.it`; cittadigitali.it senza accento è un progetto omonimo di altri).
-  - Link secondario «Porta la tua attività in Città Digitali ↓» → `#richiesta`.
-  - Visual: slot `video-poster` oppure una foto di un territorio `[DA FORNIRE]`.
-- **Mobile.** H1 → sottotitolo → CTA → link secondario → visual.
-
-### CD-2 · L'Italia in un unico portale — `LocationShowcase` variante `italy`
-- **Contenuti** (copy deck §2): tre città da nord a sud, ciascuna con nome (H3), regione, riga, dominio, CTA «Esplora ↗» e foto (slot `luogo-*`).
-- **Elenco completo** (2026-10-05):
-  - Nella colonna del testo, dopo lo statement, un link «Tutte le città ↗» alla pagina del portale (`https://xn--cittdigitali-19a.it/tutte-le-citta/`), fonte dell'elenco. Va in nuova scheda e lo annuncia, con nome unico. Lì l'ordine del DOM coincide con l'ordine visivo a ogni larghezza; dopo l'elenco delle città, da 1280 px, non coinciderebbe.
-  - Dopo la conferma del testo della pagina (`docs/strategia/citta-digitali-elenco.md` §4), l'elenco completo può stare qui, visibile a tutti, per regione, con fonte e data; la sezione va ridisegnata per un elenco lungo. Le tre città restano gli esempi in evidenza.
-- **Desktop.** Composizione nord → sud di forte impatto, diversa dalle «porte» di Puglia Digitale: regione e coordinate di `site.ts` in evidenza.
-- **Mobile.** Impilate nello stesso ordine nord → sud.
+- **Contenuti** (come nel sito; testi nel copy deck §1).
+  - **Breadcrumb** «Home / Città Digitali», nella barra sopra la hero, prima di `<main>`.
+  - **Nessun occhiello.** Sulle pagine interne il suo posto lo prende il breadcrumb (direzione visiva §7.8; T11).
+  - **H1 su due registri**, con il separatore nascosto « – »: il nome accessibile è «Città Digitali – Le attività del territorio, online senza perdere radici.» (T6).
+  - **Sottotitolo** `<p>`, verbatim dalle LG («Siti Immersivi Interattivi»). Se l'utente approva la DR2 del brief, diventa «Siti Interattivi Immersivi», con link a `/siii/` (copy deck §1).
+  - **CTA primaria** «Visita il portale ↗» → cittàdigitali.it, con il link in punycode `https://xn--cittdigitali-19a.it`. Nome accessibile: «Visita il portale Città Digitali (si apre in una nuova scheda)». cittadigitali.it senza accento è un progetto omonimo di altri.
+  - **Link secondario** «Aderisci a Città Digitali ↓» → `#richiesta`. È la forma breve del copy deck, entro i 28 caratteri della guida di stile.
+  - **Visual.** L'Orizzonte di Città Digitali chiude la hero: rilevamenti e distanze dalla sede verso Varese, Altamura e Caltanissetta. È `aria-hidden`, perché le tre città sono nel testo della pagina. Nella hero non ci sono né foto né poster.
+- **Mobile.** Breadcrumb → H1 → sottotitolo → CTA → link secondario → Orizzonte.
+- `[PROPOSTA O4 di seo-content, aperta]` **Dominio «cittàdigitali.it» in mono sotto le CTA**, come testo semplice e non come link. Per l'usabilità sono favorevole: aiuta a riconoscere il dominio con l'accento e a distinguerlo dall'omonimo. Decide il creative-director, perché cambia la composizione della hero (`docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §6).
 
 ### CD-3 · Video — `VideoSection` variante `full-bleed`
 - **Contenuti.**
@@ -387,6 +383,33 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
   - I controlli sono `<button>` di almeno 44 × 44 px, visibili al focus e al tocco, non solo al passaggio del mouse.
   - Etichette dei pulsanti: cambiano con lo stato, senza `aria-pressed` (`accessibilita.md` §2.7; già così in `video.ts`).
 
+### CD-2 · L'Italia in un unico portale — `LocationShowcase` variante `italy` (`#portale`)
+- **Contenuti** (copy deck §2): H2, paragrafo, statement, link all'elenco delle città, carta, tre città.
+- **Città.** Varese, Altamura e Caltanissetta, da nord a sud. Per ognuna:
+  - nome (H3);
+  - regione in `label`, con le coordinate del comune (`aria-hidden`);
+  - riga;
+  - CTA «Esplora ↗», con un nome accessibile completo che comprende il dominio della città.
+
+  Niente dominio visibile e niente foto (direzione visiva §7.6; copy deck, V2).
+- **Link all'elenco** «Tutte le città sul portale ↗» → `https://xn--cittdigitali-19a.it/tutte-le-citta/` `[DA VERIFICARE: indirizzo]`.
+  - Sta nella colonna del testo, dopo lo statement: lì l'ordine del DOM coincide con l'ordine visivo a ogni larghezza. Dopo l'elenco delle città, da 1280 px, non coinciderebbe.
+  - Annuncia la nuova scheda e ha un nome unico nella pagina.
+- **Carta con il punto-città** (direzione visiva 0.7, §1.4 e §7.6; proposta di ui-designer P1–P5, da applicare prima del go-live).
+  - Un punto per ogni città del portale, con i tre nodi delle schede in evidenza e nessun nome sulla carta.
+  - Legenda L1 in `<figcaption>`: «Ogni punto è una città di Città Digitali».
+  - **Accessibilità, finché l'elenco completo non sta accanto.** La carta è `role="img"` con la descrizione L6, senza nomi: «Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia.» Le tre città sono già nel testo prima della carta e nelle schede subito dopo (decisione del 2026-10-05).
+  - **Con l'elenco completo accanto** la descrizione si toglie, e carta e legenda tornano insieme `aria-hidden`. Le condizioni sono in `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3.4.
+- **Elenco completo**, dopo la conferma del testo della pagina del portale (`docs/strategia/citta-digitali-elenco.md` §4).
+  - Sta in questa sezione: visibile a tutti, oppure in un `<details>` con un sommario che dica che cosa contiene.
+  - È ordinato per regione, con fonte e data.
+  - La sezione va ridisegnata per un elenco lungo. Le tre città restano gli esempi in evidenza.
+- **Desktop.**
+  - Da 1280 px: carta a destra e città allineate alla latitudine del loro nodo.
+  - Tra 1024 e 1279 px: città in elenco accanto alla carta, con l'ordine del DOM uguale all'ordine visivo.
+  - Hover o focus su una città accende il suo nodo. È un'eco visiva: le città sono già nominate nella lista.
+- **Mobile.** Carta in alto con la legenda, poi le città in pila nello stesso ordine, da nord a sud.
+
 ### CD-4 · Dal locale al nazionale — `BenefitsSection` variante `sticky`
 - **Contenuti.**
   - Eyebrow, H2 e testo con link a `/siii/`.
@@ -400,44 +423,70 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
   - `<ol>`.
   - Nessun elemento interattivo nella colonna sticky, così non può coprire il focus.
 
+### CD-6 · Ponte «Gli altri mondi ITnode» — `Bridge`
+Riga editoriale con i link interni a `/puglia-digitale/` e `/siii/` (copy deck §6).
+- Viene dopo «Dal locale al nazionale» e prima della chiusura, come la riga ponte di SIII (SI-7): il form resta l'ultima sezione della pagina.
+- Sostituisce la proposta «Continua a esplorare → 01 SIII».
+
 ### CD-5 · Chiusura e form — `CTASection` variante `form` + `ContactForm` (preselezione `citta-digitali`)
 - **Struttura.** Come SI-8: H2 su due livelli tipografici (copy deck §5), poi il blocco `#richiesta` con il titolo H3 «Entra in Città Digitali», senza link, l'introduzione e il form.
 - **Perché così.** Come pulsante, «Entra in Città Digitali» si potrebbe leggere come «visita il portale». Come titolo del form, seguito dall'introduzione («ti spieghiamo come entrare in Città Digitali»), dice chiaramente che si tratta di aderire.
-
-### CD-6 · Continua a esplorare → 01 SIII `[PROPOSTA]`
 
 ## 5. Contatti `/contatti/`
 
 ```text
 H1  Parliamo del prossimo spazio digitale.
-H2  Recapiti            (#recapiti, può essere visivamente nascosto)
-H2  Scrivici            (#richiesta)
-H2  I portali           (#portali)
-H2  Dati societari      (#dati-societari)
+H2  Recapiti                               (#recapiti, visivamente nascosto)
+H2  Scrivici                               (#richiesta)
+H2  Giacomo Lenoci, Fondatore di ITnode    (Persona)
+H2  I portali                              (#portali)
+H2  Dati societari                         (#dati-societari)
 ```
-Il form viene prima dei portali, come nel copy deck v1.1: i portali sono un'uscita secondaria e su mobile non devono spingere il form più in basso.
+Il form viene prima dei portali, come nel copy deck: i portali sono un'uscita secondaria e su mobile non devono spingere il form più in basso. Ordine del sito: CT-1, CT-2, CT-3, CT-6, CT-4, CT-5.
 
-### CT-1 · Hero — `Hero` variante `compact`
-- **Contenuti.** Breadcrumb, eyebrow, H1 verbatim, lead.
+### CT-1 · Hero compatta (in `contatti.astro`)
+- **Contenuti.**
+  - Breadcrumb «Home / Contatti», nella barra sopra la hero.
+  - H1 verbatim.
+  - Lead.
+  - **Nessun occhiello:** il suo posto lo prende il breadcrumb (direzione visiva §7.8; copy deck di Contatti, V3).
 - **Niente CTA «Scrivici ↓».** Su desktop il form è già nel primo viewport. Su mobile lo stesso salto lo fa «Parliamone» nella barra (→ `#richiesta`).
-- **Obiettivo di layout.** A 1280 × 800 recapiti e inizio del form stanno nel primo viewport; a 390 × 844 almeno i canali diretti.
+- **Primo viewport** (misure del 2026-10-05 sullo staging).
+  - A 390 × 844 ci stanno i tre canali diretti: la riga dell'email finisce a 748 px.
+  - A 1280 × 800 ci stanno i tre canali, il titolo e l'introduzione del form.
+  - Il primo campo comincia a 978 px finché il form mostra l'avviso «Il modulo online non è ancora attivo».
 
-### CT-2 · Recapiti e CT-3 · Form — due colonne su desktop
-- **Ordine del DOM, uguale all'ordine mobile.** Come nella direzione visiva:
-  1. Canali diretti: Telefono, Mobile, Email (`<address>` con `<dl>`, copy deck §2).
-  2. Form.
-  3. Sede operativa, con il link esterno alla mappa (etichetta nel copy deck; un semplice link, senza mappa incorporata).
-  4. «Giacomo Lenoci su LinkedIn ↗».
-  5. Portali.
-  6. Dati societari.
+### CT-2 · Recapiti e CT-3 · Form — affiancati da 1024 px
+- **Ordine del DOM, uguale all'ordine di lettura a tutte le larghezze** (direzione visiva §7.7; copy deck §2 e §3).
+  1. **Recapiti**, in un `<address>` con una `<dl>` e l'H2 «Recapiti» visivamente nascosto:
+     - Telefono, Mobile, Email;
+     - Sede operativa, con la riga delle coordinate del comune (`aria-hidden`) e il link «Apri in Google Maps ↗»;
+     - LinkedIn, con la nota «Profilo personale del fondatore».
+  2. **Form** (`#richiesta`), con l'H2 «Scrivici».
 
-  Prima vengono i canali diretti (strategia di conversione §4): da mobile, chiamare e scrivere sono i compiti più probabili `[IPOTESI]`. Numeri di telefono con spazi non separabili.
-- **Form.** `ContactForm` senza preselezione. `?interesse=` è supportato. Titolo H2, introduzione e alternativa «Preferisci parlarne a voce?» (copy deck §4).
-- **Desktop.** Canali, sede e LinkedIn nella colonna sinistra (sede e LinkedIn sotto i canali), form a destra. L'ordine del focus diventa canali → form → sede: non inverte la lettura, quindi è accettabile.
-- **Mobile.** Canali come righe da toccare, alte almeno 48 px → form → sede e LinkedIn.
+  Prima vengono i canali diretti (strategia di conversione §4); sede e LinkedIn chiudono il blocco dei recapiti, prima del form. Numeri di telefono con spazi non separabili.
+- **Form.** `ContactForm` senza preselezione; `?interesse=` è supportato. Titolo H2, introduzione e alternativa «Preferisci parlarne a voce?» (copy deck §3).
+- **Desktop, da 1024 px.** Recapiti a sinistra e form a destra, affiancati dall'alto. L'ordine del focus, recapiti → form, è quello della lettura.
+- **Mobile.** Recapiti come righe da toccare, alte almeno 48 px, poi il form.
+- **Composizione confermata** da ux-designer il 2026-10-05: è la decisione che chiedeva il copy deck di Contatti.
+
+### CT-6 · Persona — ritratto, nome e ruolo, link al racconto in Home
+- **Contenuti** (copy deck §4; direzione visiva §7.7):
+  - ritratto con il suo alt;
+  - H2 «Giacomo Lenoci, Fondatore di ITnode»;
+  - link «Scopri il suo percorso →» → `/#fondatore`.
+- **Accessibilità.** Il testo nascosto « nella home» sta subito dopo il testo visibile, e il nome accessibile diventa «Scopri il suo percorso nella home» (2.4.4, 2.5.3). Confermato da ux-designer il 2026-10-05. La forma del testo visibile la decide il creative-director.
+- **Posizione.** Dopo il form e prima dei portali: su mobile non toglie spazio ai canali né al form.
+- Il numero CT-6 tiene stabili gli ID che altri documenti citano.
 
 ### CT-4 · I portali — due righe editoriali
-Per ogni portale: nome (H3), frase, link esterno con il dominio visibile (`↗`) e link interno alla pagina del progetto (etichette nel copy deck §3).
+Per ogni portale, Città Digitali e Puglia Digitale:
+- **nome come link esterno dentro l'H3.** Il nome accessibile è, per esempio, «Città Digitali, portale cittàdigitali.it»; la nuova scheda è annunciata con `aria-describedby` (A7). Il link di Città Digitali è in punycode;
+- frase;
+- dominio in mono, `aria-hidden`;
+- link interno alla pagina del progetto: «Esplora Città Digitali», «Scopri Puglia Digitale».
+
+Le etichette sono nel copy deck §5.
 
 ### CT-5 · Dati societari — blocco testuale piccolo in `<dl>`
 Gli stessi dati del footer, da completare prima del go-live (soglia 5).
