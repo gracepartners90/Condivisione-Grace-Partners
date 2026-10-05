@@ -3,9 +3,9 @@ titolo: Mappa keyword→URL, meta, struttura delle pagine e blocchi di risposta 
 owner: seo-content
 contributi: [seo-technical, ux-designer, copywriter-brand, copywriter-content, brand-strategist]
 stato: bozza
-versione: 0.2
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/ricerca-keyword.md]
+versione: 0.3
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/seo/ricerca-keyword.md, conferma dell'utente del 2026-10-05 sul dominio del portale Città Digitali (docs/strategia/citta-digitali-elenco.md §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md]
 ---
 
 # Mappa keyword→URL, meta e struttura delle pagine
@@ -50,7 +50,7 @@ Segue il glossario del brief (§4) e le proposte DR1–DR2, che l'utente deve an
 | Tecnologia | «Tour Virtuale Interattivo Immersivo», con le maiuscole, quando indica la tecnologia di ITnode (LG §07) | — | Rapporto con il SIII: I3, D4 |
 | Termini di ricerca | tour virtuale, tour virtuale interattivo, virtual tour, tour virtuale 3D, tour 360°: minuscolo, «360°» senza spazio | Usarli come nomi di prodotto | Sono le varianti viste in SERP. «3D» solo se la tecnologia lo è davvero (D4). |
 | Progetti | **Puglia Digitale**, **Città Digitali**: accento, due maiuscole, plurale; negli URL `/citta-digitali` | «Città Digitale», «Puglia digitale» | Omonimie: brief §4. Per ora non si scrive che ITnode ha «creato» Puglia Digitale (A1, DR4). |
-| Domini | lapugliadigitale.it, cittadigitali.it (minuscolo) | — | Il dominio canonico di Città Digitali è da verificare (glossario). |
+| Domini | lapugliadigitale.it, **cittàdigitali.it** (minuscolo, con l'accento; negli `href` `https://xn--cittdigitali-19a.it`) | cittadigitali.it senza accento: è «CITTA' DIGITALI», un progetto di altri | Dominio di Città Digitali confermato dall'utente il 2026-10-05 (brief: glossario, omonimie e S7). Nel testo visibile si scrive sempre con l'accento. |
 | Altri termini | destination marketing, digitalizzazione territoriale: minuscolo nel testo. hotspot: invariabile. «partite IVA». «abitare il Web» | — | DR2 |
 
 ## 2. Quadro sintetico
@@ -237,9 +237,12 @@ H2  Porta la tua impresa dentro Puglia Digitale.                             §1
 
 - **Intento**: il brand del progetto e l'adesione delle attività (B2B). Il portale per i visitatori è un sito esterno.
 - **Tema principale**: Città Digitali, rete e portale nazionale che porta online le attività delle città italiane.
-- **Query e concetti**: Città Digitali (brand), portale delle città digitali, tour virtuali delle attività commerciali, visibilità digitale delle attività locali.
+- **Query e concetti**: Città Digitali (brand), da sola e insieme a ITnode; portale delle città digitali; tour virtuali delle attività commerciali; visibilità digitale delle attività locali.
+  - Non presidia il significato generico di «città digitale» (smart city).
+  - Non contende al portale le query locali a cui rispondono le sue pagine città (ricerca keyword §2.1).
 - **Entità**:
-  - Città Digitali e cittadigitali.it;
+  - Città Digitali e cittàdigitali.it;
+  - da distinguere da «CITTA' DIGITALI» (cittadigitali.it, di altri), «Le Città Digitali» (iniziativa precedente, D5), «Città Digitale» (cittadigitale.it) e dal significato generico di «città digitale»;
   - ITnode, con un ruolo da chiarire (A1, D5);
   - il tessuto imprenditoriale e commerciale italiano;
   - tour virtuali e Siti Interattivi Immersivi;
@@ -251,7 +254,7 @@ H2  Porta la tua impresa dentro Puglia Digitale.                             §1
 H1  Città Digitali + Le attività del territorio, online senza perdere radici.     §17
     p   Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per il tessuto
         imprenditoriale e commerciale italiano.     («Siti Interattivi Immersivi» → /siii; DR2)
-    CTA «Visita il portale» → https://www.cittadigitali.it (nuova scheda)
+    CTA «Visita il portale» → cittàdigitali.it, https://xn--cittdigitali-19a.it (nuova scheda)
 H2  L’Italia in un unico portale.                                            §18 (N12: sempre con le città)
     p   Blocco E
     H3  Varese          p proprio · link → varesedigitale.it
@@ -274,7 +277,7 @@ H2  La tua azienda merita più di una presenza online. Merita di essere esplorat
 | Anchor | Destinazione | Posizione |
 |---|---|---|
 | Siti Interattivi Immersivi | `/siii` | sottotitolo della hero |
-| Visita il portale (Città Digitali, nuova scheda) | cittadigitali.it (dominio da verificare) | hero |
+| Visita il portale (Città Digitali, nuova scheda) | cittàdigitali.it (`https://xn--cittdigitali-19a.it`; la forma finale dell'URL la verifica seo-technical) | hero |
 | Varese · Altamura · Caltanissetta (+ dominio, nuova scheda) | portali delle città | «L’Italia in un unico portale» |
 | Puglia Digitale | `/puglia-digitale` | chiusura «Gli altri mondi ITnode» |
 | Entra in Città Digitali | `#entra` (form) oppure portale: sceglie cro-specialist | CTA finale |
@@ -282,7 +285,21 @@ H2  La tua azienda merita più di una presenza online. Merita di essere esplorat
 **Note**
 - **Nessuna cifra non documentata.** Niente «5–10 volte», «4 volte», «250.000 visite mensili» (N6–N8). Anche «ad alto traffico» richiede dati (N10).
 - **Attribuzione (A1, D5).** Non si scrive che ITnode ha «creato» Città Digitali. Il Blocco E usa la formula «con cui ITnode porta online».
-- **Franchising.** Se l'utente decide di rivolgersi ai potenziali affiliati (DR5), la query «Città Digitali franchising» richiede una sezione o una pagina propria: oggi non è prevista.
+- **Omonimie** (ricerca di marca del 2026-10-05, ricerca keyword §2.1). Il nome è conteso. Regole:
+  - la definizione (Blocco E) lega sempre Città Digitali a ITnode e al dominio con l'accento;
+  - la pagina non cita né linka cittadigitali.it, «CITTA' DIGITALI», lecittadigitali.it o Leadstone;
+  - «Le Città Digitali» può comparire solo nella storia del fondatore, e solo se D5 conferma il legame.
+
+  Dettagli nella review del 2026-10-05.
+- **Meta description: variante proposta** (review del 2026-10-05, O3). «Città Digitali è il portale con cui ITnode porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali e strumenti digitali.» (154 caratteri). Se viene accettata, sostituisce quella del §2 e va in `src/data/pages.ts`. Title e H1 restano come sono.
+- **Elenco delle città** (`docs/strategia/citta-digitali-elenco.md`). Quando il testo della pagina «Tutte le città» è confermato:
+  - un solo elenco, in questa pagina;
+  - i nomi ufficiali dei comuni, con la sigla della provincia;
+  - il link alla pagina città del portale, quando esiste;
+  - la data di aggiornamento.
+
+  Nessuna pagina locale su itnode.it. Regole complete nella review del 2026-10-05, §4.
+- **Franchising** (aggiornato il 2026-10-05). Sulla query «Città Digitali franchising» si posizionano già la pagina Franchising del portale e le schede delle directory. Se l'utente decide di rivolgersi ai potenziali affiliati (DR5), su itnode.it basta un link a quella pagina, senza riprendere i claim X1. Una pagina propria entrerebbe in concorrenza con il portale.
 - **Video** (S8). Per il markup VideoObject servono titolo, descrizione, data di pubblicazione, durata e poster `[DA FORNIRE]`. Il file va servito dal dominio definitivo (decidono web-performance-specialist e seo-technical).
 - **Materiali mancanti**: immagini dei territori `[DA FORNIRE]`.
 
@@ -302,7 +319,7 @@ H2  Recapiti                                               [proposta]
              LinkedIn di Giacomo Lenoci (esterno, S6)
 H2  Scrivici                                               [proposta]        §23 form, CTA «Invia richiesta»
 H2  I portali                                              [proposta]        §22
-    Città Digitali → cittadigitali.it · Puglia Digitale → lapugliadigitale.it
+    Città Digitali → cittàdigitali.it · Puglia Digitale → lapugliadigitale.it
 ```
 
 **Link interni in uscita**: `/privacy-policy`, nell'etichetta del consenso del form. Portali e LinkedIn sono esterni.
@@ -355,8 +372,10 @@ Sono definizioni brevi e autosufficienti, scritte solo con i fatti delle LG e co
 
 **E. Cos’è Città Digitali**
 - **Dove**: `/citta-digitali`, sezione «L’Italia in un unico portale.», primo paragrafo.
-- **Testo**: «Città Digitali è la rete e il portale nazionale con cui ITnode porta online le attività del territorio, senza che perdano le proprie radici. Offre al tessuto imprenditoriale e commerciale italiano tour virtuali, Siti Interattivi Immersivi e strumenti digitali, e riunisce in un unico portale, cittadigitali.it, città come Varese, Altamura e Caltanissetta.»
-- **Fonti**: LG §07, §17, §18, §22; glossario (Città Digitali); N12. Il ruolo di ITnode (A1, D5) e il dominio canonico vanno confermati.
+- **Testo**: «Città Digitali è la rete e il portale nazionale con cui ITnode porta online le attività del territorio, senza che perdano le proprie radici. Offre al tessuto imprenditoriale e commerciale italiano tour virtuali, Siti Interattivi Immersivi e strumenti digitali, e riunisce in un unico portale, cittàdigitali.it, città come Varese, Altamura e Caltanissetta.»
+- **Fonti**: LG §07, §17, §18, §22; glossario (Città Digitali); N12.
+  - Il dominio è confermato dall'utente (2026-10-05). Il ruolo di ITnode (A1, D5) va ancora confermato.
+  - È anche la definizione da riprendere identica sul portale e sui profili del progetto (review del 2026-10-05, O2).
 
 **F. SIII, Puglia Digitale e Città Digitali: come si collegano**
 - **Dove**: home, sezione «I tre mondi ITnode», paragrafo prima dei tre capitoli.
@@ -385,7 +404,7 @@ Sono definizioni brevi e autosufficienti, scritte solo con i fatti delle LG e co
 
 **Per il cliente, nuove rispetto al brief**
 1. Esiste una scheda Google Business Profile? Con quale nome, categoria e indirizzo?
-2. Quali profili ufficiali vanno collegati all'entità ITnode: Instagram @itnodedigital, una pagina LinkedIn aziendale (P3)?
+2. Quali profili ufficiali vanno collegati all'entità ITnode: Instagram @itnodedigital, una pagina LinkedIn aziendale (P3)? E all'entità Città Digitali: i profili Facebook @cittadigitali e Instagram @citta_digitali sono ufficiali? (review del 2026-10-05, O6)
 
 **Già aperte nel brief, da cui dipende questo documento**
 - D1: il ruolo di ITnode in Puglia Digitale (blocchi A e D);
@@ -402,7 +421,8 @@ Sono definizioni brevi e autosufficienti, scritte solo con i fatti delle LG e co
   - `sameAs` del LinkedIn del fondatore sul Person;
   - varianti del nome in `alternateName` (DR1);
   - `image` del Person solo con una foto reale (DR3);
-  - `name` e `description` di WebPage e VideoObject presi da questo documento, che sostituisce i title provvisori delle specifiche (§2.2).
+  - `name` e `description` di WebPage e VideoObject presi da questo documento, che sostituisce i title provvisori delle specifiche (§2.2);
+  - Brand Città Digitali: `url` nella forma finale del portale, `sameAs` solo con i profili confermati, nessun `alternateName`, `description` dal Blocco E (review del 2026-10-05, O6).
 - **ux-designer**: nomi accessibili delle CTA ripetute; blocco «Gli altri mondi ITnode» sulle pagine di progetto; composizione dell'H1 su due livelli.
 - **cro-specialist**: destinazione di «Entra in Città Digitali» (form o portale) e scelta tra «Parliamone» e «Contattaci».
 
