@@ -3,7 +3,7 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-10-05
 fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 (docs/strategia/citta-digitali-elenco.md)]
 ---
@@ -109,7 +109,7 @@ I testi tra «» sono delle LG. Le note rimandano al registro (sezione 5).
 | Livello | Messaggio | Note |
 |---|---|---|
 | H1 | «Puglia Digitale» · «Una piattaforma interattiva immersiva per la valorizzazione territoriale.» | Carattere più territoriale ed emozionale rispetto a SIII (§13) |
-| Concept | «Dalla costa all’entroterra. Un territorio da esplorare.» Progetto di destination marketing che digitalizza e valorizza città, borghi e imprese con esperienze immersive → «Visita il portale →» | Portale: lapugliadigitale.it `[DA VERIFICARE]` (D1, S7) |
+| Concept | «Dalla costa all’entroterra. Un territorio da esplorare.» Progetto di destination marketing che digitalizza e valorizza città, borghi e imprese con esperienze immersive → «Visita il portale →» | Portale: lapugliadigitale.it, confermato dall'utente il 2026-10-05 (S7). Ruolo di ITnode `[DA VERIFICARE]` (D1) |
 | Numeri | «30+ Città» · «~200.000 Partite IVA nei territori coinvolti» · «60% del tessuto produttivo pugliese» | Dati del cliente, con nota sulla fonte (N1–N3) |
 | Luoghi | «I luoghi»: Acquaviva delle Fonti, Gravina in Puglia, Monopoli → «Esplora →» | Foto `[DA FORNIRE]` |
 | Perché aderire | 01 «Aperti al mondo, 24/7» · 02 «Vendere attraverso l’esperienza» · 03 «La forza della rete» · 04 «Continuare la relazione oltre il viaggio» | Testi `[DA FORNIRE]` |
@@ -153,7 +153,7 @@ Dedotte dalle LG. Dove si parla di dubbi e di processo decisionale si tratta di 
 | **Tour Virtuale Interattivo Immersivo** | La tecnologia con cui ITnode porta online luoghi, imprese e attività: un tour navigabile arricchito da elementi interattivi. | Rapporto con il SIII `[IPOTESI: il tour è l'ambiente navigabile; il SIII aggiunge contenuti e funzioni commerciali]` (D4). Varianti per la SEO, da usare in modo descrittivo e non come nomi di prodotto: «tour virtuale interattivo», «tour virtuale 3D» (§26). «3D» solo se la tecnologia lo è davvero (D4). | LG §07, §26 |
 | **tour 360°** | Categoria generica: immagini panoramiche a 360° da navigare, con interazione limitata. È il termine di confronto per spiegare il SIII, non un prodotto ITnode. | Minuscolo nel testo; «360°» senza spazio. | LG §10 |
 | **hotspot** | Punto interattivo dentro l'ambiente che apre un contenuto o un'azione (scheda prodotto, video, richiesta). | Minuscolo e invariabile. | LG §10 |
-| **Puglia Digitale** | Piattaforma interattiva immersiva di destination marketing per valorizzare il territorio pugliese: digitalizza città, borghi e imprese con esperienze immersive. Il portale indicato è lapugliadigitale.it. | Per le omonimie vedi la tabella sotto. Il marchio porta il simbolo ® sulla foto dell'evento: registrazione `[DA VERIFICARE]` (A5). | LG §07, §13, §22 |
+| **Puglia Digitale** | Piattaforma interattiva immersiva di destination marketing per valorizzare il territorio pugliese: digitalizza città, borghi e imprese con esperienze immersive. Portale: lapugliadigitale.it (LG §22), confermato dall'utente il 2026-10-05. | Per le omonimie vedi la tabella sotto. Il marchio porta il simbolo ® sulla foto dell'evento: registrazione `[DA VERIFICARE]` (A5). | LG §07, §13, §22; utente, 2026-10-05 |
 | **Città Digitali** | Rete e portale nazionale che porta online le attività imprenditoriali e commerciali delle città italiane con tour virtuali, SIII e strumenti digitali («L’Italia in un unico portale»). | Sempre «Città Digitali»: accento, due maiuscole, plurale. Portale: **cittàdigitali.it**, con l'accento; nei link si scrive in punycode, `xn--cittdigitali-19a.it`. Le LG (§22) scrivono «www.cittadigitali.it», che non è del cliente (conferma dell'utente del 2026-10-05; vedi omonimie e S7). Simbolo ®: `[DA VERIFICARE]` (A5). | LG §17–18, §22; ricerche web; utente, 2026-10-05 |
 | **portale città** (per esempio «Acquaviva Digitale») | Il portale di una singola città della rete: luoghi, attività, esperienze. | Grafia dei nomi dei portali `[DA VERIFICARE]`. I domini alternano .it e .com: si usano esattamente come nelle LG. | LG §12, §15, §18 |
 | **digitalizzazione territoriale** | Portare online, in forma esplorabile, i luoghi, le imprese e le attività di un territorio. | Minuscolo. | LG premessa, §07 |
@@ -166,7 +166,7 @@ Dedotte dalle LG. Dove si parla di dubbi e di processo decisionale si tratta di 
 
 | Nome | Che cos'è | Regola |
 |---|---|---|
-| puglia-digitale.it · Associazione culturale Campo&Controcampo | Portale di tour virtuali delle città pugliesi, con contributo e patrocinio del Consiglio regionale | Non citarlo né linkarlo finché D1 non è chiarita |
+| puglia-digitale.it · Associazione culturale Campo&Controcampo | Portale di tour virtuali delle città pugliesi, con contributo e patrocinio del Consiglio regionale | Non citarlo né linkarlo. Il portale di Puglia Digitale del cliente è lapugliadigitale.it (conferma dell'utente del 2026-10-05). Resta aperto il rapporto tra i due progetti (D1, A1) |
 | «Puglia Digitale», «PugliaDigitale2030» (Regione Puglia) | Programmi regionali per la trasformazione digitale | Non suggerire mai un legame istituzionale (anche per la SEO: stessa query) |
 | «Città Digitale», cittadigitale.it | Un altro operatore, che fa siti per i Comuni | Scrivere sempre «Città Digitali», al plurale |
 | «CITTA' DIGITALI», cittadigitali.it (senza accento) | Progetto di altri, indicizzato con Biella, Lecce, Salerno, Trento e Treviso. Il 2026-10-05 il dominio non si risolveva | Non è del cliente (conferma dell'utente del 2026-10-05), anche se le LG §22 lo indicano. Non citarlo né linkarlo: il portale è cittàdigitali.it |
@@ -234,7 +234,7 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 | S4 | REA, capitale sociale versato, PEC | PEC «itnode@pec.it» secondo ufficiocamerale.it e la pagina «Dati aziendali» di cittàdigitali.it; REA «BA-660035» dalla stessa pagina (WebSearch, 2026-10-05) | REA e PEC: da verificare (visura). Capitale sociale: `[DA FORNIRE]` | Obbligatori. La pagina del cliente riporta anche la P.IVA 08937270729, che coincide con S2 |
 | S5 | Tel. +39 080 2466520 · Mobile +39 335 1229785 · info@itnode.it | LG §22 | Utilizzabile | Altri indirizzi trovati online (g.lenoci@, contatti@itnode.it) non si usano senza indicazione del cliente. |
 | S6 | LinkedIn: https://www.linkedin.com/in/giacomo-lenoci/ | LG §22 | Utilizzabile | È un profilo personale: va etichettato come tale. Esiste una pagina aziendale? `[DA FORNIRE]` |
-| S7 | Portali e URL (cittàdigitali.it, lapugliadigitale.it, portali città, esperienze) | LG §12, §15, §18, §22; conferma dell'utente del 2026-10-05 | Città Digitali: confermato. Altri: utilizzabili, link da verificare | **Città Digitali:** il portale del cliente è **cittàdigitali.it**, con l'accento, che nei link si scrive `https://xn--cittdigitali-19a.it`. «www.cittadigitali.it» delle LG §22 non è del cliente (conferma dell'utente del 2026-10-05): il 2026-10-05 non si risolveva ed era indicizzato come un progetto omonimo. Il sito è corretto (commit eb691ee); seo-technical verifica la parte tecnica. Elenco delle città: `docs/strategia/citta-digitali-elenco.md`. **Gli altri portali e le esperienze** non sono raggiungibili dal nostro ambiente: i link si controllano in QA. |
+| S7 | Portali e URL (cittàdigitali.it, lapugliadigitale.it, portali città, esperienze) | LG §12, §15, §18, §22; conferma dell'utente del 2026-10-05 | Città Digitali e Puglia Digitale: confermati. Portali delle città ed esperienze: utilizzabili, link da verificare | **Città Digitali:** il portale del cliente è **cittàdigitali.it**, con l'accento, che nei link si scrive `https://xn--cittdigitali-19a.it`. «www.cittadigitali.it» delle LG §22 non è del cliente (conferma dell'utente del 2026-10-05): il 2026-10-05 non si risolveva ed era indicizzato come un progetto omonimo. Il sito è corretto (commit eb691ee); seo-technical verifica la parte tecnica. Elenco delle città: `docs/strategia/citta-digitali-elenco.md`. **Puglia Digitale:** il portale è **lapugliadigitale.it**, confermato dall'utente il 2026-10-05; il sito usa già `https://www.lapugliadigitale.it` (LG §22). puglia-digitale.it è il portale dell'associazione Campo&Controcampo (vedi omonimie). Resta aperto il ruolo di ITnode (D1, A1). **Portali delle singole città** (varesedigitale.it e gli altri, LG §12, §15, §18) **ed esperienze:** la domanda all'utente è ancora senza risposta. Non sono raggiungibili dal nostro ambiente: i link si controllano in QA. |
 | S8 | Video: https://itnode-website-production.up.railway.app/public/video/citta-digitali.mp4?v=2 | LG §19 | Utilizzabile; hosting da verificare | Sta su un dominio di staging di terzi: chiedere il file per ospitarlo insieme al sito. |
 
 **Claim trovati online, assenti dalle LG: da non riprendere**
@@ -326,7 +326,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 
 Per il cliente, in ordine di priorità.
 
-- **D1. Puglia Digitale.** Che ruolo ha ITnode rispetto all'associazione Campo&Controcampo e al portale puglia-digitale.it: ideatore e titolare del marchio, partner tecnologico o altro? Il portale da linkare è lapugliadigitale.it?
+- **D1. Puglia Digitale.** Che ruolo ha ITnode rispetto all'associazione Campo&Controcampo e al portale puglia-digitale.it: ideatore e titolare del marchio, partner tecnologico o altro? (Il portale, lapugliadigitale.it, è confermato dall'utente il 2026-10-05: resta aperto solo il ruolo.)
 - **D2. Patrocinio.** A chi è stato concesso e per quale progetto? Potete inviarci l'atto e l'eventuale autorizzazione all'uso del logo?
 - **D3. SIII.** Qual è lo scioglimento di ogni lettera (S = Sito, I = Interattivo, I = Immersivo, I = ?)? Confermate l'ordine «Interattivo Immersivo»?
 - **D4. SIII e tour.** Il SIII è un Tour Virtuale Interattivo Immersivo con funzioni commerciali oppure un prodotto diverso? Si basa su foto a 360° o su modelli 3D? Vive sempre dentro un portale città o anche sul dominio dell'impresa? In concreto, cosa lo distingue da un tour 360°?
