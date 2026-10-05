@@ -73,7 +73,10 @@ const cities = italyPlaces.map((p) => ({
         outboundType="portale"
         destinationId="citta-digitali"
       />
-      <Cta href="#richiesta" label="Aderisci a Città Digitali" variant="link" ctaId="cd-hero-richiesta" location="hero" interest="citta-digitali" />
+      {/* The portal's address under its button: the accented spelling, where people look for the
+          portal (seo-content O4; visual direction §7.6). Plain text, not a second link. */}
+      <p class="cd-hero__domain t-label t-as-is">{portal.display}</p>
+      <Cta href="#richiesta" label="Aderisci a Città Digitali" variant="link" ctaId="cd-hero-richiesta" location="hero" interest="citta-digitali" class="cd-hero__join" />
     </div>
   </Hero>
 
@@ -175,11 +178,41 @@ const cities = italyPlaces.map((p) => ({
     max-width: var(--measure-lead);
   }
 
+  /* Hero CTAs (visual direction §7.6, O4): the portal button with its address under it, then
+     «Aderisci». DOM order is the reading order: button, address, second CTA. Side by side from 40em,
+     where both links fit on one line even with the text spacing of WCAG 1.4.12. */
   .cd-hero__ctas {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    justify-items: start;
     align-items: center;
-    gap: var(--space-s) var(--space-l);
+    column-gap: var(--space-l);
+  }
+
+  .cd-hero__domain {
+    margin-top: var(--space-2xs);
+    color: var(--fg-2);
+  }
+
+  .cd-hero__ctas :global(.cd-hero__join) {
+    margin-top: var(--space-s);
+  }
+
+  @media (min-width: 40em) {
+    .cd-hero__ctas {
+      grid-template-columns: auto auto;
+      justify-content: start;
+    }
+
+    .cd-hero__domain {
+      grid-row: 2;
+      grid-column: 1;
+    }
+
+    .cd-hero__ctas :global(.cd-hero__join) {
+      grid-row: 1;
+      grid-column: 2;
+      margin-top: 0;
+    }
   }
 
   /* The hero ends on the horizon; below it, the video opens. */

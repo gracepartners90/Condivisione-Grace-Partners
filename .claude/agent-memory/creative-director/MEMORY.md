@@ -16,6 +16,7 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Server con Brotli per misure:** `PORT=… node scripts/serve.mjs` serve `dist/` come in anteprima (in locale senza password).
 - **Misura dello scambio di font:** evento `loadingdone` di `document.fonts` più rete emulata via CDP (`Network.emulateNetworkConditions`) e HTML intercettato con `page.route` per togliere un `<link>`.
 - **Test visivi:** schizzi HTML in scratchpad più `npx playwright screenshot` a 1440 e 390 px, osservati con Read. Mostrano problemi che a memoria non si vedono: overflow dei numeri giganti su mobile, ambiguità I/l.
+- **Misure con il movimento ridotto** (2026-10-05). Con `reducedMotion: 'reduce'` il sito imposta `transition-duration: .01ms !important` su tutto. Ogni proprietà cambiata da uno script fa quindi una transizione, e una lettura sincrona restituisce il valore di prima: un `gap` iniettato risultava ancora di 16 px. Prima di misurare, aspettare un frame o qualche decina di millisecondi.
 - **Misure durante lo scorrimento** (2026-09-29).
   - Il sito ha lo scroll fluido. Negli script servono `document.documentElement.style.scrollBehavior = 'auto'` e `scrollTo({ top, behavior: 'instant' })`, più due `requestAnimationFrame` prima di leggere; altrimenti `scrollY` non arriva al valore.
   - La striscia dell'orizzonte copre da −90° a 450°, quindi alcune etichette esistono due volte (Varese, Monopoli): si misura la copia più vicina alla finestra.
