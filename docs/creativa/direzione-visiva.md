@@ -3,9 +3,9 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.6
+versione: 0.7
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -50,6 +50,10 @@ Tutto il resto è tipografia e aria.
 - §1.3: il limite di 5 nodi riguarda gli hotspot su foto e anteprime, non i luoghi sulle carte.
 - §7.3: il capitolo 03 della Home passa alla nuova carta, con la legenda e senza coordinate sotto i nomi. §7.6: la sezione «L'Italia in un unico portale» va ripensata per l'elenco completo, con i criteri del §1.4.
 - Ipotesi da validare, Domande aperte e Decisioni richieste aggiornate.
+
+**Modifiche della versione 0.7 (carta di `/citta-digitali/` con tutte le città, 2026-10-05).** Decisioni sulla proposta di ui-designer (`docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`, P1–P5).
+- §1.4, «Il punto-città»: la carta di `/citta-digitali/` passa al punto-città, con i tre nodi delle schede e nessun nome sulla carta. Regola nuova per le carte accanto a schede; legenda e descrizione anche lì.
+- §7.6, sezione 3: punto 2 deciso. Righe 1 e 5 allineate al sito: nella hero «Visita il portale ↗» con il link secondario «Aderisci a Città Digitali ↓»; nella chiusura «Entra in Città Digitali» è il titolo del form, non una CTA (verifica V3 di copywriter-content).
 
 ---
 
@@ -195,8 +199,9 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - È una condizione di soglia (WCAG 1.1.1 e 1.3.1): con 45 punti, una carta `aria-hidden` darebbe solo a chi vede dove stanno le città.
   - L'`<svg>` della costa è `aria-hidden`, e i nomi disegnati non si leggono una seconda volta.
   - Legenda ed elenco in testo completano l'informazione (sotto).
-  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Puglia e quella di `/citta-digitali/`.
-  - Visivamente non cambia nulla.
+  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Puglia.
+  - Anche la carta di `/citta-digitali/` è un'immagine con una descrizione, finché l'elenco completo non le sta accanto. La descrizione è la stessa forma della Home, con i tre nomi delle schede: «Tra queste: Varese, Altamura e Caltanissetta». Quando arriva l'elenco, carta e legenda tornano `aria-hidden`, perché la legenda spiega solo ciò che si vede. Questa regola la conferma ux-designer.
+  - In nessuno dei due casi cambia qualcosa a schermo.
 - **Posizioni vere.**
   - Mai spostate per fare spazio, mai aggregate in bolle o in numeri.
   - Dove i punti si sovrappongono si impilano come monete: ogni anello ritaglia il punto precedente, e il gruppo si legge come «tanti luoghi qui», non come una macchia. Si dipingono da nord a sud, poi i nodi con nome.
@@ -204,7 +209,7 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
     - San Cataldo resta sotto il nodo di Caltanissetta;
     - Gravina resta sotto quello di Altamura fino a 350 px di carta;
     - Ercolano e Torre del Greco si leggono come un punto con uno spicchio.
-- **Dove.** Solo sulle carte. Oggi la carta d'Italia del capitolo 03 della Home, con le città di Città Digitali (§7.3); prima del go-live anche quella di `/citta-digitali/` (§7.6).
+- **Dove.** Solo sulle carte. Oggi le due carte d'Italia con le città di Città Digitali: il capitolo 03 della Home (§7.3) e la sezione «L'Italia in un unico portale» di `/citta-digitali/` (§7.6).
 - **Nomi.** Le regole valgono per ogni carta con il punto-città. Le applica il generatore delle carte al build, senza JavaScript in pagina.
   1. **Obbligatori:** le città nominate dal testo accanto alla carta, oggi Varese, Altamura e Caltanissetta (LG §18). Se uno non entra sulle carte larghe il build si ferma. Sulle carte strette si nasconde con un avviso, e prima di pubblicare decide il creative-director.
   2. **Poi un nome per regione o gruppo**, nell'ordine che racconta l'estensione del progetto: prima le regioni fuori dalla Puglia, poi i gruppi pugliesi, poi la seconda area siciliana.
@@ -218,7 +223,12 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
      - È su una riga e mai sillabato, in `label` mono `--fg`, con il fondo nel colore della superficie.
   7. **Due classi di larghezza della carta**, annidate: strette fino a 25rem, larghe oltre. Quando la carta cresce un nome può solo comparire, mai sparire.
   8. **Niente coordinate sotto i nomi e niente numeri** su questa carta. Le coordinate restano negli altri usi del dispositivo (sopra, «Dove»).
-- **Risultato al 2026-10-05:** 45 città, cioè 36 punti e 9 nomi.
+  9. **Carte accanto a schede** (`/citta-digitali/`). Se le città in evidenza sono nominate da schede allineate alla loro latitudine, la carta non porta nomi.
+     - Le città delle schede sono nodi Ø 10, tutte le altre punti. Il nodo Ø 10 segna sempre una città nominata: dal nome sulla carta o dalla sua scheda.
+     - I nodi si accendono dalla scheda (×1,5 in 250 ms), come prima: è un'eco visiva della scheda, non un'interazione della carta.
+     - I punti restano senza stati, anche quando arriverà l'elenco in testo. Accenderli dall'elenco si decide solo con il disegno di quella sezione.
+     - Niente anello attorno ai nodi delle schede, che darebbe un significato falso (§1.3: l'anello segna ciò che si esplora, e sulle carte la sede), e niente richiami dalle schede ai nodi, che attraverserebbero i punti della Puglia.
+- **Risultato al 2026-10-05, carta della Home:** 45 città, cioè 36 punti e 9 nomi. Sulla carta di `/citta-digitali/`: 42 punti e i 3 nodi delle schede, senza nomi (regola 9).
   - Carte strette (finestre fino a circa 440 px e da 1024 a circa 1070 px): Varese, Altamura (appeso), Caltanissetta, Itri e Cosenza.
   - Carte larghe: in più Manfredonia, Bari, Massafra (appeso) e Caltagirone. Sulle carte strette queste quattro sono punti.
   - Nessuna sovrapposizione da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12. Le misure sono di ui-designer; il creative-director le ha ricontrollate a 16 larghezze.
@@ -235,6 +245,7 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - **Niente parole che dicano più di quanto sappiamo**, come «aderenti», «partner», «comuni» o «attive». La pagina del cliente si chiama «Tutte le città».
   - **Nessun numero nella Home.** Quando ci saranno le tre condizioni di brand-strategist (testo della pagina confermato, data, stesso numero di punti), il numero va nell'elenco di `/citta-digitali/`, con la data: si aggiorna in un posto solo.
   - **Nessun link nella legenda.** Il capitolo resta con una sola CTA, come i capitoli 01 e 02 (ux-designer, HM-5), e «Esplora Città Digitali» porta già alla pagina dell'elenco.
+  - **Su `/citta-digitali/`** la stessa legenda sta sotto la carta, senza link: il link alla fonte è già nella colonna del testo. Da 1280 px esce dal flusso e occupa lo spazio sotto la carta, così le città restano alla latitudine dei loro nodi. Tra 1024 e 1279 px resta nella colonna della carta e non sposta nulla. Sotto i 1024 px, con la carta in alto e le città in pila, le schede scendono di 33 px (49 a 320 px, dove la legenda va su due righe).
 - **Elenco in testo** (posto deciso da ux-designer: `/citta-digitali/`, sezione «L'Italia in un unico portale», ancora `#portale`).
   - **Subito:** un link alla fonte del cliente, «Tutte le città sul portale ↗», nella colonna del testo, dopo lo statement (ux-designer §3.2, testo di copywriter-brand L2-b). Rimanda alla pagina da cui vengono punti e nomi.
     - Posizione confermata dal creative-director, con una prova in pagina a 1440 e 390 px: il link chiude lo statement «… un'unica rete da esplorare.» e precede le tre città.
@@ -788,11 +799,11 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
-| 1 | Hero | H1 «Città Digitali», Passaggio «Le attività del territorio, / online senza perdere radici.», sottotitolo, CTA «Visita il portale →»; nessuna immagine: la hero finisce su un orizzonte che si apre nel video | calce | `display-xl` | — |
+| 1 | Hero | H1 «Città Digitali», Passaggio «Le attività del territorio, / online senza perdere radici.», sottotitolo, CTA «Visita il portale ↗» verso cittàdigitali.it (nuova scheda) e link secondario «Aderisci a Città Digitali ↓» verso il form della chiusura; nessuna immagine: la hero finisce su un orizzonte che si apre nel video | calce | `display-xl` | — |
 | 2 | Video | A tutta larghezza, altezza `min(100svh, 56.25vw)`; apertura dall'orizzonte; controlli minimi (un nodo play/pausa in basso a sinistra, audio, tempo in mono); poster sempre presente: un fotogramma reale del video, scelto dal creative-director quando arriva il file. La copertina non ha un proprio orizzonte (G4, V10): a 768–1024 px sarebbe il secondo nella stessa schermata (§1.1), e il gesto dell'orizzonte che si apre nel video lo fa già quello di fine hero | notte | — (etichetta mono) | 16:9 a tutta larghezza; niente autoplay con Save-Data o reduced motion |
-| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con 3 nodi `arancio-segnale`; a sinistra l'H2 e le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora →»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12). **In revisione (2026-10-05).** (1) Subito: nella colonna del testo, il link alla fonte «Tutte le città sul portale ↗» (ux-designer). (2) Prima del go-live: la carta passa al punto-città, perché la pagina del progetto non può mostrare meno città della Home. Le tre città delle linee guida restano in evidenza come nodi, allineate alla latitudine, con coordinate e «Esplora →». Finché l'elenco non le sta accanto, la carta ha una descrizione come quella della Home. Proposta di ui-designer, review del creative-director. (3) Con il testo della pagina confermato: l'elenco completo, con i criteri del §1.4 («Il punto-città», elenco in testo), e la sezione ridisegnata per un elenco lungo | notte (continua il buio del video) | `display-l` | carta piccola in alto, città in pila |
+| 3 | L'Italia in un unico portale | Carta d'Italia a filo in `calce` su una colonna alta a destra, con un punto-città `arancio-segnale` per ogni città di Città Digitali e i 3 nodi delle città in evidenza (§1.4); legenda in mono sotto la carta. A sinistra l'H2, il testo, lo statement e il link alla fonte «Tutte le città sul portale ↗», poi le tre città **allineate alla latitudine del loro nodo** (Varese in alto, Altamura al centro, Caltanissetta in basso), con coordinate e «Esplora ↗»; al focus o hover su una città si accende il suo nodo. La carta è solo contorno: nessuna campitura che faccia pensare a una copertura dell'Italia intera (N12). **Stato al 2026-10-05.** (1) Link alla fonte: nel sito. (2) Punto-città: deciso dal creative-director (proposta di ui-designer, P1–P5). Ci sono 42 punti senza nome e i 3 nodi delle schede, che si accendono come prima; sulla carta nessun nome. La legenda L1 sta sotto la carta e da 1280 px esce dal flusso. La carta è un'immagine con la descrizione a tre nomi finché l'elenco non le sta accanto. Va applicato prima del go-live. (3) Con il testo della pagina del cliente confermato: l'elenco completo, con i criteri del §1.4 («Il punto-città», elenco in testo), e la sezione ridisegnata per un elenco lungo, con ux-designer. La descrizione si toglie, e carta e legenda tornano `aria-hidden` | notte (continua il buio del video) | `display-l` | carta piccola in alto con la legenda, città in pila |
 | 4 | Dal locale al nazionale | Elenco *sticky*: titolo e indicatore mono «01/05» fermi a sinistra, i 5 concetti scorrono a destra; spazio predisposto per dati documentati, nascosto finché non arrivano (linee guida §20) | calce | `display-l` | elenco numerato, niente sticky |
-| 5 | Chiusura | Passaggio «La tua azienda merita più di una presenza online. / Merita di essere esplorata.» in `display-xl`, CTA «Entra in Città Digitali →» e form sotto | notte | `display-xl` | form a una colonna |
+| 5 | Chiusura | Passaggio «La tua azienda merita più di una presenza online. / Merita di essere esplorata.» in `display-xl`; sotto, il form, con «Entra in Città Digitali» come titolo del form e non come CTA. Il form sta subito sotto lo statement, e un link che lo raggiunge sarebbe inutile (`struttura-pagine.md` CD-5; verifica V3 di copywriter-content) | notte | `display-xl` | form a una colonna |
 
 ### 7.7 Contatti (`/contatti`)
 
@@ -895,4 +906,4 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.6)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.7)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
