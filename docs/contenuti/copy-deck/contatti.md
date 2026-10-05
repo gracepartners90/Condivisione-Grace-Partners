@@ -48,7 +48,7 @@ Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comod
 
 Note:
 - **Raccomando la versione del sito** (vedi «Verifica sul sito», V1). Il title segue lo schema delle specifiche SEO (§2.1, «‹Titolo pagina› | ITnode»), da cui si ricava anche `og:title`. L'indirizzo con la virgola è quello di footer, pagina e dati strutturati. L'avevo proposto il 2026-09-28 (review di bozze, K3 e K4), e lo chiede anche seo-technical (specifiche §2.2).
-- Decide seo-content, owner dei metadati. Il sito non va riportato alla versione della mappa.
+- Decide seo-content, owner dei metadati. Il sito non va riportato alla versione della mappa. Nella mappa 0.4, in lavorazione il 2026-10-05, seo-content ha già adottato la versione del sito: quando la mappa è pubblicata, la prima tabella qui sopra si allinea alla seconda.
 
 ## Struttura della pagina
 
@@ -251,7 +251,7 @@ Link esterni: Google Maps e LinkedIn nei recapiti, i due portali nella sezione 5
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
-| V1 | Title e meta: `src/data/pages.ts` e mappa SEO §2 | Sito: «Contatti, Acquaviva delle Fonti (BA) \| ITnode» e «Via Sant’Anna, 34,». Mappa: «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34,» | Adottare nella mappa la versione del sito (K3, K4; specifiche SEO §2.2). Il sito non cambia | seo-content |
+| V1 | Title e meta: `src/data/pages.ts` e mappa SEO §2 | Sito: «Contatti, Acquaviva delle Fonti (BA) \| ITnode» e «Via Sant’Anna, 34,». Mappa 0.3: «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34,» | **In chiusura**: la mappa 0.4, in lavorazione il 2026-10-05, ha già title e meta del sito (K3, K4; specifiche SEO §2.2). Il sito non cambia | seo-content |
 | V2 | Dati societari | Mancano sede legale, Registro delle imprese e REA, capitale sociale (soglia 5) | Dati dal cliente con la visura; poi i valori in `site.ts` e, se la sede legale è diversa, un campo per mostrarla | Cliente (C02); sessione principale |
 | V3 | `docs/ux/struttura-pagine.md` CT-1 | Citava l'occhiello nella hero | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
 
@@ -287,6 +287,6 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 ## Decisioni richieste
 
-- **seo-content**: title e meta della mappa allineati al sito (V1).
+- **seo-content**: chiudere l'allineamento di title e meta nella mappa (V1), già in corso nella versione 0.4.
 - **cro-specialist**: conferma del lead senza CTA.
 - **creative-director**: forma del link della sezione Persona, «Scopri il suo percorso →» (proposta) o «Il suo percorso →».

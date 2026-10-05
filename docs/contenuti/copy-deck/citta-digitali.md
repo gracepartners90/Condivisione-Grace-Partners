@@ -5,7 +5,7 @@ contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, web-per
 stato: in revisione
 versione: 1.3
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (0.7: §1.4, §7.6, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§3), src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/lib/citta-digitali.ts, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de), staging http://localhost:4321 del 2026-10-05 (commit c98f565)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (0.8: §1.4, §7.6 e nota O4, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§3), src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/lib/citta-digitali.ts, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de), staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Città Digitali
@@ -13,6 +13,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, o
 Pagina `/citta-digitali/`. Copre le sezioni 17, 18, 19, 20 e 21 delle linee guida (LG) e l'introduzione al form (§23). I testi sono pronti da impaginare.
 
 **Novità della v1.3 (2026-10-05)**
+- **Dominio del portale sotto la CTA della hero** (O4 approvata e applicata, commit 5c4a6cb).
 - **Carta della sezione 2.** Legenda «Ogni punto è una città di Città Digitali» (L1) e descrizione accessibile senza nomi (L6), come nel sito dal commit c98f565.
 
 **Novità della v1.2 (2026-10-05)**
@@ -80,6 +81,9 @@ Note:
 **Nome accessibile della CTA primaria**
 > Visita il portale Città Digitali (si apre in una nuova scheda)
 
+**Dominio del portale** · p · `label` mono (`t-label t-as-is`) · testo semplice, non un link · sotto la CTA primaria
+> cittàdigitali.it
+
 **CTA secondaria** · link testuale → `#richiesta` · max 28 · `cta_id` cd-hero-richiesta
 > Aderisci a Città Digitali ↓
 
@@ -88,7 +92,11 @@ Note:
 - **Sottotitolo e DR2.** Le LG scrivono «Siti Immersivi Interattivi», con l'ordine invertito rispetto al nome del prodotto. Se l'utente approva la DR2 del brief, il testo diventa «Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per il tessuto imprenditoriale e commerciale italiano.», con link da «Siti Interattivi Immersivi» a `/siii/` (mappa SEO). Finché la decisione manca, resta verbatim e senza link.
 - CTA secondaria: la strategia di conversione propone «Porta la tua attività in Città Digitali» (39 caratteri). La guida di stile fissa un massimo di 28 caratteri, quindi propongo «Aderisci a Città Digitali ↓», da confermare con cro-specialist. Evito «Entra in Città Digitali» nella hero perché, accanto a «Visita il portale ↗», si confonderebbe con il link al portale.
 - Parola lunga nel sottotitolo: «imprenditoriale» (15 caratteri). Alla scala del sottotitolo non crea problemi.
-- **Dominio visibile vicino alla CTA** (proposta O4 di seo-content, non applicata). Sono favorevole nella forma più leggera: «cittàdigitali.it» in `label` mono sotto le CTA, come testo semplice e non come link. Nessuna parola nuova, e la grafia con l'accento si impara proprio dove si cerca il portale. Anche ux-designer è favorevole: la riga non aggiunge fermate al Tab e resta leggibile dagli screen reader, perché il nome della CTA non contiene il dominio (review della carta della pagina, §6). Decide il creative-director, perché cambia la composizione della hero (direzione visiva §7.6).
+- **Dominio sotto la CTA primaria: applicato** (proposta O4 di seo-content, approvata dal creative-director il 2026-10-05; commit 5c4a6cb; direzione visiva 0.8, §7.6, riga 1 e nota «O4»).
+  - Perché: chi cerca il portale lo cerca qui, e il nome ha un omonimo senza accento. Vedere «cittàdigitali.it» sotto il pulsante insegna la grafia giusta e dice dove porta il pulsante. Nessuna parola nuova.
+  - Forma: didascalia del pulsante, 8 px sotto e allineata al suo bordo sinistro, in `label` mono minuscola, colore secondario. Testo semplice, non un link: nessuna fermata in più al Tab. Il testo viene dal dato del sito (`portal.display`), come nel testo della sezione 2.
+  - Ordine nel DOM e di lettura: pulsante, dominio, «Aderisci a Città Digitali ↓». Sotto i 640 px le tre righe vanno in pila; da 640 px «Aderisci» sta accanto al pulsante, e il dominio resta sotto il pulsante (misurato sullo staging a 320, 390, 640 e 1440 px).
+  - Lo screen reader lo legge come paragrafo dopo il pulsante: il nome accessibile della CTA non contiene il dominio (ux-designer, review della carta della pagina, §6).
 
 ## 2. L’Italia in un unico portale
 
@@ -297,7 +305,7 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Punto | Scelta in questo documento | Motivo |
 |---|---|---|
 | Dominio del portale | cittàdigitali.it nel testo; `https://xn--cittdigitali-19a.it` nei link | Conferma dell'utente del 2026-10-05 (brief S7); forma dell'indirizzo nelle specifiche SEO §5.3. Sostituisce il dominio senza accento delle LG §22, che è di un progetto omonimo di altri |
-| Ancora del form | `#richiesta` | Strategia di conversione. La mappa SEO (§3.4) usa ancora `#entra`: va allineata |
+| Ancora del form | `#richiesta` | Strategia di conversione. La mappa SEO 0.4, in lavorazione, usa già `#richiesta` nella §3.4 (V4) |
 | Occhiello della hero | Nessuno: lo sostituisce il breadcrumb | Direzione visiva §7.8; review di accessibilità del 2026-09-28, T11. La v1.1 proponeva «Digitalizzazione territoriale», che a sua volta sostituiva «Un progetto ITnode» della v1.0, un'attribuzione non confermata (A1, D5) |
 | CTA secondaria della hero | «Aderisci a Città Digitali ↓» | Massimo 28 caratteri (tone of voice §6), nessuna confusione con il link al portale. È nel sito |
 | Titolo di riserva del concetto 05 | «La forza di un portale nazionale» | Brief N10 e mappa SEO (sostituisce la mia proposta «condiviso» della v1.0) |
@@ -305,7 +313,8 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Chiusura | «Entra in Città Digitali» come titolo del form, senza link | `struttura-pagine.md` CD-5 |
 | Schede delle città | Senza foto e senza riga del dominio | Direzione visiva §7.6 |
 | Meta description | Versione del 2026-10-05, con ITnode | seo-content, review sull'omonimia, O3 |
-| Carta della sezione 2 | Legenda L1; descrizione L6, senza nomi | Direzione visiva 0.7 (§1.4, regola 9); ux-designer, review della carta della pagina (§3); copywriter-brand, L1 e L6. La direzione visiva 0.7 (§1.4 e §7.6) cita ancora la descrizione a tre nomi (V3) |
+| Carta della sezione 2 | Legenda L1; descrizione L6, senza nomi | Direzione visiva 0.8 (§1.4, regola 9 e «Accessibilità»); ux-designer, review della carta della pagina (§3); copywriter-brand, L1 e L6 |
+| Dominio sotto la CTA della hero | «cittàdigitali.it», testo semplice in `label` mono | O4 di seo-content, approvata dal creative-director; direzione visiva 0.8, §7.6 |
 
 ## Verifica sul sito (2026-10-05)
 
@@ -313,9 +322,9 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 - Build `dist/` del 2026-10-05, che corrisponde al commit 2a038de. L'ho copiata e servita in locale. Dopo quel commit `src/` è cambiato in un solo punto, che non tocca i testi: `data-cta-location` del link all'elenco (commit ce276be, controllato sul codice).
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/citta-digitali.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
-- **Seconda verifica (v1.3)**, dopo la carta con il punto-città: staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit c98f565. Stesso metodo.
+- **Seconda verifica (v1.3)**, dopo la carta con il punto-città e il dominio sotto la CTA: staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit 5c4a6cb. Stesso metodo, a 320, 390, 640 e 1440 px per la hero.
 
-**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici: title, meta, titoli, paragrafi, CTA, nomi accessibili, legenda e descrizione della carta, link e `cta_id` (55 testi su 55 trovati dallo script sullo staging; title e meta controllati a parte). Rispetto alla v1.1 ho allineato nove punti: in ognuno il sito seguiva una decisione registrata.
+**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici: title, meta, titoli, paragrafi, CTA, nomi accessibili, legenda e descrizione della carta, link e `cta_id` (56 testi su 56 trovati dallo script sullo staging; title e meta controllati a parte). Rispetto alla v1.1 ho allineato dieci punti: in ognuno il sito seguiva una decisione registrata.
 
 | Punto | v1.1 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -328,6 +337,7 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Chiusura | Link «Entra in Città Digitali →» | Titolo del form, senza link | `struttura-pagine.md` CD-5 |
 | Nome accessibile dell'H1 | Non indicato | «Città Digitali – Le attività del territorio, online senza perdere radici.» | ux-designer, T6 |
 | Carta della sezione 2 | Contorno con i tre nodi, `aria-hidden` | Punto-città, legenda L1, descrizione L6 (v1.3) | Direzione visiva 0.7; ux-designer; copywriter-brand (commit c98f565) |
+| Dominio sotto la CTA della hero | Proposta non applicata | «cittàdigitali.it» sotto «Visita il portale ↗» (v1.3) | creative-director, O4 (commit 5c4a6cb) |
 
 **Differenze aperte.**
 
@@ -335,8 +345,8 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 |---|---|---|---|---|
 | V1 | Sito: link «Tutte le città sul portale», `data-cta-location` | Nella build verificata c'era `portale`, un valore fuori dall'elenco del piano di misurazione | **Chiusa il 2026-10-05**: `luoghi`, come le tre città della sezione (snippet di cro-specialist, commit ce276be). Nessun testo cambia | Sessione principale, su indicazione di cro-specialist |
 | V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citavano l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓» e, per ogni città, dominio e foto | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
-| V3 | `docs/creativa/direzione-visiva.md` 0.7, §1.4 e §7.6 | La riga 5 di §7.6 cita ancora la CTA «Entra in Città Digitali →» sopra il form. §1.4 e la riga 3 di §7.6 danno alla carta di questa pagina la descrizione a tre nomi, mentre il sito ha L6, senza nomi (lo chiede anche ux-designer) | Allineare il documento al sito. Il sito non cambia | creative-director |
-| V4 | `docs/seo/mappa-keyword-url.md` §3.4 | Usa ancora `#entra` per il form e cita le «immagini dei territori» tra i materiali mancanti | Allineare il documento al sito. Il sito non cambia | seo-content |
+| V3 | `docs/creativa/direzione-visiva.md`, §1.4 e §7.6 | Nella 0.7 la riga 5 di §7.6 citava la CTA «Entra in Città Digitali →» sopra il form, e §1.4 dava alla carta la descrizione a tre nomi | **Chiusa il 2026-10-05**: la 0.7 ha allineato la chiusura, la 0.8 la descrizione L6 | creative-director |
+| V4 | `docs/seo/mappa-keyword-url.md` §3.4 | Usava `#entra` per il form e citava le «immagini dei territori» tra i materiali mancanti | **In chiusura**: nella mappa 0.4, in lavorazione il 2026-10-05, la §3.4 ha già `#richiesta`, «Entra in Città Digitali» come titolo del form e, tra i materiali mancanti, solo quelli del video | seo-content |
 
 ## Testi originali mancanti
 
@@ -377,8 +387,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **Utente, tramite la sessione principale** (DR2): allineare il sottotitolo a «Siti Interattivi Immersivi».
 - **Cliente e cro-specialist** (N10): titolo 05 «La forza di un portale ad alto traffico» solo con dati documentati, altrimenti «La forza di un portale nazionale».
 - **cro-specialist**: etichetta della CTA secondaria della hero.
-- **creative-director**: dominio visibile vicino alla CTA della hero (O4 di seo-content; parere favorevole mio e di ux-designer, note della sezione 1).
-- **creative-director e seo-content**: allineare i propri documenti (V3, V4).
+- **seo-content**: chiudere l'allineamento della mappa (V4), già in corso nella versione 0.4.
 
 ## Fonti consultate
 
