@@ -80,3 +80,14 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Altri membri committano in `src/` mentre lavoro** (ce276be durante questo incarico). Prima di generare le patch: `git log`, confronto file per file tra copia e repository, riallineamento della copia, nuova build. Poi `git apply --check` delle patch estratte dalla review stessa, così il testo consegnato è quello provato.
 - **Pesi compressi:** `gzip -c file` scrive il nome del file nell'intestazione, e nomi di lunghezza diversa falsano i confronti di pochi byte. Usare `zlib` di Node (o `gzip -n`). Per trovare differenze tra HTML minificati: `cmp -l`, oppure andare a capo su `><`; `SequenceMatcher` senza autojunk su 140 KB non finisce.
 - **Script** in `scratchpad/ui-cdpage/`: `probe.mjs` (nodi, schede, legenda, accensione a 7 larghezze), `spacing.mjs` (legenda con 1.4.12), `a11y.mjs` e `nolabel.mjs` (albero di accessibilità), `forced2.mjs` (colori forzati), `contrast.mjs`, `focusshot.mjs`; patch in `diff/`.
+
+## Ricontrollo della carta e colori forzati (lezioni del 2026-10-05, sera)
+- **Esito:** la carta di `/citta-digitali/` è applicata (c98f565) come proposta, con la descrizione L6 di ux-designer al posto della mia P3 con i tre nomi: su questa pagina i nomi sono già nel testo e nelle schede. P6 approvata. Le mie CF1 (404), CF2 (residui a gradiente) e CF3 (controllo D.2) sono state adottate da ux-designer, e CF1 è applicata in 00593a7.
+- **Colori forzati, due casi oltre gli sfondi:**
+  - i gradienti spariscono, perché `background-image` diventa `none` per ogni strato;
+  - un contorno trasparente usato per nascondere un anello a riposo viene dipinto e resta sempre acceso.
+  - Il controllo che cerca solo gli sfondi color tela non li vede. Serve il confronto tra modo normale e colori forzati sugli stessi elementi (`accessibilita.md` D.2).
+- **Lo staging può essere ricostruito mentre misuro** (qui con O4). Controllare l'ora di `dist/` prima e dopo, e dire su quale build vale ogni prova. Uno spostamento frazionario della sezione (la hero cresce di 24,8–26,2 px) rompe il confronto pixel per pixel per l'antialiasing. Resta valido il confronto della geometria relativa al componente.
+- **La squadra va veloce:** il coordinatore committa i file in corso e applica le proposte mentre scrivo ancora. Prima di consegnare: `git log`, poi stato di review e design system allineato alle decisioni prese nel frattempo (DV 0.8, `accessibilita.md` 0.6).
+- **Server di prova:** chiuderli a fine incarico. Il 4333 della carta del capitolo 03 era rimasto acceso dalla mattina; chiuso con `kill` sul PID, dopo aver controllato con `/proc/<pid>/cwd` che servisse una mia copia.
+- **Script** in `scratchpad/ui-cdpage/remeasure/` (`probe2/3/4`, `pixels`, `forced3`, `fcmarks`, `fc-extra`, `gradients`, `fix404`, `offset`) e in `scratchpad/ui-fc404/` (copia del repository con CF1, `test404.mjs`, `fcx/fc-extra.mjs`).

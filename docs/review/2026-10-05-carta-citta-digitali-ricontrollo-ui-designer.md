@@ -1,42 +1,47 @@
 ---
-titolo: Ricontrollo della carta di /citta-digitali/ e dei colori forzati dopo c98f565
+titolo: Ricontrollo della carta di /citta-digitali/ e dei colori forzati dopo c98f565, 5c4a6cb e 00593a7
 owner: ui-designer
 contributi: []
 stato: bozza
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-10-05
-fonti: [commit c98f565, staging http://localhost:4321 (dist del 2026-10-05, 16:36), variante «in pubblicazione» http://localhost:4322, build provata della proposta (copia nello scratchpad), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/ux/accessibilita.md (§2.14, §4.3, Appendice D), docs/creativa/direzione-visiva.md (0.7, §1.4), docs/ui/design-system.md (0.7, §1.8), misure Playwright 1.56 (Chromium 141) e axe-core 4.13 del 2026-10-05]
+fonti: [commit c98f565, 5c4a6cb e 00593a7, staging http://localhost:4321 (build del 2026-10-05 alle 16:36, con c98f565, e alle 16:49, con anche O4), variante «in pubblicazione» http://localhost:4322, build provata della proposta (copia nello scratchpad), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/ux/accessibilita.md (0.6: §2.14, §4.3, Appendice D), docs/creativa/direzione-visiva.md (0.8, §1.4), docs/ui/design-system.md (0.7, §1.8), misure Playwright 1.56 (Chromium 141) e axe-core 4.13 del 2026-10-05]
 ---
 
-# Ricontrollo della carta di `/citta-digitali/` e dei colori forzati (commit c98f565)
+# Ricontrollo della carta di `/citta-digitali/` e dei colori forzati (commit c98f565 e 5c4a6cb)
 
 ## In sintesi
 
 - **La carta applicata è quella provata.**
-  - A 10 larghezze da 320 a 1920 px, con e senza la spaziatura di WCAG 1.4.12, la geometria è identica a quella della build della proposta: carta, 42 punti, 3 nodi, schede, legenda, altezza della sezione e della pagina.
-  - Nel modo normale la sezione è identica pixel per pixel a 390, 768, 1024 e 1440 px.
-  - L'unica differenza è voluta: la descrizione L6.
+  - A 10 larghezze da 320 a 1920 px, con e senza la spaziatura di WCAG 1.4.12, la geometria della sezione è identica a quella della build della proposta: carta, 42 punti, 3 nodi, schede, legenda, altezza della sezione.
+  - Sulla build di c98f565 la sezione era identica anche pixel per pixel, a 390, 768, 1024 e 1440 px.
+  - Dopo O4 (5c4a6cb) la sezione scende di 24,8–26,2 px, perché la hero ha una riga in più, e il confronto pixel per pixel non regge più: lo spostamento è frazionario e cambia l'antialiasing. Ho rifatto le altre prove, con gli stessi risultati.
+  - L'unica differenza voluta è la descrizione L6.
 - **Accessibilità.**
   - La descrizione L6 si legge (138 caratteri) e l'albero di accessibilità è quello previsto.
   - axe: 0 violazioni.
   - Nei colori forzati punti e nodi sono in `CanvasText` con l'anello in `Canvas`, con la palette chiara e con la scura.
 - **A 390 px la pagina cresce di 32,8 px:** 16 px di margine più 16,8 px di legenda. Sono i 32 px misurati dalla sessione principale.
-- **Colori forzati: due casi che il controllo dell'Appendice D di `accessibilita.md` non vede.**
-  - **CF1, pagina 404.** I tre nodi perdono il punto e mostrano sempre l'anello del passaggio del mouse, quindi diventano anelli vuoti. Spariscono anche le tacche della scala. C'è una correzione provata, solo CSS.
-  - **CF2, tacche disegnate con gradienti.** Spariscono sul filo dei capitoli, nel confronto di SIII, nella variante «in pubblicazione» e nei segni di taglio dello staging. La linea resta. Proposta: residui accettati.
-  - **CF3.** Un'aggiunta al controllo, per trovare questi casi.
-- **Design system 0.7:** colori forzati in §1.8, carta di `/citta-digitali/` applicata in §2.4 e §3.8.
+- **Colori forzati: due casi che il controllo dell'Appendice D di `accessibilita.md` non vedeva.** Tutti e tre i punti sono decisi da ux-designer (`accessibilita.md` 0.6).
+  - **CF1, pagina 404.** I tre nodi perdevano il punto e mostravano sempre l'anello del passaggio del mouse, quindi diventavano anelli vuoti. Sparivano anche le tacche della scala. Correzione approvata e applicata in 00593a7.
+  - **CF2, tacche disegnate con gradienti.** Spariscono sul filo dei capitoli, nel confronto di SIII, nella variante «in pubblicazione» e nei segni di taglio dello staging. La linea resta. Sono residui accettati (§2.14).
+  - **CF3.** Un'aggiunta al controllo, per trovare questi casi: adottata come Appendice D.2.
+  - **Dopo 00593a7, sullo staging:** D.1 trova solo `a::after` (32 esecuzioni: 8 pagine, 2 larghezze, 2 palette); D.2 trova solo le tacche di CF2.
+- **Design system 0.7:** colori forzati in §1.8, con CF1–CF3 tra i casi aperti; carta di `/citta-digitali/` applicata in §2.4 e §3.8.
 
 ## 1. Rimisura della carta di `/citta-digitali/`
 
 **Come.**
-- **Confronto.** Lo staging (commit c98f565) contro la build della proposta, servita di nuovo dalla copia nello scratchpad. Le due build differiscono, in questa sezione, solo per la descrizione: P3 con i tre nomi, L6 senza.
+- **Confronto.** Lo staging contro la build della proposta, servita di nuovo dalla copia nello scratchpad. Le due build differiscono, in questa sezione, solo per la descrizione: P3 con i tre nomi, L6 senza.
+- **Due build dello staging.** Durante le misure lo staging è stato ricostruito con O4 (5c4a6cb), che cambia solo la hero della pagina.
+  - Le prove della tabella valgono per entrambe le build, tranne il confronto dei pixel, fatto sulla prima.
+  - Il peso è quello della seconda.
 - **Strumenti:** Playwright (Chromium 141) e axe-core 4.13.
 
 | Prova | Esito |
 |---|---|
-| Geometria (320, 360, 390, 414, 768, 1024, 1100, 1280, 1440 e 1920 px, con e senza 1.4.12) | Identica alla build provata a tutte le 20 combinazioni: carta, 42 punti, 3 nodi Ø 10, posizioni delle schede, legenda, altezza della sezione e della pagina |
-| Pixel della sezione `#portale` | Modo normale: identica a 390, 768, 1024 e 1440 px. Colori forzati: identica a 390 e 768. A 1024 e 1440 cambia solo il punto della voce corrente nell'header sticky, che ora resta (6 bis, F2) |
+| Geometria (320, 360, 390, 414, 768, 1024, 1100, 1280, 1440 e 1920 px, con e senza 1.4.12) | Identica alla build provata a tutte le 20 combinazioni: carta, 42 punti, 3 nodi Ø 10, posizioni delle schede rispetto alla carta, legenda, altezza della sezione. Con c98f565 anche l'altezza della pagina; con O4 la pagina cresce di 25–26 px nella hero |
+| Pixel della sezione `#portale` (build di c98f565) | Modo normale: identica a 390, 768, 1024 e 1440 px. Colori forzati: identica a 390 e 768. A 1024 e 1440 cambia solo il punto della voce corrente nell'header sticky, che ora resta (6 bis, F2) |
 | Nodi accesi dalle schede | Focus su ogni «Esplora» e passaggio del mouse su ogni scheda: il nodo va a 15 px e si spegne quando il puntatore esce, a tutte le 10 larghezze |
 | Legenda | 16 px sotto la carta. Su una riga da 360 px (alta 16,8–18,2 px), su due a 320. Con 1.4.12 va su due righe a 320, 360, 390 e 768 px. Mai sovrapposta né tagliata. Da 1280 px resta dentro la sezione, con almeno 195 px di margine |
 | Crescita della pagina sotto 1024 px | 32,8 px a 390 (16 di margine più 16,8 di legenda); 49,6 a 320, dove la legenda va su due righe |
@@ -45,10 +50,9 @@ fonti: [commit c98f565, staging http://localhost:4321 (dist del 2026-10-05, 16:3
 | Albero di accessibilità (390 e 1440 px) | Figura «Ogni punto è una città di Città Digitali» → immagine con L6 → testo della legenda → lista delle tre città (H3 e link) |
 | axe-core | 0 violazioni a 390 px, 1440 px e 1440 px con movimento ridotto. Voci da rivedere invariate: color-contrast (6, 9 e 4) e video-caption (1) |
 | Colori forzati (palette chiara e scura, 390 e 1440 px) | Punti e nodi in `CanvasText` con l'anello in `Canvas`; legenda e costa nei colori del tema. Al focus su «Esplora» il link ha il contorno di sistema e il nodo si accende. Nessun buco nella costa |
-| Peso dell'HTML (zlib livello 9) | 143,8 KB; 28,7 KB con gzip (+0,78 KB, compresi i blocchi dei colori forzati), 23,7 KB con brotli; budget T2 di 35 KB |
+| Peso dell'HTML (zlib livello 9) | Con c98f565: 143,8 KB, 28,7 KB con gzip (+0,78 KB, compresi i blocchi dei colori forzati). Con O4: 144,4 KB, 28,8 KB con gzip e 23,8 KB con brotli. Budget T2: 35 KB |
 
-**Esito.** La carta è conforme alla proposta approvata (DV 0.7 §1.4, regola 9) e alla decisione di ux-designer sulla descrizione. Non c'è niente da correggere.
-- Una nota per la DV, da allineare: §1.4 dice ancora che la descrizione di `/citta-digitali/` ha i tre nomi («Tra queste: Varese, Altamura e Caltanissetta»). Il sito usa L6, senza nomi.
+**Esito.** La carta è conforme alla proposta approvata (DV 0.7 §1.4, regola 9) e alla descrizione L6, ora anche nella DV 0.8. Non c'è niente da correggere.
 
 ## 2. Colori forzati: casi fuori dall'Appendice D
 
@@ -58,7 +62,7 @@ Due casi gli sfuggono, perché lì il segno non sta nel colore di fondo:
 - **i gradienti:** nei colori forzati Chromium toglie `background-image`, e il calcolo dà `none` per ogni strato;
 - **i contorni trasparenti:** un contorno trasparente a riposo viene dipinto nel colore del tema, quindi diventa visibile.
 
-### CF1 · [SUGGERIMENTO] Pagina 404: i nodi diventano anelli vuoti e la scala perde le tacche
+### CF1 · [SUGGERIMENTO] Pagina 404: i nodi diventano anelli vuoti e la scala perde le tacche (applicata in 00593a7)
 
 - **Dove.** `src/pages/404.astro`, `.nf__node` e `.nf__worlds::before` (DS §2.1, «Variante 404»).
 - **Problema.**
@@ -118,7 +122,7 @@ index f401435..f97ca32 100644
   - **Modo normale:** pagina identica pixel per pixel a 390 e 1440 px, a riposo e con il focus su un mondo.
   - **Peso:** +0,05 KB con gzip.
 
-### CF2 · [SUGGERIMENTO] Tacche disegnate con gradienti: residui da accettare
+### CF2 · [SUGGERIMENTO] Tacche disegnate con gradienti: residui da accettare (accettati, `accessibilita.md` §2.14)
 
 - **Dove** (misurato sullo staging e sulla variante «in pubblicazione»):
   - `.chapter__rule` (`ProjectShowcase.astro`): le tacche minori del filo dei capitoli, in `--line`;
@@ -135,7 +139,7 @@ index f401435..f97ca32 100644
   - Aggiungerli ai residui accettati di §2.14.
   - Se ux-designer preferisce la coerenza con l'Orizzonte anche nella variante «in pubblicazione», la tecnica è quella di CF1: `forced-color-adjust: none` e il gradiente in `CanvasText`.
 
-### CF3 · [SUGGERIMENTO] Il controllo dell'Appendice D non vede gradienti e contorni trasparenti
+### CF3 · [SUGGERIMENTO] Il controllo dell'Appendice D non vede gradienti e contorni trasparenti (adottato come Appendice D.2)
 
 - **Dove.** `docs/ux/accessibilita.md`, Appendice D (`fc-check.mjs`).
 - **Problema.** I due casi qui sopra passano il controllo: CF1 sulla 404 e le tacche di CF2.
@@ -201,9 +205,9 @@ await browser.close();
 
 ## Verdetto di dominio (UI)
 
-- **Carta di `/citta-digitali/`: conforme.** Corrisponde alla proposta approvata e alla DV 0.7, con la descrizione L6 decisa da ux-designer. Resta da allineare la DV §1.4.
+- **Carta di `/citta-digitali/`: conforme.** Corrisponde alla proposta approvata (DV 0.7) e alla DV 0.8, con la descrizione L6 decisa da ux-designer.
 - **Colori forzati: P6 e 6 bis conformi** a §2.14, nelle pagine e negli stati che il controllo dell'Appendice D copre.
-- **CF1–CF3 sono suggerimenti per ux-designer**, owner dell'accessibilità. Nessuno blocca il go-live, perché WCAG 2.2 AA non chiede di supportare i colori forzati. CF1 è l'unico caso in cui l'anello di uno stato resta sempre acceso.
+- **CF1–CF3 sono decisi da ux-designer**, owner dell'accessibilità. CF1 è applicata in 00593a7 e verificata sullo staging: la 404 è pulita anche per D.2. Nessuno dei tre bloccava il go-live, perché WCAG 2.2 AA non chiede di supportare i colori forzati.
 
 ## Ipotesi da validare
 
@@ -212,13 +216,8 @@ await browser.close();
 
 ## Domande aperte
 
-- **ux-designer:**
-  - CF1;
-  - i residui di CF2;
-  - l'aggiunta CF3 all'Appendice D.
-- **creative-director:** allineare la DV §1.4 alla descrizione L6 di `/citta-digitali/`.
+Nessuna.
 
 ## Decisioni richieste
 
-1. **ux-designer:** CF1 (applicare la patch) e CF2 (accettare i residui o correggerli con la stessa tecnica).
-2. **Sessione principale:** se CF1 passa, applicare la patch alla 404. Non serve altro: solo CSS, una pagina.
+Nessuna: CF1–CF3 sono decise da ux-designer, e CF1 è applicata in 00593a7.
