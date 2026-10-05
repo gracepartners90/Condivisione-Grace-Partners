@@ -3,9 +3,9 @@ titolo: Requisiti e verifica di accessibilità (WCAG 2.2 AA)
 owner: ux-designer
 contributi: [ui-designer, web-performance-specialist, cro-specialist, seo-technical, copywriter-content]
 stato: in revisione
-versione: 0.3
-aggiornato: 2026-09-29
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
+versione: 0.4
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/seo/specifiche-tecniche.md, src/scripts/, src/components/, docs/review/2026-09-28-sito-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, "https://w3c.github.io/wcag/techniques/css/C43 (2026-09-28, dai risultati di ricerca: w3.org è bloccato dall'ambiente)", "axe-core 4.13.0 e @axe-core/playwright 4.13.0 dal registry npm (2026-09-28)"]
 ---
 
 # Requisiti e verifica di accessibilità (WCAG 2.2 AA)
@@ -124,6 +124,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/contenu
 | Requisito | Regola operativa | Criteri |
 |---|---|---|
 | Testi alternativi | Quelli di `alt-text.md`. Decorative: `alt=""`. Logo: `alt="ITnode"`. Immagine dentro un link che ha già testo: `alt=""`. | 1.1.1 |
+| Carte | **Decorative** (`aria-hidden`) quando i luoghi che mostrano sono già scritti nel testo accanto: la carta della Puglia del capitolo 02 e quella di `/citta-digitali/`. **Con informazione propria**, come la carta del capitolo 03 con tutte le città di Città Digitali: `role="img"` con una descrizione costruita dagli stessi dati (regioni, regione più fitta, nomi disegnati sulla carta più ricca) e l'`<svg>` interno `aria-hidden`. Mai un elenco nascosto di nomi. Nessun numero finché il conteggio non è confermato. L'elenco completo sta nella pagina di linea, visibile a tutti, oppure come link alla fonte. Decisione del 2026-10-05 in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`. | 1.1.1, 1.3.1 |
 | Testo nelle immagini | Niente testo significativo dentro le immagini. La foto dell'evento ha cornice e scritta sovrimpresse: si usano i ritagli in `derivate/`, e l'originale resta `[DA FORNIRE]`. | 1.4.5 |
 | Veridicità | Tre immagini hanno il segno di Gemini e tutte e quattro le foto del fondatore sembrano elaborate. Alt e didascalie descrivono ciò che si vede, senza presentare come reali eventi non documentati (soglia 1; brief DR3). | 1.1.1 |
 | **Slot vuoti (decisione)** | Finché un asset manca, il segnaposto di `Media.astro` ha `aria-hidden="true"`, senza `role="img"` né `aria-label`: prima annunciava l'alt dell'immagine futura, cioè un'immagine che non c'era. Già corretto. L'etichetta visiva «Asset richiesto» serve solo a chi rivede lo staging. **In produzione nessun segnaposto di staging:** si pubblica l'asset oppure la variante tipografica «in pubblicazione» (`SlotPending`, build con `PUBLIC_SLOT_MODE=publish`). Anche la variante è `aria-hidden` e senza elementi focalizzabili, ed è ammessa a una condizione: il testo che mostra è già scritto nella pagina (H3, righe di luogo) oppure è il segno grafico dei rilevamenti (rilevamento, distanza, coordinate: decisione T10). Sulla Home il nome dell'esperienza non è nel testo, quindi lì la variante va senza nome o con un nome esposto (verifica del 2026-09-28, O6). | 1.1.1, 1.3.1, 4.1.2 |

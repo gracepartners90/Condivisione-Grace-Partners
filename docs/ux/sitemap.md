@@ -3,8 +3,8 @@ titolo: Sitemap e navigazione
 owner: ux-designer
 contributi: [cro-specialist, seo-technical, seo-content, ui-designer, creative-director]
 stato: bozza
-versione: 0.1
-aggiornato: 2026-09-28
+versione: 0.2
+aggiornato: 2026-10-05
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, src/data/site.ts, src/data/pages.ts, src/scripts/header.ts, src/components/layout/Breadcrumbs.astro]
 ---
 
@@ -146,9 +146,10 @@ Regole:
 | 1 | Logo | Link a `/`. Serve la versione per fondo scuro se il footer è scuro `[DA FORNIRE: logo SVG positivo e negativo]`. |
 | 2 | Navigazione | `<nav aria-label="Piè di pagina">`: SIII · Puglia Digitale · Città Digitali · Contatti |
 | 3 | Contatti | `<address>`: Sede operativa, Via Sant’Anna, 34 · 70021 Acquaviva delle Fonti (BA); +39 080 2466520 (`tel:`); info@itnode.it (`mailto:`) |
-| 4 | Portali | «cittadigitali.it ↗» e «lapugliadigitale.it ↗», esterni, in nuova scheda |
+| 4 | Portali | «cittàdigitali.it ↗» (link `https://xn--cittdigitali-19a.it`) e «lapugliadigitale.it ↗», esterni, in nuova scheda |
 | 5 | Riga legale | © {anno} ITNODE S.r.l. `[DA VERIFICARE]` · P.IVA 08937270729 `[DA VERIFICARE]` · Sede legale `[DA FORNIRE]` · Registro delle imprese e REA `[DA FORNIRE]` · Capitale sociale `[DA FORNIRE]` · Privacy Policy · Cookie Policy · «Preferenze cookie» (solo se esiste un banner di consenso) |
 
+- **Dominio di Città Digitali.** Il portale del cliente è cittàdigitali.it, con l'accento, confermato dall'utente il 2026-10-05. Nei link va in punycode (`https://xn--cittdigitali-19a.it`), nel testo visibile con l'accento. cittadigitali.it, senza accento, è un progetto omonimo di altri: mai come link né come etichetta.
 - **Portali etichettati con il dominio.** LG §24 elenca tra i link anche «Città Digitali» e «Puglia Digitale». Le stesse etichette però sono già nella navigazione verso le pagine interne: con il dominio si evitano due link con lo stesso nome e destinazioni diverse (2.4.4, 3.2.4).
 - **Titoli dei gruppi**: `<h2>` in stile piccolo («Navigazione», «Contatti», «Portali»). Servono a chi naviga per titoli.
 - **Anno**: generato in build. Un piccolo script lo aggiorna se il sito non viene ricompilato a inizio anno.

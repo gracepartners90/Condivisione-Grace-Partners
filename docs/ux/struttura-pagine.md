@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.3
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+versione: 0.4
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -122,8 +122,9 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
   - **Visual**
     - 01: soglia «Schermo» 16:10, slot `siii-masseria-santella`;
     - 02: carta della Puglia, finché non arriva una foto del territorio;
-    - 03: carta d'Italia.
-    - Le carte sono SVG decorativi (`aria-hidden`): i luoghi sono nominati come testo nelle pagine di linea.
+    - 03: carta d'Italia con un punto per ogni città di Città Digitali e i nomi dove c'è spazio (proposta di ui-designer del 2026-10-05), con una legenda di una riga in `<figcaption>`.
+    - Le carte 02 e 03 di oggi sono decorative (`aria-hidden`): i loro luoghi sono nominati come testo accanto o nelle pagine di linea.
+    - **La carta 03 con tutte le città non è decorativa.** Mostra dove sta la rete, e il testo del capitolo non lo dice. È un'immagine (`role="img"`) con una descrizione costruita dagli stessi dati: regioni da nord a sud, la regione più fitta, i nomi disegnati sulla carta larga. Nessun numero finché il conteggio non è confermato. Nella Home niente elenco dei nomi, né nascosto né in un `<details>`. Decisione in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`.
 - **Desktop.** Tre capitoli grandi, non tre card, con composizioni speculari (direzione visiva). Dentro ogni capitolo, numero o visual possono essere sticky.
 - **Mobile.** Per ogni capitolo: numero → nome → statement → visual → microdescrizione → CTA a tutta larghezza. Niente sticky, niente swipe.
 - **Interazione e accessibilità.**
@@ -353,13 +354,16 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
   - Breadcrumb ed eyebrow.
   - H1 su due righe.
   - Sottotitolo `<p>`: «Siti Interattivi Immersivi» va nella forma di SIII (brief DR2).
-  - CTA primaria «Visita il portale ↗» → cittadigitali.it.
+  - CTA primaria «Visita il portale ↗» → cittàdigitali.it (link `https://xn--cittdigitali-19a.it`; cittadigitali.it senza accento è un progetto omonimo di altri).
   - Link secondario «Porta la tua attività in Città Digitali ↓» → `#richiesta`.
   - Visual: slot `video-poster` oppure una foto di un territorio `[DA FORNIRE]`.
 - **Mobile.** H1 → sottotitolo → CTA → link secondario → visual.
 
 ### CD-2 · L'Italia in un unico portale — `LocationShowcase` variante `italy`
 - **Contenuti** (copy deck §2): tre città da nord a sud, ciascuna con nome (H3), regione, riga, dominio, CTA «Esplora ↗» e foto (slot `luogo-*`).
+- **Elenco completo** (2026-10-05):
+  - Nella colonna del testo, dopo lo statement, un link «Tutte le città ↗» alla pagina del portale (`https://xn--cittdigitali-19a.it/tutte-le-citta/`), fonte dell'elenco. Va in nuova scheda e lo annuncia, con nome unico. Lì l'ordine del DOM coincide con l'ordine visivo a ogni larghezza; dopo l'elenco delle città, da 1280 px, non coinciderebbe.
+  - Dopo la conferma del testo della pagina (`docs/strategia/citta-digitali-elenco.md` §4), l'elenco completo può stare qui, visibile a tutti, per regione, con fonte e data; la sezione va ridisegnata per un elenco lungo. Le tre città restano gli esempi in evidenza.
 - **Desktop.** Composizione nord → sud di forte impatto, diversa dalle «porte» di Puglia Digitale: regione e coordinate di `site.ts` in evidenza.
 - **Mobile.** Impilate nello stesso ordine nord → sud.
 
