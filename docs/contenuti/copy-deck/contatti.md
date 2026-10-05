@@ -3,14 +3,17 @@ titolo: Copy deck · Contatti
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-designer, creative-director]
 stato: in revisione
-versione: 1.4
+versione: 1.5
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3, §5.4), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3, §5.4), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§5, §6), src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
 ---
 
 # Copy deck · Contatti
 
 Pagina `/contatti/`. Copre la sezione 22 delle linee guida (LG) e l'introduzione al form (§23). I recapiti sono quelli forniti dal cliente, senza modifiche. I testi sono pronti da impaginare.
+
+**Novità della v1.5 (2026-10-05)**
+- **Risposte di ux-designer** (review della carta della pagina, §5 e §6): composizione di recapiti e form e testo nascosto « nella home» confermati come nel sito; `struttura-pagine.md` 0.5 allineata (V3 chiusa).
 
 **Novità della v1.4 (2026-10-05)**
 - **Dominio di Città Digitali.** È cittàdigitali.it, con l'accento; nei link `https://xn--cittdigitali-19a.it`. Il dominio senza accento indicato dalle LG (§22) è di un progetto omonimo di altri: non si cita e non si linka (conferma dell'utente del 2026-10-05; brief S7).
@@ -148,7 +151,7 @@ Alternativa: «Il suo percorso →» (15), la forma proposta dal creative-direct
 Note:
 - **Nessuna frase nuova attribuita al fondatore** (K1, N5). Il link parla di lui in terza persona e non riassume il racconto: rimanda al testo che c'è già.
 - **Perché «percorso».** Il racconto in Home comincia proprio così: «Il suo percorso comincia con IBM…». Chi clicca trova subito ciò che il link promette. Verificato il 2026-09-28 a 390 e a 1440 px: aprendo `/#fondatore`, occhiello, titolo e primo paragrafo della sezione sono visibili sotto l'header. Provato in pagina con il link iniettato: sta su una riga da 320 a 1920 px.
-- **Perché il testo nascosto.** «Scopri il suo percorso» non dice che si cambia pagina: lo dice la freccia →, ma solo a chi la vede. « nella home» aggiunge la destinazione al nome accessibile, che comincia comunque con il testo visibile (tone of voice §6, regola 6; WCAG 2.5.3). Per il criterio 2.4.4 basterebbe già il titolo che precede, con nome e ruolo (tecnica H80): il testo nascosto serve a chi scorre l'elenco dei link. Decide ux-designer, owner dell'accessibilità.
+- **Perché il testo nascosto.** «Scopri il suo percorso» non dice che si cambia pagina: lo dice la freccia →, ma solo a chi la vede. « nella home» aggiunge la destinazione al nome accessibile, che comincia comunque con il testo visibile (tone of voice §6, regola 6; WCAG 2.5.3). Per il criterio 2.4.4 basterebbe già il titolo che precede, con nome e ruolo (tecnica H80): il testo nascosto serve a chi scorre l'elenco dei link. ux-designer, owner dell'accessibilità, l'ha confermato il 2026-10-05 (review della carta della pagina, §6).
 - **Se il nome non viene confermato** (F7): propongo come H2 «Il fondatore di ITnode», la stessa formula prevista per la Home; il link resta com'è.
 - **Evoluzione possibile** (review di conversione, osservazione 14; verdetto G4, N5). Se il cliente conferma che è il fondatore a rispondere alle richieste, e arriva una sua foto reale, la sezione può diventare «Ti risponde Giacomo Lenoci», insieme al blocco «Cosa succede dopo» della strategia di conversione (§8). Fino ad allora non si scrive. [DA FORNIRE: chi risponde alle richieste, tempi garantiti, foto reale]
 
@@ -250,7 +253,7 @@ Link esterni: Google Maps e LinkedIn nei recapiti, i due portali nella sezione 5
 |---|---|---|---|---|
 | V1 | Title e meta: `src/data/pages.ts` e mappa SEO §2 | Sito: «Contatti, Acquaviva delle Fonti (BA) \| ITnode» e «Via Sant’Anna, 34,». Mappa: «Contatti \| ITnode, Acquaviva delle Fonti (BA)» e «Via Sant’Anna 34,» | Adottare nella mappa la versione del sito (K3, K4; specifiche SEO §2.2). Il sito non cambia | seo-content |
 | V2 | Dati societari | Mancano sede legale, Registro delle imprese e REA, capitale sociale (soglia 5) | Dati dal cliente con la visura; poi i valori in `site.ts` e, se la sede legale è diversa, un campo per mostrarla | Cliente (C02); sessione principale |
-| V3 | `docs/ux/struttura-pagine.md` CT-1 | Cita ancora l'occhiello nella hero | Allineare il documento al sito. Il sito non cambia | ux-designer |
+| V3 | `docs/ux/struttura-pagine.md` CT-1 | Citava l'occhiello nella hero | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
 
 ## Testi originali mancanti
 
@@ -285,6 +288,5 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 ## Decisioni richieste
 
 - **seo-content**: title e meta della mappa allineati al sito (V1).
-- **ux-designer**: composizione affiancata o in colonna di recapiti e form; testo nascosto « nella home» nel link della sezione Persona; allineamento di `struttura-pagine.md` CT-1 (V3).
 - **cro-specialist**: conferma del lead senza CTA.
 - **creative-director**: forma del link della sezione Persona, «Scopri il suo percorso →» (proposta) o «Il suo percorso →».

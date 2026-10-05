@@ -3,14 +3,17 @@ titolo: Copy deck · Città Digitali
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, web-performance-specialist]
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (§7.6, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (0.7: §1.4, §7.6, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§3), src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/lib/citta-digitali.ts, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de), staging http://localhost:4321 del 2026-10-05 (commit c98f565)]
 ---
 
 # Copy deck · Città Digitali
 
 Pagina `/citta-digitali/`. Copre le sezioni 17, 18, 19, 20 e 21 delle linee guida (LG) e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.3 (2026-10-05)**
+- **Carta della sezione 2.** Legenda «Ogni punto è una città di Città Digitali» (L1) e descrizione accessibile senza nomi (L6), come nel sito dal commit c98f565.
 
 **Novità della v1.2 (2026-10-05)**
 - **Dominio del portale.** È cittàdigitali.it, con l'accento; nei link `https://xn--cittdigitali-19a.it`. Il dominio senza accento indicato dalle LG (§22) è di un progetto omonimo di altri: non si cita e non si linka (conferma dell'utente del 2026-10-05; brief S7).
@@ -51,7 +54,7 @@ Le sezioni tengono la numerazione delle versioni precedenti, perché altri docum
 |---|---|---|---|
 | 1 | 1. Hero | — | Hero `line`, chiusa da un orizzonte decorativo (`aria-hidden`) |
 | 2 | 3. Video | `#video` | VideoSection a tutta larghezza |
-| 3 | 2. L’Italia in un unico portale | `#portale` | LocationShowcase `italy`: carta d'Italia e tre città, niente card |
+| 3 | 2. L’Italia in un unico portale | `#portale` | LocationShowcase `italy`: carta d'Italia con il punto-città e la legenda, tre città, niente card |
 | 4 | 4. Dal locale al nazionale | `#come-funziona` | BenefitsSection `sticky`, niente card |
 | 5 | 6. Gli altri mondi ITnode | — | Bridge: riga editoriale con due link |
 | 6 | 5. Chiusura e form | `#chiusura`; form `#richiesta` | CTASection `form` + ContactForm |
@@ -85,7 +88,7 @@ Note:
 - **Sottotitolo e DR2.** Le LG scrivono «Siti Immersivi Interattivi», con l'ordine invertito rispetto al nome del prodotto. Se l'utente approva la DR2 del brief, il testo diventa «Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per il tessuto imprenditoriale e commerciale italiano.», con link da «Siti Interattivi Immersivi» a `/siii/` (mappa SEO). Finché la decisione manca, resta verbatim e senza link.
 - CTA secondaria: la strategia di conversione propone «Porta la tua attività in Città Digitali» (39 caratteri). La guida di stile fissa un massimo di 28 caratteri, quindi propongo «Aderisci a Città Digitali ↓», da confermare con cro-specialist. Evito «Entra in Città Digitali» nella hero perché, accanto a «Visita il portale ↗», si confonderebbe con il link al portale.
 - Parola lunga nel sottotitolo: «imprenditoriale» (15 caratteri). Alla scala del sottotitolo non crea problemi.
-- **Dominio visibile vicino alla CTA** (proposta O4 di seo-content, non applicata). Sono favorevole nella forma più leggera: «cittàdigitali.it» in `label` mono sotto le CTA, come l'indirizzo dei portali in Contatti. Nessuna parola nuova, e la grafia con l'accento si impara proprio dove si cerca il portale. Decidono ux-designer e il creative-director, perché cambia la composizione della hero (direzione visiva §7.6).
+- **Dominio visibile vicino alla CTA** (proposta O4 di seo-content, non applicata). Sono favorevole nella forma più leggera: «cittàdigitali.it» in `label` mono sotto le CTA, come testo semplice e non come link. Nessuna parola nuova, e la grafia con l'accento si impara proprio dove si cerca il portale. Anche ux-designer è favorevole: la riga non aggiunge fermate al Tab e resta leggibile dagli screen reader, perché il nome della CTA non contiene il dominio (review della carta della pagina, §6). Decide il creative-director, perché cambia la composizione della hero (direzione visiva §7.6).
 
 ## 2. L’Italia in un unico portale
 
@@ -114,6 +117,23 @@ Note:
 | Tracciamento | `data-track="outbound_click"`, `data-cta-id="cd-portale-tutte-le-citta"`, `data-cta-location="luoghi"` (come le tre città della sezione), `data-outbound-type="portale"`, `data-destination-id="citta-digitali"` (piano di misurazione §5.1) |
 | Stato | Nel sito dal commit 0a61546; `data-cta-location` corretto da `portale` a `luoghi` nel commit ce276be. Verificato il 2026-10-05: testo, nome accessibile e indirizzo come sopra |
 
+**Legenda della carta** · `figcaption` · `label` mono · testo di copywriter-brand (L1)
+> Ogni punto è una città di Città Digitali
+
+**Descrizione della carta** · `aria-label` della carta (`role="img"`) · testo di copywriter-brand (L6), decisione di ux-designer
+> Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia.
+
+**Dettagli della carta**
+| Campo | Valore |
+|---|---|
+| Che cosa mostra | I punti delle città dell'elenco di brand-strategist, letto dalla pagina «Tutte le città» del portale (`citta-digitali-elenco.md`), e i nodi delle tre città delle schede, che si accendono dalla scheda. Nessun nome sulla carta (direzione visiva 0.7, §1.4, «Il punto-città», regola 9) |
+| Legenda nel sorgente | `Ogni punto è una città di&nbsp;Città&nbsp;Digitali`: con gli spazi unificatori il nome del marchio non si spezza e la preposizione resta con il nome. Niente punto finale (tone of voice §8), niente numero, niente link |
+| A capo della legenda | Una riga da 360 px; due a 320 px, «Ogni punto è una città / di Città Digitali» (misurato sullo staging il 2026-10-05, come nella review di copywriter-brand) |
+| Come si costruisce la descrizione | Dagli stessi dati dei punti: `describeCittaDigitali()` in `src/lib/citta-digitali.ts`. Regioni da nord a sud; «la maggior parte in» solo se una regione ha più della metà delle città, altrimenti «più che altrove in» (L4). Su questa pagina nessun nome: la carta non ne disegna, e le tre città sono già nel testo prima e nelle schede subito dopo. «Tra queste: …» resta solo nella Home, dove i nomi sono disegnati (L6) |
+| Ordine di lettura | H2, testo, statement, link all'elenco, carta con la descrizione, legenda, schede (ux-designer, review della carta della pagina, §3.5) |
+| Quando arriva l'elenco in testo | La descrizione si toglie, e carta e legenda tornano insieme `aria-hidden`, se l'elenco è completo, raggruppato per regione, nella stessa sezione e visibile, oppure in un `<details>` con un sommario chiaro (ux-designer, review della carta della pagina, §3.4) |
+| Stato | Nel sito dal commit c98f565. Verificato sullo staging del 2026-10-05: descrizione di 138 caratteri e legenda come sopra |
+
 **Schede delle città** · copy · da nord a sud, come nelle LG
 | Campo | Città 1 | Città 2 | Città 3 |
 |---|---|---|---|
@@ -135,7 +155,8 @@ Note:
 - Le righe contengono un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti). La §18 non prevede una CTA: «Esplora ↗» è ripresa dalla §15 per coerenza con Puglia Digitale.
 - **Niente foto e niente riga del dominio.** La v1.1 prevedeva per ogni città il dominio visibile e una foto (slot `luogo-*`). La composizione della direzione visiva (§7.6: carta d'Italia, città allineate alla latitudine del loro nodo) non li ha, e gli slot non esistono in `src/data/asset-slots.ts`. Il dominio della città resta nel nome accessibile di «Esplora».
 - **Portali delle città da verificare.** seo-technical trova indizi di indirizzi superati per i tre portali (review del dominio, oss. 2). Se dopo la verifica un link passa alla pagina della città su cittàdigitali.it, il testo visibile resta «Esplora ↗» e il nome accessibile diventa «Esplora [città] su cittàdigitali.it (si apre in una nuova scheda)». L'URL lo indica seo-technical.
-- **Sezione in revisione** (direzione visiva 0.6, §7.6). Prima del go-live la carta passa al punto-città, con tutte le città del portale. Finché l'elenco in testo non le sta accanto, la carta avrà una descrizione costruita dai dati, come quella della Home (modello di copywriter-brand, review della legenda, L4). Quando il testo della pagina «Tutte le città» è confermato arriva l'elenco completo, per regione, con fonte e data (seo-content, review sull'omonimia, §5; ux-designer, §3.2). Scrivo io i testi dei due elementi quando la carta e l'elenco sono decisi.
+- **Carta e legenda** (dal commit c98f565). La legenda descrive ogni punto e non promette che l'elenco sia completo: resta vera se il portale aggiunge una città prima che la carta si aggiorni (L1). La descrizione non ha numeri e non nomina città: un numero è un claim, e i nomi dell'elenco sono ancora da verificare (`citta-digitali-elenco.md` §4).
+- **Elenco in testo, il prossimo passo.** Quando il testo della pagina «Tutte le città» è confermato arriva l'elenco completo, per regione, con fonte e data (seo-content, review sull'omonimia, §5; ux-designer, §3.2 della review della carta e §3.4 della review della carta della pagina). Ne scrivo io i testi, con i criteri della direzione visiva (§1.4, «Elenco in testo»).
 
 ## 3. Video
 
@@ -284,6 +305,7 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Chiusura | «Entra in Città Digitali» come titolo del form, senza link | `struttura-pagine.md` CD-5 |
 | Schede delle città | Senza foto e senza riga del dominio | Direzione visiva §7.6 |
 | Meta description | Versione del 2026-10-05, con ITnode | seo-content, review sull'omonimia, O3 |
+| Carta della sezione 2 | Legenda L1; descrizione L6, senza nomi | Direzione visiva 0.7 (§1.4, regola 9); ux-designer, review della carta della pagina (§3); copywriter-brand, L1 e L6. La direzione visiva 0.7 (§1.4 e §7.6) cita ancora la descrizione a tre nomi (V3) |
 
 ## Verifica sul sito (2026-10-05)
 
@@ -291,8 +313,9 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 - Build `dist/` del 2026-10-05, che corrisponde al commit 2a038de. L'ho copiata e servita in locale. Dopo quel commit `src/` è cambiato in un solo punto, che non tocca i testi: `data-cta-location` del link all'elenco (commit ce276be, controllato sul codice).
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/citta-digitali.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
+- **Seconda verifica (v1.3)**, dopo la carta con il punto-città: staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit c98f565. Stesso metodo.
 
-**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici: title, meta, titoli, paragrafi, CTA, nomi accessibili, link e `cta_id` (53 testi su 53 trovati dallo script; title e meta controllati a parte). Rispetto alla v1.1 ho allineato otto punti: in ognuno il sito seguiva una decisione registrata.
+**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici: title, meta, titoli, paragrafi, CTA, nomi accessibili, legenda e descrizione della carta, link e `cta_id` (55 testi su 55 trovati dallo script sullo staging; title e meta controllati a parte). Rispetto alla v1.1 ho allineato nove punti: in ognuno il sito seguiva una decisione registrata.
 
 | Punto | v1.1 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -304,14 +327,15 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Schede delle città | Dominio visibile e foto | Regione con coordinate, niente foto | Direzione visiva §7.6 |
 | Chiusura | Link «Entra in Città Digitali →» | Titolo del form, senza link | `struttura-pagine.md` CD-5 |
 | Nome accessibile dell'H1 | Non indicato | «Città Digitali – Le attività del territorio, online senza perdere radici.» | ux-designer, T6 |
+| Carta della sezione 2 | Contorno con i tre nodi, `aria-hidden` | Punto-città, legenda L1, descrizione L6 (v1.3) | Direzione visiva 0.7; ux-designer; copywriter-brand (commit c98f565) |
 
 **Differenze aperte.**
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
 | V1 | Sito: link «Tutte le città sul portale», `data-cta-location` | Nella build verificata c'era `portale`, un valore fuori dall'elenco del piano di misurazione | **Chiusa il 2026-10-05**: `luoghi`, come le tre città della sezione (snippet di cro-specialist, commit ce276be). Nessun testo cambia | Sessione principale, su indicazione di cro-specialist |
-| V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citano ancora l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓» e, per ogni città, dominio e foto | Allineare il documento al sito. Il sito non cambia | ux-designer |
-| V3 | `docs/creativa/direzione-visiva.md` §7.6, riga 5 | Cita ancora la CTA «Entra in Città Digitali →» sopra il form | Allineare il documento al sito. Il sito non cambia | creative-director |
+| V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citavano l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓» e, per ogni città, dominio e foto | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
+| V3 | `docs/creativa/direzione-visiva.md` 0.7, §1.4 e §7.6 | La riga 5 di §7.6 cita ancora la CTA «Entra in Città Digitali →» sopra il form. §1.4 e la riga 3 di §7.6 danno alla carta di questa pagina la descrizione a tre nomi, mentre il sito ha L6, senza nomi (lo chiede anche ux-designer) | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V4 | `docs/seo/mappa-keyword-url.md` §3.4 | Usa ancora `#entra` per il form e cita le «immagini dei territori» tra i materiali mancanti | Allineare il documento al sito. Il sito non cambia | seo-content |
 
 ## Testi originali mancanti
@@ -329,7 +353,7 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, statement
 | Paragrafi e tabelle | 20 | 255 | 1.324 | **60,6** |
 | Tutti i testi principali | 38 | 347 | 1.875 | 67,8 |
 
-Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 39 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi non cambiano (il dominio con l'accento ha le stesse lettere); il totale sale di una frase perché conta il titolo del form.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 39 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi non cambiano (il dominio con l'accento ha le stesse lettere); il totale sale di una frase perché conta il titolo del form. Legenda e descrizione della carta sono fuori da questi insiemi, perché sono testi dell'interfaccia e dell'accessibilità: da sole hanno Gulpease 85,2 (legenda, 40 caratteri) e 66,7 (descrizione, 138 caratteri).
 
 ## Ipotesi da validare
 
@@ -353,8 +377,8 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **Utente, tramite la sessione principale** (DR2): allineare il sottotitolo a «Siti Interattivi Immersivi».
 - **Cliente e cro-specialist** (N10): titolo 05 «La forza di un portale ad alto traffico» solo con dati documentati, altrimenti «La forza di un portale nazionale».
 - **cro-specialist**: etichetta della CTA secondaria della hero.
-- **ux-designer e creative-director**: dominio visibile vicino alla CTA della hero (O4 di seo-content; parere favorevole nelle note della sezione 1).
-- **ux-designer, creative-director, seo-content**: allineare i propri documenti (V2, V3, V4).
+- **creative-director**: dominio visibile vicino alla CTA della hero (O4 di seo-content; parere favorevole mio e di ux-designer, note della sezione 1).
+- **creative-director e seo-content**: allineare i propri documenti (V3, V4).
 
 ## Fonti consultate
 
