@@ -3,9 +3,9 @@ titolo: Review SEO dei contenuti · omonimia di «Città Digitali» e dominio de
 owner: seo-content
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md (glossario, omonimie, A1, A2, D1, D5, S7, X1), docs/strategia/citta-digitali-elenco.md (§1, §2, §4, §5), docs/seo/ricerca-keyword.md (§2.1), docs/seo/mappa-keyword-url.md (§3.4, §4), docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md (§5.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, dist/ (build del commit eb691ee, sola lettura), src/ (sola lettura), WebSearch del 2026-10-05 (URL nel testo e in Fonti)]
+fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md (glossario, omonimie, A1, A2, D1, D5, S7, X1), docs/strategia/citta-digitali-elenco.md (§1, §2, §4, §5), docs/seo/ricerca-keyword.md (§2.1), docs/seo/mappa-keyword-url.md (§3.4, §4), docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md (§5.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/creativa/direzione-visiva.md (0.8, §7.6), dist/ (build dei commit eb691ee e 5c4a6cb, sola lettura), src/ (sola lettura), WebSearch del 2026-10-05 (URL nel testo e in Fonti)]
 ---
 
 # Review SEO dei contenuti · omonimia di «Città Digitali» (Fase 5)
@@ -40,10 +40,22 @@ fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md
 | Documenti seo-content | Corretti: 4 citazioni in `ricerca-keyword.md`, 6 in `mappa-keyword-url.md`. Una lettura era sbagliata (i «due domini» di Città Digitali) ed è corretta (§1) |
 | Dominio nel sito | Conforme dopo eb691ee. In `dist/` il dominio senza accento non compare mai, in nessuna delle 8 pagine. I link e il JSON-LD usano il punycode, il testo visibile l'accento |
 | Rischio di confusione nella ricerca di marca | Alto sugli indirizzi e sull'attribuzione, medio nelle SERP (§2) |
-| Title, H1, testi | Title, H1 e Blocco E vanno bene così (§3). Nuova meta description con ITnode, già nella mappa e da applicare (O3). Consigliato il dominio visibile vicino alla CTA della hero (O4) |
+| Title, H1, testi | Title, H1 e Blocco E vanno bene così (§3). Nuova meta description con ITnode applicata (O3). Dominio visibile sotto la CTA della hero applicato (O4, chiusa) |
 | Dati strutturati | Il nodo Brand è corretto. Tre proposte a seo-technical (O6) |
-| Documenti di altri membri | 7 file citano ancora il dominio senza accento (O7) |
+| Documenti di altri membri | Allineati: il dominio senza accento resta solo come avvertenza sull'omonimo (O7, chiusa) |
 | Elenco delle città | Un solo elenco su `/citta-digitali/`, nessuna pagina locale (§5) |
+
+## Stato delle osservazioni (aggiornato il 2026-10-05)
+
+| Osservazione | Stato | Riferimento |
+|---|---|---|
+| O1 · Dominio senza accento | Aperta: dipende dal cliente e dalla verifica whois | — |
+| O2 · Definizione su sito, portale e profili | Aperta: dopo le risposte a B4 e D5 | — |
+| O3 · Meta description con ITnode | **Applicata** | `src/data/pages.ts`, commit 73b041c; copy deck di Città Digitali |
+| O4 · Dominio sotto la CTA della hero | **Chiusa**: approvata dal creative-director e applicata | Commit 5c4a6cb; direzione visiva 0.8 §7.6 |
+| O5 · www2 con «Le Città Digitali» | Aperta: dipende dal cliente | — |
+| O6 · Dati strutturati del Brand | Aperta: a seo-technical | — |
+| O7 · Documenti del team | **Chiusa**: i sette documenti scrivono cittàdigitali.it | Verifica del 2026-10-05 |
 
 ## 1. Correzioni nei miei documenti
 
@@ -122,9 +134,9 @@ fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md
 | Elemento | Raccomandazione | Perché |
 |---|---|---|
 | Title di `/citta-digitali/` | **Resta** «Città Digitali: le attività del territorio online \| ITnode» (58 caratteri) | Il nome è in testa, per la query di marca. «Le attività del territorio» lo separa dal significato generico. ITnode è nel suffisso. Una variante con «tour virtuali» sovrapporrebbe la pagina a `/siii/`, l'unica che ha «tour virtuale» come tema principale (ricerca keyword §4) |
-| Meta description | **Nuova, con ITnode** (O3): già nella mappa 0.3, da applicare in `pages.ts` | È il riassunto che i motori riprendono più spesso |
+| Meta description | **Nuova, con ITnode** (O3): applicata (commit 73b041c) | È il riassunto che i motori riprendono più spesso |
 | H1 | **Resta** «Città Digitali» + «Le attività del territorio, online senza perdere radici.» | Il descrittore separa il nome dal significato generico. ITnode nell'H1 non serve: lo danno il title, il nome del sito, il Blocco E e i dati strutturati. Niente testo nascosto nell'H1 |
-| Hero | **Dominio visibile** vicino a «Visita il portale» (O4) | Insegna la grafia giusta proprio dove si cerca il portale |
+| Hero | **Dominio visibile** sotto «Visita il portale» (O4): applicato (commit 5c4a6cb) | Insegna la grafia giusta proprio dove si cerca il portale |
 | Blocco E («L'Italia in un unico portale») | **Resta identico** | È la definizione che lega il nome a ITnode e a cittàdigitali.it, con la formula prudente di A1 e D5. Va ripresa uguale sul portale e sui profili (O2) |
 | Altri testi della pagina | **Regole.**<br>Nel testo sorgente sempre «Città Digitali»: plurale, accento, due maiuscole. Maiuscolo o maiuscoletto solo da CSS.<br>Mai «città digitale», «Citta' Digitali» o «CITTA' DIGITALI».<br>Nessuna citazione né link a cittadigitali.it, lecittadigitali.it, Leadstone, cittadigitale.it.<br>Nessun contenuto sul significato generico (smart city): non è l'intento della pagina. | §2.2 |
 | Capitolo 03 della Home | **Resta com'è**: H3 «Città Digitali», testo con Varese, Altamura e Caltanissetta, CTA «Esplora Città Digitali» verso `/citta-digitali/`.<br>**Con la carta a 45 puntini** (proposta di ui-designer del 2026-10-05) vanno bene i nomi sulla carta dove c'è spazio e una legenda testuale con un link all'elenco. Non serve un elenco testuale delle città nella Home, né visibile né nascosto: l'elenco completo sta su `/citta-digitali/` (§5) | Il legame con ITnode lo danno «I tre mondi ITnode» e il Blocco A della Home. Una pagina, un intento. Niente testo nascosto |
@@ -170,8 +182,9 @@ fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md
   4. Alla stessa condizione, la timeline della Home può nominare «Le Città Digitali» come tappa del fondatore. Oggi non la nomina. Decidono copywriter-brand e brand-strategist.
   5. Se può, il cliente aggiorna le schede delle directory con la stessa definizione, senza i claim X1. Non dipende da noi.
 
-### O3 · [SUGGERIMENTO] Meta description di `/citta-digitali/` con ITnode
+### O3 · [SUGGERIMENTO] Meta description di `/citta-digitali/` con ITnode · applicata
 
+- **Stato: applicata il 2026-10-05.** È in `src/data/pages.ts` (commit 73b041c) e nella copia del copy deck di Città Digitali. La build del commit 5c4a6cb la pubblica.
 - **Dove.** `src/data/pages.ts`, voce `citta-digitali.description`; mappa keyword→URL §2 e §3.4.
 - **Problema.** La meta attuale non nomina ITnode. Nella SERP di marca il legame si vede solo dal nome del sito e dal suffisso del title, che Google può riscrivere.
 - **Motivazione.** I motori, anche quelli generativi, usano spesso la meta come riassunto della pagina. Con l'attribuzione a iComm Lab che circola (O2), ripetere il legame con ITnode costa poco.
@@ -185,8 +198,13 @@ fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md
   - copywriter-content aggiorna la copia nel copy deck di Città Digitali (sezione Metadati).
   - Se la sessione principale o il creative-director hanno obiezioni, si torna alla meta precedente: il sito resta comunque conforme.
 
-### O4 · [SUGGERIMENTO] Il dominio con l'accento visibile vicino alla CTA della hero
+### O4 · [SUGGERIMENTO] Il dominio con l'accento visibile vicino alla CTA della hero · chiusa
 
+- **Stato: chiusa il 2026-10-05.**
+  - Approvata dal creative-director, con il parere favorevole di copywriter-content e ux-designer.
+  - Applicata nel commit 5c4a6cb. Sotto «Visita il portale ↗» compare «cittàdigitali.it» come didascalia in testo semplice, non come link (direzione visiva 0.8 §7.6).
+  - Il testo viene da `portal.display`. L'ordine nel DOM è pulsante, dominio, «Aderisci».
+  - Verificata nella build del commit 5c4a6cb: la didascalia c'è.
 - **Dove.** `/citta-digitali/`, hero, CTA «Visita il portale».
 - **Problema.** Nella hero il portale è un pulsante senza indirizzo. Il dominio con l'accento si vede solo nel Blocco E, dopo il video, e nel footer.
 - **Motivazione.** Chi arriva dalla SERP di marca cerca il portale proprio lì. Vedere «cittàdigitali.it» insegna la grafia giusta (O1). Non è un fattore di posizionamento.
@@ -218,9 +236,10 @@ fonti: [docs/brief/linee-guida.md (§17–§22), docs/brief/brief-consolidato.md
 - **Da non fare.** Nessun `logo` del Brand finché non arriva il marchio vettoriale ufficiale (verdetto G4 §6, C5).
 - **Motivazione.** Il markup deve corrispondere al testo visibile. Con omonimi così vicini, `sameAs` e `description` sono i due segnali che separano le entità.
 
-### O7 · [IMPORTANTE] Sette documenti del team citano ancora il dominio senza accento
+### O7 · [IMPORTANTE] Sette documenti del team citano ancora il dominio senza accento · chiusa
 
-- **Dove.** Righe al 2026-10-05:
+- **Stato: chiusa il 2026-10-05.** Ho ricontrollato i sette file: scrivono tutti cittàdigitali.it. Il dominio senza accento resta solo nelle avvertenze sull'omonimo, che sono corrette.
+- **Dove.** Righe al 2026-10-05, prima delle correzioni:
 
   | Owner | File e righe | Che cosa |
   |---|---|---|
@@ -288,12 +307,11 @@ Valgono quando il testo della pagina «Tutte le città» è confermato e i nomi 
 **Conforme, con raccomandazioni.**
 - **Il sito.** Dopo eb691ee scrive e linka il portale giusto in ogni pagina. `/citta-digitali/` distingue il nome dagli omonimi nel title, nell'H1, nel Blocco E e nei dati strutturati.
 - **Nessuna osservazione blocca la pubblicazione.**
+- **Fatto:** O3 applicata, O4 e O7 chiuse. Il sito è anche protetto da `check:seo`.
 - **Restano:**
   - due rischi che il sito da solo non chiude: O1 e O2, che dipendono dal cliente;
-  - due miglioramenti piccoli: O3 e O4;
   - una pulizia sul portale: O5;
-  - le proposte a seo-technical: O6;
-  - l'allineamento dei documenti del team: O7. Il sito è già protetto da `check:seo`.
+  - le proposte a seo-technical: O6.
 
 Il verdetto di gate spetta al creative-director.
 
@@ -338,16 +356,11 @@ Consultate il 2026-10-05, tramite gli estratti dei risultati di WebSearch. Le pa
 - **Per brand-strategist:**
   - la definizione ufficiale dopo B4 e D5 (O2);
   - gli otto comuni in comune con puglia-digitale.it, come indizio per D1 (§5).
-- **Per copywriter-content e ux-designer:** O4.
 
 ## Decisioni richieste
 
 - **Utente**, con il cliente: registrare il dominio senza accento, se è libero (O1).
-- **Sessione principale:**
-  - applicare la meta di O3 in `src/data/pages.ts`;
-  - coordinare la correzione di O7 fra gli owner;
-  - aggiungere le domande per il cliente all'elenco del verdetto G4 §6.
+- **Sessione principale:** aggiungere le domande per il cliente all'elenco del verdetto G4 §6. Meta di O3 e correzioni di O7: fatte.
 - **seo-technical:** O6. Il controllo di regressione di O7 è già nel repository (commit d419d0d).
-- **copywriter-content:** la copia della meta nel copy deck (O3); O4 insieme a ux-designer, con il creative-director se cambia la composizione della hero.
 - **brand-strategist:** O2, dopo B4 e D5.
-- **seo-content:** fatto. Correzioni ai miei documenti (§1) e nuova meta nella mappa (O3).
+- **seo-content:** fatto. Correzioni ai miei documenti (§1), nuova meta nella mappa (O3), O4 chiusa.

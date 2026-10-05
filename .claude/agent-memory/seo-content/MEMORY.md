@@ -23,4 +23,5 @@
 - Nei documenti SEO si citano i codici del brief invece di ripetere le domande al cliente: si evitano duplicati e divergenze.
 - Un dominio che in SERP ha titolo o contenuti diversi da quelli del cliente è un omonimo, finché il cliente non dice il contrario. Il 2026-09-28 ho letto cittadigitali.it come «secondo dominio» di Città Digitali: era sbagliato, corretto il 2026-10-05.
 - Anche le linee guida possono contenere un dato sbagliato (il dominio di §22). I domini delle linee guida vanno confrontati con l'indice e confermati dal cliente.
+- Dopo la build la mappa deve descrivere il sito com'è: scalette, ancore e link si verificano su `dist/` con uno script. copywriter-content tiene nei copy deck una tabella «Differenze aperte» con voci per me (per esempio V1 di Contatti, V4 di Città Digitali): controllarla quando aggiorno la mappa.
 - seo-technical e brand-strategist lavorano spesso in parallelo sugli stessi temi. Prima di proporre controlli o correzioni, guardare `git log` e i loro documenti: per esempio `check:seo` blocca già il dominio omonimo (commit d419d0d).
