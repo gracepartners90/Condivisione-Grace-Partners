@@ -34,3 +34,11 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Verificare dati pubblicati senza browser (localhost non raggiungibile): grep su `dist/**/*.html` con una regex che prende ogni occorrenza del formato (qui `\d+\.\d+°` seguito da N, S, E o O), più i valori vecchi, più i formati alternativi (virgola decimale, testo per screen reader); l'immagine social si guarda con Read. Contare le occorrenze attese (per esempio la firma del footer in tutte e otto le pagine).
 - `dist/` è la build di staging: le varianti «in pubblicazione» (`PUBLIC_SLOT_MODE=publish`) non ci sono. Verificarle per calcolo e rimandare la verifica a vista alla build di produzione.
 - Dopo un cambio di dati, controllare i commenti vicini: qui il commento del tipo `Place` diceva ancora «4 digits».
+
+## Lezioni dall'elenco delle città di Città Digitali (2026-10-05)
+- Distinguere gli errori di WebFetch: «EGRESS_BLOCKED» = blocco di policy (non riprovare, non aggirare); «ENOTFOUND» = il dominio non si risolve, quindi un possibile link morto da segnalare. Così è emerso che il portale delle LG (cittadigitali.it, senza accento) non esiste più ed è un omonimo.
+- Per ogni dominio del cliente provare anche la variante con l'accento (IDN, punycode `xn--…`). WebSearch accetta il punycode in `allowed_domains`.
+- I portali del cliente contengono dati utili anche ad altri dossier: pagine «dati aziendali» (REA, PEC) e «chi siamo» (ruoli). Segnalarli come piste `[DA VERIFICARE]`, senza applicarli.
+- Controlli su un elenco letto da un riassunto: il numero dichiarato dalla fonte deve coincidere con i nomi elencati; le pagine trovate una per una devono essere tutte nell'elenco. Le ricerche che contengono già i nomi tendono a confermarli per eco: valgono poco.
+- Coordinate in serie: se due comuni risultano con lo stesso valore (Martina Franca = Mottola), il valore è da scartare. Nessun sostituto «a memoria».
+- Per tante voci (45 città) conviene WebSearch a gruppi di 9 in parallelo, una città per ricerca, con `allowed_domains` = en.wikipedia.org; poi un'appendice con i dati pronti, controllata riga per riga con la tabella.
