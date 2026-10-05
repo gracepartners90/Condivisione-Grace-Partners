@@ -11,7 +11,7 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Nella v1.0 avevo scritto «Un progetto ITnode» per Puglia Digitale e Città Digitali: è un'attribuzione non confermata (A1). Anche eyebrow e meta possono contenere claim: controllarli come il resto.
 
 ## Ambiente
-- Bloccati: itnode.it, tutti i portali (*digitale.it/.com, cittadigitali.it e cittàdigitali.it), lapugliadigitale.it, railway.app (video), LinkedIn, consiglio.puglia.it, giacomolenoci.it, leccesette.it, tuttifranchising.it. WebFetch quasi sempre bloccato; WebSearch funziona: usare le sintesi dei risultati, citare URL e data, marcare [DA VERIFICARE].
+- Bloccati: itnode.it, tutti i portali (*digitale.it/.com, cittàdigitali.it e l'omonimo senza accento), lapugliadigitale.it, railway.app (video), LinkedIn, consiglio.puglia.it, giacomolenoci.it, leccesette.it, tuttifranchising.it. WebFetch quasi sempre bloccato; WebSearch funziona: usare le sintesi dei risultati, citare URL e data, marcare [DA VERIFICARE].
 - La scratchpad è condivisa con altri membri: lavorare solo in `scratchpad/copywriter-content/`.
 - PIL non è installato: per le dimensioni delle immagini usare `file` (JPEG, PNG) o leggere l'header WebP con struct.
 
@@ -28,6 +28,15 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Confrontare il sito con il copy deck riga per riga: la sessione principale può reintrodurre il testo originale del cliente che il copy deck aveva ammorbidito per veridicità (caso «Ha creato Città Digitali e Puglia Digitale», anche nel JSON-LD).
 - Prima di scrivere una review, leggere quelle già in `docs/review/` della stessa data (brand-strategist, seo-technical) e rimandare alla loro numerazione invece di duplicare.
 - Una citazione verbatim riusata su un’altra pagina può perdere l’antecedente («È questo il futuro…»): verificare il senso nel nuovo contesto.
+- Spazio prima della virgola nei nomi accessibili («Città Digitali , portale…»): non dipende solo dall'a capo. Chromium tratta lo `sr-only` (position: absolute) come blocco e aggiunge uno spazio se il testo nascosto comincia con la punteggiatura. Il separatore « – » non lo produce. ux-designer l'ha già valutato (verifica del 2026-09-28, A7: non si sente, nessuna azione): non risegnalarlo, al massimo annotarlo.
+
+## Allineare i copy deck al sito (lezione del 2026-10-05, Fase 5)
+- A ogni incarico cercare in `docs/review/` le richieste rivolte a me («copywriter-content», «copy deck … va allineato»): alcune decisioni (K2 riga del telefono, T11 breadcrumb al posto dell'occhiello) erano rimaste non applicate nei miei deck per una settimana.
+- Prima di dire che il sito sbaglia, cercare la decisione: direzione visiva §7.x, `struttura-pagine.md`, review di accessibilità. Spesso il sito segue una decisione presa dopo il copy deck: allora si allinea il deck e si cita la fonte.
+- Se cambia l'ordine delle sezioni, tenere la numerazione del deck (altri documenti la citano) e aggiungere la colonna «Ordine nel sito».
+- Il dominio omonimo (senza accento) non va scritto alla lettera nemmeno nelle note: descriverlo («il dominio senza accento delle LG §22»), così né un copia-incolla né una ricerca lo ripescano.
+- Metodo collaudato: copiare `dist/` in `scratchpad/copywriter-content/` e servirla con `DIST_DIR=… PREVIEW_AUTH=off PORT=4391 node scripts/serve.mjs` (niente corse con le build degli altri). `verify-deck.mjs` controlla ogni blocco `>` e ogni tabella di copy contro `textContent`, nomi e descrizioni dell'albero di accessibilità (CDP), `href`, `data-cta-id` e `alt`.
+- `copycheck.py` non legge come metadati una tabella che segue un'etichetta in grassetto: le lunghezze di una seconda tabella di title e meta vanno contate a parte.
 
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

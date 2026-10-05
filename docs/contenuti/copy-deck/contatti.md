@@ -5,7 +5,7 @@ contributi: [copywriter-brand, seo-content, seo-technical, cro-specialist, ux-de
 stato: in revisione
 versione: 1.4
 aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (S1–S8, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§2.1, §2.2, §5.3, §5.4), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/microcopy.md, docs/creativa/direzione-visiva.md (§7.7, §7.8), docs/ux/struttura-pagine.md (§5), docs/strategia/coordinate-luoghi.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-09-28-sito-accessibilita-ux-designer.md (A7, §4), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, src/pages/contatti.astro, src/data/pages.ts, src/data/site.ts, src/data/media.ts, dist/ del 2026-10-05 (commit 2a038de)]
 ---
 
 # Copy deck · Contatti
@@ -14,6 +14,7 @@ Pagina `/contatti/`. Copre la sezione 22 delle linee guida (LG) e l'introduzione
 
 **Novità della v1.4 (2026-10-05)**
 - **Dominio di Città Digitali.** È cittàdigitali.it, con l'accento; nei link `https://xn--cittdigitali-19a.it`. Il dominio senza accento indicato dalle LG (§22) è di un progetto omonimo di altri: non si cita e non si linka (conferma dell'utente del 2026-10-05; brief S7).
+- **Dominio di Puglia Digitale.** lapugliadigitale.it, come nelle LG, confermato dall'utente il 2026-10-05: il link non cambia.
 - **Verifica sul sito costruito.** Il documento ora descrive la pagina com'è: hero senza occhiello, coordinate e nota sul profilo LinkedIn nei recapiti, riga «Preferisci parlarne a voce?» sotto il form, portali con il nome come link, dati societari nell'ordine del sito. Le differenze ancora aperte sono nella sezione «Verifica sul sito».
 
 ## Come leggere questo documento
@@ -43,7 +44,7 @@ Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comod
 | Meta description | Parliamo del tuo prossimo spazio digitale: SIII, Puglia Digitale o Città Digitali. ITnode, Via Sant’Anna, 34, Acquaviva delle Fonti (BA). Tel. 080 2466520. | 155 |
 
 Note:
-- **Raccomando la versione del sito** (vedi «Verifica sul sito», V1). Il title segue lo schema delle specifiche SEO (§2.1, «‹Titolo pagina› \| ITnode»), da cui si ricava anche `og:title`. L'indirizzo con la virgola è quello di footer, pagina e dati strutturati. L'avevo proposto il 2026-09-28 (review di bozze, K3 e K4), e lo chiede anche seo-technical (specifiche §2.2).
+- **Raccomando la versione del sito** (vedi «Verifica sul sito», V1). Il title segue lo schema delle specifiche SEO (§2.1, «‹Titolo pagina› | ITnode»), da cui si ricava anche `og:title`. L'indirizzo con la virgola è quello di footer, pagina e dati strutturati. L'avevo proposto il 2026-09-28 (review di bozze, K3 e K4), e lo chiede anche seo-technical (specifiche §2.2).
 - Decide seo-content, owner dei metadati. Il sito non va riportato alla versione della mappa.
 
 ## Struttura della pagina
@@ -177,7 +178,7 @@ Note:
 - **Nuova scheda.** È annunciata con una descrizione (`aria-describedby`, un solo elemento nella pagina con il testo «Si apre in una nuova scheda.»). Così nell'elenco dei titoli lo screen reader legge «Città Digitali, portale cittàdigitali.it», senza l'avviso (ux-designer, review di accessibilità del 2026-09-28, A7). In Chromium il nome calcolato ha uno spazio prima della virgola: non si sente, nessuna azione (verifica di accessibilità, A7).
 - **Questa forma sostituisce quella della v1.3**, che aveva un link a parte con il dominio, per di più senza accento. Il sito la usa dal 2026-09-28.
 - **Dominio di Città Digitali** confermato dall'utente il 2026-10-05 (brief S7): nel testo «cittàdigitali.it», con la «à» composta; nel link il punycode, senza www (specifiche SEO §5.3).
-- **Dominio di Puglia Digitale** [DA VERIFICARE]: l'indice di ricerca non restituisce pagine di lapugliadigitale.it (seo-technical, review del dominio, oss. 2; domanda al cliente). Se cambia, cambiano qui dominio visibile, testo nascosto e URL.
+- **Dominio di Puglia Digitale** confermato dall'utente il 2026-10-05: lapugliadigitale.it, come nelle LG §22 (brief S7). Il link resta `https://www.lapugliadigitale.it`, con www come nelle LG, finché la verifica da una rete normale non dice altro (specifiche SEO §5.4). Il dominio quasi omonimo, con il trattino, è di un'altra organizzazione: non si cita e non si linka (brief, omonimie).
 
 ## 6. Dati societari
 
@@ -196,7 +197,7 @@ Note:
 | PEC | [DA VERIFICARE: valore candidato nel brief, S4] Facoltativa: non è tra i dati obbligatori della soglia 5 |
 
 Note:
-- **Nel sito oggi** compaiono ragione sociale, partita IVA e sede operativa. «Registro delle imprese e REA» e «Capitale sociale» compaiono quando i valori sono inseriti in `src/data/site.ts` (`rea`, `shareCapital`). Sede legale e PEC non hanno ancora un campo: servono solo se la sede legale è diversa da quella operativa e se il cliente vuole pubblicare la PEC.
+- **Nel sito oggi** compaiono ragione sociale, partita IVA e sede operativa. «Registro delle imprese e REA» e «Capitale sociale» compaiono quando i valori sono inseriti in `src/data/site.ts` (`rea`, `shareCapital`). Sede legale e PEC non hanno ancora un campo. Se la sede legale coincide con quella operativa basta cambiare l'etichetta in «Sede legale e operativa»; un campo nuovo serve solo se è diversa, o se il cliente vuole pubblicare la PEC.
 - Gli stessi dati vanno nel footer di tutte le pagine (§24 e soglia 5). Qui compaiono per completezza, vicino ai recapiti. Sono la condizione C02 del verdetto G4.
 - [DA VERIFICARE: se la società ha un socio unico o è in liquidazione, va indicato]
 
@@ -228,7 +229,7 @@ Link esterni: Google Maps e LinkedIn nei recapiti, i due portali nella sezione 5
 ## Verifica sul sito (2026-10-05)
 
 **Metodo.**
-- Build `dist/` del 2026-10-05, commit 2a038de: dopo la build non è cambiato nessun file di `src/`. L'ho copiata e servita in locale.
+- Build `dist/` del 2026-10-05, che corrisponde al commit 2a038de. L'ho copiata e servita in locale. Dopo quel commit `contatti.astro`, `pages.ts` e `site.ts` non sono cambiati.
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/contatti.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
 
@@ -271,7 +272,7 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - [IPOTESI: il profilo LinkedIn indicato è quello del fondatore, Giacomo Lenoci (brief F7)]
 - [IPOTESI: la sede operativa riceve visite. Il link a Google Maps ha senso solo in questo caso]
 - [IPOTESI: il link della sezione Persona non sottrae richieste. Sta dopo il form, e la sezione del fondatore in Home è seguita dalla chiusura con «Parliamone →», che riporta qui]
-- [DA VERIFICARE: risposta del portale di Città Digitali da una rete normale: risoluzione del dominio, HTTPS, forma senza www. È bloccante per il go-live del link (seo-technical, review del dominio, oss. 1)]
+- [DA VERIFICARE: risposta dei due portali da una rete normale: risoluzione del dominio, HTTPS, forma con o senza www. È bloccante per il go-live dei link (seo-technical, review del dominio, oss. 1; specifiche SEO §5.3 e §5.4)]
 
 ## Domande aperte
 
@@ -280,7 +281,6 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 3. Orari di risposta al telefono, se il cliente vuole indicarli.
 4. Tempi di risposta al form: se c'è un impegno reale (per esempio «entro due giorni lavorativi»), diventa una rassicurazione. Senza conferma non si scrive.
 5. Chi risponde alle richieste? Se è il fondatore, la sezione Persona può diventare «Ti risponde…» (sezione 4, evoluzione possibile).
-6. Il portale di Puglia Digitale è ancora lapugliadigitale.it? La domanda è già nell'elenco di seo-technical (review del dominio, oss. 2).
 
 ## Decisioni richieste
 

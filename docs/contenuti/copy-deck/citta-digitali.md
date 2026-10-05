@@ -39,7 +39,7 @@ Fa fede `docs/seo/mappa-keyword-url.md` §2 (owner seo-content). Copia per comod
 | Breadcrumb | Home › Città Digitali | — |
 
 Note:
-- **Meta description del 2026-10-05** (154 caratteri). La decide seo-content: nomina ITnode con la formula del Blocco E, contro l'attribuzione ad altri che circola nella ricerca di marca (review sull'omonimia, O3; mappa §2 e §3.4). «Siti Interattivi Immersivi» resta nel sottotitolo e nel testo.
+- **Meta description del 2026-10-05** (154 caratteri). La decide seo-content: nomina ITnode con la formula del Blocco E, perché nella ricerca di marca circola un'attribuzione del progetto ad altri (review sull'omonimia, O2 e O3; mappa §2 e §3.4). «Siti Interattivi Immersivi» resta nel sottotitolo e nel testo.
   - Prima era: «Città Digitali porta online le attività di città come Varese, Altamura e Caltanissetta con tour virtuali, Siti Interattivi Immersivi e strumenti digitali.»
 - Title, meta e breadcrumb coincidono con il sito (`src/data/pages.ts`, build del 2026-10-05).
 
@@ -58,11 +58,11 @@ Le sezioni tengono la numerazione delle versioni precedenti, perché altri docum
 
 Note:
 - **Il video viene prima del portale.** La hero finisce su un orizzonte che si apre nel video, e la carta continua il buio del video (direzione visiva §7.6).
-- **Il ponte viene prima della chiusura**, come su SIII (`struttura-pagine.md` SI-7 e SI-8): il form resta l'ultima sezione della pagina. Nella v1.1 proponevo il ponte dopo il form.
+- **Il ponte viene prima della chiusura**, come su SIII e Puglia Digitale (`struttura-pagine.md` SI-7 e SI-8): il form resta l'ultima sezione della pagina. Nella v1.1 proponevo il ponte dopo il form.
 
 ## 1. Hero
 
-**Eyebrow.** Non c'è. Sulle pagine interne il breadcrumb («Home / Città Digitali») prende il posto dell'occhiello: è una decisione della sessione principale (direzione visiva §7.8; review di accessibilità del 2026-09-28, T11). La v1.1 proponeva «Digitalizzazione territoriale», che non va reintrodotto senza una nuova decisione.
+**Eyebrow.** Non c'è. Sulle pagine interne il breadcrumb («Home / Città Digitali») prende il posto dell'occhiello: è una decisione della sessione principale (direzione visiva §7.8; review di accessibilità del 2026-09-28, T11). La v1.1 proponeva l'occhiello «Digitalizzazione territoriale»: non va reintrodotto senza una nuova decisione.
 
 **H1** · verbatim · max 72 in totale (riga 1: 14, riga 2: 56) · due righe nello stesso H1: nome alla scala piena, statement alla scala dei titoli di sezione
 > Città Digitali\
@@ -111,8 +111,8 @@ Note:
 | Testo per gli screen reader | « Città Digitali (si apre in una nuova scheda)», con lo spazio iniziale, in uno `<span class="sr-only">` subito dopo il testo visibile |
 | Icona | ↗ in SVG con `aria-hidden="true"`: il link esce dal sito e apre una nuova scheda (tone of voice §6, regola 3) |
 | Attributi | `target="_blank" rel="noopener"`, senza `noreferrer` |
-| Tracciamento | `data-track="outbound_click"`, `data-cta-id="cd-portale-tutte-le-citta"`, `data-outbound-type="portale"`, `data-destination-id="citta-digitali"`. Per `data-cta-location` cro-specialist chiede `luoghi`, come per le tre città: nel sito oggi c'è `portale` (vedi «Verifica sul sito», V1) |
-| Stato | Nel sito dal commit 0a61546. Verificato sulla build del 2026-10-05: testo, nome accessibile e indirizzo come sopra |
+| Tracciamento | `data-track="outbound_click"`, `data-cta-id="cd-portale-tutte-le-citta"`, `data-cta-location="luoghi"` (come le tre città della sezione), `data-outbound-type="portale"`, `data-destination-id="citta-digitali"` (piano di misurazione §5.1) |
+| Stato | Nel sito dal commit 0a61546; `data-cta-location` corretto da `portale` a `luoghi` nel commit ce276be. Verificato il 2026-10-05: testo, nome accessibile e indirizzo come sopra |
 
 **Schede delle città** · copy · da nord a sud, come nelle LG
 | Campo | Città 1 | Città 2 | Città 3 |
@@ -224,7 +224,7 @@ Resa: `[Valore]` in grande, sotto `[Etichetta]`, poi in piccolo «Fonte: [Fonte]
 
 ## 5. Chiusura e form
 
-**H2** · verbatim · max 80 · due frasi su due livelli tipografici (vedi nota)
+**H2** · verbatim · max 80 · due frasi in due registri (vedi nota)
 > La tua azienda merita più di una presenza online. Merita di essere esplorata.
 
 **Titolo del form** · H3 · verbatim · senza link e senza freccia · ancora `#richiesta`
@@ -288,7 +288,7 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 ## Verifica sul sito (2026-10-05)
 
 **Metodo.**
-- Build `dist/` del 2026-10-05, commit 2a038de: dopo la build non è cambiato nessun file di `src/`. L'ho copiata e servita in locale.
+- Build `dist/` del 2026-10-05, che corrisponde al commit 2a038de. L'ho copiata e servita in locale. Dopo quel commit `src/` è cambiato in un solo punto, che non tocca i testi: `data-cta-location` del link all'elenco (commit ce276be, controllato sul codice).
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/citta-digitali.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
 
@@ -309,8 +309,8 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
-| V1 | Sito: link «Tutte le città sul portale», `data-cta-location` | Nel codice c'è `portale`, un valore fuori dall'elenco del piano di misurazione. cro-specialist chiede `luoghi`, come per le tre città della stessa sezione | Snippet del piano di misurazione §5.1, in `LocationShowcase.astro`: `data-cta-location={location}`. Nessun testo cambia | Sessione principale, su indicazione di cro-specialist |
-| V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citano ancora l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓», e dominio e foto per ogni città | Allineare il documento al sito. Il sito non cambia | ux-designer |
+| V1 | Sito: link «Tutte le città sul portale», `data-cta-location` | Nella build verificata c'era `portale`, un valore fuori dall'elenco del piano di misurazione | **Chiusa il 2026-10-05**: `luoghi`, come le tre città della sezione (snippet di cro-specialist, commit ce276be). Nessun testo cambia | Sessione principale, su indicazione di cro-specialist |
+| V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citano ancora l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓» e, per ogni città, dominio e foto | Allineare il documento al sito. Il sito non cambia | ux-designer |
 | V3 | `docs/creativa/direzione-visiva.md` §7.6, riga 5 | Cita ancora la CTA «Entra in Città Digitali →» sopra il form | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V4 | `docs/seo/mappa-keyword-url.md` §3.4 | Usa ancora `#entra` per il form e cita le «immagini dei territori» tra i materiali mancanti | Allineare il documento al sito. Il sito non cambia | seo-content |
 
@@ -353,7 +353,6 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **Utente, tramite la sessione principale** (DR2): allineare il sottotitolo a «Siti Interattivi Immersivi».
 - **Cliente e cro-specialist** (N10): titolo 05 «La forza di un portale ad alto traffico» solo con dati documentati, altrimenti «La forza di un portale nazionale».
 - **cro-specialist**: etichetta della CTA secondaria della hero.
-- **Sessione principale**: `data-cta-location` del link all'elenco (V1).
 - **ux-designer e creative-director**: dominio visibile vicino alla CTA della hero (O4 di seo-content; parere favorevole nelle note della sezione 1).
 - **ux-designer, creative-director, seo-content**: allineare i propri documenti (V2, V3, V4).
 
