@@ -121,13 +121,15 @@ if (!data) {
 <div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame), 'map--cities': Boolean(cities) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
   {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' })}
 >
+  {/* Drawn text is aria-hidden too: with `label` the description says it (children of role="img" are
+      presentational, and this keeps it so in every browser); without `label` the whole map is hidden. */}
   <svg class="map__svg" viewBox={viewBox} preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
     {data ? <path class="map__coast" d={data.path} vector-effect="non-scaling-stroke" /> : <path class="map__grid" d={graticule.join('')} vector-effect="non-scaling-stroke" />}
   </svg>
   {
     showLabels &&
       labels.map((l) => (
-        <span class:list={['map__area t-label', `map__area--${l.anchor ?? 'start'}`]} style={`left: ${l.left}%; top: ${l.top}%`}>
+        <span class:list={['map__area t-label', `map__area--${l.anchor ?? 'start'}`]} style={`left: ${l.left}%; top: ${l.top}%`} aria-hidden="true">
           {l.text}
         </span>
       ))
@@ -143,7 +145,7 @@ if (!data) {
       >
         <span class="map__node" />
         {showLabels && (
-          <span class="map__label t-label" data-anchor={p.anchor?.wide} data-anchor-narrow={p.anchor && p.anchor.narrow !== p.anchor.wide ? p.anchor.narrow : undefined}>
+          <span class="map__label t-label" data-anchor={p.anchor?.wide} data-anchor-narrow={p.anchor && p.anchor.narrow !== p.anchor.wide ? p.anchor.narrow : undefined} aria-hidden="true">
             <span>{p.name}</span>
             {!cities && <span class="map__coords">{formatCoords(p)}</span>}
           </span>

@@ -222,4 +222,26 @@ const worlds = [
       grid-column: 1 / span 8;
     }
   }
+
+  /* Forced colors (Windows contrast themes): the system paints backgrounds in its canvas colour, drops
+     gradients and paints the transparent outline that hides the ring at rest. Dot in the link colour,
+     ring only on hover and focus, ticks redrawn like the Horizon's (accessibilita.md §2.14). */
+  @media (forced-colors: active) {
+    .nf__worlds::before {
+      forced-color-adjust: none;
+      background:
+        linear-gradient(to right, CanvasText 0 1px, transparent 1px) 0 0 / calc(var(--deg) * 9) 20px repeat-x,
+        linear-gradient(to right, CanvasText 0 1px, transparent 1px) 0 0 / calc(var(--deg) * 3) 12px repeat-x,
+        linear-gradient(to right, CanvasText 0 1px, transparent 1px) 0 0 / var(--deg) 6px repeat-x;
+    }
+
+    .nf__node {
+      forced-color-adjust: none;
+      background: LinkText;
+    }
+
+    .nf__world-link:is(:hover, :focus-visible) .nf__node {
+      outline-color: LinkText;
+    }
+  }
 </style>
