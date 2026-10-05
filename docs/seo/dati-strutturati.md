@@ -3,9 +3,9 @@ titolo: Piano dei dati strutturati (JSON-LD)
 owner: seo-technical
 contributi: [seo-content, copywriter-content]
 stato: bozza
-versione: 0.1
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/seo/specifiche-tecniche.md, docs/seo/ricerca-keyword.md, fonti web elencate in fondo]
+versione: 0.2
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/seo/specifiche-tecniche.md, docs/seo/ricerca-keyword.md, conferma dell'utente del 2026-10-05 sul dominio di Città Digitali, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, fonti web elencate in fondo]
 ---
 
 # Piano dei dati strutturati (JSON-LD)
@@ -143,7 +143,7 @@ Organization e WebSite sono identici su tutte le pagine, tranne `founder`, che c
           "@type": "Brand",
           "@id": "https://itnode.it/citta-digitali/#brand",
           "name": "Città Digitali",
-          "url": "https://www.cittadigitali.it/",
+          "url": "https://xn--cittdigitali-19a.it/",
           "description": "Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per il tessuto imprenditoriale e commerciale italiano."
         }
       ],
@@ -185,7 +185,11 @@ Valori da confermare prima della pubblicazione:
 - **`vatID`**: la P.IVA con prefisso IT `[DA VERIFICARE]`. Deve comparire nel footer (soglia legale di CLAUDE.md).
 - **`address`**: le linee guida la indicano come sede operativa; per le fonti pubbliche coincide con la sede legale `[DA VERIFICARE]`.
 - **`telephone`**: è il numero fisso. Il cellulare resta solo in pagina, perché non sappiamo a quale funzione corrisponda.
-- **`brand.url`**: gli URL finali dei portali `[DA VERIFICARE: seo-content segnala anche cittàdigitali.it, con l'accento]`.
+- **`brand.url` di Città Digitali**: `https://xn--cittdigitali-19a.it/`, cioè cittàdigitali.it in ASCII, senza www e con la barra finale (specifiche, sez. 5.3).
+  - Il dominio è confermato dall'utente il 2026-10-05. Il dominio senza accento, `cittadigitali.it`, non è del cliente e non va mai usato.
+  - Prima del go-live resta da verificare da una rete normale la forma canonica del portale (specifiche, sez. 5.3).
+  - Nel codice l'URL viene da `portals.cittaDigitali.url` (`src/data/site.ts`): nessun indirizzo scritto a mano nel markup.
+- **Brand Puglia Digitale**: nel codice non si pubblica finché il cliente non conferma il ruolo di ITnode (brief D1; `src/lib/structured-data.ts`). Per questo la WebPage di `/puglia-digitale/` esce senza `about`. L'esempio mostra il nodo come sarà dopo la conferma; il suo `url` è `[DA VERIFICARE]` (specifiche, domanda 9).
 - **`logo`**: file stabile in `public/brand/` (specifiche, sez. 2.4). Niente `width` e `height` nel markup: per schema.org non sono numeri semplici, e Google ricava le dimensioni dal file. Quando arriva il logo vettoriale si sostituisce il PNG, con lo stesso URL.
 - **`sameAs` di Organization**: si aggiunge quando il cliente conferma i profili ufficiali di ITnode, per esempio Instagram @itnodedigital segnalato da seo-content `[DA FORNIRE]`. Il LinkedIn personale del fondatore non va usato qui, perché appartiene alla persona.
 - **Proprietà escluse**: `foundingDate`, `numberOfEmployees` e `geo`, perché sono dati non verificati.
@@ -408,7 +412,7 @@ Il nodo Person esce solo quando sono vere tutte queste condizioni:
 - **`founder` di Organization** compare solo sulla home, dove esiste il nodo Person.
 
 ## 8. Validazione
-- **Automatica**: controllo n. 11 delle specifiche, sez. 7. Controlla JSON valido, riferimenti `@id` risolti, campi richiesti, coerenza con il contenuto visibile e assenza di `[DA …]`.
+- **Automatica**: controllo n. 11 delle specifiche, sez. 7. Controlla JSON valido, riferimenti `@id` risolti, campi richiesti, coerenza con il contenuto visibile e assenza di `[DA …]`. Gli URL del markup sono in ASCII, con gli IDN in punycode (specifiche, sez. 5.3 e controllo 13).
 - **Manuale in staging**:
   - Rich Results Test in modalità «codice», perché lo staging è protetto;
   - Schema Markup Validator (validator.schema.org).
@@ -428,18 +432,23 @@ Consultate il 2026-09-28 tramite gli estratti dei risultati di ricerca: develope
 - Ufficio Camerale, ITNODE S.R.L. (P.IVA e sede): https://www.ufficiocamerale.it/2699/itnode-srl
 - Sito attuale, email g.lenoci@itnode.it dagli estratti della ricerca `site:itnode.it`: https://itnode.it/
 
+Consultate il 2026-10-05, tramite gli estratti dei risultati di ricerca:
+- Google, equivalenza tra forma punycode e forma Unicode di un hostname: https://developers.google.com/search/blog/2015/07/googles-handling-of-new-top-level
+- Home del portale Città Digitali nell'indice, sul dominio senza www: https://xn--cittdigitali-19a.it/
+
 ## Ipotesi da validare
 - L'estensione con `Brand` e `Service` (sez. 2) è utile e non crea attrito con le linee guida.
 - `contentUrl` e `thumbnailUrl` del video su itnode.it (dipende dall'hosting del video).
 - La sede di Via Sant'Anna 34 è insieme sede legale e operativa.
+- La forma canonica del portale Città Digitali è il dominio senza www (specifiche, sez. 5.3).
 
 ## Domande aperte
 1. **Cliente.** Nome e ruolo esatti del fondatore come devono apparire in pagina? Quale foto è un ritratto reale utilizzabile?
 2. **Cliente.** Video: file originale, data di prima pubblicazione, presenza di parlato (per i sottotitoli), fotogramma preferito per il poster.
-3. **Cliente.** Quali sono i profili social ufficiali di ITnode (`sameAs`) e i domini canonici dei portali?
+3. **Cliente.** Quali sono i profili social ufficiali di ITnode (`sameAs`)? Qual è il dominio del portale di Puglia Digitale (specifiche, domanda 9)? Il dominio di Città Digitali è chiuso dal 2026-10-05.
 4. **Cliente.** Ragione sociale nella forma esatta, REA e capitale sociale: servono al footer (soglia legale) e a `legalName`.
 5. **copywriter-content.** Titolo e descrizione visibili del video; testo definitivo della descrizione del SIII.
 
 ## Decisioni richieste
-- **seo-technical (presa)**: `@id` e composizione dei grafi per pagina come da sez. 2–3; VideoObject pubblicato solo con dati completi; Person solo con nome, ruolo ed eventuale foto confermati.
+- **seo-technical (presa)**: `@id` e composizione dei grafi per pagina come da sez. 2–3; VideoObject pubblicato solo con dati completi; Person solo con nome, ruolo ed eventuale foto confermati; URL dei portali in ASCII, con `brand.url` di Città Digitali uguale a `https://xn--cittdigitali-19a.it/` (2026-10-05).
 - **Team (creative-director, se serve)**: confermare l'estensione con `Brand` e `Service`, o chiedere di restare nell'elenco delle linee guida.

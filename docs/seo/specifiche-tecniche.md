@@ -3,9 +3,9 @@ titolo: Specifiche tecniche SEO
 owner: seo-technical
 contributi: [seo-content, ux-designer, web-performance-specialist, copywriter-content]
 stato: bozza
-versione: 0.1
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/seo/ricerca-keyword.md, pacchetti npm astro@7.3.5 e @astrojs/sitemap@3.7.4, fonti web elencate in fondo]
+versione: 0.2
+aggiornato: 2026-10-05
+fonti: [docs/brief/linee-guida.md, docs/seo/ricerca-keyword.md, docs/strategia/citta-digitali-elenco.md (§1, §5), conferma dell'utente del 2026-10-05 sul dominio di Città Digitali, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, pacchetti npm astro@7.3.5 e @astrojs/sitemap@3.7.4, fonti web elencate in fondo]
 ---
 
 # Specifiche tecniche SEO
@@ -348,14 +348,45 @@ Matrice minima:
 | Tipo | Esempi | Apertura | `rel` |
 |---|---|---|---|
 | Esperienze SIII | cassanodigitale.it/masseriasantella/, monopolidigitale.it/maisonmimina/, acquavivadigitale.com/dielle/ | Nuova scheda (linee guida, sez. 12) | `noopener` |
-| Portali di ITnode | cittadigitali.it, lapugliadigitale.it, portali delle città | Nuova scheda | `noopener` |
+| Portali di ITnode | cittàdigitali.it (sezione 5.3), lapugliadigitale.it, portali delle città | Nuova scheda | `noopener` |
 | Profili | LinkedIn del fondatore, profili ufficiali di ITnode | Nuova scheda | `noopener` |
 
 - **Niente `nofollow`**: sono link editoriali verso progetti di ITnode.
 - **Niente `noreferrer`**: toglierebbe ai portali il dato sulle visite provenienti da itnode.it.
 - **Nuova scheda dichiarata**: icona con testo alternativo, oppure testo nascosto «(si apre in una nuova scheda)». Il dettaglio lo decide ux-designer.
-- **URL finali**: i link puntano direttamente all'URL finale (protocollo, www, barra finale) per evitare redirect. `[DA VERIFICARE: URL finali dei portali, non raggiungibili dall'ambiente; seo-content segnala anche il dominio con accento cittàdigitali.it]`
+- **URL finali**: i link puntano direttamente all'URL finale (protocollo, www, barra finale) per evitare redirect. `[DA VERIFICARE da una rete senza blocchi: URL finali dei portali e delle esperienze, controllo 13. Per Città Digitali la procedura è nella sezione 5.3]`
+- **Domini internazionalizzati (IDN)**: negli `href` e nel JSON-LD l'host si scrive in ASCII (punycode, `xn--…`); i percorsi con caratteri non ASCII si codificano in percentuale (UTF-8). Nel testo visibile il dominio si scrive con gli accenti. Dettagli nella sezione 5.3.
 - **Email e telefono**: link `mailto:` e `tel:` in chiaro nell'HTML, senza offuscare l'email con JavaScript (per esempio va disattivata l'«Email Address Obfuscation» di Cloudflare). Sono i dati visibili su cui si basa il markup Organization.
+
+### 5.3 Portale Città Digitali: dominio e forma dell'indirizzo
+**Fatto confermato.** Il portale di Città Digitali è `cittàdigitali.it`, con l'accento, che in ASCII (punycode) si scrive `xn--cittdigitali-19a.it`. Il dominio senza accento, `cittadigitali.it`, non è del cliente: lo ha confermato l'utente il 2026-10-05. Nell'indice di ricerca corrisponde a un progetto omonimo (`docs/strategia/citta-digitali-elenco.md`, §1), quindi il sito non lo linka e non lo nomina.
+
+**Forma dell'indirizzo** (decisione di seo-technical del 2026-10-05, già applicata in `src/data/site.ts`):
+
+| Dove | Forma | Valore |
+|---|---|---|
+| `href` dei link | ASCII (punycode), `https`, dominio senza www | `https://xn--cittdigitali-19a.it` |
+| JSON-LD (`brand.url`) | ASCII, forma serializzata con la barra finale | `https://xn--cittdigitali-19a.it/` |
+| Testo visibile e nomi accessibili | Unicode, senza protocollo né www | `cittàdigitali.it` |
+
+- **Perché l'ASCII negli `href` e nel JSON-LD.** Per Google la forma punycode e la forma Unicode dello stesso host sono equivalenti, quindi la scelta non cambia nulla per la Ricerca. Conta per tutti gli altri:
+  - è la forma che il browser ricava comunque dall'`href`;
+  - è quella che arriva agli analytics (`link_url`, `link_domain`);
+  - non dipende dalla conversione IDN di crawler di terzi, validatori e strumenti di verifica;
+  - nel JSON-LD evita confronti falliti tra due codifiche Unicode della stessa lettera (à composta o scomposta).
+- **Perché senza www.** Nell'indice di ricerca tutte le pagine del portale sono sul dominio senza www, home compresa: `https://xn--cittdigitali-19a.it/`. La piattaforma precedente sta su `www2.`. Linkare l'host indicizzato evita un redirect `[DA VERIFICARE da una rete normale]`.
+- **Barra finale.** Alla radice del dominio `https://host` e `https://host/` producono la stessa richiesta (`GET /`): nell'`href` la barra non cambia nulla e non causa redirect. Nel JSON-LD si scrive la forma serializzata, con la barra.
+- **Testo visibile.** Il dominio si scrive con l'accento, nella forma composta (U+00E0), come lo scrive il cliente.
+
+**Verifiche da una rete normale, prima del go-live.** I comandi sono nella review `docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md` (oss. 1); i punti confluiranno in `docs/seo/checklist-lancio.md`.
+
+| Verifica | Esito atteso | Se l'esito è diverso |
+|---|---|---|
+| Risoluzione del dominio | `xn--cittdigitali-19a.it` si risolve | Il go-live si blocca finché il cliente non sistema il dominio, oppure finché creative-director non decide di togliere il link |
+| HTTPS sul dominio senza www | 200 senza redirect, certificato valido per il nome | Con un redirect verso `www.`, si cambia `url` in `src/data/site.ts`. Con un errore TLS o 5xx, il go-live si blocca come nella riga precedente |
+| Redirect tra varianti | `http://`, `https://www.` e `http://www.` rispondono 301 o 308 verso `https://xn--cittdigitali-19a.it/`, oppure `www.` non esiste | Si segnala al cliente; il nostro link non cambia |
+| Forma canonica | Il canonical della home del portale è `https://xn--cittdigitali-19a.it/`, oppure la stessa forma in Unicode | Il link segue l'URL che il portale serve senza redirect; l'incoerenza si segnala al cliente |
+| Browser | Il link del footer e «Visita il portale» aprono la home del portale in una nuova scheda, e la barra degli indirizzi mostra `cittàdigitali.it` | Si segnala a seo-technical |
 
 ## 6. Migrazione dal sito attuale
 - **Cosa sappiamo.** Dalla ricerca web del 2026-09-28 (itnode.it e la Wayback Machine non sono raggiungibili dall'ambiente):
@@ -395,7 +426,7 @@ Script (Node o Bash) su `dist/` e sull'anteprima locale o sullo staging. Ogni co
 | 10 | Lingua | `<html lang="it">` su ogni pagina |
 | 11 | JSON-LD | JSON valido, `@id` coerenti e riferimenti risolti nella pagina, campi richiesti presenti. Valori uguali al contenuto visibile (breadcrumb, nomi, indirizzo, telefono). Nessun segnaposto `[DA …]` residuo. Verifica manuale su 2 pagine con Rich Results Test e validator.schema.org |
 | 12 | Immagini | Ogni `<img>` ha `alt` (vuoto solo se decorativa), `width` e `height`; nessuna immagine rotta |
-| 13 | Link esterni | Ogni `target="_blank"` ha un `rel` che contiene `noopener`; niente `nofollow` né `noreferrer` sui link del network; ogni link esterno risponde 200 senza redirect (verifica da una rete senza blocchi) |
+| 13 | Link esterni | Ogni `target="_blank"` ha un `rel` che contiene `noopener`; niente `nofollow` né `noreferrer` sui link del network; URL assoluti in ASCII, con gli IDN in punycode, e nessun dominio escluso dalla sezione 5.3; ogni link esterno risponde 200 senza redirect (verifica da una rete senza blocchi) |
 | 14 | 404 | Un URL inventato risponde 404 con la pagina personalizzata, non 200 |
 | 15 | Normalizzazioni | http → https, www → senza www, senza barra → con barra: 301 (o 308 automatico) in un salto |
 | 16 | Redirect | Per ogni riga di `redirect-map.csv`: codice e `Location` attesi, destinazione che risponde 200, un salto (al massimo due per le varianti http) |
@@ -425,12 +456,18 @@ Consultate il 2026-09-28. developers.google.com e docs.astro.build non sono ragg
 - X, fallback delle card su Open Graph: https://kb.theseoframework.com/kb/twitter-cards-and-x-sharing/
 - Sito attuale, ricerca `site:itnode.it`: https://itnode.it/ e https://itnode.it/informativa-privacy/
 
+Consultate il 2026-10-05 (sezione 5.3), tramite gli estratti dei risultati di ricerca: il portale è bloccato dalla policy di rete dell'ambiente.
+- Google, equivalenza tra forma punycode e forma Unicode di un hostname: https://developers.google.com/search/blog/2015/07/googles-handling-of-new-top-level
+- WHATWG, URL Standard (conversione dell'host in ASCII): https://url.spec.whatwg.org/
+- Portale nell'indice, sul dominio senza www: https://xn--cittdigitali-19a.it/ («Home - Città Digitali») e pagine interne, per esempio https://xn--cittdigitali-19a.it/il-progetto/
+
 ## Ipotesi da validare
 - Dominio canonico senza www (1.1).
 - Informative privacy e cookie indicizzabili: dipende da come vengono prodotte (1.2).
 - Fallback dell'immagine social con la foto dell'evento (2.3).
 - Hosting del video fuori da Railway (4.5).
 - Sito attuale su WordPress (6).
+- Forma canonica del portale Città Digitali: `https://xn--cittdigitali-19a.it/`, senza www (5.3).
 
 ## Domande aperte
 1. **Cliente.** Export di Search Console (o accesso in lettura), sitemap attuale, accesso al CMS o all'hosting attuale. Il sito risponde anche su www?
@@ -441,6 +478,11 @@ Consultate il 2026-09-28. developers.google.com e docs.astro.build non sono ragg
 6. **Cliente.** Quali sono i profili ufficiali di ITnode (seo-content segnala Instagram @itnodedigital)? Esiste un account X?
 7. **web-performance-specialist.** Quale hosting? Da questo dipendono il formato dei redirect, gli header e la gestione della 404.
 8. **ux-designer.** Posizione e stile dei breadcrumb, e avviso di apertura in una nuova scheda.
+9. **Cliente.** Il portale di Puglia Digitale è lapugliadigitale.it, come nelle linee guida, oppure puglia-digitale.it? Nell'indice di ricerca il primo non ha pagine, il secondo sì `[DA VERIFICARE]`.
+10. **Cliente.** I portali delle città linkati dal sito (varesedigitale.it, altamuradigitale.com, caltanissettadigitale.it, gravinadigitale.it, monopolidigitale.it, acquavivadigitale.com) sono attivi? Con quale indirizzo finale? Alcune città hanno ora una pagina su cittàdigitali.it.
+11. **Utente, o chi ha una rete senza blocchi.** Eseguire le verifiche della sezione 5.3 e il controllo 13, poi girare l'output a seo-technical.
+
+Chiusa il 2026-10-05: il dominio del portale Città Digitali (5.3).
 
 ## Decisioni richieste
 - **Cliente, con ADR in `docs/decisioni/`**: politica per i crawler di AI. Consigliata l'opzione A.
@@ -450,5 +492,6 @@ Consultate il 2026-09-28. developers.google.com e docs.astro.build non sono ragg
   - slug della tabella 1.2;
   - redirect 301 lato server, senza l'opzione `redirects` di Astro;
   - staging con autenticazione e `X-Robots-Tag`;
-  - nessun `noindex` legato all'ambiente nel codice.
+  - nessun `noindex` legato all'ambiente nel codice;
+  - IDN in ASCII negli `href` e nel JSON-LD, con gli accenti nel testo visibile; portale Città Digitali senza www (5.3, 2026-10-05).
 - **web-performance-specialist, con seo-technical**: hosting del video.
