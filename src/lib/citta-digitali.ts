@@ -1,6 +1,6 @@
 /**
- * Text alternative of a map with the cities of Città Digitali (WCAG 1.1.1, 1.3.1), built from the same
- * data as the dots: regions north → south, the region with most cities, then the names the map draws.
+ * Text alternatives of the maps with the cities of Città Digitali (WCAG 1.1.1, 1.3.1), built from the
+ * same data as the dots: regions north → south, the region with most cities, then the names the map draws.
  * No number: a count is a claim (docs/strategia/citta-digitali-elenco.md §4).
  * Wording: copywriter-brand (L4, L6). «Tra queste» only when the map draws names (narrow maps draw
  * fewer than wide ones, so they are examples). A map that draws none, like the one of /citta-digitali/
@@ -18,11 +18,37 @@ if (unknown.length) throw new Error(`lib/citta-digitali.ts: add ${unknown.join('
 const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} e ${xs.at(-1)}` : (xs[0] ?? ''));
 const inRegion = (r: string) => (r === 'Lazio' ? `nel ${r}` : `in ${r}`);
 
+/** «la maggior parte» only above half; otherwise «più che altrove» (copywriter-brand, L4). */
+const shareOf = (count: number, total: number) => (count > total / 2 ? 'la maggior parte' : 'più che altrove');
+
 /** `names`: the names the map draws on wide screens, north → south; none for a map without names. */
 export function describeCittaDigitali(names: string[] = []): string {
   const regions = REGIONS.filter((r) => perRegion.has(r));
   const [mostRegion, mostCount] = [...perRegion].sort((a, b) => b[1] - a[1])[0];
-  const share = mostCount > cittaDigitali.citta.length / 2 ? 'la maggior parte' : 'più che altrove';
+  const share = shareOf(mostCount, cittaDigitali.citta.length);
   const among = names.length ? ` Tra queste: ${andList(names)}.` : '';
   return `Carta d’Italia con le città di Città Digitali. Sono in ${andList(regions)}, ${share} ${inRegion(mostRegion)}.${among}`;
+}
+
+// The cities of Puglia Digitale are the cities of Puglia in the list (user, 2026-10-06:
+// docs/strategia/citta-digitali-elenco.md §4). Provinces north → south, by their capital.
+const PROVINCES: Record<string, string> = { FG: 'Foggia', BT: 'Barletta-Andria-Trani', BA: 'Bari', BR: 'Brindisi', TA: 'Taranto', LE: 'Lecce' };
+const puglia = cittaDigitali.citta.filter((c) => c.region === 'Puglia');
+const perProvince = new Map<string, number>();
+for (const c of puglia) perProvince.set(c.province, (perProvince.get(c.province) ?? 0) + 1);
+const unknownProvince = [...perProvince.keys()].filter((p) => !PROVINCES[p]);
+if (unknownProvince.length) throw new Error(`lib/citta-digitali.ts: add ${unknownProvince.join(', ')} to PROVINCES`);
+
+/**
+ * Text alternative of the map of Puglia with the cities of Puglia Digitale, in the same form: the
+ * provinces north → south, the one with most cities, the names the map draws on wide screens, and the
+ * office when the map rings it. Never «tutta la Puglia» nor a number (brand-strategist, §4).
+ * Wording to be refined by copywriter-brand.
+ */
+export function describePugliaDigitale(names: string[] = [], office?: string): string {
+  const provinces = Object.keys(PROVINCES).filter((p) => perProvince.has(p)).map((p) => PROVINCES[p]);
+  const [most, mostCount] = [...perProvince].sort((a, b) => b[1] - a[1])[0];
+  const among = names.length ? ` Tra queste: ${andList(names)}.` : '';
+  const ring = office ? ` Un anello segna ${office}, dove ha sede ITnode.` : '';
+  return `Carta della Puglia con le città di Puglia Digitale. Sono nelle province di ${andList(provinces)}, ${shareOf(mostCount, puglia.length)} in quella di ${PROVINCES[most]}.${among}${ring}`;
 }

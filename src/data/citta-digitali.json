@@ -66,5 +66,20 @@
     ],
     "poi": ["acquaviva", "gravina", "monopoli", "cassano", "massafra", "itri", "bitonto", "santeramo", "manfredonia", "martina-franca", "bari", "lecce", "brindisi", "cosenza", "pompei"],
     "senzaNome": ["polignano", "san-cataldo"]
+  },
+  "nomiPuglia": {
+    "obbligatori": ["acquaviva", "gravina", "monopoli"],
+    "solidi": ["altamura", "cassano"],
+    "gruppi": [
+      ["manfredonia", "san-giovanni-rotondo"],
+      ["lecce", "nardo", "gallipoli", "copertino"],
+      ["bari", "bitonto"],
+      ["barletta", "andria", "trani", "bisceglie"],
+      ["martina-franca", "alberobello", "locorotondo", "ostuni", "fasano", "cisternino", "putignano"],
+      ["massafra", "grottaglie"],
+      ["brindisi", "francavilla-fontana"]
+    ],
+    "poi": ["lecce"],
+    "senzaNome": ["polignano"]
   }
 }

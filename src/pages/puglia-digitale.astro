@@ -20,6 +20,8 @@ import { figures } from '../data/figures';
 import { eventPhotoNote } from '../data/media';
 import { placeSlot } from '../data/asset-slots';
 import { pageGraph } from '../lib/structured-data';
+import { describePugliaDigitale } from '../lib/citta-digitali';
+import maps from '../data/maps.json';
 import eventoSchermo from '../assets/images/derivate/evento-schermo.jpg';
 import acquavivaPorta from '../assets/images/derivate/acquaviva-porta.jpg';
 import gravinaPorta from '../assets/images/derivate/gravina-porta.jpg';
@@ -53,6 +55,19 @@ const photos: Record<string, { image: typeof acquavivaPorta; alt: string; note: 
     note: 'Immagine elaborata digitalmente',
   },
 };
+// The whole coast of Puglia with a dot for every city of Puglia Digitale (visual direction §1.4, §7.5).
+// Text alternative: the provinces, the names drawn on the wide map (north → south) and the office.
+type RegionPlace = { name: string; lat: number; role?: string; anchor: { hero: string } };
+const region = maps.maps.pugliaRegione;
+const [, , regionW, regionH] = region.viewBox.split(' ').map(Number);
+const regionPlaces = region.places as RegionPlace[];
+const mapLabel = describePugliaDigitale(
+  regionPlaces.filter((p) => p.anchor.hero !== 'none').sort((a, b) => b.lat - a.lat).map((p) => p.name),
+  regionPlaces.find((p) => p.role === 'sede')?.name,
+);
+// Legend: copywriter-brand writes the final text (brand-strategist §4: the cities of Puglia Digitale).
+const legend = 'Ogni punto è una città di\u00a0Puglia\u00a0Digitale';
+
 const locations = pugliaPlaces.map((p) => ({
   id: p.id,
   name: p.name,
@@ -84,13 +99,16 @@ const locations = pugliaPlaces.map((p) => ({
     </div>
   </Hero>
 
-  <!-- The coast of the Terra di Bari as one line across the page, drawn on entry. -->
-  <div class="pd-coast surface-calce" aria-hidden="true">
+  <!-- The whole coast of Puglia as one line, a dot for every city of Puglia Digitale, drawn on entry. -->
+  <div class="pd-coast surface-calce">
     <div class="wrap">
-      <div class="pd-coast__draw">
-        <MapItaly map="puglia" places={pugliaPlaces} home="acquaviva" frame="0 24 1600 716" class="pd-coast__map pd-coast__map--wide" />
-        <MapItaly map="puglia" places={pugliaPlaces} home="acquaviva" compact class="pd-coast__map pd-coast__map--compact" />
-      </div>
+      <figure class="pd-coast__atlas" style={`--ratio: ${(regionW / regionH).toFixed(4)}`}>
+        <div class="pd-coast__draw">
+          <MapItaly map="pugliaRegione" cities nameClass="hero" home="acquaviva" label={mapLabel} class="pd-coast__map pd-coast__map--wide" />
+          <MapItaly map="pugliaRegione" cities home="acquaviva" label={mapLabel} class="pd-coast__map pd-coast__map--compact" />
+        </div>
+        <figcaption class="pd-coast__note t-label">{legend}</figcaption>
+      </figure>
     </div>
   </div>
 
@@ -240,8 +258,18 @@ const locations = pugliaPlaces.map((p) => ({
     overflow-x: clip;
   }
 
+  .pd-coast__atlas {
+    margin: 0;
+  }
+
   .pd-coast__draw {
     position: relative;
+  }
+
+  /* Legend under the map, like the maps of Città Digitali (visual direction §1.4). */
+  .pd-coast__note {
+    margin-top: var(--space-s);
+    color: var(--fg-2);
   }
 
   .pd-coast :global(.pd-coast__map--wide) {
@@ -256,12 +284,20 @@ const locations = pugliaPlaces.map((p) => ({
     .pd-coast :global(.pd-coast__map--compact) {
       display: none;
     }
+
+    /* The whole region, against the right edge: as wide as the band, about three quarters of the
+       window tall, and between 640 and 1100 px wide: the names are placed for that range
+       (scripts/generate-maps.mjs, class «hero»). */
+    .pd-coast__atlas {
+      width: min(100%, clamp(640px, 75svh * var(--ratio), 1100px));
+      margin-inline-start: auto;
+    }
   }
 
-  /* The coast crosses the page from the third column to the right edge. */
+  /* From the third column to the right edge, as the coast did. */
   @media (min-width: 64em) {
-    .pd-coast__draw {
-      margin-left: calc((100% + var(--gutter)) / 12 * 2);
+    .pd-coast__atlas {
+      width: min(100% - (100% + var(--gutter)) / 12 * 2, clamp(640px, 75svh * var(--ratio), 1100px));
     }
   }
 
