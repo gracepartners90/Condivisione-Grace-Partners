@@ -3,14 +3,16 @@ titolo: Testi alternativi delle immagini
 owner: copywriter-content
 contributi: [ux-designer, seo-content, seo-technical, copywriter-brand]
 stato: in revisione
-versione: 1.2
-aggiornato: 2026-10-05
-fonti: [src/assets/images/, scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+versione: 1.3
+aggiornato: 2026-10-06
+fonti: [src/assets/images/ (con acquaviva-digitale.webp, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici, prove di ritaglio del creative-director (scratchpad, non versionate), scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Testi alternativi delle immagini
 
-Testi alternativi delle immagini del sito: i 6 file del cliente in `src/assets/images/`, i 6 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-05.
+Testi alternativi delle immagini del sito: i 7 file del cliente in `src/assets/images/`, i 6 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-05.
+
+**Novità della v1.3 (2026-10-06).** Nuovo file del cliente, `acquaviva-digitale.webp`, per la porta di Acquaviva su `/puglia-digitale/`: testo alternativo per il ritaglio centrale e per gli altri due candidati, nota sotto la foto nei tre casi possibili sull'uso di AI, risposta sulla fonte.
 
 **Novità della v1.2 (2026-10-05).** Il documento ora descrive il sito com'è.
 - Nuova tabella «Nel sito», con alt e didascalie pubblicati.
@@ -57,6 +59,45 @@ Note:
 - L'`og:image:alt` descrive l'immagine social di oggi, che è tipografica. La proposta della v1.1, con il fondatore sul palco, non vale più.
 
 ## File del cliente (`src/assets/images/`)
+
+### `acquaviva-digitale.webp` · 1248 × 832 px · WebP · per la porta di Acquaviva
+
+Una piazza in pieno sole, vista da dietro una ringhiera su un muro in pietra. Sul fondo un palazzo color ocra con balconi; a destra una lunga fila di edifici in pietra e intonaco chiaro, con un lampione; a sinistra case colorate e un albero; in primo piano, uno spazio ribassato in pietra con una scala. Sulla foto c'è una grafica digitale: pannelli trasparenti azzurri con disegni e icone, segnaposto arancioni e piccole scintille di luce.
+
+- **Provenienza.** Immagine del portale del cliente, cittàdigitali.it, incollata dall'utente il 2026-10-06 (commit fd616d6). Il file non ha metadati. Autore, data e uso di strumenti AI non sono noti: li ha chiesti la sessione principale all'utente. [DA FORNIRE]
+- **Decisione dell'utente** (2026-10-06): i segni grafici restano, perché «segnano l'aspetto digitale della città». Per questo l'alt li descrive.
+- **Uso.** Porta 3:5 di Acquaviva delle Fonti, sezione «I luoghi» di `/puglia-digitale/`, al posto del segnaposto `luogo-acquaviva`. Il ritaglio lo sceglie il creative-director. Non è ancora nel sito.
+- **Indizi sull'AI** (osservati il 2026-10-06, non conclusivi). Agli angoli, ingranditi 3 volte, non c'è il segno visibile di Gemini. I pannelli contengono segni illeggibili, frequenti nella grafica generata con AI ma anche in quella disegnata. La foto sotto la grafica ha una prospettiva e un'architettura coerenti. [DA VERIFICARE con l'utente]
+
+**Testo alternativo.** Il nome della città non si ripete, perché è nel titolo della porta, subito sotto (criterio 5). Il nome della piazza non c'è, perché non è verificato. La grafica digitale si descrive, perché per l'utente ha un significato.
+
+| Ritaglio | alt | Caratteri |
+|---|---|---|
+| **Centrale** (prova B): il palazzo sul fondo, la ringhiera, il muro in pietra, la fila di edifici a destra | Una piazza con un palazzo sul fondo e una fila di edifici a destra, oltre una ringhiera; sopra, segnaposto arancioni e un pannello digitale azzurro. | 148 |
+| Prova A, e i ritagli simili che il creative-director sta provando: in più lo spazio ribassato in primo piano e più pannelli | Una piazza con un palazzo sul fondo, oltre una ringhiera e uno spazio ribassato in pietra; sopra, segnaposto arancioni e pannelli digitali azzurri. | 147 |
+| Prova C: la fila di edifici con il lampione, il palazzo solo in parte | Una fila di edifici in pietra e intonaco chiaro, con un lampione, oltre una ringhiera; sopra, segnaposto arancioni e pannelli digitali azzurri. | 143 |
+
+Regole per qualunque ritaglio:
+- si descrive solo ciò che il riquadro mostra, dal fondo al primo piano, poi la grafica;
+- la grafica si nomina sempre per quello che c'è nel riquadro: «segnaposto arancioni», «un pannello» o «pannelli» digitali azzurri. Le scintille sono un dettaglio minore e si possono lasciare fuori;
+- niente nomi di luoghi, niente «storico», «antico» o «centro storico», che non sono verificati;
+- una frase, entro 150 caratteri circa.
+
+**Nota sotto la foto.** Segue la regola dell'ADR 002: un'immagine elaborata ha una nota di trasparenza, e la nota dice solo ciò che è certo. In `label` mono sotto la foto, dentro la porta, come la nota dei ritratti; senza punto finale (tone of voice §8); letta anche dagli screen reader.
+
+| Caso | Nota | Caratteri |
+|---|---|---|
+| **Adesso**, uso di AI non noto (la formula più sicura) | Immagine elaborata digitalmente | 31 |
+| L'utente conferma l'AI solo per la grafica (la foto è vera) | Immagine elaborata con strumenti di intelligenza artificiale | 60 |
+| L'utente conferma che l'immagine è generata con AI, foto compresa | Immagine generata con strumenti di intelligenza artificiale | 59 |
+| L'utente conferma l'AI, ma non chiarisce quale parte | Immagine generata o elaborata con strumenti di intelligenza artificiale | 71 |
+| Niente AI: foto vera, grafica aggiunta a mano | Foto con grafica digitale aggiunta | 34 |
+| Niente AI, autore noto che chiede il credito | Foto di [DA FORNIRE: autore], con grafica digitale aggiunta | — |
+
+- **Perché la prima è la più sicura.** È vera in ogni caso: la grafica sovrapposta è un'elaborazione digitale certa. Non afferma un uso di AI che non è dimostrato, e non lo esclude.
+- **Il suo limite.** Se l'utente conferma l'AI, la nota va cambiata prima del go-live con la riga giusta della tabella. Due delle tre formule con l'AI sono già nel sito: «elaborata» per la foto dell'evento, «generata o elaborata» per i ritratti (ADR 002). «Generata» da sola vale se tutta l'immagine è sintetica.
+- **Se al go-live la risposta manca.** La scelta spetta a brand-strategist, owner dell'ADR 002, con il parere del consulente legale, perché le due strade hanno rischi opposti. La formula dei ritratti, «generata o elaborata con strumenti di intelligenza artificiale», copre l'art. 50 dell'AI Act, ma affermerebbe un uso di AI non dimostrato. Restare su «elaborata digitalmente» è vero, ma potrebbe non bastare se l'AI c'è (Rischi, 3).
+- **Fonte: non va nella didascalia.** L'immagine viene dal portale del cliente, quindi non è un contenuto di terzi da citare. Su `/puglia-digitale/`, poi, «cittàdigitali.it» sotto la foto legherebbe l'immagine a un altro progetto, e il rapporto tra i due è chiarito solo per l'elenco delle città. La provenienza resta qui e nel commit. Il credito serve solo se l'autore è un fotografo che lo chiede: allora vale l'ultima riga della tabella. [DA FORNIRE: autore e diritti]
 
 ### `logo-itnode.png` · 192 × 114 px · PNG
 
@@ -144,7 +185,7 @@ Gli id sono quelli di `src/data/asset-slots.ts`. L'alt definitivo si scrive solo
 | `siii-dielle` | /siii (esempi) | D.L. Natura Dentro nel suo Sito Interattivo Immersivo: [DA FORNIRE: ambiente inquadrato], con i punti interattivi. | Come sopra. |
 | `siii-anteprima` | /siii, hero | [DA FORNIRE: nome dell'esperienza] su smartphone: [DA FORNIRE: ambiente inquadrato], con i punti interattivi. | Un'esperienza SIII vista da smartphone, in verticale. Se la schermata viene da uno dei tre esempi, l'alt lo nomina. I tre nodi sovrapposti sono decorativi. |
 | `luogo-gravina` | /puglia-digitale (I luoghi) | [Soggetto della foto], senza ripetere il nome della città. | Il nome della città è già nel titolo della scheda, subito accanto. La foto non sta dentro il link «Esplora». |
-| `luogo-acquaviva` | /puglia-digitale (I luoghi) | [Soggetto della foto], senza ripetere il nome della città. | Come sopra. |
+| `luogo-acquaviva` | /puglia-digitale (I luoghi) | Il file c'è: `acquaviva-digitale.webp`, con alt e nota nella sezione «File del cliente» | Il segnaposto resta finché la sessione principale non collega il ritaglio scelto dal creative-director. |
 | `luogo-monopoli` | /puglia-digitale (I luoghi) | [Soggetto della foto], senza ripetere il nome della città. | Come sopra. |
 | `video-poster` | /citta-digitali | Nessun alt: il poster è un attributo di `<video>`. | Oggi la copertina del video è tipografica e il poster non c'è (`preload="none"`). Se il poster viene mostrato come `<img>` prima del caricamento: `alt=""`. Il nome lo portano l'H2 «Città Digitali, in movimento.» e il pulsante di riproduzione. |
 
@@ -182,9 +223,10 @@ Le due descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 
 1. **Immagini generate o modificate con AI** (brief §0.3). Tre immagini su cinque hanno in basso a destra il segno visibile che Gemini applica alle immagini create o modificate con la sua app: `evento-puglia-digitale.jpg`, `fondatore-in-piedi.jpg` e `fondatore-palco-citta-digitali.jpg`. L'ho verificato su ritagli ingranditi degli angoli. Le altre due foto del fondatore hanno lo stesso aspetto. Anche la foto dell'evento, indicata come reale, è quindi passata da uno strumento di AI: almeno per cornice e scritte, forse per altro. Nel sito ritratti e foto dell'evento hanno la nota di trasparenza (ADR 002).
 2. **Veridicità (soglia 1).** Le foto mostrano il fondatore sul palco di eventi Città Digitali, con platea, ma non abbiamo documentazione di quegli eventi. Se non sono avvenuti così, le immagini diventano prove non vere. Gli alt descrivono ciò che si vede senza affermare che l'evento sia reale, ma l'immagine comunica comunque quel messaggio. Le due foto sul palco di Città Digitali oggi non sono nel sito.
-3. **Obbligo di trasparenza.** Dal 2 agosto 2026 si applica l'art. 50 del Regolamento UE 2024/1689 (AI Act). Chi pubblica immagini generate o manipolate con AI che somigliano a persone o eventi reali, e che possono sembrare autentiche, deve dichiararne l'origine artificiale (par. 4). I ritagli eliminano il segno visibile, ma non l'eventuale obbligo. La nota oggi nel sito risponde a questo rischio. [DA VERIFICARE con il consulente legale: se la nota basta]
+3. **Obbligo di trasparenza.** Dal 2 agosto 2026 si applica l'art. 50 del Regolamento UE 2024/1689 (AI Act). Chi pubblica immagini generate o manipolate con AI che somigliano a persone, oggetti, luoghi o eventi esistenti, e che possono sembrare autentiche, deve dichiararne l'origine artificiale (par. 4; definizione di «deep fake» all'art. 3, punto 60). Riguarda anche i luoghi: per l'immagine di Acquaviva conta, se nella foto c'è AI. I ritagli eliminano il segno visibile, ma non l'eventuale obbligo. La nota oggi nel sito risponde a questo rischio. [DA VERIFICARE con il consulente legale: se la nota basta]
 4. **Persone riconoscibili in platea** (brief A4; B4; condizione C07 del verdetto G4). Servono l'informativa sulle riprese o le liberatorie. Altrimenti ui-designer stringe i ritagli su schermi e palco, senza profili riconoscibili.
 5. **Richiesta al cliente** (brief D9). Indicare quali foto sono scatti reali non alterati e fornire l'originale della foto dell'evento, senza cornice né modifiche, con data, luogo e autore. Se possibile, fornire anche ritratti reali del fondatore.
+6. **Immagine di Acquaviva.** Autore, data, diritti e uso di AI non sono noti. La nota «Immagine elaborata digitalmente» è vera, ma va rivista con la risposta (sezione del file). La risoluzione è più bassa della specifica dello slot: un ritaglio 3:5 è alto 832 px, contro i 2400 px di `asset-slots.ts`. Lo valutano il creative-director e web-performance-specialist.
 
 ## Ipotesi da validare
 
@@ -196,11 +238,14 @@ Le due descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 1. Quali immagini sono fotografie reali, e quali sono generate o modificate con AI (D9)?
 2. Il cliente ha l'originale della foto dell'evento, con data, luogo e autore (A4, B4)?
 3. Le persone in platea sono state informate delle riprese, o ci sono le liberatorie (C07)?
+4. Immagine di Acquaviva: chi è l'autore, quando è stata fatta, chi ha i diritti, e se la foto o la grafica sono state fatte con strumenti di AI? Il cliente vuole un credito sotto la foto?
 
 ## Decisioni richieste
 
 - **Utente, con il consulente legale del cliente**: se la nota di trasparenza basta per l'art. 50 dell'AI Act (ADR 002).
 - **Sessione principale**: quando arrivano i file degli slot, prendere gli alt da questo documento (V1).
+- **creative-director**: ritaglio della foto di Acquaviva. Se non è il centrale, l'alt è nella tabella della sezione del file, o segue le sue regole.
+- **brand-strategist, con il consulente legale**: la nota della foto di Acquaviva se al go-live manca la risposta sull'AI.
 
 ## Fonti consultate
 

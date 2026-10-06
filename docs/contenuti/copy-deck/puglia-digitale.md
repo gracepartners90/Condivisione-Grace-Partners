@@ -3,14 +3,18 @@ titolo: Copy deck · Puglia Digitale
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, brand-strategist, creative-director]
 stato: in revisione
-versione: 1.3
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+versione: 1.4
+aggiornato: 2026-10-06
+fonti: [docs/brief/linee-guida.md, src/assets/images/acquaviva-digitale.webp (utente, 2026-10-06), docs/contenuti/alt-text.md (1.3), docs/strategia/citta-digitali-elenco.md (0.3), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Puglia Digitale
 
 Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (LG), la chiusura e l'introduzione al form (§23). Rispetto a SIII il carattere è più territoriale ed emozionale (§13). I testi sono pronti da impaginare.
+
+**Novità della v1.4 (2026-10-06)**
+- **Foto di Acquaviva delle Fonti** per la sua porta nella sezione 4: testo alternativo e nota sotto la foto, in attesa del ritaglio del creative-director e delle risposte dell'utente su autore, data e uso di AI.
+- **«30+ città»**: elenco e perimetro confermati dall'utente il 2026-10-06, cioè le 31 città pugliesi dell'elenco di Città Digitali. Manca solo la data dei dati (brief N1).
 
 **Novità della v1.3 (2026-10-05)**
 - **Verifica sul sito costruito.** Il documento ora descrive la pagina com'è: hero senza occhiello e chiusa dalla linea della costa, link al portale nel primo paragrafo, foto dell'evento nella sezione 2 con la nota di trasparenza, luoghi da ovest a est, ponte prima della chiusura, «Contattaci» come titolo del form.
@@ -163,7 +167,7 @@ Alternativa: «Il territorio di Puglia Digitale» (32).
 **Nota sotto il numero** · p · obbligatoria, con la data
 > Dati ITnode, aggiornati a [DA FORNIRE: mese e anno].
 
-Condizioni (brand-strategist, B3 e I9): il cliente conferma il numero, il perimetro e il mese e l'anno del dato. Il perimetro deve dire quali sono le città e che sono tutte di Puglia Digitale. Se comprende città di altri progetti, per esempio di Città Digitali, il numero non vale per questa pagina: decide brand-strategist.
+Condizioni (brand-strategist, B3 e I9): il cliente conferma il numero, il perimetro e il mese e l'anno del dato. Numero e perimetro sono confermati dal 2026-10-06 (le 31 città pugliesi dell'elenco); manca la data. Il perimetro deve dire quali sono le città e che sono tutte di Puglia Digitale. Se comprende città di altri progetti, per esempio di Città Digitali, il numero non vale per questa pagina: decide brand-strategist.
 
 Note:
 - **Perché questo titolo.** Dice che cosa contiene la sezione e di chi è il numero. Il singolare rende il numero unico una scelta di composizione, non il vuoto lasciato da altri due. Recupera la proposta della mappa SEO («Puglia Digitale in numeri»), accantonata per proteggere il claim delle partite IVA (N2): senza quel numero, il rischio non c'è più.
@@ -172,7 +176,7 @@ Note:
 - **A capo**, provati il 2026-09-28 con DOM iniettato e il numero dalla colonna 3: il titolo sta su una riga da 360 a 1920 px; a 320 px va su due, «Puglia Digitale / in un numero». L'alternativa va a capo in «Il territorio di / Puglia Digitale», sempre solo a 320 px.
 - **Dove si applica**: in `src/pages/puglia-digitale.astro`, il `title` di `<Stats>` e il solo primo elemento di `stats`; in `src/data/figures.ts`, mese e anno in `pugliaUpdated`. La composizione a un numero la cura ui-designer.
 - **seo-content** allinea l'H2 nella mappa keyword→URL, se la variante va online.
-- brand-strategist ipotizza che le «30+ città» siano le città pugliesi dell'elenco di Città Digitali (`citta-digitali-elenco.md` §4, ipotesi da validare): la domanda al cliente diventa un sì o un no. Se la risposta è no, sono due perimetri diversi da spiegare, e decide brand-strategist.
+- **Elenco e perimetro di «30+ città»: confermati** dall'utente il 2026-10-06. Sono le 31 città pugliesi dell'elenco di Città Digitali (`citta-digitali-elenco.md`; brief N1). Manca solo la data dei dati: la proposta di brand-strategist è «ottobre 2026», da confermare.
 
 ## 4. I luoghi
 
@@ -192,13 +196,26 @@ Note:
 | Nome accessibile della CTA | Esplora Gravina in Puglia su gravinadigitale.it (si apre in una nuova scheda) | Esplora Acquaviva delle Fonti su acquavivadigitale.com (si apre in una nuova scheda) | Esplora Monopoli su monopolidigitale.it (si apre in una nuova scheda) |
 | URL | https://www.gravinadigitale.it | https://www.acquavivadigitale.com | https://www.monopolidigitale.it |
 | `cta_id` | pd-luoghi-gravina | pd-luoghi-acquaviva | pd-luoghi-monopoli |
-| Immagine (slot) | `luogo-gravina` | `luogo-acquaviva` | `luogo-monopoli` |
+| Immagine (slot nel sito) | `luogo-gravina` | `luogo-acquaviva` | `luogo-monopoli` |
 
 Note:
 - **Ordine da ovest a est**: Gravina, Acquaviva, Monopoli. È la decisione del G4 (direzione visiva §7.5, riga 4): le porte stanno sull'orizzonte secondo la longitudine reale, e l'ordine del DOM è lo stesso a ogni larghezza, quindi anche l'ordine del focus (WCAG 1.3.2 e 2.4.3). Sostituisce l'ordine «dalla costa all'entroterra» che proponevo nella v1.2: le righe valgono in qualunque ordine.
 - Ogni riga contiene un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti). Per Acquaviva c'è anche il legame con ITnode, che lì ha la sede operativa (§22). Nessuna informazione sui contenuti dei portali, che non si possono consultare.
 - Nel sito, sotto il nome, le coordinate del comune in mono, e sotto la CTA il dominio: entrambi nascosti agli screen reader, perché il dominio è già nel nome accessibile di «Esplora».
-- Le foto mancano: i segnaposto sono nascosti agli screen reader. [DA FORNIRE: foto reali, formato 3:5] Il testo alternativo per quando arrivano è in `docs/contenuti/alt-text.md`.
+- Le foto di Gravina e Monopoli mancano: i segnaposto sono nascosti agli screen reader. [DA FORNIRE: foto reali, formato 3:5] Lo schema del testo alternativo è in `docs/contenuti/alt-text.md`.
+
+**Foto di Acquaviva delle Fonti** · `figure` nella porta 3:5 · immagine `src/assets/images/acquaviva-digitale.webp`, al posto dello slot `luogo-acquaviva` · non ancora nel sito
+| Elemento | Testo |
+|---|---|
+| Testo alternativo, ritaglio centrale | Una piazza con un palazzo sul fondo e una fila di edifici a destra, oltre una ringhiera; sopra, segnaposto arancioni e un pannello digitale azzurro. |
+| Nota sotto la foto (`label` mono), adesso | Immagine elaborata digitalmente |
+
+Note sulla foto:
+- **Che cos'è.** L'immagine di Acquaviva del portale del cliente, cittàdigitali.it, con una grafica digitale sovrapposta: pannelli trasparenti azzurri, segnaposto arancioni, scintille. La grafica resta per decisione dell'utente (2026-10-06), perché «segna l'aspetto digitale della città». Per questo l'alt la descrive.
+- **Testo alternativo.** Non ripete il nome della città, che è nel titolo della porta, e non nomina la piazza, che non è verificata. È scritto per il ritaglio centrale; le versioni per gli altri due ritagli candidati e le regole per qualunque riquadro sono in `alt-text.md`. Il ritaglio lo sceglie il creative-director.
+- **Nota.** Segue l'ADR 002: dice solo ciò che è certo, cioè che la grafica è un'elaborazione digitale, senza affermare né escludere l'AI. Quando l'utente risponde, la nota cambia con le formule di `alt-text.md`. Con l'AI: «Immagine elaborata con strumenti di intelligenza artificiale» (o «generata», o «generata o elaborata»). Senza AI: «Foto con grafica digitale aggiunta».
+- **Fonte: nessun credito sotto la foto.** È materiale del cliente; «cittàdigitali.it» su questa pagina legherebbe la foto a un altro progetto. Il credito serve solo se l'autore lo chiede. [DA FORNIRE: autore, data, diritti, uso di AI]
+- **Collegamento nel sito** (sessione principale): l'alt va preso da qui o da `alt-text.md`, non dal campo `alt` di `asset-slots.ts`, che contiene il solo nome della città.
 - La mappa SEO chiede 2–3 righe per luogo [DA FORNIRE dal cliente]. Qui c'è una riga, come previsto dall'incarico.
 
 ## 5. Perché aderire a Puglia Digitale
@@ -341,13 +358,13 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 ## Ipotesi da validare
 
 - [DA VERIFICARE: «60% del tessuto produttivo pugliese» è la quota di imprese pugliesi che si trova nei territori coinvolti. È la lettura su cui si basano l'H2 e le didascalie; la verifica di coerenza è nel brief, N3]
-- [IPOTESI: «30+ città» sono i comuni coinvolti nel progetto, cioè gli stessi territori delle 200.000 partite IVA (brief N1, I6)]
+- [DA VERIFICARE: «~200.000 partite IVA» e «60%» si riferiscono ai territori delle 31 città di Puglia Digitale (brief I6). Servono fonte, anno e definizione; con l'elenco si possono controllare su dati pubblici per comune]
 - [DA VERIFICARE: risposta del portale da una rete normale: risoluzione del dominio, HTTPS, forma con o senza www (seo-technical, review del dominio, oss. 1; specifiche SEO §5.4)]
 
 ## Domande aperte
 
 1. Ruolo di ITnode in Puglia Digitale (brief D1). Dalla risposta dipendono l'attribuzione e il Blocco D. Il dominio del portale è invece chiuso: lapugliadigitale.it, confermato dall'utente il 2026-10-05.
-2. Fonte, data e definizione dei tre numeri, con l'elenco delle città (D7).
+2. Numeri (D7): per «30+ città» solo la data, perché elenco e perimetro sono confermati; per «~200.000» e «60%», fonte, anno e definizione.
 3. Le imprese entrano nel portale con un SIII, con un tour virtuale o con entrambi (I3, D4)?
 4. Originale della foto dell'evento, con data e luogo, e informativa sulle riprese per le persone in platea (A4, B4, D9; condizione C07 del verdetto G4).
 

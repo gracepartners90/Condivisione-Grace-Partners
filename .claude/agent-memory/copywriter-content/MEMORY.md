@@ -41,6 +41,8 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Lo script nel senso inverso (`reverse-check.mjs`) trova i testi del sito che il deck non riporta, fuori dal form: figure, marquee, didascalie, righe mono. `verify-deck2.mjs <porta> <deck>=<percorso>` è la versione con parametri. `alts.mjs` raccoglie alt, didascalie e `role="img"` di tutte le pagine.
 - Riaprire anche le mie review precedenti: nella review di bozze del 2026-09-28 avevo scritto «allineo io il copy deck» (S3, Testo 03 di SIII), ed era rimasto da fare.
 - L'ADR 002 (riserve di go-live, brand-strategist) contiene testi di riserva per i miei deck (B2, B3, I6, I7, I8, A7): riportarli nelle note delle sezioni e controllarne la lunghezza. La riserva I6 «Porta la tua impresa in Puglia Digitale» supera i 28 caratteri.
+- Nelle tabelle di copy solo testi da pubblicare o valori del sito (slot, URL, `cta_id`): le note vanno fuori, altrimenti lo script le segnala come mancanti.
+- Asset nuovo del cliente (lezione del 2026-10-06): angoli ingranditi 3 volte e metadati con `sharp` (lo script deve girare da una cartella che risolve i `node_modules` del repo; poi va tolto). Se l'uso di AI non è noto, la nota dice solo ciò che è certo («Immagine elaborata digitalmente»), e si preparano le formule per i casi confermati, riusando quelle già nel sito (ADR 002). La scelta per il go-live senza risposta spetta a brand-strategist con il consulente.
 - La sessione principale committa versioni intermedie dei miei file mentre lavoro («lavoro in corso»): normale. Prima di consegnare, rileggere `git log` e le review nuove (es. direzione visiva 0.8, mappa 0.4 in corso) e aggiornare lo stato delle differenze aperte.
 
 ## Preferenze e correzioni ricevute
