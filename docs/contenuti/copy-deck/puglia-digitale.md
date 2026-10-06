@@ -3,14 +3,17 @@ titolo: Copy deck · Puglia Digitale
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, brand-strategist, creative-director]
 stato: in revisione
-versione: 1.4
+versione: 1.5
 aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, src/assets/images/acquaviva-digitale.webp (utente, 2026-10-06), docs/contenuti/alt-text.md (1.3), docs/strategia/citta-digitali-elenco.md (0.3), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+fonti: [docs/brief/linee-guida.md, src/assets/images/acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp (utente, 2026-10-06), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, docs/contenuti/alt-text.md (1.4), docs/strategia/citta-digitali-elenco.md (0.3), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Puglia Digitale
 
 Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (LG), la chiusura e l'introduzione al form (§23). Rispetto a SIII il carattere è più territoriale ed emozionale (§13). I testi sono pronti da impaginare.
+
+**Novità della v1.5 (2026-10-06)**
+- **Foto di Gravina in Puglia e Monopoli** per le loro porte: testo alternativo per il ritaglio centrale e nota, in attesa dei ritagli del creative-director. La foto di Acquaviva è nel sito (commit d60b95f).
 
 **Novità della v1.4 (2026-10-06)**
 - **Foto di Acquaviva delle Fonti** per la sua porta nella sezione 4: testo alternativo e nota sotto la foto, in attesa del ritaglio del creative-director e delle risposte dell'utente su autore, data e uso di AI.
@@ -196,23 +199,23 @@ Note:
 | Nome accessibile della CTA | Esplora Gravina in Puglia su gravinadigitale.it (si apre in una nuova scheda) | Esplora Acquaviva delle Fonti su acquavivadigitale.com (si apre in una nuova scheda) | Esplora Monopoli su monopolidigitale.it (si apre in una nuova scheda) |
 | URL | https://www.gravinadigitale.it | https://www.acquavivadigitale.com | https://www.monopolidigitale.it |
 | `cta_id` | pd-luoghi-gravina | pd-luoghi-acquaviva | pd-luoghi-monopoli |
-| Immagine (slot nel sito) | `luogo-gravina` | `luogo-acquaviva` | `luogo-monopoli` |
 
 Note:
 - **Ordine da ovest a est**: Gravina, Acquaviva, Monopoli. È la decisione del G4 (direzione visiva §7.5, riga 4): le porte stanno sull'orizzonte secondo la longitudine reale, e l'ordine del DOM è lo stesso a ogni larghezza, quindi anche l'ordine del focus (WCAG 1.3.2 e 2.4.3). Sostituisce l'ordine «dalla costa all'entroterra» che proponevo nella v1.2: le righe valgono in qualunque ordine.
 - Ogni riga contiene un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti). Per Acquaviva c'è anche il legame con ITnode, che lì ha la sede operativa (§22). Nessuna informazione sui contenuti dei portali, che non si possono consultare.
 - Nel sito, sotto il nome, le coordinate del comune in mono, e sotto la CTA il dominio: entrambi nascosti agli screen reader, perché il dominio è già nel nome accessibile di «Esplora».
-- Le foto di Gravina e Monopoli mancano: i segnaposto sono nascosti agli screen reader. [DA FORNIRE: foto reali, formato 3:5] Lo schema del testo alternativo è in `docs/contenuti/alt-text.md`.
+- **Immagini delle porte.** Acquaviva: `derivate/acquaviva-porta.jpg`, nel sito dal commit d60b95f. Gravina e Monopoli: le immagini del portale sono arrivate il 2026-10-06 e aspettano il ritaglio; fino ad allora restano gli slot `luogo-gravina` e `luogo-monopoli`, nascosti agli screen reader. Tutte e tre hanno i segni grafici del portale, per decisione dell'utente (ADR 007).
 
-**Foto di Acquaviva delle Fonti** · `figure` nella porta 3:5 · immagine `src/assets/images/acquaviva-digitale.webp`, al posto dello slot `luogo-acquaviva` · non ancora nel sito
-| Elemento | Testo |
-|---|---|
-| Testo alternativo, ritaglio centrale | Una piazza con un palazzo sul fondo e una fila di edifici a destra, oltre una ringhiera; sopra, segnaposto arancioni e un pannello digitale azzurro. |
-| Nota sotto la foto (`label` mono), adesso | Immagine elaborata digitalmente |
+**Foto delle porte** · `figure` nella porta 3:5 · alt e nota; varianti per altri ritagli in `alt-text.md`
+| Porta | Testo alternativo | Nota sotto la foto (`label` mono) |
+|---|---|---|
+| Gravina in Puglia · `gravina-digitale.webp`, ritaglio centrale a tutta altezza, in arrivo | Una chiesa in pietra vista di scorcio, con una finestra tonda e un piccolo portale sormontato da una statua; sopra, pannelli digitali azzurri. | Immagine elaborata digitalmente |
+| Acquaviva delle Fonti · `derivate/acquaviva-porta.jpg`, nel sito | Una piazza con un palazzo sul fondo, oltre una ringhiera e uno spazio ribassato in pietra; sopra, segnaposto arancioni e pannelli digitali azzurri. | Immagine elaborata digitalmente |
+| Monopoli · `monopoli-digitale.webp`, ritaglio centrale a tutta altezza, in arrivo | Un muro imbiancato con un balconcino rosso e una bicicletta rossa con un cesto di fiori; sopra, una fascia di pannelli digitali azzurri e segnaposto. | Immagine elaborata digitalmente |
 
 Note sulla foto:
-- **Che cos'è.** L'immagine di Acquaviva del portale del cliente, cittàdigitali.it, con una grafica digitale sovrapposta: pannelli trasparenti azzurri, segnaposto arancioni, scintille. La grafica resta per decisione dell'utente (2026-10-06), perché «segna l'aspetto digitale della città». Per questo l'alt la descrive.
-- **Testo alternativo.** Non ripete il nome della città, che è nel titolo della porta, e non nomina la piazza, che non è verificata. È scritto per il ritaglio centrale; le versioni per gli altri due ritagli candidati e le regole per qualunque riquadro sono in `alt-text.md`. Il ritaglio lo sceglie il creative-director.
+- **Che cosa sono.** Immagini del portale del cliente con una grafica digitale sovrapposta: pannelli trasparenti azzurri, segnaposto arancioni (non a Gravina), piccole luci. La grafica resta per decisione dell'utente (2026-10-06), perché «segna l'aspetto digitale della città». Per questo gli alt la descrivono. L'associazione delle immagini a Gravina e Monopoli l'ha confermata l'utente il 2026-10-06.
+- **Testo alternativo.** Non ripete il nome della città, che è nel titolo della porta, e non nomina luoghi non verificati: né la piazza di Acquaviva né la chiesa di Gravina, perché è confermata la città, non che sia la cattedrale. Per Gravina e Monopoli è scritto per il ritaglio centrale a tutta altezza; varianti e regole per qualunque riquadro sono in `alt-text.md`. I ritagli li sceglie il creative-director.
 - **Nota.** Segue l'ADR 002: dice solo ciò che è certo, cioè che la grafica è un'elaborazione digitale, senza affermare né escludere l'AI. Quando l'utente risponde, la nota cambia con le formule di `alt-text.md`. Con l'AI: «Immagine elaborata con strumenti di intelligenza artificiale» (o «generata», o «generata o elaborata»). Senza AI: «Foto con grafica digitale aggiunta».
 - **Fonte: nessun credito sotto la foto.** È materiale del cliente; «cittàdigitali.it» su questa pagina legherebbe la foto a un altro progetto. Il credito serve solo se l'autore lo chiede. [DA FORNIRE: autore, data, diritti, uso di AI]
 - **Collegamento nel sito** (sessione principale): l'alt va preso da qui o da `alt-text.md`, non dal campo `alt` di `asset-slots.ts`, che contiene il solo nome della città.

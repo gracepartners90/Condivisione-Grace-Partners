@@ -3,14 +3,16 @@ titolo: Testi alternativi delle immagini
 owner: copywriter-content
 contributi: [ux-designer, seo-content, seo-technical, copywriter-brand]
 stato: in revisione
-versione: 1.3
+versione: 1.4
 aggiornato: 2026-10-06
-fonti: [src/assets/images/ (con acquaviva-digitale.webp, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici, prove di ritaglio del creative-director (scratchpad, non versionate), scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+fonti: [src/assets/images/ (con acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp, fornite dall'utente il 2026-10-06), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, conferma dell'utente del 2026-10-06 sull'associazione delle immagini alle città, decisione dell'utente del 2026-10-06 sui segni grafici, prove di ritaglio del creative-director (scratchpad, non versionate), scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Testi alternativi delle immagini
 
-Testi alternativi delle immagini del sito: i 7 file del cliente in `src/assets/images/`, i 6 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-05.
+Testi alternativi delle immagini del sito: i 9 file del cliente in `src/assets/images/`, i 6 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-05.
+
+**Novità della v1.4 (2026-10-06).** Due nuovi file del cliente, `gravina-digitale.webp` e `monopoli-digitale.webp`, per le porte di Gravina in Puglia e Monopoli: testo alternativo per il ritaglio centrale, varianti e nota. La foto di Acquaviva è nel sito (commit d60b95f), con l'alt della prova A.
 
 **Novità della v1.3 (2026-10-06).** Nuovo file del cliente, `acquaviva-digitale.webp`, per la porta di Acquaviva su `/puglia-digitale/`: testo alternativo per il ritaglio centrale e per gli altri due candidati, nota sotto la foto nei tre casi possibili sull'uso di AI, risposta sulla fonte.
 
@@ -49,6 +51,7 @@ Le immagini generate o elaborate con AI non si usano come prova di eventi, né c
 | Home, stesso punto, su mobile (stesso `<picture>`) | `derivate/evento-citta.jpg` | Lo stesso testo: vale per entrambi i ritagli | Come sopra |
 | Home, «Il fondatore» | `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg` | Giacomo Lenoci a braccia conserte, in abito scuro. | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale»; nome e ruolo nella firma |
 | Puglia Digitale, sezione 2 | `derivate/evento-schermo.jpg` | La platea dell’evento Puglia Digitale davanti al maxischermo con il tour virtuale di una piazza storica. | Nota «Immagine elaborata con strumenti di intelligenza artificiale» |
+| Puglia Digitale, «I luoghi», porta di Acquaviva delle Fonti | `derivate/acquaviva-porta.jpg`, da `acquaviva-digitale.webp` | Una piazza con un palazzo sul fondo, oltre una ringhiera e uno spazio ribassato in pietra; sopra, segnaposto arancioni e pannelli digitali azzurri. | Nota «Immagine elaborata digitalmente»; nome della città nel titolo della porta |
 | Contatti, «Persona» | `derivate/fondatore-contatti.jpg`, da `fondatore-in-piedi.jpg` | Giacomo Lenoci in abito scuro, sorridente. | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale»; nome e ruolo nell'H2 |
 | Header e footer, logo | wordmark SVG (`Wordmark.astro`), non il PNG del cliente | `role="img"`, `aria-label` «ITnode» | — |
 | Immagine social di tutte le pagine | `public/og/default.jpg`, tipografica: wordmark, «Esperienze digitali immersive per imprese e territori.», coordinate e orizzonte | `og:image:alt` «ITnode: esperienze digitali immersive per imprese e territori» (`src/data/pages.ts`, owner seo-technical) | — |
@@ -66,8 +69,8 @@ Una piazza in pieno sole, vista da dietro una ringhiera su un muro in pietra. Su
 
 - **Provenienza.** Immagine del portale del cliente, cittàdigitali.it, incollata dall'utente il 2026-10-06 (commit fd616d6). Il file non ha metadati. Autore, data e uso di strumenti AI non sono noti: li ha chiesti la sessione principale all'utente. [DA FORNIRE]
 - **Decisione dell'utente** (2026-10-06): i segni grafici restano, perché «segnano l'aspetto digitale della città». Per questo l'alt li descrive.
-- **Uso.** Porta 3:5 di Acquaviva delle Fonti, sezione «I luoghi» di `/puglia-digitale/`, al posto del segnaposto `luogo-acquaviva`. Il ritaglio lo sceglie il creative-director. Non è ancora nel sito.
-- **Indizi sull'AI** (osservati il 2026-10-06, non conclusivi). Agli angoli, ingranditi 3 volte, non c'è il segno visibile di Gemini. I pannelli contengono segni illeggibili, frequenti nella grafica generata con AI ma anche in quella disegnata. La foto sotto la grafica ha una prospettiva e un'architettura coerenti. [DA VERIFICARE con l'utente]
+- **Uso.** Porta 3:5 di Acquaviva delle Fonti, sezione «I luoghi» di `/puglia-digitale/`, al posto del segnaposto `luogo-acquaviva`. **Nel sito dal commit d60b95f**: ritaglio del creative-director (x 388, y 36, 462 × 770 px sull'originale; `derivate/acquaviva-porta.jpg`), con l'alt della prova A e la nota «Immagine elaborata digitalmente» (ADR 007).
+- **Indizi sull'AI** (osservati il 2026-10-06, non conclusivi). Le dimensioni, 1248 × 832 come il 1024 × 1024 delle immagini di Gravina e Monopoli, sono formati 3:2 e 1:1 comuni nell'uscita dei generatori di immagini, ma anche nei ridimensionamenti [DA VERIFICARE]. Agli angoli, ingranditi 3 volte, non c'è il segno visibile di Gemini. I pannelli contengono segni illeggibili, frequenti nella grafica generata con AI ma anche in quella disegnata. La foto sotto la grafica ha una prospettiva e un'architettura coerenti. [DA VERIFICARE con l'utente]
 
 **Testo alternativo.** Il nome della città non si ripete, perché è nel titolo della porta, subito sotto (criterio 5). Il nome della piazza non c'è, perché non è verificato. La grafica digitale si descrive, perché per l'utente ha un significato.
 
@@ -98,6 +101,33 @@ Regole per qualunque ritaglio:
 - **Il suo limite.** Se l'utente conferma l'AI, la nota va cambiata prima del go-live con la riga giusta della tabella. Due delle tre formule con l'AI sono già nel sito: «elaborata» per la foto dell'evento, «generata o elaborata» per i ritratti (ADR 002). «Generata» da sola vale se tutta l'immagine è sintetica.
 - **Se al go-live la risposta manca.** La scelta spetta a brand-strategist, owner dell'ADR 002, con il parere del consulente legale, perché le due strade hanno rischi opposti. La formula dei ritratti, «generata o elaborata con strumenti di intelligenza artificiale», copre l'art. 50 dell'AI Act, ma affermerebbe un uso di AI non dimostrato. Restare su «elaborata digitalmente» è vero, ma potrebbe non bastare se l'AI c'è (Rischi, 3).
 - **Fonte: non va nella didascalia.** L'immagine viene dal portale del cliente, quindi non è un contenuto di terzi da citare. Su `/puglia-digitale/`, poi, «cittàdigitali.it» sotto la foto legherebbe l'immagine a un altro progetto, e il rapporto tra i due è chiarito solo per l'elenco delle città. La provenienza resta qui e nel commit. Il credito serve solo se l'autore è un fotografo che lo chiede: allora vale l'ultima riga della tabella. [DA FORNIRE: autore e diritti]
+
+### `gravina-digitale.webp` · 1024 × 1024 px · WebP · per la porta di Gravina in Puglia
+
+Una chiesa in pietra vista di scorcio, sotto un cielo azzurro con nuvole. A sinistra una cupola; al centro la lunga fiancata con finestre strette e lo spigolo con un pinnacolo; a destra la facciata con un grande rosone, una finestra tonda e un piccolo portale sormontato da una statua; in basso, una ringhiera. Sulla foto, pannelli trasparenti azzurri con disegni e piccole luci; nessun segnaposto.
+
+- **Provenienza.** Immagine del portale del cliente, mandata dall'utente il 2026-10-06 (commit 808c901), senza metadati. Che sia Gravina in Puglia l'ha confermato l'utente il 2026-10-06. Il nome della chiesa non si scrive: è confermata la città, non che sia la cattedrale. Autore, data e uso di AI non sono noti. [DA FORNIRE]
+- **Segni grafici:** restano per decisione dell'utente, come per Acquaviva (ADR 007). Ritaglio del creative-director in arrivo.
+
+| Ritaglio | alt | Caratteri |
+|---|---|---|
+| **Centrale, a tutta altezza** | Una chiesa in pietra vista di scorcio, con una finestra tonda e un piccolo portale sormontato da una statua; sopra, pannelli digitali azzurri. | 141 |
+| Spostato a destra, con il rosone | La facciata in pietra di una chiesa con un grande rosone e una finestra tonda; sopra, pannelli digitali azzurri. | 111 |
+| Spostato a sinistra, con la cupola | Una chiesa in pietra con una cupola a sinistra e una lunga fiancata con finestre strette; sopra, pannelli digitali azzurri. | 122 |
+
+### `monopoli-digitale.webp` · 1024 × 1024 px · WebP · per la porta di Monopoli
+
+Una strada dai muri imbiancati. Al centro una bicicletta rossa con un cesto di fiori appoggiata al muro, sotto un balconcino rosso con piante; sul muro una telecamera e due insegne; a destra una porta ad arco in legno scuro; per terra, lastre di pietra. Sulla foto, una fascia di pannelli trasparenti azzurri con grafici, collegati da linee, e segnaposto arancioni.
+
+- **Provenienza.** Come per Gravina: portale del cliente, utente, 2026-10-06 (commit 808c901), senza metadati; associazione a Monopoli confermata dall'utente il 2026-10-06. Le insegne sul muro non si trascrivono: sono illeggibili e non aiutano a capire la scena (criterio 7). Autore, data e uso di AI non sono noti. [DA FORNIRE]
+- **Segni grafici:** restano per decisione dell'utente, come per Acquaviva (ADR 007). Ritaglio del creative-director in arrivo.
+
+| Ritaglio | alt | Caratteri |
+|---|---|---|
+| **Centrale, a tutta altezza** | Un muro imbiancato con un balconcino rosso e una bicicletta rossa con un cesto di fiori; sopra, una fascia di pannelli digitali azzurri e segnaposto. | 149 |
+| Spostato a destra, con la porta ad arco | Una bicicletta rossa con un cesto di fiori contro un muro imbiancato, accanto a una porta ad arco; sopra, pannelli digitali azzurri e segnaposto. | 143 |
+
+**Nota sotto le due foto.** «Immagine elaborata digitalmente», come per Acquaviva e per le stesse ragioni: la grafica sovrapposta è un'elaborazione certa, l'uso di AI non è noto. Con la risposta dell'utente si cambia con la tabella della sezione di Acquaviva. Stesse regole per gli alt di qualunque ritaglio: dal fondo al primo piano, poi la grafica; niente nomi di luoghi né «storico» o «antico»; una frase entro 150 caratteri circa.
 
 ### `logo-itnode.png` · 192 × 114 px · PNG
 
@@ -170,6 +200,7 @@ Generati da `scripts/prepare-assets.mjs` (`npm run assets`). Gli alt dei ritagli
 | `evento-panorama.jpg` | 1272 × 560 px | `evento-puglia-digitale.jpg` | Platea, palco con l'oratore e i due maxischermi, senza cornice | Home, da desktop | Vedi «Nel sito» |
 | `evento-citta.jpg` | 448 × 560 px | come sopra | Il maxischermo con la città vista dall'alto e la platea | Home, su mobile | Vedi «Nel sito» |
 | `evento-schermo.jpg` | 438 × 548 px | come sopra | Il maxischermo con la piazza storica e la platea | Puglia Digitale, sezione 2 | Vedi «Nel sito» |
+| `acquaviva-porta.jpg` | 462 × 770 px | `acquaviva-digitale.webp` | La piazza con il palazzo sul fondo, la ringhiera, lo spazio ribassato e la grafica digitale | Puglia Digitale, porta di Acquaviva | Vedi «Nel sito» |
 | `evento-palco.jpg` | 448 × 560 px | come sopra | L'oratore sul palco davanti al fondale di Puglia Digitale, e la platea | Non usato | Un oratore sul palco dell’evento Puglia Digitale, davanti alla platea. |
 | `fondatore-ritratto.jpg` | 480 × 480 px | `fondatore-braccia-conserte.jpg` | Ritratto a mezzo busto, a braccia conserte | Home, «Il fondatore» | Vedi «Nel sito» |
 | `fondatore-contatti.jpg` | 420 × 560 px | `fondatore-in-piedi.jpg` | Ritratto a mezzo busto, sorridente | Contatti, «Persona» | Vedi «Nel sito» |
@@ -184,9 +215,9 @@ Gli id sono quelli di `src/data/asset-slots.ts`. L'alt definitivo si scrive solo
 | `siii-maison-mimina` | /siii (esempi) | Maison Miminà nel suo Sito Interattivo Immersivo: [DA FORNIRE: ambiente inquadrato], con i punti interattivi. | Come sopra. |
 | `siii-dielle` | /siii (esempi) | D.L. Natura Dentro nel suo Sito Interattivo Immersivo: [DA FORNIRE: ambiente inquadrato], con i punti interattivi. | Come sopra. |
 | `siii-anteprima` | /siii, hero | [DA FORNIRE: nome dell'esperienza] su smartphone: [DA FORNIRE: ambiente inquadrato], con i punti interattivi. | Un'esperienza SIII vista da smartphone, in verticale. Se la schermata viene da uno dei tre esempi, l'alt lo nomina. I tre nodi sovrapposti sono decorativi. |
-| `luogo-gravina` | /puglia-digitale (I luoghi) | [Soggetto della foto], senza ripetere il nome della città. | Il nome della città è già nel titolo della scheda, subito accanto. La foto non sta dentro il link «Esplora». |
-| `luogo-acquaviva` | /puglia-digitale (I luoghi) | Il file c'è: `acquaviva-digitale.webp`, con alt e nota nella sezione «File del cliente» | Il segnaposto resta finché la sessione principale non collega il ritaglio scelto dal creative-director. |
-| `luogo-monopoli` | /puglia-digitale (I luoghi) | [Soggetto della foto], senza ripetere il nome della città. | Come sopra. |
+| `luogo-gravina` | /puglia-digitale (I luoghi) | Il file c'è: `gravina-digitale.webp`, con alt e nota nella sezione «File del cliente» | Il segnaposto resta finché la sessione principale non collega il ritaglio scelto dal creative-director. |
+| `luogo-acquaviva` | /puglia-digitale (I luoghi) | Sostituito dalla foto: `derivate/acquaviva-porta.jpg` (vedi «Nel sito») | Lo slot resta dichiarato in `asset-slots.ts`. |
+| `luogo-monopoli` | /puglia-digitale (I luoghi) | Il file c'è: `monopoli-digitale.webp`, con alt e nota nella sezione «File del cliente» | Il segnaposto resta finché la sessione principale non collega il ritaglio scelto dal creative-director. |
 | `video-poster` | /citta-digitali | Nessun alt: il poster è un attributo di `<video>`. | Oggi la copertina del video è tipografica e il poster non c'è (`preload="none"`). Se il poster viene mostrato come `<img>` prima del caricamento: `alt=""`. Il nome lo portano l'H2 «Città Digitali, in movimento.» e il pulsante di riproduzione. |
 
 Note:
