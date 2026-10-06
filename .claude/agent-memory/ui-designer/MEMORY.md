@@ -125,3 +125,14 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `site/scripts/explore*.mjs`: le posizioni possibili;
   - `assemble.py` ed `extract.py`;
   - patch in `diff/`.
+
+## Verifica sulla build della regola 11 (lezioni del 2026-10-06, sera)
+- **Esito:** il creative-director ha approvato R1, R2 e R3 (DV 0.12), applicati in 3edfc79 senza modifiche. La verifica sulla build è conforme alla proposta, nello staging e nella variante «in pubblicazione». Per la descrizione del capitolo 03 ux-designer ha scelto B (4b90180): solo i nomi disegnati a ogni larghezza, 5 nomi, 199 caratteri. Ora è una regola sola per tutte le carte. Design system 0.9.
+- **Unità dei pesi:** `budget.md` usa KB = 1024 byte, come Lighthouse. Nelle review della Puglia intera e della regola 11 avevo dato migliaia di byte: 26,8, 27,9 e 29,4 KB invece di 26,2, 27,3 e 28,7. Leggere sempre la convenzione del documento di riferimento prima di scrivere un peso.
+- **Le patch in attesa di una decisione invecchiano.** Dopo 4b90180, che toccava `index.astro`, la patch 6 v2 di P4 non si applicava più, e avrebbe dichiarato una seconda volta `drawnAtEveryWidth`. A ogni commit che tocca i file di una patch in attesa: rifare `git apply --check` e riusare le funzioni introdotte da altri, invece di duplicarle.
+- **Verifica di fedeltà veloce e solida:**
+  1. file applicati contro file provati (`cmp`);
+  2. sha256 dei dati generati;
+  3. HTML dello staging contro la build di prova, pagina per pagina.
+
+  Se sono identici, le misure valgono; poi si rimisura comunque, come chiesto, nelle due build.
