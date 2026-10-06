@@ -3,9 +3,9 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.10
+versione: 0.11
 aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright), richiesta dell'utente del 2026-10-06 sulla Puglia intera e sue conferme (riferite dalla sessione principale), docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P1–P5), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (1.3, L7), docs/strategia/citta-digitali-elenco.md (0.3, §4), docs/ux/accessibilita.md (0.7), staging dei commit b113efb e 0d106e7 e controllo del creative-director con Playwright (Chromium) da 320 a 2560 px, prova del generatore delle carte con la regola dei 6 px sulla carta d'Italia (copia nello scratchpad, 2026-10-06)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -64,6 +64,18 @@ Tutto il resto è tipografia e aria.
 - §4.6 e §7.5 (riga 4): rimandi al §4.7.
 
 **Modifiche della versione 0.10 (2026-10-06).** §4.7: l'utente estende l'eccezione a Gravina in Puglia e Monopoli, con le immagini equivalenti del portale. Ci sono i riquadri delle due porte, e per Monopoli il male minore, motivato.
+
+**Modifiche della versione 0.11 (la Puglia intera nella hero di `/puglia-digitale/`, 2026-10-06).** L'utente ha chiesto la Puglia intera, con i punti di tutte le città virtualizzate. Qui ci sono le decisioni sulla proposta di ui-designer (`docs/review/2026-10-06-carta-puglia-intera-ui-designer.md`, P1–P5), che l'anteprima mostra già per scelta dell'utente.
+- §1.4, «Il punto-città»: la hero di `/puglia-digitale/` passa al punto-città, con 31 punti.
+  - Regola 6 estesa: due righe per i nomi obbligatori sulle carte compatte della Puglia, e il richiamo di 56 px.
+  - Regola 7 riscritta: le classi di larghezza per carta.
+  - Regole nuove: 10 (la sede), 11 (6 px dai nodi con nome), 12 (i nomi dei mari).
+  - In più: ordine dei nomi, risultato, limiti accettati, accessibilità e veridicità della nuova carta.
+- §1.4, regola 11: sulla carta del capitolo 03 della Home due nomi stanno a meno di 6 px dal nodo di un'altra città. È una correzione chiesta a ui-designer.
+- §1.4, «Dove» delle Coordinate: l'elenco degli usi segue la regola 8. Le carte con il punto-città non hanno coordinate, che restano nelle schede delle città di `/citta-digitali/`.
+- §7.5, riga 1: la hero di `/puglia-digitale/` è riscritta, e «MURGIA» esce.
+- §7.3, riga 5: il creative-director consiglia la stessa carta nel capitolo 02 della Home (P4). Decide l'utente.
+- Ipotesi da validare, Domande aperte e Decisioni richieste aggiornate.
 
 ---
 
@@ -139,7 +151,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
   - coordinate in gradi decimali, con le cifre che la fonte garantisce: oggi 2, per esempio «40.90° N · 16.85° E» (regola di precisione qui sotto);
   - rilevamento e distanza da Acquaviva delle Fonti, il comune della sede, per esempio «MONOPOLI · 081° · 38 KM»;
   - cartografia a filo.
-- **Dove.** Orizzonte della hero, carta della Puglia, porte dei luoghi, carta d'Italia, didascalie degli showcase (dove si trova l'impresa), Contatti (sede e link «Apri in Mappe»), firma del footer.
+- **Dove.** Orizzonte della hero, carta della Terra di Bari nel capitolo 02 della Home (finché c'è), porte dei luoghi, schede delle città di `/citta-digitali/`, didascalie degli showcase (dove si trova l'impresa), Contatti (sede e link «Apri in Mappe»), firma del footer.
   - Nel capitolo 03 della Home la carta d'Italia usa il punto-città, con i nomi senza coordinate (vedi «Il punto-città», in fondo al paragrafo).
 - **Come.**
   - Contorni da Natural Earth 1:10m (pubblico dominio), semplificati: al massimo 8 KB per carta.
@@ -196,7 +208,7 @@ Il concept delle linee guida (spazio fisico → spazio digitale → persone → 
 
 #### Il punto-città (2026-10-05)
 
-Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali. Le decisioni sulla proposta di ui-designer (`docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md`, P1–P5) sono queste.
+Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali. Le decisioni sulla proposta di ui-designer (`docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md`, P1–P5) sono queste. Dal 2026-10-06 il segno vale anche per la Puglia intera di `/puglia-digitale/`, con le 31 città di Puglia Digitale (`docs/review/2026-10-06-carta-puglia-intera-ui-designer.md`; sotto, «La carta della Puglia intera»).
 
 - **Cos'è.** Un punto per ogni luogo reale di un elenco con una fonte dichiarata, nella sua posizione vera. È un dato, non una trama: dice «qui c'è una città del progetto».
 - **Segno.**
@@ -209,7 +221,11 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - È una condizione di soglia (WCAG 1.1.1 e 1.3.1): con 45 punti, una carta `aria-hidden` darebbe solo a chi vede dove stanno le città.
   - L'`<svg>` della costa è `aria-hidden`, e i nomi disegnati non si leggono una seconda volta.
   - Legenda ed elenco in testo completano l'informazione (sotto).
-  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Puglia.
+  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Terra di Bari nel capitolo 02 della Home. La carta della hero di `/puglia-digitale/` non lo è più: con 31 punti mostra più di quanto dica il testo (sotto).
+  - **La Puglia intera nella hero di `/puglia-digitale/`.** È un'immagine con la descrizione L7 di copywriter-brand, scelta da ux-designer (`docs/review/2026-10-06-carta-puglia-intera-ux-designer.md`). Sono 222 caratteri: la provincia con più città, poi i nomi che la carta disegna a ogni larghezza, da nord a sud, poi la frase della sede.
+    - Non elenca le province: tutte e sei, all'ascolto, varrebbero «tutta la Puglia».
+    - Al go-live con i soli nomi solidi scende da sola a 186 caratteri.
+  - **Tetto:** 250 caratteri per ogni descrizione di carta, nella versione più lunga (ux-designer, `docs/ux/accessibilita.md` 0.7). Oggi la Home ne ha 241, `/citta-digitali/` 138, `/puglia-digitale/` 222.
   - Anche la carta di `/citta-digitali/` è un'immagine con una descrizione, finché l'elenco completo non le sta accanto. La descrizione è la L6 di copywriter-brand, senza nomi (138 caratteri): «Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia.» I tre nomi non servono, perché chi usa uno screen reader li incontra nel testo prima della carta e nelle schede subito dopo (decisione di ux-designer, `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3). «Tra queste: …» compare solo dove la carta disegna nomi, cioè sulla Home.
   - **Quando arriva l'elenco in testo** si toglie la descrizione, e carta e legenda tornano insieme `aria-hidden`, perché la legenda spiega solo ciò che si vede. Regola confermata da ux-designer, a quattro condizioni; se ne manca una, la carta tiene la descrizione L6:
     - l'elenco è completo, dallo stesso file dati;
@@ -224,25 +240,59 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
     - San Cataldo resta sotto il nodo di Caltanissetta;
     - Gravina resta sotto quello di Altamura fino a 350 px di carta;
     - Ercolano e Torre del Greco si leggono come un punto con uno spicchio.
-- **Dove.** Solo sulle carte. Oggi le due carte d'Italia con le città di Città Digitali: il capitolo 03 della Home (§7.3) e la sezione «L'Italia in un unico portale» di `/citta-digitali/` (§7.6).
+- **Dove.** Solo sulle carte. Oggi sono tre, e una quarta dipende dall'utente:
+  - le due carte d'Italia con le città di Città Digitali: capitolo 03 della Home (§7.3) e sezione «L'Italia in un unico portale» di `/citta-digitali/` (§7.6);
+  - la carta della Puglia intera con le 31 città di Puglia Digitale, nella hero di `/puglia-digitale/` (§7.5);
+  - la stessa carta, compatta, nel capitolo 02 della Home, solo se l'utente approva P4 (§7.3).
 - **Nomi.** Le regole valgono per ogni carta con il punto-città. Le applica il generatore delle carte al build, senza JavaScript in pagina.
-  1. **Obbligatori:** le città nominate dal testo accanto alla carta, oggi Varese, Altamura e Caltanissetta (LG §18). Se uno non entra sulle carte larghe il build si ferma. Sulle carte strette si nasconde con un avviso, e prima di pubblicare decide il creative-director.
-  2. **Poi un nome per regione o gruppo**, nell'ordine che racconta l'estensione del progetto: prima le regioni fuori dalla Puglia, poi i gruppi pugliesi, poi la seconda area siciliana.
+  1. **Obbligatori:** le città nominate dal testo accanto alla carta. Sulle carte d'Italia sono Varese, Altamura e Caltanissetta (LG §18). Sulla carta della Puglia sono Acquaviva delle Fonti, Gravina in Puglia e Monopoli, le tre località della pagina. Se uno non entra sulle carte della classe più larga il build si ferma. Sulle altre si nasconde con un avviso, e prima di pubblicare decide il creative-director.
+  2. **Poi un nome per regione o gruppo**, nell'ordine che racconta l'estensione del progetto.
+     - Carte d'Italia: prima le regioni fuori dalla Puglia, poi i gruppi pugliesi, poi la seconda area siciliana.
+     - Carta della Puglia (`nomiPuglia`): dopo gli obbligatori vengono i nomi solidi dei materiali di progetto (Altamura e Cassano delle Murge). Poi un nome per gruppo, prima i due estremi, Gargano e Salento, che raccontano l'estensione; poi Bari, la costa a nord di Bari, la Valle d'Itria, Taranto e Brindisi; infine Lecce.
      - Dentro ogni gruppo vince la fonte più solida: prima linee guida e materiali di progetto, poi le pagine città trovate sul portale del cliente, poi le città grandi e senza ambiguità.
-     - L'ordine è una scelta editoriale. Sta nel file dati (`nomi`) e lo approva il creative-director: quello proposto da ui-designer è approvato.
+     - L'ordine è una scelta editoriale. Sta nel file dati (`nomi`, `nomiPuglia`) e lo approva il creative-director. Quelli proposti da ui-designer sono approvati: per l'Italia il 2026-10-05, per la Puglia il 2026-10-06.
   3. **Spazio.** Un nome compare solo se non copre punti, nodi, altri nomi o richiami e se resta dentro la carta, a ogni larghezza della sua classe. Il controllo si fa ogni 5 px, con le misure peggiori dell'etichetta mono e con la spaziatura di WCAG 1.4.12.
   4. **Un nome non nasconde un'altra città.** Il nodo con nome è più grande del punto: se coprirebbe il punto di un'altra città, il nome si scarta. Fanno eccezione solo gli obbligatori.
-  5. **Mai un nome per una lettura ambigua** finché il cliente non la chiarisce: oggi «Polignano» e «San Cataldo». Il punto resta.
+  5. **Mai un nome per una lettura ambigua** finché il cliente non la chiarisce: oggi «Polignano», sulla carta d'Italia e su quella della Puglia. Il punto resta. «San Cataldo» l'ha chiarito l'utente il 2026-10-06 (è il comune siciliano), ma il suo punto resta comunque sotto il nodo di Caltanissetta.
   6. **Forma.**
      - Il nome sta accanto al nodo, su un angolo, oppure appeso sotto con un richiamo verticale di 1 px in `--place`, il gesto delle etichette dell'Orizzonte.
-     - È su una riga e mai sillabato, in `label` mono `--fg`, con il fondo nel colore della superficie.
-  7. **Due classi di larghezza della carta**, annidate: strette fino a 25rem, larghe oltre. Quando la carta cresce un nome può solo comparire, mai sparire.
-  8. **Niente coordinate sotto i nomi e niente numeri** su questa carta. Le coordinate restano negli altri usi del dispositivo (sopra, «Dove»).
+     - I richiami sono di 24, 40 o 56 px (`drop`, `drop2`, `drop3`), mai più lunghi: oltre, il nome si stacca dal suo nodo e diventa una didascalia.
+     - Quello di 56 px è l'ultima prova prima di scartare un nome, e vale solo sulla carta della Puglia, dove i nomi obbligatori devono uscire dal gruppo fitto della Murgia. Oggi lo usa solo Acquaviva delle Fonti, sulle carte compatte.
+     - Il nome è in `label` mono `--fg`, con il fondo nel colore della superficie, e non è mai sillabato.
+     - **Sta su una riga.** Unica eccezione: sulle carte compatte della Puglia (finestre sotto i 700 px) i nomi obbligatori possono andare su due righe.
+       - Si spezzano a uno spazio, e la preposizione va a capo con ciò che segue: «Acquaviva / delle Fonti», «Gravina / in Puglia», mai «Gravina in / Puglia». Con i nomi di oggi lo fa già la regola del generatore, che cerca la riga più lunga più corta possibile. Per un nome nuovo si controlla a occhio.
+       - Il generatore prova prima una riga.
+       - Senza l'eccezione Gravina resterebbe senza nome sui telefoni. Sulla carta della hero, da 640 px, tutti i nomi stanno su una riga.
+  7. **Classi di larghezza della carta**, annidate: quando la carta cresce un nome può solo comparire, mai sparire.
+     - Carte d'Italia: due classi, strette fino a 25rem (400 px) e larghe oltre.
+     - Carta della Puglia: tre classi. Sulle carte compatte (finestre sotto i 700 px) ci sono le strette, da 280 a 400 px, e le larghe, da 400 a 660 px. La carta della hero, da 700 px di finestra, ha una classe sua, da 640 a 1100 px, perché la sua larghezza segue l'altezza della finestra (§7.5).
+  8. **Niente coordinate sotto i nomi e niente numeri** sulle carte con il punto-città. Le coordinate restano negli altri usi del dispositivo (sopra, «Dove»). Su `/puglia-digitale/` restano sotto i nomi delle tre porte di «I luoghi».
   9. **Carte accanto a schede** (`/citta-digitali/`). Se le città in evidenza sono nominate da schede allineate alla loro latitudine, la carta non porta nomi.
      - Le città delle schede sono nodi Ø 10, tutte le altre punti. Il nodo Ø 10 segna sempre una città nominata: dal nome sulla carta o dalla sua scheda.
      - I nodi si accendono dalla scheda (×1,5 in 250 ms), come prima: è un'eco visiva della scheda, non un'interazione della carta.
      - I punti restano senza stati, anche quando arriverà l'elenco in testo. Accenderli dall'elenco si decide solo con il disegno di quella sezione.
      - Niente anello attorno ai nodi delle schede, che darebbe un significato falso (§1.3: l'anello segna ciò che si esplora, e sulle carte la sede), e niente richiami dalle schede ai nodi, che attraverserebbero i punti della Puglia.
+  10. **La sede** (anello Ø 26, §1.3) tiene i nomi fuori dall'anello.
+      - I nomi d'angolo stanno a 11 px invece di 8, e i richiami partono dall'anello, non dal nodo.
+      - I punti vicini si dipingono sopra l'anello, e il loro ritaglio lo interrompe come interrompe la costa: l'anello non nasconde mai una città.
+  11. **Almeno 6 px tra un nome e il nodo con nome di un'altra città**, richiamo compreso. Così un nome non si legge mai come il nome del nodo accanto: nel primo tentativo di ui-designer, «ALTAMURA» stava sopra il nodo di Gravina. La regola vale per ogni carta.
+      - **Carta della Puglia:** rispettata. Il minimo misurato dal creative-director in pagina, da 320 a 1920 px, è di 9,8 px.
+      - **Carta del capitolo 03 della Home: da correggere `[IMPORTANTE]`** prima del go-live, se al lancio porta più nomi dei tre obbligatori.
+        - «MANFREDONIA» passa a 3,5–5,9 px dal nodo di Itri, con finestre da 445 a 490 px e da 1075 a 1225 px (carta di 402–459 px).
+        - «MASSAFRA» arriva fino a 4,1 px dal nodo di Cosenza.
+        - Effetto: a colpo d'occhio Manfredonia sembra nel Lazio e Massafra in Calabria. Misure del creative-director in pagina, ogni 5 px, il 2026-10-06.
+      - **Come correggere.** La regola applicata così com'è al generatore cambia la scelta.
+        - Escono Manfredonia e Massafra, che hanno la pagina sul portale, ed entra San Giovanni Rotondo, con una fonte più debole.
+        - Alzare la soglia della classe larga fino a 430 px non cambia l'esito: a ogni larghezza della classe servono i 6 px, e «MANFREDONIA» li raggiunge solo da 460 px di carta (prova del creative-director su una copia del generatore).
+        - La soluzione la cerca ui-designer, in quest'ordine di preferenza:
+          1. tenere i 9 nomi, cambiando gli ancoraggi;
+          2. altrimenti, mostrare la serie stretta fino alla larghezza da cui i 9 nomi rispettano i 6 px;
+          3. per ultima, un'altra scelta di nomi, che rivede il creative-director.
+        - La descrizione della Home segue i dati e deve restare sotto i 250 caratteri.
+  12. **Nomi dei mari**, come «MARE ADRIATICO» e «MAR IONIO», in `label` mono `--fg-2`.
+      - Stanno solo in mare, e solo sulle carte più larghe di 25rem: sui telefoni affollerebbero la costa (DS §5.4).
+      - Per i nomi delle città sono ostacoli come i punti. Il build si ferma se un nome di mare copre un punto o esce dalla carta.
+      - Tra i punti non va nessun nome di area, per esempio «MURGIA», «SALENTO» o «GARGANO»: si leggerebbe come il nome di una città.
 - **Risultato al 2026-10-05, carta della Home:** 45 città, cioè 36 punti e 9 nomi. Sulla carta di `/citta-digitali/`: 42 punti e i 3 nodi delle schede, senza nomi (regola 9).
   - Carte strette (finestre fino a circa 440 px e da 1024 a circa 1070 px): Varese, Altamura (appeso), Caltanissetta, Itri e Cosenza.
   - Carte larghe: in più Manfredonia, Bari, Massafra (appeso) e Caltagirone. Sulle carte strette queste quattro sono punti.
@@ -278,6 +328,41 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - Punti e nomi vengono dalla pagina «Tutte le città» del portale del cliente, indicata dall'utente. La pagina è stata letta da un riassunto dell'indice di ricerca, quindi i nomi restano `[DA VERIFICARE]` (`docs/strategia/citta-digitali-elenco.md` §1, §4).
   - **Anteprima:** la carta si mostra subito con i 9 nomi, come chiede l'utente.
   - **Go-live:** serve il testo o uno screenshot della pagina. Se al lancio non c'è, si pubblicano i punti con i soli tre nomi obbligatori (`nomi` ridotto agli obbligatori). La descrizione della carta segue da sola, perché nasce dagli stessi dati.
+- **La carta della Puglia intera** (hero di `/puglia-digitale/`, 2026-10-06). È la proposta di ui-designer (P1–P5), approvata dal creative-director: inquadratura, punti, nomi, legenda e descrizione, componente e generatore.
+  - **Solo costa.** Una linea aperta dalla foce del Saccione (confine con il Molise) a quella del Bradano (confine con la Basilicata), passando per il Gargano e Santa Maria di Leuca. Le estremità restano nette: la linea finisce dove finisce la Puglia.
+    - Niente confine regionale e niente campitura: una regione chiusa farebbe pensare a una copertura completa (N12; brand-strategist, condizione 2). La Puglia si riconosce dalla costa.
+    - Un confine scaricato (ISTAT o Natural Earth admin-1) non serve: sarebbe una dipendenza nuova, con licenza e attribuzione, per un segno che non vogliamo.
+    - Stessa proiezione e stessa levigatura delle altre carte. Le Isole Tremiti mancano, perché Natural Earth 1:10m non le ha; al telefono, del resto, sembrerebbero un punto-città.
+  - **Risultato al 2026-10-06.** I punti sono 31, e da 280 px di carta in su nessuna coppia si sovrappone: le città più vicine, Locorotondo e Martina Franca, distano 6,7 km. Acquaviva delle Fonti è il nodo con l'anello della sede.
+    - Carte compatte strette (telefoni, 280–400 px): 7 nomi. Sono Manfredonia, Barletta, Bari, Monopoli, Acquaviva delle Fonti (su due righe, appesa a 56 px), Gravina in Puglia (su due righe) e Nardò.
+    - Carte compatte larghe (400–660 px): 10 nomi, cioè in più Lecce, Massafra e Ostuni.
+    - Carta della hero (640–1100 px): 12 nomi, cioè in più Altamura (appesa) e Brindisi, tutti su una riga.
+    - Nessuna sovrapposizione in 222 formati di finestra, con e senza la spaziatura di WCAG 1.4.12 (misure di ui-designer).
+    - Il creative-director ha ricontrollato la pagina a 320, 390, 700, 768, 1024, 1280, 1440 e 1920 px, e la distanza dei nomi dai nodi da 320 a 1920 px.
+  - **Limiti accettati** (creative-director, 2026-10-06).
+    - **Cassano delle Murge e l'anello della sede.** Cassano sta a 7,1 km da Acquaviva.
+      - Fino a circa 400 px di carta il suo punto è dentro l'anello, e tra 400 e 770 px l'anello lo attraversa. Sui telefoni succede lo stesso con Santeramo in Colle e Gioia del Colle.
+      - Il ritaglio dei punti interrompe l'anello, quindi le città si vedono.
+      - È il costo della sede in mezzo al gruppo più fitto, come San Cataldo sotto Caltanissetta.
+    - **«OSTUNI» e «NARDÒ» attraversano la costa.** Il fondo nel colore della superficie la interrompe sotto il nome (DS §2.4), come fanno le carte stampate con le linee sotto i nomi. È un ritaglio, non un alone luminoso. Il nome resta leggibile e accanto al suo nodo.
+    - **Il vuoto a sinistra su desktop è respiro.** La regione è più alta che larga e la carta sta a destra, così la hero diventa una diagonale: il titolo in alto a sinistra, la Puglia in basso a destra, lungo l'asse della regione.
+      - Il vuoto sotto i pulsanti dà aria alle CTA.
+      - Lì non entra nulla: niente decorazioni, niente seconda immagine.
+    - **Sui portatili la prima schermata mostra solo l'inizio della carta.**
+      - Da 1280 a 1536 px di finestra si vede dal 18 al 36% della carta, cioè il Gargano; il resto arriva con lo scorrimento. La striscia di prima, a 1440 × 900, si vedeva per circa metà.
+      - Su telefoni e tablet in verticale la carta è quasi tutta nella prima schermata (87–100%).
+      - Il disegno all'ingresso parte al caricamento, quindi sui portatili si vede solo in parte. Va bene: il movimento aggiunge, non spiega (§8, domanda 5).
+      - Niente disegno legato allo scorrimento, che nasconderebbe parti della carta finché non si scorre.
+      - Se l'utente vuole la Puglia intera nella prima schermata anche sui portatili, l'unica via è affiancarla al titolo, da circa 1280 px. Costa una carta più piccola (circa 450–550 px, 10 nomi invece di 12) e una hero divisa in due colonne, uno schema comune: il creative-director non la consiglia.
+  - **Legenda: «Ogni punto è una città di Puglia Digitale»** (copywriter-brand, L7, nella forma di L1). È la stessa riga mono sotto la carta, con gli spazi unificatori in «di Puglia Digitale»: in tutto il sito i punti si leggono in un modo solo.
+  - **Veridicità.**
+    - L'utente ha confermato il 2026-10-06 che le città virtualizzate di Puglia Digitale sono le 31 città pugliesi dell'elenco (`docs/strategia/citta-digitali-elenco.md` 0.3).
+    - Nessun numero e nessun «tutta la Puglia». Nessuna formula attribuisce Puglia Digitale a ITnode: la frase della sede dice dove sta ITnode, non di chi è il progetto (brand-strategist, condizioni 1–3).
+    - **Anteprima:** si mostrano subito anche i nomi oltre ai solidi, come nella Home.
+    - **Go-live senza il testo della pagina «Tutte le città»:** si tolgono `gruppi` e `poi` da `nomiPuglia`.
+      - Restano Acquaviva delle Fonti, Gravina in Puglia e Monopoli, più Altamura sulla carta della hero.
+      - Cassano non entra mai, perché sta dentro l'anello.
+      - La descrizione segue da sola.
 - **Non si fa.**
   - Punti decorativi o a trama, come retini, griglie o «mappe a puntini»: quelle sono texture, non dati, e il divieto del dispositivo («Non si fa», sopra) resta.
   - Punti senza un luogo reale dietro, o spostati per estetica.
@@ -831,7 +916,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 2 | Manifesto | Statement su 10 colonne: «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.»; sotto, sfalsato (colonne 7–11), il `lead` di sintesi su Città Digitali e Puglia Digitale | pietra (la terra continua) | `display-l` | statement e poi lead, senza sfalsamento |
 | 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda; didascalia solo con data e luogo confermati (A4) | pietra | — (legenda) | ritaglio «Città» 4:5; legenda sotto |
 | 4 | Infrastruttura | Passaggio «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.»; in basso, marquee legato allo scroll: «spazio fisico → spazio digitale → persone → imprese → territorio →» (frecce SVG) | **notte** (primo ingresso nel digitale) | `display-l`, marquee in `display-m` | statement su 4 righe; marquee più lento |
-| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo sulle colonne 8–12, con un punto-città per ogni città del progetto e i nomi dove c'è spazio (5 sulle carte strette, 9 sulle larghe; §1.4), senza coordinate sotto i nomi e con una riga di legenda in mono sotto la carta; testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
+| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. *Proposta P4 (2026-10-06), in attesa dell'utente:* al posto della Terra di Bari, la carta della Puglia intera della hero di `/puglia-digitale/`, compatta, con i punti-città, la legenda e la descrizione (§1.4). Il creative-director la consiglia: il gesto «dalla regione all'Italia» diventa letterale, perché le stesse città si vedono da vicino nel capitolo 02 e da lontano nel 03. **03 Città Digitali** (240°, pietra): carta d'Italia a filo sulle colonne 8–12, con un punto-città per ogni città del progetto e i nomi dove c'è spazio (5 sulle carte strette, 9 sulle larghe; §1.4), senza coordinate sotto i nomi e con una riga di legenda in mono sotto la carta; testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
 | 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`, agganciato alla tappa Leadstone con la sua attribuzione (registro N5: clienti delle aziende fondate prima di ITnode) e separato da «oggi» da almeno una tappa di spazio: mai vicino al logo o ai nomi dei prodotti ITnode. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sulla foto reale «Palco» (DR3-a; ritratto a inchiostro solo con DR3-b) e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
 | 7 | Chiusura | Passaggio, CTA «Parliamone» e contatti rapidi in mono (email, telefono) | notte | `display-xl` | CTA a tutta larghezza |
 | — | Footer | Vedi §7.8 | notte | — | colonne in pila |
@@ -858,7 +943,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
-| 1 | Hero | H1 «Puglia Digitale» con sottotitolo e CTA «Visita il portale →»; la costa pugliese è un'unica linea che attraversa la pagina e si disegna all'ingresso, con i nodi `terra` di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» | calce | `display-xl` | carta ritagliata sulla Terra di Bari, sotto il titolo |
+| 1 | Hero | H1 «Puglia Digitale» con il sottotitolo, CTA «Visita il portale ↗» e link «Aderisci a Puglia Digitale ↓». Sotto, **la Puglia intera** (2026-10-06, richiesta dell'utente; §1.4, «La carta della Puglia intera»). La costa è un'unica linea aperta, dal Saccione al Bradano, senza confine regionale né campitura, e si disegna all'ingresso da ovest a est. C'è un punto-città per ognuna delle 31 città di Puglia Digitale. Acquaviva delle Fonti ha l'anello della sede, Gravina in Puglia e Monopoli hanno il nome, gli altri nomi compaiono dove c'è spazio; «MARE ADRIATICO» e «MAR IONIO» stanno in mare. Niente coordinate sotto i nomi (restano nelle porte di «I luoghi») e niente «MURGIA», che tra i punti sembrerebbe una città. Sotto la carta la legenda in mono; la carta è un'immagine con la descrizione L7. **Impaginato da 700 px:** carta allineata a destra, alta circa tre quarti della finestra, larga da 640 a 1100 px e mai oltre le colonne 3–12. La hero diventa una diagonale, con il titolo in alto a sinistra e la Puglia in basso a destra; il vuoto sotto i pulsanti è respiro | calce | `display-xl` | la stessa carta, compatta, a tutta larghezza sotto i pulsanti (da 280 a 632 px), con la legenda: 7 nomi sui telefoni, 10 sulle carte più larghe |
 | 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Schermo» 4:5 in soglia sulle colonne 1–5 (persone che esplorano una piazza pugliese sul maxischermo), testo sul Destination Marketing sulle colonne 7–11; didascalia solo con data e luogo (A4) | pietra | `display-l` | foto a tutta larghezza, poi testo |
 | 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350). **Se al lancio resta solo «30+»** (riserva B3: gli altri due numeri non si pubblicano senza fonte): un solo numero in `display-xxl` dalla colonna 3, etichetta e nota con la data; il titolo si adatta al singolare (copywriter-brand). Se neanche «30+» è confermato, la sezione non si pubblica e il layout resta pronto |
 | 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →». Nelle tre porte, le immagini del portale con i segni grafici e la loro nota (§4.7, eccezione dell'utente); le varianti tipografiche restano pronte | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
@@ -951,9 +1036,13 @@ Cinque domande per ogni sezione, a ogni review. Basta un «no» per riprogettare
 - **Carte.** Natural Earth 1:10m è in pubblico dominio. Se servisse il confine regionale ufficiale, i limiti amministrativi ISTAT richiedono l'attribuzione.
 - **Città di Città Digitali** (§1.4, «Il punto-città»).
   - I 45 nomi vengono dal riassunto dell'indice di ricerca della pagina «Tutte le città» `[DA VERIFICARE]`. Il testo o uno screenshot della pagina chiude il dubbio, ed è la condizione per pubblicare i nomi oltre ai tre delle linee guida.
-  - «Polignano» è letto come Polignano a Mare (BA) e «San Cataldo» come il comune in provincia di Caltanissetta `[IPOTESI]`. Sulla carta nessuno dei due ha il nome; il punto di San Cataldo resta comunque sotto il nodo di Caltanissetta.
+  - «Polignano» è letto come Polignano a Mare (BA) `[IPOTESI]`, e sulle carte resta senza nome. «San Cataldo» è il comune in provincia di Caltanissetta (confermato dall'utente il 2026-10-06); il suo punto resta sotto il nodo di Caltanissetta.
   - Le misure delle etichette sono in Chromium; Safari iOS e Firefox `[DA VERIFICARE]`.
   - Con il testo ingrandito dalle sole impostazioni del browser, le etichette crescono più della carta e i margini potrebbero non bastare. Lo zoom della pagina, quello di WCAG 1.4.4, non cambia nulla.
+- **Carta della Puglia intera** (§1.4).
+  - Oltre ai cinque nomi solidi (Acquaviva, Gravina, Monopoli, Altamura, Cassano), la grafia dei nomi è `[DA VERIFICARE]`. L'elenco come insieme è confermato dall'utente.
+  - L'estremo nord della costa è il vertice di Natural Earth più vicino alla foce del Saccione `[DA VERIFICARE]`, ininfluente a questa scala.
+  - Misure in Chromium; Safari iOS e Firefox `[DA VERIFICARE]`, compresa la larghezza della carta della hero, che dipende da `svh`.
 
 ## Domande aperte
 
@@ -971,7 +1060,7 @@ Da aggiungere, per la parte visiva:
 - **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2). Serve il file per scegliere il fotogramma del poster.
 - **Riferimento.** Screenshot di aprildunford.com (vedi `analisi-riferimento.md`).
 - **Persone nella foto dell'evento.** Ai partecipanti è stata data un'informativa sulle riprese? Senza, i ritagli si stringono sui due schermi e sul palco, escludendo i profili riconoscibili ai margini (§4.2).
-- **Elenco delle città di Città Digitali.** Le domande al cliente (città attive, data dell'elenco, legame con le «30+ città» di Puglia Digitale) sono in `docs/strategia/citta-digitali-elenco.md` e non si duplicano qui. Per la parte visiva: se il cliente conferma che le «30+ città» di Puglia Digitale sono le 31 città pugliesi dell'elenco, anche la carta della Puglia del capitolo 02 può passare al punto-città. Lo decide il creative-director su una proposta di ui-designer.
+- **Elenco delle città di Città Digitali.** Le domande al cliente (città attive, data dell'elenco) sono in `docs/strategia/citta-digitali-elenco.md` e non si duplicano qui. Il legame con le «30+ città» di Puglia Digitale l'ha confermato l'utente il 2026-10-06: sono le 31 città pugliesi dell'elenco. Per la parte visiva, quindi, anche la carta del capitolo 02 della Home può passare al punto-città (P4). Il creative-director la consiglia, ma l'utente non l'aveva chiesta: decide lui (Decisioni richieste, punto 6).
 
 ## Decisioni richieste
 
@@ -990,4 +1079,16 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.9)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.11)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+6. **Capitolo 02 della Home con la Puglia intera (P4 di ui-designer).** Al posto della carta della Terra di Bari, la stessa carta della hero di `/puglia-digitale/`, compatta, con i 31 punti, la legenda e la descrizione. Il prototipo è pronto e provato a 161 larghezze, senza sovrapposizioni, anche con la spaziatura di WCAG 1.4.12.
+   - **Parere del creative-director: sì.**
+   - Pro:
+     - «dalla regione all'Italia» (§7.3) diventa letterale: le stesse città, da vicino nel capitolo 02 e da lontano nel 03, con lo stesso segno;
+     - Home e pagina mostrano la stessa Puglia;
+     - esce la vecchia carta, con gli a capo «GRAVINA IN / PUGLIA» e «ACQUAVIVA DELLE / FONTI», che lasciano la preposizione in fondo alla riga.
+   - Contro:
+     - l'utente non l'aveva chiesto;
+     - le città pugliesi compaiono due volte in Home;
+     - la Home pesa 1,5 KB in più con gzip (29,5 su 40);
+     - sul telefono il capitolo cresce di 69 px.
+   - Il capitolo resta il posto della foto del territorio, quando arriverà.
