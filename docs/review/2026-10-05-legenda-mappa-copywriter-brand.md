@@ -3,9 +3,9 @@ titolo: Legenda della carta del capitolo 03 della Home e testi collegati
 owner: copywriter-brand
 contributi: []
 stato: in revisione
-versione: 1.2
-aggiornato: 2026-10-05
-fonti: [richiesta della sessione principale del 2026-10-05, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P4), dist/citta-digitali/index.html (testo della sezione e schede), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
+versione: 1.3
+aggiornato: 2026-10-06
+fonti: [richiesta della sessione principale del 2026-10-05 e del 2026-10-06, docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P2, P3), src/data/citta-digitali.json, src/lib/citta-digitali.ts, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P4), dist/citta-digitali/index.html (testo della sezione e schede), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
 ---
 
 # Legenda della carta del capitolo 03 · testi
@@ -152,6 +152,26 @@ Gli stessi testi sono nel copy deck della Home (v1.4, § 5, «Capitolo 03 con la
   - 138 caratteri, Gulpease 67. Valgono le regole di L4 per la quota e per la preposizione.
 - **Per la funzione condivisa** (`describeCittaDigitali`, P4 di ui-designer): la frase «Tra queste: …» si scrive solo quando la carta disegna dei nomi. La pagina passa un elenco vuoto, e la frase non c’è. La Home non cambia.
 - **Legenda:** L1 anche qui, «Ogni punto è una città di Città Digitali».
+
+## L7 · [IMPORTANTE] Carta della Puglia intera nella hero di `/puglia-digitale/` (2026-10-06)
+
+- **Dove.** Proposta di ui-designer, `docs/review/2026-10-06-carta-puglia-intera-ui-designer.md` (P3): 31 punti, uno per ogni città di Puglia Digitale, nomi dove c’è spazio, anello della sede su Acquaviva delle Fonti; funzione `describePugliaDigitale` in `src/lib/citta-digitali.ts`.
+- **Condizioni** (brand-strategist, `citta-digitali-elenco.md` 0.3, §4): si può dire «città di Puglia Digitale»; nessuna formula che attribuisca Puglia Digitale a ITnode (D1 aperta); niente «tutta la Puglia»; nessun numero.
+- **Legenda**, nella forma di L1:
+  > Ogni punto è una città di Puglia Digitale
+  - 41 caratteri, spazi unificatori in «di Puglia Digitale». Una riga da 390 px; a 320 px «Ogni punto è una città / di Puglia Digitale» (misure di ui-designer, P3).
+  - Preferita alle formule di brand-strategist: «Le città di Puglia Digitale» non spiega il segno; «Città virtualizzate con Puglia Digitale» usa un termine tecnico che il tone of voice non adotta. La forma è la stessa delle carte di Città Digitali: un solo modo di leggere i punti in tutto il sito.
+- **Descrizione.** Il testo di oggi (379 caratteri, Gulpease 57) è lungo per un nome accessibile, che lo screen reader legge tutto d’un fiato. Ha anche due problemi di contenuto.
+  - L’elenco di tutte e sei le province si legge come una copertura completa della regione, cioè quasi un «tutta la Puglia».
+  - «Acquaviva delle Fonti» compare due volte, tra i nomi e nella frase dell’anello.
+- **Testo proposto** (222 caratteri, Gulpease 64):
+  > Carta della Puglia con le città di Puglia Digitale, più numerose nella provincia di Bari. Tra queste: Manfredonia, Barletta, Bari, Monopoli, Gravina in Puglia e Nardò. Un anello segna Acquaviva delle Fonti, sede di ITnode.
+  - **Modello:** `Carta della Puglia con le città di Puglia Digitale, ${quota} nella provincia di ${provincia}. Tra queste: ${nomi}. Un anello segna ${sede}, sede di ITnode.`
+  - **Quota:** «più numerose» per la provincia con più città (oggi Bari, 13 su 31); «la maggior parte» solo sopra la metà. In caso di parità la frase si ferma prima della virgola. «Provincia di Bari» come nel resto del sito («in provincia di Bari», Home).
+  - **Nomi:** quelli che la carta disegna a ogni larghezza, cioè le carte strette, da nord a sud, senza la sede, che ha la sua frase. Così ogni nome detto è sulla carta anche al telefono, e Manfredonia e Nardò danno l’estensione senza dichiararla.
+  - **Al go-live senza il testo della pagina** restano i nomi solidi: «Tra queste: Monopoli e Gravina in Puglia.» (descrizione di 186 caratteri, Gulpease 70).
+  - **Se ux-designer vuole i nomi della hero**, la carta più ricca: «Tra queste: Manfredonia, Barletta, Bari, Monopoli, Altamura, Gravina in Puglia, Ostuni, Brindisi, Massafra, Lecce e Nardò.» (267 caratteri in tutto).
+  - **Sede:** «sede di ITnode» dice dove sta l’azienda, senza attribuirle Puglia Digitale (condizione 1). Nessun numero, nessun «tutte».
 
 ## Misure
 
