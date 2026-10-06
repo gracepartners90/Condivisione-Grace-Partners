@@ -2,9 +2,10 @@
  * Text alternatives of the maps with the cities of Città Digitali (WCAG 1.1.1, 1.3.1), built from the
  * same data as the dots: regions north → south, the region with most cities, then the names the map draws.
  * No number: a count is a claim (docs/strategia/citta-digitali-elenco.md §4).
- * Wording: copywriter-brand (L4, L6). «Tra queste» only when the map draws names (narrow maps draw
- * fewer than wide ones, so they are examples). A map that draws none, like the one of /citta-digitali/
- * whose nodes are named by the cards beside it, gets no third sentence (ux-designer, 2026-10-05).
+ * Wording: copywriter-brand (L4, L6, L7). «Tra queste» only when the map draws names, and only the names
+ * drawn at every width, so that each one is on the map on a phone too (ux-designer, 2026-10-06). A map
+ * that draws none, like the one of /citta-digitali/ whose nodes are named by the cards beside it, gets no
+ * third sentence (ux-designer, 2026-10-05).
  */
 import cittaDigitali from '../data/citta-digitali.json';
 
@@ -21,7 +22,7 @@ const inRegion = (r: string) => (r === 'Lazio' ? `nel ${r}` : `in ${r}`);
 /** «la maggior parte» only above half; otherwise «più che altrove» (copywriter-brand, L4). */
 const shareOf = (count: number, total: number) => (count > total / 2 ? 'la maggior parte' : 'più che altrove');
 
-/** `names`: the names the map draws on wide screens, north → south; none for a map without names. */
+/** `names`: the names the map draws at every width, north → south; none for a map without names. */
 export function describeCittaDigitali(names: string[] = []): string {
   const regions = REGIONS.filter((r) => perRegion.has(r));
   const [mostRegion, mostCount] = [...perRegion].sort((a, b) => b[1] - a[1])[0];

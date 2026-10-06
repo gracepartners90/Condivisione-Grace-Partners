@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.7
+versione: 0.8
 aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -124,7 +124,7 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
     - 02: carta della Puglia, finché non arriva una foto del territorio;
     - 03: carta d'Italia con un punto per ogni città di Città Digitali e i nomi dove c'è spazio, con la legenda di una riga in `<figcaption>` (nel sito dal commit 0a61546).
     - La carta 02 è decorativa (`aria-hidden`): i suoi luoghi sono nominati nella pagina di linea.
-    - **La carta 03 non è decorativa.** Mostra dove sta la rete, e il testo del capitolo non lo dice. È un'immagine (`role="img"`) con una descrizione costruita dagli stessi dati: regioni da nord a sud, la regione più fitta, poi «Tra queste:» con i nomi disegnati sulla carta larga (forma L4 di copywriter-brand). Nessun numero finché il conteggio non è confermato. Nella Home niente elenco dei nomi, né nascosto né in un `<details>`. Decisione in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`.
+    - **La carta 03 non è decorativa.** Mostra dove sta la rete, e il testo del capitolo non lo dice. È un'immagine (`role="img"`) con una descrizione costruita dagli stessi dati: regioni da nord a sud, la regione più fitta, poi «Tra queste:» con i nomi disegnati a ogni larghezza (forma L4 di copywriter-brand; regola dei nomi della L7, decisione del 2026-10-06 in `docs/review/2026-10-06-descrizione-carta-home-ux-designer.md`). Nessun numero finché il conteggio non è confermato. Nella Home niente elenco dei nomi, né nascosto né in un `<details>`. Decisione in `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`.
 - **Desktop.** Tre capitoli grandi, non tre card, con composizioni speculari (direzione visiva). Dentro ogni capitolo, numero o visual possono essere sticky.
 - **Mobile.** Per ogni capitolo: numero → nome → statement → visual → microdescrizione → CTA a tutta larghezza. Niente sticky, niente swipe.
 - **Interazione e accessibilità.**
