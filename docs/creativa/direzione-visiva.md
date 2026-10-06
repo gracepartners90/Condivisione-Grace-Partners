@@ -3,7 +3,7 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.9
+versione: 0.10
 aggiornato: 2026-10-06
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright)]
 ---
@@ -62,6 +62,8 @@ Tutto il resto è tipografia e aria.
 **Modifiche della versione 0.9 (2026-10-06).**
 - §4.7, nuovo: l'immagine di Acquaviva delle Fonti del portale del cliente, con i suoi segni grafici, entra nella porta di Acquaviva su `/puglia-digitale/`. È un'eccezione decisa dall'utente alle linee guida §33 e al §4.6, registrata con le sue parole e nell'ADR 007. Contiene ritaglio in pixel, colore, nota, testo alternativo, coerenza con le altre porte e condizioni per rivederla.
 - §4.6 e §7.5 (riga 4): rimandi al §4.7.
+
+**Modifiche della versione 0.10 (2026-10-06).** §4.7: l'utente estende l'eccezione a Gravina in Puglia e Monopoli, con le immagini equivalenti del portale. Ci sono i riquadri delle due porte, e per Monopoli il male minore, motivato.
 
 ---
 
@@ -537,7 +539,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 3. **Video Città Digitali:** il file, o il permesso di ospitarlo, un poster, la durata e l'indicazione se c'è parlato (in quel caso servono i sottotitoli).
 4. **Un ritratto reale del fondatore**, in un luogo vero (ufficio o Acquaviva), con luce naturale e senza schermi alle spalle.
 5. **Foto dei luoghi.**
-   - Acquaviva delle Fonti, Gravina in Puglia, Monopoli: Porta 3:5, lato lungo di almeno 2400 px. Per Acquaviva oggi si usa l'immagine del portale con i segni grafici (§4.7); resta valida la richiesta dell'originale senza grafica e ad alta risoluzione.
+   - Acquaviva delle Fonti, Gravina in Puglia, Monopoli: Porta 3:5, lato lungo di almeno 2400 px. Per le tre città oggi si usano le immagini del portale con i segni grafici (§4.7); resta valida la richiesta degli originali senza grafica e ad alta risoluzione.
    - Varese, Altamura, Caltanissetta: Porta 3:5 o Schermo 16:10.
 6. **Marchi vettoriali** di ITnode, Puglia Digitale e Città Digitali, con i codici colore.
 7. **L'elenco delle 30+ città** di Puglia Digitale, per la carta ed eventualmente un marquee.
@@ -545,7 +547,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 **Direzione fotografica per le foto da produrre.** Il riferimento è «Viaggio in Italia» (1984, Luigi Ghirri e altri): luoghi ordinari guardati con attenzione, inquadrature frontali, orizzonte in vista, luce naturale, colori veri. Le persone sono ritratte al lavoro nei loro spazi.
 - **No:** droni saturi, HDR, tramonti da cartolina, visori VR, mani su tablet con ologrammi, folklore.
 
-### 4.7 Immagine di Acquaviva delle Fonti dal portale del cliente (eccezione dell'utente, 2026-10-06)
+### 4.7 Immagini dei luoghi dal portale del cliente: Acquaviva delle Fonti, Gravina in Puglia, Monopoli (eccezione dell'utente, 2026-10-06)
 
 - **File.** `src/assets/images/acquaviva-digitale.webp`, 1248 × 832 px, senza metadati.
   - È l'immagine di Acquaviva del portale del cliente, cittàdigitali.it (`wp-content/uploads/2026/02/Acquaviva_digitale_image.webp`). L'ha fornita l'utente il 2026-10-06.
@@ -558,7 +560,7 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - La grafica va contro le linee guida §33 («NO glow neon gratuiti», «NO dashboard finte», «NO eccesso di glassmorphism») e contro la direzione fotografica del §4.6 («mani su tablet con ologrammi»).
   - L'utente l'ha scelta sapendolo, tra tre alternative: l'originale senza grafica, un ritocco con AI, l'attesa. Le sue parole: **«lascia i segni grafici, segnano l'aspetto digitale della città»**.
   - Obiettivi e identità li decide l'utente (CLAUDE.md, «Come si risolvono i conflitti», punto 4). L'eccezione si registra e non si riapre: ADR 007.
-- **Perimetro.** Vale per questa immagine, nella porta di Acquaviva della sezione «I luoghi» di `/puglia-digitale/`.
+- **Perimetro.** Vale per le tre immagini del portale, nelle tre porte della sezione «I luoghi» di `/puglia-digitale/`: prima Acquaviva, poi Gravina e Monopoli, per estensione decisa dall'utente (sotto).
   - Non diventa uno stile del sito: altrove valgono le linee guida §33 e il §4.6.
   - Per estenderla ad altre immagini serve una nuova decisione dell'utente.
 - **Il ritaglio fa il lavoro.** La grafica non si tocca: niente ritocchi, cancellazioni o estensioni. È il ritaglio a scegliere quanta grafica entra.
@@ -583,12 +585,20 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - Il testo è di copywriter-content (`docs/contenuti/alt-text.md`), con la regola dell'ADR 002: dice solo ciò che è certo. Oggi è «Immagine elaborata digitalmente», e cambia quando il cliente chiarisce l'uso di AI.
   - Nessun credito né fonte sotto la foto, salvo richiesta dell'autore.
 - **Testo alternativo.** Lo scrive copywriter-content. Descrive ciò che il riquadro mostra, dal fondo al primo piano e poi i segni grafici, senza il nome della piazza.
-- **Le altre due porte.**
-  - Gravina e Monopoli restano con la variante tipografica (in staging, con il segnaposto dichiarato). Reggono da sole (§4.5), e una sola foto nella porta centrale, la città della sede, si legge.
-  - Conviene comunque chiedere al cliente le immagini equivalenti di Gravina e Monopoli dal portale. Con le stesse regole (nessun pannello tagliato sul bordo, orizzonte al 58%, colore intatto, nota) le tre porte parlerebbero la stessa lingua.
-  - Usarle estende l'eccezione: decide l'utente.
+- **Gravina in Puglia e Monopoli** (estensione decisa dall'utente il 2026-10-06, con le immagini equivalenti del portale). L'utente ha confermato l'associazione alle città: «è giusto». Valgono le stesse regole: colore intatto, nessun ritocco, la stessa nota, il testo alternativo di copywriter-content.
+  - **Gravina** (`gravina-digitale.webp`, 1024 × 1024): una chiesa con il rosone; che sia la cattedrale è `[DA VERIFICARE]`, quindi nessun testo la nomina.
+    - **Riquadro: x 444, y 30, 580 × 967.** È pulito, senza pannelli tagliati: i due pannelli a sinistra finiscono a x 437, quello grande in basso comincia a x 452, e a destra il riquadro arriva al bordo dell'immagine.
+    - Dentro restano quattro pannelli: uno sul frontone, uno grande in basso a sinistra, uno accanto alla nicchia, uno tenue sotto il rosone.
+    - La foto guarda la facciata dal basso e l'orizzonte è fuori campo, quindi la regola del 58% non si applica. Il riquadro tiene la facciata intera, dal pinnacolo del frontone alla soglia del portale; la base del timpano della porta laterale cade al 63%.
+  - **Monopoli** (`monopoli-digitale.webp`, 1024 × 1024): una strada imbiancata, una bicicletta rossa, una targa rossa e una finestra con la ringhiera.
+    - **Riquadro: x 154, y 0, 614 × 1023**, a tutta altezza.
+    - **È il male minore.** I pannelli formano una fascia continua, e un 3:5 che tenga intere la bicicletta e la targa rossa deve tagliarne uno. Taglio quello più tenue, biancastro, a destra a metà altezza: resta dentro per circa il 60%.
+    - A sinistra il bordo del riquadro coincide con il bordo di un pannello piccolo (x 154), senza frammenti. Resta fuori il pannello grande sulla porta scura (da x 774), che sarebbe il taglio più visibile.
+    - Il davanzale della finestra cade al 61% dell'altezza, vicino al 58%.
+  - **Risoluzione.** 580 × 967 e 614 × 1023 sono meglio di Acquaviva: bastano a densità 1 ovunque e sui telefoni, e si ammorbidiscono poco sui desktop ad alta densità.
+- **Le tre porte insieme.** Provate in pagina a 1440 e 390 px: tre immagini della stessa serie, con la stessa nota, nessun pannello grande tagliato sul bordo e la linea principale vicina al 58% dove c'è un orizzonte. Le varianti tipografiche restano pronte, se un'immagine venisse ritirata.
 - **Quando si rivede.**
-  - Se arriva l'originale senza grafica, o ad alta risoluzione.
+  - Se arrivano gli originali senza grafica, o ad alta risoluzione.
   - Se il cliente chiarisce autore e uso di AI: cambia la nota (ADR 002).
   - Se l'utente cambia idea.
 
@@ -851,7 +861,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 1 | Hero | H1 «Puglia Digitale» con sottotitolo e CTA «Visita il portale →»; la costa pugliese è un'unica linea che attraversa la pagina e si disegna all'ingresso, con i nodi `terra` di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» | calce | `display-xl` | carta ritagliata sulla Terra di Bari, sotto il titolo |
 | 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Schermo» 4:5 in soglia sulle colonne 1–5 (persone che esplorano una piazza pugliese sul maxischermo), testo sul Destination Marketing sulle colonne 7–11; didascalia solo con data e luogo (A4) | pietra | `display-l` | foto a tutta larghezza, poi testo |
 | 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350). **Se al lancio resta solo «30+»** (riserva B3: gli altri due numeri non si pubblicano senza fonte): un solo numero in `display-xxl` dalla colonna 3, etichetta e nota con la data; il titolo si adatta al singolare (copywriter-brand). Se neanche «30+» è confermato, la sezione non si pubblica e il layout resta pronto |
-| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →». Nella porta di Acquaviva, l'immagine del portale con i segni grafici e la sua nota (§4.7, eccezione dell'utente); nelle altre due, la variante tipografica finché non arriva un'immagine | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
+| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →». Nelle tre porte, le immagini del portale con i segni grafici e la loro nota (§4.7, eccezione dell'utente); le varianti tipografiche restano pronte | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
 | 5 | Perché aderire | Elenco *scala*: le 4 voci rientrano ciascuna di una colonna rispetto alla precedente; numeri in `display-xl`, titoli in `display-s` | pietra | `display-m` | rientri di 16 px |
 | 6 | Chiusura | Passaggio «Porta la tua impresa / dentro Puglia Digitale.», CTA «Contattaci →», form su due colonne sotto lo statement; link secondario al portale | notte | `display-l` | form a una colonna |
 
@@ -955,7 +965,7 @@ Le domande sui materiali e sui fatti sono già registrate nel brief consolidato 
 - §7: i materiali mancanti.
 
 Da aggiungere, per la parte visiva:
-- **Immagine di Acquaviva (§4.7).** Autore, data, diritti e uso di AI; nome della piazza; l'originale senza grafica e ad alta risoluzione; le immagini equivalenti di Gravina e Monopoli dal portale.
+- **Immagini dei luoghi dal portale (§4.7).** Autore, data, diritti e uso di AI; i nomi della piazza di Acquaviva e della chiesa di Gravina; gli originali senza grafica e ad alta risoluzione.
 - **Foto evento.** La scena, oltre alla sovrimpressione, è stata ritoccata con strumenti generativi? Il simbolo ✦ lo fa sospettare.
 - **Colori.** Codici ufficiali (HEX o Pantone) di ITnode, Puglia Digitale e Città Digitali.
 - **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2). Serve il file per scegliere il fotogramma del poster.

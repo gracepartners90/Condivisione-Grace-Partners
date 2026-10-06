@@ -1,14 +1,14 @@
 ---
-titolo: "ADR 007 · Immagine di Acquaviva delle Fonti con i segni grafici del portale: eccezione alle linee guida §33"
+titolo: "ADR 007 · Immagini dei luoghi con i segni grafici del portale (Acquaviva delle Fonti, Gravina in Puglia, Monopoli): eccezione alle linee guida §33"
 owner: creative-director
 contributi: [copywriter-content, brand-strategist]
 stato: accettata
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md (§33), docs/creativa/direzione-visiva.md (0.9: §4.1, §4.2, §4.3, §4.5, §4.6, §4.7, §7.5), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/contenuti/alt-text.md (1.3), src/assets/images/acquaviva-digitale.webp (commit fd616d6), decisione dell'utente del 2026-10-06 riferita dalla sessione principale, prove di ritaglio del creative-director del 2026-10-06 (sharp; Playwright con Chromium sullo staging e sulla variante «in pubblicazione»)]
+fonti: [docs/brief/linee-guida.md (§33), docs/creativa/direzione-visiva.md (0.9: §4.1, §4.2, §4.3, §4.5, §4.6, §4.7, §7.5), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, docs/contenuti/alt-text.md (1.3), src/assets/images/acquaviva-digitale.webp (commit fd616d6), src/assets/images/gravina-digitale.webp e monopoli-digitale.webp (commit 808c901), conferma dell'associazione alle città da parte dell'utente del 2026-10-06, decisione dell'utente del 2026-10-06 riferita dalla sessione principale, prove di ritaglio del creative-director del 2026-10-06 (sharp; Playwright con Chromium sullo staging e sulla variante «in pubblicazione»)]
 ---
 
-# ADR 007 · Immagine di Acquaviva delle Fonti con i segni grafici del portale
+# ADR 007 · Immagini dei luoghi con i segni grafici del portale
 
 | Campo | Valore |
 |---|---|
@@ -58,9 +58,17 @@ fonti: [docs/brief/linee-guida.md (§33), docs/creativa/direzione-visiva.md (0.9
 - **Testo alternativo** di copywriter-content: descrive anche i segni grafici, perché per l'utente hanno un significato. Il nome della piazza non c'è, perché non è verificato.
 - **Perimetro.** Solo questa immagine, in questa porta. Non è uno stile del sito. Per altre immagini con segni grafici, comprese le eventuali equivalenti di Gravina e Monopoli, serve una nuova decisione dell'utente.
 
+## Estensione a Gravina in Puglia e Monopoli (versione 1.1, 2026-10-06)
+
+- **Decisione dell'utente**, riferita dalla sessione principale. Ha mandato le immagini equivalenti del portale (`gravina-digitale.webp` e `monopoli-digitale.webp`, 1024 × 1024, senza metadati) e ha esteso loro l'eccezione. Ha confermato l'associazione alle città: «è giusto».
+- **Esecuzione** (direzione visiva §4.7): stesse regole, cioè colore intatto, nessun ritocco, la stessa nota, il testo alternativo di copywriter-content.
+  - **Gravina:** riquadro x 444, y 30, 580 × 967, senza pannelli tagliati. La foto è una vista dal basso e l'orizzonte è fuori campo: il riquadro tiene la facciata intera.
+  - **Monopoli:** riquadro x 154, y 0, 614 × 1023. È il male minore: i pannelli formano una fascia continua, e per tenere intere bicicletta e targa si taglia il pannello più tenue (a destra, dentro per circa il 60%). Il pannello grande sulla porta resta fuori.
+- **Perimetro.** Le tre immagini della serie del portale, nelle tre porte di «I luoghi». Per ogni altro uso serve una nuova decisione dell'utente.
+
 ## Conseguenze
 
-- Una delle tre porte di «I luoghi» ha un'immagine; le altre due restano tipografiche finché non arrivano immagini. Una sola foto nella porta centrale, la città della sede, si legge.
+- Le tre porte di «I luoghi» hanno le immagini del portale, della stessa serie e con la stessa nota. Le varianti tipografiche restano pronte, se un'immagine venisse ritirata.
 - Sugli schermi desktop ad alta densità l'immagine è morbida: il derivato non si ingrandisce. La richiesta dell'originale ad alta risoluzione resta aperta (direzione visiva §4.6).
 - Il prossimo controllo delle linee guida §33 su questa porta trova un'eccezione registrata, non un difetto da segnalare.
 - La nota cambia quando il cliente risponde sull'uso di AI, con le formule di `docs/contenuti/alt-text.md`. Se al go-live la risposta manca, decide brand-strategist con il consulente legale (ADR 002).
@@ -78,11 +86,11 @@ fonti: [docs/brief/linee-guida.md (§33), docs/creativa/direzione-visiva.md (0.9
 
 ## Domande aperte
 
-- **Per l'utente o il cliente:** autore, data, diritti e uso di AI dell'immagine; il nome della piazza; l'originale senza grafica e ad alta risoluzione; le immagini equivalenti di Gravina e Monopoli dal portale.
+- **Per l'utente o il cliente:** autore, data, diritti e uso di AI delle tre immagini; i nomi della piazza di Acquaviva e della chiesa di Gravina; gli originali senza grafica e ad alta risoluzione.
 
 ## Decisioni richieste
 
-- **Utente:** se arriveranno le immagini equivalenti di Gravina e Monopoli con i segni grafici, decidere se estendere loro l'eccezione.
+- **Utente:** nessuna, oltre alle risposte sulla provenienza. L'estensione a Gravina e Monopoli è decisa (versione 1.1).
 - **Sessione principale:**
-  - generare il derivato con lo script degli asset, con il riquadro del §4.7;
-  - collegarlo alla porta con il testo alternativo e la nota di copywriter-content.
+  - generare i derivati con lo script degli asset, con i riquadri del §4.7;
+  - collegarli alle porte con i testi alternativi e la nota di copywriter-content.
