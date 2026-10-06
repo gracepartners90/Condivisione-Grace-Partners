@@ -22,6 +22,8 @@ import { placeSlot } from '../data/asset-slots';
 import { pageGraph } from '../lib/structured-data';
 import eventoSchermo from '../assets/images/derivate/evento-schermo.jpg';
 import acquavivaPorta from '../assets/images/derivate/acquaviva-porta.jpg';
+import gravinaPorta from '../assets/images/derivate/gravina-porta.jpg';
+import monopoliPorta from '../assets/images/derivate/monopoli-porta.jpg';
 
 // No `about` → Brand until the client confirms the role of ITnode in Puglia Digitale (brief D1).
 const schema = pageGraph('puglia-digitale');
@@ -32,13 +34,22 @@ const lines: Record<string, string> = {
   acquaviva: 'Nell’entroterra barese, la città in cui ha sede ITnode.',
   gravina: 'La città che prende il nome dalla sua gravina, nell’Alta Murgia.',
 };
-// Acquaviva: the client's portal image with its digital overlays, kept by the user's choice
-// (visual direction §4.7, ADR 007); alt and note from docs/contenuti/alt-text.md. The other doors
-// keep their slot until the client sends a photo.
+// The client's portal images with their digital overlays, kept by the user's choice (visual
+// direction §4.7, ADR 007); alt and note from docs/contenuti/alt-text.md.
 const photos: Record<string, { image: typeof acquavivaPorta; alt: string; note: string }> = {
   acquaviva: {
     image: acquavivaPorta,
     alt: 'Una piazza con un palazzo sul fondo, oltre una ringhiera e uno spazio ribassato in pietra; sopra, segnaposto arancioni e pannelli digitali azzurri.',
+    note: 'Immagine elaborata digitalmente',
+  },
+  gravina: {
+    image: gravinaPorta,
+    alt: 'La facciata in pietra di una chiesa con un grande rosone e una finestra tonda; sopra, pannelli digitali azzurri.',
+    note: 'Immagine elaborata digitalmente',
+  },
+  monopoli: {
+    image: monopoliPorta,
+    alt: 'Un muro imbiancato con un balconcino rosso e una bicicletta rossa con un cesto di fiori; sopra, una fascia di pannelli digitali azzurri e segnaposto.',
     note: 'Immagine elaborata digitalmente',
   },
 };

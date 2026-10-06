@@ -21,11 +21,13 @@ const eventCrops = [
 
 /**
  * Place photos for the doors of /puglia-digitale/ (visual direction §4.7, ADR 007), in pixels on the
- * original. Acquaviva: the client's portal image, with its digital overlays kept by the user's choice;
- * the 3:5 crop leaves out the large panels. Colour untouched, no resize.
+ * original. The client's portal images, with their digital overlays kept by the user's choice; the
+ * 3:5 crops leave out the large panels where a clean cut exists. Colour untouched, no resize.
  */
 const placeCrops = [
   { src: 'acquaviva-digitale.webp', out: 'acquaviva-porta.jpg', box: { left: 388, top: 36, width: 462, height: 770 } }, // 3:5
+  { src: 'gravina-digitale.webp', out: 'gravina-porta.jpg', box: { left: 444, top: 30, width: 580, height: 967 } }, // 3:5, clean cut
+  { src: 'monopoli-digitale.webp', out: 'monopoli-porta.jpg', box: { left: 154, top: 0, width: 614, height: 1023 } }, // 3:5, least-bad cut (§4.7)
 ];
 
 /**

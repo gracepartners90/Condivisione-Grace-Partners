@@ -98,7 +98,7 @@ const north = [...locations]
                 {d.photo ? (
                   <figure class="door__figure">
                     <div class="door__frame aperture">
-                      <Media image={d.photo.image} alt={d.photo.alt} sizes="(min-width: 64em) 26vw, 40vw" class="door__media" />
+                      <Media image={d.photo.image} alt={d.photo.alt} ratio="3 / 5" sizes="(min-width: 64em) 26vw, 40vw" class="door__media" />
                     </div>
                     {d.photo.note && <figcaption class="door__note">{d.photo.note}</figcaption>}
                   </figure>
