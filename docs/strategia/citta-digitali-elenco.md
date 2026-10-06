@@ -3,9 +3,9 @@ titolo: Città Digitali · elenco delle città del progetto
 owner: brand-strategist
 contributi: [ui-designer, creative-director]
 stato: in revisione
-versione: 0.2
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-consolidato.md (D5, D7, N1, P2; glossario e omonimie), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/strategia/coordinate-luoghi.md (tabella 1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, src/data/site.ts e dist/ (sola lettura), WebFetch e WebSearch del 2026-10-05 (URL nel testo), risposte dell'utente del 2026-10-05 (dominio del portale, Martina Franca), commit eb691ee (dominio corretto nel sito), Wikidata Q52020 (Martina Franca), Q51863 e Q51822 (controllo incrociato)]
+versione: 0.3
+aggiornato: 2026-10-06
+fonti: [docs/brief/linee-guida.md (§12, §15, §18, §22), docs/brief/brief-consolidato.md (D5, D7, N1, P2; glossario e omonimie), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§6), docs/strategia/coordinate-luoghi.md (tabella 1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md, src/data/site.ts e dist/ (sola lettura), WebFetch e WebSearch del 2026-10-05 (URL nel testo), risposte dell'utente del 2026-10-05 (dominio del portale, Martina Franca), commit eb691ee (dominio corretto nel sito), Wikidata Q52020 (Martina Franca), Q51863 e Q51822 (controllo incrociato), risposte dell'utente del 2026-10-06 (San Cataldo; città di Puglia Digitale)]
 ---
 
 # Città Digitali · elenco delle città del progetto
@@ -52,6 +52,7 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 - **LG:** città di Città Digitali secondo le linee guida (§18).
 - **Progetto:** presente nei materiali di progetto in un altro mondo (Puglia Digitale, LG §15; esempi SIII, LG §12) e nell'elenco di Città Digitali, quindi in entrambi `[DA VERIFICARE]`.
 - **Portale cliente:** solo nell'elenco «Tutte le città» `[DA VERIFICARE: testo della pagina]`.
+- **Puglia Digitale (conferma dell'utente del 2026-10-06).** Le città virtualizzate di Puglia Digitale sono le 31 città pugliesi dell'elenco, cioè le righe con regione «Puglia». Per tutte, l'appartenenza a entrambi i mondi è confermata: il `[DA VERIFICARE]` dello stato «Progetto» è chiuso per Acquaviva, Gravina, Monopoli e Cassano.
 
 **Fonte dell'elenco (F).** https://xn--cittdigitali-19a.it/tutte-le-citta/ (cittàdigitali.it/tutte-le-citta), riassunto dell'indice di WebSearch, consultato il 2026-10-05.
 
@@ -102,7 +103,7 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 | 35 | Polignano a Mare (nell'elenco «Polignano») | BA | Puglia | — | F | Portale cliente | 41.00 | 17.22 | 41°00′N 17°13′E |
 | 36 | Pompei | NA | Campania | — | F | Portale cliente | 40.75 | 14.50 | 40°44′57″N 14°30′02″E |
 | 37 | Putignano | BA | Puglia | — | F | Portale cliente | 40.85 | 17.12 | 40°51′N 17°07′E |
-| 38 | San Cataldo | CL | Sicilia | — | F | Portale cliente | 37.48 | 13.98 | 37°29′N 13°59′E |
+| 38 | San Cataldo | CL | Sicilia | — | F; provincia confermata dall'utente il 2026-10-06 | Portale cliente | 37.48 | 13.98 | 37°29′N 13°59′E |
 | 39 | San Giovanni Rotondo | FG | Puglia | — | F | Portale cliente | 41.70 | 15.73 | 41°42′N 15°44′E |
 | 40 | Santeramo in Colle | BA | Puglia | cittàdigitali.it/santeramo-in-colle | F | Portale cliente | 40.80 | 16.77 | 40°48′N 16°46′E |
 | 41 | Terracina | LT | Lazio | — | F | Portale cliente | 41.28 | 13.25 | 41°17′N 13°15′E |
@@ -112,10 +113,8 @@ Resta possibile che un nome sia stato letto male. Il testo o uno screenshot dell
 | 45 | Varese | VA | Lombardia | varesedigitale.it (LG §18) | F; LG §18 | LG | 45.82 | 8.83 | 45°49′N 08°50′E |
 
 **Due nomi letti come nel riassunto.**
-- «Polignano»: l'unico comune con questo nome è Polignano a Mare (BA).
-- «San Cataldo»: è un comune in provincia di Caltanissetta, ma esiste anche una marina di Lecce con lo stesso nome.
-
-Entrambe le letture restano `[DA VERIFICARE]`.
+- «Polignano»: l'unico comune con questo nome è Polignano a Mare (BA). La lettura resta `[DA VERIFICARE]`.
+- «San Cataldo»: è il comune in provincia di Caltanissetta, non la marina di Lecce. L'ha confermato l'utente il 2026-10-06 («no sono 31 allora»): con la marina di Lecce le città pugliesi sarebbero state 32.
 
 ## 3. Coordinate: controlli ed eccezione per Martina Franca
 
@@ -156,8 +155,10 @@ L'utente ha indicato questa pagina come fonte primaria del cliente: le città ch
 | Che cosa si pubblica subito come «città del progetto» | Un puntino per ciascuna delle 45 città. Quello di Martina Franca usa la fonte di riserva, se il creative-director accetta l'eccezione del §3 | Fonte primaria del cliente. Nel codice va un commento con fonte e data |
 | Quali nomi in pagina | In attesa del testo della pagina: Varese, Altamura e Caltanissetta, già nominate dalle linee guida e nel testo del capitolo. Dopo la conferma, qualunque città dell'elenco; la scelta per leggibilità spetta a ui-designer e al creative-director | Un nome mostrato è una dichiarazione più esplicita di un puntino. I tre nomi delle linee guida sono certi |
 | Un numero («N città») | Non ancora. «45 città» si può pubblicare con il testo della pagina confermato, una data («Dati ITnode, [mese anno]») e lo stesso numero di puntini | Il numero non è nelle linee guida, invecchia e deve corrispondere alla mappa: con Martina Franca i puntini sono 45. L'elenco può comprendere città della piattaforma precedente (www2) |
-| Città in attesa di conferma | Le 42 città fuori dalla §18 delle linee guida, per la lettura dei nomi; le letture «Polignano» e «San Cataldo» | §1–§2. Martina Franca ha ora le coordinate (§3) |
-| Legame con le «30+ città» di Puglia Digitale (N1) | Le città pugliesi dell'elenco sono 31, comprese le tre di Puglia Digitale (LG §15). `[IPOTESI: le «30+ città» di Puglia Digitale sono queste 31]`. La domanda al cliente diventa un sì o un no, con l'elenco allegato | Se il cliente conferma, i numeri di Puglia Digitale hanno elenco e perimetro (verdetto G4 §6, B5). Se no, sono due perimetri diversi da spiegare: le città pugliesi stanno in entrambi i mondi |
+| Città in attesa di conferma | Le 42 città fuori dalla §18 delle linee guida, per la lettura dei nomi; la lettura «Polignano» | §1–§2. Martina Franca ha ora le coordinate (§3); San Cataldo è confermato (§2) |
+| Legame con le «30+ città» di Puglia Digitale (N1) | **Confermato dall'utente il 2026-10-06**: le città virtualizzate di Puglia Digitale sono le 31 città pugliesi dell'elenco. L'utente aveva prima scritto «forse sono 32», poi ha confermato 31 chiarendo San Cataldo | «30+» ha ora elenco e perimetro (verdetto G4 §6, B5). In Puglia ogni città appartiene a entrambi i mondi |
+| La legenda di una carta della Puglia può dire «città di Puglia Digitale»? | **Sì**, per i puntini delle 31 città pugliesi. Formule proposte: «Le città di Puglia Digitale» o «Città virtualizzate con Puglia Digitale»; il testo definitivo è di copywriter-brand. Condizioni: (1) nessuna formula che attribuisca Puglia Digitale a ITnode, come «le città ITnode», finché D1 è aperta; (2) niente «tutta la Puglia» né campiture della regione che facciano pensare a una copertura completa, con lo stesso criterio della carta d'Italia (N12); (3) un numero in legenda solo alle condizioni della riga sotto; (4) i nomi in carta sono subito ammessi per le cinque città dei materiali di progetto (Acquaviva, Gravina, Monopoli, Altamura, Cassano), per le altre dopo il testo della pagina | L'appartenenza è confermata dall'utente e l'elenco viene dal portale del cliente. Resta aperto solo il ruolo di ITnode (D1), che la legenda non tocca |
+| «30+ città» ha un elenco: che cosa manca per pubblicarlo? | **Manca solo la data dei dati**, per la nota «Dati ITnode, aggiornati a [mese anno]» (regola B3 dell'ADR 002). Proposta: «aggiornati a ottobre 2026». È vera per costruzione: l'elenco del portale del cliente è stato consultato il 2026-10-05 e confermato dall'utente il 2026-10-06. Se l'utente non la accetta, la data la dà il cliente. Nella formulazione «30+» resta vero con 31 e regge anche se l'elenco cresce. «31» esatto è possibile, ma va aggiornato a ogni cambio e deve coincidere con i puntini della carta | Numero e perimetro sono confermati; la fonte è di prima parte («Dati ITnode»). «~200.000» e «60%» restano fuori senza fonte, anno e definizione (N2–N3): con l'elenco delle 31 città diventano almeno verificabili su dati pubblici per comune |
 
 ## 5. Scoperte da girare, fuori dalla mappa
 
@@ -238,9 +239,11 @@ Gli id di Acquaviva, Altamura, Caltanissetta, Cassano, Gravina, Monopoli e Vares
 ## Ipotesi da validare
 
 - `[IPOTESI: il riassunto dell'indice riporta i nomi esatti della pagina «Tutte le città».]` Si chiude con il testo o uno screenshot della pagina.
-- `[IPOTESI: «Polignano» è Polignano a Mare (BA) e «San Cataldo» è il comune in provincia di Caltanissetta.]`
+- `[IPOTESI: «Polignano» è Polignano a Mare (BA).]`
 - `[IPOTESI: le pagine su www2 («Le Città Digitali») appartengono alla piattaforma precedente. Altamura e Martina Franca sono comunque nell'elenco attuale.]`
-- `[IPOTESI: le «30+ città» di Puglia Digitale sono le 31 città pugliesi dell'elenco.]`
+- Chiuse il 2026-10-06 con la conferma dell'utente, e quindi non più ipotesi:
+  - San Cataldo è il comune in provincia di Caltanissetta;
+  - le «30+ città» di Puglia Digitale sono le 31 città pugliesi dell'elenco.
 - `[IPOTESI: tutte le 45 città hanno oggi attività online sul portale.]` L'elenco potrebbe comprendere città in avvio.
 
 ## Domande aperte
@@ -248,14 +251,17 @@ Gli id di Acquaviva, Altamura, Caltanissetta, Cassano, Gravina, Monopoli e Vares
 - **Per l'utente.** Testo o screenshot della pagina «Tutte le città»: chiude la lettura dei nomi.
 - **Per il cliente**, da aggiungere all'elenco del verdetto G4 §6:
   1. Le 45 città della pagina «Tutte le città» sono tutte attive? A quale data è aggiornato l'elenco? (C7)
-  2. Le «30+ città» di Puglia Digitale sono le 31 città pugliesi di questo elenco? (B5)
+  2. Numeri di Puglia Digitale (N1–N3, B5). Va bene «Dati ITnode, aggiornati a ottobre 2026» per «30+»? Se no, a quale data? Per «~200.000» e «60%»: fonte, anno e definizione.
   3. REA e PEC della pagina «Dati aziendali» sono corretti? Qual è il capitale sociale? (B1)
 - **Per il creative-director.** Accetta l'eccezione del §3 per Martina Franca?
 - **Per ui-designer e creative-director.** Quali nomi mostrare oltre ai tre delle linee guida, dopo la conferma del testo.
 
 ## Decisioni richieste
 
-- **Utente:** approvare la regola del §4: puntini per tutte le città, nomi delle linee guida fino alla conferma del testo, numero solo con testo confermato e data. La correzione del dominio è già decisa e applicata (§5).
+- **Utente:**
+  - approvare la regola del §4: puntini per tutte le città, nomi delle linee guida fino alla conferma del testo, numero solo con testo confermato e data. La correzione del dominio è già decisa e applicata (§5);
+  - accettare «Dati ITnode, aggiornati a ottobre 2026» per «30+», oppure lasciare la data al cliente (§4).
+- **copywriter-brand:** testo della legenda della carta della Puglia, alle condizioni del §4.
 - **Creative-director:** eccezione alla DV §1.4 per Martina Franca (§3); revisione della proposta di mappa.
 - **Sessione principale:**
   - inserire i dati dell'appendice con il commento sulla fonte, compresa la riga di Martina Franca;

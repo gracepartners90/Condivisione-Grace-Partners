@@ -3,9 +3,9 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.3
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 (docs/strategia/citta-digitali-elenco.md)]
+versione: 0.4
+aggiornato: 2026-10-06
+fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md)]
 ---
 
 # Brief consolidato · Nuovo sito ITnode
@@ -75,7 +75,7 @@ Nota: Puglia Digitale e Città Digitali condividono lo stesso simbolo (la «C» 
 
 - **Filo narrativo per la Home** `[PROPOSTA per creative-director e copywriter-brand]`: dalla singola impresa al territorio fino alla rete di città. Non va implicata una copertura nazionale completa: le città si nominano sempre (N12).
 - **Motivo ricorrente:** la curiosità apre la Home («La curiosità ci accompagna da sempre», §07) e torna nella sezione del fondatore («E ancora la stessa curiosità», §09). Lega marca e fondatore; va usata come filo del racconto, non come claim.
-- **Sovrapposizione da chiarire:** Altamura è una città pugliese, ma nelle LG compare sotto Città Digitali (§18), mentre Acquaviva, Gravina e Monopoli compaiono sotto Puglia Digitale (§15) (D5).
+- **Sovrapposizione chiarita (conferma dell'utente del 2026-10-06).** Le città di Puglia Digitale sono le 31 città pugliesi dell'elenco di Città Digitali (`docs/strategia/citta-digitali-elenco.md`). In Puglia una città appartiene quindi a entrambi i mondi. Altamura (LG §18, sotto Città Digitali) e Acquaviva, Gravina e Monopoli (LG §15, sotto Puglia Digitale) sono tutte nell'elenco. Il resto di D5 (origine, franchising) è ancora aperto.
 
 ### 2.4 Gerarchia dei messaggi per pagina
 
@@ -186,7 +186,7 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 
 | ID | Claim | Fonte | Stato | Formulazione consigliata e condizioni |
 |---|---|---|---|---|
-| N1 | «30+ Città» | LG §14 | Utilizzabile | «30+ città», con la nota «Dati ITnode, aggiornati a [mese anno]». Servono l'elenco delle città e il perimetro: solo Puglia? Il portale puglia-digitale.it contava 16 comuni a luglio 2025, con 26 previsti per fine 2025 (bariseranews.it): potrebbe essere un altro perimetro. |
+| N1 | «30+ Città» | LG §14; elenco e perimetro: utente, 2026-10-06 | Utilizzabile; manca la data | «30+ città», con la nota «Dati ITnode, aggiornati a [mese anno]».<br>**Elenco e perimetro:** le 31 città pugliesi dell'elenco di Città Digitali (`docs/strategia/citta-digitali-elenco.md`), confermate dall'utente il 2026-10-06; l'utente aveva prima scritto «forse sono 32». San Cataldo è in provincia di Caltanissetta e non conta.<br>**Data dei dati:** `[DA FORNIRE]`. Proposta: «ottobre 2026», cioè l'elenco consultato il 2026-10-05 e confermato il 2026-10-06; serve l'accordo dell'utente o del cliente.<br>I 16 comuni di luglio 2025 (26 previsti per fine 2025, bariseranews.it) sono il perimetro di puglia-digitale.it, il progetto dell'associazione: non si usano. |
 | N2 | «~200.000 Partite IVA nei territori coinvolti» | LG §14 | Utilizzabile, con fonte | «~200.000 partite IVA operano nei territori coinvolti». Deve essere chiaro che si tratta del bacino economico dei territori, **non delle imprese presenti sulla piattaforma**. `[DA FORNIRE: fonte, anno, definizione]` |
 | N3 | «60% del tessuto produttivo pugliese» | LG §14 | Utilizzabile, con fonte | Valgono le condizioni di N2. Verifica di coerenza: se 200.000 corrisponde al 60%, la base è circa 333.000. È un ordine di grandezza compatibile con le imprese pugliesi attive: le registrate erano 373.787 al 31/12/2025 secondo Movimprese. Non torna invece se la base sono tutte le partite IVA. Serve la definizione. |
 | N4 | «36 anni dentro l’innovazione» | LG §09 | Utilizzabile | Presuppone un inizio nel 1990 `[DA VERIFICARE]`. Il numero invecchia: va calcolato dall'anno di inizio oppure aggiornato ogni anno. |
@@ -279,7 +279,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 | P1 | Ritratto reale del fondatore, oppure la conferma d'uso delle immagini attuali | Sezione fondatore, JSON-LD Person | DR3 |
 | P2 | Originale della foto dell'evento, senza cornice, logo e firma; data e luogo | Home, Puglia Digitale | A4 |
 | P2 | File del video Città Digitali, fotogramma per il poster, sottotitoli se c'è parlato | /citta-digitali (VideoObject) | S8; i sottotitoli servono all'accessibilità |
-| P2 | Fonti dei numeri ed elenco delle città | Sezione numeri di /puglia-digitale | N1–N3 |
+| P2 | Fonti dei numeri: data per «30+»; fonte, anno e definizione per «~200.000» e «60%». L'elenco delle città c'è (31 città pugliesi, conferma dell'utente del 2026-10-06) | Sezione numeri di /puglia-digitale | N1–N3 |
 | P2 | Atto di patrocinio e autorizzazione all'uso del logo | Eventuale fascia di fiducia | A2 |
 | P2 | Consenso delle imprese dello showcase e loro nomi ufficiali | /siii | A7 |
 | P3 | Dati analytics per «5–10 volte», «4 volte», «250.000 visite mensili» | Layout dei numeri già predisposto | Solo se il cliente vuole mostrarli |
@@ -319,7 +319,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 - I3. Il SIII è costruito su un Tour Virtuale Interattivo Immersivo ed è pubblicato su un portale città.
 - I4. Le imprese sono il segmento primario. Gli enti sono un segmento di valore, con un processo d'acquisto diverso.
 - I5. «36 anni» significa un percorso iniziato nel 1990; «2002» è l'anno di MyComm.
-- I6. «30+ città», «~200.000» e «60%» si riferiscono a Puglia Digitale.
+- I6. «~200.000» e «60%» si riferiscono ai territori delle 31 città di Puglia Digitale. Per «30+ città» non è più un'ipotesi: sono le 31 città pugliesi dell'elenco di Città Digitali (conferma dell'utente del 2026-10-06).
 - I7. I quattro ritratti del fondatore sono generati o elaborati con AI. La foto dell'evento è reale, ma elaborata.
 
 ## Domande aperte
@@ -330,9 +330,12 @@ Per il cliente, in ordine di priorità.
 - **D2. Patrocinio.** A chi è stato concesso e per quale progetto? Potete inviarci l'atto e l'eventuale autorizzazione all'uso del logo?
 - **D3. SIII.** Qual è lo scioglimento di ogni lettera (S = Sito, I = Interattivo, I = Immersivo, I = ?)? Confermate l'ordine «Interattivo Immersivo»?
 - **D4. SIII e tour.** Il SIII è un Tour Virtuale Interattivo Immersivo con funzioni commerciali oppure un prodotto diverso? Si basa su foto a 360° o su modelli 3D? Vive sempre dentro un portale città o anche sul dominio dell'impresa? In concreto, cosa lo distingue da un tour 360°?
-- **D5. Città Digitali.** È nata come «Le Città Digitali» di iComm Lab/Leadstone e oggi appartiene a ITnode? Il franchising è attivo, e il sito deve rivolgersi anche ai potenziali affiliati? Come convivono Città Digitali e Puglia Digitale per le città pugliesi (per esempio Altamura)?
+- **D5. Città Digitali.** È nata come «Le Città Digitali» di iComm Lab/Leadstone e oggi appartiene a ITnode? Il franchising è attivo, e il sito deve rivolgersi anche ai potenziali affiliati? (La convivenza con Puglia Digitale per le città pugliesi è chiarita: le 31 città pugliesi dell'elenco di Città Digitali sono le città di Puglia Digitale, conferma dell'utente del 2026-10-06.)
 - **D6. Fondatore.** Nome e ruolo da indicare; conferma della timeline (domande della sezione 6); il testo narrativo citato nelle LG.
-- **D7. Numeri.** Fonte, anno e definizione di «30+ città», «~200.000 partite IVA» e «60%», con l'elenco delle città. Avete dati documentati per «5–10 volte», «4 volte» (4 volte cosa?) e «250.000 visite mensili»?
+- **D7. Numeri.**
+  - «30+ città»: elenco e perimetro sono chiariti (le 31 città pugliesi, conferma dell'utente del 2026-10-06). Manca la data dei dati: va bene «ottobre 2026»?
+  - «~200.000 partite IVA» e «60%»: fonte, anno e definizione. Con l'elenco delle 31 città si possono anche verificare su dati pubblici per comune.
+  - Avete dati documentati per «5–10 volte», «4 volte» (4 volte cosa?) e «250.000 visite mensili»?
 - **D8. Enti pubblici.** I Comuni sono clienti che acquistano, partner che aderiscono, o entrambe le cose?
 - **D9. Immagini.** Le foto del fondatore sono generate o elaborate con AI? Avete foto reali (ritratto, eventi) e l'originale della foto dell'evento Puglia Digitale, con data e luogo?
 - **D10. Nome e dati legali.** Confermate «ITnode» nei testi, lasciando invariato il logotipo «itNode»? Ci inviate REA, capitale sociale versato e PEC? Sede legale e sede operativa coincidono?
