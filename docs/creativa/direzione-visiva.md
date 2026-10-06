@@ -3,9 +3,9 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.8
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12)]
+versione: 0.9
+aggiornato: 2026-10-06
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright)]
 ---
 
 # Direzione visiva ITnode: Editorial × Technology × Immersive
@@ -58,6 +58,10 @@ Tutto il resto è tipografia e aria.
 **Modifiche della versione 0.8 (2026-10-05).**
 - §1.4, «Accessibilità»: la carta di `/citta-digitali/` ha la descrizione L6, senza nomi, per decisione di ux-designer. La regola per quando arriva l'elenco è confermata, con le sue quattro condizioni. La descrizione della Home è di 241 caratteri, non 255.
 - §7.6, sezione 1: il dominio «cittàdigitali.it» sotto «Visita il portale ↗», in `label` mono (O4 di seo-content, approvata). Sezione 3: stato aggiornato, carta applicata con la descrizione L6.
+
+**Modifiche della versione 0.9 (2026-10-06).**
+- §4.7, nuovo: l'immagine di Acquaviva delle Fonti del portale del cliente, con i suoi segni grafici, entra nella porta di Acquaviva su `/puglia-digitale/`. È un'eccezione decisa dall'utente alle linee guida §33 e al §4.6, registrata con le sue parole e nell'ADR 007. Contiene ritaglio in pixel, colore, nota, testo alternativo, coerenza con le altre porte e condizioni per rivederla.
+- §4.6 e §7.5 (riga 4): rimandi al §4.7.
 
 ---
 
@@ -533,13 +537,60 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
 3. **Video Città Digitali:** il file, o il permesso di ospitarlo, un poster, la durata e l'indicazione se c'è parlato (in quel caso servono i sottotitoli).
 4. **Un ritratto reale del fondatore**, in un luogo vero (ufficio o Acquaviva), con luce naturale e senza schermi alle spalle.
 5. **Foto dei luoghi.**
-   - Acquaviva delle Fonti, Gravina in Puglia, Monopoli: Porta 3:5, lato lungo di almeno 2400 px.
+   - Acquaviva delle Fonti, Gravina in Puglia, Monopoli: Porta 3:5, lato lungo di almeno 2400 px. Per Acquaviva oggi si usa l'immagine del portale con i segni grafici (§4.7); resta valida la richiesta dell'originale senza grafica e ad alta risoluzione.
    - Varese, Altamura, Caltanissetta: Porta 3:5 o Schermo 16:10.
 6. **Marchi vettoriali** di ITnode, Puglia Digitale e Città Digitali, con i codici colore.
 7. **L'elenco delle 30+ città** di Puglia Digitale, per la carta ed eventualmente un marquee.
 
 **Direzione fotografica per le foto da produrre.** Il riferimento è «Viaggio in Italia» (1984, Luigi Ghirri e altri): luoghi ordinari guardati con attenzione, inquadrature frontali, orizzonte in vista, luce naturale, colori veri. Le persone sono ritratte al lavoro nei loro spazi.
 - **No:** droni saturi, HDR, tramonti da cartolina, visori VR, mani su tablet con ologrammi, folklore.
+
+### 4.7 Immagine di Acquaviva delle Fonti dal portale del cliente (eccezione dell'utente, 2026-10-06)
+
+- **File.** `src/assets/images/acquaviva-digitale.webp`, 1248 × 832 px, senza metadati.
+  - È l'immagine di Acquaviva del portale del cliente, cittàdigitali.it (`wp-content/uploads/2026/02/Acquaviva_digitale_image.webp`). L'ha fornita l'utente il 2026-10-06.
+  - Autore, data, diritti e uso di strumenti di AI non sono noti `[DA FORNIRE]`.
+- **Che cosa mostra.**
+  - Una piazza in pieno sole: sul fondo un palazzo color ocra, a destra una fila di edifici in pietra con un lampione, in primo piano una ringhiera e uno spazio ribassato in pietra.
+  - Sopra la foto c'è una grafica digitale: pannelli trasparenti azzurri e luminosi, segnaposto arancioni, scintille nel cielo.
+  - Il nome della piazza e degli edifici non è verificato `[DA VERIFICARE]`: non si scrive in nessun testo.
+- **L'eccezione.**
+  - La grafica va contro le linee guida §33 («NO glow neon gratuiti», «NO dashboard finte», «NO eccesso di glassmorphism») e contro la direzione fotografica del §4.6 («mani su tablet con ologrammi»).
+  - L'utente l'ha scelta sapendolo, tra tre alternative: l'originale senza grafica, un ritocco con AI, l'attesa. Le sue parole: **«lascia i segni grafici, segnano l'aspetto digitale della città»**.
+  - Obiettivi e identità li decide l'utente (CLAUDE.md, «Come si risolvono i conflitti», punto 4). L'eccezione si registra e non si riapre: ADR 007.
+- **Perimetro.** Vale per questa immagine, nella porta di Acquaviva della sezione «I luoghi» di `/puglia-digitale/`.
+  - Non diventa uno stile del sito: altrove valgono le linee guida §33 e il §4.6.
+  - Per estenderla ad altre immagini serve una nuova decisione dell'utente.
+- **Il ritaglio fa il lavoro.** La grafica non si tocca: niente ritocchi, cancellazioni o estensioni. È il ritaglio a scegliere quanta grafica entra.
+  - **Riquadro sull'originale: x 388, y 36, 462 × 770 px**, 3:5 esatto.
+  - **Pannelli.** Tre pannelli grandi delimitano una fascia libera larga 462 px: a sinistra uno in alto (fino a x 386) e uno in basso (fino a x 383), a destra uno da x 850. È l'unico 3:5 che non taglia a metà nessun pannello sul bordo (bordi misurati colonna per colonna).
+  - **Segni che restano.** Dentro restano i segni piccoli: tre pannelli piccoli, quattro segnaposto e le scintille. Il segno voluto dall'utente si vede, e la piazza resta il soggetto.
+  - **Orizzonte.** La linea più forte della foto, la ringhiera sul fondo della piazza (y 483 sull'originale), cade al 58% dell'altezza. È la quota dell'orizzonte nelle varianti tipografiche delle altre due porte (§4.5) e il rapporto tra cielo e terra della hero: le tre porte guardano alla stessa altezza.
+  - **Punto di fuga.** La strada che si allontana tra il palazzo e la fila di edifici converge al 52% della larghezza: un'inquadratura frontale, come chiede il §4.6.
+  - **Nodo della porta.** Su desktop il nodo e il filo dell'orizzonte arrivano all'angolo in alto a sinistra, dove c'è solo cielo, senza pannelli né segnaposto.
+  - **Scartati.** I ritagli a tutta altezza, 499 × 832, tagliano sempre un pannello grande sul bordo. Quelli più stretti (300 × 500, 260 × 433) andrebbero ingranditi già a densità 1.
+- **Colore: intatto**, come la foto dell'evento (§4.2). Nessun filtro, viraggio o monocromia.
+  - La monocromia a inchiostro del §4.3 serve ad assorbire i fondali generati dietro una persona.
+  - Qui spegnerebbe i segni che l'utente ha voluto, e il colore vero della pietra è il soggetto del luogo.
+- **Derivato.** Si genera con lo script versionato degli asset (`scripts/prepare-assets.mjs`, `npm run assets`), dall'originale intatto, senza ridimensionare né correggere il colore.
+- **Risoluzione.** 462 × 770 basta a densità 1, perché la porta misura al massimo 387 × 645 px CSS (a 1920 px), e basta sui telefoni.
+  - Sugli schermi desktop ad alta densità si ammorbidisce: a 1440 px servirebbero 696 × 1160.
+  - Il derivato non si ingrandisce mai. Resta valida la richiesta dell'originale ad alta risoluzione (§4.6).
+- **Nota sotto la foto.** Sta in una `<figcaption>` subito sotto l'immagine, dentro la porta: la stessa forma della foto dell'evento (§4.2) e dei ritratti (§4.3).
+  - Larga quanto l'immagine, 8 px sotto (`--space-2xs`), in mono alla misura `label`, senza maiuscolo, in `--fg-2`.
+  - È testo reale, letto anche dagli screen reader: nell'ordine di lettura viene dopo l'immagine e prima del nome della porta.
+  - Su mobile resta nella colonna dell'immagine (circa 130 px a 390 px): con la nota di oggi sono due righe. Una nota più lunga di 4 righe a 390 px va accorciata.
+  - Il testo è di copywriter-content (`docs/contenuti/alt-text.md`), con la regola dell'ADR 002: dice solo ciò che è certo. Oggi è «Immagine elaborata digitalmente», e cambia quando il cliente chiarisce l'uso di AI.
+  - Nessun credito né fonte sotto la foto, salvo richiesta dell'autore.
+- **Testo alternativo.** Lo scrive copywriter-content. Descrive ciò che il riquadro mostra, dal fondo al primo piano e poi i segni grafici, senza il nome della piazza.
+- **Le altre due porte.**
+  - Gravina e Monopoli restano con la variante tipografica (in staging, con il segnaposto dichiarato). Reggono da sole (§4.5), e una sola foto nella porta centrale, la città della sede, si legge.
+  - Conviene comunque chiedere al cliente le immagini equivalenti di Gravina e Monopoli dal portale. Con le stesse regole (nessun pannello tagliato sul bordo, orizzonte al 58%, colore intatto, nota) le tre porte parlerebbero la stessa lingua.
+  - Usarle estende l'eccezione: decide l'utente.
+- **Quando si rivede.**
+  - Se arriva l'originale senza grafica, o ad alta risoluzione.
+  - Se il cliente chiarisce autore e uso di AI: cambia la nota (ADR 002).
+  - Se l'utente cambia idea.
 
 ---
 
@@ -800,7 +851,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 1 | Hero | H1 «Puglia Digitale» con sottotitolo e CTA «Visita il portale →»; la costa pugliese è un'unica linea che attraversa la pagina e si disegna all'ingresso, con i nodi `terra` di Acquaviva, Gravina e Monopoli e le etichette mono «MARE ADRIATICO» e «MURGIA» | calce | `display-xl` | carta ritagliata sulla Terra di Bari, sotto il titolo |
 | 2 | Concetto e documento | Passaggio «Dalla costa all'entroterra. / Un territorio da esplorare.»; ritaglio «Schermo» 4:5 in soglia sulle colonne 1–5 (persone che esplorano una piazza pugliese sul maxischermo), testo sul Destination Marketing sulle colonne 7–11; didascalia solo con data e luogo (A4) | pietra | `display-l` | foto a tutta larghezza, poi testo |
 | 3 | Numeri | Scalinata: «30+», «~200.000», «60%» in `display-xxl`, ognuno sfalsato di 2 colonne verso destra e verso il basso; simboli + ~ % in `arancio-segnale`; etichette mono. Sotto i numeri, la nota mono «Dati ITnode, aggiornati a [mese anno]» (registro N1–N3). L'etichetta di «~200.000» chiarisce che è il bacino economico dei territori, non le imprese presenti sulla piattaforma (N2). Testi del copywriter | notte | numeri `display-xxl` | numeri in pila allineati a sinistra (72 px: «~200.000» occupa 309 px su 350). **Se al lancio resta solo «30+»** (riserva B3: gli altri due numeri non si pubblicano senza fonte): un solo numero in `display-xxl` dalla colonna 3, etichetta e nota con la data; il titolo si adatta al singolare (copywriter-brand). Se neanche «30+» è confermato, la sezione non si pubblica e il layout resta pronto |
-| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →» | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
+| 4 | I luoghi | Titolo «I luoghi»; tre Porte 3:5 posizionate in orizzontale secondo la **longitudine reale** (Gravina a ovest, Acquaviva al centro, Monopoli a est), con un lieve sfalsamento verticale, su un filo d'orizzonte; nome in `display-s`, coordinate, «Esplora →». Nella porta di Acquaviva, l'immagine del portale con i segni grafici e la sua nota (§4.7, eccezione dell'utente); nelle altre due, la variante tipografica finché non arriva un'immagine | calce | `display-l` | pila **da ovest a est**, come la fila desktop e l'ordine del focus: Gravina → Acquaviva → Monopoli (decisione del G4, al posto di «dalla costa all'entroterra»: WCAG 1.3.2 e 2.4.3, un solo ordine a tutte le larghezze) |
 | 5 | Perché aderire | Elenco *scala*: le 4 voci rientrano ciascuna di una colonna rispetto alla precedente; numeri in `display-xl`, titoli in `display-s` | pietra | `display-m` | rientri di 16 px |
 | 6 | Chiusura | Passaggio «Porta la tua impresa / dentro Puglia Digitale.», CTA «Contattaci →», form su due colonne sotto lo statement; link secondario al portale | notte | `display-l` | form a una colonna |
 
@@ -904,6 +955,7 @@ Le domande sui materiali e sui fatti sono già registrate nel brief consolidato 
 - §7: i materiali mancanti.
 
 Da aggiungere, per la parte visiva:
+- **Immagine di Acquaviva (§4.7).** Autore, data, diritti e uso di AI; nome della piazza; l'originale senza grafica e ad alta risoluzione; le immagini equivalenti di Gravina e Monopoli dal portale.
 - **Foto evento.** La scena, oltre alla sovrimpressione, è stata ritoccata con strumenti generativi? Il simbolo ✦ lo fa sospettare.
 - **Colori.** Codici ufficiali (HEX o Pantone) di ITnode, Puglia Digitale e Città Digitali.
 - **Video Città Digitali.** C'è parlato? Se sì, i sottotitoli sono obbligatori (WCAG 1.2.2). Serve il file per scegliere il fotogramma del poster.
@@ -928,4 +980,4 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.8)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.9)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
