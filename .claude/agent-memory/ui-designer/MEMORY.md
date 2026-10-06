@@ -108,3 +108,20 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Staging riacceso a fine incarico:** confrontare l'HTML servito con quello della copia di confronto (`cmp`) per dire se le misure di «oggi» valgono anche lì.
 - **sharp:** `composite` e `resize` nella stessa catena falliscono; prima il composito in un buffer, poi il ridimensionamento.
 - **Script** in `scratchpad/ui-puglia/`: `probe.mjs` (sovrapposizioni con e senza 1.4.12), `widths.mjs`, `legend.mjs`, `brtest.mjs` (a capo condizionale), `forced.mjs`, `fcmarks-pd.mjs` (colori forzati), `same.mjs` (confronto al pixel), `a11y.mjs`, `anim.mjs` (otturatore e legenda), `home02.mjs` (P4), `assemble.py` ed `extract.py` (review dalle patch e ritorno); patch in `diff/`.
+
+## Regola 11 su tutte le carte (lezioni del 2026-10-06, pomeriggio)
+- **Esito della Puglia intera:** applicata (b113efb) e approvata dal creative-director senza correzioni: DV 0.11, con le regole 10 (sede), 11 (6 px dai nodi con nome) e 12 (nomi dei mari). La descrizione è la L7 di copywriter-brand, scelta da ux-designer: i nomi disegnati a ogni larghezza, senza la sede nell'elenco. Ogni descrizione di carta sta sotto i 250 caratteri. Design system 0.8 allineato.
+- **Il metro decide l'esito.** Il creative-director misura in pagina, con la spaziatura normale, dal bordo dipinto del nodo. Il generatore usa il caso peggiore (1.4.12) dal bordo dell'anello: circa 3 px più severo. Con il suo metro «MANFREDONIA» arriva a 6 px da 460 px di carta, con quello del generatore mai. Dichiarare sempre il metro e dare entrambe le misure.
+- **Quando la ricerca non trova soluzioni, dimostrarlo** con una tabella per posizione: che cosa la blocca e a quali larghezze (fuori carta, punto coperto, nodo a meno di 6 px). Convince più di «il generatore non trova spazio».
+- **Il ripiego editoriale del gruppo può essere peggio di nessun nome:** «SAN GIOVANNI ROTONDO», 20 caratteri, su 400 px attraversa la penisola. Guardare l'immagine della scelta automatica prima di proporla. La preferenza 2 del creative-director applicata nome per nome (restano i nomi che la regola già rispetta) non richiede nomi nuovi.
+- **«Vale per tutte le carte» vuol dire misurarle tutte in pagina,** comprese quelle posizionate dal CSS. Così è emerso un difetto vecchio della carta della Terra di Bari nel capitolo 02 della Home: le coordinate di Monopoli sull'anello della sede a 400–480 px di carta, soprattutto nella conca delle due colonne (finestre 1025–1230). Nelle verifiche precedenti avevo guardato 390 e 1440: provare ogni 5 px, anche lì.
+- **Sonde:** la prima misura dopo il caricamento o un ridimensionamento può essere falsa (carta di 219 px a 320). Fare un ridimensionamento a vuoto e aspettare 600 ms. Per le sovrapposizioni di testo usare i rettangoli di un Range: i riquadri delle etichette danno falsi positivi (confermato).
+- **Patch con `git diff --no-index`:** riscrivere le intestazioni `a/a/…` e `b/b/…`. La riga `index` conserva il blob di HEAD, quindi `--3way` resta possibile.
+- **Script** in `scratchpad/ui-apart/`:
+  - `tools/probe-map.mjs`: sonda generale di una carta, con il selettore come argomento;
+  - `tools/gaps.mjs`: il metro del creative-director;
+  - `tools/tdb-text.mjs`: la Terra di Bari, misurata sul testo;
+  - `tools/mapwidth.mjs`, `mapshot.mjs`, `shot02c.mjs`;
+  - `site/scripts/explore*.mjs`: le posizioni possibili;
+  - `assemble.py` ed `extract.py`;
+  - patch in `diff/`.
