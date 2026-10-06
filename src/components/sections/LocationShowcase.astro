@@ -14,6 +14,7 @@ import MapItaly from '../ui/MapItaly.astro';
 import Arrow from '../ui/Arrow.astro';
 import { formatCoords } from '../../lib/geo';
 import maps from '../../data/maps.json';
+import type { ImageMetadata } from 'astro';
 import type { AssetSlotId } from '../../data/asset-slots';
 
 type Location = {
@@ -27,6 +28,8 @@ type Location = {
   display: string;
   ctaId: string;
   asset?: AssetSlotId;
+  /** Doors: the place photo, when the client has given one; otherwise the slot (`asset`) is shown. */
+  photo?: { image: ImageMetadata; alt: string; note?: string };
 };
 
 interface Props {
@@ -92,9 +95,18 @@ const north = [...locations]
             {doors.map((d) => (
               <li class="door" style={`--x: ${d.x.toFixed(3)}; --y: ${d.y.toFixed(3)}`} data-reveal>
                 <span class="door__leader" aria-hidden="true" />
-                <div class="door__frame aperture">
-                  <Media asset={d.asset} class="door__media" />
-                </div>
+                {d.photo ? (
+                  <figure class="door__figure">
+                    <div class="door__frame aperture">
+                      <Media image={d.photo.image} alt={d.photo.alt} sizes="(min-width: 64em) 26vw, 40vw" class="door__media" />
+                    </div>
+                    {d.photo.note && <figcaption class="door__note">{d.photo.note}</figcaption>}
+                  </figure>
+                ) : (
+                  <div class="door__frame aperture">
+                    <Media asset={d.asset} class="door__media" />
+                  </div>
+                )}
                 <div class="door__body">
                   <h3 class="door__name">{d.name}</h3>
                   <p class="door__coords t-label" aria-hidden="true">
@@ -269,6 +281,19 @@ const north = [...locations]
 
   .door__frame :global(:is(.media-slot, .slot-pub)) {
     --media-ratio: 3 / 5;
+  }
+
+  .door__figure {
+    margin: 0;
+  }
+
+  /* The note of an elaborated photo, as under the event photo (visual direction §4.7, ADR 002). */
+  .door__note {
+    margin-top: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    line-height: var(--lh-label);
+    color: var(--fg-2);
   }
 
   .door__body {

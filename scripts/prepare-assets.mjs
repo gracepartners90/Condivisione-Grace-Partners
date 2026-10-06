@@ -20,6 +20,15 @@ const eventCrops = [
 ];
 
 /**
+ * Place photos for the doors of /puglia-digitale/ (visual direction §4.7, ADR 007), in pixels on the
+ * original. Acquaviva: the client's portal image, with its digital overlays kept by the user's choice;
+ * the 3:5 crop leaves out the large panels. Colour untouched, no resize.
+ */
+const placeCrops = [
+  { src: 'acquaviva-digitale.webp', out: 'acquaviva-porta.jpg', box: { left: 388, top: 36, width: 462, height: 770 } }, // 3:5
+];
+
+/**
  * Founder portraits, «inchiostro» treatment (only because the user chose to use these photos):
  * 1. luminance weighted on the blue channel, so the blue skyline fades towards paper;
  * 2. contrast ×1.2 −30 and tone mapping from inchiostro #141413 to calce #F3F1EC, in one linear step.
@@ -40,6 +49,11 @@ await mkdir(OUT, { recursive: true });
 
 for (const { out, box } of eventCrops) {
   await sharp(`${SRC}/evento-puglia-digitale.jpg`).extract(box).jpeg({ quality: 92, mozjpeg: true }).toFile(`${OUT}/${out}`);
+  console.log(`${out}  ${box.width}×${box.height}`);
+}
+
+for (const { src, out, box } of placeCrops) {
+  await sharp(`${SRC}/${src}`).extract(box).jpeg({ quality: 90, mozjpeg: true }).toFile(`${OUT}/${out}`);
   console.log(`${out}  ${box.width}×${box.height}`);
 }
 
