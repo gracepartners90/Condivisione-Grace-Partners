@@ -96,7 +96,7 @@
           "xPct": 79.47,
           "yPct": 73.45,
           "anchor": {
-            "wide": "se",
+            "wide": "w",
             "narrow": "w"
           }
         },
@@ -110,36 +110,8 @@
           "xPct": 56.11,
           "yPct": 55.59,
           "anchor": {
-            "wide": "sw",
+            "wide": "e",
             "narrow": "nw"
-          }
-        },
-        {
-          "id": "manfredonia",
-          "name": "Manfredonia",
-          "lat": 41.63,
-          "lon": 15.92,
-          "x": 756.5,
-          "y": 613,
-          "xPct": 75.65,
-          "yPct": 51.92,
-          "anchor": {
-            "wide": "w",
-            "narrow": "none"
-          }
-        },
-        {
-          "id": "massafra",
-          "name": "Massafra",
-          "lat": 40.58,
-          "lon": 17.12,
-          "x": 861,
-          "y": 723.5,
-          "xPct": 86.1,
-          "yPct": 61.27,
-          "anchor": {
-            "wide": "drop2-l",
-            "narrow": "none"
           }
         },
         {
@@ -164,6 +136,13 @@
           "y": 606,
           "xPct": 74.07,
           "yPct": 51.32
+        },
+        {
+          "id": "manfredonia",
+          "x": 756.5,
+          "y": 613,
+          "xPct": 75.65,
+          "yPct": 51.92
         },
         {
           "id": "barletta",
@@ -339,6 +318,13 @@
           "y": 714.1,
           "xPct": 92.8,
           "yPct": 60.47
+        },
+        {
+          "id": "massafra",
+          "x": 861,
+          "y": 723.5,
+          "xPct": 86.1,
+          "yPct": 61.27
         },
         {
           "id": "francavilla-fontana",

@@ -437,6 +437,12 @@ if (!data) {
     }
   }
 
+  /* The compact frame (Home chapter 02, at most 30rem): names only at every width. With the
+     coordinates, those of Monopoli would cover the office ring and the name of Acquaviva. */
+  .map--compact .map__coords {
+    display: none;
+  }
+
   /* The compact frame crops the coastline: clip it to the frame. */
   .map--compact .map__svg {
     overflow: clip;

@@ -237,10 +237,12 @@ function toCurvePath(lines, decimals) {
 // Each name takes one position around its node: beside it, on a corner, or hanging below it on a
 // vertical leader, the gesture of the Horizon labels (design system §2.1). A name is shown only if
 // it covers no dot, no node, no other name, no other leader and no area name at every width of its
-// class, and stays inside the map.
+// class, and stays inside the map. On every map a name, leader included, also keeps 6 px from the
+// nodes of the other named cities, so that it never reads as the name of the node beside it (visual
+// direction §1.4, rule 11): the build checks the result again and stops if a name breaks the rule.
 // Metrics: mono label at 13 px, uppercase, with the user text spacing of WCAG 1.4.12 (0.12em
 // tracking, line-height 1.5). Offsets match the anchor rules in MapItaly.astro.
-const LABEL = { advance: 9.6, pad: 2, line: 19.5, node: 6.5, dot: 4, ring: 13.5, clear: 1, indent: 8, areaMax: 104 }; // node and dot radii include the 1.5 px knockout ring; ring: the office; areaMax: 8em
+const LABEL = { advance: 9.6, pad: 2, line: 19.5, node: 6.5, dot: 4, ring: 13.5, clear: 1, indent: 8, areaMax: 104, apart: 6 }; // node and dot radii include the 1.5 px knockout ring; ring: the office; areaMax: 8em; apart: rule 11, from the knockout ring
 const NAME_CLASSES = { narrow: [280, 400], wide: [400, 480] }; // px; .worlds__map is 280 px at 320 and 30rem at most
 const STEP = 5;
 const DROPS = { 'drop-r': 24, 'drop-l': 24, 'drop2-r': 40, 'drop2-l': 40, 'drop3-r': 56, 'drop3-l': 56 }; // px from the node centre to the first line
@@ -271,6 +273,7 @@ const circleHitsBox = (cx, cy, r, [x0, y0, x1, y1]) => {
   return (cx - nx) ** 2 + (cy - ny) ** 2 < r * r;
 };
 const boxesHit = (a, b, m) => a[0] < b[2] + m && a[2] > b[0] - m && a[1] < b[3] + m && a[3] > b[1] - m;
+const pointToBox = (x, y, [x0, y0, x1, y1]) => Math.hypot(Math.max(x0 - x, 0, x - x1), Math.max(y0 - y, 0, y - y1));
 const widthRange = ([from, to]) => { const r = []; for (let w = from; w <= to; w += STEP) r.push(w); return r; };
 
 /** A name on two lines, broken at the space that makes the longer line shortest (never hyphenated). */
@@ -317,10 +320,9 @@ function areaBox(a, W, view) {
  * Anchors (and line breaks) for every city of `named` together (backtracking), or null if they do not
  * all fit at `widths`. `opts.home`: id of the office (its ring keeps other names away, its own name
  * stays beside it); `opts.areas`: area names to keep clear; `opts.wrap`: ids that may break on two lines;
- * `opts.longDrops`: leaders of 56 px too; `opts.apart`: px between a name and the other named nodes, so
- * that a name never reads as the name of the node beside it.
+ * `opts.longDrops`: leaders of 56 px too.
  */
-function placeNames(named, cities, view, widths, { home = null, areas = [], wrap = [], longDrops = false, apart = LABEL.clear } = {}, budget = 300000) {
+function placeNames(named, cities, view, widths, { home = null, areas = [], wrap = [], longDrops = false } = {}, budget = 300000) {
   const others = cities.filter((c) => !named.includes(c));
   const radius = (q) => (q.id === home ? LABEL.ring : LABEL.node);
   const free = (p, a, lines) => widths.every((W) => {
@@ -328,7 +330,7 @@ function placeNames(named, cities, view, widths, { home = null, areas = [], wrap
     if (box[0] < 0 || box[1] < 0 || box[2] > W || box[3] > view.height * k) return false;
     const touches = (x, y, r) => circleHitsBox(x * k, y * k, r + LABEL.clear, box) || (leader && circleHitsBox(x * k, y * k, r + LABEL.clear, leader));
     if (areas.some((ar) => boxesHit(box, areaBox(ar, W, view), LABEL.clear) || (leader && boxesHit(leader, areaBox(ar, W, view), LABEL.clear)))) return false;
-    return !others.some((d) => touches(d.x, d.y, LABEL.dot)) && !named.some((q) => q !== p && touches(q.x, q.y, radius(q) + apart - LABEL.clear));
+    return !others.some((d) => touches(d.x, d.y, LABEL.dot)) && !named.some((q) => q !== p && touches(q.x, q.y, radius(q) + LABEL.apart - LABEL.clear));
   });
   const layouts = (p) => [[p.name], ...(wrap.includes(p.id) && twoLines(p.name) ? [twoLines(p.name)] : [])];
   const options = named.map((p) => layouts(p).flatMap((lines) => anchorOrder(p, view, longDrops)
@@ -349,6 +351,30 @@ function placeNames(named, cities, view, widths, { home = null, areas = [], wrap
     return false;
   };
   return search(0) ? Object.fromEntries(named.map((p, i) => [p.id, { anchor: chosen[i].a, lines: chosen[i].lines }])) : null;
+}
+
+/**
+ * Rule 11 on a result of chooseNames: the smallest gap, in px, between a name (leader included) and
+ * the node of another city named in the same class, over every width of every class. Stops the build
+ * under LABEL.apart.
+ */
+function checkApart(id, result, cities, view, classes, home) {
+  const byId = Object.fromEntries(cities.map((c) => [c.id, c]));
+  let min = Infinity;
+  for (const c of classes) {
+    const shown = Object.entries(result).filter(([, e]) => e.anchor[c.name] !== 'none')
+      .map(([cid, e]) => ({ p: byId[cid], anchor: e.anchor[c.name], lines: e.lines?.[c.name] ?? [byId[cid].name] }));
+    for (const W of widthRange(c.range)) for (const a of shown) {
+      const { k, box, leader } = nameGeometry(a.p, a.anchor, W, view, a.lines, a.p.id === home);
+      for (const b of shown) {
+        if (b === a) continue;
+        const gap = Math.min(...[box, leader].filter(Boolean).map((r) => pointToBox(b.p.x * k, b.p.y * k, r))) - (b.p.id === home ? LABEL.ring : LABEL.node);
+        if (gap < LABEL.apart) throw new Error(`${id}: ${a.p.name} is ${gap.toFixed(1)} px from the node of ${b.p.name} on ${c.name} maps at ${W} px (visual direction §1.4, rule 11)`);
+        min = Math.min(min, gap);
+      }
+    }
+  }
+  return min;
 }
 
 /**
@@ -393,12 +419,15 @@ function chooseNames(cities, nomi, view, { id = 'italia', classes = [{ name: 'na
     if (lost.length) console.warn(`${id}: ${lost.join(', ')} named on ${prev.name} maps but not on ${c.name} ones`);
   });
   const last = results.at(-1);
-  return Object.fromEntries(last.ids.map((cid) => {
+  const result = Object.fromEntries(last.ids.map((cid) => {
     const entry = { anchor: Object.fromEntries([...results].reverse().map((r) => [r.name, r.placed[cid]?.anchor ?? 'none'])) };
     const broken = results.filter((r) => r.placed[cid]?.lines.length > 1);
     if (broken.length) entry.lines = Object.fromEntries(broken.map((r) => [r.name, r.placed[cid].lines]));
     return [cid, entry];
   }));
+  const gap = checkApart(id, result, cities, view, classes, opts.home);
+  console.log(`${id}: names at least ${gap.toFixed(1)} px from the other named nodes (rule 11)`);
+  return result;
 }
 
 // ─── Map builders ───
@@ -566,7 +595,7 @@ function buildPugliaRegione({ width = 1000, minAreaKm2 = 1.65, decimals = 1, pad
     const hit = points.find((c) => circleHitsBox(c.x * k, c.y * k, (c.id === office ? LABEL.ring : LABEL.node) + LABEL.clear, box));
     if (hit) throw new Error(`pugliaRegione: ${ar.text} covers ${hit.id} at ${W} px`);
   }
-  const names = chooseNames(points, CITIES.nomiPuglia, view, { id: 'pugliaRegione', classes: PUGLIA_NAME_CLASSES, home: office, areas, wrap: CITIES.nomiPuglia.obbligatori, longDrops: true, apart: 6 });
+  const names = chooseNames(points, CITIES.nomiPuglia, view, { id: 'pugliaRegione', classes: PUGLIA_NAME_CLASSES, home: office, areas, wrap: CITIES.nomiPuglia.obbligatori, longDrops: true });
   const named = points.filter((c) => names[c.id]);
   const dots = points.filter((c) => !names[c.id]).sort((p, q) => p.y - q.y); // north first: southern dots paint on top
   return {
