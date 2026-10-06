@@ -40,15 +40,18 @@ const unknownProvince = [...perProvince.keys()].filter((p) => !PROVINCES[p]);
 if (unknownProvince.length) throw new Error(`lib/citta-digitali.ts: add ${unknownProvince.join(', ')} to PROVINCES`);
 
 /**
- * Text alternative of the map of Puglia with the cities of Puglia Digitale, in the same form: the
- * provinces north → south, the one with most cities, the names the map draws on wide screens, and the
- * office when the map rings it. Never «tutta la Puglia» nor a number (brand-strategist, §4).
- * Wording to be refined by copywriter-brand.
+ * Text alternative of the map of Puglia with the cities of Puglia Digitale (copywriter-brand, L7):
+ * the province with most cities, the names the map draws at every width (north → south, without the
+ * office) and the office, which the map rings. No list of provinces: all six would read as «tutta la
+ * Puglia». Never a number (brand-strategist, §4). About 220 characters: an accessible name is read in
+ * one breath (ux-designer, 2026-10-06).
  */
 export function describePugliaDigitale(names: string[] = [], office?: string): string {
-  const provinces = Object.keys(PROVINCES).filter((p) => perProvince.has(p)).map((p) => PROVINCES[p]);
-  const [most, mostCount] = [...perProvince].sort((a, b) => b[1] - a[1])[0];
+  const [[most, mostCount], second] = [...perProvince].sort((a, b) => b[1] - a[1]);
+  // «la maggior parte» only above half; on a tie no province is named.
+  const quota = mostCount > puglia.length / 2 ? 'la maggior parte' : 'più numerose';
+  const where = second && second[1] === mostCount ? '' : `, ${quota} nella provincia di ${PROVINCES[most]}`;
   const among = names.length ? ` Tra queste: ${andList(names)}.` : '';
-  const ring = office ? ` Un anello segna ${office}, dove ha sede ITnode.` : '';
-  return `Carta della Puglia con le città di Puglia Digitale. Sono nelle province di ${andList(provinces)}, ${shareOf(mostCount, puglia.length)} in quella di ${PROVINCES[most]}.${among}${ring}`;
+  const ring = office ? ` Un anello segna ${office}, sede di ITnode.` : '';
+  return `Carta della Puglia con le città di Puglia Digitale${where}.${among}${ring}`;
 }

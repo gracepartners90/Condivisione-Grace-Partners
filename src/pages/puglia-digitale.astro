@@ -56,16 +56,18 @@ const photos: Record<string, { image: typeof acquavivaPorta; alt: string; note: 
   },
 };
 // The whole coast of Puglia with a dot for every city of Puglia Digitale (visual direction §1.4, §7.5).
-// Text alternative: the provinces, the names drawn on the wide map (north → south) and the office.
-type RegionPlace = { name: string; lat: number; role?: string; anchor: { hero: string } };
+// Text alternative (copywriter-brand, L7): the names drawn at every width, north → south, so that every
+// name said is on the map on a phone too; the office has its own sentence.
+type RegionPlace = { name: string; lat: number; role?: string; anchor: Record<'hero' | 'wide' | 'narrow', string> };
 const region = maps.maps.pugliaRegione;
 const [, , regionW, regionH] = region.viewBox.split(' ').map(Number);
 const regionPlaces = region.places as RegionPlace[];
+const drawnAtEveryWidth = (p: RegionPlace) => (['hero', 'wide', 'narrow'] as const).every((c) => p.anchor[c] && p.anchor[c] !== 'none');
 const mapLabel = describePugliaDigitale(
-  regionPlaces.filter((p) => p.anchor.hero !== 'none').sort((a, b) => b.lat - a.lat).map((p) => p.name),
+  regionPlaces.filter((p) => p.role !== 'sede' && drawnAtEveryWidth(p)).sort((a, b) => b.lat - a.lat).map((p) => p.name),
   regionPlaces.find((p) => p.role === 'sede')?.name,
 );
-// Legend: copywriter-brand writes the final text (brand-strategist §4: the cities of Puglia Digitale).
+// Legend: copywriter-brand, L7 (the form of L1; brand-strategist §4: the cities of Puglia Digitale).
 const legend = 'Ogni punto è una città di\u00a0Puglia\u00a0Digitale';
 
 const locations = pugliaPlaces.map((p) => ({

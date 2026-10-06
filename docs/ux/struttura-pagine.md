@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.6
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+versione: 0.7
+aggiornato: 2026-10-06
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -273,14 +273,20 @@ H2  Continua a esplorare                                       [PROPOSTA]
 L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo sta dentro l'H1.
 
 ### PD-1 · Hero — `Hero` variante `line`, carattere territoriale
-- **Contenuti.**
-  - Breadcrumb ed eyebrow.
-  - H1 su due righe.
+- **Contenuti** (come nel sito, commit b113efb).
+  - Breadcrumb nella barra sopra la hero; nessun occhiello (direzione visiva §7.8).
+  - H1 su due registri, con il separatore nascosto « – ».
   - CTA primaria «Visita il portale ↗» → lapugliadigitale.it.
-  - Link secondario «Porta la tua impresa in Puglia Digitale ↓» → `#richiesta` (strategia di conversione §4).
-  - Visual: slot `puglia-paesaggio` `[DA FORNIRE]`.
-- **Desktop.** Più emozionale di SIII: la fotografia è protagonista (creative-director).
-- **Mobile.** H1 → CTA → link secondario → foto. Se il testo sta sulla foto: velatura con contrasto verificato sull'area peggiore.
+  - Link secondario «Aderisci a Puglia Digitale ↓» → `#richiesta` (strategia di conversione §4).
+- **Carta della Puglia intera**, nella fascia subito dopo la hero (proposta di ui-designer del 2026-10-06, scelta dell'utente).
+  - È una `<figure>`: la costa della Puglia, un punto per ognuna delle città di Puglia Digitale, Acquaviva delle Fonti con l'anello della sede, nomi dove c'è spazio.
+  - Legenda in `<figcaption>`: «Ogni punto è una città di Puglia Digitale» (copywriter-brand, L7).
+  - **Accessibilità.** La carta è `role="img"` con la descrizione L7, al massimo 250 caratteri. Contiene: la provincia più fitta, i nomi disegnati a ogni larghezza senza la sede, la sede. Nomi disegnati e mari sono `aria-hidden`.
+  - Nel DOM ci sono due carte, larga e compatta, e a ogni larghezza se ne vede una sola: l'altra è `display: none` e non entra nell'albero di accessibilità.
+  - Nessun elemento focalizzabile nella figura.
+- **Ordine, a tutte le larghezze:** breadcrumb → H1 → CTA → link secondario → carta → legenda → «Il progetto». Verificato da 320 a 1440 px (`docs/review/2026-10-06-carta-puglia-intera-ux-designer.md`).
+- **Desktop.** La carta è allineata a destra, dalla colonna 3, alta circa tre quarti della finestra.
+- **Mobile.** La carta occupa tutta la larghezza, con la legenda sotto.
 
 ### PD-2 · Il progetto — `LargeStatement` variante `territory`
 - **Contenuti.** H2 verbatim e due paragrafi (copy deck §2); la prima frase è la definizione della pagina.
@@ -309,9 +315,10 @@ L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo st
 
 ### PD-5 · I luoghi — `LocationShowcase` variante `doors`
 - **Contenuti per luogo** (copy deck §5):
+  - foto del portale della città, con la nota «Immagine elaborata digitalmente» in `<figcaption>` (ADR 007; testi alternativi in `alt-text.md`);
   - nome (H3), riga geografica, dominio;
-  - CTA «Esplora ↗» con nome accessibile completo;
-  - foto: slot `luogo-*` `[DA FORNIRE]`.
+  - CTA «Esplora ↗» con nome accessibile completo.
+  - Ordine in ogni voce della lista: immagine → nota → nome → riga → «Esplora». Va bene: la voce tiene insieme i quattro elementi (1.3.1), e l'ordine è quello visivo (verifica del 2026-10-06).
   - `[PROPOSTA]` Sotto Monopoli e Acquaviva delle Fonti, un link a `/siii/#esempi`: Maison Miminà e D.L. Natura Dentro sono pubblicati su quei portali.
 - **Desktop.** Tre «porte»: immagini verticali alte, composte in modo non uniforme.
 - **Mobile.** Impilate a tutta larghezza (rapporto 4:5 dello slot). Nome e CTA sempre visibili: non si rivelano al passaggio del mouse.
@@ -324,7 +331,7 @@ L'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: il sottotitolo st
   - **Posizione ux-designer su I11 della review UI.** La proposta di I11 non è accettata. Con il DOM Monopoli → Acquaviva → Gravina e le porte posizionate per longitudine, su desktop il focus andrebbe da destra a sinistra, al contrario della lettura della fila: 2.4.3, e 1.3.2 con la tecnica C27.
   - **Decisione del creative-director** (verdetto G4 §3.5): ovest → est a tutte le larghezze, come nel codice.
   - **Raccomandazione (accolta):** ovest → est. «Dalla costa all'entroterra» è il titolo di #progetto, due sezioni prima; il copy deck dichiara l'ordine reversibile. Motivazione completa in `docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md` §3.3.
-- **Accessibilità.** `<ul>`. Se l'intera scheda è cliccabile, l'immagine ha `alt=""` (`alt-text.md`).
+- **Accessibilità.** Lista (`<ol>` nel sito). Il link è solo «Esplora», quindi la foto ha il suo testo alternativo; se un giorno diventasse cliccabile l'intera scheda, la foto avrebbe `alt=""` (`alt-text.md`). Nei colori forzati foto, note e fili delle porte restano (verifica del 2026-10-06).
 
 ### PD-6 · Perché aderire — `BenefitsSection` variante `staircase` («scala» nella direzione visiva)
 - **Contenuti.** Eyebrow, H2, quattro motivi (H3 verbatim) con testo.
