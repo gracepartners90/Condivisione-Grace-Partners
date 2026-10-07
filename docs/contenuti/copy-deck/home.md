@@ -3,14 +3,22 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.4
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/data/site.ts, src/components/ui/Horizon.astro]
+versione: 1.5
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.12), docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md (§2.8), docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md (1.5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (H5), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/pages/index.astro, src/data/site.ts, src/data/media.ts, src/data/maps.json, src/lib/citta-digitali.ts, src/components/ui/Horizon.astro, build di HEAD 326f354 del 2026-10-07 (copia nello scratchpad), prove Playwright del 2026-10-07]
 ---
 
 # Copy deck · Home
 
 Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA verso i contatti, nell’ordine delle sette sezioni fissato dalla direzione visiva (`docs/creativa/direzione-visiva.md`, § 7.3). I testi sono pronti da impaginare. Le parti provvisorie sono elencate in fondo, in «Testi da sostituire con gli originali del cliente».
+
+**Versione 1.5 (2026-10-07): il copy deck descrive il sito com’è oggi.** Nessun testo approvato è cambiato. Rispetto alla 1.4:
+- capitolo 01: la schermata reale del SIII di Masseria Santella, con il suo testo alternativo, e i nodi decorativi nascosti;
+- capitolo 02: la carta della Terra di Bari, che il copy deck non descriveva;
+- capitolo 03: la descrizione B, con i 5 nomi disegnati a ogni larghezza, e i 7 nomi delle carte larghe dopo la regola 11;
+- documento: il nodo 2 senza «regionale» (review di bozze, H5), il nome della sezione, la nota sull’immagine e la legenda ridotta al nodo 1 sotto i 700 px;
+- fondatore: testo alternativo e nota del ritratto; virgolette della citazione;
+- ordine della sezione «I tre mondi», rilevamento del capitolo 01, Gulpease ricalcolato, domande e decisioni aggiornate.
 
 ## Come leggere questo documento
 
@@ -20,7 +28,7 @@ Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA
 - **verbatim**: frase del cliente. Non si modifica.
 - **A capo d’autore**: la barra rovesciata `\` a fine riga indica un a capo che sta nel contenuto (regola «Il Passaggio», direzione visiva § 1.5). Nel markup è un `<br>` oppure una riga separata.
 - **Frecce**: → ↓ ↗ indicano quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri: i font scelti non li contengono (direzione visiva, § 3).
-- **Gulpease**: calcolato con uno script il 2026-09-28 con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Titoli, statement, riga di posizionamento, paragrafi, legenda dei nodi, didascalie della timeline e citazione, esclusi occhielli, etichette mono, CTA e contatti: 72 nel complesso (348 parole). Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
+- **Gulpease**: calcolato con uno script con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Insieme dei testi: titoli, statement, riga di posizionamento, paragrafi, legenda dei nodi del documento, legenda della carta del capitolo 03, didascalie della timeline e citazione; esclusi occhielli, etichette mono, CTA e contatti. Ricalcolato il 2026-10-07 sui testi del sito: 72 nel complesso (356 parole). Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
 - **Riferimenti**: grafie, CTA e punteggiatura in `tone-of-voice.md`; testi alternativi in `alt-text.md` (copywriter-content); header, footer, form, marquee e 404 in `microcopy.md`; eventi `data-track` nella strategia di conversione, § 4.
 
 ## Metadati
@@ -39,7 +47,7 @@ Sono quelli di seo-content (`docs/seo/mappa-keyword-url.md`, § 2), recepiti sen
 |---|---|---|---|
 | 1 | Hero · «L’orizzonte dei luoghi» | — | H1 |
 | 2 | Manifesto | `#chi-siamo` | H2 |
-| 3 | Documento · foto dell’evento | — | nessuno (didascalia) |
+| 3 | Documento · foto dell’evento | — | nessuno; la sezione ha il nome «L’evento Puglia Digitale» (`aria-label`) |
 | 4 | Infrastruttura · statement e marquee | — | nessuno (statement in `<p>`) |
 | 5 | I tre mondi | `#tre-mondi` | H2 e tre H3 |
 | 6 | Fondatore | `#fondatore` | H2 |
@@ -137,23 +145,31 @@ Note:
 
 ## 3. Documento · foto dell’evento
 
-**Legenda dei nodi** · `ol` sotto la foto, sempre visibile su mobile · testi della direzione visiva (§ 4.2)
+**Nome della sezione** · `aria-label` della `<section>` · prop `legendTitle`
+> L’evento Puglia Digitale
+
+**Legenda dei nodi** · `ol` sotto la foto, sempre visibile · testi della direzione visiva (§ 4.2). Sotto i 700 px il ritaglio «Città» mostra solo il nodo 1, e la legenda solo la sua voce; i nodi 2 e 3, con le loro voci, compaiono da 700 px
 
 | Nodo | Testo | Verifica |
 |---|---|---|
 | 1 · schermo sinistro | Vista aerea a 360° di una città, con le attività in evidenza | `[DA VERIFICARE: quale città]` |
-| 2 · palco | Il palco dell’evento regionale Puglia Digitale | `[DA VERIFICARE: chi parla]` |
+| 2 · palco | Il palco dell’evento Puglia Digitale | `[DA VERIFICARE: chi parla]`. Senza «regionale», come nel sito (review di bozze, H5; brief, A2). Il nodo sta sul leggio, accanto all’oratore, non sulla persona (direzione visiva, § 4.2; G4, N7) |
 | 3 · schermo destro | Una piazza storica esplorabile a 360° | `[DA VERIFICARE: quale luogo]` |
 
 Nome accessibile dei nodi, che sono pulsanti numerati: il numero seguito dal testo della legenda, per esempio «1 – Vista aerea a 360° di una città, con le attività in evidenza».
 
-**Didascalia** · p · mono · solo con luogo e data confermati
+**Nota sull’immagine** · `figcaption` · testo di `eventPhotoNote` in `src/data/media.ts`
+> Immagine elaborata con strumenti di intelligenza artificiale
+
+**Didascalia** · p · mono · solo con luogo e data confermati · oggi non pubblicata
 > Puglia Digitale, evento regionale · {luogo}, {data}
 
 Note:
-- La didascalia si pubblica solo quando luogo e data sono confermati (brief, A4). Fino ad allora la foto resta accompagnata dalla sola legenda. `[DA FORNIRE: luogo, data e autore della foto]`
+- La didascalia si pubblica solo quando luogo e data sono confermati (brief, A4). Fino ad allora la foto resta accompagnata dalla legenda e dalla nota sull’immagine. `[DA FORNIRE: luogo, data e autore della foto]`
 - Nessun numero di partecipanti. In basso a destra dell’originale c’è la filigrana ✦ di Gemini: i ritagli la escludono, ma serve l’originale senza sovrimpressioni e la conferma che la scena non è stata alterata (direzione visiva, § 4.2).
-- Testo alternativo: `alt-text.md`, voce `derivate/evento-panoramica.jpg`.
+- **Nota sull’immagine.** Resta finché non arrivano l’originale dello scatto e la conferma del cliente (review di veridicità, B4; ADR 002).
+- **«regionale» nella didascalia** `[DA DECIDERE]`. Il sito l’ha tolto dal nodo 2 per non suggerire un legame istituzionale (brief, A2), ma la didascalia di riserva lo contiene ancora, come la direzione visiva (§ 4.2). Propongo «L’evento Puglia Digitale · {luogo}, {data}», con lo stesso nome della sezione. Decide il creative-director; finché luogo e data non arrivano, in pagina non cambia nulla.
+- **Testo alternativo** (`alt-text.md`, `derivate/evento-panorama.jpg` da desktop e `derivate/evento-citta.jpg` su mobile, stesso testo): «La platea dell’evento Puglia Digitale; sul maxischermo a sinistra del palco, il tour virtuale di una città vista dall’alto.»
 
 ## 4. Infrastruttura
 
@@ -173,20 +189,20 @@ Note:
 **H2** · max 45 (18) · può avere la scala visiva di un’etichetta
 > I tre mondi ITnode
 
-Alternativa, se la composizione chiede un titolo più forte: H2 «Un’impresa. Un territorio. Una rete di città.» (45, entro il limite della struttura UX) e «I tre mondi ITnode» come occhiello mono. La mappa SEO indica «I tre mondi ITnode» come H2: con l’alternativa va avvisato seo-content.
+Alternativa non adottata (nel sito l’H2 è «I tre mondi ITnode», in scala di etichetta): H2 «Un’impresa. Un territorio. Una rete di città.» (45, entro il limite della struttura UX) e «I tre mondi ITnode» come occhiello mono. La mappa SEO indica «I tre mondi ITnode» come H2: con l’alternativa va avvisato seo-content.
 
-**Testo** · p · max 200 (193) · Gulpease 52 · blocco di risposta F di seo-content, accorciato
-> SIII, Puglia Digitale e Città Digitali sono tre applicazioni concrete della stessa visione. ITnode rende esplorabili gli spazi reali e usa questa tecnologia per valorizzare imprese e territori.
-
-**Statement di sezione** · p · facoltativo, su una riga (non a registri) · max 50 (45)
+**Statement di sezione** · p · su una riga (non a registri) · max 50 (45) · nel sito, subito dopo l’H2
 > Un’impresa. Un territorio. Una rete di città.
+
+**Testo** · p · max 200 (193) · Gulpease 52 · blocco di risposta F di seo-content, accorciato · dopo lo statement
+> SIII, Puglia Digitale e Città Digitali sono tre applicazioni concrete della stessa visione. ITnode rende esplorabili gli spazi reali e usa questa tecnologia per valorizzare imprese e territori.
 
 **I tre capitoli** · copy · una colonna per capitolo, nell’ordine della direzione visiva: numero, nome, statement, visual, microdescrizione, CTA
 
 | Elemento | Tag · max | 01 | 02 | 03 |
 |---|---|---|---|---|
 | Numero | span `aria-hidden="true"` · 2 | 01 | 02 | 03 |
-| Rilevamento | mono, `aria-hidden="true"` | 000° | 120° | 240° |
+| Rilevamento | mono, `aria-hidden="true"` | 000° · N | 120° | 240° |
 | Nome | H3 · 16 | SIII | Puglia Digitale | Città Digitali |
 | Descrittore | seconda riga dell’H3, più piccola · 30 | Siti Interattivi Immersivi | — | — |
 | Statement | p, due registri · 60 | Spazi reali.<br>Esperienze digitali. | Un territorio.<br>Migliaia di storie. | Le attività del territorio,<br>online senza perdere radici. |
@@ -195,24 +211,26 @@ Alternativa, se la composizione chiede un titolo più forte: H2 «Un’impresa. 
 | CTA | a · verbatim · 28 | Esplora SIII → | Scopri Puglia Digitale → | Esplora Città Digitali → |
 | Destinazione | — | `/siii/` | `/puglia-digitale/` | `/citta-digitali/` |
 | `data-track` | — | `home-capitolo-siii` | `home-capitolo-puglia-digitale` | `home-capitolo-citta-digitali` |
-| Visual | — | Schermo 16:10 con tre nodi: schermata di un SIII `[DA FORNIRE]` (slot `siii-*`) | Ritaglio «Schermo» 4:5 della foto dell’evento | Carta d’Italia con le città del portale, un punto ciascuna, e i nomi dove c’è spazio, sempre Varese, Altamura e Caltanissetta (direzione visiva 0.6, § 1.4). Legenda e descrizione: blocco «Capitolo 03 con la carta di tutte le città», qui sotto |
+| Visual | — | Schermata reale del SIII di Masseria Santella, vista dall’interno (`siii-masseria-santella-desktop-interno.jpg`). Testo alternativo (`alt-text.md` 1.5): «Il SIII di Masseria Santella: una sala con la volta bianca e una porta a vetri ad arco aperta sugli altri ambienti, con il menu e i punti interattivi.» I tre nodi decorativi sopra lo schermo sono nascosti: la schermata mostra già i suoi punti | Carta compatta della Terra di Bari, `aria-hidden`: Acquaviva delle Fonti, con l’anello della sede, Gravina in Puglia e Monopoli, più «Mare Adriatico» e «Murgia». Nessuna coordinata sotto i nomi (direzione visiva 0.12, R3) | Carta d’Italia con le città del portale, un punto ciascuna. Nomi dove c’è spazio (regola 11 della direzione visiva 0.12): 7 sulle carte larghe (Varese, Itri, Bari, Altamura, Cosenza, Caltanissetta, Caltagirone), 5 su quelle strette (senza Bari e Caltagirone). Legenda e descrizione: blocco «Capitolo 03 con la carta di tutte le città», qui sotto |
 
 Note:
 - Gli statement sono gli esempi del § 08, invariati, con l’a capo d’autore dopo il primo punto (01 e 02) e dopo la virgola (03).
 - Il blocco F è accorciato: la sua seconda frase, cioè che cosa fa ciascun progetto, è distribuita nelle microdescrizioni, sotto il rispettivo H3.
-- Lo statement di sezione è facoltativo. Segue il filo narrativo del brief (2.3): dalla singola impresa al territorio, fino alla rete di città, una parola per capitolo. Non lascia intendere che tutta l’Italia sia coperta (N12). Se si usa, va su una riga: la regola del Passaggio ammette tre registri solo per «Entra. Esplora. Interagisci.».
+- Lo statement di sezione è in uso, subito dopo l’H2. Segue il filo narrativo del brief (2.3): dalla singola impresa al territorio, fino alla rete di città, una parola per capitolo. Non lascia intendere che tutta l’Italia sia coperta (N12). Se si usa, va su una riga: la regola del Passaggio ammette tre registri solo per «Entra. Esplora. Interagisci.».
 - 01: le funzioni del SIII sono quelle del § 10. Il descrittore scioglie la sigla alla prima occorrenza, come l’hero della pagina SIII.
 - 02: nessuna attribuzione della creazione di Puglia Digitale (A1). «destination marketing» con `lang="en"`.
 - 03: ordine «Siti Interattivi Immersivi» uniformato (il § 17 scrive «Siti Immersivi Interattivi»: brief, DR2). «Imprese e attività» riassume il «tessuto imprenditoriale e commerciale italiano» del § 17; la scala nazionale la dicono le tre città del § 18, nominate come chiede N12 e coincidenti con i nodi della carta.
-- Visual: la direzione visiva (§ 7.3) e la struttura UX (HM-3) indicano soluzioni diverse per i capitoli 02 e 03 (ritaglio «Schermo» e carta d’Italia contro foto intera e poster del video). I testi valgono in entrambi i casi; decide creative-director.
+- **Visual**, come nel sito al 2026-10-07: schermata reale nel capitolo 01, carta della Terra di Bari nel 02, carta d’Italia con tutte le città nel 03 (direzione visiva 0.12, § 7.3). La carta della Puglia intera è approvata per la hero di `/puglia-digitale/`; nel capitolo 02 arriva solo se l’utente approva la proposta P4 (direzione visiva, § 7.3). I testi dei capitoli non cambiano con i visual.
+- **01, schermata di Masseria Santella.** Il testo alternativo nomina l’impresa; la microdescrizione resta generale, sul SIII, e non cambia.
+  - Il consenso dell’impresa a comparire con nome e immagini non è ancora registrato (brief, A7). Per cro-specialist è bloccante per il go-live (review del 2026-10-07, oss. 2): senza consenso, al lancio la schermata non si pubblica (ADR 002).
 - Niente link esterni nei capitoli: prima si approfondisce sul sito (cro-specialist). Le CTA hanno testi diversi tra loro, quindi non serve un nome accessibile aggiuntivo.
 
-**Capitolo 03 con la carta di tutte le città** · da applicare solo con la nuova carta (proposta di ui-designer del 2026-10-05, decisa nella direzione visiva 0.6; alternativa testuale di ux-designer) · motivazioni e misure: `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`
+**Capitolo 03 con la carta di tutte le città** · nel sito dal commit 0a61546 (2026-10-05), con la descrizione B dal commit 4b90180 (2026-10-06) · proposta di ui-designer, decisa nella direzione visiva; alternativa testuale di ux-designer · motivazioni e misure: `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`
 
 | Elemento | Tag e stile | Testo | Note |
 |---|---|---|---|
 | Legenda | `figcaption` · `t-label` · max 40 (40) | Ogni punto è una città di Città Digitali | Adottata dal creative-director (direzione visiva 0.6, § 1.4). Spazi unificatori tra «di», «Città» e «Digitali» (`di&nbsp;Città&nbsp;Digitali`). Una riga da 360 px; a 320 px «Ogni punto è una città / di Città Digitali». Nessun numero nella Home: quando si potrà, va nell’elenco di `/citta-digitali/`. Mai «Un punto per ogni città», che dichiara la completezza dell’elenco |
-| Descrizione della carta | `aria-label` della carta con `role="img"` (decisione di ux-designer) · costruita dai dati | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Manfredonia, Itri, Bari, Altamura, Massafra, Cosenza, Caltanissetta e Caltagirone. | Modello: «… Sono in {regioni da nord a sud}, {quota} {regione con più città}. Tra queste: {nomi della carta larga, da nord a sud}.» «la maggior parte in» solo se quella regione ha più della metà delle città, altrimenti «più che altrove in». Niente numeri, mai «ogni» o «tutte» (review, L4) |
+| Descrizione della carta | `aria-label` della carta con `role="img"` (decisione di ux-designer) · costruita dai dati (`describeCittaDigitali`, `src/lib/citta-digitali.ts`) · 199 caratteri | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Itri, Altamura, Cosenza e Caltanissetta. | Forma B (ux-designer, review del 2026-10-06). Modello: «… Sono in {regioni da nord a sud}, {quota} {regione con più città}. Tra queste: {nomi disegnati a ogni larghezza, da nord a sud}.» I nomi d’esempio sono quelli della carta stretta, così ogni nome detto è sulla carta anche al telefono (stessa regola della L7; `accessibilita.md`, § 2.8). «la maggior parte in» solo se quella regione ha più della metà delle città, altrimenti «più che altrove in». Niente numeri, mai «ogni» o «tutte» (review, L4) |
 | Link | — | Nessuno nel capitolo | Una sola CTA per capitolo (ux-designer, HM-5) e niente link esterni nei capitoli della Home (strategia di conversione). Il link «Tutte le città sul portale ↗» va su `/citta-digitali/`, sezione «L’Italia in un unico portale.» (review, L2) |
 | Microdescrizione | p | Invariata | Resta vera con la carta piena: le tre città del testo sono i nomi obbligatori della carta, visibili a ogni larghezza |
 
@@ -242,14 +260,17 @@ Alternativa senza numero, che non invecchia: «Dagli anni ’90 dentro l’innov
 - Tappa 3: «10.000+» è il momento numerico in `display-l`. Testo accessibile: «Oltre 10.000 clienti, prima di ITnode».
 - Tappa 4: è l’unico nodo esplorabile. «Puglia Digitale» → `/puglia-digitale/`, «Città Digitali» → `/citta-digitali/`; «ITnode» resta testo, perché siamo già sulla sua home.
 
-**Citazione** · `blockquote` dentro `figure` · verbatim · chiude la sezione, dopo il ritratto (§ 09)
+**Citazione** · `blockquote` dentro `figure` · verbatim · chiude la sezione, dopo il ritratto (§ 09) · nel sito tra virgolette basse («»)
 > È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno.
 
 **Firma** · `figcaption` · max 40 (35)
 > Giacomo Lenoci, fondatore di ITnode
 
-**Link al profilo** · a · facoltativo · nuova scheda
+**Link al profilo** · a · nuova scheda · nome accessibile «Giacomo Lenoci su LinkedIn (si apre in una nuova scheda)»
 > Giacomo Lenoci su LinkedIn ↗
+
+**Nota sotto il ritratto** · testo di `media.ts` (DR3-b)
+> Immagine generata o elaborata con strumenti di intelligenza artificiale
 
 Note:
 - **Nome e ruolo** `[DA VERIFICARE]` (brief, F7): «Giacomo Lenoci» e «fondatore» sono visibili nel lead e nella firma. Servono al nodo Person dei dati strutturati (`jobTitle` «Fondatore»: `dati-strutturati.md`, § 7). Il link a LinkedIn in questa sezione giustifica il `sameAs`. Se il nome non viene confermato: «il fondatore di ITnode», e niente Person.
@@ -259,7 +280,7 @@ Note:
 - **iComm Lab**: grafia da confermare. Il § 09 scrive «IcommLab».
 - **Markup**: `<ol>`, con `<time datetime="2002">` solo sulle date complete; «Anni ’90» e «Oggi» restano testo semplice.
 - **Citazione**: «È questo il futuro» rimanda a ciò che la precede. Con i testi provvisori, il riferimento è la tappa «Oggi»; con il racconto originale del cliente sarà il suo ultimo paragrafo.
-- **Ritratto**: `fondatore-braccia-conserte.jpg` nel trattamento «inchiostro», senza didascalia su luoghi, date o eventi (direzione visiva, § 4.3). Il testo alternativo va allineato tra direzione visiva («Ritratto di Giacomo Lenoci, fondatore di ITnode») e `alt-text.md`, dove decide copywriter-content. La scelta dell’immagine resta dell’utente (brief, DR3).
+- **Ritratto**: `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg`, nel trattamento «inchiostro», senza didascalia su luoghi, date o eventi (direzione visiva, § 4.3). Testo alternativo (`alt-text.md`): «Giacomo Lenoci a braccia conserte, in abito scuro.» La nota resta finché il cliente non chiarisce la provenienza dell’immagine. La scelta dell’immagine resta dell’utente (brief, DR3): il sito usa l’opzione (b), che l’ADR 002 propone per il lancio.
 - Nessuna CTA dentro il racconto (cro-specialist).
 
 ## 7. Chiusura
@@ -312,12 +333,12 @@ Note:
 
 - **Per il cliente** (tramite la sessione principale): nome e ruolo del fondatore; il testo narrativo del § 09; ruolo in IBM e anno di inizio dei 36 anni; nome e anno della prima azienda; anni di MyComm, iComm Lab e Leadstone; perimetro e fonte di «10.000+ clienti»; ruolo di ITnode in Puglia Digitale (D1); luogo, data e autore della foto dell’evento, con le città sugli schermi.
 - **Per seo-content**: va bene l’accorciamento dei blocchi A, F e G? E la regola «un segnaposto aperto non si pubblica» applicata a «prima azienda · 2002»?
-- **Per creative-director e copywriter-content**: un solo testo alternativo per il ritratto del fondatore.
-- **Per creative-director, con ux-designer e ui-designer**: la direzione visiva (§ 5), la struttura UX (HM-1) e il design system prevedono sotto la didascalia «Scorri per esplorare», indicato come testo «dal copy deck». Il copy deck non l’ha mai previsto e il sito non lo mostra. Propongo di toglierlo dai tre documenti: con la riga di posizionamento la hero ha già quattro livelli di testo, e con il movimento ridotto l’orizzonte non ruota, quindi l’invito prometterebbe qualcosa che non succede. Se invece si tiene, il testo è «Scorri per esplorare», `aria-hidden` e nascosto con `prefers-reduced-motion: reduce`.
+- **Per ux-designer**: la carta della Terra di Bari del capitolo 02 è `aria-hidden` e disegna «Acquaviva delle Fonti», «Gravina in Puglia» e «Monopoli». La direzione visiva (§ 1.4) e `accessibilita.md` (§ 2.8) la danno per decorativa perché i suoi luoghi sarebbero «già scritti nel testo accanto», ma il testo del capitolo 02 non li nomina. Due strade: una descrizione della carta, per esempio «Carta della Terra di Bari con Gravina in Puglia e Monopoli. Un anello segna Acquaviva delle Fonti, sede di ITnode.» (da ovest a est, come le porte di `/puglia-digitale/`; stesso schema della L7, senza ripetere la sede), oppure i tre nomi nel testo, che però cambierebbe una microdescrizione approvata. Decide ux-designer.
+- **Per il creative-director**: «regionale» nella didascalia di riserva della foto dell’evento (sezione 3) e nella direzione visiva (§ 4.2). Il sito l’ha già tolto dal nodo 2.
 
 ## Decisioni richieste
 
 - **«10.000+ clienti» al lancio**: decisa al G4 (verdetto del creative-director, § 3.8). Con la conferma del perimetro vale l’opzione A, con l’etichetta confermata; senza, l’opzione B: il numero si toglie e la tappa resta.
-- **Varianti B e C della riga di posizionamento** (cro-specialist): se includerle nel test E1 dopo il lancio (sezione 1).
+- **Varianti B e C della riga di posizionamento** (cro-specialist): se includerle nel test E1 dopo il lancio (sezione 1). Parere del creative-director (direzione visiva, § 5): si prova B come sfidante principale; C resta di riserva.
 - **Titolo del fondatore** (utente): «36 anni…», da aggiornare ogni anno, oppure l’alternativa senza numero.
-- **Immagine della sezione fondatore** (utente, sentito creative-director): DR3 del brief. La direzione visiva propone il ritratto a braccia conserte, trattato a inchiostro.
+- **Immagine della sezione fondatore** (utente, sentito creative-director): DR3 del brief. Oggi il sito usa l’opzione (b), il ritratto a braccia conserte trattato a inchiostro, con la nota; l’ADR 002 la propone per il lancio e un ritratto reale appena possibile.
