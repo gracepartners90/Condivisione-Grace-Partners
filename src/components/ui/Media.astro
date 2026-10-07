@@ -33,6 +33,14 @@ interface Props {
    * pixels they show, not a taller image that object-fit crops (docs/performance/budget.md §4).
    */
   mobileCrop?: { ratio: number; widths?: number[]; position?: string };
+  /**
+   * Extra AVIF widths for screens of 1.5 dppx and more (desktops and tablets at 2x), for a detailed
+   * image that would look soft there. They go in a source with media="(min-resolution: 1.5dppx)" that
+   * has every width, these included, so phones at 1.75x–3x keep choosing by need. The other AVIF, WebP
+   * and JPEG sources stop at `widths`: WebP and JPEG at these widths would break the per-file limits
+   * of docs/performance/budget.md (check 8).
+   */
+  hiDpiAvifWidths?: number[];
   class?: string;
 }
 
@@ -47,6 +55,7 @@ const {
   position = '50% 50%',
   pendingText = true,
   mobileCrop,
+  hiDpiAvifWidths,
   class: className,
 } = Astro.props;
 
@@ -59,24 +68,31 @@ const usableWidths = image
   ? [...new Set([...widths.filter((w) => w < image.width), Math.min(image.width, Math.max(...widths))])]
   : [];
 
-// Art direction (mobileCrop): mobile sources cropped by sharp (fit cover), then the full image.
+// Sources built here instead of <Picture> when a viewport or a screen density needs its own widths.
+// - Art direction (mobileCrop): mobile sources cropped by sharp (fit cover), first, so they win below 64em.
+// - High density (hiDpiAvifWidths): an AVIF source for 1.5 dppx and more with every width, before the
+//   normal sources. Without either prop Media renders <Picture>.
 const MOBILE_MEDIA = '(max-width: 63.99em)';
+const HIDPI_MEDIA = '(min-resolution: 1.5dppx)';
+const hiDpiWidths =
+  image && hiDpiAvifWidths ? [...new Set([...usableWidths, ...hiDpiAvifWidths.filter((w) => w <= image.width)])].sort((a, b) => a - b) : undefined;
 const art =
-  image && mobileCrop
+  image && (mobileCrop || hiDpiWidths)
     ? await (async () => {
+        const full = { src: image, widths: usableWidths };
+        const [avif, webp, jpg, hiDpi] = await Promise.all([
+          getImage({ ...full, format: 'avif' }),
+          getImage({ ...full, format: 'webp' }),
+          getImage({ ...full, format: 'jpg' }),
+          hiDpiWidths ? getImage({ src: image, widths: hiDpiWidths, format: 'avif' }) : undefined,
+        ]);
+        if (!mobileCrop) return { avif, webp, jpg, hiDpi, mobile: undefined };
         const mWidths = [...new Set((mobileCrop.widths ?? [480, 640, 768]).filter((w) => w <= image.width))];
         const mWidth = Math.max(...mWidths);
         const mHeight = Math.round(mWidth / mobileCrop.ratio);
         const crop = { src: image, width: mWidth, height: mHeight, widths: mWidths, fit: 'cover' as const, position: mobileCrop.position ?? 'centre' };
-        const full = { src: image, widths: usableWidths };
-        const [mAvif, mWebp, avif, webp, jpg] = await Promise.all([
-          getImage({ ...crop, format: 'avif' }),
-          getImage({ ...crop, format: 'webp' }),
-          getImage({ ...full, format: 'avif' }),
-          getImage({ ...full, format: 'webp' }),
-          getImage({ ...full, format: 'jpg' }),
-        ]);
-        return { mAvif, mWebp, avif, webp, jpg, mWidth, mHeight };
+        const [mAvif, mWebp] = await Promise.all([getImage({ ...crop, format: 'avif' }), getImage({ ...crop, format: 'webp' })]);
+        return { avif, webp, jpg, hiDpi, mobile: { avif: mAvif, webp: mWebp, width: mWidth, height: mHeight } };
       })()
     : undefined;
 ---
@@ -84,8 +100,9 @@ const art =
 {
   image && art ? (
     <picture class="media-picture" style={`--media-ratio: ${aspect}`}>
-      <source media={MOBILE_MEDIA} type="image/avif" srcset={art.mAvif.srcSet.attribute} sizes={sizes} width={art.mWidth} height={art.mHeight} />
-      <source media={MOBILE_MEDIA} type="image/webp" srcset={art.mWebp.srcSet.attribute} sizes={sizes} width={art.mWidth} height={art.mHeight} />
+      {art.mobile && <source media={MOBILE_MEDIA} type="image/avif" srcset={art.mobile.avif.srcSet.attribute} sizes={sizes} width={art.mobile.width} height={art.mobile.height} />}
+      {art.mobile && <source media={MOBILE_MEDIA} type="image/webp" srcset={art.mobile.webp.srcSet.attribute} sizes={sizes} width={art.mobile.width} height={art.mobile.height} />}
+      {art.hiDpi && <source media={HIDPI_MEDIA} type="image/avif" srcset={art.hiDpi.srcSet.attribute} sizes={sizes} />}
       <source type="image/avif" srcset={art.avif.srcSet.attribute} sizes={sizes} />
       <source type="image/webp" srcset={art.webp.srcSet.attribute} sizes={sizes} />
       <img

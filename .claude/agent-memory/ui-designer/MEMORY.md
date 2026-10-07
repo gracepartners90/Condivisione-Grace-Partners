@@ -179,3 +179,13 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `variants.mjs`: pesi per larghezza e formato;
   - `compare.mjs`: Tenengrad e PSNR per zona;
   - `diff/siii-esempio-avif-retina.patch`.
+
+## Strada (b) per il primo esempio di /siii/ (lezioni del 2026-10-07, sera)
+- **Esito:** web-performance-specialist ha scelto la (b), una sorgente AVIF solo con `media="(min-resolution: 1.5dppx)"`, contro la mia (a) (`avifWidths` per tutti), per non dare +18,5 KB agli schermi 1x larghi. Ho preparato la patch `hiDpiAvifWidths` di `Media`, con le prove richieste: review S3 0.2, §6, e design system 0.13. Non è ancora applicata.
+- **La sorgente ad alta densità deve avere tutte le larghezze**, non solo quelle nuove. Anche i telefoni da 1,75x a 3x rispondono a `min-resolution`, e con le sole larghezze grandi scaricherebbero 1600 px o più. Per le larghezze comuni l'URL è la stessa della sorgente normale: nessun file in più.
+- **In Astro, con `compressHTML: false`, un'espressione `{cond && <tag/>}` su una riga a parte lascia una riga vuota** quando la condizione è falsa. Per tenere identico byte per byte l'HTML delle istanze senza la prop, la nuova espressione va sulla stessa riga di un elemento vicino, con un commento nel frontmatter che spieghi perché.
+- **Quale `<source>` sceglie il browser:** la prima la cui `media` è vera e il cui `type` è supportato. Con URL condivise tra sorgenti, `currentSrc` non basta: trovare la sorgente usata con `matchMedia(source.media)`, poi il candidato nel suo `srcset`.
+- **`sizes` decide, non la larghezza resa:** a 390 × 844 a 3× la schermata è larga 350 px, ma `sizes` vale 93vw (363 px). 363 × 3 supera 1080, quindi il browser sceglie il 1440 già oggi.
+- **Script** in `scratchpad/ui-s3b/`:
+  - `choice.mjs` e `choice2.mjs`: variante e sorgente scelte, oggi e con la patch; il secondo prende i formati come JSON;
+  - `diff/siii-esempio-avif-hidpi.patch`.
