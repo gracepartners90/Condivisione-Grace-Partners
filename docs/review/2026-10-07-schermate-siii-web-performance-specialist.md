@@ -3,9 +3,9 @@ titolo: Review di performance · Schermate SIII nel sito, /siii/ con un'immagine
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-10-07
-fonti: [commit d06a3e9 (schermate SIII), docs/performance/budget.md (0.4), docs/performance/architettura.md, docs/decisioni/005-preload-del-font.md (1.1 e 1.3), docs/decisioni/004-anteprima-su-railway.md, dist/ del 2026-10-07 alle 08:43 (d06a3e9), build di controllo 09dcd17, varianti costruite in un worktree della scratchpad, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-07 (08:51–09:41 UTC), sharp 0.35.5 del progetto; §7: commit bae201c (dist/ delle 11:20) e f28649a, misure delle 11:25–11:42 UTC]
+fonti: [commit d06a3e9 (schermate SIII), docs/performance/budget.md (0.4), docs/performance/architettura.md, docs/decisioni/005-preload-del-font.md (1.1 e 1.3), docs/decisioni/004-anteprima-su-railway.md, dist/ del 2026-10-07 alle 08:43 (d06a3e9), build di controllo 09dcd17, varianti costruite in un worktree della scratchpad, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-07 (08:51–09:41 UTC), sharp 0.35.5 del progetto; §7: commit bae201c (dist/ delle 11:20) e f28649a, misure delle 11:25–11:42 UTC; §8: docs/review/2026-10-07-siii-primo-esempio-nitidezza-ui-designer.md (S3) e le sue immagini di confronto]
 ---
 
 # Review di performance · Schermate SIII nel sito
@@ -516,6 +516,50 @@ await browser.close();
 - Budget rispettato e controlli statici superati.
 - La finestra del ripiego sul 4G lento è sotto i 600 ms in laboratorio. Resta da provarla sull'host reale in HTTP/2, con lo script del §7.2.
 
+## 8. Decisione sulla nitidezza del primo esempio (S3, 2026-10-07)
+
+**Il caso.** Verifica S3 del verdetto del creative-director, fatta da ui-designer: `docs/review/2026-10-07-siii-primo-esempio-nitidezza-ui-designer.md`.
+- Con il limite a 1440 px (osservazione 1), sugli schermi 2x il primo esempio perde nitidezza nei dettagli d'interfaccia: resta il 63–78% dei contorni, contro il 93–96% della variante da 1920 px. L'ho controllato anche sul confronto visivo: logo e cancello sono più morbidi.
+- Le strade proposte:
+  - (a) larghezze in più solo in AVIF, 1600 e 1920, per tutti gli schermi;
+  - (b) una sorgente AVIF solo per gli schermi da 1,5 dppx in su;
+  - (c) restare a 1440.
+
+**Decisione: (b).**
+- **Stesso guadagno di (a) dove serve.** Gli schermi 2x che chiedono più di 1440 px (desktop e tablet) ricevono l'AVIF da 1920.
+- **Nessun costo sugli schermi 1x.** La (a) aggiunge 18,5 KB alle finestre 1x da 1600 px in su, per evitare un ingrandimento del 3% che ui-designer giudica invisibile (0,97 pixel per pixel). Con la (b) gli schermi 1x non cambiano.
+- **Costo:** +56,8 KB in AVIF (da 116,9 a 173,7 KB), solo sugli schermi da 1,5 dppx in su che chiedono più di 1440 px. I telefoni non cambiano.
+- **Limiti rispettati.** Il controllo n. 8 resta vuoto: AVIF a 173,7 KB, sotto i 200 KB; WebP e JPEG fermi a 1440 px.
+- **Obiettivo del §4 superato, con motivazione.** Il §4 indica 150 KB a 1920 px; si supera di 23,7 KB, solo sugli schermi 2x. È lo stesso caso del 1080 già accettato:
+  - immagine `lazy` sotto la piega, senza effetto su LCP, CLS e peso al caricamento;
+  - dettagli d'interfaccia che a 1440 px si vedono impastati;
+  - è la schermata più grande della pagina, la prova del prodotto.
+- **Perché non la (c):** sugli schermi retina larghi la prova principale della pagina resterebbe visibilmente morbida, per risparmiare 57 KB scaricati solo dopo lo scroll.
+
+**Requisiti per la patch di ui-designer.**
+1. **Una sorgente in più**, `<source type="image/avif" media="(min-resolution: 1.5dppx)">`, prima di quella AVIF normale.
+   - Deve avere **tutte** le larghezze: 480, 768, 1080, 1440, 1600, 1920.
+   - Anche i telefoni da 1,75x a 3x rispondono alla media query, e devono continuare a scegliere in base al bisogno: 768w, 1080w o 1440w come oggi. Con le sole larghezze grandi scaricherebbero 1600 px o più.
+2. **Il resto invariato.** Sorgente AVIF normale, WebP e JPEG restano come oggi, fino a 1440 px.
+3. **Con `mobileCrop`** le sorgenti mobili restano per prime, così vincono sotto 64em.
+4. **Prove da allegare:**
+   - controllo n. 8 vuoto;
+   - le altre pagine e la hero di `/siii/` identiche byte per byte;
+   - varianti scelte:
+
+     | Schermo | Variante attesa |
+     |---|---|
+     | 1x a 1280, 1440, 1600 e 1920 px | 1440w, come oggi |
+     | 1440×900 a 2x | 1920w |
+     | 1024×768 a 2x | 1920w o 1600w |
+     | 390×844 a 3x, 412×823 a 1,75x, 430×932 a 3x | come oggi |
+5. **Compatibilità.** I Safari precedenti al 16 non riconoscono `min-resolution` e ricadono sulle sorgenti normali; quelle versioni non hanno comunque l'AVIF.
+
+**Rimisura.** Non serve una rimisura Lighthouse.
+- L'immagine è `lazy` e non entra nell'LCP né nel peso al caricamento.
+- Al Moto G di Lighthouse (1,75x) la variante resta la 768w.
+- Bastano le prove del punto 4, che ui-designer allega alla patch e che io ricontrollo in pochi minuti dopo l'applicazione.
+
 ## Verdetto di dominio
 
 **Aggiornamento del 2026-10-07, dopo `bae201c`.** La correzione bloccante è applicata (`d3eba9c`), e così il ritaglio in build (osservazione 3). Il verdetto diventa **conforme senza condizioni di performance**, salvo la prova della finestra del ripiego sull'host (§7.2). Il testo che segue è il verdetto del mattino.
@@ -548,6 +592,8 @@ await browser.close();
   - patch e ritaglio applicati in `bae201c`;
   - decisioni del creative-director prese: sala, finestra del ripiego accettata con soglia di 600 ms (ADR 005 1.3), ritaglio in basso.
 - Resta da decidere chi fa la prova sull'host (domanda 3).
+- **ui-designer:** patch della sorgente AVIF per gli schermi da 1,5 dppx in su, per il primo esempio, con i requisiti e le prove del §8.
+- **Sessione principale:** applicarla quando arriva. Non serve una rimisura Lighthouse.
 
 Registro del mattino:
 

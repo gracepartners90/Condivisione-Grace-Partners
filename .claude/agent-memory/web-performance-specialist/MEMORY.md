@@ -117,6 +117,12 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - **Prova sull'host ancora da fare:** script portabile `siii-fallback.mjs`, testo nella review §7.2.
   - Lezione: la regola «richiesta prima della fine del documento» era troppo rigida, perché ci sono ±40 ms di rumore. Ora ha una tolleranza di 50 ms (budget §2).
   - Una build di `d06a3e9` ricostruita in un worktree è risultata identica per dimensione a quella misurata: si possono rifare le build storiche per i confronti alternati.
+- **Nitidezza del primo esempio sugli schermi 2x (S3, 2026-10-07): scelta la strada (b).**
+  - Una sorgente AVIF con `media="(min-resolution: 1.5dppx)"` fino a 1920 px (173,7 KB), solo per gli schermi ad alta densità. WebP, JPEG e schermi 1x restano a 1440 px.
+  - Obiettivo §4 di 150 KB superato con motivazione (`lazy`, sotto la piega, dettagli d'interfaccia).
+  - Patch affidata a ui-designer, requisiti nella review §8. Non serve rimisurare: basta il controllo n. 8 e delle varianti scelte.
+  - **Lezione:** una sorgente per l'alta densità deve avere tutte le larghezze, non solo quelle grandi, perché i telefoni da 1,75x a 3x rispondono alla stessa media query.
+  - **Lezione:** per un guadagno visivo solo sui 2x conviene una sorgente con media query, non larghezze in più per tutti, che fanno pagare anche gli schermi 1x.
 - **Micro-spostamento preesistente:** 0,00016 di CLS al cambio di carattere, per lo spostamento orizzontale della navigazione dell'header a 1440 px (identico sul controllo). Si ignora, ma non va scambiato per una regressione.
 - **Contatore 01/05 di Città Digitali.** Applicato l'IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'` (`007956d`): provato su Chromium, da provare su Safari.
 - **Autoplay del video su mobile.** Risolto: `video.ts` fa autoplay solo da 64em. Restano aperti il file su Railway (403 dal proxy) e l'hosting: sono le condizioni per il go-live.
