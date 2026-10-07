@@ -3,7 +3,7 @@ titolo: Review di performance · Schermate SIII nel sito, /siii/ con un'immagine
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-10-07
 fonti: [commit d06a3e9 (schermate SIII), docs/performance/budget.md (0.4), docs/performance/architettura.md, docs/decisioni/005-preload-del-font.md (1.1 e 1.3), docs/decisioni/004-anteprima-su-railway.md, dist/ del 2026-10-07 alle 08:43 (d06a3e9), build di controllo 09dcd17, varianti costruite in un worktree della scratchpad, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-07 (08:51–09:41 UTC), sharp 0.35.5 del progetto; §7: commit bae201c (dist/ delle 11:20) e f28649a, misure delle 11:25–11:42 UTC; §8: docs/review/2026-10-07-siii-primo-esempio-nitidezza-ui-designer.md (S3) e le sue immagini di confronto]
 ---
@@ -555,6 +555,25 @@ await browser.close();
      | 390×844 a 3x, 412×823 a 1,75x, 430×932 a 3x | come oggi |
 5. **Compatibilità.** I Safari precedenti al 16 non riconoscono `min-resolution` e ricadono sulle sorgenti normali; quelle versioni non hanno comunque l'AVIF.
 
+**Esito della verifica (2026-10-07, commit `d4511be`).** La patch di ui-designer (`hiDpiAvifWidths`) è applicata.
+- Nella build:
+  - la nuova sorgente `(min-resolution: 1.5dppx)` ha tutte le larghezze, da 480 a 1920w;
+  - AVIF normale e WebP restano fino a 1440w.
+- Variante scaricata dal primo esempio (Playwright, un contesto nuovo per caso, senza cache):
+
+| Schermo | Variante | Atteso |
+|---|---|---|
+| 1x a 1280, 1440, 1600 e 1920 px | 1440w AVIF, 116,9 KB | 1440w |
+| 2x, 1440×900 | 1920w AVIF, 173,7 KB | 1920w |
+| 2x, 1024×768, desktop e tablet | 1920w AVIF, 173,7 KB | 1920w o 1600w |
+| 3x, 390×844 e 430×932 | 1440w AVIF, 116,9 KB | come prima: 1440w |
+| 1,75x, 412×823 | 768w AVIF, 45,3 KB | come prima: 768w |
+
+- **10 casi su 10 come previsto.**
+- **La porta della hero non cambia:** desktop 480w (18,0 KB) a 1x e 1080w (51,4 KB) a 2x; telefoni con il ritaglio 4:5, 768w (26,8 KB) e 1080w (40,7 KB).
+- **Controllo n. 8 vuoto.**
+- **Decisione chiusa.**
+
 **Rimisura.** Non serve una rimisura Lighthouse.
 - L'immagine è `lazy` e non entra nell'LCP né nel peso al caricamento.
 - Al Moto G di Lighthouse (1,75x) la variante resta la 768w.
@@ -592,8 +611,7 @@ await browser.close();
   - patch e ritaglio applicati in `bae201c`;
   - decisioni del creative-director prese: sala, finestra del ripiego accettata con soglia di 600 ms (ADR 005 1.3), ritaglio in basso.
 - Resta da decidere chi fa la prova sull'host (domanda 3).
-- **ui-designer:** patch della sorgente AVIF per gli schermi da 1,5 dppx in su, per il primo esempio, con i requisiti e le prove del §8.
-- **Sessione principale:** applicarla quando arriva. Non serve una rimisura Lighthouse.
+- **Chiuso:** la sorgente AVIF per gli schermi da 1,5 dppx in su del primo esempio è applicata (`d4511be`) e verificata (§8).
 
 Registro del mattino:
 

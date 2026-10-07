@@ -120,7 +120,8 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
 - **Nitidezza del primo esempio sugli schermi 2x (S3, 2026-10-07): scelta la strada (b).**
   - Una sorgente AVIF con `media="(min-resolution: 1.5dppx)"` fino a 1920 px (173,7 KB), solo per gli schermi ad alta densità. WebP, JPEG e schermi 1x restano a 1440 px.
   - Obiettivo §4 di 150 KB superato con motivazione (`lazy`, sotto la piega, dettagli d'interfaccia).
-  - Patch affidata a ui-designer, requisiti nella review §8. Non serve rimisurare: basta il controllo n. 8 e delle varianti scelte.
+  - Patch di ui-designer (`hiDpiAvifWidths`) applicata in `d4511be` e verificata: varianti come previsto in 10 casi su 10, controllo n. 8 vuoto, hero invariata. Decisione chiusa.
+  - Controllo rapido delle varianti: `scratchpad/siii-lcp/s3-check.mjs`.
   - **Lezione:** una sorgente per l'alta densità deve avere tutte le larghezze, non solo quelle grandi, perché i telefoni da 1,75x a 3x rispondono alla stessa media query.
   - **Lezione:** per un guadagno visivo solo sui 2x conviene una sorgente con media query, non larghezze in più per tutti, che fanno pagare anche gli schermi 1x.
 - **Micro-spostamento preesistente:** 0,00016 di CLS al cambio di carattere, per lo spostamento orizzontale della navigazione dell'header a 1440 px (identico sul controllo). Si ignora, ma non va scambiato per una regressione.

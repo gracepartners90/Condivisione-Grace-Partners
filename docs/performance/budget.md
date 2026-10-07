@@ -145,7 +145,7 @@ Le soglie valgono per tutti i template:
 | Componente | Budget |
 |---|---|
 | Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP. Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Misurato con il ritaglio: 21,4–40,7 KB sui telefoni (640w–1080w; prima 33,6–58,3), 18,0–51,4 KB su desktop (§7.3). |
-| Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Dettaglio nella review del 2026-10-07, §8. |
+| Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
 | Carte (Puglia, Italia) | Inline, ≤ 20 KB non compresso ciascuna; tracciati semplificati con SVGO, precisione a 1 decimale. |
@@ -735,10 +735,12 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - porta con la sala, ritaglio 4:5 ancorato in basso;
   - finestra del ripiego accettata, con la soglia di sorveglianza di 600 ms dell'ADR 005, versione 1.3;
   - 6 corse per variante, nell'ADR 005 versione 1.2.
-- **ui-designer:** preparare la patch della sorgente AVIF per gli schermi da 1,5 dppx in su, per il primo esempio di `/siii/` (review del 2026-10-07, §8, con i requisiti).
+- **ui-designer:** chiuso. La patch della sorgente AVIF per gli schermi da 1,5 dppx in su è applicata (`d4511be`) e verificata (review del 2026-10-07, §8).
 - **Sessione principale:**
-  - fatto: primo esempio di `/siii/` fino a 1440 px (`d3eba9c`); patch `mobileCrop` di `Media.astro` (`bae201c`);
-  - applicare la patch AVIF per gli schermi da 1,5 dppx in su, quando ui-designer la consegna. Non serve una rimisura Lighthouse, basta il controllo del §8 della review;
+  - fatto:
+    - primo esempio di `/siii/` fino a 1440 px (`d3eba9c`);
+    - patch `mobileCrop` di `Media.astro` (`bae201c`);
+    - sorgente AVIF per gli schermi da 1,5 dppx in su (`d4511be`);
   - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con il comando del controllo n. 8 del §6.3 e i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura);
   - far misurare la finestra del ripiego di `/siii/` sul 4G lento in HTTP/2, sull'anteprima aperta o sullo staging (soglia di 600 ms, §3), da una postazione che raggiunge l'host:
     - con lo script Playwright della review del 2026-10-07 (§7, `profiles2.mjs`, Node 22 e Playwright);
