@@ -16,6 +16,7 @@ import CTASection from '../components/sections/CTASection.astro';
 import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { siiiShowcase } from '../data/site';
+import { siiiHeroScreen, siiiExampleScreens } from '../data/media';
 import { pageGraph, siiiService, siiiDefinition, ids } from '../lib/structured-data';
 
 const schema = pageGraph('siii', [siiiService()], { about: ids.siiiService });
@@ -68,7 +69,7 @@ const phrases: Record<string, string> = {
       <Cta href="#richiesta" label="Richiedi un’offerta" variant="link" ctaId="siii-hero-offerta" location="hero" interest="siii" />
     </div>
     <div slot="visual" class="siii-hero__door aperture">
-      <Media asset="siii-anteprima" class="siii-hero__media" />
+      <Media image={siiiHeroScreen.image} alt={siiiHeroScreen.alt} sizes="(min-width: 30rem) 26rem, 90vw" priority class="siii-hero__media" />
       <Node kind="hotspot" class="siii-hero__node" style="left: 30%; top: 30%" ping />
       <Node kind="hotspot" class="siii-hero__node" style="left: 68%; top: 46%" ping />
       <Node kind="hotspot" class="siii-hero__node" style="left: 42%; top: 64%" ping />
@@ -234,7 +235,11 @@ const phrases: Record<string, string> = {
           <li class:list={['example', `example--${i + 1}`]}>
             <div class="wrap grid example__grid">
               <div class="example__screen aperture">
-                <Media asset={ex.slot} pendingText={false} />
+                <Media
+                  image={siiiExampleScreens[ex.id].image}
+                  alt={siiiExampleScreens[ex.id].alt}
+                  sizes={i === 0 ? '(min-width: 100rem) 1488px, 93vw' : '(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw'}
+                />
               </div>
               <div class="example__body" data-reveal>
                 <h3 class="example__name">{ex.name}</h3>
@@ -300,7 +305,7 @@ const phrases: Record<string, string> = {
   }
 
   /* Porta 3:5 on desktop, 4:5 below the text on mobile (visual direction §7.4). */
-  .siii-hero__door :global(:is(.media-slot, .slot-pub)) {
+  .siii-hero__door :global(:is(.media-slot, .slot-pub, .media-picture)) {
     aspect-ratio: 4 / 5;
   }
 
@@ -316,8 +321,9 @@ const phrases: Record<string, string> = {
     }
   }
 
-  /* The publication variant draws its own still hotspots. */
-  .siii-hero__door:has(:global(.slot-pub)) :global(.siii-hero__node) {
+  /* The publication variant draws its own still hotspots. Over a real screenshot the nodes would
+     add hotspots the experience does not have: the screenshot shows its own. */
+  .siii-hero__door:has(:global(:is(.slot-pub, .media-picture))) :global(.siii-hero__node) {
     display: none;
   }
 
@@ -327,7 +333,7 @@ const phrases: Record<string, string> = {
       width: 100%;
     }
 
-    .siii-hero__door :global(:is(.media-slot, .slot-pub)) {
+    .siii-hero__door :global(:is(.media-slot, .slot-pub, .media-picture)) {
       aspect-ratio: 3 / 5;
     }
   }

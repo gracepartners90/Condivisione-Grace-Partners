@@ -16,7 +16,7 @@ import Media from '../components/ui/Media.astro';
 import MapItaly from '../components/ui/MapItaly.astro';
 import Node from '../components/ui/Node.astro';
 import { horizonPlaces, pugliaPlaces, office, founder } from '../data/site';
-import { founderPortrait, eventPhotoNote } from '../data/media';
+import { founderPortrait, eventPhotoNote, siiiHomeScreen } from '../data/media';
 import { bearing, distanceKm, formatCoords } from '../lib/geo';
 import { pageGraph, person, ids } from '../lib/structured-data';
 import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
@@ -120,8 +120,8 @@ const mapLabel = describeCittaDigitali(
         cta={{ label: 'Esplora SIII', href: '/siii/', id: 'home-capitolo-siii' }}
       >
         <div slot="visual" class="worlds__screen aperture">
-          {/* The chapter speaks of SIII in general: no client name on the publish variant. */}
-          <Media asset="siii-masseria-santella" pendingText={false} />
+          {/* Masseria Santella's SIII from inside: the alt names it, the chapter text speaks of SIII in general. */}
+          <Media image={siiiHomeScreen.image} alt={siiiHomeScreen.alt} sizes="(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw" />
           <Node kind="hotspot" class="worlds__hot" style="left: 22%; top: 58%" ping />
           <Node kind="hotspot" class="worlds__hot" style="left: 57%; top: 38%" ping />
           <Node kind="hotspot" class="worlds__hot" style="left: 78%; top: 66%" ping />
@@ -272,6 +272,12 @@ const mapLabel = describeCittaDigitali(
 
   /* The publication variant draws its own still hotspots. */
   .worlds__screen:has(:global(.slot-pub)) :global(.worlds__hot) {
+    display: none;
+  }
+
+  /* Over a real screenshot the nodes would add hotspots the experience does not have: the
+     screenshot shows its own. */
+  .worlds__screen:has(:global(.media-picture)) :global(.worlds__hot) {
     display: none;
   }
 
