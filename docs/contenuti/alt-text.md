@@ -17,7 +17,7 @@ Testi alternativi delle immagini del sito: i 18 file del cliente in `src/assets/
 - Home e hero non cambiano: nominano il menu e i punti interattivi come parti della vista, senza un comando da premere (criterio 12).
 - Nelle schermate non usate escono «frecce di navigazione», «icona per entrare» e «icone di telefono ed email».
 - La schermata dell'appartamento non si usa al lancio (review CRO, oss. 3).
-- Il copy deck di `/siii/` è allineato alle schermate (V3, chiusa).
+- Il copy deck di `/siii/` è allineato alle schermate (V3, chiusa). Quello della Home ha ora la descrizione della carta del sito (V4, chiusa).
 
 **Novità della v1.5 (2026-10-07).** Le 9 schermate dei SIII inviate dall'utente.
 - Alt definitivi per le 5 nel sito: Home, capitolo 01; hero ed esempi di `/siii/`. Sostituiscono i provvisori del commit d06a3e9 (Differenze aperte, V2).
@@ -343,13 +343,15 @@ Le tre descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 - Con Playwright (Chromium) ho letto le 8 pagine: tutti gli `img` con alt e didascalia, ogni elemento con `role="img"`, i segnaposto, il video e l'`og:image:alt`.
 - Su `/` e `/siii/` ho letto l'albero di accessibilità, a 1440 e 390 px, per vedere che cosa c'è prima e dopo ogni schermata, e il riquadro in cui la schermata è mostrata.
 - Ho guardato le 9 schermate originali, gli screenshot di controllo della sessione principale e i ritagli di Gravina e Monopoli.
+- Per la v1.6 ho costruito in una cartella di lavoro una copia di `HEAD` (326f354) con la patch degli alt, e l'ho servita in locale: lo staging condiviso era fermo a d06a3e9. Su `/` e `/siii/`, a 1440 px, ho letto l'albero di accessibilità e gli strati sopra le schermate degli esempi. Il repository non è stato toccato.
 - La verifica precedente, del 2026-10-05, era sulla build del commit 5c4a6cb.
 
 **Esito.**
 - Gli alt pubblicati descrivono le immagini che li usano.
 - Nessuna immagine informativa è senza alt, e nessun segnaposto è esposto agli screen reader.
 - La variante «in pubblicazione» ha le stesse schermate e gli stessi alt.
-- Restano da applicare gli alt definitivi delle schermate (V2).
+- Con la patch, gli alt della v1.6 sono letti al posto giusto. Gli strati sopra le schermate degli esempi sono nascosti agli screen reader e fuori dalla tabulazione, con il `cta_id` della schermata.
+- Restano da applicare gli alt della v1.6 dei tre esempi (V2).
 
 **Differenze aperte.**
 
@@ -358,7 +360,7 @@ Le tre descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 | V1 | `src/data/asset-slots.ts`, campo `alt` degli slot | Contiene testi che non sono quelli di questo documento, per esempio il solo nome della città per i luoghi. Oggi non si usa | Quando si collega un file, prendere l'alt da qui. Nessuna modifica necessaria finché i file non arrivano | Sessione principale |
 | V2 | `src/data/media.ts`, alt dei tre esempi di `/siii/` | Sono quelli della v1.5 (commit 9ddc8b2), con «il pulsante di avvio»: la regola di ux-designer chiede di descrivere la vista, non i comandi disegnati. Home e hero sono già quelli della v1.6 | Sostituirli con quelli della tabella «Nel sito» (snippet nell'Esito del 2026-10-07, provato con `git apply --check`) | Sessione principale |
 | V3 | `docs/contenuti/copy-deck/siii.md` | La v1.2 descriveva le schermate come mancanti | **Chiusa** il 2026-10-07: la v1.3 descrive hero, esempi e schermata cliccabile come sono nel sito | copywriter-content |
-| V4 | `docs/contenuti/copy-deck/home.md`, descrizione della carta del capitolo 03 | Riporta la versione con 9 nomi; il sito ha quella con i soli 5 nomi disegnati a ogni larghezza | Allineare il copy deck al sito | copywriter-brand |
+| V4 | `docs/contenuti/copy-deck/home.md`, descrizione della carta del capitolo 03 | La v1.4 riportava la versione con 9 nomi | **Chiusa** il 2026-10-07: la v1.5 del copy deck della Home ha la descrizione con i 5 nomi del sito (commit 9cfe3b1) | copywriter-brand |
 
 ## Rischi
 

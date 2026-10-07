@@ -52,6 +52,9 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Lo snippet per `src/` si verifica senza toccare il repo: copia in scratchpad, `diff -u` e `git apply --check`.
 - Quando inserisco righe in una tabella, controllare i «come sopra» delle righe che seguono (nella v1.3 di alt-text.md la riga di evento-palco era finita sotto la foto di Acquaviva).
 - Il Gulpease di un alt di una frase sta sempre tra 52 e 62: non discrimina, conta la lunghezza.
+- Regola di ux-designer per le schermate di prodotto (`accessibilita.md` §2.8, 2026-10-07): l'alt descrive la vista, non i comandi disegnati. Anche «pulsante di avvio» era troppo: una vista con il play al centro è «la schermata d’avvio dell’esperienza». «Il menu» e «i punti interattivi» restano, come parti della vista. Mai «pulsante», «icona per…», «frecce di navigazione».
+- Se lo staging condiviso è vecchio, si prova una patch per `src/` senza toccare il repo. In una cartella di lavoro: `git archive HEAD | tar -x`, symlink a `node_modules`, `patch -p1`, `npx astro build`, poi `serve.mjs` con `DIST_DIR`. Alla fine, chiudere il server con `kill` sul PID (controllare `/proc/<pid>/cwd`).
+- `copycheck.py` conta come paragrafo ogni etichetta in grassetto che comincia con «Testo»: per un alt nel copy deck, usare «**Alt della …**», così il Gulpease del testo visibile resta confrontabile.
 
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

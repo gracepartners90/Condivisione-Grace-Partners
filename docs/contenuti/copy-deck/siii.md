@@ -13,7 +13,7 @@ fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immag
 Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusura e l'introduzione al form (§23). I testi sono pronti da impaginare.
 
 **Novità della v1.3 (2026-10-07)**
-- **Le schermate ci sono.** Hero ed esempi mostrano schermate vere delle esperienze, inviate dall'utente (commit d06a3e9). Il documento non le dà più per mancanti: niente segnaposto e niente [DA FORNIRE] per la pagina.
+- **Le schermate ci sono.** Hero ed esempi mostrano schermate vere delle esperienze, inviate dall'utente (commit d06a3e9). Il documento non le dà più per mancanti: per questa pagina non ci sono più segnaposto né asset da fornire.
 - **Schermate cliccabili negli esempi**, per decisione dell'utente (commit 88d7083): la schermata apre l'esperienza in una nuova scheda, come il CTA, con un `cta_id` proprio.
 - **Testi alternativi** delle schermate, da `docs/contenuti/alt-text.md` (1.6): descrivono la vista, non i comandi disegnati (`docs/ux/accessibilita.md` §2.8).
 - **Riserva A7**: il consenso delle tre imprese ora riguarda schermate già nel sito (sezione 6).
@@ -326,14 +326,29 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 | Schermate degli esempi | Cliccabili, con uno strato per il solo puntatore; l'immagine tiene l'alt | Decisione dell'utente del 2026-10-07 (commit 88d7083); `accessibilita.md` §2.8; `struttura-pagine.md` SI-6. |
 | Testi alternativi delle schermate | La vista, non i comandi disegnati | `accessibilita.md` §2.8; `alt-text.md` (1.6), criterio 12. |
 
-## Verifica sul sito (2026-10-05)
+## Verifica sul sito (2026-10-07)
 
 **Metodo.**
-- Staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit c98f565. Confronto con `src/pages/siii.astro`, `src/lib/structured-data.ts`, `src/data/pages.ts` e `src/data/site.ts`.
-- Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 1440 px.
-- Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
+- Lo staging condiviso era fermo al commit d06a3e9, prima della schermata cliccabile. Ho costruito in una cartella di lavoro una copia di `HEAD` (326f354), con gli alt della v1.6 di `alt-text.md` applicati, e l'ho servita in locale. Il repository non è stato toccato.
+- Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 1440 px. Per gli strati sulle schermate ho letto anche URL, `target`, `tabindex`, `aria-hidden` e `cta_id`.
+- Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere, compresi alt e `cta_id`. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
+- La verifica precedente, del 2026-10-05, era sulla build del commit c98f565.
 
-**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici (96 testi su 96 trovati dallo script, compresa la figura di confronto; title e meta controllati a parte). Fanno eccezione solo i testi dell'anteprima immersiva, che non è al lancio. Rispetto alla v1.1 ho allineato questi punti: in ognuno il sito seguiva una decisione registrata.
+**Esito.**
+- I testi da pubblicare di questo documento sono tutti nel sito, identici: 100 su 100, compresi i quattro alt delle schermate e i tre `cta_id` delle schermate. Title e meta li ho controllati a parte.
+- Fa eccezione solo l'anteprima immersiva, che non è al lancio.
+- Nel senso inverso, mancano solo i gradi della figura di confronto, decorativi e nascosti agli screen reader (sezione 3).
+- Gli alt dei tre esempi coincidono solo dopo la patch della v1.6 (Differenze aperte, V4).
+
+**Allineato nella v1.3.**
+
+| Punto | v1.2 | Sito, ora anche qui | Decisione |
+|---|---|---|---|
+| Visual della hero | Slot `siii-anteprima`, in attesa della schermata, con tre nodi decorativi | Schermata di Masseria Santella su smartphone, con alt; nessun nodo sopra | Commit d06a3e9; `accessibilita.md` §2.8; `struttura-pagine.md` SI-1 |
+| Immagini degli esempi | Slot, «Le schermate mancano» | Schermate delle tre esperienze, con alt | Commit d06a3e9; `alt-text.md` (1.6) |
+| Schermata degli esempi | Non cliccabile | Apre l'esperienza in una nuova scheda, per il solo puntatore, con un `cta_id` proprio | Decisione dell'utente del 2026-10-07, commit 88d7083 |
+
+**Allineato nella v1.2**, rispetto alla v1.1:
 
 | Punto | v1.1 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -353,9 +368,10 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
-| V1 | `docs/ux/struttura-pagine.md` SI-1 | Cita ancora l'occhiello, e come visual lo slot `siii-masseria-santella` o un `ImmersivePreview`; il sito ha lo slot `siii-anteprima` | Allineare il documento al sito. Il sito non cambia | ux-designer |
+| V1 | `docs/ux/struttura-pagine.md` SI-1 (0.9) | Il visual ora è allineato al sito, ma tra i contenuti e nell'ordine su mobile c'è ancora l'occhiello, che il breadcrumb ha sostituito | Togliere l'occhiello da SI-1. Il sito non cambia | ux-designer |
 | V2 | `docs/creativa/direzione-visiva.md` §7.4, riga 7 | Cita ancora la CTA «Richiedi un'offerta →» sopra il form (lo segnala anche il tone of voice) | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V3 | `docs/seo/mappa-keyword-url.md` §3.2 | Usa ancora `#richiedi-offerta` e l'H2 «Cosa puoi fare dentro un SIII» | Allineare il documento al sito. Il sito non cambia | seo-content |
+| V4 | `src/data/media.ts`, alt dei tre esempi | Nel sito c'è ancora la v1.5 di `alt-text.md`, con «il pulsante di avvio» | Applicare la v1.6 (snippet nell'Esito del 2026-10-07) | Sessione principale |
 
 ## Testi originali mancanti
 
@@ -372,12 +388,13 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, statement
 | Paragrafi e tabelle | 38 | 450 | 2.321 | **62,8** |
 | Tutti i testi principali | 66 | 547 | 2.836 | 73,4 |
 
-Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 68 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi salgono da 62,1 a 62,8 perché il Testo 03 è in due frasi; un elemento in meno perché l'occhiello non c'è più.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 68 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi salgono da 62,1 a 62,8 perché il Testo 03 è in due frasi; un elemento in meno perché l'occhiello non c'è più. Ricontrollato il 2026-10-07: invariato. Gli alt delle schermate non entrano in questo calcolo: il loro indice è in `alt-text.md`.
 
 ## Ipotesi da validare
 
 - [IPOTESI: la sigla SIII corrisponde a «Sito Interattivo Immersivo». La sigla ha tre «I» e lo scioglimento ne spiega due (brief D3). Il testo abbina sigla e nome come la §10, senza spiegare le lettere una per una]
-- [IPOTESI: i tre esempi sono realizzati da ITnode e le imprese hanno autorizzato nome e schermate (brief A7). La pagina non lo afferma in modo esplicito]
+- [IPOTESI: i tre esempi sono realizzati da ITnode e le imprese hanno autorizzato nome e schermate (brief A7). La pagina non lo afferma in modo esplicito. Le schermate sono nel sito dal 2026-10-07, ma il consenso non risulta in `docs/` (review CRO del 2026-10-07, oss. 2)]
+- [IPOTESI: la vista a piccolo pianeta degli esempi è la schermata d’avvio di ogni esperienza, come dicono il commit d06a3e9 e le review del 2026-10-07. Gli alt la chiamano così (`alt-text.md`, «Ipotesi da validare»)]
 - [IPOTESI: ogni SIII può includere tutte le azioni della §10, a seconda di come è configurato. Per questo il testo usa «può»]
 - [DA VERIFICARE: Masseria Santella si trova a Cassano delle Murge (BA)]
 
@@ -393,16 +410,19 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 
 - **brand-strategist**: forma della didascalia della figura se si applica la riserva I7 (proposta nella sezione 3).
 - **creative-director**: approvazione dello statement «Un tour 360° è una visita. Un SIII è un sito.» e della regola «H2 piccolo + statement grande»; allineamento della direzione visiva (V2).
-- **ux-designer**: allineamento di `struttura-pagine.md` SI-1 (V1).
+- **ux-designer**: togliere l'occhiello da `struttura-pagine.md` SI-1 (V1).
+- **Sessione principale**: alt della v1.6 per i tre esempi in `src/data/media.ts` (V4).
+- **Utente, con brand-strategist** (owner dell'ADR 002): consenso scritto delle tre imprese per le schermate (A7).
 - **seo-content**: allineare l'ancora `#richiesta` e l'H2 della sezione 4 nella mappa (V3).
 
 ## Rischi
 
+- **Consenso delle imprese degli esempi (A7).** Le schermate di tre imprese reali sono già nel sito, anche nella variante «in pubblicazione», e il consenso non è registrato. Per cro-specialist è bloccante per il go-live (condizione C06). Senza consenso, si tolgono le schermate e restano nomi e link (sezione 6).
 - **Cookie di terze parti nelle anteprime.** Se l'anteprima immersiva viene attivata, l'iframe carica un portale esterno che potrebbe impostare cookie non tecnici. Il clic su «Avvia l’anteprima» non equivale a un consenso secondo le linee guida del Garante. Per questo al lancio non c'è, e prima di attivarla va verificato (soglia 5; `struttura-pagine.md` SI-6).
 
 ## Fonti consultate
 
-Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente: le informazioni sui portali vengono solo da risultati di ricerca. Il 2026-10-05 non ho consultato nuove fonti web.
+Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente: le informazioni sui portali vengono solo da risultati di ricerca. Il 2026-10-05 e il 2026-10-07 non ho consultato nuove fonti web.
 
 - Masseria Santella a Cassano delle Murge: https://www.booking.com/hotel/it/masseria-santella.de.html · https://masseria-santella.apuliahotelspage.com/en/ · https://www.facebook.com/masseriasantella/
 - Città Digitali e tecnologia VR 360 (solo sintesi di ricerca): https://xn--cittdigitali-19a.it/il-progetto/

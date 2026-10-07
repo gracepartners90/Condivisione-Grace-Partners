@@ -41,8 +41,9 @@ export const founderPortraitContacts = {
 
 // SIII screenshots sent by the user on 2026-10-07: desktop 2000 × 1250 (16:10), mobile 1200 × 2000 (3:5).
 // Unused views stay in src/assets/images/ for the creative-director (siii-*-mobile-*, Masseria's other view).
-// Alt texts: docs/contenuti/alt-text.md v1.5 («Nel sito»). On /siii/ the examples do not repeat the
-// business name: the h3 right after the image says it.
+// Alt texts: docs/contenuti/alt-text.md v1.6 («Nel sito»). They describe the view, not the controls drawn
+// in it (docs/ux/accessibilita.md §2.8). On /siii/ the examples do not repeat the business name: the h3
+// right after the image says it.
 
 /** Home, chapter 01: a SIII in use, inside the space, with its menu and hotspots. */
 export const siiiHomeScreen = {
@@ -64,14 +65,14 @@ export const siiiHeroScreen = {
 export const siiiExampleScreens = {
   'masseria-santella': {
     image: santellaIngresso,
-    alt: 'Il cancello d’ingresso tra gli alberi, in una vista a piccolo pianeta, con il pulsante di avvio e il menu dell’esperienza.',
+    alt: 'La schermata d’avvio dell’esperienza: il cancello d’ingresso tra gli alberi in una vista a piccolo pianeta, con il menu.',
   },
   'maison-mimina': {
     image: miminaIngresso,
-    alt: 'La vetrina su una strada alberata, in una vista a piccolo pianeta, con il pulsante di avvio e la barra con posizione, sito web e social.',
+    alt: 'La schermata d’avvio dell’esperienza: la vetrina su una strada alberata in una vista a piccolo pianeta, con il menu.',
   },
   'dl-natura-dentro': {
     image: dielleIngresso,
-    alt: 'Il vialetto d’ingresso tra le siepi, sotto una palma, in una vista a piccolo pianeta, con il pulsante di avvio e il menu dell’esperienza.',
+    alt: 'La schermata d’avvio dell’esperienza: il vialetto d’ingresso tra le siepi, sotto una palma, in una vista a piccolo pianeta, con il menu.',
   },
 } as const;
