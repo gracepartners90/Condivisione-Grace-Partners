@@ -3,14 +3,20 @@ titolo: Copy deck · SIII (Siti Interattivi Immersivi)
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.2
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/ux/struttura-pagine.md (0.5, §2), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit c98f565)]
+versione: 1.3
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
 ---
 
 # Copy deck · SIII
 
 Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusura e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.3 (2026-10-07)**
+- **Le schermate ci sono.** Hero ed esempi mostrano schermate vere delle esperienze, inviate dall'utente (commit d06a3e9). Il documento non le dà più per mancanti: niente segnaposto e niente [DA FORNIRE] per la pagina.
+- **Schermate cliccabili negli esempi**, per decisione dell'utente (commit 88d7083): la schermata apre l'esperienza in una nuova scheda, come il CTA, con un `cta_id` proprio.
+- **Testi alternativi** delle schermate, da `docs/contenuti/alt-text.md` (1.6): descrivono la vista, non i comandi disegnati (`docs/ux/accessibilita.md` §2.8).
+- **Riserva A7**: il consenso delle tre imprese ora riguarda schermate già nel sito (sezione 6).
 
 **Novità della v1.2 (2026-10-05)**
 - **Verifica sul sito costruito.** Il documento ora descrive la pagina com'è: hero senza occhiello, frecce ↓ sulle CTA che portano al form, testi della figura di confronto e marquee dei verbi, ponte prima della chiusura, «Richiedi un’offerta» come titolo del form, anteprima immersiva non al lancio.
@@ -47,12 +53,12 @@ Le sezioni tengono la numerazione delle versioni precedenti, perché altri docum
 
 | Ordine nel sito | Sezione del copy deck | Ancora | Componente |
 |---|---|---|---|
-| 1 | 1. Hero | — | Hero `line`, con la soglia dell'anteprima a destra |
+| 1 | 1. Hero | — | Hero `line`, con la schermata di un SIII su smartphone a destra (sotto le CTA su mobile) |
 | 2 | 2. Cos’è un Sito Interattivo Immersivo | `#cos-e` | H2 piccolo, definizione, statement |
 | 3 | 3. Tour 360° o Sito Interattivo Immersivo? | `#tour-360` | Statement, figura a due stati e tabella di confronto |
 | 4 | 4. Cosa si può fare dentro un SIII | `#cosa-si-puo-fare` | Statement, marquee dei verbi, elenco tipografico, niente card |
 | 5 | 5. Perché scegliere un SIII | `#benefici` | BenefitsSection `zigzag` |
-| 6 | 6. Entra. Esplora. Interagisci. | `#esempi` | Tre soglie Schermo 16:10, con schermata e link |
+| 6 | 6. Entra. Esplora. Interagisci. | `#esempi` | Tre esempi, ognuno con la schermata 16:10 dell'esperienza, cliccabile, e il CTA |
 | 7 | 8. Gli altri mondi ITnode | — | Bridge: riga editoriale con due link |
 | 8 | 7. Chiusura e form | `#chiusura`; form `#richiesta` | CTASection `form` + ContactForm |
 
@@ -79,7 +85,17 @@ Note:
 - La seconda riga dell'H1 non può stare alla scala piena: «Interattivi» (11 caratteri) a 64 px supera la larghezza utile di uno schermo da 390 px. Tra le due righe c'è un separatore nascosto alla vista (`<span class="sr-only"> – </span>`): il nome accessibile dell'H1 è «SIII – Siti Interattivi Immersivi» (review di accessibilità del 2026-09-28, T6).
 - Nessun paragrafo nella hero: la definizione arriva subito dopo.
 - CTA confermate dalla strategia di conversione §4: la prova più forte del SIII è provarlo. La CTA secondaria porta al form della stessa pagina, quindi la sua icona è ↓, non →; le parole del cliente restano identiche (tone of voice §6, regole 3 e 4).
-- **Visual.** A destra una soglia 3:5 con lo slot `siii-anteprima` (un'esperienza SIII vista da smartphone) e tre nodi hotspot decorativi. [DA FORNIRE: schermata, almeno 1200 × 2000 px] Finché manca, il segnaposto è nascosto agli screen reader. Il testo alternativo per quando arriva è in `docs/contenuti/alt-text.md`.
+
+**Alt della schermata** · testo alternativo (`alt`) · fa fede `docs/contenuti/alt-text.md`
+> Masseria Santella da smartphone: una sala con la volta bianca e una porta a vetri aperta sulla stanza accanto, con il menu e un punto interattivo.
+
+Note sulla schermata:
+- **Che cos'è.** La schermata di Masseria Santella vista da smartphone: la sala con la volta (`siii-masseria-santella-mobile-sala.jpg`, commit d06a3e9). È l'elemento LCP della pagina.
+- **Formato.** Porta 3:5 da 1024 px; sotto è 4:5, con ritaglio centrato (`struttura-pagine.md` SI-1).
+- **Accessibilità.** È informativa, con alt. Sopra non ci sono nodi decorativi: la schermata ha già i suoi punti interattivi (`accessibilita.md` §2.8). Non è un link.
+- **Perché l'alt nomina la struttura.** La hero non la nomina. L'alt non ripete «Siti Interattivi Immersivi», che è nell'H1 (criterio 5 di `alt-text.md`).
+- **Proposta di cro-specialist** (review del 2026-10-07, oss. 4): una riga «Masseria Santella · Cassano delle Murge (BA)» sotto la schermata, solo con il consenso A7. Il testo è di copywriter-brand e decide il creative-director. Se arriva, l'alt passa alla variante senza il nome (`alt-text.md`).
+- **Consenso.** La schermata mostra un'impresa reale: vale la riserva A7 della sezione 6.
 
 ## 2. Cos’è un Sito Interattivo Immersivo
 
@@ -228,7 +244,8 @@ Note:
 | Nome accessibile della CTA | Entra nell’esperienza di Masseria Santella (si apre in una nuova scheda) | Entra nell’esperienza di Maison Miminà (si apre in una nuova scheda) | Entra nell’esperienza di D.L. Natura Dentro (si apre in una nuova scheda) |
 | URL | https://www.cassanodigitale.it/masseriasantella/ | https://www.monopolidigitale.it/maisonmimina/ | https://www.acquavivadigitale.com/dielle/ |
 | `cta_id` | siii-showcase-masseria-santella | siii-showcase-maison-mimina | siii-showcase-dl-natura-dentro |
-| Immagine (slot) | `siii-masseria-santella` | `siii-maison-mimina` | `siii-dielle` |
+| Testo alternativo della schermata (`alt`) | La schermata d’avvio dell’esperienza: il cancello d’ingresso tra gli alberi in una vista a piccolo pianeta, con il menu. | La schermata d’avvio dell’esperienza: la vetrina su una strada alberata in una vista a piccolo pianeta, con il menu. | La schermata d’avvio dell’esperienza: il vialetto d’ingresso tra le siepi, sotto una palma, in una vista a piccolo pianeta, con il menu. |
+| `cta_id` della schermata | siii-showcase-masseria-santella-schermata | siii-showcase-maison-mimina-schermata | siii-showcase-dl-natura-dentro-schermata |
 
 **Anteprima immersiva (predisposta, non al lancio)** · solo con l'iframe caricato al clic (`src/scripts/immersive.ts`)
 | Campo | Esempio 1 | Esempio 2 | Esempio 3 |
@@ -242,8 +259,16 @@ Note:
 - Le frasi usano solo ciò che è noto: nome, luogo e il fatto che si tratta di un SIII. «Masseria» è nel nome della struttura. Non attribuire settori, servizi o risultati finché il cliente non li fornisce.
 - Nel sito luogo e portale stanno sulla stessa riga mono, sotto il nome.
 - Luogo di Masseria Santella: il dominio dice solo «Cassano», ma Cassano delle Murge risulta da più schede pubbliche della struttura (brief §8). [DA VERIFICARE con il cliente]
-- Le schermate mancano: i segnaposto sono nascosti agli screen reader e, nella variante «in pubblicazione», non ripetono nome e luogo, che sono già nel testo accanto. [DA FORNIRE]
-- **Riserve di go-live** (ADR 002, in stato di proposta). I8: un'esperienza che al lancio non risponde si toglie, e «Tre Siti Interattivi Immersivi già online» si adegua al numero vero. A7: senza il consenso delle imprese, nessuna schermata delle loro esperienze; restano la variante «in pubblicazione», i nomi e i link (LG §12).
+- **Schermate.** Per ogni esempio, la vista a piccolo pianeta con cui si apre l'esperienza (commit d06a3e9): `siii-masseria-santella-desktop-ingresso.jpg`, `siii-maison-mimina-desktop-ingresso.jpg`, `siii-dielle-desktop-ingresso.jpg`, in 16:10. Sono informative, con alt, e nella voce della lista vengono prima del nome.
+- **Testi alternativi.** Fa fede `docs/contenuti/alt-text.md` (1.6, criterio 12). Descrivono la vista, non i comandi disegnati: niente «pulsante» per il play al centro, che chi usa lo screen reader non può premere (`accessibilita.md` §2.8). Non ripetono il nome, che l'H3 dice subito dopo. Nel sito c'è ancora la versione con «il pulsante di avvio», finché la sessione principale non applica la v1.6.
+- **La schermata apre l'esperienza**, in una nuova scheda (decisione dell'utente del 2026-10-07, commit 88d7083).
+  - Sopra l'immagine c'è uno strato `<a>` trasparente, con lo stesso URL e la stessa nuova scheda del CTA. È per il solo puntatore: fuori dalla tabulazione e nascosto agli screen reader.
+  - L'immagine resta fuori dal link e tiene il suo alt. Per tastiera e screen reader il CTA resta l'unico link della voce, e dice già destinazione e nuova scheda.
+  - Lo strato non ha testo visibile: non serve copy.
+  - Tracciamento: `outbound_click`, tipo `esperienza-siii`, `cta_location` esempi, con il `cta_id` della schermata, distinto da quello del CTA (piano di misurazione 0.5).
+  - Limite noto, da verificare con VoiceOver e TalkBack: nell'esplorazione al tocco, sopra la schermata lo screen reader non legge nulla (review di ux-designer del 2026-10-07, §2.3).
+- **Riserva A7** (ADR 002, in stato di proposta; condizione C06 del verdetto G4). Le schermate mostrano nome, logo e ambienti di tre imprese reali. Senza il loro consenso, nessuna schermata delle loro esperienze: si torna agli slot, e restano nomi e link (LG §12). Oggi le schermate entrano senza passare dagli slot, quindi tornare indietro richiede una modifica del codice: cro-specialist propone un controllo di go-live che blocca (review CRO del 2026-10-07, oss. 2). [DA VERIFICARE: consenso scritto delle tre imprese]
+- **Riserva I8** (ADR 002): un'esperienza che al lancio non risponde si toglie, con la sua schermata, e «Tre Siti Interattivi Immersivi già online» si adegua al numero vero.
 - **Anteprima immersiva: non al lancio.** Al lancio ci sono schermata e link (`struttura-pagine.md` SI-6). Il pulsante compare solo da 1024 px, e solo dopo tre verifiche: i portali permettono l'incorporamento, non impostano cookie non tecnici senza consenso, il viewer non trattiene il focus. Quando si attiva, ux-designer chiede anche un pulsante «Chiudi l’anteprima» subito dopo l'iframe. La nota sotto il pulsante serve alla trasparenza, perché l'anteprima carica un sito di terze parti (vedi Rischi).
 
 ## 7. Chiusura e form
@@ -283,7 +308,7 @@ Link: «Puglia Digitale» → `/puglia-digitale/`; «Città Digitali» → `/cit
 
 In entrata: Home (Blocco A e capitolo 01), `/citta-digitali/` («Sito Interattivo Immersivo» nella sezione «Dal locale al nazionale» e nel blocco finale), `/puglia-digitale/` (blocco finale), navigazione e footer.
 
-Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il footer.
+Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il footer. Anche le tre schermate degli esempi aprono l'esperienza, per il solo puntatore (sezione 6).
 
 ## Allineamenti con gli altri documenti
 
@@ -298,6 +323,8 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 | Chiusura | «Richiedi un’offerta» come titolo del form, senza link | `struttura-pagine.md` SI-8. |
 | Ponte | Prima della chiusura | `struttura-pagine.md` SI-7. |
 | Anteprima immersiva | Non al lancio | `struttura-pagine.md` SI-6. |
+| Schermate degli esempi | Cliccabili, con uno strato per il solo puntatore; l'immagine tiene l'alt | Decisione dell'utente del 2026-10-07 (commit 88d7083); `accessibilita.md` §2.8; `struttura-pagine.md` SI-6. |
+| Testi alternativi delle schermate | La vista, non i comandi disegnati | `accessibilita.md` §2.8; `alt-text.md` (1.6), criterio 12. |
 
 ## Verifica sul sito (2026-10-05)
 
