@@ -136,3 +136,18 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   3. HTML dello staging contro la build di prova, pagina per pagina.
 
   Se sono identici, le misure valgono; poi si rimisura comunque, come chiesto, nelle due build.
+
+## P4 sulla build e pulizia della Terra di Bari (lezioni del 2026-10-07)
+- **Esito:** l'utente ha approvato P4 («sì, mettila»). La sessione principale l'ha applicata in 3e25c42, portando a mano la mia patch 6 v3: non si applicava più dopo 133e9a5 e d06a3e9. La verifica sulla build è conforme alla v3. Design system 0.10. Ho proposto di togliere la carta della Terra di Bari, ormai senza uso: decide il creative-director.
+- **Dopo un riavvio del container** i server sono spenti, ma lo scratchpad resta. Prima di rimisurare controllare HEAD e le build servite, e confrontare l'HTML servito con quello già misurato. Se è identico byte per byte, le misure valgono ancora.
+- **Prova di una pulizia senza effetti visivi:**
+  - markup identico, ignorando le righe vuote: togliere un'espressione Astro lascia una riga di soli spazi, che in un contenitore a griglia non conta;
+  - differenza del CSS regola per regola;
+  - screenshot di ogni figura con carta, confrontati byte per byte, in tre larghezze.
+- **Il codice morto può contraddire le regole nuove:** le coordinate di `MapItaly` per le carte senza punti-città sarebbero andate contro la regola 8 della DV 0.12. Dirlo nella proposta di pulizia.
+- **Script** in `scratchpad/ui-p4/`:
+  - `pixmaps.mjs`: le figure di due build a confronto;
+  - `forced-cap02.mjs`: colori forzati della carta;
+  - `fcmarks-home.mjs`: D.1;
+  - `shot-cap02.mjs`;
+  - `diff/pulizia-terra-di-bari.patch`.
