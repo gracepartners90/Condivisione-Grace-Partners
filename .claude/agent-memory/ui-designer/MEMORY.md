@@ -151,3 +151,19 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `fcmarks-home.mjs`: D.1;
   - `shot-cap02.mjs`;
   - `diff/pulizia-terra-di-bari.patch`.
+
+## Pulizia applicata e hero di /siii/ con il ritaglio in build (lezioni del 2026-10-07, pomeriggio)
+- **Esito:** il creative-director ha approvato la pulizia della Terra di Bari (decisione 7) e la sessione principale l'ha applicata in bae201c senza modifiche. Nello stesso commit: nodi tolti dalle schermate vere (decisione 4) e `mobileCrop` di `Media` nella hero di `/siii/`, 4:5 e ancorato in basso (decisioni 1 e 2). Le carte sono identiche pixel per pixel e il ritaglio coincide con la prova del creative-director. Design system 0.11.
+- **Verificare un ritaglio fatto in build contro un riferimento CSS:**
+  1. screenshot dell'elemento;
+  2. togliere dal `<picture>` le `<source media>` e mettere all'`<img>` l'`object-position` del riferimento (il browser ricarica l'immagine intera);
+  3. secondo screenshot;
+  4. differenza media in scala di grigi, al quarto della risoluzione, cercando lo scarto migliore entro ±4 px.
+
+  Lo scarto (0, 0) con circa 1 su 255 prova che il ritaglio coincide. `naturalWidth` e `naturalHeight` sono corretti per la densità del `srcset` (danno la misura CSS): vale il loro rapporto, e il candidato scelto si legge da `currentSrc` confrontato con il `srcset`.
+- **Art direction con `<picture>`:** il ripiego `<img>` (JPEG intero) usa `object-fit` con il suo `object-position`. Se il ritaglio è ancorato in basso e l'`<img>` è al centro, i browser senza AVIF e WebP inquadrano diverso. Dare all'`<img>` lo stesso ancoraggio non cambia nulla a schermo.
+- **Il verdetto del creative-director può assegnarmi lavoro che la sessione principale non riporta.** Qui il punto S3, la nitidezza del primo esempio di `/siii/` sugli schermi retina larghi. Leggere sempre il verdetto e segnalare i punti aperti nel resoconto.
+- **Script** in `scratchpad/ui-siii/`:
+  - `hero-crop.mjs`: ritaglio contro riferimento, sorgente scelta, prima schermata;
+  - `hero-extra.mjs`: CLS e `object-position`;
+  - `diff/siii-hero-fallback-position.patch`.
