@@ -3,7 +3,7 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.5
+versione: 0.6
 aggiornato: 2026-10-07
 fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), fonti web elencate nel §6.8]
 ---
@@ -49,8 +49,8 @@ Le soglie valgono per tutti i template:
 | Speed Index | ≤ 3,4 s | ≤ 2,5 s | 1,34 s |
 | Punteggio Performance | ≥ 90 | ≥ 95 | 99 |
 | **LCP − FCP** con throttling applicato (`devtools`), pagine con LCP testuale | ≤ 200 ms | ≤ 100 ms | 0 ms |
-| **Immagine LCP**, throttling applicato: la richiesta parte prima della fine del download del documento | sì | — | sì: 654–679 ms contro 679–684 ms (`/siii/`) |
-| **Immagine LCP**, throttling applicato: ritardo di rendering (`lcp-breakdown-insight`) | ≤ 200 ms | ≤ 100 ms | 37–70 ms (`/siii/`) |
+| **Immagine LCP**, throttling applicato: inizio della richiesta rispetto alla fine del download del documento | ≤ +50 ms | prima della fine | `/siii/` (`bae201c`): da −25 a +5 ms. Con `lazy`: circa +300 ms |
+| **Immagine LCP**, throttling applicato: ritardo di rendering (`lcp-breakdown-insight`) | ≤ 200 ms | ≤ 100 ms | 41–71 ms (`/siii/`, `bae201c`) |
 
 **Perché serve la riga LCP − FCP.** Il throttling simulato non vede i ritardi dovuti alle animazioni.
 - Un H1 che entra da `opacity: 0` sposta l'LCP di +0,66 s con throttling applicato, e di soli +0,05 s in quello simulato (§7.2).
@@ -126,6 +126,10 @@ Le soglie valgono per tutti i template:
 - **Dal 2026-10-07 l'LCP di `/siii/` è un'immagine** (§7.3), che il preload non sposta: per l'LCP il confronto resta significativo sulla Home. Su `/siii/` si registra la finestra del ripiego.
   - L'immagine in alta priorità divide la banda con il font: in laboratorio la finestra sale da 664 a 967 ms, sul 4G lento da 230 a 478 ms; sul 4G veloce resta sotto i 70 ms.
   - L'effetto è segnalato al creative-director: review del 2026-10-07, osservazione 2.
+  - **Soglia dell'ADR 005, versione 1.3:** se sull'host reale, in HTTP/2, la finestra supera **600 ms sul profilo 4G lento**, web-performance-specialist prova la porta senza `fetchpriority="high"` e sceglie con le misure. L'LCP deve restare entro 2,0 s.
+  - **In laboratorio, dopo il ritaglio 4:5** (`bae201c`, HTTP/1.1, mediane di 5 caricamenti): 449 ms a 1,75x e 483 ms a 3x, quindi sotto la soglia.
+    - Un caricamento a 3x è arrivato a 669 ms: si valuta la mediana.
+    - La prova formale va fatta sull'host reale, perché le priorità di HTTP/2 qui non si vedono.
 
 **Registro dei confronti**
 
@@ -140,7 +144,7 @@ Le soglie valgono per tutti i template:
 
 | Componente | Budget |
 |---|---|
-| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP. Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (art direction, review del 2026-10-07, §6). Misurato: 33,6–58,3 KB sui telefoni, 18,0–51,4 KB su desktop (§7.3). |
+| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP. Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Misurato con il ritaglio: 21,4–40,7 KB sui telefoni (640w–1080w; prima 33,6–58,3), 18,0–51,4 KB su desktop (§7.3). |
 | Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
@@ -653,26 +657,50 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 - Confronto visivo con ingrandimento 2x su un volto: AVIF q50 è indistinguibile a 1x; q45 impasta la texture del tessuto; q60 costa +36%.
 - **Default:** q50. q60 solo per i ritratti in primo piano, su richiesta di ui-designer.
 
-### 7.3 Schermate SIII: `/siii/` con un'immagine LCP (2026-10-07, commit `d06a3e9`)
+### 7.3 Schermate SIII: `/siii/` con un'immagine LCP (2026-10-07, commit `d06a3e9` e `bae201c`)
 
-Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141, `benchmarkIndex` 1461–2919. Corse alternate con la build del commit precedente (`09dcd17`). Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`.
+Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141. Corse alternate:
+- `d06a3e9` contro il commit precedente `09dcd17` (mattino; `benchmarkIndex` 1461–2919);
+- `bae201c`, con il ritaglio in build della porta (`mobileCrop` 4:5 ancorato in basso), contro `d06a3e9` ricostruito (11:24–11:36 UTC; `benchmarkIndex` 1612–2623, carico 0,7–3,4).
+
+Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`, §§2–6 e §7.
+
+**Base attuale, `bae201c`:**
 
 | URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
 |---|---|---|---|---|---|---|---|---|
-| `/siii/` (T2) | 1,25 / **1,80 s** (5) | 1,02 / **1,70 s** (6) | 0,31 / 0,40 s (3) | 0 / 40 ms | 0 | 132,1 KB, 8 | 34,0 KB (porta, 768w AVIF) | **porta della hero** (schermata della sala di Masseria Santella) |
+| `/siii/` (T2) | 1,27 / **1,80 s** (5) | 1,06 / **1,61 s** (6) | 0,32 / 0,40 s (3) | 0 / 55 ms | 0 | 125,4 KB, 8 | 27,2 KB (porta, ritaglio 4:5, 768w AVIF) | **porta della hero** (schermata della sala di Masseria Santella) |
+| `/` (T1) | 1,17 / 1,65 s (3) | 1,04 / 1,04 s (3) | — | 0 / 64 ms | 0 | 117,2 KB, 7 (applicato: 136,3 KB, 8) | 19,5 KB (applicato: 38,6 KB) | riga dell'H1 |
+
+**Storico, `d06a3e9`** (porta 3:5, senza ritaglio):
+
+| URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
+|---|---|---|---|---|---|---|---|---|
+| `/siii/` (T2) | 1,25 / 1,80 s (5) | 1,02 / 1,70 s (6) | 0,31 / 0,40 s (3) | 0 / 40 ms | 0 | 132,1 KB, 8 | 34,0 KB (porta, 768w AVIF) | porta della hero |
 | `/` (T1) | 1,19 / 1,73 s (5) | 1,02 / 1,02 s (3) | — | 0 / 47 ms | 0 | 116,4 KB, 7 (applicato: 135,5 KB, 8) | 19,5 KB (applicato: 38,6 KB) | riga dell'H1, come prima |
+
+- **Ritaglio in build (`bae201c`)** contro `d06a3e9` ricostruito, nella stessa tornata:
+  - LCP applicato 1,61 contro 1,73 s (−111 ms);
+  - simulato allo stesso gradino (1,80 s);
+  - desktop invariato;
+  - porta di 27,2 KB invece di 34,0 al Moto G.
+  - Sul 4G lento, Playwright: LCP 796 contro 936 ms a 1,75x, 1108 contro 1140 ms a 3x.
+- **Home con `bae201c`:** sono cambiati il capitolo 02 (P4) e i nodi del capitolo 01, quindi il documento pesa +0,8 KB.
+  - L'LCP resta il testo: 1,04 contro 1,00 s applicato (3 corse); simulato un gradino sotto. Nessuna regressione oltre il rumore.
 
 - **`/siii/` rispetto al controllo** (testo come LCP): simulato 1,65 s, applicato 1,06 s.
   - L'aumento supera la regola del +10% del §8. È motivato: l'elemento LCP è cambiato per scelta di contenuto, e l'LCP resta sotto l'obiettivo di 2,0 s.
   - Sui profili 4G reali: 0,33–0,38 s con il 4G veloce, 0,92–1,10 s con il 4G lento.
 - **Home:** stesse richieste del controllo. Con throttling applicato Chromium scarica in anticipo anche la schermata `lazy` del capitolo 01 (19,1 KB). L'LCP resta il testo (1,02 contro 1,03 s).
-- **Immagine LCP per dispositivo:**
-  - 768w, 33,6 KB: telefoni fino a 2x, compreso il Moto G di Lighthouse;
-  - 1080w, 51,4 KB: telefoni da 2,6x a 3x e desktop a 2x;
-  - 1200w, 58,3 KB: telefoni a 3x da 430 px;
-  - 480w, 18,0 KB: desktop a 1x.
+- **Immagine LCP per dispositivo, con `bae201c`** (tra parentesi `d06a3e9`):
+  - 640w, 21,4 KB a 320 px e 2x (prima 768w, 33,6 KB);
+  - 768w, 26,8 KB al Moto G di Lighthouse e fino a 2x (prima 33,6);
+  - 1080w, 40,7 KB sui telefoni da 2,6x a 3x e sui tablet sotto 64em (prima 51,4 o 58,3 KB);
+  - desktop invariato: 480w, 18,0 KB a 1x; 1080w, 51,4 KB a 2x.
   - Tutte dentro il §4.
-- **Controlli statici:** superati tranne il n. 8, per il primo esempio di `/siii/` (WebP e JPEG a 1920 px). La correzione è nella review, osservazione 1.
+- **Controlli statici:**
+  - `bae201c`: superati tutti, n. 8 compreso;
+  - `d06a3e9`: n. 8 non superato per il primo esempio, poi corretto in `d3eba9c` con larghezze fino a 1440 px.
 
 ## 8. Eccezioni e modifiche
 
@@ -703,14 +731,15 @@ Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141, `ben
   - chi misura dall'Italia (domanda 3). Con l'anteprima aperta (dal 2026-09-29) non servono credenziali, e si può usare anche PageSpeed Insights dal browser (§6.8, punto 4).
 - **brand-strategist:** superata la richiesta di assenso per WebPageTest. Con l'anteprima aperta per decisione dell'utente (ADR 004), il risultato del test non espone niente di più.
 - **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve per l'INP del menu, per il TTFB reale e per la prima condizione di riapertura dell'ADR 005 (nota del §3).
-- **creative-director** (review del 2026-10-07):
-  - porta di `/siii/` con la sala o con la facciata (§6 della review);
-  - accettare o no la finestra del ripiego più lunga sulle reti lente dovuta all'immagine LCP (§3);
-  - inquadratura mobile della porta.
-  - Chiuso: le 6 corse per variante sono nell'ADR 005, versione 1.2.
+- **creative-director:** nessuna decisione aperta sulla performance. Chiuse il 2026-10-07:
+  - porta con la sala, ritaglio 4:5 ancorato in basso;
+  - finestra del ripiego accettata, con la soglia di sorveglianza di 600 ms dell'ADR 005, versione 1.3;
+  - 6 corse per variante, nell'ADR 005 versione 1.2.
 - **Sessione principale:**
-  - **prima del go-live:** fermare a 1440 px il primo esempio di `/siii/`, perché il controllo n. 8 lo segnala (review del 2026-10-07, osservazione 1);
-  - consigliato: applicare la patch di `Media.astro` (`mobileCrop`) per il ritaglio 4:5 della porta su mobile (osservazione 3);
+  - fatto: primo esempio di `/siii/` fino a 1440 px (`d3eba9c`); patch `mobileCrop` di `Media.astro` (`bae201c`);
   - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con il comando del controllo n. 8 del §6.3 e i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura);
+  - far misurare la finestra del ripiego di `/siii/` sul 4G lento in HTTP/2, sull'anteprima aperta o sullo staging (soglia di 600 ms, §3), da una postazione che raggiunge l'host:
+    - con lo script Playwright della review del 2026-10-07 (§7, `profiles2.mjs`, Node 22 e Playwright);
+    - oppure con la filmstrip di WebPageTest, profilo 4G.
   - durante la prova dall'Italia, leggere con il connettore Railway i log HTTP (§6.8, punto 5).
   - Fatto: `scripts/perf/hosting-check.sh` è salvato; le impostazioni del servizio Railway sono lette e conformi (regione `europe-west4-drams3a`, una replica, modalità Serverless spenta, nessuna CDN); il server di misura c'è già (`scripts/serve.mjs`, con le richieste `Range` dal commit `007956d`); `.perf/` è in `.gitignore`.

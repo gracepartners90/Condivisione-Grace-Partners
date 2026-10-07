@@ -3,9 +3,9 @@ titolo: Review di performance · Schermate SIII nel sito, /siii/ con un'immagine
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-07
-fonti: [commit d06a3e9 (schermate SIII), docs/performance/budget.md (0.4), docs/performance/architettura.md, docs/decisioni/005-preload-del-font.md (1.1), docs/decisioni/004-anteprima-su-railway.md, dist/ del 2026-10-07 alle 08:43 (d06a3e9), build di controllo 09dcd17, varianti costruite in un worktree della scratchpad, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-07 (08:51–09:41 UTC), sharp 0.35.5 del progetto]
+fonti: [commit d06a3e9 (schermate SIII), docs/performance/budget.md (0.4), docs/performance/architettura.md, docs/decisioni/005-preload-del-font.md (1.1 e 1.3), docs/decisioni/004-anteprima-su-railway.md, dist/ del 2026-10-07 alle 08:43 (d06a3e9), build di controllo 09dcd17, varianti costruite in un worktree della scratchpad, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-07 (08:51–09:41 UTC), sharp 0.35.5 del progetto; §7: commit bae201c (dist/ delle 11:20) e f28649a, misure delle 11:25–11:42 UTC]
 ---
 
 # Review di performance · Schermate SIII nel sito
@@ -407,7 +407,118 @@ La patch completa è in `scratchpad/siii-lcp/media-mobilecrop.patch`. Il testo:
   widths={[480, 768, 1080]} mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768] }} class="siii-hero__media" />
 ```
 
+## 7. Rimisura dopo `bae201c` (2026-10-07, pomeriggio)
+
+**Cosa è cambiato.**
+- `d3eba9c`: primo esempio fino a 1440 px (osservazione 1).
+- `bae201c`, dal verdetto del creative-director:
+  - la patch `mobileCrop` del §6, senza modifiche;
+  - nella porta, ritaglio 4:5 ancorato in basso, con larghezze 480–1080;
+  - tolti i nodi decorativi del capitolo 01 della Home e della hero;
+  - tolta la carta della Terra di Bari.
+- `f28649a` aggiunge soltanto `position="50% 100%"` alla porta, cioè l'`object-position` del JPEG di ripiego: nessun effetto su risorse o LCP.
+
+**Condizioni.**
+- Build `dist/` del 2026-10-07 alle 11:20 (`bae201c`), servita da `scripts/serve.mjs`.
+- Confronto con `d06a3e9` ricostruito in un worktree: l'HTML di `/siii/` è identico per dimensione a quello del mattino (147.593 byte).
+- 40 corse Lighthouse alternate (11:25–11:36 UTC, `benchmarkIndex` 1612–2623, carico 0,7–3,4) e Playwright con 5 caricamenti per variante e profilo.
+
+### 7.1 LCP di `/siii/` (domanda 1)
+
+| Metodo | `bae201c` | `d06a3e9` | Differenza |
+|---|---|---|---|
+| Mobile, simulato (5 corse) | 1,27 / **1,80 s** | 1,27 / 1,80 s | stesso gradino del modello |
+| Mobile, applicato (6 corse) | 1,06 / **1,61 s** (1,60–1,65) | 1,07 / 1,73 s (1,69–1,85) | **−111 ms** |
+| Desktop, simulato (3 corse) | 0,32 / 0,40 s | 0,32 / 0,40 s | pari (sorgenti desktop invariate) |
+| Playwright, 4G lento, 412 a 1,75x | 796 ms | 936 ms | −140 ms |
+| Playwright, 4G lento, 390 a 3x | 1108 ms | 1140 ms | −32 ms |
+| Playwright, 4G veloce, 412 a 1,75x / 390 a 3x | 328 / 404 ms | 344 / 384 ms | nel rumore |
+
+- **Pesi:** 125,4 KB, 8 richieste, di cui 27,2 KB per la porta (prima 132,1 KB e 34,0 KB). CLS 0, punteggio 99–100.
+- **Varianti scaricate:** a 320 px 640w (21,4 KB), al Moto G 768w (26,8 KB), a 3x 1080w (40,7 KB, prima 51,4 o 58,3). Da 1024 px restano le sorgenti desktop. La porta è l'elemento LCP a tutte le viewport provate.
+- **Fasi dell'LCP con throttling applicato:**
+  - inizio della richiesta: da 25 ms prima a 5 ms dopo la fine del documento;
+  - download: 885–892 ms invece di 966–997;
+  - rendering: 41–71 ms.
+- **Correzione alla riga del budget.** Ho riformulato la riga del `budget.md` §2 sull'inizio della richiesta con una tolleranza di 50 ms. La formula «prima della fine del documento» era troppo rigida: anche `d06a3e9` arriva una volta a +44 ms, mentre con `lazy` si è a circa +300 ms.
+- **Controlli statici:** superati tutti, n. 8 compreso (`bae201c`).
+
+### 7.2 Finestra del carattere di ripiego sul 4G lento (domanda 2, soglia di 600 ms dell'ADR 005 1.3)
+
+| Viewport | `bae201c`: mediana e caricamenti | `d06a3e9`: mediana e caricamenti |
+|---|---|---|
+| 412 a 1,75x | **449 ms** [340, 441, 449, 470, 506] | 447 ms [534, 431, 439, 447, 541] |
+| 390 a 3x | **483 ms** [484, 457, 483, 427, 669] | 520 ms [415, 579, 416, 520, 586] |
+
+- **In laboratorio è sotto la soglia di 600 ms**, con 117–151 ms di margine sulla mediana.
+- Un caricamento a 3x è arrivato a 669 ms. La soglia va letta sulla mediana; i casi singoli vanno annotati.
+- Il ritaglio non accorcia la finestra a 1,75x (449 contro 447 ms), e a 3x la riduce di 37 ms. Il suo guadagno è sull'LCP, non sul font.
+- **Limite.** L'ADR fissa la soglia sull'host reale in HTTP/2; qui il server va in HTTP/1.1. Per la prova sull'host c'è uno script portabile: provato in locale, dà 432 ms a 1,75x e 441 ms a 3x. Va eseguito da una postazione che raggiunge l'anteprima:
+
+```js
+// siii-fallback.mjs — fallback-font window and LCP of /siii/ on «4G lento» (ADR 005 1.3, threshold 600 ms).
+// Setup, once:  npm init -y && npm i playwright@1.56.1 && npx playwright install chromium
+// Usage:        node siii-fallback.mjs https://itnode-sito-production.up.railway.app/siii/ 5
+import { chromium } from 'playwright';
+
+const [url, loadsArg = '5'] = process.argv.slice(2);
+if (!url) throw new Error('usage: node siii-fallback.mjs <url of /siii/> [loads]');
+const PROFILE = { latency: 150, down: 1600, cpu: 4 }; // 4G lento: 150 ms, 1.6 Mbit/s, CPU 4x
+const DEVICES = {
+  '412x823 1,75x': { viewport: { width: 412, height: 823 }, deviceScaleFactor: 1.75, isMobile: true, hasTouch: true },
+  '390x844 3x': { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+};
+const median = (a) => { const s = [...a].sort((x, y) => x - y); return s[Math.floor((s.length - 1) / 2)]; };
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
+for (const [name, device] of Object.entries(DEVICES)) {
+  const rows = [];
+  for (let i = 0; i < Number(loadsArg); i++) {
+    const ctx = await browser.newContext(device);
+    const page = await ctx.newPage();
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: PROFILE.cpu });
+    await cdp.send('Network.enable');
+    await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+    await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: PROFILE.latency, downloadThroughput: (PROFILE.down * 1024) / 8, uploadThroughput: (675 * 1024) / 8 });
+    await page.addInitScript(() => {
+      window.__lcp = 0; window.__font = null;
+      new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__lcp = e.startTime; }).observe({ type: 'largest-contentful-paint', buffered: true });
+      document.fonts.addEventListener('loadingdone', (ev) => { if (!window.__font && ev.fontfaces.some((f) => f.family.startsWith('Schibsted'))) window.__font = performance.now(); });
+    });
+    await page.goto(url, { waitUntil: 'load', timeout: 90000 });
+    await page.waitForTimeout(1500);
+    const r = await page.evaluate(() => ({ fcp: performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? 0, lcp: window.__lcp, font: window.__font }));
+    rows.push({ ...r, window: r.font === null ? NaN : Math.max(0, r.font - r.fcp) });
+    await ctx.close();
+  }
+  const w = rows.map((r) => Math.round(r.window));
+  console.log(`${name}: ripiego visibile mediana ${median(w)} ms [${w.join(', ')}] · LCP mediana ${Math.round(median(rows.map((r) => r.lcp)))} ms · soglia 600 ms: ${median(w) > 600 ? 'SUPERATA' : 'rispettata'}`);
+}
+await browser.close();
+```
+
+### 7.3 Riga di controllo sulla Home (domanda 3)
+
+| Metodo | `bae201c` | `d06a3e9` |
+|---|---|---|
+| Simulato (3 corse): FCP / LCP | 1,17 / 1,65 s | 1,17 / 1,58 s |
+| Applicato (3 corse): FCP = LCP | 1,04 s | 1,00 s |
+| Peso, richieste | 117,2 KB, 7 (applicato: 136,3 KB, 8) | 116,4 KB, 7 (applicato: 135,5 KB, 8) |
+
+- **L'LCP resta la riga dell'H1.**
+- **Scarti nel rumore:** un gradino del modello nel simulato e +4% con 3 corse applicate, sotto la regola del +10%.
+- Il documento pesa 0,8 KB in più per il capitolo 02 con la Puglia intera (P4): la carta della Terra di Bari tolta pesava meno di quella nuova.
+
+### 7.4 Verdetto della rimisura
+
+**Conforme.**
+- Il ritaglio in build fa quello che prometteva: −111 ms di LCP con throttling applicato e −6,8 KB di immagine al Moto G, senza effetti sul desktop.
+- Budget rispettato e controlli statici superati.
+- La finestra del ripiego sul 4G lento è sotto i 600 ms in laboratorio. Resta da provarla sull'host reale in HTTP/2, con lo script del §7.2.
+
 ## Verdetto di dominio
+
+**Aggiornamento del 2026-10-07, dopo `bae201c`.** La correzione bloccante è applicata (`d3eba9c`), e così il ritaglio in build (osservazione 3). Il verdetto diventa **conforme senza condizioni di performance**, salvo la prova della finestra del ripiego sull'host (§7.2). Il testo che segue è il verdetto del mattino.
 
 **Conforme, con una correzione bloccante.**
 - `/siii/` con la schermata come immagine LCP rispetta tempi, pesi, richieste e CLS del template T2 e il budget dell'immagine LCP, su ogni dispositivo.
@@ -425,10 +536,20 @@ La patch completa è in `scratchpad/siii-lcp/media-mobilecrop.patch`. Il testo:
 
 ## Domande aperte
 
-1. **Per il creative-director:** porta con la sala o con la facciata (§6)? E inquadratura mobile centrata o dall'alto (osservazione 4)?
+1. **Chiusa** (verdetto del creative-director del 2026-10-07): porta con la sala, ritaglio 4:5 ancorato in basso.
 2. **Per l'utente o il cliente:** dall'Italia, PageSpeed Insights (pagespeed.web.dev) sull'anteprima aperta, per `/siii/` e la Home. Da qui l'API risponde 429 e l'host è irraggiungibile.
+3. **Per l'utente o la sessione principale:** chi esegue lo script del §7.2 sull'anteprima, da una postazione che la raggiunge, per la soglia di 600 ms dell'ADR 005 1.3?
 
 ## Decisioni richieste
+
+**Aggiornamento del 2026-10-07, dopo `bae201c`:**
+- tutte le voci qui sotto sono chiuse:
+  - osservazione 1 applicata in `d3eba9c`;
+  - patch e ritaglio applicati in `bae201c`;
+  - decisioni del creative-director prese: sala, finestra del ripiego accettata con soglia di 600 ms (ADR 005 1.3), ritaglio in basso.
+- Resta da decidere chi fa la prova sull'host (domanda 3).
+
+Registro del mattino:
 
 - **Sessione principale:**
   - applicare l'osservazione 1, bloccante: una riga in `siii.astro`;

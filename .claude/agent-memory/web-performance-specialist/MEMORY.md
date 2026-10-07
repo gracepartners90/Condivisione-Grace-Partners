@@ -110,7 +110,13 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - **L'immagine LCP divide la banda con il font in preload:** finestra del ripiego +250–300 ms sulle reti lente. Da ricordare per ogni nuova immagine in una hero.
   - **Patch `mobileCrop` di `Media.astro`** (ritaglio 4:5 in build sotto 64em): provata, non ancora applicata. Testo nella review §6.3 e in `scratchpad/siii-lcp/media-mobilecrop.patch`.
   - La facciata della reception sta nel budget solo con il ritaglio (57,8 KB a 768 px) e larghezze desktop fino a 1080 px.
-  - Decisioni aperte del creative-director: sala o facciata, finestra del ripiego, inquadratura mobile.
+  - **Decise dal creative-director e applicate** (`d3eba9c`, `bae201c`): sala con ritaglio 4:5 ancorato in basso; finestra del ripiego accettata con soglia di **600 ms sul 4G lento, in HTTP/2 sull'host** (ADR 005 1.3).
+  - **Rimisura dopo `bae201c`:** LCP applicato 1,61 contro 1,73 s; porta di 26,8 KB al Moto G e 40,7 KB a 3x.
+    - Finestra del ripiego sul 4G lento in laboratorio: 449 ms a 1,75x e 483 ms a 3x (mediane); un caricamento singolo a 669 ms.
+    - Il ritaglio accorcia l'LCP, non la finestra.
+  - **Prova sull'host ancora da fare:** script portabile `siii-fallback.mjs`, testo nella review §7.2.
+  - Lezione: la regola «richiesta prima della fine del documento» era troppo rigida, perché ci sono ±40 ms di rumore. Ora ha una tolleranza di 50 ms (budget §2).
+  - Una build di `d06a3e9` ricostruita in un worktree è risultata identica per dimensione a quella misurata: si possono rifare le build storiche per i confronti alternati.
 - **Micro-spostamento preesistente:** 0,00016 di CLS al cambio di carattere, per lo spostamento orizzontale della navigazione dell'header a 1440 px (identico sul controllo). Si ignora, ma non va scambiato per una regressione.
 - **Contatore 01/05 di Città Digitali.** Applicato l'IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'` (`007956d`): provato su Chromium, da provare su Safari.
 - **Autoplay del video su mobile.** Risolto: `video.ts` fa autoplay solo da 64em. Restano aperti il file su Railway (403 dal proxy) e l'hosting: sono le condizioni per il go-live.
