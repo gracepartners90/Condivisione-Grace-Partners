@@ -9,14 +9,17 @@ const SRC = 'src/assets/images';
 const OUT = `${SRC}/derivate`;
 
 /**
- * Event photo crops, in pixels on the 1365×768 original. All of them exclude the social-media
- * overlay (white frame, logo top-left, tagline and ✦ symbol bottom-right). Colour untouched.
+ * Event photo crops, in pixels on their original. Colour untouched.
+ * - Home: the clean version sent by the user on 2026-10-07 (1672×941, no frame, logo or tagline),
+ *   with both screens and the backdrop mark whole (creative-director, verdict of 2026-10-07).
+ * - The other crops: the 1365×768 social-media version, inside its overlay (white frame, logo
+ *   top-left, tagline and ✦ symbol bottom-right).
  */
 const eventCrops = [
-  { out: 'evento-panorama.jpg', box: { left: 46, top: 124, width: 1272, height: 560 } }, // 2.27:1
-  { out: 'evento-citta.jpg', box: { left: 46, top: 124, width: 448, height: 560 } }, // 4:5, aerial city screen
-  { out: 'evento-palco.jpg', box: { left: 470, top: 124, width: 448, height: 560 } }, // 4:5, stage
-  { out: 'evento-schermo.jpg', box: { left: 880, top: 124, width: 438, height: 548 } }, // 4:5, 360° square screen
+  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-panorama.jpg', box: { left: 0, top: 55, width: 1672, height: 736 } }, // 2.27:1
+  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-citta.jpg', box: { left: 24, top: 120, width: 549, height: 686 } }, // 4:5, aerial city screen, stopping before the lectern
+  { src: 'evento-puglia-digitale.jpg', out: 'evento-palco.jpg', box: { left: 470, top: 124, width: 448, height: 560 } }, // 4:5, stage
+  { src: 'evento-puglia-digitale.jpg', out: 'evento-schermo.jpg', box: { left: 880, top: 124, width: 438, height: 548 } }, // 4:5, 360° square screen
 ];
 
 /**
@@ -122,8 +125,8 @@ const linearB = k.map((ki, i) => -30 * ki + INK[i]);
 await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });
 
-for (const { out, box } of eventCrops) {
-  await sharp(`${SRC}/evento-puglia-digitale.jpg`).extract(box).jpeg({ quality: 92, mozjpeg: true }).toFile(`${OUT}/${out}`);
+for (const { src, out, box } of eventCrops) {
+  await sharp(`${SRC}/${src}`).extract(box).jpeg({ quality: 92, mozjpeg: true }).toFile(`${OUT}/${out}`);
   console.log(`${out}  ${box.width}×${box.height}`);
 }
 
