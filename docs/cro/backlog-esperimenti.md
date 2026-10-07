@@ -3,9 +3,9 @@ titolo: Backlog degli esperimenti
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.2
-aggiornato: 2026-10-05
-fonti: [docs/review/2026-09-28-sito-conversione-cro-specialist.md (§5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.4, §3.6, §3.8), docs/creativa/direzione-visiva.md (§5), docs/contenuti/copy-deck/home.md (§1), docs/cro/piano-misurazione.md (§8.1, §10), docs/cro/strategia-conversione.md]
+versione: 0.3
+aggiornato: 2026-10-07
+fonti: [docs/review/2026-09-28-sito-conversione-cro-specialist.md (§5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.4, §3.6, §3.8), docs/creativa/direzione-visiva.md (§5), docs/contenuti/copy-deck/home.md (§1), docs/cro/piano-misurazione.md (§8.1, §10), docs/cro/strategia-conversione.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md]
 ---
 
 # Backlog degli esperimenti
@@ -143,6 +143,8 @@ Non sono esperimenti: sono domande da tenere presenti nelle sessioni di E1 o nei
 - «Aderisci a …» nella hero di PD e CD porta a un form intitolato «Contattaci» (PD) o «Entra in Città Digitali» (CD). Si capisce che il primo passo è una richiesta, non un'iscrizione? (review di conversione, oss. 9)
 - Contatti, sezione Persona: il link «Scopri il suo percorso» si nota? Serve a chi sta per scrivere? (verdetto G4, N5)
 - Form a due colonne su desktop: i campi appaiati creano esitazioni? Se sì, c'è l'alternativa in subgrid già provata da ui-designer (verdetto G4, §3.6).
+- Esempi di /siii/: per entrare in un'esperienza si clicca la schermata con il play o il CTA? Si capisce che si apre una nuova scheda? Quando ci sarà uno strumento di analytics, lo dirà anche il rapporto tra i `cta_id` che finiscono in `-schermata` e quelli del CTA (piano di misurazione, §5.1).
+- Capitolo 01 della Home e hero di /siii/: le schermate mostrano icone e punti dell'esperienza che sembrano cliccabili, ma non lo sono. Qualcuno ci prova? (review di conversione del 2026-10-07, oss. 5)
 
 ## 7. Registro degli esiti
 

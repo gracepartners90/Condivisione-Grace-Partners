@@ -3,9 +3,9 @@ titolo: Strategia di conversione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.4
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/006-endpoint-del-form.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, inventario dei cta_id nelle build del 2026-09-28 e del 2026-10-05]
+versione: 0.5
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/data/asset-slots.ts, src/assets/images/, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/006-endpoint-del-form.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, inventario dei cta_id nelle build del 2026-09-28, del 2026-10-05 e del 2026-10-07]
 ---
 
 # Strategia di conversione
@@ -19,6 +19,7 @@ fonti: [docs/brief/linee-guida.md, src/scripts/form.ts, src/data/site.ts, src/da
 > - La fiducia si costruisce solo con prove vere: esperienze e portali reali, il percorso del fondatore, la sede in Puglia. **Tre foto hanno un simbolo compatibile con il watermark di Google Gemini**: prima di usarle come prova serve una verifica (§9).
 > - **v0.2.** Le tabelle dei `cta_id` (§3–4) sono allineate alla build del 2026-09-28, con il nuovo `contatti-persona-percorso` e i link dentro il form. Le opzioni per l'endpoint sono nell'ADR 006, in stato di proposta (§7).
 > - **v0.3 e 0.4 (2026-10-05).** Il portale di Città Digitali è **cittàdigitali.it**, con l'accento; nei link si scrive in punycode, `https://xn--cittdigitali-19a.it`. `cittadigitali.it`, senza accento, è un progetto omonimo di altri. Il portale di Puglia Digitale è lapugliadigitale.it, confermato dall'utente lo stesso giorno. Su /citta-digitali/ c'è un nuovo link «Tutte le città sul portale ↗» (`cd-portale-tutte-le-citta`, §4).
+> - **v0.5 (2026-10-07).** Le schermate SIII sono nel sito. Su /siii/ anche la schermata di ogni esempio apre l'esperienza in una nuova scheda (`siii-showcase-<id>-schermata`, §4). Resta il consenso delle imprese (A7, §9).
 
 ## 1. Conversioni per audience
 
@@ -75,6 +76,7 @@ Nei capitoli della home niente link esterni: prima si approfondisce sul sito, i 
 | Hero | Richiedi un'offerta ↓ | secondaria, link testuale | `#richiesta` | `siii-hero-offerta` |
 | Dopo i benefici | Richiedi un'offerta ↓ | primaria della vista | `#richiesta` | `siii-benefici-offerta` |
 | Esempi (`#esempi`), tre esperienze | Entra nell'esperienza ↗ | uscita in nuova scheda | URL in `siiiShowcase` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` |
+| Esempi, schermata d'apertura con il play (dal 2026-10-07) | tutta la schermata è un link, solo per il puntatore: tastiera e screen reader usano il CTA | stessa uscita del CTA, in nuova scheda (decisione dell'utente) | URL in `siiiShowcase` | lo stesso id del CTA con `-schermata`, per esempio `siii-showcase-masseria-santella-schermata` |
 | Esempi, anteprima in iframe | Avvia l'anteprima | coinvolgimento | facade che carica l'iframe | **non attiva al lancio**: evento `preview_start` sospeso (piano §4) |
 | Chiusura | «La tua azienda può diventare un'esperienza.» seguita dal form, **senza bottone**: la chiusura è il form stesso (§5) | primaria | form con SIII preselezionato | nessun `cta_id`; evento `form_submit` |
 | Pannello di successo del form | Torna agli esempi ↑ | ritorno alla prova | `#esempi` | `richiesta-siii-successo-esempi` |
@@ -254,7 +256,7 @@ Esclusi: urgenza o scarsità, tempi di risposta non garantiti, confirmshaming.
 
 | Prova | Stato | Dove | Regola d'uso |
 |---|---|---|---|
-| Tre esperienze SIII reali | fornite dal cliente. [DA VERIFICARE] che siano online e che il cliente possa citarle. [DA FORNIRE] le schermate (gli slot sono già in `asset-slots.ts`) | showcase di /siii; anteprima nel capitolo 01 della home | è la prova più forte, perché si può provare. Indicare nome, tipo di attività e luogo; nessun risultato attribuito senza dati |
+| Tre esperienze SIII reali | fornite dal cliente. Schermate ricevute il 2026-10-07 e in uso (capitolo 01 della Home; hero ed esempi di /siii/). [DA VERIFICARE] che siano online. [DA FORNIRE] il consenso scritto delle tre imprese (A7): senza, le schermate non vanno online (review di conversione del 2026-10-07, oss. 2) | showcase di /siii, dove anche la schermata apre l'esperienza; hero di /siii; capitolo 01 della home | è la prova più forte, perché si può provare. Indicare nome, tipo di attività e luogo; nessun risultato attribuito senza dati. Niente schermate con marchi di terzi in vista, per esempio Airbnb o Booking: possono far pensare a una partnership (stessa review, oss. 3) |
 | Portali reali: 2 principali e 6 cittadini | forniti. Città Digitali è su cittàdigitali.it e Puglia Digitale su lapugliadigitale.it (conferme dell'utente del 2026-10-05). [DA VERIFICARE] che tutti siano online e aggiornati: dall'ambiente di lavoro non sono raggiungibili | hero di PD e CD, «I luoghi», «L'Italia in un unico portale», Contatti, footer | la copertura da nord a sud (Varese, Altamura, Caltanissetta) dimostra «L'Italia in un unico portale». Dal 2026-10-05 la carta del capitolo 03 della Home mostra le città del portale, e /citta-digitali/ rimanda alla pagina «Tutte le città»: l'estensione della rete si vede senza pubblicare numeri da verificare. Tutti i link vanno controllati prima del lancio |
 | Numeri PD: 30+ città, ~200.000 partite IVA, 60% | forniti. [DA VERIFICARE] fonte e anno di riferimento | sezione Numeri di /puglia-digitale | sono dati **dei territori coinvolti, non clienti di ITnode**: le etichette non devono far pensare il contrario. Nota con fonte e anno. Il componente Stats non mostra un numero privo di fonte |
 | Percorso del fondatore: 36 anni, IBM, 2002, MyComm, IcommLab, Leadstone | fornito | sezione fondatore della home. Volto e nome anche su /contatti, ma solo se è lui a gestire le richieste [DA VERIFICARE] | senza superlativi |
@@ -274,7 +276,7 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 | # | Rischio | Impatto | Mitigazione | Chi |
 |---|---|---|---|---|
 | 1 | Lancio senza endpoint: la conversione principale non funziona | alto | avviso prima dei campi e fallback onesto; **decidere l'endpoint prima del go-live** (ADR 006, condizione C04 del G4) | cliente, sessione principale |
-| 2 | Mancano le schermate SIII e le foto dei luoghi: per capire il prodotto bisogna uscire dal sito | alto su /siii | [DA FORNIRE] gli asset; anteprime con facade solo se i portali non impostano cookie non tecnici | cliente |
+| 2 | Mancano le schermate SIII e le foto dei luoghi: per capire il prodotto bisogna uscire dal sito | ridotto: le schermate SIII sono arrivate il 2026-10-07, le foto di Gravina e Monopoli il 2026-10-06 | resta il consenso delle imprese (A7); anteprime con facade solo se i portali non impostano cookie non tecnici | cliente |
 | 3 | Nessuna informazione su processo, tempi e modalità di adesione | medio | blocco «Cosa succede dopo» con dati reali | cliente, copywriter |
 | 4 | Link verso i portali già nella hero di PD e CD | medio | apertura in nuova scheda; link secondario al form nella hero; chiusure forti | ux-designer |
 | 5 | CTA ambigue («Entra in Città Digitali», «Esplora») | medio | introduzione del form esplicita; `↗` e destinazione nel nome accessibile | copywriter-brand |
@@ -293,6 +295,7 @@ Pubblicare numeri o immagini non veritieri non viola solo la soglia di veridicit
 - v0.3, 2026-10-05:
   - dominio di Città Digitali e forma dei link: conferma dell'utente del 2026-10-05 e decisione di seo-technical in `docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md`;
   - dominio di Puglia Digitale, lapugliadigitale.it: conferma dell'utente del 2026-10-05, riferita dalla sessione principale (v0.4);
+  - v0.5, 2026-10-07: schermate SIII e link sulla schermata degli esempi, `docs/review/2026-10-07-schermate-siii-cro-specialist.md` (commit `d06a3e9` e `88d7083`);
   - nuovo link: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md`, §3.2;
   - inventario della build del commit `2a038de`: rispetto al 2026-09-28 cambia solo il nuovo link.
 

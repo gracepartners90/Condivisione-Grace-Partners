@@ -19,7 +19,7 @@ const page = (rel) => pages.find((p) => p.path === join(dist, rel))?.html ?? '';
 
 // Veridicity reserves still open (ADR 002; veracity review B2, I2; G4 verdict N10). Set to true
 // only with the client's written confirmation, recorded in docs/.
-const CONFIRMED = { highTraffic: false, clients10k: false };
+const CONFIRMED = { highTraffic: false, clients10k: false, showcaseConsent: false };
 const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.replace(dist, ''));
 
 const checks = [
@@ -50,6 +50,12 @@ const checks = [
     name: 'Coordinate alla precisione della fonte (al massimo 2 decimali)',
     ok: anyPage(/\d\.\d{3,}° [NSEO]/).length === 0,
     detail: anyPage(/\d\.\d{3,}° [NSEO]/),
+  },
+  {
+    // ADR 002, A7: screenshots of the three businesses only with their written consent, recorded in docs/.
+    name: 'Schermate delle esperienze SIII con il consenso scritto delle imprese (A7)',
+    ok: CONFIRMED.showcaseConsent || anyPage(/_astro\/siii-(masseria-santella|maison-mimina|dielle)-/).length === 0,
+    detail: anyPage(/_astro\/siii-(masseria-santella|maison-mimina|dielle)-/),
   },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];

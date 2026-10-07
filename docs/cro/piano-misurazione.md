@@ -3,9 +3,9 @@ titolo: Piano di misurazione
 owner: cro-specialist
 contributi: []
 stato: bozza
-versione: 0.4
-aggiornato: 2026-10-05
-fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, src/components/sections/LocationShowcase.astro, inventario degli attributi data-* nelle build del 2026-09-28 e del 2026-10-05]
+versione: 0.5
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/review/2026-09-28-sito-conversione-cro-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, src/scripts/track.ts, src/scripts/form.ts, src/scripts/video.ts, src/scripts/immersive.ts, src/scripts/header.ts, src/data/site.ts, src/components/sections/LocationShowcase.astro, src/pages/siii.astro, docs/review/2026-10-07-schermate-siii-cro-specialist.md, inventario degli attributi data-* nelle build del 2026-09-28, del 2026-10-05 e del 2026-10-07]
 ---
 
 # Piano di misurazione
@@ -21,6 +21,9 @@ fonti: [docs/brief/linee-guida.md, docs/cro/strategia-conversione.md, docs/revie
 >   - Nuovo link «Tutte le città sul portale ↗» su /citta-digitali/: `cta_id` e tipo confermati. `cta_location` corretto da `portale` a `luoghi`, la sezione in cui sta: applicato nel codice e verificato sulla build (§5.1).
 >   - I domini arrivano agli eventi in punycode: **report e segmenti sui portali filtrano su `destination_id`**, non sul dominio (§4).
 >   - Le etichette UTM dei portali diventano gli slug di `destination_id` (§7).
+> - **v0.5 (2026-10-07).** Su /siii/ anche la schermata di ogni esempio apre l'esperienza in una nuova scheda (decisione dell'utente, commit `88d7083`).
+>   - Il tracciamento è lo stesso del CTA, `outbound_click` di tipo `esperienza-siii`; i due clic si distinguono per il `cta_id`, che per la schermata finisce in `-schermata` (§3, §5.1).
+>   - Un link verso un altro dominio è sempre `outbound_click`, anche quando ripete un CTA (§4).
 
 ## 1. Al lancio: niente tracciamento, niente banner
 
@@ -63,7 +66,7 @@ Il limite va detto chiaramente: senza analytics non si costruisce una baseline d
 | Conversione | Tasso di conversione per pagina | `form_submit` / visite della pagina | — | analytics |
 | Diagnosi | Completamento del form | `form_submit` / `form_start`; errori per campo da `form_error` | — | analytics |
 | Diagnosi | Raggiungimento del form | `form_view` / visite della pagina | — | analytics |
-| Micro | Prova del prodotto | `outbound_click` di tipo `esperienza-siii` su /siii (al lancio non ci sono anteprime in iframe) | — | analytics |
+| Micro | Prova del prodotto | `outbound_click` di tipo `esperienza-siii` su /siii (al lancio non ci sono anteprime in iframe). Conta i clic sul CTA (`siii-showcase-<id>`) e sulla schermata (`siii-showcase-<id>-schermata`), distinti dal `cta_id`. Per le persone: sessioni con almeno uno di questi clic | — | analytics |
 | Micro | Interesse per i portali | `outbound_click` di tipo `portale` e `portale-luogo`, contati per `destination_id` | — | analytics |
 | Micro | Video | `video_progress` al 50% / `video_start` | — | analytics |
 | Salute | Errori d'invio | `form_error` di tipo `rete`, `timeout` o `server`; obiettivo: zero | log dell'endpoint | analytics |
@@ -83,7 +86,7 @@ Nessun target numerico finché non arrivano i dati di business [DA FORNIRE]. Pro
 
 | Priorità | Evento | Quando | Parametri | Conversione |
 |---|---|---|---|---|
-| P1 | `cta_click` | clic su una CTA interna (verso una pagina o un'ancora) | `cta_id`, `cta_location`, `cta_text`, `link_url`, `interest` (se pertinente) | — |
+| P1 | `cta_click` | clic su una CTA interna (verso una pagina o un'ancora del sito). Mai per un altro dominio, nemmeno quando il link ripete un CTA: in quel caso è `outbound_click` | `cta_id`, `cta_location`, `cta_text`, `link_url`, `interest` (se pertinente) | — |
 | P1 | `outbound_click` | clic verso un altro dominio | `cta_id`, `cta_location`, `outbound_type`, `destination_id`, `link_url`, `link_domain` | micro, se di tipo `esperienza-siii` |
 | P1 | `contact_click` | clic su `tel:` o `mailto:`, compresa la bozza email del fallback | `cta_id`, `cta_location`, `contact_method`; **mai `link_url`**, perché la bozza email contiene i dati dell'utente | **sì, secondaria** |
 | P1 | `form_view` | form visibile almeno al 50%, **oppure** che occupa almeno metà dell'altezza dello schermo; una volta per pagina. La seconda condizione serve sugli schermi bassi, dove un form alto circa 1.300 px non arriva mai al 50% | `form_id`, `interest_preselected` | — |
@@ -151,7 +154,9 @@ Esempio:
 
 `cta_location` dice **in che tipo di sezione** sta l'elemento; `page_type` dice in quale pagina. Insieme danno la posizione: per esempio `hero` su `siii`. L'elenco è chiuso: un valore nuovo si aggiunge prima qui, poi nel codice, e il test 2 del §9 fallisce sui valori fuori elenco.
 
-Inventario della build del 2026-10-05 (commit `ce276be`): 155 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine, con i 15 valori dell'elenco e nessuno fuori elenco. L'unica novità rispetto al 2026-09-28 è il link `cd-portale-tutte-le-citta`. Era uscito con `portale` ed è stato corretto in `luoghi` (in fondo a questo paragrafo).
+Inventario della build del 2026-10-07 (commit `88d7083`): 158 elementi tracciati con `data-cta-location`, esclusi i `nav_click`, su 8 pagine, con i 15 valori dell'elenco e nessuno fuori elenco. Le novità rispetto al 2026-09-28:
+- il link `cd-portale-tutte-le-citta` (2026-10-05). Era uscito con `portale` ed è stato corretto in `luoghi` (in fondo a questo paragrafo);
+- i tre link sulle schermate degli esempi di /siii/ (2026-10-07, riga `esempi`).
 
 | Valore | Dove | `cta_id` | Pagine |
 |---|---|---|---|
@@ -160,7 +165,7 @@ Inventario della build del 2026-10-05 (commit `ce276be`): 155 elementi tracciati
 | `hero` | CTA della hero | `siii-hero-esempi`, `siii-hero-offerta`, `pd-hero-portale`, `pd-hero-richiesta`, `cd-hero-portale`, `cd-hero-richiesta` | SIII, PD, CD |
 | `capitolo` | i tre capitoli della Home | `home-capitolo-siii`, `home-capitolo-puglia-digitale`, `home-capitolo-citta-digitali` | Home |
 | `benefici` | CTA dopo i benefici | `siii-benefici-offerta` | SIII |
-| `esempi` | le tre esperienze, sezione `#esempi` | `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro` | SIII |
+| `esempi` | le tre esperienze, sezione `#esempi`: il CTA «Entra nell'esperienza» e, dal 2026-10-07, la schermata | CTA: `siii-showcase-masseria-santella`, `siii-showcase-maison-mimina`, `siii-showcase-dl-natura-dentro`. Schermata: lo stesso id con `-schermata` | SIII |
 | `luoghi` | città con il loro portale: «I luoghi» su PD; «L'Italia in un unico portale» (`#portale`) su CD, compreso il link «Tutte le città sul portale» | `pd-luoghi-gravina`, `pd-luoghi-acquaviva`, `pd-luoghi-monopoli`, `cd-citta-varese`, `cd-citta-altamura`, `cd-citta-caltanissetta`, `cd-portale-tutte-le-citta` | PD, CD |
 | `sezione` | link nel testo di una sezione | `home-fondatore-linkedin`, `pd-progetto-portale`, `legale-email` | Home, PD, pagine legali |
 | `chiusura` | chiusura con CTA e recapiti | `home-chiusura-parliamone`, `home-chiusura-email`, `home-chiusura-telefono` | Home. Su SIII, PD e CD la chiusura è il form: nessun bottone |
@@ -179,6 +184,22 @@ Inventario della build del 2026-10-05 (commit `ce276be`): 155 elementi tracciati
 **Dei valori presenti al 2026-09-28 nessuno va rinominato nel codice.** L'unica correzione riguarda il link aggiunto il 2026-10-05, qui sotto. Resta una rinomina facoltativa, in codice oggi non incluso in nessuna pagina: in `src/scripts/immersive.ts`, riga 23, `cta_location: 'showcase'` diventa `'esempi'`. Va fatta solo se si riattiva l'anteprima.
 
 I `cta_id` con la vecchia parola di sezione (`siii-showcase-*`, `cd-citta-*`) restano come sono: sono chiavi, e cambiarle non porta alcun beneficio.
+
+**Schermate degli esempi su /siii/ (dal 2026-10-07)**
+
+Ogni schermata è coperta da un link trasparente verso l'esperienza, in una nuova scheda: il play della vista d'apertura invita al clic (review di conversione del 2026-10-07, oss. 1; decisione dell'utente, commit `88d7083`). Il link funziona solo con il puntatore: è fuori dall'ordine del focus e nascosto alle tecnologie assistive, che usano il CTA.
+
+| | CTA «Entra nell'esperienza» | Schermata |
+|---|---|---|
+| Evento | `outbound_click` | `outbound_click` |
+| `cta_id` | `siii-showcase-<id>` | `siii-showcase-<id>-schermata` |
+| `cta_location`, `outbound_type`, `destination_id` | `esempi`, `esperienza-siii`, `<id>` | uguali |
+| `cta_text` | «Entra nell'esperienza» | assente: il link non ha testo visibile |
+
+Nei report:
+- **Distinguere i due clic con il `cta_id`**: «finisce con `-schermata`» per l'immagine, altrimenti il CTA. In GA4 con una dimensione derivata o un filtro sul `cta_id`, mai su `cta_text`.
+- **Tenerli insieme** con `destination_id` oppure con un filtro «inizia con» `siii-showcase-<id>`.
+- **Contare le persone, non i clic**, quando la domanda è quante persone entrano in un'esperienza: sessioni con almeno un `outbound_click` di tipo `esperienza-siii`. Chi clicca prima l'immagine e poi il CTA fa due clic.
 
 **Link «Tutte le città sul portale ↗» su /citta-digitali/ (dal 2026-10-05)**
 
@@ -324,7 +345,7 @@ Li scrivo io appena la build è pronta.
    - Ogni `[data-track]` ha `data-cta-id` e `data-cta-location`, tranne i `nav_click`, che hanno `data-nav-item` e `data-nav-location`.
    - Ogni valore di `data-cta-location`, `data-outbound-type`, `data-destination-id` e `data-contact-method` appartiene agli elenchi del §5 e del §5.1.
    - `<body>` ha `data-page-type`.
-3. **Eventi**: il clic su ogni elemento tracciato produce in `window.dataLayer` l'evento giusto, con i parametri obbligatori e **senza dati personali**. Ogni `outbound_click` ha `destination_id` e `outbound_type`; i link ai domini con caratteri accentati hanno `link_domain` in punycode.
+3. **Eventi**: il clic su ogni elemento tracciato produce in `window.dataLayer` l'evento giusto, con i parametri obbligatori e **senza dati personali**. Ogni `outbound_click` ha `destination_id` e `outbound_type`; i link ai domini con caratteri accentati hanno `link_domain` in punycode. Su /siii/ il clic al centro della schermata di un esempio produce un `outbound_click` con il `cta_id` che finisce in `-schermata` e apre una nuova scheda; il Tab salta la schermata e arriva al CTA.
 4. **Form**
    - Endpoint vuoto: l'avviso è visibile prima dei campi; all'invio non parte alcuna richiesta di rete; viene registrato `form_error` con `error_type` `endpoint-assente`.
    - Endpoint simulato con `page.route`, risposta 200: compare il pannello di successo con il focus e viene registrato `form_submit`.
@@ -363,6 +384,7 @@ Il backlog degli esperimenti è in `docs/cro/backlog-esperimenti.md`. Il primo �
   - inventario sulla build del commit `2a038de`, generata in una cartella temporanea fuori da `dist/` e confrontata riga per riga con quella del 2026-09-28;
   - correzione provata su una copia del codice, fuori dal repository: clic in Chromium 141 con Playwright 1.56, navigazione bloccata, lettura di `window.dataLayer`;
   - v0.4: inventario ricontrollato sulla build del commit `ce276be`, generata fuori da `dist/`; dominio di Puglia Digitale confermato dall'utente il 2026-10-05, riferito dalla sessione principale.
+- v0.5, 2026-10-07: `docs/review/2026-10-07-schermate-siii-cro-specialist.md`. Build del commit `88d7083` fuori da `dist/`: inventario, clic sull'immagine e sul CTA con le richieste esterne simulate, ordine del focus, axe-core 4.13.
 
 ## Ipotesi da validare
 - Il traffico del sito non basta per test A/B né per la modellazione di Consent Mode (§8, §10).
