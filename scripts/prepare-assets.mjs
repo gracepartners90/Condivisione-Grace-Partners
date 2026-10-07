@@ -36,9 +36,82 @@ const placeCrops = [
  * 2. contrast ×1.2 −30 and tone mapping from inchiostro #141413 to calce #F3F1EC, in one linear step.
  */
 const portraits = [
-  { src: 'fondatore-braccia-conserte.jpg', out: 'fondatore-ritratto.jpg', box: { left: 566, top: 36, width: 480, height: 480 } },
+  // Centred on the founder (user, 2026-10-07: the Home portrait «non è centrata»). The Città Digitali logo
+  // stands just left of him: its last letters, which the centred crop would cut, are taken out first.
+  {
+    src: 'fondatore-braccia-conserte.jpg',
+    out: 'fondatore-ritratto.jpg',
+    box: { left: 445, top: 36, width: 480, height: 480 },
+    withoutLogo: {
+      area: [230, 135, 570, 336],
+      // Top of the suit measured either side of the last «I», which was laid over the shoulder.
+      suitTop: (x) => (x < 544 ? 336 + 0.29 * (544 - x) : x <= 560 ? 336 - 0.5 * (x - 544) : 328 - 0.475 * (x - 560)),
+    },
+  },
   { src: 'fondatore-in-piedi.jpg', out: 'fondatore-contatti.jpg', box: { left: 470, top: 40, width: 420, height: 560 } },
 ];
+
+/**
+ * Takes the logo letters out of `area` (source pixels): saturated, not dark pixels, grown by 3 px onto
+ * the light background, are filled with a Gaussian-weighted mean of the light background around them.
+ * Below `suitTop(x)` the fill comes from the suit instead, with a 1.5 px soft edge. Returns a PNG.
+ */
+async function withoutLogo(file, { area: [x0, y0, x1, y1], suitTop }) {
+  const { data, info } = await sharp(file).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width: W, height: H } = info;
+  const at = (x, y) => (y * W + x) * 3;
+  const chroma = (i) => Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]);
+  const luma = (i) => 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+  const isLetter = (i) => chroma(i) > 55 && Math.max(data[i], data[i + 1], data[i + 2]) > 90;
+  const isSky = (i) => luma(i) > 170 && chroma(i) < 55;
+  const isSuit = (i) => luma(i) < 60 && chroma(i) < 40;
+  const letter = new Uint8Array(W * H);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (isLetter(at(x, y))) letter[y * W + x] = 1;
+  const mask = letter.slice();
+  for (let y = y0; y < y1; y++) {
+    for (let x = x0; x < x1; x++) {
+      if (letter[y * W + x] || Math.max(...data.subarray(at(x, y), at(x, y) + 3)) < 90) continue;
+      near: for (let dy = -3; dy <= 3; dy++) {
+        for (let dx = -3; dx <= 3; dx++) {
+          const xx = x + dx, yy = y + dy;
+          if (xx >= 0 && yy >= 0 && xx < W && yy < H && letter[yy * W + xx]) {
+            mask[y * W + x] = 1;
+            break near;
+          }
+        }
+      }
+    }
+  }
+  const R = 18;
+  const mean = (x, y, accept) => {
+    let r = 0, g = 0, b = 0, sum = 0;
+    for (let dy = -R; dy <= R; dy++) {
+      for (let dx = -R; dx <= R; dx++) {
+        const xx = x + dx, yy = y + dy;
+        if (xx < 0 || yy < 0 || xx >= W || yy >= H || mask[yy * W + xx] || !accept(at(xx, yy), xx, yy)) continue;
+        const w = Math.exp(-(dx * dx + dy * dy) / 162), j = at(xx, yy);
+        r += w * data[j];
+        g += w * data[j + 1];
+        b += w * data[j + 2];
+        sum += w;
+      }
+    }
+    return sum > 0 ? [r / sum, g / sum, b / sum] : null;
+  };
+  const out = Buffer.from(data);
+  for (let y = y0; y < y1; y++) {
+    for (let x = x0; x < x1; x++) {
+      if (!mask[y * W + x]) continue;
+      const depth = y - suitTop(x); // > 0: inside the suit
+      const sky = mean(x, y, isSky);
+      const suit = depth > -1.5 ? mean(x, y, (j, xx, yy) => isSuit(j) && yy > suitTop(xx)) : null;
+      const a = suit ? Math.min(1, Math.max(0, (depth + 0.5) / 1.5)) : 0;
+      const c = sky && suit ? sky.map((v, k) => v * (1 - a) + suit[k] * a) : (sky ?? suit);
+      if (c) out.set(c.map(Math.round), at(x, y));
+    }
+  }
+  return sharp(out, { raw: { width: W, height: H, channels: 3 } }).png().toBuffer();
+}
 
 const INK = [20, 20, 19];
 const PAPER = [243, 241, 236];
@@ -59,9 +132,10 @@ for (const { src, out, box } of placeCrops) {
   console.log(`${out}  ${box.width}×${box.height}`);
 }
 
-for (const { src, out, box } of portraits) {
+for (const { src, out, box, withoutLogo: clean } of portraits) {
   const lum = [0.15, 0.25, 0.6];
-  const grey = await sharp(`${SRC}/${src}`)
+  const input = clean ? await withoutLogo(`${SRC}/${src}`, clean) : `${SRC}/${src}`;
+  const grey = await sharp(input)
     .extract(box)
     .removeAlpha()
     .recomb([lum, lum, lum])

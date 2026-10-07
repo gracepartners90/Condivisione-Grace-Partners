@@ -3,7 +3,7 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.13
+versione: 0.14
 aggiornato: 2026-10-07
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright), richiesta dell'utente del 2026-10-06 sulla Puglia intera e sue conferme (riferite dalla sessione principale), docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P1–P5), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (1.3, L7), docs/strategia/citta-digitali-elenco.md (0.3, §4), docs/ux/accessibilita.md (0.7), staging dei commit b113efb e 0d106e7 e controllo del creative-director con Playwright (Chromium) da 320 a 2560 px, prova del generatore delle carte con la regola dei 6 px sulla carta d'Italia (copia nello scratchpad, 2026-10-06), docs/review/2026-10-06-regola-11-carte-ui-designer.md (R1–R3) e le sue immagini di confronto (scratchpad ui-apart), schermate SIII inviate dall'utente il 2026-10-07 (src/assets/images/siii-*.jpg), review del 2026-10-07 in docs/review/ (schermate SIII: cro-specialist, ux-designer, web-performance-specialist; carta della Terra di Bari: ux-designer; verifica di P4: ui-designer), docs/contenuti/alt-text.md (1.6), docs/contenuti/copy-deck/home.md (1.5, didascalia della foto dell'evento), staging di d3eba9c e prove del creative-director del 2026-10-07 (Playwright, Chromium: hero di /siii/ con la sala e con la facciata, ritagli 4:5 al centro, in alto e in basso; capitoli 01–03 della Home)]
 ---
@@ -87,6 +87,8 @@ Tutto il resto è tipografia e aria.
 - §4.2: la didascalia senza «regionale» e solo con l'originale dello scatto; indicazioni per i ritagli della nuova versione della foto chiesta dall'utente per la Home.
 - §1.4: la Puglia intera anche nel capitolo 02 della Home (P4, approvata dall'utente). Nessuna carta è più decorativa. La carta d'Italia della Home ha la descrizione di 199 caratteri con 5 nomi, decisa da ux-designer. La carta della Terra di Bari esce anche dal codice.
 - §7.3, riga 5, e §7.4, righe 1 e 6: allineate al sito. Decisioni richieste, punto 6: P4 decisa.
+
+**Modifiche della versione 0.14 (2026-10-07).** §4.3: eccezione per centrare il ritratto della Home, su segnalazione dell'utente («non è centrata»). Si tolgono dallo sfondo le lettere del marchio che il ritaglio taglierebbe e si usa una nuova maschera. Il ritratto di Contatti resta com'è.
 
 
 Il concept delle linee guida (spazio fisico → spazio digitale → persone → imprese → territorio) diventa quattro segni riconoscibili, più una regola tipografica.
@@ -588,7 +590,7 @@ Le quattro foto hanno fondali con skyline di grattacieli e reti luminose: è l'e
 
 | File | Decisione con (b) | Taglio (x, y, l × a) | Uso |
 |---|---|---|---|
-| `fondatore-braccia-conserte.jpg` | Usata | testa e spalle: 566, 36, 480 × 480 (1:1) | Home, chiusura della timeline, al massimo 400 px CSS |
+| `fondatore-braccia-conserte.jpg` | Usata | testa e spalle, centrata: 445, 36, 480 × 480 (1:1), con le lettere del marchio tolte dallo sfondo (eccezione del 2026-10-07, sotto). Prima: 566, 36, 480 × 480 | Home, chiusura della timeline, al massimo 400 px CSS |
 | `fondatore-in-piedi.jpg` | Usata | 470, 40, 420 × 560 (3:4) | Contatti, al massimo 320 px CSS |
 | `fondatore-palco-citta-digitali.jpg` | Scartata anche con (b) | — | Palco, platea e schermo con marchio la farebbero leggere come documentazione di un evento che non possiamo verificare; porta il simbolo ✦ |
 | `fondatore-presentazione-platea.webp` | Scartata anche con (b) | — | Stessa ragione |
@@ -599,7 +601,7 @@ Con (b), sotto ogni ritratto va una nota mono: «Immagine generata o elaborata c
 1. Luminanza pesata sul canale blu (0,15 R + 0,25 G + 0,6 B), con contrasto ×1,2 e −30: lo skyline azzurro si schiarisce quasi fino alla carta.
 2. Mappatura dei toni da `inchiostro` #141413 a `calce` #F3F1EC.
 3. Maschera CSS che fonde il lato destro nella carta, per assorbire ciò che resta dello skyline. Valori del G4, provati a 2× sui derivati (verifica UI, V6):
-   - Home, `fondatore-braccia-conserte`: `linear-gradient(to right, #000 40%, transparent 74%)`;
+   - Home, `fondatore-braccia-conserte`: `linear-gradient(to right, #000 80%, transparent 100%)` dal 2026-10-07, con il ritaglio centrato. Lì a destra resta poco skyline, in basso, e basta una sfumatura sul bordo. Prima era `#000 40%, transparent 74%`;
    - Contatti, `fondatore-in-piedi` (figura più stretta): `linear-gradient(to right, #000 36%, transparent 68%)`.
 
    Con questi valori grattacieli e linee a nodi quasi spariscono e la figura resta intera, con il bordo del braccio appena ammorbidito. Il valore iniziale (62% → 100%) e il successivo (48% → 86%) lasciavano leggibili skyline e «reti luminose».
@@ -607,6 +609,20 @@ Con (b), sotto ogni ritratto va una nota mono: «Immagine generata o elaborata c
 I derivati si generano con uno script sharp versionato nel repository; gli originali restano intatti. La sfumatura verso la carta presuppone che il ritratto stia su fondo `calce` (vedi §7).
 
 - **Mai:** versioni a colori, scontorni, ritocchi o estensioni generative, didascalie con luoghi e date, inquadrature «dal vivo sul palco».
+- **Eccezione del 2026-10-07: il ritratto della Home centrato.** L'utente ha scritto: «quella in basso di Giacomo non è centrata».
+  - **Il problema.** Il ritaglio di prima (566) stava a destra del marchio «Città Digitali», che nell'originale è subito a sinistra del fondatore. Così la testa finiva al 24% della larghezza, e la destra si scioglieva nella carta: si leggeva come un errore.
+  - **Perché il ritaglio da solo non basta.** Qualunque riquadro centrato sulla testa più largo di 240 px contiene le ultime lettere del marchio, tagliate: «À» e «ALI». A 240 px la risoluzione non regge i 400 px CSS.
+  - **Che cosa è ammesso, e niente altro.**
+    - Si tolgono le lettere del marchio che il ritaglio taglierebbe, riempiendole con il fondo chiaro circostante.
+    - Dove l'ultima «I» copriva la spalla, il bordo della giacca si ricostruisce sulla linea misurata ai due lati.
+    - Lo script sharp è deterministico e versionato in `scripts/prepare-assets.mjs`. Nessuno strumento generativo, originale intatto.
+    - Volto e figura non si toccano, e il resto dello sfondo, skyline compreso, resta com'è: lo assorbono il trattamento «inchiostro» e la maschera.
+  - **Perché è un'eccezione accettabile.**
+    - Il ritratto non è un documento (DR3-b) e lo dichiara: la nota AI resta.
+    - L'intervento toglie solo un segno grafico sovrapposto, cioè fa ciò che il ritaglio non può fare senza decentrare la figura.
+    - Non rende l'immagine più credibile come fotografia, e non cambia la persona.
+  - **Contatti no.** Il ritratto di `/contatti/` (`fondatore-in-piedi`) ha lo stesso schema, ma centrarlo vorrebbe dire togliere più lettere («TÀ» e «TALI», una sulla spalla) e lo skyline a sinistra in basso e a destra. Sarebbe un ritocco più ampio, per una pagina dove l'utente non l'ha chiesto, quindi resta com'è. Se l'utente lo chiede, si usa lo stesso metodo e il creative-director rivede il risultato.
+  - **La soluzione vera resta il ritratto reale** (opzione c, §4.6, priorità 4): toglie nota, skyline e ritocchi in un colpo solo.
 - **Alt:** «Ritratto di Giacomo Lenoci, fondatore di ITnode». `[DA VERIFICARE: nome]`
 
 ### 4.4 Logo
@@ -1151,5 +1167,5 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.13)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.14)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
 6. **Capitolo 02 della Home con la Puglia intera (P4 di ui-designer): decisa.** L'utente l'ha approvata il 2026-10-07 («sì, mettila»), e la Home la mostra dal commit 3e25c42, con la legenda e la descrizione L7. La carta della Terra di Bari non è più usata, e si toglie dal generatore e dal componente (decisione del creative-director del 2026-10-07, sulla proposta di ui-designer).

@@ -229,12 +229,13 @@ const { eyebrow, title, lead, stages, portrait, portraitAlt = '', portraitNote, 
     max-width: 25rem;
   }
 
-  /* The portrait melts into the paper on the right (visual direction §4.3). */
+  /* The portrait is centred on the founder and only its right edge melts into the paper, where the
+     skyline begins (visual direction §4.3, exception of 2026-10-07). */
   .founder__portrait :global(.founder__img) {
     width: 100%;
     height: auto;
-    -webkit-mask-image: linear-gradient(to right, #000 40%, transparent 74%);
-    mask-image: linear-gradient(to right, #000 40%, transparent 74%);
+    -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 80%, transparent 100%);
   }
 
   .founder__portrait-note {
