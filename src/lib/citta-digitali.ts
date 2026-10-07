@@ -56,16 +56,3 @@ export function describePugliaDigitale(names: string[] = [], office?: string): s
   const ring = office ? ` Un anello segna ${office}, sede di ITnode.` : '';
   return `Carta della Puglia con le città di Puglia Digitale${where}.${among}${ring}`;
 }
-
-/**
- * Text alternative of the map of the Terra di Bari (Home chapter 02): the text beside it names no
- * place, so the map is an image. The places it names, west → east as the strip reads, without the
- * office, then the office with its ring: the schema of L7 (copywriter-brand; ux-designer, 2026-10-07).
- */
-export function describeTerraDiBari(places: { id: string; name: string; lon: number }[], office?: string): string {
-  const names = places.filter((p) => p.id !== office).sort((a, b) => a.lon - b.lon).map((p) => p.name);
-  const home = places.find((p) => p.id === office)?.name;
-  const among = names.length ? ` con ${andList(names)}` : '';
-  const ring = home ? ` Un anello segna ${home}, sede di ITnode.` : '';
-  return `Carta della Terra di Bari${among}.${ring}`;
-}

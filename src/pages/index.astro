@@ -15,14 +15,14 @@ import CTASection from '../components/sections/CTASection.astro';
 import Media from '../components/ui/Media.astro';
 import MapItaly from '../components/ui/MapItaly.astro';
 import Node from '../components/ui/Node.astro';
-import { horizonPlaces, pugliaPlaces, office, founder } from '../data/site';
+import { horizonPlaces, office, founder } from '../data/site';
 import { founderPortrait, eventPhotoNote, siiiHomeScreen } from '../data/media';
 import { bearing, distanceKm, formatCoords } from '../lib/geo';
 import { pageGraph, person, ids } from '../lib/structured-data';
 import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
 import eventoCitta from '../assets/images/derivate/evento-citta.jpg';
 import maps from '../data/maps.json';
-import { describeCittaDigitali, describeTerraDiBari } from '../lib/citta-digitali';
+import { describeCittaDigitali, describePugliaDigitale } from '../lib/citta-digitali';
 
 const places = horizonPlaces.map((p) => ({ id: p.id, name: p.name, bearing: bearing(office, p), km: distanceKm(office, p) }));
 const schema = pageGraph('home', [person()], { about: ids.organization });
@@ -34,8 +34,15 @@ const drawnAtEveryWidth = (p: { anchor?: { wide?: string; narrow?: string } }) =
 const mapLabel = describeCittaDigitali(
   [...maps.maps.italia.places].filter(drawnAtEveryWidth).sort((a, b) => b.lat - a.lat).map((p) => p.name),
 );
-// Text alternative of the chapter 02 map: the chapter text names none of its places (ux-designer, 2026-10-07).
-const pugliaLabel = describeTerraDiBari(pugliaPlaces, 'acquaviva');
+// Chapter 02: the whole of Puglia with the cities of Puglia Digitale, as on /puglia-digitale/ (compact map;
+// P4, approved by the user on 2026-10-07). Same rule for its text alternative (copywriter-brand, L7): the
+// names drawn at every width, north → south, without the office, which has its own sentence.
+type RegionPlace = { name: string; lat: number; role?: string; anchor: Record<'wide' | 'narrow', string> };
+const regionPlaces = maps.maps.pugliaRegione.places as RegionPlace[];
+const pugliaLabel = describePugliaDigitale(
+  regionPlaces.filter((p) => p.role !== 'sede' && drawnAtEveryWidth(p)).sort((a, b) => b.lat - a.lat).map((p) => p.name),
+  regionPlaces.find((p) => p.role === 'sede')?.name,
+);
 ---
 
 <BaseLayout page="home" schema={schema}>
@@ -140,7 +147,10 @@ const pugliaLabel = describeTerraDiBari(pugliaPlaces, 'acquaviva');
         text="Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive."
         cta={{ label: 'Scopri Puglia Digitale', href: '/puglia-digitale/', id: 'home-capitolo-puglia-digitale' }}
       >
-        <MapItaly slot="visual" map="puglia" places={pugliaPlaces} home="acquaviva" compact label={pugliaLabel} class="worlds__map worlds__map--puglia" />
+        <figure slot="visual" class="worlds__atlas">
+          <MapItaly map="pugliaRegione" cities home="acquaviva" label={pugliaLabel} class="worlds__map" />
+          <figcaption class="worlds__atlas-note t-label">Ogni punto è una città di&nbsp;Puglia&nbsp;Digitale</figcaption>
+        </figure>
       </ProjectShowcase>
 
       <ProjectShowcase
