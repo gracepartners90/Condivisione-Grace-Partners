@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.3
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md]
+versione: 0.4
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1) e al 2026-10-07 (commit d06a3e9), prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -181,12 +181,17 @@ Si usa `src/components/ui/Media.astro`, già nel repository.
 
 ### 3.2 Immagine LCP
 
-Oggi nessuna pagina ha una foto come LCP: la direzione visiva prevede hero tipografiche. Se in futuro ci sarà:
+**Dal 2026-10-07 `/siii/` ha un'immagine LCP:** la schermata nella porta della hero, `Media` con `priority` (commit `d06a3e9`). Le altre pagine hanno hero tipografiche. Regole per ogni immagine LCP:
 - un solo `priority` per pagina, sul tag `<img>` nell'HTML. Niente `background-image` CSS: il preload scanner non lo vede;
-- nessun `loading="lazy"`, nessun `<link rel="preload">` aggiuntivo;
-- nessuna animazione d'ingresso che parta da nascosta (§6.1).
+- `priority` anche quando l'immagine è in parte sotto la piega, se resta l'elemento LCP. Sulla porta di `/siii/`, con `lazy` l'LCP peggiora di 271 ms;
+- nessun `loading="lazy"`, nessun `<link rel="preload">` aggiuntivo: la porta viene richiesta prima della fine del download del documento;
+- nessuna animazione d'ingresso che parta da nascosta (§6.1). La porta riceve subito `is-inview`;
+- pesi del `budget.md` §4 per ogni variante che un telefono può scaricare, densità 3x compresa.
+- **Se su mobile l'immagine si vede con un'altra proporzione** (la porta è 3:5 su desktop e 4:5 su mobile), si ritaglia in build invece di lasciar tagliare `object-fit` (§3.4).
 
-Misura: foto evento in hero con `priority` → LCP 1,51 s (variante AVIF 750w, 30 KB).
+Misure:
+- prototipo, foto evento in hero con `priority`: LCP 1,51 s (variante AVIF 750w, 30 KB);
+- `/siii/`, porta 3:5 da 768w e 33,6 KB: LCP 1,80 s simulato, 1,70 s con throttling applicato (`budget.md` §7.3).
 
 ### 3.3 `sizes` per slot della griglia a 12 colonne
 
@@ -208,6 +213,16 @@ Misura: foto evento in hero con `priority` → LCP 1,51 s (variante AVIF 750w, 3
 ### 3.4 Art direction: ritaglio diverso tra mobile e desktop (verificato)
 
 Si usa solo quando cambia il ritaglio; altrimenti basta `Media`.
+
+**Stessa immagine, proporzione diversa su mobile.** C'è una via più semplice del componente qui sotto: il prop `mobileCrop` di `Media.astro`, nella patch provata della review del 2026-10-07 (§6), non ancora applicata.
+- Sotto 64em sharp ritaglia l'immagine in build (fit cover), con larghezze proprie; sopra resta l'immagine intera.
+- Senza il prop, l'HTML di tutte le pagine resta identico.
+- Sulla porta di `/siii/`, a parità di inquadratura: 25,8 KB invece di 33,6 KB a 768 px e 39,5 KB invece di 51,4 KB a 1080 px.
+
+```astro
+<Media image={screen} alt="…" sizes="(min-width: 30rem) 26rem, 90vw" priority
+  mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080] }} />
+```
 
 ```astro
 ---

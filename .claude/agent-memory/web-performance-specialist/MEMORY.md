@@ -23,12 +23,28 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - `reveal-frames.mjs`, `lcp-detail.mjs`, `inp-scroll.mjs`, `menu-first.mjs`, `menu-trace.mjs`, `scroll2.mjs`, `fix-check.mjs`, `publish-check.mjs`, `counter-func.mjs`.
   - C14: `c14-lcp.mjs` (candidati LCP e aree dei blocchi di testo a 6 viewport), `c14-cls.mjs` (CLS in lettura, nuova build contro controllo), `c14-loadshift.mjs` (origine degli spostamenti al caricamento), `c14/run.sh` e `c14/ab.sh` (corse alternate).
   - Build di controllo: `perf-rimisura/dist-fixF` = baseline §7.1 (`7c5f747`) con la correzione del reveal a righe.
+  - Schermate SIII (2026-10-07), in `scratchpad/siii-lcp/`:
+    - `geometry.mjs`: `sizes` rispetto alla larghezza resa, variante scaricata, area visibile ed elemento LCP a 19 viewport;
+    - `profiles.mjs`: LCP e finestra del ripiego su tre profili di rete;
+    - `sharp-matrix.mjs`: pesi con i parametri di Astro;
+    - `check8.sh`;
+    - `run.sh` e `ab.sh`: corse alternate.
 - **Altri membri misurano in parallelo** (ux-designer e ui-designer con Playwright): il carico sale a 2–3 su 4 CPU. Si alternano le varianti corsa per corsa e si annotano carico e `benchmarkIndex`; gli script di geometria (LCP, CLS) non ne risentono.
+- **Build di un altro commit o di una variante senza toccare `src/`** (2026-10-07): `git worktree add --detach <scratch>/wt <commit>`, poi `ln -s /home/user/itnode/node_modules <wt>/node_modules` e `npx astro build --outDir <scratch>/dist-x`. Ci mette circa 3 s grazie alla cache delle immagini.
+  - Le patch si provano nel worktree.
+  - `git apply --check <patch>` nel repository verifica che si applichino, senza modificare niente.
+  - Per rimuovere: `rm` con variabili di shell viene bloccato dal controllo di sicurezza, quindi si usano percorsi assoluti letterali (`rm -f /percorso/wt/node_modules`, poi `git worktree remove --force /percorso/wt`).
+- **I processi in background muoiono dopo 30 minuti.** I server di misura si avviano tutti in un solo task in background (uno script con più `node scripts/serve.mjs &` e un `wait`), e le tornate di misura si programmano entro quel tempo.
+- **`naturalWidth` con descrittori `w`** restituisce la larghezza di `sizes`, non quella della variante: per sapere quale variante è scaricata si cerca `currentSrc` nei `srcset`.
+- **Astro copia in `_astro/` gli originali delle immagini importate**, anche se nessuna pagina li richiama: il vecchio `find -size` del controllo n. 8 dava falsi positivi (comando affinato nel budget §6.3).
+- **sharp AVIF:** `chromaSubsampling: '4:2:0'` fa guadagnare solo il 2–4% sulle schermate SIII. Le codifiche a 1920 px sono lente (una matrice di circa 100 file ha richiesto 10 minuti): vanno lanciate in background.
+- **Fasi dell'LCP di un'immagine:** in `lcp-breakdown-insight` sono ttfb, attesa, download e rendering; `runs.mjs` le stampa come t/r/r/e.
 - **Rete.**
   - Bloccati: docs.astro.build, docs.railway.com, railway.com, station.railway.com, `*.up.railway.app` (anteprima compresa: CONNECT 403, 2026-09-28), developers.cloudflare.com, MDN, web.dev, caniuse, jsDelivr, api.fontsource.org, railway.app, itnode.it, erwinhofman.com, webpagetest.org.
   - Funzionano: il registry npm, raw.githubusercontent.com (anche il **sorgente di Chromium**: `chromium/chromium/main/third_party/blink/...`), github.com con WebFetch, WebSearch (solo sintesi).
   - Le misure sull'host (C08) le fa una persona in Italia con lo script del `budget.md` §6.8: io leggo l'output e scrivo l'audit.
-- **PageSpeed Insights.** L'API risponde, ma la quota anonima è esaurita (429): serve una chiave.
+- **PageSpeed Insights.** L'API risponde, ma la quota anonima è esaurita (429, anche il 2026-10-07): serve una chiave.
+  - Dal 2026-09-29 l'anteprima è aperta (`PREVIEW_AUTH=off`, ADR 004): l'utente può usare pagespeed.web.dev dal browser. Il proxy di questo ambiente la blocca ancora.
 - **Font di sistema.** L'ambiente ha **Liberation Sans** (non Arial, Roboto, Helvetica né Segoe). Il ripiego `local('Liberation Sans')` si applica, quindi il CLS dello swap misurato qui è realistico (budget §6.1, corretto).
 - **Bash in modalità automatica.** A volte il classificatore non risponde (errore transitorio). Intanto si lavora con Read, Glob e Grep: dopo 10 fallimenti di fila il turno si ferma.
 
@@ -88,6 +104,13 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Confronto C14: +204 e +201 ms, sotto la soglia di 300 ms.
   - **Servono 6 corse per variante.** Le singole coppie oscillano da 106 a 361 ms: con 3 corse `/siii/` dava 282 ms. Ho chiesto al creative-director di allineare l'ADR (che dice 3).
   - Prossimo confronto entro il 28 dicembre 2026, o prima se si aggiorna il Chromium di misura.
+- **Schermate SIII (2026-10-07, review `2026-10-07-schermate-siii`):** `/siii/` ha la prima immagine LCP del sito, la porta della hero (base nel budget §7.3).
+  - Budget rispettato. `priority` è giusto anche dove la porta è a metà sotto la piega: è l'LCP a 19 viewport su 19, e con `lazy` peggiora di 271 ms.
+  - **Bloccante aperto:** il primo esempio supera il controllo n. 8 (WebP a 1920 px da 284 KB, JPEG da 313 KB). Correzione: larghezze fino a 1440 px.
+  - **L'immagine LCP divide la banda con il font in preload:** finestra del ripiego +250–300 ms sulle reti lente. Da ricordare per ogni nuova immagine in una hero.
+  - **Patch `mobileCrop` di `Media.astro`** (ritaglio 4:5 in build sotto 64em): provata, non ancora applicata. Testo nella review §6.3 e in `scratchpad/siii-lcp/media-mobilecrop.patch`.
+  - La facciata della reception sta nel budget solo con il ritaglio (57,8 KB a 768 px) e larghezze desktop fino a 1080 px.
+  - Decisioni aperte del creative-director: sala o facciata, finestra del ripiego, inquadratura mobile.
 - **Micro-spostamento preesistente:** 0,00016 di CLS al cambio di carattere, per lo spostamento orizzontale della navigazione dell'header a 1440 px (identico sul controllo). Si ignora, ma non va scambiato per una regressione.
 - **Contatore 01/05 di Città Digitali.** Applicato l'IntersectionObserver con `rootMargin: '100000px 0px -50% 0px'` (`007956d`): provato su Chromium, da provare su Safari.
 - **Autoplay del video su mobile.** Risolto: `video.ts` fa autoplay solo da 64em. Restano aperti il file su Railway (403 dal proxy) e l'hosting: sono le condizioni per il go-live.

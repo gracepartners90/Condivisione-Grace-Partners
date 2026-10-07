@@ -3,9 +3,9 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.4
-aggiornato: 2026-09-28
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), fonti web elencate nel §6.8]
+versione: 0.5
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), fonti web elencate nel §6.8]
 ---
 
 # Budget di performance
@@ -40,20 +40,31 @@ Lighthouse 13.5.0 in emulazione mobile, throttling simulato, mediana di 5 esecuz
 
 Le soglie valgono per tutti i template:
 
-| Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1) |
+| Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1 e §7.3) |
 |---|---|---|---|
-| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,67 s |
+| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,80 s (`/siii/`, immagine LCP, §7.3) |
 | FCP | ≤ 1,8 s | ≤ 1,5 s | 1,34 s (con il preload del font, ADR 005) |
 | TBT | ≤ 200 ms | ≤ 100 ms | 0 ms |
 | CLS | ≤ 0,1 | ≤ 0,05 | 0 |
 | Speed Index | ≤ 3,4 s | ≤ 2,5 s | 1,34 s |
 | Punteggio Performance | ≥ 90 | ≥ 95 | 99 |
-| **LCP − FCP** con throttling applicato (`devtools`) | ≤ 200 ms | ≤ 100 ms | 0 ms |
+| **LCP − FCP** con throttling applicato (`devtools`), pagine con LCP testuale | ≤ 200 ms | ≤ 100 ms | 0 ms |
+| **Immagine LCP**, throttling applicato: la richiesta parte prima della fine del download del documento | sì | — | sì: 654–679 ms contro 679–684 ms (`/siii/`) |
+| **Immagine LCP**, throttling applicato: ritardo di rendering (`lcp-breakdown-insight`) | ≤ 200 ms | ≤ 100 ms | 37–70 ms (`/siii/`) |
 
 **Perché serve la riga LCP − FCP.** Il throttling simulato non vede i ritardi dovuti alle animazioni.
 - Un H1 che entra da `opacity: 0` sposta l'LCP di +0,66 s con throttling applicato, e di soli +0,05 s in quello simulato (§7.2).
 - Sul sito costruito lo statement di `/siii/`, nascosto dal reveal, ha dato LCP − FCP = 935 ms con throttling applicato e 373 ms in quello simulato, dovuti al font (review del 2026-09-28).
-- Su tutte le pagine la hero è senza foto e l'LCP è testo: LCP e FCP devono quindi coincidere.
+- Dove l'LCP è testo (tutte le pagine tranne `/siii/`), LCP e FCP devono coincidere.
+
+**Pagine con un'immagine LCP** (dal 2026-10-07: `/siii/`, porta della hero).
+- **Perché le righe cambiano.** L'immagine arriva dopo il primo paint per natura (su `/siii/` circa 0,7 s con throttling applicato), quindi la riga LCP − FCP non si applica. Al suo posto valgono le due righe «Immagine LCP», che intercettano i due errori tipici:
+  - **scoperta tardiva:** `lazy`, sfondo CSS, immagine inserita da script. Con `lazy` la richiesta della porta parte circa 300 ms dopo la fine del documento, e l'LCP peggiora di 271 ms;
+  - **immagine nascosta da un'animazione:** ritardo di rendering alto.
+- **Dove si leggono:**
+  - l'inizio della richiesta in `audits['network-requests']` (`networkRequestTime` dell'immagine, `networkEndTime` del documento);
+  - il ritardo di rendering in `audits['lcp-breakdown-insight']`.
+- **Valgono anche le altre righe:** l'LCP resta entro limite e obiettivo con entrambi i metodi, e l'immagine rispetta il §4.
 
 **FCP simulato e font.** Il sito tiene il preload di Schibsted Grotesk (ADR 005, §3). Le misure del §7.1 sono fatte con il preload, e l'obiettivo di 1,5 s è rispettato su tutti i template. Se un giorno il preload verrà tolto (condizioni del §3), vale questa avvertenza:
 - il modello simulato (Lantern) tratta il font come una dipendenza dell'FCP, mentre con `font-display: swap` il testo si dipinge con il ripiego;
@@ -103,7 +114,7 @@ Le soglie valgono per tutti i template:
   - Questo vale anche per i domini dei portali, per railway.app e per i preconnect statici.
   - Ogni futura aggiunta (analytics, antispam del form) passa da un ADR con cro-specialist, con un proprio budget di peso e di INP.
 
-**Sorveglianza del preload (ADR 005, versione 1.1).** La mia nota sull'ADR è stata accolta il 2026-09-28: due numeri corretti (+72–280 ms di primo paint su 4G; finestra del ripiego da 2,7 a 14 volte più lunga senza preload), FCP simulato tolto dai contro, sorveglianza adottata. La decisione sul preload resta del creative-director; la sorveglianza spetta a web-performance-specialist.
+**Sorveglianza del preload (ADR 005, versioni 1.1 e 1.2).** La mia nota sull'ADR è stata accolta il 2026-09-28 (nella 1.2 anche le 6 corse per variante): due numeri corretti (+72–280 ms di primo paint su 4G; finestra del ripiego da 2,7 a 14 volte più lunga senza preload), FCP simulato tolto dai contro, sorveglianza adottata. La decisione sul preload resta del creative-director; la sorveglianza spetta a web-performance-specialist.
 - **Dati di campo.** RUM `web-vitals` senza cookie dopo il lancio, raccomandato dall'ADR. Senza RUM la condizione «LCP mobile al 75° percentile sopra 2,0 s» non può scattare, e CrUX è improbabile con il traffico del sito (§6.7). La decisione è aperta con cro-specialist e l'utente.
 - **Confronto in laboratorio** su `/` e `/siii/`, a ogni aggiornamento maggiore del Chromium di misura e comunque ogni tre mesi:
   - stessa build, con la sola riga del preload tolta; throttling applicato, corse alternate con e senza preload;
@@ -112,6 +123,9 @@ Le soglie valgono per tutti i template:
   - si controllano anche le costanti `kMaxFCPDelay` (100 ms) e `kMaxBlockingTimeForRenderBlockingFonts` (1500 ms) nel sorgente di Chromium;
   - facoltativo, dal metodo dell'ADR: la finestra del ripiego su 4G veloce, con l'evento `loadingdone` di `document.fonts`.
 - **Soglia.** Si riapre se il ritardo supera 300 ms su una delle due pagine, oppure se cambiano le due costanti. In quel caso web-performance-specialist toglie il preload e ne informa il creative-director.
+- **Dal 2026-10-07 l'LCP di `/siii/` è un'immagine** (§7.3), che il preload non sposta: per l'LCP il confronto resta significativo sulla Home. Su `/siii/` si registra la finestra del ripiego.
+  - L'immagine in alta priorità divide la banda con il font: in laboratorio la finestra sale da 664 a 967 ms, sul 4G lento da 230 a 478 ms; sul 4G veloce resta sotto i 70 ms.
+  - L'effetto è segnalato al creative-director: review del 2026-10-07, osservazione 2.
 
 **Registro dei confronti**
 
@@ -126,7 +140,7 @@ Le soglie valgono per tutti i template:
 
 | Componente | Budget |
 |---|---|
-| Immagine LCP, se una pagina ne avrà una | Unica immagine con `priority`, mai `lazy`. Pesi: ≤ 60 KB nella variante mobile (≤ 828 px), ≤ 150 KB in quella desktop. |
+| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP. Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (art direction, review del 2026-10-07, §6). Misurato: 33,6–58,3 KB sui telefoni, 18,0–51,4 KB su desktop (§7.3). |
 | Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
@@ -222,7 +236,30 @@ CHROME_PATH=/opt/pw-browsers/chromium npx -y lighthouse@13.5.0 http://127.0.0.1:
 | 5 | `<video>` senza `autoplay` e senza `poster` | `grep -rhoE '<video[^>]*>' dist --include='*.html' \| grep -E 'autoplay\|poster='` → vuoto |
 | 6 | Nessuno script, CSS, font o preconnect esterno | `grep -rhoE '<script[^>]+src="https?://[^"]*"\|<link[^>]+rel="(stylesheet\|preload\|modulepreload\|preconnect\|dns-prefetch)"[^>]*href="https?://[^"]*"' dist --include='*.html'` → vuoto |
 | 7 | Esattamente un `rel="preload"` per pagina: il WOFF2 di Schibsted Grotesk, con `as="font"`, `type="font/woff2"` e `crossorigin` (§3, ADR 005; senza `crossorigin` il font si scarica due volte). Al massimo 2 file `.woff2` | `for f in $(find dist -name '*.html'); do echo "$f $(grep -oE '<link[^>]*rel="preload"[^>]*>' "$f" \| grep -c 'schibsted-grotesk[^"]*\.woff2" as="font" type="font/woff2" crossorigin') $(grep -o 'rel="preload"' "$f" \| wc -l)"; done` → ogni riga finisce con `1 1` (provato il 2026-09-28: 8 pagine su 8; senza `crossorigin` dà `0 1`); `find dist -name '*.woff2' \| wc -l` → ≤ 2 |
-| 8 | Nessun AVIF o WebP sopra i 200 KB, nessun JPEG di fallback sopra i 300 KB; nessuna foto in `public/` | `find dist -type f \( -name '*.avif' -o -name '*.webp' \) -size +200k` → vuoto |
+| 8 | Tra le immagini che le pagine fanno scaricare, nessun AVIF o WebP sopra i 200 KB e nessun JPEG sopra i 300 KB; nessuna foto in `public/` | comando qui sotto → vuoto. `find public -type f \( -name '*.jpg' -o -name '*.webp' -o -name '*.avif' \) ! -path 'public/og/*'` → vuoto |
+
+**Comando del controllo n. 8** (affinato il 2026-10-07).
+- Considera solo i file che le pagine fanno scaricare: i candidati di `srcset` di ogni `<source>` e `<img>`, e le `<img>` fuori da `<picture>`.
+- Esclude due tipi di file che nessun browser moderno scarica:
+  - gli originali che Astro copia in `_astro/` senza che nessuna pagina li richiami;
+  - lo `src` di ripiego dentro `<picture>`, usato solo da browser senza `srcset`.
+- Il comando precedente (`find … -size +200k`) segnalava anche i file esclusi, quindi dava falsi positivi.
+- Provato sulla build `d06a3e9`: segnala le due varianti del primo esempio di `/siii/` (review del 2026-10-07, osservazione 1); sulla build di controllo `09dcd17` risulta vuoto.
+
+```bash
+node -e '
+const fs = require("fs"), path = require("path"), D = "dist";
+const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".html") ? [path.join(d, e.name)] : []);
+const html = walk(D).map((f) => fs.readFileSync(f, "utf8")).join("\n");
+const urls = new Set();
+for (const m of html.matchAll(/srcset="([^"]+)"/g)) for (const c of m[1].split(/,\s+/)) urls.add(c.trim().split(/\s+/)[0]);
+for (const m of html.replace(/<picture[\s\S]*?<\/picture>/g, "").matchAll(/<img[^>]+src="([^"]+)"/g)) urls.add(m[1]);
+for (const u of urls) {
+  const f = path.join(D, u); if (!u.startsWith("/") || !fs.existsSync(f)) continue;
+  const kb = fs.statSync(f).size / 1024, lim = /\.(avif|webp)$/.test(u) ? 200 : /\.jpe?g$/.test(u) ? 300 : Infinity;
+  if (kb > lim) console.log(`${kb.toFixed(1)} KB ${u}`);
+}'
+```
 
 ### 6.4 INP, scroll e reveal in laboratorio (Playwright)
 
@@ -347,11 +384,11 @@ http.createServer(async (req, res) => {
 
 | Momento | Host | Valore dell'esito |
 |---|---|---|
-| Ora | Anteprima su Railway (ADR 004): progetto `itnode-anteprima`, regione europe-west4 (Amsterdam), https://itnode-sito-production.up.railway.app, protetta da password | Prova dell'opzione C dell'ADR 001 e misura di riferimento. Bloccante solo se la produzione resterà su Railway |
+| Ora | Anteprima su Railway (ADR 004): progetto `itnode-anteprima`, regione europe-west4 (Amsterdam), https://itnode-sito-production.up.railway.app. Dal 2026-09-29 è aperta a chi ha il link e resta fuori dai motori di ricerca (`PREVIEW_AUTH=off`, decisione dell'utente) | Prova dell'opzione C dell'ADR 001 e misura di riferimento. Bloccante solo se la produzione resterà su Railway |
 | Prima del cambio DNS | Staging dell'hosting di produzione scelto | **Bloccante per il go-live** (C08) |
 | Il giorno del lancio, poi ogni mese | Produzione, `https://itnode.it` | Controllo, più PageSpeed Insights (§6.7) |
 
-**Chi misura.** Una persona in Italia con le credenziali dell'anteprima: l'utente o il cliente [DA DEFINIRE].
+**Chi misura.** Una persona in Italia: l'utente o il cliente [DA DEFINIRE]. Dal 2026-09-29 l'anteprima è aperta (ADR 004): non servono credenziali, e allo script basta lasciare vuoto l'utente. Se la password verrà rimessa, valgono le istruzioni con le credenziali.
 - L'ambiente di lavoro non raggiunge l'host: il proxy di rete rifiuta `*.up.railway.app` (403, verificato il 2026-09-28).
 - web-performance-specialist legge l'output e scrive l'audit.
 
@@ -383,7 +420,7 @@ Valori attesi su qualsiasi host.
 | H8 | `Range: bytes=0-1023` su un file binario: oggi il WOFF2, poi i file di `/video/` | 206, `content-range`, 1024 byte | Bloccante prima di pubblicare il video in `/video/`, perché Safari su iOS non lo riproduce; oggi diagnostica |
 | H9 | `http://`, `www.` e URL senza barra finale | Arrivano al canonico con un solo 301; il canonico risponde 200 senza redirect | Da correggere se i salti sono più di uno: ogni salto si somma al TTFB. Le regole sono di seo-technical |
 | H10 | Tutte | Nessun `set-cookie` | Da correggere, con cro-specialist e seo-technical (soglia 5 di CLAUDE.md) |
-| H11 | Solo anteprima: HTML e asset **senza** credenziali | 401 per tutti | Bloccante per l'anteprima (ADR 004, condizione di veridicità dello staging) |
+| H11 | Solo se l'anteprima è protetta: HTML e asset **senza** credenziali | 401 per tutti | Bloccante per un'anteprima protetta. Dal 2026-09-29 l'anteprima è aperta per decisione dell'utente (ADR 004): il controllo resta valido solo se la password verrà rimessa |
 
 #### TTFB dall'Italia
 
@@ -509,13 +546,16 @@ Dove leggere i valori nel JSON:
 - Il piano gratuito Starter offre 300 test al mese e circa 30 località, e Milano risulta tra queste [DA VERIFICARE al momento del test]. I test privati sono solo nel piano Pro.
 - Impostazioni: Chrome, emulazione mobile (Moto G), connessione 4G, 5 esecuzioni, solo la prima visita. Credenziali nella scheda «Auth» [DA VERIFICARE che esista ancora].
 - **Attenzione.** Il risultato è visibile a chiunque abbia il link, con le schermate dell'anteprima e i dettagli delle richieste, che possono comprendere le credenziali.
-  - Si usa solo con una password temporanea, da cambiare subito dopo.
-  - Serve l'assenso di brand-strategist: le schermate mostrano testi non ancora confermati (ADR 002).
+  - Con l'anteprima protetta: solo con una password temporanea, da cambiare subito dopo.
+  - Serviva l'assenso di brand-strategist, perché le schermate mostrano testi non ancora confermati (ADR 002). Dal 2026-09-29 l'anteprima è comunque aperta a chi ha il link (ADR 004): il risultato del test non espone niente di più.
 
-**4. PageSpeed Insights: non sull'anteprima.**
-- Non gestisce l'autenticazione: riceve 401.
-- Misura da un data center di Google scelto in base a chi lancia il test: per l'Europa nei Paesi Bassi, non in Italia [DA VERIFICARE].
-- Serve in produzione, per i dati di campo CrUX (se ci sono) e per il controllo mensile (§6.7).
+**4. PageSpeed Insights: sull'anteprima solo se è aperta.**
+- Non gestisce l'autenticazione: con la password riceve 401.
+- **Dal 2026-09-29 l'anteprima è aperta**, quindi chiunque può provarla dal browser su pagespeed.web.dev, senza chiave.
+  - Dà i dati di laboratorio sull'host reale: LCP, compressione (`document-latency-insight`), protocollo, cache.
+  - Non dà il TTFB dall'Italia: misura da un data center di Google scelto in base a chi lancia il test, per l'Europa nei Paesi Bassi [DA VERIFICARE].
+  - Dall'ambiente di lavoro l'API risponde 429 (quota anonima esaurita, provato anche il 2026-10-07).
+- In produzione serve anche per i dati di campo CrUX (se ci sono) e per il controllo mensile (§6.7).
 
 **5. Pannello e registri di Railway** (sessione principale con il connettore Railway, oppure l'utente dal pannello).
 - **Impostazioni del servizio:**
@@ -559,6 +599,8 @@ Dove leggere i valori nel JSON:
 ### 7.1 Sito costruito (rimisura del 2026-09-28, commit `7c5f747`)
 
 Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con Lighthouse 13.5.0, Chromium 141, `benchmarkIndex` 1642–2690 e build con il preload del font. Dettaglio e confronti in `docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md`.
+
+**Per `/siii/` dal 2026-10-07 la base è il §7.3**: la porta della hero è diventata l'immagine LCP. La riga di `/siii/` qui sotto resta come storico.
 
 | URL (template) | Simulato: FCP / LCP (corse) | Applicato: FCP = LCP (corse) | TBT sim. / appl. | CLS | Peso, richieste | JS | Elemento LCP |
 |---|---|---|---|---|---|---|---|
@@ -611,6 +653,27 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 - Confronto visivo con ingrandimento 2x su un volto: AVIF q50 è indistinguibile a 1x; q45 impasta la texture del tessuto; q60 costa +36%.
 - **Default:** q50. q60 solo per i ritratti in primo piano, su richiesta di ui-designer.
 
+### 7.3 Schermate SIII: `/siii/` con un'immagine LCP (2026-10-07, commit `d06a3e9`)
+
+Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141, `benchmarkIndex` 1461–2919. Corse alternate con la build del commit precedente (`09dcd17`). Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`.
+
+| URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
+|---|---|---|---|---|---|---|---|---|
+| `/siii/` (T2) | 1,25 / **1,80 s** (5) | 1,02 / **1,70 s** (6) | 0,31 / 0,40 s (3) | 0 / 40 ms | 0 | 132,1 KB, 8 | 34,0 KB (porta, 768w AVIF) | **porta della hero** (schermata della sala di Masseria Santella) |
+| `/` (T1) | 1,19 / 1,73 s (5) | 1,02 / 1,02 s (3) | — | 0 / 47 ms | 0 | 116,4 KB, 7 (applicato: 135,5 KB, 8) | 19,5 KB (applicato: 38,6 KB) | riga dell'H1, come prima |
+
+- **`/siii/` rispetto al controllo** (testo come LCP): simulato 1,65 s, applicato 1,06 s.
+  - L'aumento supera la regola del +10% del §8. È motivato: l'elemento LCP è cambiato per scelta di contenuto, e l'LCP resta sotto l'obiettivo di 2,0 s.
+  - Sui profili 4G reali: 0,33–0,38 s con il 4G veloce, 0,92–1,10 s con il 4G lento.
+- **Home:** stesse richieste del controllo. Con throttling applicato Chromium scarica in anticipo anche la schermata `lazy` del capitolo 01 (19,1 KB). L'LCP resta il testo (1,02 contro 1,03 s).
+- **Immagine LCP per dispositivo:**
+  - 768w, 33,6 KB: telefoni fino a 2x, compreso il Moto G di Lighthouse;
+  - 1080w, 51,4 KB: telefoni da 2,6x a 3x e desktop a 2x;
+  - 1200w, 58,3 KB: telefoni a 3x da 430 px;
+  - 480w, 18,0 KB: desktop a 1x.
+  - Tutte dentro il §4.
+- **Controlli statici:** superati tranne il n. 8, per il primo esempio di `/siii/` (WebP e JPEG a 1920 px). La correzione è nella review, osservazione 1.
+
 ## 8. Eccezioni e modifiche
 
 - **Owner.** Il budget lo modifica solo web-performance-specialist.
@@ -620,7 +683,9 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 - **Regressioni.** Se una modifica peggiora LCP o INP di oltre il 10% rispetto all'audit precedente, va giustificata anche se resta sotto il limite.
 
 ## Ipotesi da validare
-- [IPOTESI: nessuna pagina avrà una foto come LCP, come prevede la direzione visiva. Vale per tutte le pagine attuali (verificato il 2026-09-28). Se una pagina futura la avrà, vale la riga «Immagine LCP» del §4.]
+- **Superata il 2026-10-07:** l'ipotesi «nessuna pagina avrà una foto come LCP». Dal commit `d06a3e9` l'LCP di `/siii/` è la porta della hero (§7.3), e valgono la riga «Immagine LCP» del §4 e le righe «Immagine LCP» del §2.
+- [IPOTESI: sulle altre pagine l'LCP resta testo. È verificato sulla Home il 2026-10-07, mentre Puglia Digitale e Città Digitali non sono state rimisurate dopo le foto e le carte del 2026-10-06. Va controllato al primo audit.]
+- [IPOTESI: su HTTP/2, all'host reale, `fetchpriority="high"` anticipa l'immagine LCP rispetto al font più di quanto si veda in laboratorio (HTTP/1.1). Da verificare sull'anteprima, per la finestra del ripiego (§3).]
 - [IPOTESI: il blocco del rendering dovuto al preload del font (§3, ADR 005) riguarda Chrome, quindi i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato.]
 - [IPOTESI: le misure sull'anteprima fatte con le credenziali passano dall'edge di Railway ma non dalla sua CDN, perché le richieste con `Authorization` non vanno in cache (§6.8). Rappresentano quindi una produzione su Railway senza CDN.]
 - [DA VERIFICARE sull'anteprima (§6.8): l'edge di Railway inoltra la compressione del server; HTTP/2 attivo; modalità Serverless spenta.]
@@ -629,17 +694,23 @@ Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con L
 
 ## Domande aperte
 1. È disponibile un Android di fascia media per una verifica sul campo prima del lancio, oppure un servizio di test su dispositivi reali?
-2. Il cliente ha una chiave API di PageSpeed Insights o un accesso a Search Console per i dati sul campo del sito attuale?
+2. Il cliente ha un accesso a Search Console per i dati sul campo del sito attuale? Per l'anteprima aperta basta PageSpeed Insights dal browser; la chiave API serve solo per automatizzare.
 3. Chi esegue in Italia le verifiche sull'hosting del §6.8, e da quali reti (una fissa e una mobile, meglio se una in Puglia)?
 
 ## Decisioni richieste
 - **Utente:**
   - hosting di produzione (ADR 001; condizione C08): le verifiche del §6.8 si ripetono sullo staging dell'host scelto;
-  - chi misura dall'Italia (domanda 3) e, se si usa WebPageTest, una password temporanea dell'anteprima da cambiare dopo il test.
-- **brand-strategist:** assenso all'uso di WebPageTest sull'anteprima, i cui risultati sono visibili a chi ha il link (§6.8, punto 3). Senza assenso bastano lo script e Lighthouse.
+  - chi misura dall'Italia (domanda 3). Con l'anteprima aperta (dal 2026-09-29) non servono credenziali, e si può usare anche PageSpeed Insights dal browser (§6.8, punto 4).
+- **brand-strategist:** superata la richiesta di assenso per WebPageTest. Con l'anteprima aperta per decisione dell'utente (ADR 004), il risultato del test non espone niente di più.
 - **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve per l'INP del menu, per il TTFB reale e per la prima condizione di riapertura dell'ADR 005 (nota del §3).
-- **creative-director:** nell'ADR 005 (versione 1.1, «Sorveglianza delle condizioni»), portare il confronto da 3 a **6 corse per variante**. Con 3 corse la stima del ritardo oscilla di circa 80 ms (§3, registro dei confronti).
+- **creative-director** (review del 2026-10-07):
+  - porta di `/siii/` con la sala o con la facciata (§6 della review);
+  - accettare o no la finestra del ripiego più lunga sulle reti lente dovuta all'immagine LCP (§3);
+  - inquadratura mobile della porta.
+  - Chiuso: le 6 corse per variante sono nell'ADR 005, versione 1.2.
 - **Sessione principale:**
-  - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura), e salvare lo script del §6.8 in `scripts/perf/hosting-check.sh`;
-  - con il connettore Railway: leggere le impostazioni del servizio dell'anteprima (regione, Serverless, CDN) e, durante la prova dall'Italia, i log HTTP (§6.8, punto 5);
-  - il server di misura c'è già (`scripts/serve.mjs`, con le richieste `Range` dal commit `007956d`), e `.perf/` è già in `.gitignore`.
+  - **prima del go-live:** fermare a 1440 px il primo esempio di `/siii/`, perché il controllo n. 8 lo segnala (review del 2026-10-07, osservazione 1);
+  - consigliato: applicare la patch di `Media.astro` (`mobileCrop`) per il ritaglio 4:5 della porta su mobile (osservazione 3);
+  - creare prima del lancio `scripts/perf/lighthouse.mjs` e `checks.mjs` (§6), con il comando del controllo n. 8 del §6.3 e i controlli Playwright del §6.4 (reveal fotogramma per fotogramma e CLS durante la lettura);
+  - durante la prova dall'Italia, leggere con il connettore Railway i log HTTP (§6.8, punto 5).
+  - Fatto: `scripts/perf/hosting-check.sh` è salvato; le impostazioni del servizio Railway sono lette e conformi (regione `europe-west4-drams3a`, una replica, modalità Serverless spenta, nessuna CDN); il server di misura c'è già (`scripts/serve.mjs`, con le richieste `Range` dal commit `007956d`); `.perf/` è in `.gitignore`.

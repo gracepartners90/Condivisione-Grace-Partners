@@ -239,6 +239,7 @@ const phrases: Record<string, string> = {
                   image={siiiExampleScreens[ex.id].image}
                   alt={siiiExampleScreens[ex.id].alt}
                   sizes={i === 0 ? '(min-width: 100rem) 1488px, 93vw' : '(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw'}
+                  widths={i === 0 ? [480, 768, 1080, 1440] : undefined}
                 />
                 {/* The whole screenshot opens the experience too, in a new tab (user, 2026-10-07). For pointers
                     only: keyboard and screen readers have the CTA below, and the image keeps its alt. */}
