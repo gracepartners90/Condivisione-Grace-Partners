@@ -3,9 +3,9 @@ titolo: "ADR 005 · Preload del carattere principale (Schibsted Grotesk)"
 owner: creative-director
 contributi: [web-performance-specialist]
 stato: accettata
-versione: 1.2
-aggiornato: 2026-09-28
-fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md (0.4, §3: nota di web-performance-specialist sull'ADR 005, protocollo e registro dei confronti), docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59)]
+versione: 1.3
+aggiornato: 2026-10-07
+fonti: [docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/performance/budget.md (0.4, §3: nota di web-performance-specialist sull'ADR 005, protocollo e registro dei confronti), docs/performance/architettura.md, docs/creativa/direzione-visiva.md, misure del creative-director del 2026-09-28 (Playwright 1.56, Chromium 141, server scripts/serve.mjs con Brotli, build dist/ delle 12:59), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (osservazioni 2 e 3), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md]
 ---
 
 # ADR 005 · Preload del carattere principale
@@ -93,6 +93,27 @@ L'FCP simulato della Home senza preload (1,51 s, 0,01 s sopra l'obiettivo) non �
   - `docs/performance/architettura.md`: regola 4, implementazione dei font e riepiloghi.
 - **Nessun cambio** a `docs/ui/design-system.md` (tabella dei font: già «preload») né alla direzione visiva (§3.2, aggiornata solo con il rimando a questo ADR).
 - La baseline di laboratorio del `budget.md` §7.1 è già misurata con il preload: resta valida.
+
+## Aggiornamento 1.3 · `/siii/` con un'immagine LCP (2026-10-07)
+
+- **Contesto.** Dal commit d06a3e9 la hero di `/siii/` ha la schermata reale di un SIII in `priority`, ed è l'elemento LCP della pagina. Immagine e font in preload arrivano insieme e si dividono la banda. Le misure di web-performance-specialist (`docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`, osservazione 2), mediane di 3 caricamenti, dal primo paint all'arrivo del font:
+
+  | Profilo | Con l'immagine | Senza immagine | Differenza |
+  |---|---|---|---|
+  | Laboratorio di Lighthouse | 937–967 ms | 664–686 ms | +251–303 ms |
+  | 4G lento | 478–530 ms | 230–262 ms | +248–268 ms |
+  | 4G veloce | 26–63 ms | 25–29 ms | +1–34 ms |
+
+- **Decisione del creative-director: si accetta.**
+  - L'LCP ha soglie non negoziabili, la finestra del ripiego no. Sulla pagina che vende il SIII la schermata è la prova più forte, e deve arrivare per prima.
+  - Il preload resta. Sulle reti veloci, dove si concentra il pubblico desktop, la finestra resta trascurabile.
+  - Sul 4G lento la finestra arriva a 0,48–0,53 s, il doppio di prima, ma il titolo non si sposta (CLS 0).
+- **Mitigazione, approvata nello stesso verdetto.** Sotto i 64em la porta scarica il ritaglio 4:5 fatto in build (`mobileCrop`). La finestra scende da 967 a 805 ms in laboratorio e da 478 a 418 ms sul 4G lento, a 1,75x.
+- **Sorveglianza.**
+  - Su `/siii/` l'LCP è ora l'immagine, e il preload non lo sposta più. Il confronto con e senza preload resta significativo per l'LCP solo sulla Home.
+  - Su `/siii/` si registra la finestra del ripiego (`budget.md` §3, web-performance-specialist).
+  - Se sull'host reale, in HTTP/2, la finestra supera i 600 ms sul profilo 4G lento, web-performance-specialist prova la porta senza `fetchpriority="high"` e sceglie con le misure, senza nuovo assenso. L'LCP deve restare entro l'obiettivo di 2,0 s.
+- **La condizione «la hero smette di essere tipografica»** (sopra, «Quando si riapre») riguarda la Home. La hero di `/siii/` resta guidata dal titolo «SIII» in `display-xxl`, con l'immagine accanto, quindi la condizione non scatta.
 
 ## Ipotesi da validare
 
