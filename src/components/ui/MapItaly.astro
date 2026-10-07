@@ -7,8 +7,6 @@
  * in the text beside it) and aria-hidden; with `label` it is an image with that text alternative
  * (Home chapter 03, visual direction §1.4).
  */
-import { formatCoords } from '../../lib/geo';
-
 type MapPlace = { id: string; name: string; lat: number; lon: number };
 /** Position of a name per class of map width (scripts/generate-maps.mjs); 'none' where it is not shown. */
 type LabelAnchor = { wide: string; narrow: string; hero?: string };
@@ -28,7 +26,6 @@ type MapDot = { id: string; x: number; y: number };
 type MapLabel = { text: string; x: number; y: number; anchor?: 'start' | 'middle' | 'end' };
 type MapData = {
   viewBox: string;
-  viewBoxCompact?: string;
   path: string;
   places: PlacePoint[] | Record<string, { x: number; y: number }>;
   labels?: MapLabel[];
@@ -37,7 +34,7 @@ type MapData = {
 };
 
 interface Props {
-  map: 'italia' | 'puglia' | 'pugliaRegione';
+  map: 'italia' | 'pugliaRegione';
   /** Named places; with `cities` they come from maps.json. */
   places?: MapPlace[];
   /**
@@ -55,12 +52,8 @@ interface Props {
    * under 25rem.
    */
   nameClass?: 'hero';
-  /** Puglia: crop to the stretch of coast around the places. */
-  compact?: boolean;
   /** Id of the place drawn as the office (ring around the node). */
   home?: string;
-  /** Custom viewBox (a crop of the map's own coordinates), e.g. a wide band of coast. */
-  frame?: string;
   /**
    * Text alternative (WCAG 1.1.1). Give it when the map shows something the text beside it does not
    * say (chapter 03: where the cities of Città Digitali are). Without it the map is decorative.
@@ -69,16 +62,15 @@ interface Props {
   class?: string;
 }
 
-const { map, places = [], cities = false, nameClass, showLabels = true, compact = false, home, frame, label, class: className } = Astro.props;
+const { map, places = [], cities = false, nameClass, showLabels = true, home, label, class: className } = Astro.props;
 
 const files = import.meta.glob<{ default: Record<string, unknown> }>('../../data/maps.json', { eager: true });
 const raw = Object.values(files)[0]?.default as { maps?: Record<string, MapData> } & Record<string, MapData> | undefined;
 const data: MapData | undefined = raw?.maps?.[map] ?? raw?.[map];
 
-// Fallback frame: bounding boxes of the two maps.
+// Fallback frame: bounding boxes of the maps.
 const BOUNDS = {
   italia: { minLon: 6.5, maxLon: 18.6, minLat: 36.5, maxLat: 47.2 },
-  puglia: { minLon: 15.8, maxLon: 17.8, minLat: 40.4, maxLat: 41.35 },
   pugliaRegione: { minLon: 14.9, maxLon: 18.7, minLat: 39.6, maxLat: 42.1 },
 }[map];
 const W = 400;
@@ -89,7 +81,7 @@ const project = (lat: number, lon: number) => ({
   y: ((BOUNDS.maxLat - lat) / (BOUNDS.maxLat - BOUNDS.minLat)) * H,
 });
 
-const viewBox = (data && frame) || (compact && data?.viewBoxCompact) || data?.viewBox || `0 0 ${W} ${H}`;
+const viewBox = data?.viewBox || `0 0 ${W} ${H}`;
 const [vbX, vbY, vbW, vbH] = viewBox.split(/\s+/).map(Number);
 const pct = (x: number, y: number) => ({ left: ((x - vbX) / vbW) * 100, top: ((y - vbY) / vbH) * 100 });
 
@@ -146,7 +138,7 @@ if (!data) {
 }
 ---
 
-<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--compact': compact || Boolean(frame), 'map--cities': Boolean(cities) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
+<div class:list={['map', `map--${map}`, { 'map--fallback': !data, 'map--cities': Boolean(cities) }, className]} style={`aspect-ratio: ${vbW} / ${vbH}`}
   {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' })}
 >
   {/* Drawn text is aria-hidden too: with `label` the description says it (children of role="img" are
@@ -183,7 +175,6 @@ if (!data) {
             ) : (
               <span>{p.name}</span>
             )}
-            {!cities && <span class="map__coords">{formatCoords(p)}</span>}
           </span>
         )}
       </span>
@@ -290,8 +281,8 @@ if (!data) {
     white-space: normal;
   }
 
-  /* Wide maps (the Puglia Digitale hero from ~800 px): place names on one line, as on a printed
-     map at this scale (N8). Small maps keep their two-line names. */
+  /* Maps of at least 45rem: place names on one line, as on a printed map at this scale (N8). Small
+     maps keep their two-line names. Maps with city dots set their own lines (below). */
   @container (min-width: 45rem) {
     .map__label > span:first-child {
       max-width: none;
@@ -382,7 +373,7 @@ if (!data) {
     display: none;
   }
 
-  /* Narrow maps (up to 25rem, like the coordinates below): the narrow anchor where it differs; a
+  /* Narrow maps (up to 25rem): the narrow anchor where it differs; a
      city without room for its name there is drawn as a dot. */
   @container (max-width: 25rem) {
     .map__label[data-anchor-narrow] {
@@ -424,28 +415,6 @@ if (!data) {
 
     /* The whole of Puglia on a phone: no sea names, which would crowd the coast (design system §5.4). */
     .map--pugliaRegione .map__area { display: none; }
-  }
-
-  .map__coords {
-    color: var(--fg-2);
-  }
-
-  /* Small maps (phones): names only, the coordinates would collide. */
-  @container (max-width: 25rem) {
-    .map__coords {
-      display: none;
-    }
-  }
-
-  /* The compact frame (Home chapter 02, at most 30rem): names only at every width. With the
-     coordinates, those of Monopoli would cover the office ring and the name of Acquaviva. */
-  .map--compact .map__coords {
-    display: none;
-  }
-
-  /* The compact frame crops the coastline: clip it to the frame. */
-  .map--compact .map__svg {
-    overflow: clip;
   }
 
   /* Windows contrast themes (forced colors): the system paints every background in its canvas

@@ -14,7 +14,6 @@ import FounderTimeline from '../components/sections/FounderTimeline.astro';
 import CTASection from '../components/sections/CTASection.astro';
 import Media from '../components/ui/Media.astro';
 import MapItaly from '../components/ui/MapItaly.astro';
-import Node from '../components/ui/Node.astro';
 import { horizonPlaces, office, founder } from '../data/site';
 import { founderPortrait, eventPhotoNote, siiiHomeScreen } from '../data/media';
 import { bearing, distanceKm, formatCoords } from '../lib/geo';
@@ -131,9 +130,6 @@ const pugliaLabel = describePugliaDigitale(
         <div slot="visual" class="worlds__screen aperture">
           {/* Masseria Santella's SIII from inside: the alt names it, the chapter text speaks of SIII in general. */}
           <Media image={siiiHomeScreen.image} alt={siiiHomeScreen.alt} sizes="(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw" />
-          <Node kind="hotspot" class="worlds__hot" style="left: 22%; top: 58%" ping />
-          <Node kind="hotspot" class="worlds__hot" style="left: 57%; top: 38%" ping />
-          <Node kind="hotspot" class="worlds__hot" style="left: 78%; top: 66%" ping />
         </div>
       </ProjectShowcase>
 
@@ -263,34 +259,6 @@ const pugliaLabel = describePugliaDigitale(
   .worlds__list {
     margin: 0;
     padding: 0;
-  }
-
-  .worlds__screen {
-    position: relative;
-  }
-
-  .worlds__screen :global(.worlds__hot) {
-    position: absolute;
-    z-index: 3;
-    transform: translate(-50%, -50%);
-  }
-
-  /* On a small placeholder the nodes would cover the asset brief: they return with the image. */
-  @media (max-width: 43.74em) {
-    .worlds__screen:has(:global(.media-slot)) :global(.worlds__hot) {
-      display: none;
-    }
-  }
-
-  /* The publication variant draws its own still hotspots. */
-  .worlds__screen:has(:global(.slot-pub)) :global(.worlds__hot) {
-    display: none;
-  }
-
-  /* Over a real screenshot the nodes would add hotspots the experience does not have: the
-     screenshot shows its own. */
-  .worlds__screen:has(:global(.media-picture)) :global(.worlds__hot) {
-    display: none;
   }
 
   .worlds :global(.worlds__map) {

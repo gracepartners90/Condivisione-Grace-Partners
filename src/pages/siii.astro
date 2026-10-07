@@ -69,10 +69,16 @@ const phrases: Record<string, string> = {
       <Cta href="#richiesta" label="Richiedi un’offerta" variant="link" ctaId="siii-hero-offerta" location="hero" interest="siii" />
     </div>
     <div slot="visual" class="siii-hero__door aperture">
-      <Media image={siiiHeroScreen.image} alt={siiiHeroScreen.alt} sizes="(min-width: 30rem) 26rem, 90vw" priority class="siii-hero__media" />
-      <Node kind="hotspot" class="siii-hero__node" style="left: 30%; top: 30%" ping />
-      <Node kind="hotspot" class="siii-hero__node" style="left: 68%; top: 46%" ping />
-      <Node kind="hotspot" class="siii-hero__node" style="left: 42%; top: 64%" ping />
+      {/* Below 64em the door is 4:5: phones get a crop made at build time, anchored at the bottom so the
+          menu, the room and the hotspot stay in view (creative-director, verdict of 2026-10-07). */}
+      <Media
+        image={siiiHeroScreen.image}
+        alt={siiiHeroScreen.alt}
+        sizes="(min-width: 30rem) 26rem, 90vw"
+        priority
+        mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'bottom' }}
+        class="siii-hero__media"
+      />
     </div>
   </Hero>
 
@@ -323,24 +329,6 @@ const phrases: Record<string, string> = {
   /* Porta 3:5 on desktop, 4:5 below the text on mobile (visual direction §7.4). */
   .siii-hero__door :global(:is(.media-slot, .slot-pub, .media-picture)) {
     aspect-ratio: 4 / 5;
-  }
-
-  .siii-hero__door :global(.siii-hero__node) {
-    position: absolute;
-    z-index: 3;
-    transform: translate(-50%, -50%);
-  }
-
-  @media (max-width: 43.74em) {
-    .siii-hero__door :global(.siii-hero__node) {
-      display: none;
-    }
-  }
-
-  /* The publication variant draws its own still hotspots. Over a real screenshot the nodes would
-     add hotspots the experience does not have: the screenshot shows its own. */
-  .siii-hero__door:has(:global(:is(.slot-pub, .media-picture))) :global(.siii-hero__node) {
-    display: none;
   }
 
   @media (min-width: 64em) {

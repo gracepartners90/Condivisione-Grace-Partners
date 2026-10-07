@@ -10,13 +10,15 @@
 //
 // - italia: outer rings of Italy ∪ San Marino ∪ Vatican (no enclave holes), islands ≥ 18 km² (smaller ones render as specks),
 //   Douglas–Peucker at ~1 km, closed polylines.
-// - puglia: Italian coastline clipped to the Terra di Bari window, Visvalingam–Whyatt (drops
-//   sub-kilometre notches such as the harbour moles), then a centripetal Catmull–Rom curve
-//   through the remaining Natural Earth vertices: one open line, no fill.
 // - pugliaRegione: the whole coast of Puglia, from the mouth of the Saccione (border with Molise) to
-//   the mouth of the Bradano (border with Basilicata), smoothed like `puglia`: one open line, no fill,
-//   no regional border (Natural Earth admin-0 has none, and a closed outline would read as coverage:
-//   N12). One dot per city of Puglia Digitale, names where they fit (three classes of width).
+//   the mouth of the Bradano (border with Basilicata): Visvalingam–Whyatt (drops sub-kilometre notches
+//   such as the harbour moles), then a centripetal Catmull–Rom curve through the remaining Natural
+//   Earth vertices. One open line, no fill, no regional border (Natural Earth admin-0 has none, and a
+//   closed outline would read as coverage: N12). One dot per city of Puglia Digitale, names where they
+//   fit (three classes of width).
+//
+// The Terra di Bari map (`puglia`), on the Home until 2026-10-07, is no longer generated: it is in the
+// git history (commit 133e9a5) if it is ever needed again.
 //
 // Run with: node scripts/generate-maps.mjs   (fails if a path exceeds 8 KB)
 import { readFile, writeFile } from 'node:fs/promises';
@@ -40,14 +42,6 @@ const projection = geoConicConformal()
   .scale(EARTH_RADIUS_KM)
   .translate([0, 0])
   .precision(0);
-
-// Coordinates of the places: same values and source as src/data/site.ts (visual direction §1.4,
-// docs/strategia/coordinate-luoghi.md). Keep the two lists aligned, then run `npm run maps`.
-const PLACES = {
-  acquaviva: { name: 'Acquaviva delle Fonti', lat: 40.9, lon: 16.85 },
-  gravina: { name: 'Gravina in Puglia', lat: 40.82, lon: 16.42 },
-  monopoli: { name: 'Monopoli', lat: 40.95, lon: 17.3 },
-};
 
 // Città Digitali on the «italia» map (Home chapter 03): one dot per city, names where they fit.
 // Single source: src/data/citta-digitali.json (cities from the page «Tutte le città» of
@@ -134,29 +128,6 @@ function simplifyRing(ring, tolerance) {
   const a = simplify(pts.slice(0, far + 1), tolerance);
   const b = simplify([...pts.slice(far), pts[0]], tolerance);
   return [...a.slice(0, -1), ...b.slice(0, -1)];
-}
-
-/** Liang–Barsky clipping of a polyline against [x0,y0,x1,y1]; returns the visible pieces. */
-function clipPolyline(points, [x0, y0, x1, y1]) {
-  const pieces = [];
-  let current = null;
-  for (let k = 0; k < points.length - 1; k++) {
-    const a = points[k], b = points[k + 1];
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    let t0 = 0, t1 = 1, visible = true;
-    for (const [p, q] of [[-dx, a[0] - x0], [dx, x1 - a[0]], [-dy, a[1] - y0], [dy, y1 - a[1]]]) {
-      if (p === 0) { if (q < 0) { visible = false; break; } continue; }
-      const r = q / p;
-      if (p < 0) { if (r > t1) { visible = false; break; } if (r > t0) t0 = r; }
-      else { if (r < t0) { visible = false; break; } if (r < t1) t1 = r; }
-    }
-    if (!visible) { current = null; continue; }
-    const pa = [a[0] + t0 * dx, a[1] + t0 * dy], pb = [a[0] + t1 * dx, a[1] + t1 * dy];
-    if (!current || t0 > 0) { current = [pa]; pieces.push(current); }
-    current.push(pb);
-    if (t1 < 1) current = null;
-  }
-  return pieces.filter((p) => p.length > 1);
 }
 
 // ─── Serialisation: absolute start, then relative deltas computed on rounded points (no drift) ───
@@ -439,17 +410,6 @@ function windowTransform([kx0, ky0, kx1, ky1], width) {
   return { s, width, height, apply: ([x, y]) => [(x - kx0) * s, (y - ky0) * s] };
 }
 
-function placeEntry(id, T, extra = {}) {
-  const p = PLACES[id];
-  const [x, y] = T.apply(projection([p.lon, p.lat]));
-  return {
-    id, name: p.name, lat: p.lat, lon: p.lon,
-    x: +x.toFixed(1), y: +y.toFixed(1),
-    xPct: +((x / T.width) * 100).toFixed(2), yPct: +((y / T.height) * 100).toFixed(2),
-    ...extra,
-  };
-}
-
 function labelEntry(text, lat, lon, T, anchor) {
   const [x, y] = T.apply(projection([lon, lat]));
   return { text, lat, lon, anchor, x: +x.toFixed(1), y: +y.toFixed(1), xPct: +((x / T.width) * 100).toFixed(2), yPct: +((y / T.height) * 100).toFixed(2) };
@@ -489,47 +449,6 @@ function buildItalia({ width = 1000, minIslandKm2 = 18, tolerance = 1.1, decimal
     bytes: Buffer.byteLength(path),
     places: named.map((p) => ({ ...p, anchor: anchors[p.id] })),
     dots: dots.map(({ id, x, y, xPct, yPct }) => ({ id, x, y, xPct, yPct })),
-  };
-}
-
-/** Coast of Terra di Bari as one open line crossing the frame (no fill: the frame edges are not drawn). */
-function buildPuglia({ width = 1600, minArea = 200, decimals = 1 } = {}) {
-  const WINDOW = { west: 15.98, east: 17.72, north: 41.37, south: 40.66 };
-  // Wide window (desktop hero) in projected km, from the geographic corners below.
-  const corner = (lon, lat) => projection([lon, lat]);
-  const [wx0] = corner(WINDOW.west, 41.0), [wx1] = corner(WINDOW.east, 40.8);
-  const [, wy0] = corner(16.85, WINDOW.north), [, wy1] = corner(16.85, WINDOW.south);
-  const T = windowTransform([wx0, wy0, wx1, wy1], width);
-  const coast = mesh(topology, topology.objects.countries, (a, b) => a === b && a.id === ITALY);
-  const pieces = coast.coordinates
-    .map((line) => line.map((c) => T.apply(projection(c))))
-    .flatMap((line) => clipPolyline(line, [0, 0, T.width, T.height]))
-    .map((line) => simplifyArea(line, minArea))
-    .filter((line) => line.length > 1);
-  const path = toCurvePath(pieces, decimals);
-  // Compact window (mobile, Home chapter 02): Terra di Bari around the three nodes, same coordinates.
-  const [cx0, cy0] = T.apply(corner(16.3, 41.34));
-  const [cx1, cy1] = T.apply(corner(17.42, 40.7));
-  const compact = [cx0, cy0, cx1 - cx0, cy1 - cy0].map((v) => +v.toFixed(1));
-  return {
-    description: 'Costa della Terra di Bari, da nord-ovest (Barletta) a sud-est (oltre Monopoli): linea aperta levigata (Catmull-Rom sui vertici Natural Earth), solo tratto.',
-    window: WINDOW,
-    viewBox: `0 0 ${T.width} ${T.height}`,
-    viewBoxCompact: compact.join(' '),
-    width: T.width, height: T.height,
-    kmPerUnit: +(1 / T.s).toFixed(4),
-    subpaths: pieces.length,
-    path,
-    bytes: Buffer.byteLength(path),
-    places: [
-      placeEntry('gravina', T),
-      placeEntry('acquaviva', T, { role: 'sede' }),
-      placeEntry('monopoli', T),
-    ],
-    labels: [
-      labelEntry('MARE ADRIATICO', 41.2, 17.12, T, 'start'),
-      labelEntry('MURGIA', 41.02, 16.28, T, 'start'),
-    ],
   };
 }
 
@@ -579,7 +498,7 @@ function buildPugliaRegione({ width = 1000, minAreaKm2 = 1.65, decimals = 1, pad
   const [bx0, by0, bx1, by1] = [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
   const padKm = (bx1 - bx0) * pad;
   const T = windowTransform([bx0 - padKm, by0 - padKm, bx1 + padKm, by1 + padKm], width);
-  const minArea = minAreaKm2 * T.s * T.s; // same smoothing as the Terra di Bari coast, in km²
+  const minArea = minAreaKm2 * T.s * T.s; // Visvalingam threshold: km² → viewBox units²
   const line = simplifyArea(projected.map(T.apply), minArea);
   const path = toCurvePath([line], decimals);
   const view = { width: T.width, height: T.height };
@@ -614,9 +533,8 @@ function buildPugliaRegione({ width = 1000, minAreaKm2 = 1.65, decimals = 1, pad
 }
 
 const italia = buildItalia();
-const puglia = buildPuglia();
 const pugliaRegione = buildPugliaRegione();
-for (const [id, m] of Object.entries({ italia, puglia, pugliaRegione })) {
+for (const [id, m] of Object.entries({ italia, pugliaRegione })) {
   if (m.bytes > MAX_PATH_BYTES) throw new Error(`${id}: path is ${m.bytes} B, over ${MAX_PATH_BYTES} B`);
   console.log(`${id}: viewBox ${m.viewBox}, ${m.subpaths} subpaths, path ${m.bytes} B`);
 }
@@ -626,7 +544,7 @@ const out = {
   generatedBy: 'scripts/generate-maps.mjs',
   projection: { ...PROJECTION, scale: EARTH_RADIUS_KM, note: 'Lambert conformal conic; one projection for every map' },
   coordinatesNote: 'Coordinate a 2 decimali da una fonte unica (riquadro Wikipedia dei comuni, 2026-09-28): docs/strategia/coordinate-luoghi.md.',
-  maps: { italia, puglia, pugliaRegione },
+  maps: { italia, pugliaRegione },
 };
 await writeFile('src/data/maps.json', JSON.stringify(out, null, 2) + '\n');
 console.log('src/data/maps.json written');
