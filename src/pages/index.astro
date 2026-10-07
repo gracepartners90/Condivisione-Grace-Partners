@@ -22,7 +22,7 @@ import { pageGraph, person, ids } from '../lib/structured-data';
 import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
 import eventoCitta from '../assets/images/derivate/evento-citta.jpg';
 import maps from '../data/maps.json';
-import { describeCittaDigitali } from '../lib/citta-digitali';
+import { describeCittaDigitali, describeTerraDiBari } from '../lib/citta-digitali';
 
 const places = horizonPlaces.map((p) => ({ id: p.id, name: p.name, bearing: bearing(office, p), km: distanceKm(office, p) }));
 const schema = pageGraph('home', [person()], { about: ids.organization });
@@ -34,6 +34,8 @@ const drawnAtEveryWidth = (p: { anchor?: { wide?: string; narrow?: string } }) =
 const mapLabel = describeCittaDigitali(
   [...maps.maps.italia.places].filter(drawnAtEveryWidth).sort((a, b) => b.lat - a.lat).map((p) => p.name),
 );
+// Text alternative of the chapter 02 map: the chapter text names none of its places (ux-designer, 2026-10-07).
+const pugliaLabel = describeTerraDiBari(pugliaPlaces, 'acquaviva');
 ---
 
 <BaseLayout page="home" schema={schema}>
@@ -138,7 +140,7 @@ const mapLabel = describeCittaDigitali(
         text="Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive."
         cta={{ label: 'Scopri Puglia Digitale', href: '/puglia-digitale/', id: 'home-capitolo-puglia-digitale' }}
       >
-        <MapItaly slot="visual" map="puglia" places={pugliaPlaces} home="acquaviva" compact class="worlds__map worlds__map--puglia" />
+        <MapItaly slot="visual" map="puglia" places={pugliaPlaces} home="acquaviva" compact label={pugliaLabel} class="worlds__map worlds__map--puglia" />
       </ProjectShowcase>
 
       <ProjectShowcase
