@@ -56,5 +56,11 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Se lo staging condiviso è vecchio, si prova una patch per `src/` senza toccare il repo. In una cartella di lavoro: `git archive HEAD | tar -x`, symlink a `node_modules`, `patch -p1`, `npx astro build`, poi `serve.mjs` con `DIST_DIR`. Alla fine, chiudere il server con `kill` sul PID (controllare `/proc/<pid>/cwd`).
 - `copycheck.py` conta come paragrafo ogni etichetta in grassetto che comincia con «Testo»: per un alt nel copy deck, usare «**Alt della …**», così il Gulpease del testo visibile resta confrontabile.
 
+## Nuova versione di un asset già nel sito (lezione del 2026-10-07)
+- Confrontare la nuova versione con la vecchia, a pezzi ingranditi (schermi, persone, angoli): la foto «pulita» dell'evento aveva la stessa platea ma schermi e posa dell'oratore diversi. Almeno una delle due è elaborata, e la nota AI dipende da quale: è una domanda per l'utente, non una deduzione mia.
+- Se un `<picture>` ha due ritagli, l'alt deve valere per tutti e due. Leggere anche la legenda per breakpoint (`ImmersivePreview`: sotto i 700 px restano solo i punti con `small`).
+- Nelle tabelle dei ritagli, quando cambia la sorgente di una riga, i «come sopra» delle righe seguenti cambiano significato: scrivere la sorgente per esteso.
+- Prima di aggiornare un mio documento, `git log` dall'ultima versione: in mezza giornata altri commit avevano cambiato carte, nodi, ritagli e ritratto. Il documento va riallineato anche lì, non solo sul punto richiesto.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

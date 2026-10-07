@@ -3,14 +3,24 @@ titolo: Testi alternativi delle immagini
 owner: copywriter-content
 contributi: [ux-designer, seo-content, seo-technical, copywriter-brand]
 stato: in revisione
-versione: 1.6
+versione: 1.7
 aggiornato: 2026-10-07
-fonti: [docs/ux/accessibilita.md 0.9 (§2.8, riga «Schermate di prodotto»), docs/review/2026-10-07-schermate-siii-ux-designer.md (§6.1), docs/review/2026-10-07-schermate-siii-cro-specialist.md (oss. 3 e 4), commit 88d7083 (schermata cliccabile negli esempi, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt della v1.5 nel sito), src/assets/images/ (con le 9 schermate dei SIII inviate dall'utente il 2026-10-07, commit d06a3e9; acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp, fornite dall'utente il 2026-10-06), screenshot di controllo della sessione principale del 2026-10-07 (scratchpad, non versionati), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.1), conferma dell'utente del 2026-10-06 sull'associazione delle immagini alle città, decisione dell'utente del 2026-10-06 sui segni grafici, prove di ritaglio del creative-director (scratchpad, non versionate), scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/components/ui/MapItaly.astro, src/pages/index.astro, src/pages/siii.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (A7, I7, I8), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/ux/accessibilita.md (sigla SIII, carte), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://127.0.0.1:4321 e variante «in pubblicazione» http://127.0.0.1:4322 del 2026-10-07 (commit d06a3e9)]
+fonti: [src/assets/images/evento-puglia-digitale-pulita.webp (versione pulita della foto dell'evento, inviata dall'utente il 2026-10-07, commit 920e497), catture della sessione principale in scratchpad/evento2/ (non versionate), commit bae201c (ritaglio in build della hero di /siii/, nodi decorativi tolti, carta della Terra di Bari tolta), 3e25c42 (carta della Puglia nel capitolo 02 della Home), 3bfe9b2 (ritratto del fondatore centrato in Home) e d211ba4 (alt della v1.6 nel sito), docs/creativa/direzione-visiva.md (0.14, §4.3), staging http://127.0.0.1:4321 del 2026-10-07, build delle 15:04 (commit 920e497), docs/ux/accessibilita.md 0.9 (§2.8, riga «Schermate di prodotto»), docs/review/2026-10-07-schermate-siii-ux-designer.md (§6.1), docs/review/2026-10-07-schermate-siii-cro-specialist.md (oss. 3 e 4), commit 88d7083 (schermata cliccabile negli esempi, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt della v1.5 nel sito), src/assets/images/ (con le 9 schermate dei SIII inviate dall'utente il 2026-10-07, commit d06a3e9; acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp, fornite dall'utente il 2026-10-06), screenshot di controllo della sessione principale del 2026-10-07 (scratchpad, non versionati), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.1), conferma dell'utente del 2026-10-06 sull'associazione delle immagini alle città, decisione dell'utente del 2026-10-06 sui segni grafici, prove di ritaglio del creative-director (scratchpad, non versionate), scripts/prepare-assets.mjs, src/data/asset-slots.ts, src/data/media.ts, src/components/ui/Media.astro, src/components/ui/SlotPending.astro, src/components/ui/MapItaly.astro, src/pages/index.astro, src/pages/siii.astro, src/pages/puglia-digitale.astro, src/pages/contatti.astro, src/data/pages.ts, src/scripts/immersive.ts, docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (A7, I7, I8), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B4), docs/review/2026-09-28-sito-bozze-copywriter-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), docs/ux/accessibilita.md (sigla SIII, carte), docs/creativa/direzione-visiva.md (§4.3, §4.5, §7.4–§7.7), docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, staging http://127.0.0.1:4321 e variante «in pubblicazione» http://127.0.0.1:4322 del 2026-10-07 (commit d06a3e9)]
 ---
 
 # Testi alternativi delle immagini
 
-Testi alternativi delle immagini del sito: i 18 file del cliente in `src/assets/images/` (9 immagini e 9 schermate dei SIII), i 9 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-07.
+Testi alternativi delle immagini del sito: i 19 file del cliente in `src/assets/images/` (10 immagini, tra cui le due versioni della foto dell'evento, e 9 schermate dei SIII), i 9 ritagli in `src/assets/images/derivate/` (generati da `scripts/prepare-assets.mjs`) e gli slot segnaposto di `src/data/asset-slots.ts`. Ogni testo è pronto da inserire nell'attributo `alt`, o in `aria-label` / `title` dove indicato. Per le immagini già nel sito c'è il testo pubblicato, verificato sullo staging del 2026-10-07.
+
+**Novità della v1.7 (2026-10-07).** La foto dell'evento della Home viene dalla versione pulita inviata dall'utente, `evento-puglia-digitale-pulita.webp` (commit 920e497).
+- Nuova sezione del file in «File del cliente»; nella tabella «Ritagli», misure e sorgente nuove per `evento-panorama.jpg` ed `evento-citta.jpg`.
+- L'alt della Home non cambia. Vale per i due nuovi ritagli: su mobile si vede solo lo schermo di sinistra, e la legenda mostra solo il punto 01. Anche le etichette dei tre punti valgono.
+- Il documento segue anche le altre modifiche di oggi:
+  - la carta della Puglia nel capitolo 02 della Home, al posto di quella della Terra di Bari;
+  - i nodi decorativi tolti;
+  - il ritaglio in build della hero di `/siii/`;
+  - il ritratto centrato del fondatore in Home.
+  Gli alt non cambiano. V2 è chiusa: gli alt della v1.6 sono nel sito.
 
 **Novità della v1.6 (2026-10-07).** Gli alt delle schermate seguono la regola di ux-designer per le schermate di prodotto: descrivono la vista, non i comandi disegnati (`docs/ux/accessibilita.md` §2.8; review del 2026-10-07, §6.1).
 - I tre esempi di `/siii/` non dicono più «con il pulsante di avvio»: dicono che cos'è la vista, «la schermata d’avvio dell’esperienza». Da applicare in `src/data/media.ts` (V2).
@@ -66,10 +76,10 @@ Le immagini generate o elaborate con AI non si usano come prova di eventi, né c
 
 | Pagina e punto | File | Testo alternativo | Testo visibile accanto |
 |---|---|---|---|
-| Home, «L’evento Puglia Digitale», da desktop | `derivate/evento-panorama.jpg` | La platea dell’evento Puglia Digitale; sul maxischermo a sinistra del palco, il tour virtuale di una città vista dall’alto. | Legenda dei tre punti (copy deck della Home) e la nota «Immagine elaborata con strumenti di intelligenza artificiale» |
-| Home, stesso punto, su mobile (stesso `<picture>`) | `derivate/evento-citta.jpg` | Lo stesso testo: vale per entrambi i ritagli | Come sopra |
+| Home, «L’evento Puglia Digitale», da desktop | `derivate/evento-panorama.jpg`, da `evento-puglia-digitale-pulita.webp` (commit 920e497) | La platea dell’evento Puglia Digitale; sul maxischermo a sinistra del palco, il tour virtuale di una città vista dall’alto. | Legenda dei tre punti (copy deck della Home) e la nota «Immagine elaborata con strumenti di intelligenza artificiale» |
+| Home, stesso punto, sotto i 700 px (stesso `<picture>`) | `derivate/evento-citta.jpg`, dalla stessa foto | Lo stesso testo: vale per entrambi i ritagli | La legenda mostra solo il punto 01, e la stessa nota |
 | Home, «I tre mondi», capitolo 01 «SIII» | `siii-masseria-santella-desktop-interno.jpg` | Il SIII di Masseria Santella: una sala con la volta bianca e una porta a vetri ad arco aperta sugli altri ambienti, con il menu e i punti interattivi. | Prima: l'H3 «SIII – Siti Interattivi Immersivi» e «Spazi reali. Esperienze digitali.»; dopo: il testo del capitolo. Nessuna didascalia |
-| Home, «Il fondatore» | `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg` | Giacomo Lenoci a braccia conserte, in abito scuro. | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale»; nome e ruolo nella firma |
+| Home, «Il fondatore» | `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg` (ritaglio centrato, commit 3bfe9b2) | Giacomo Lenoci a braccia conserte, in abito scuro. | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale»; nome e ruolo nella firma |
 | SIII, hero | `siii-masseria-santella-mobile-sala.jpg` | Masseria Santella da smartphone: una sala con la volta bianca e una porta a vetri aperta sulla stanza accanto, con il menu e un punto interattivo. | Prima: l'H1 «SIII – Siti Interattivi Immersivi», «Non raccontare la tua azienda. Falla esplorare.» e i due link. Nessuna didascalia |
 | SIII, «Esempi», Masseria Santella | `siii-masseria-santella-desktop-ingresso.jpg` | La schermata d’avvio dell’esperienza: il cancello d’ingresso tra gli alberi in una vista a piccolo pianeta, con il menu. | Dopo: l'H3 con il nome, luogo e portale, il testo della scheda e il link «Entra nell’esperienza ↗». Nessuna didascalia |
 | SIII, «Esempi», Maison Miminà | `siii-maison-mimina-desktop-ingresso.jpg` | La schermata d’avvio dell’esperienza: la vetrina su una strada alberata in una vista a piccolo pianeta, con il menu. | Come sopra |
@@ -83,18 +93,19 @@ Le immagini generate o elaborate con AI non si usano come prova di eventi, né c
 | Immagine social di tutte le pagine | `public/og/default.jpg`, tipografica: wordmark, «Esperienze digitali immersive per imprese e territori.», coordinate e orizzonte | `og:image:alt` «ITnode: esperienze digitali immersive per imprese e territori» (`src/data/pages.ts`, owner seo-technical) | — |
 
 Note:
-- Alt della foto dell'evento: per la Home è quello della review di bozze del 2026-09-28; per Puglia Digitale è quello già nel sito, registrato nella review di veridicità (P4). Corrispondono ai ritagli: li ho ricontrollati sui file il 2026-10-05. Nessuna immagine del sito sta dentro un link. Nel ritaglio di Puglia Digitale il palco e il fondale non si vedono.
+- Alt della foto dell'evento: per la Home è quello della review di bozze del 2026-09-28; per Puglia Digitale è quello già nel sito, registrato nella review di veridicità (P4). Corrispondono ai ritagli: li ho ricontrollati sui file il 2026-10-05, e il 2026-10-07 sui due nuovi ritagli della Home. Nessuna immagine del sito sta dentro un link. Nel ritaglio di Puglia Digitale il palco e il fondale non si vedono.
+- **Foto dell'evento in Home, dalla versione pulita** (commit 920e497). L'alt vale per i due ritagli: in tutti e due ci sono la platea e lo schermo di sinistra con la città vista dall'alto, e lo schermo sta davvero a sinistra del palco. Non nomina l'oratore (criterio 11) e non descrive la sua posa, che nel ritaglio da mobile non si vede. Le etichette dei punti valgono: 01 sulla città dello schermo di sinistra, 02 sul leggio, 03 sulla piazza dello schermo di destra. Sotto i 700 px restano il punto 01 e la sua voce di legenda; gli altri due escono anche per gli screen reader. Alt e voce 01 parlano tutti e due della città. È una ripetizione minore, e la lascio: l'alt resta autosufficiente anche per chi non arriva alla legenda.
+- **Ritratto del fondatore in Home** (commit 3bfe9b2). Ritaglio centrato. Dallo sfondo uno script ha tolto le ultime lettere del logo di Città Digitali, senza strumenti generativi (direzione visiva 0.14, §4.3). L'alt vale ancora, e la nota AI resta.
 - Gli alt dei ritratti sono quelli di questo documento per i casi con il nome nel testo, adattati alla monocromia: niente colori che l'immagine trattata non mostra più (`src/data/media.ts`).
 - L'`og:image:alt` descrive l'immagine social di oggi, che è tipografica. La proposta della v1.1, con il fondatore sul palco, non vale più.
 - **Schermate dei SIII: alt definitivi.** Nella tabella ci sono quelli della v1.6.
-  - Home e hero sono nel sito dal commit 9ddc8b2.
-  - I tre esempi nel sito dicono ancora «con il pulsante di avvio» (v1.5): vanno sostituiti in `src/data/media.ts` (V2).
-  - Le schermate non hanno didascalia, e sopra le schermate i punti animati del sito sono nascosti.
+  - Home e hero sono nel sito dal commit 9ddc8b2, i tre esempi dal commit d211ba4.
+  - Le schermate non hanno didascalia. I punti animati che il sito disegnava sopra le schermate sono stati tolti dal markup (commit bae201c).
 - **Esempi di `/siii/`: schermata cliccabile, immagine fuori dal link.** Per decisione dell'utente la schermata apre l'esperienza in una nuova scheda (commit 88d7083). Lo fa con uno strato `<a>` trasparente sopra l'immagine, per il solo puntatore, nascosto agli screen reader e fuori dalla tabulazione. L'immagine resta fuori dal link e tiene il suo alt: il criterio 6 non si applica. Per tastiera e screen reader l'unico link resta «Entra nell’esperienza».
 - **Home e hero di `/siii/`.** L'alt nomina Masseria Santella, perché il testo accanto non lo fa. Non ripete «Siti Interattivi Immersivi», che è nel titolo subito prima (criterio 5). La sigla SIII è quella del testo accanto: come la leggono gli screen reader si verifica in Fase 5 (`docs/ux/accessibilita.md`).
 - **Home e hero: il menu e i punti interattivi restano.** Sono la parte della vista che mostra un SIII in uso, e ux-designer li conta tra gli elementi che fanno l'immagine informativa (review del 2026-10-07, §1 e §4). Sono nominati come oggetti nella vista, non come comandi: nessun «pulsante», nessuna azione (criterio 12).
 - **Se sotto la hero arriva il nome della struttura.** cro-specialist propone una riga «Masseria Santella · Cassano delle Murge (BA)» sotto la schermata (review CRO, oss. 4). In quel caso l'alt passa alla variante «Con il nome nel testo accanto» (sezione delle schermate).
-- **Ritaglio della hero.** Da 1024 px l'immagine è 3:5, come il file; sotto è 4:5. Il ritaglio 4:5 toglie in alto parte del logo e in basso le ultime icone del menu: l'alt vale per tutti e due.
+- **Ritaglio della hero.** Da 1024 px l'immagine è 3:5, come il file. Sotto c'è un ritaglio 4:5 fatto in build, ancorato in basso (commit bae201c): restano la volta, la sala, la porta, il menu intero e il punto interattivo; il logo esce. L'alt vale per tutti e due, e l'ho ricontrollato a 390 px.
 - **Esempi di `/siii/`: l'alt non nomina l'impresa.** Nel DOM l'H3 con il nome arriva subito dopo l'immagine. Ripeterlo allungherebbe la lettura di ogni scheda (criterio 5). «Siti Interattivi Immersivi» lo dice già l'introduzione della sezione.
 - **Esempi di `/siii/`: «la schermata d’avvio dell’esperienza».** L'alt dice che cos'è la vista, non il play disegnato al centro: chi usa lo screen reader non può premerlo, e il modo di entrare è il link che chiude la scheda (review di ux-designer, §6.1). La v1.5 diceva «con il pulsante di avvio». Il frame arriva per primo, perché l'immagine precede il nome dell'impresa.
 
@@ -240,9 +251,28 @@ Note:
 - Nel logo si legge «itNode», nel testo si scrive «ITnode» (tone of voice §5, brief DR1).
 - [DA FORNIRE: logo vettoriale ufficiale, positivo e negativo, brief §7]
 
-### `evento-puglia-digitale.jpg` · 1365 × 768 px · originale
+### `evento-puglia-digitale-pulita.webp` · 1672 × 941 px · WebP · versione pulita, per la Home
 
-Foto dell'evento. Un oratore parla sul palco davanti al fondale di Puglia Digitale, di fronte a una platea numerosa. Sui maxischermi ai lati ci sono due tour virtuali: a sinistra una città vista dall'alto con i loghi delle attività, a destra una piazza storica. Sull'immagine sono sovrapposti una cornice bianca, il marchio del progetto in alto a sinistra, una scritta in corsivo e, in basso a destra, il segno di Gemini. **Nel sito non si usa intera**: è la fonte dei quattro ritagli dell'evento.
+Foto dell'evento, senza la cornice, il marchio sovrapposto, la scritta in corsivo e il segno di Gemini della prima versione. Un oratore in abito scuro, con le mani in tasca, sta sul palco vicino a un leggio, davanti al fondale con il marchio di Puglia Digitale. Ai lati, due maxischermi mostrano il portale Puglia Digitale con il menu laterale: a sinistra una città vista dall'alto con i loghi delle attività, a destra una piazza storica. In primo piano una platea numerosa, di spalle.
+
+- **Provenienza.** Inviata dall'utente il 2026-10-07 («aggiorna questa in home»; commit 920e497). Il file ha solo un profilo colore: niente EXIF, XMP o IPTC. Agli angoli, ingranditi 3 volte, nessun segno visibile.
+- **Confronto con la prima versione** (osservato il 2026-10-07).
+  - Platea e persone sono le stesse, nelle stesse posizioni.
+  - Cambiano la posa dell'oratore e il contenuto degli schermi. Nella prima versione c'è un altro portale, con uno stemma e voci di menu illeggibili, un'altra città e un'altra inquadratura della piazza. Qui c'è il portale Puglia Digitale, con il menu leggibile.
+  - Almeno una delle due versioni è stata quindi elaborata; quale, e con quali strumenti, non è noto. [DA VERIFICARE con l'utente]
+- **Nota sotto la foto.** «Immagine elaborata con strumenti di intelligenza artificiale», per decisione del creative-director (commit 920e497). È la regola dell'ADR 002 finché non arriva l'originale dello scatto (B4). Se l'utente conferma che questa è la foto originale, con gli schermi come erano in sala, la nota va rivista con brand-strategist: per questa immagine non sarebbe più vera.
+- **Uso.** Fonte dei due ritagli della Home, `evento-panorama.jpg` ed `evento-citta.jpg` (tabella «Ritagli»). Gli alt sono nella tabella «Nel sito».
+- **Scritte** (criterio 7). Le voci del menu degli schermi e la scritta del fondale non si trascrivono. Dal fondale si legge in parte «regionale»: negli alt non c'è (criterio 9).
+
+| Uso | alt |
+|---|---|
+| Home, i due ritagli | Vedi «Nel sito» |
+| Intera, senza testo accanto | Un oratore sul palco dell’evento Puglia Digitale, davanti a una grande platea; sui due schermi, una città vista dall’alto e una piazza storica. |
+| `/puglia-digitale/`, se si rifà da qui `evento-schermo.jpg` | Lo stesso alt di oggi, che vale anche per lo schermo di destra di questa versione: «La platea dell’evento Puglia Digitale davanti al maxischermo con il tour virtuale di una piazza storica.» |
+
+### `evento-puglia-digitale.jpg` · 1365 × 768 px · prima versione, con cornice e scritte
+
+Foto dell'evento. Un oratore parla sul palco davanti al fondale di Puglia Digitale, di fronte a una platea numerosa. Sui maxischermi ai lati ci sono due tour virtuali: a sinistra una città vista dall'alto con i loghi delle attività, a destra una piazza storica. Sull'immagine sono sovrapposti una cornice bianca, il marchio del progetto in alto a sinistra, una scritta in corsivo e, in basso a destra, il segno di Gemini. **Nel sito non si usa intera.** Oggi è la fonte di due ritagli: `evento-schermo.jpg` (Puglia Digitale) ed `evento-palco.jpg` (non usato). I due della Home vengono dalla versione pulita (commit 920e497).
 
 | Uso | alt |
 |---|---|
@@ -293,14 +323,14 @@ Generati da `scripts/prepare-assets.mjs` (`npm run assets`). Gli alt dei ritagli
 
 | File | Formato | Da | Che cosa mostra | Uso nel sito | alt |
 |---|---|---|---|---|---|
-| `evento-panorama.jpg` | 1272 × 560 px | `evento-puglia-digitale.jpg` | Platea, palco con l'oratore e i due maxischermi, senza cornice | Home, da desktop | Vedi «Nel sito» |
-| `evento-citta.jpg` | 448 × 560 px | come sopra | Il maxischermo con la città vista dall'alto e la platea | Home, su mobile | Vedi «Nel sito» |
-| `evento-schermo.jpg` | 438 × 548 px | come sopra | Il maxischermo con la piazza storica e la platea | Puglia Digitale, sezione 2 | Vedi «Nel sito» |
+| `evento-panorama.jpg` | 1672 × 736 px (x 0, y 55) | `evento-puglia-digitale-pulita.webp` (commit 920e497; fino ad allora 1272 × 560 dalla prima versione) | Platea, palco con l'oratore e il leggio, fondale con il marchio e i due maxischermi interi | Home, da desktop | Vedi «Nel sito» |
+| `evento-citta.jpg` | 549 × 686 px (x 24, y 120) | come sopra (fino ad allora 448 × 560 dalla prima versione) | Il maxischermo di sinistra con la città vista dall'alto, il bordo del palco e la platea; si ferma prima del leggio | Home, sotto i 700 px | Vedi «Nel sito» |
+| `evento-schermo.jpg` | 438 × 548 px | `evento-puglia-digitale.jpg`, la prima versione | Il maxischermo con la piazza storica e la platea | Puglia Digitale, sezione 2 | Vedi «Nel sito» |
 | `evento-palco.jpg` | 448 × 560 px | come sopra | L'oratore sul palco davanti al fondale di Puglia Digitale, e la platea | Non usato | Un oratore sul palco dell’evento Puglia Digitale, davanti alla platea. |
 | `acquaviva-porta.jpg` | 462 × 770 px | `acquaviva-digitale.webp` | La piazza con il palazzo sul fondo, la ringhiera, lo spazio ribassato e la grafica digitale | Puglia Digitale, porta di Acquaviva | Vedi «Nel sito» |
 | `gravina-porta.jpg` | 580 × 967 px | `gravina-digitale.webp` | La facciata della chiesa con il rosone, la finestra tonda, il piccolo portale con la statua e la grafica digitale | Puglia Digitale, porta di Gravina in Puglia | Vedi «Nel sito» |
 | `monopoli-porta.jpg` | 614 × 1023 px | `monopoli-digitale.webp` | Il muro imbiancato con il balconcino rosso, la bicicletta con il cesto di fiori, la fascia di pannelli e i segnaposto | Puglia Digitale, porta di Monopoli | Vedi «Nel sito» |
-| `fondatore-ritratto.jpg` | 480 × 480 px | `fondatore-braccia-conserte.jpg` | Ritratto a mezzo busto, a braccia conserte | Home, «Il fondatore» | Vedi «Nel sito» |
+| `fondatore-ritratto.jpg` | 480 × 480 px (x 445, y 36) | `fondatore-braccia-conserte.jpg` | Ritratto a mezzo busto, a braccia conserte, centrato. Le ultime lettere del logo sullo sfondo sono tolte da uno script, senza strumenti generativi (commit 3bfe9b2) | Home, «Il fondatore» | Vedi «Nel sito» |
 | `fondatore-contatti.jpg` | 420 × 560 px | `fondatore-in-piedi.jpg` | Ritratto a mezzo busto, sorridente | Contatti, «Persona» | Vedi «Nel sito» |
 
 ## Slot segnaposto
@@ -312,7 +342,7 @@ Gli id sono quelli di `src/data/asset-slots.ts`. L'alt definitivo si scrive solo
 | `siii-masseria-santella` | Home (capitolo 01), /siii (esempi) | Sostituito dalle schermate: `siii-masseria-santella-desktop-interno.jpg` nella Home, `siii-masseria-santella-desktop-ingresso.jpg` su /siii (vedi «Nel sito») | Negli esempi la schermata è cliccabile con uno strato per il solo puntatore (commit 88d7083), ma l'immagine resta fuori dal link: serve l'alt. Se un giorno l'immagine finisce dentro un link con un testo: `alt=""` (criterio 6). |
 | `siii-maison-mimina` | /siii (esempi) | Sostituito dalla schermata `siii-maison-mimina-desktop-ingresso.jpg` (vedi «Nel sito») | Come sopra. |
 | `siii-dielle` | /siii (esempi) | Sostituito dalla schermata `siii-dielle-desktop-ingresso.jpg` (vedi «Nel sito») | Come sopra. |
-| `siii-anteprima` | /siii, hero | Sostituito dalla schermata `siii-masseria-santella-mobile-sala.jpg` (vedi «Nel sito») | Sopra la schermata, i tre nodi decorativi sono nascosti (commit d06a3e9). |
+| `siii-anteprima` | /siii, hero | Sostituito dalla schermata `siii-masseria-santella-mobile-sala.jpg` (vedi «Nel sito») | I tre nodi decorativi sopra la schermata sono stati tolti dal markup (commit bae201c). |
 | `luogo-gravina` | /puglia-digitale (I luoghi) | Sostituito dalla foto: `derivate/gravina-porta.jpg` (vedi «Nel sito») | Ritaglio scelto dal creative-director (sezione del file). |
 | `luogo-acquaviva` | /puglia-digitale (I luoghi) | Sostituito dalla foto: `derivate/acquaviva-porta.jpg` (vedi «Nel sito») | — |
 | `luogo-monopoli` | /puglia-digitale (I luoghi) | Sostituito dalla foto: `derivate/monopoli-porta.jpg` (vedi «Nel sito») | Ritaglio scelto dal creative-director (sezione del file). |
@@ -329,42 +359,47 @@ Note:
 |---|---|---|
 | Carta del capitolo 03 della Home | `aria-label` della carta (`role="img"`), modello di copywriter-brand (L4) con i soli nomi disegnati a ogni larghezza (decisione di ux-designer del 2026-10-06) | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Itri, Altamura, Cosenza e Caltanissetta. |
 | Carta di `/citta-digitali/` | `aria-label` della carta (`role="img"`), testo di copywriter-brand (L6) | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. |
-| Carta della Puglia, hero di `/puglia-digitale/` | `aria-label` della carta (`role="img"`), testo di copywriter-brand (L7) | Carta della Puglia con le città di Puglia Digitale, più numerose nella provincia di Bari. Tra queste: Manfredonia, Barletta, Bari, Monopoli, Gravina in Puglia e Nardò. Un anello segna Acquaviva delle Fonti, sede di ITnode. |
-| Carta della Terra di Bari (Home, capitolo 02), orizzonti (Home, Città Digitali), schermo della figura di confronto (SIII), punti animati sopra le schermate dei SIII | `aria-hidden` | Decorativi: ciò che mostrano lo dicono il testo e le didascalie accanto. I punti animati sopra le schermate sono anche nascosti alla vista |
+| Carta della Puglia: hero di `/puglia-digitale/` e, dal commit 3e25c42, capitolo 02 della Home | `aria-label` della carta (`role="img"`), testo di copywriter-brand (L7), lo stesso nelle due pagine | Carta della Puglia con le città di Puglia Digitale, più numerose nella provincia di Bari. Tra queste: Manfredonia, Barletta, Bari, Monopoli, Gravina in Puglia e Nardò. Un anello segna Acquaviva delle Fonti, sede di ITnode. |
+| Orizzonti (Home, Città Digitali), schermo della figura di confronto (SIII) | `aria-hidden` | Decorativi: ciò che mostrano lo dicono il testo e le didascalie accanto. La carta della Terra di Bari e i punti animati sopra le schermate dei SIII non ci sono più (commit bae201c) |
 | Video Città Digitali | `aria-labelledby` verso l'H2 della sezione | Città Digitali, in movimento. |
 | Numeri di Puglia Digitale | testo visivamente nascosto | Più di 30 città coinvolte · Circa 200.000 partite IVA nei territori coinvolti · Il 60% del tessuto produttivo pugliese si trova nei territori coinvolti |
 | Anteprima immersiva (predisposta, non al lancio: oggi nessuna pagina la usa) | `title` dell'iframe (`data-embed-title`) | Anteprima interattiva di Masseria Santella · Anteprima interattiva di Maison Miminà · Anteprima interattiva di D.L. Natura Dentro |
 
-Le tre descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/lib/citta-digitali.ts`) e non contengono numeri. Quando l'elenco delle città sarà in testo su `/citta-digitali/`, la descrizione di quella carta si toglie e la carta torna `aria-hidden` (copy deck di Città Digitali, sezione 2).
+Le descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/lib/citta-digitali.ts`) e non contengono numeri. Quando l'elenco delle città sarà in testo su `/citta-digitali/`, la descrizione di quella carta si toglie e la carta torna `aria-hidden` (copy deck di Città Digitali, sezione 2).
 
 ## Verifica sul sito (2026-10-07)
 
-**Metodo.** Staging http://127.0.0.1:4321, build del commit d06a3e9 (nessun file di `src/` più recente di `dist/`), e variante «in pubblicazione» su http://127.0.0.1:4322.
-- Con Playwright (Chromium) ho letto le 8 pagine: tutti gli `img` con alt e didascalia, ogni elemento con `role="img"`, i segnaposto, il video e l'`og:image:alt`.
-- Su `/` e `/siii/` ho letto l'albero di accessibilità, a 1440 e 390 px, per vedere che cosa c'è prima e dopo ogni schermata, e il riquadro in cui la schermata è mostrata.
-- Ho guardato le 9 schermate originali, gli screenshot di controllo della sessione principale e i ritagli di Gravina e Monopoli.
-- Per la v1.6 ho costruito in una cartella di lavoro una copia di `HEAD` (326f354) con la patch degli alt, e l'ho servita in locale: lo staging condiviso era fermo a d06a3e9. Su `/` e `/siii/`, a 1440 px, ho letto l'albero di accessibilità e gli strati sopra le schermate degli esempi. Il repository non è stato toccato.
+**Metodo.**
+- **Pomeriggio, per la v1.7.** Staging http://127.0.0.1:4321, build delle 15:04 con il commit 920e497: nessun file di `src/` o `scripts/` più recente di `dist/`.
+  - Con Playwright (Chromium) ho letto le 8 pagine: tutti gli `img` con alt e didascalia, ogni elemento con `role="img"`, i segnaposto, il video e l'`og:image:alt`.
+  - Della foto dell'evento ho letto l'albero di accessibilità a 1440 e 390 px.
+  - Ho guardato la versione pulita, i due nuovi ritagli e le catture della sessione principale, e ho confrontato la versione pulita con la prima.
+  - A 390 px ho ricontrollato la hero di `/siii/` e il ritratto del fondatore.
+  - La variante «in pubblicazione» (porta 4322) non era attiva.
+- **Mattina, per la v1.5 e la v1.6.**
+  - Staging della build di d06a3e9, con la variante «in pubblicazione».
+  - Albero di accessibilità di `/` e `/siii/` a 1440 e 390 px, intorno a ogni schermata.
+  - Le 9 schermate originali e i ritagli di Gravina e Monopoli.
+  - Per la v1.6, una copia di `HEAD` (326f354) con la patch degli alt, costruita in una cartella di lavoro e servita in locale, senza toccare il repository.
 - La verifica precedente, del 2026-10-05, era sulla build del commit 5c4a6cb.
 
 **Esito.**
-- Gli alt pubblicati descrivono le immagini che li usano.
+- Gli alt pubblicati descrivono le immagini che li usano, compresi i due nuovi ritagli dell'evento: non serve cambiarne nessuno.
 - Nessuna immagine informativa è senza alt, e nessun segnaposto è esposto agli screen reader.
-- La variante «in pubblicazione» ha le stesse schermate e gli stessi alt.
-- Con la patch, gli alt della v1.6 sono letti al posto giusto. Gli strati sopra le schermate degli esempi sono nascosti agli screen reader e fuori dalla tabulazione, con il `cta_id` della schermata.
-- Restano da applicare gli alt della v1.6 dei tre esempi (V2).
+- Gli alt della v1.6 dei tre esempi sono nel sito (V2, chiusa).
 
 **Differenze aperte.**
 
 | # | Dove | Differenza | Proposta | Chi decide |
 |---|---|---|---|---|
 | V1 | `src/data/asset-slots.ts`, campo `alt` degli slot | Contiene testi che non sono quelli di questo documento, per esempio il solo nome della città per i luoghi. Oggi non si usa | Quando si collega un file, prendere l'alt da qui. Nessuna modifica necessaria finché i file non arrivano | Sessione principale |
-| V2 | `src/data/media.ts`, alt dei tre esempi di `/siii/` | Sono quelli della v1.5 (commit 9ddc8b2), con «il pulsante di avvio»: la regola di ux-designer chiede di descrivere la vista, non i comandi disegnati. Home e hero sono già quelli della v1.6 | Sostituirli con quelli della tabella «Nel sito» (snippet nell'Esito del 2026-10-07, provato con `git apply --check`) | Sessione principale |
+| V2 | `src/data/media.ts`, alt dei tre esempi di `/siii/` | Nella v1.5 dicevano «con il pulsante di avvio» | **Chiusa** il 2026-10-07: gli alt della v1.6 sono nel sito dal commit d211ba4 | Sessione principale |
 | V3 | `docs/contenuti/copy-deck/siii.md` | La v1.2 descriveva le schermate come mancanti | **Chiusa** il 2026-10-07: la v1.3 descrive hero, esempi e schermata cliccabile come sono nel sito | copywriter-content |
 | V4 | `docs/contenuti/copy-deck/home.md`, descrizione della carta del capitolo 03 | La v1.4 riportava la versione con 9 nomi | **Chiusa** il 2026-10-07: la v1.5 del copy deck della Home ha la descrizione con i 5 nomi del sito (commit 9cfe3b1) | copywriter-brand |
 
 ## Rischi
 
-1. **Immagini generate o modificate con AI** (brief §0.3). Tre immagini su cinque hanno in basso a destra il segno visibile che Gemini applica alle immagini create o modificate con la sua app: `evento-puglia-digitale.jpg`, `fondatore-in-piedi.jpg` e `fondatore-palco-citta-digitali.jpg`. L'ho verificato su ritagli ingranditi degli angoli. Le altre due foto del fondatore hanno lo stesso aspetto. Anche la foto dell'evento, indicata come reale, è quindi passata da uno strumento di AI: almeno per cornice e scritte, forse per altro. Nel sito ritratti e foto dell'evento hanno la nota di trasparenza (ADR 002).
+1. **Immagini generate o modificate con AI** (brief §0.3). Tre immagini su cinque hanno in basso a destra il segno visibile che Gemini applica alle immagini create o modificate con la sua app: `evento-puglia-digitale.jpg`, `fondatore-in-piedi.jpg` e `fondatore-palco-citta-digitali.jpg`. L'ho verificato su ritagli ingranditi degli angoli. Le altre due foto del fondatore hanno lo stesso aspetto. Anche la foto dell'evento, indicata come reale, è quindi passata da uno strumento di AI: almeno per cornice e scritte, forse per altro. Nel sito ritratti e foto dell'evento hanno la nota di trasparenza (ADR 002). La versione pulita della Home non ha il segno, ma resta da chiarire se è lo scatto originale (sezione del file; Rischio 10).
 2. **Veridicità (soglia 1).** Le foto mostrano il fondatore sul palco di eventi Città Digitali, con platea, ma non abbiamo documentazione di quegli eventi. Se non sono avvenuti così, le immagini diventano prove non vere. Gli alt descrivono ciò che si vede senza affermare che l'evento sia reale, ma l'immagine comunica comunque quel messaggio. Le due foto sul palco di Città Digitali oggi non sono nel sito.
 3. **Obbligo di trasparenza.** Dal 2 agosto 2026 si applica l'art. 50 del Regolamento UE 2024/1689 (AI Act). Chi pubblica immagini generate o manipolate con AI che somigliano a persone, oggetti, luoghi o eventi esistenti, e che possono sembrare autentiche, deve dichiararne l'origine artificiale (par. 4; definizione di «deep fake» all'art. 3, punto 60). Riguarda anche i luoghi: per l'immagine di Acquaviva conta, se nella foto c'è AI. I ritagli eliminano il segno visibile, ma non l'eventuale obbligo. La nota oggi nel sito risponde a questo rischio. [DA VERIFICARE con il consulente legale: se la nota basta]
 4. **Persone riconoscibili in platea** (brief A4; B4; condizione C07 del verdetto G4). Servono l'informativa sulle riprese o le liberatorie. Altrimenti ui-designer stringe i ritagli su schermi e palco, senza profili riconoscibili.
@@ -373,11 +408,12 @@ Le tre descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 7. **Consenso delle imprese degli esempi** (ADR 002, A7; condizione C06 del verdetto G4). Le schermate di Masseria Santella, Maison Miminà e D.L. Natura Dentro sono nel sito dal commit d06a3e9, anche nella variante «in pubblicazione». La riserva A7 le subordina al consenso delle tre imprese. Senza consenso si torna agli slot, con nomi e link. Serve una modifica del codice, perché le schermate non passano dagli slot e `PUBLIC_SLOT_MODE=publish` non le sostituisce: cro-specialist propone un controllo di go-live che blocca (review CRO del 2026-10-07, oss. 2). [DA VERIFICARE: consenso, e in che forma]
 8. **Scritte e marchi nelle schermate.** Gli alt non trascrivono numeri né marchi, ma chi vede le schermate li legge. Le cinque nel sito mostrano solo loghi, nomi e insegne delle imprese. La schermata dell'appartamento mostrerebbe anche «3 camere da letto» e i marchi di due siti di prenotazione: per questo non si usa al lancio (review CRO, oss. 3; ADR 002, I7).
 9. **Ritratto nelle schermate.** Nelle schermate di Masseria Santella e in quella interna di Maison Miminà c'è il ritratto di una donna, in un cerchio in basso a destra. Se è una persona reale, servono le stesse garanzie delle persone riconoscibili (Rischio 4). Se è un'immagine generata con AI, brand-strategist valuta se serve una nota, come per i ritratti (ADR 002).
+10. **Due versioni della stessa foto dell'evento nel sito.** La Home usa la versione pulita, Puglia Digitale un ritaglio della prima versione. La platea è identica, gli schermi no. Chi le confronta può capire che almeno una è elaborata, e la foto perde forza come prova. Proposta: rifare anche `evento-schermo.jpg` dalla versione pulita; l'alt di oggi vale anche lì (sezione del file). Decide il creative-director.
 
 ## Ipotesi da validare
 
 - [DA VERIFICARE: la persona nelle foto è Giacomo Lenoci, fondatore di ITnode (F7)]
-- [IPOTESI: la foto dell'evento Puglia Digitale è reale nella scena e nelle persone, ed è stata modificata con AI solo per cornice e scritte (brief I7)]
+- [IPOTESI: la foto dell'evento Puglia Digitale è reale nella scena e nelle persone. Tra le due versioni cambiano però la posa dell'oratore e il contenuto degli schermi: almeno una delle due è elaborata anche oltre cornice e scritte (brief I7)]
 - [IPOTESI: le schermate dei SIII mostrano le esperienze come sono pubblicate oggi. Se un'esperienza cambia, la schermata e il suo alt vanno rifatti.]
 - [IPOTESI: la vista a piccolo pianeta con il play al centro è la schermata d’avvio di ogni esperienza. La chiamano «vista d'apertura» il commit d06a3e9 e le review di ux-designer e cro-specialist del 2026-10-07, e il play al centro è il segno abituale di una schermata d'avvio. Non risulta però una prova fatta aprendo le esperienze: nelle prove di cro-specialist le richieste esterne erano simulate. Se non è così, gli alt degli esempi tolgono «La schermata d’avvio dell’esperienza:» e restano su luogo, vista e menu.]
 
@@ -389,11 +425,14 @@ Le tre descrizioni delle carte sono costruite dagli stessi dati dei punti (`src/
 4. Immagine di Acquaviva: chi è l'autore, quando è stata fatta, chi ha i diritti, e se la foto o la grafica sono state fatte con strumenti di AI? Il cliente vuole un credito sotto la foto?
 5. Masseria Santella, Maison Miminà e D.L. Natura Dentro hanno dato il consenso a mostrare le schermate delle loro esperienze (A7)?
 6. Chi è la donna nel ritratto in basso a destra delle schermate di Masseria Santella e di Maison Miminà, e che cosa fa nell'esperienza?
+7. Foto dell'evento: la versione pulita è lo scatto originale? In sala gli schermi mostravano il portale Puglia Digitale, o sono stati sostituiti dopo, a mano o con AI?
 
 ## Decisioni richieste
 
 - **Utente, con il consulente legale del cliente**: se la nota di trasparenza basta per l'art. 50 dell'AI Act (ADR 002).
-- **Sessione principale**: alt dei tre esempi in `src/data/media.ts` (V2). Quando arrivano altri file, prendere gli alt da questo documento (V1).
+- **Sessione principale**: quando arrivano altri file, prendere gli alt da questo documento (V1).
+- **creative-director**: se rifare anche `evento-schermo.jpg` (e `evento-palco.jpg`, oggi non usato) dalla versione pulita della foto dell'evento (Rischio 10).
+- **brand-strategist** (owner dell'ADR 002), con la risposta dell'utente alla domanda 7: la nota della foto dell'evento, se la versione pulita risulta lo scatto originale.
 - **Utente, con brand-strategist** (owner dell'ADR 002): consenso delle tre imprese degli esempi (A7). Senza, variante «in pubblicazione».
 - **creative-director**: se usa una schermata da smartphone nello stesso `<picture>` di una da desktop, l'alt è uno solo. Per D.L. Natura Dentro è nella tabella delle schermate; per le altre serve una nuova proposta.
 - **brand-strategist, con il consulente legale**: la nota delle immagini dei luoghi se al go-live manca la risposta sull'AI.
