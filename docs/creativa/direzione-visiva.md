@@ -219,15 +219,16 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
   - Con il nome, il punto diventa il nodo-luogo del §1.3 (Ø 10), con lo stesso anello. Senza nome resta Ø 5: metà del nodo, stessa famiglia, gerarchia leggibile.
 - **Comportamento.** Non è interattivo e non si muove: niente anello esterno, ping, hover, focus né comparsa a cascata.
 - **Accessibilità** (decisione di ux-designer, owner dell'accessibilità: `docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md` §3.1).
-  - La carta del capitolo 03 è un'immagine con una descrizione costruita dagli stessi dati (`role="img"` e `aria-label`): le regioni da nord a sud, la regione con più città, i nomi disegnati sulla carta larga. Nessun numero. Con la regola 11 (2026-10-06) la descrizione è di 218 caratteri e chiude con «Tra queste:» e i 7 nomi della carta larga; prima erano 241 caratteri e 9 nomi. Le frasi su regioni e nomi le può rifinire copywriter-brand. Se passare ai soli nomi disegnati a ogni larghezza, come nella L7 (sarebbero 5), lo decide ux-designer.
+  - La carta del capitolo 03 è un'immagine con una descrizione costruita dagli stessi dati (`role="img"` e `aria-label`): le regioni da nord a sud, la regione con più città, poi «Tra queste:» con i nomi che la carta disegna a ogni larghezza. Nessun numero. Oggi sono 199 caratteri e 5 nomi: Varese, Itri, Altamura, Cosenza e Caltanissetta (decisione di ux-designer del 2026-10-06, la stessa regola della L7). Prima erano 241 caratteri e 9 nomi, poi 218 e 7 con la regola 11. Le frasi su regioni e nomi le può rifinire copywriter-brand.
   - È una condizione di soglia (WCAG 1.1.1 e 1.3.1): con 45 punti, una carta `aria-hidden` darebbe solo a chi vede dove stanno le città.
   - L'`<svg>` della costa è `aria-hidden`, e i nomi disegnati non si leggono una seconda volta.
   - Legenda ed elenco in testo completano l'informazione (sotto).
-  - Le carte i cui luoghi sono tutti nominati dal testo accanto restano `aria-hidden`: oggi la carta della Terra di Bari nel capitolo 02 della Home. La carta della hero di `/puglia-digitale/` non lo è più: con 31 punti mostra più di quanto dica il testo (sotto).
-  - **La Puglia intera nella hero di `/puglia-digitale/`.** È un'immagine con la descrizione L7 di copywriter-brand, scelta da ux-designer (`docs/review/2026-10-06-carta-puglia-intera-ux-designer.md`). Sono 222 caratteri: la provincia con più città, poi i nomi che la carta disegna a ogni larghezza, da nord a sud, poi la frase della sede.
+  - Una carta resta `aria-hidden` solo se tutti i suoi luoghi sono già nominati dal testo accanto (`docs/ux/accessibilita.md` §2.8). Oggi nessuna carta del sito è in questo caso: ognuna è un'immagine con una descrizione.
+    - La carta della Terra di Bari del capitolo 02 della Home non lo era: il testo del capitolo non nomina i suoi luoghi (ux-designer, `docs/review/2026-10-07-carta-terra-di-bari-ux-designer.md`). Dal 2026-10-07 non è più nel sito, sostituita dalla Puglia intera (P4).
+  - **La Puglia intera nella hero di `/puglia-digitale/` e nel capitolo 02 della Home.** È un'immagine con la descrizione L7 di copywriter-brand, scelta da ux-designer (`docs/review/2026-10-06-carta-puglia-intera-ux-designer.md`), uguale nei due posti. Sono 222 caratteri: la provincia con più città, poi i nomi che la carta disegna a ogni larghezza, da nord a sud, poi la frase della sede.
     - Non elenca le province: tutte e sei, all'ascolto, varrebbero «tutta la Puglia».
     - Al go-live con i soli nomi solidi scende da sola a 186 caratteri.
-  - **Tetto:** 250 caratteri per ogni descrizione di carta, nella versione più lunga (ux-designer, `docs/ux/accessibilita.md` 0.7). La Home ne ha 218 con la regola 11 (241 prima), `/citta-digitali/` 138, `/puglia-digitale/` 222.
+  - **Tetto:** 250 caratteri per ogni descrizione di carta, nella versione più lunga (ux-designer, `docs/ux/accessibilita.md` 0.7). Oggi la carta d'Italia della Home ne ha 199, quella di `/citta-digitali/` 138, la Puglia intera 222 (su `/puglia-digitale/` e nel capitolo 02 della Home).
   - Anche la carta di `/citta-digitali/` è un'immagine con una descrizione, finché l'elenco completo non le sta accanto. La descrizione è la L6 di copywriter-brand, senza nomi (138 caratteri): «Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia.» I tre nomi non servono, perché chi usa uno screen reader li incontra nel testo prima della carta e nelle schede subito dopo (decisione di ux-designer, `docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md` §3). «Tra queste: …» compare solo dove la carta disegna nomi, cioè sulla Home.
   - **Quando arriva l'elenco in testo** si toglie la descrizione, e carta e legenda tornano insieme `aria-hidden`, perché la legenda spiega solo ciò che si vede. Regola confermata da ux-designer, a quattro condizioni; se ne manca una, la carta tiene la descrizione L6:
     - l'elenco è completo, dallo stesso file dati;
@@ -242,10 +243,10 @@ Nasce dalla richiesta dell'utente di mostrare tutte le città di Città Digitali
     - San Cataldo resta sotto il nodo di Caltanissetta;
     - Gravina resta sotto quello di Altamura fino a 350 px di carta;
     - Ercolano e Torre del Greco si leggono come un punto con uno spicchio.
-- **Dove.** Solo sulle carte. Oggi sono tre, e una quarta dipende dall'utente:
+- **Dove.** Solo sulle carte. Oggi sono quattro:
   - le due carte d'Italia con le città di Città Digitali: capitolo 03 della Home (§7.3) e sezione «L'Italia in un unico portale» di `/citta-digitali/` (§7.6);
   - la carta della Puglia intera con le 31 città di Puglia Digitale, nella hero di `/puglia-digitale/` (§7.5);
-  - la stessa carta, compatta, nel capitolo 02 della Home, solo se l'utente approva P4 (§7.3).
+  - la stessa carta, compatta, nel capitolo 02 della Home (P4, approvata dall'utente il 2026-10-07: «sì, mettila»; §7.3).
 - **Nomi.** Le regole valgono per ogni carta con il punto-città. Le applica il generatore delle carte al build, senza JavaScript in pagina.
   1. **Obbligatori:** le città nominate dal testo accanto alla carta. Sulle carte d'Italia sono Varese, Altamura e Caltanissetta (LG §18). Sulla carta della Puglia sono Acquaviva delle Fonti, Gravina in Puglia e Monopoli, le tre località della pagina. Se uno non entra sulle carte della classe più larga il build si ferma. Sulle altre si nasconde con un avviso, e prima di pubblicare decide il creative-director.
   2. **Poi un nome per regione o gruppo**, nell'ordine che racconta l'estensione del progetto.
@@ -535,9 +536,31 @@ In Home la foto compare al massimo due volte, in ritagli con soggetti diversi.
   1. Schermo sinistro (13%, 18%): «Una città vista dall'alto a 360°: le attività sono punti da aprire».
   2. Palco, sul leggio accanto all'oratore (36%, 31%): «Il palco». Il nome di chi parla si aggiunge solo dopo la conferma (registro F7). Nella versione 0.1 il nodo stava a (44%, 30%), sul busto di una persona non identificata: un segno d'interazione non va sul corpo di qualcuno (G4, N7; posizione misurata da ui-designer, C14-2).
   3. Schermo destro (84%, 17%): «Una piazza storica esplorabile a 360°».
-- **Didascalia.** Nessuna finché data e luogo non sono confermati (brief consolidato, registro A4). Poi, in mono: «Puglia Digitale, evento regionale · [luogo] · [data] · foto [autore]». Nessun numero di partecipanti se non documentato.
+- **Didascalia.** Servono tre cose: l'originale dello scatto, cioè la conferma che la scena non è alterata; il luogo; la data (brief consolidato, registro A4). Solo allora va in mono il testo di copywriter-brand (2026-10-07): «L'evento Puglia Digitale · {luogo}, {data}». Se l'autore è noto ed è d'accordo, si aggiunge «· foto {autore}».
+  - Senza «regionale», come nel nodo 2: non deve suggerire un legame istituzionale (brief, A2). È anche il nome della sezione.
+  - Nessun numero di partecipanti se non documentato.
+  - Su un'immagine elaborata con strumenti di intelligenza artificiale non va nessuna didascalia con luogo e data: legherebbe a un evento preciso una scena che non è un documento (§4.1, regola 2).
 - **Persone in platea (A4).** I ritagli scelti mostrano la platea di spalle, ma la liberatoria o l'informativa dell'evento va comunque verificata. Senza, si stringono i ritagli sui due schermi e sul palco, escludendo i profili ai margini.
 - **Nota di veridicità.** La sovrimpressione con il simbolo ✦ in basso a destra somiglia al segno che lasciano alcuni strumenti di editing generativo; la scritta «Digital Innovation for the Territory» non si usa (A6). Va chiesto il file originale senza sovrimpressioni e la conferma che la scena non è stata alterata.
+- **Nuova versione per la Home** (richiesta dell'utente del 2026-10-07: «aggiorna questa in home»). Indicazioni del creative-director prima di vedere il file (`docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md`, §4). I ritagli li rivedo nell'anteprima.
+  - **Che cos'è.** La stessa scena senza cornice, logo, scritta e ✦, più grande (circa 1672 × 941 px). Ma l'oratore ha un'altra posa, quindi è un'altra elaborazione, non l'originale dello scatto.
+    - La nota «Immagine elaborata con strumenti di intelligenza artificiale» resta (B4, I7), e nessuna didascalia con luogo e data.
+    - Cambia solo con la conferma scritta del cliente che la scena non è alterata.
+  - **Stessi formati di oggi.** Panorama 2,27:1 per desktop e tablet, «Città» 4:5 per il telefono: impaginato, nodi e legenda non si spostano, e lo scambio non causa CLS. Le aree si ricalcolano sul file nuovo.
+  - **Panorama: usare lo spazio liberato.** Oggi il ritaglio taglia lo schermo destro, sopra e a destra, e la parte alta del marchio sul fondale, per evitare la cornice. Il nuovo ritaglio contiene interi i due schermi e il marchio Puglia Digitale del fondale, con un margine sopra di almeno il 2% dell'altezza. Sotto, la platea si taglia dove cade.
+    - Se l'inquadratura è la stessa di oggi (scala 1,225), l'area è all'incirca su tutta la larghezza: 0, 55, 1672 × 736 `[IPOTESI: da verificare sul file]`.
+  - **«Città» 4:5:** lo schermo sinistro intero, con il suo menu laterale, e la platea sotto. Più o meno 40, 120, 549 × 686 `[IPOTESI]`.
+  - **In tutti e due:** colore intatto; nessun profilo riconoscibile ai margini (A4); mai più di 1200 px CSS, come oggi.
+  - **Nodi:** gli stessi tre, rimisurati da ui-designer sui ritagli nuovi.
+    1. Sul contenuto dello schermo sinistro, non sul menu né sulla cornice.
+    2. Sul leggio accanto all'oratore, mai sulla persona (N7).
+    3. Sul contenuto dello schermo destro.
+
+    Sul telefono resta solo il nodo 1.
+  - **Legenda e testo alternativo:** descrivono solo ciò che si vede.
+    - Se sugli schermi si legge il portale Puglia Digitale con il suo menu, le voci 1 e 3 si riscrivono: legenda di copywriter-brand, testo alternativo di copywriter-content.
+    - Se non cambia nulla di visibile, restano.
+  - **`/puglia-digitale/`** (ritaglio «Schermo», §2) tiene la versione di oggi, perché l'utente ha detto «in home». Ma due pose diverse dello stesso oratore sullo stesso sito si notano, e indeboliscono tutte e due le immagini. Va chiesto all'utente se aggiornare anche quella pagina (Domande aperte).
 
 ### 4.3 Ritratti del fondatore (decisione DR3, in attesa dell'utente)
 
@@ -620,7 +643,7 @@ Precisazioni del G4, sul sito costruito (flag `PUBLIC_SLOT_MODE=publish`):
 L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si aggiungono formati, risoluzioni e direzione fotografica.
 
 1. **Foto evento:** originale ad alta risoluzione senza cornice e scritte, con luogo, data e autore.
-2. **Screenshot delle tre esperienze SIII** (Masseria Santella, Maison Miminà, D.L. Natura Dentro): desktop 16:10 da almeno 2560 px e mobile. In alternativa, un accesso per catturarli: i portali sono bloccati dal nostro ambiente.
+2. **Screenshot delle tre esperienze SIII** (Masseria Santella, Maison Miminà, D.L. Natura Dentro): **ricevuti il 2026-10-07 e in uso** (§4.8). Le viste desktop sono di 2000 × 1250 px: se possibile, le stesse a 2560 × 1600 per gli schermi grandi. Resta da registrare il consenso scritto delle tre imprese (A7).
 3. **Video Città Digitali:** il file, o il permesso di ospitarlo, un poster, la durata e l'indicazione se c'è parlato (in quel caso servono i sottotitoli).
 4. **Un ritratto reale del fondatore**, in un luogo vero (ufficio o Acquaviva), con luce naturale e senza schermi alle spalle.
 5. **Foto dei luoghi.**
@@ -686,6 +709,42 @@ L'elenco coincide con i materiali mancanti del brief consolidato (§7). Qui si a
   - Se arrivano gli originali senza grafica, o ad alta risoluzione.
   - Se il cliente chiarisce autore e uso di AI: cambia la nota (ADR 002).
   - Se l'utente cambia idea.
+
+### 4.8 Schermate delle esperienze SIII (2026-10-07)
+
+L'utente ha inviato il 2026-10-07 nove schermate delle esperienze di Masseria Santella, Maison Miminà e D.L. Natura Dentro: quattro da desktop, 2000 × 1250 px, e cinque da smartphone, 1200 × 2000 px (`src/assets/images/siii-*.jpg`). Le decisioni sono nel verdetto `docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md`.
+
+- **Sono documenti del prodotto.** Si tagliano, non si ritoccano (§4.1, regola 1).
+  - Colori intatti e nessun filtro.
+  - Nessuna cornice di telefono o di browser disegnata intorno: la Porta e lo Schermo sono già la cornice (§1.2).
+  - Nessun segno nostro sopra.
+  - L'interfaccia resta com'è: menu, logo dell'impresa, punti interattivi, assistente. È la prova che un SIII è un sito.
+- **Dove e quale.**
+
+  | Dove | Schermata | Formato | Perché |
+  |---|---|---|---|
+  | Home, capitolo 01 | `siii-masseria-santella-desktop-interno.jpg`: l'ingresso con la volta, la porta a vetri ad arco e il menu | Schermo 16:10, colonne 5–12 | È la vista più luminosa e profonda: fa vedere alla lettera «Spazi reali. / Esperienze digitali.» |
+  | `/siii/`, hero | `siii-masseria-santella-mobile-sala.jpg`: la sala con la volta, da smartphone | Porta 3:5 da 64em; sotto, 4:5 ancorata in basso | Il prodotto in uso dentro uno spazio vero. I toni caldi stanno sulla notte e lasciano il primo piano al titolo. È l'elemento LCP e sta nel budget |
+  | `/siii/`, esempi | la schermata d'avvio di ogni esperienza (`…-desktop-ingresso.jpg`), un «piccolo pianeta» con il play | Schermo 16:10: 12 colonne, poi 8 a destra e 8 a sinistra; il primo fino a 1440 px (controllo n. 8 del budget) | È la vista che si trova aprendo l'esperienza, quindi la promessa del play e del CTA è mantenuta. Le tre viste fanno una serie: stesso gesto, luoghi diversi. Per decisione dell'utente la schermata è anche un link all'esperienza, in una nuova scheda |
+
+- **Ritaglio della hero sotto i 64em: 4:5 ancorato in basso.**
+  - Al centro, la porta si apre su metà del logo e su un soffitto bianco. In alto, mostra il logo intero e taglia il menu a metà, e la sala scende sotto la prima schermata.
+  - In basso, nella prima schermata a 390 px ci sono il menu, la sala e il punto interattivo sulla porta. Sul bordo non resta nessun elemento tagliato: perde solo soffitto vuoto, logo e icona del menu.
+  - Il ritaglio si fa in build (`mobileCrop` di web-performance-specialist), così i telefoni scaricano solo i pixel che mostrano.
+- **Nessun nodo sopra le schermate vere.** I punti li disegna già l'interfaccia: i nostri sarebbero doppioni, o punti che l'esperienza non ha (§1.3, veridicità). I nodi restano sui segnaposto e sulle varianti «in pubblicazione» (§4.5).
+- **Marchi di terzi.**
+  - Le icone social del menu fanno parte dell'interfaccia e restano.
+  - Non si usano schermate in cui i marchi di terzi sono contenuto, come Airbnb e Booking nella schermata dell'appartamento. Farebbero pensare a una partnership e contraddirebbero «Vendita diretta» (cro-specialist, oss. 3; riserva I7).
+- **Il nome sotto la hero** (proposta di cro-specialist, approvata).
+  - Una riga in `label` mono `--fg-2` sotto la porta, allineata al suo bordo sinistro, 8 px sotto (`--space-2xs`), su una riga.
+  - Testo di copywriter-brand; la proposta è «Masseria Santella · Cassano delle Murge (BA)».
+  - È il dispositivo delle Coordinate applicato alla prova: di chi è lo spazio e dove sta, come la riga del luogo negli esempi.
+  - Markup e lettura li decide ux-designer, perché il testo alternativo nomina già la masseria.
+- **Consenso (A7).** Nomi, righe e schermate delle tre imprese vanno online solo con il loro consenso scritto (ADR 002). Il controllo di go-live di cro-specialist lo presidia. Se manca per un'impresa, si tolgono la sua schermata e la sua riga, e torna lo slot (§4.5).
+- **Non usate.**
+  - La facciata della reception, da smartphone. È l'immagine più forte da sola, ma il blu saturo e la luce piena sulla notte tolgono il primo piano al titolo, e il selciato in basso è stirato dalla proiezione. In più porterebbe l'LCP al limite dell'obiettivo (1,99 s in laboratorio).
+  - L'appartamento: ha i marchi di terzi.
+  - Da smartphone, l'interno di Maison Miminà e l'ingresso di D.L. Natura Dentro: per pagina basta un telefono.
 
 ---
 
@@ -916,7 +975,7 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 | 2 | Manifesto | Statement su 10 colonne: «ITnode nasce dall'idea di creare un nuovo modo di abitare il Web.»; sotto, sfalsato (colonne 7–11), il `lead` di sintesi su Città Digitali e Puglia Digitale | pietra (la terra continua) | `display-l` | statement e poi lead, senza sfalsamento |
 | 3 | Documento | Foto evento «Panorama» su 12 colonne (al massimo 1200 px), apertura, 3 nodi numerati, legenda; didascalia solo con data e luogo confermati (A4) | pietra | — (legenda) | ritaglio «Città» 4:5; legenda sotto |
 | 4 | Infrastruttura | Passaggio «Una nuova infrastruttura digitale / per connettere imprese, cittadini e visitatori.»; in basso, marquee legato allo scroll: «spazio fisico → spazio digitale → persone → imprese → territorio →» (frecce SVG) | **notte** (primo ingresso nel digitale) | `display-l`, marquee in `display-m` | statement su 4 righe; marquee più lento |
-| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 (segnaposto SIII) con 3 nodi sulle colonne 5–12, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): carta della Puglia a filo (costa, con i nodi `terra` di Acquaviva, Gravina e Monopoli) sulle colonne 1–5, numero in alto a destra, testo sulle colonne 7–12; quando arriverà una foto del territorio, prenderà il posto della carta. *Proposta P4 (2026-10-06), in attesa dell'utente:* al posto della Terra di Bari, la carta della Puglia intera della hero di `/puglia-digitale/`, compatta, con i punti-città, la legenda e la descrizione (§1.4). Il creative-director la consiglia: il gesto «dalla regione all'Italia» diventa letterale, perché le stesse città si vedono da vicino nel capitolo 02 e da lontano nel 03. **03 Città Digitali** (240°, pietra): carta d'Italia a filo sulle colonne 8–12, con un punto-città per ogni città del progetto e i nomi dove c'è spazio (5 sulle carte strette, 7 sulle larghe; §1.4), senza coordinate sotto i nomi e con una riga di legenda in mono sotto la carta; testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
+| 5 | I tre mondi | Tre Capitoli, ognuno aperto da un tratto d'orizzonte con il suo rilevamento. **01 SIII** (000°, notte): «01» in `display-xxl` sulle colonne 1–4, statement «Spazi reali. / Esperienze digitali.» sulle colonne 5–12, soglia Schermo 16:10 con la schermata reale di Masseria Santella (l'ingresso, §4.8) sulle colonne 5–12, senza nodi, micro e CTA in basso a sinistra. **02 Puglia Digitale** (120°, calce): la carta della Puglia intera della hero di `/puglia-digitale/`, compatta, con i punti-città, la legenda e la descrizione (§1.4), sulle colonne 1–5; numero in alto a destra, testo sulle colonne 7–12. È la P4, approvata dall'utente il 2026-10-07 («sì, mettila»): il gesto «dalla regione all'Italia» è letterale, perché le stesse città si vedono da vicino nel capitolo 02 e da lontano nel 03. Quando arriverà una foto del territorio, prenderà il posto della carta. **03 Città Digitali** (240°, pietra): carta d'Italia a filo sulle colonne 8–12, con un punto-città per ogni città del progetto e i nomi dove c'è spazio (5 sulle carte strette, 7 sulle larghe; §1.4), senza coordinate sotto i nomi e con una riga di legenda in mono sotto la carta; testo sulle colonne 1–6. Le carte di 02 e 03 sono un unico gesto: dalla regione all'Italia, con impaginati speculari | notte → calce → pietra | numeri `display-xxl`, nomi `display-m`, statement `display-l` → `display-m` 400 (§1.5) | ogni capitolo in quest'ordine: numero, nome, statement, visual, micro, CTA |
 | 6 | Fondatore | Passaggio «36 anni dentro l'innovazione. / E ancora la stessa curiosità.» e poi l'orizzonte del tempo **orizzontale e sticky**. Le tappe sono tacche (IBM · anni '90 · prima azienda · 2002 MyComm · IcommLab · Leadstone · oggi: ITnode, Puglia Digitale, Città Digitali). «10.000+ clienti» è un momento numerico in `display-l`, agganciato alla tappa Leadstone con la sua attribuzione (registro N5: clienti delle aziende fondate prima di ITnode) e separato da «oggi» da almeno una tappa di spazio: mai vicino al logo o ai nomi dei prodotti ITnode. Solo «oggi» è un nodo, perché è esplorabile: le sue tre voci sono link alle pagine. Si chiude sulla foto reale «Palco» (DR3-a; ritratto a inchiostro solo con DR3-b) e sulla frase finale in `display-m` | calce | `display-l` | linea verticale a sinistra, tappe in pila, niente sticky |
 | 7 | Chiusura | Passaggio, CTA «Parliamone» e contatti rapidi in mono (email, telefono) | notte | `display-xl` | CTA a tutta larghezza |
 | — | Footer | Vedi §7.8 | notte | — | colonne in pila |
@@ -931,12 +990,12 @@ Tra parentesi, il componente delle linee guida (§30) di cui ogni composizione �
 
 | # | Sezione | Composizione | Superficie | Titolo | Mobile |
 |---|---|---|---|---|---|
-| 1 | Hero | H1 = «SIII» in `display-xxl` più «Siti Interattivi Immersivi» in `display-m`; Passaggio «Non raccontare la tua azienda. / Falla esplorare.»; a destra una soglia Porta 3:5 con anteprima SIII (segnaposto) e 3 nodi | notte | `display-xxl` | la porta passa sotto il testo, in 4:5 |
+| 1 | Hero | H1 = «SIII» in `display-xxl` più «Siti Interattivi Immersivi» in `display-m`; Passaggio «Non raccontare la tua azienda. / Falla esplorare.»; a destra una soglia Porta 3:5 con la schermata reale di Masseria Santella da smartphone (la sala, §4.8), senza nodi. Sotto la porta, la riga mono «Masseria Santella · Cassano delle Murge (BA)», con il consenso A7 | notte | `display-xxl` | la porta passa sotto il testo, in 4:5 ancorata in basso (ritaglio in build), con la riga sotto |
 | 2 | Definizione | `lead` grande su 7 colonne e `body` sfalsato: il SIII replica gli spazi dell'impresa, navigabili da desktop e smartphone | calce | `display-s` | una colonna |
 | 3 | Confronto | Una sola immagine Schermo 16:10 con interruttore accessibile a due stati. «Tour 360° — guardi»: solo orizzonte. «SIII — agisci»: compaiono i nodi (prodotto, video, informazioni, prenotazione). Sotto, 3 righe di differenze in tabella tipografica | pietra | `display-l` | interruttore a tutta larghezza; tabella in pila |
 | 4 | Cosa puoi fare | Marquee di verbi in `display-xl` presi dalle 7 azioni delle linee guida (§10), per esempio «Esplora · Interagisci · Guarda · Chiedi · Prenota»; il testo definitivo è del copywriter e nessun verbo può promettere più di quanto il SIII fa. Sotto, l'elenco accessibile delle 7 azioni su due colonne | notte | marquee | elenco in una colonna |
 | 5 | Benefici | Elenco *zig-zag*: 4 benefici, numeri `display-xxl` alternati a sinistra e a destra, una idea per schermata; solo formulazioni qualitative (linee guida §11) | calce | `display-s` per voce | numero sopra il testo |
-| 6 | Showcase | Passaggio a cascata «Entra. / Esplora. / Interagisci.», poi tre soglie Schermo 16:10 di larghezze diverse (12 colonne; 8 a destra; 8 a sinistra), nome in `display-l`, luogo e coordinate in mono, CTA «Entra nell'esperienza →» (nuova scheda, dichiarata). Nomi e immagini delle imprese solo con il loro consenso (A7) | notte | `display-l` | soglie a tutta larghezza in pila |
+| 6 | Showcase | Passaggio a cascata «Entra. / Esplora. / Interagisci.», poi tre soglie Schermo 16:10 di larghezze diverse (12 colonne; 8 a destra; 8 a sinistra), ognuna con la schermata d'avvio dell'esperienza (§4.8). Per decisione dell'utente la schermata è anche un link all'esperienza, in una nuova scheda, solo per il puntatore. Nome in `display-l`, luogo e portale in mono, CTA «Entra nell'esperienza ↗» (nuova scheda, dichiarata). Nomi e immagini delle imprese solo con il loro consenso (A7) | notte | `display-l` | soglie a tutta larghezza in pila |
 | 7 | Chiusura | Passaggio «La tua azienda può diventare un'esperienza.» sulle colonne 1–5, CTA «Richiedi un'offerta →», form sulle colonne 7–12 | calce | `display-l` | statement, poi form |
 
 ### 7.5 Puglia Digitale (`/puglia-digitale`)
@@ -1079,18 +1138,5 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.12)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
-6. **Capitolo 02 della Home con la Puglia intera (P4 di ui-designer).** Al posto della carta della Terra di Bari, la stessa carta della hero di `/puglia-digitale/`, compatta, con i 31 punti, la legenda e la descrizione. Il prototipo è pronto e provato a 161 larghezze, senza sovrapposizioni, anche con la spaziatura di WCAG 1.4.12.
-   - **Parere del creative-director: sì.**
-   - Pro:
-     - «dalla regione all'Italia» (§7.3) diventa letterale: le stesse città, da vicino nel capitolo 02 e da lontano nel 03, con lo stesso segno;
-     - Home e pagina mostrano la stessa Puglia;
-     - esce la vecchia carta, con gli a capo «GRAVINA IN / PUGLIA» e «ACQUAVIVA DELLE / FONTI», che lasciano la preposizione in fondo alla riga.
-   - Contro:
-     - l'utente non l'aveva chiesto;
-     - le città pugliesi compaiono due volte in Home;
-     - la Home pesa 1,5 KB in più con gzip (29,5 su 40);
-     - sul telefono il capitolo cresce di 69 px.
-   - Il capitolo resta il posto della foto del territorio, quando arriverà.
-   - **Il prototipo** è la patch 6 v2 di ui-designer, con la descrizione L7 di `/puglia-digitale/`.
-   - **Se l'utente dice no,** resta la carta della Terra di Bari senza coordinate (R3, regola 8), e il `[BLOCCANTE]` delle sovrapposizioni è chiuso comunque.
+5. **Approvazione di questa direzione visiva (versione 0.13)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+6. **Capitolo 02 della Home con la Puglia intera (P4 di ui-designer): decisa.** L'utente l'ha approvata il 2026-10-07 («sì, mettila»), e la Home la mostra dal commit 3e25c42, con la legenda e la descrizione L7. La carta della Terra di Bari non è più usata: se toglierla dal generatore e dal componente lo propone ui-designer. Per la direzione visiva si può togliere.
