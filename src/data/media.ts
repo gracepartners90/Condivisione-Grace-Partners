@@ -41,13 +41,13 @@ export const founderPortraitContacts = {
 
 // SIII screenshots sent by the user on 2026-10-07: desktop 2000 × 1250 (16:10), mobile 1200 × 2000 (3:5).
 // Unused views stay in src/assets/images/ for the creative-director (siii-*-mobile-*, Masseria's other view).
-// Alt texts follow the patterns of docs/contenuti/alt-text.md («Slot segnaposto»); provisional until
-// copywriter-content reviews them.
+// Alt texts: docs/contenuti/alt-text.md v1.5 («Nel sito»). On /siii/ the examples do not repeat the
+// business name: the h3 right after the image says it.
 
 /** Home, chapter 01: a SIII in use, inside the space, with its menu and hotspots. */
 export const siiiHomeScreen = {
   image: santellaInterno,
-  alt: 'Masseria Santella nel suo Sito Interattivo Immersivo: una sala con la volta bianca e una porta a vetri ad arco aperta sugli altri ambienti, con il menu delle azioni e i punti interattivi.',
+  alt: 'Il SIII di Masseria Santella: una sala con la volta bianca e una porta a vetri ad arco aperta sugli altri ambienti, con il menu e i punti interattivi.',
 };
 
 /**
@@ -57,21 +57,21 @@ export const siiiHomeScreen = {
  */
 export const siiiHeroScreen = {
   image: santellaSala,
-  alt: 'Masseria Santella su smartphone: una sala con la volta bianca, un divanetto e una porta a vetri aperta sulla stanza accanto, con il menu delle azioni e un punto interattivo.',
+  alt: 'Masseria Santella da smartphone: una sala con la volta bianca e una porta a vetri aperta sulla stanza accanto, con il menu e un punto interattivo.',
 };
 
 /** /siii/ examples, by showcase id (site.ts): the opening view of each experience. */
 export const siiiExampleScreens = {
   'masseria-santella': {
     image: santellaIngresso,
-    alt: 'Masseria Santella nel suo Sito Interattivo Immersivo: il cancello d’ingresso tra i pini in una vista a piccolo pianeta, con il pulsante per entrare nell’esperienza e il menu delle azioni.',
+    alt: 'Il cancello d’ingresso tra gli alberi, in una vista a piccolo pianeta, con il pulsante di avvio e il menu dell’esperienza.',
   },
   'maison-mimina': {
     image: miminaIngresso,
-    alt: 'Maison Miminà nel suo Sito Interattivo Immersivo: la vetrina sulla strada, tra i pini, in una vista a piccolo pianeta, con il pulsante per entrare nell’esperienza e la barra dei contatti.',
+    alt: 'La vetrina su una strada alberata, in una vista a piccolo pianeta, con il pulsante di avvio e la barra con posizione, sito web e social.',
   },
   'dl-natura-dentro': {
     image: dielleIngresso,
-    alt: 'D.L. Natura Dentro nel suo Sito Interattivo Immersivo: il vialetto d’ingresso tra le siepi e le palme in una vista a piccolo pianeta, con il pulsante per entrare nell’esperienza e il menu delle azioni.',
+    alt: 'Il vialetto d’ingresso tra le siepi, sotto una palma, in una vista a piccolo pianeta, con il pulsante di avvio e il menu dell’esperienza.',
   },
 } as const;

@@ -45,5 +45,13 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Asset nuovo del cliente (lezione del 2026-10-06): angoli ingranditi 3 volte e metadati con `sharp` (lo script deve girare da una cartella che risolve i `node_modules` del repo; poi va tolto). Se l'uso di AI non è noto, la nota dice solo ciò che è certo («Immagine elaborata digitalmente»), e si preparano le formule per i casi confermati, riusando quelle già nel sito (ADR 002). La scelta per il go-live senza risposta spetta a brand-strategist con il consulente.
 - La sessione principale committa versioni intermedie dei miei file mentre lavoro («lavoro in corso»): normale. Prima di consegnare, rileggere `git log` e le review nuove (es. direzione visiva 0.8, mappa 0.4 in corso) e aggiornare lo stato delle differenze aperte.
 
+## Alt delle schermate di un'esperienza (lezione del 2026-10-07)
+- Prima di scrivere l'alt, leggere l'albero di accessibilità intorno all'immagine (`locator(...).ariaSnapshot()`, a 1440 e 390 px): negli esempi di `/siii/` l'immagine viene *prima* dell'H3 con il nome, quindi il nome nell'alt è una ripetizione. Misurare anche il riquadro (`object-fit`, proporzione per breakpoint): l'alt deve valere per ogni ritaglio CSS.
+- Descrivere il luogo, poi l'interfaccia in termini generali. Un simbolo play è un «pulsante di avvio», non «il pulsante per entrare nell'esperienza»: è una funzione non verificata, e si confonde col link vicino. Niente specie di piante non certe, niente numeri o marchi trascritti (una schermata con «3 camere» e marchi di prenotazione tocca la riserva I7).
+- Un `<picture>` con sorgenti diverse ha un solo alt: vale solo se le due immagini mostrano lo stesso luogo.
+- Lo snippet per `src/` si verifica senza toccare il repo: copia in scratchpad, `diff -u` e `git apply --check`.
+- Quando inserisco righe in una tabella, controllare i «come sopra» delle righe che seguono (nella v1.3 di alt-text.md la riga di evento-palco era finita sotto la foto di Acquaviva).
+- Il Gulpease di un alt di una frase sta sempre tra 52 e 62: non discrimina, conta la lunghezza.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)
