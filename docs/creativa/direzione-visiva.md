@@ -3,7 +3,7 @@ titolo: Direzione visiva
 owner: creative-director
 contributi: [ui-designer, web-performance-specialist, ux-designer, brand-strategist, copywriter-brand]
 stato: in revisione
-versione: 0.14
+versione: 0.15
 aggiornato: 2026-10-07
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/analisi-riferimento.md, docs/ux/sitemap.md, docs/contenuti/copy-deck/home.md, src/assets/images/, test tipografici, cromatici e fotografici del 2026-09-28 (Playwright 1.56, sharp 0.34), review di Fase 5 in docs/review/ (2026-09-28), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/decisioni/005-preload-del-font.md, docs/strategia/coordinate-luoghi.md (0.3), docs/review/2026-09-29-sito-ricontrollo-c14-ui-designer.md, docs/review/2026-09-29-rotazione-orizzonte-mobile-ux-designer.md, docs/ux/accessibilita.md (§2.6), misure della rotazione del 2026-09-29 (Playwright, Chromium 141, build del commit 100b578), richieste dell'utente del 2026-10-05 sulla carta di Città Digitali, docs/strategia/citta-digitali-elenco.md (0.2), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§5), build di prova della carta del 2026-10-05 (http://localhost:4333, copia di ui-designer) e controllo del creative-director con Playwright (Chromium) a 16 larghezze, docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md e la sua build di prova (scratchpad ui-cdpage), docs/contenuti/copy-deck/citta-digitali.md (1.2, verifica V3), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6, §3.4, §6), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (O4), staging del commit c98f565 e prova in pagina di O4 (Playwright, Chromium, da 320 a 1920 px, anche con la spaziatura di WCAG 1.4.12), src/assets/images/acquaviva-digitale.webp (immagine del portale del cliente, fornita dall'utente il 2026-10-06), decisione dell'utente del 2026-10-06 sui segni grafici (riferita dalla sessione principale), docs/contenuti/alt-text.md (1.3), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, prove di ritaglio del creative-director del 2026-10-06 (sharp, Playwright), richiesta dell'utente del 2026-10-06 sulla Puglia intera e sue conferme (riferite dalla sessione principale), docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P1–P5), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (1.3, L7), docs/strategia/citta-digitali-elenco.md (0.3, §4), docs/ux/accessibilita.md (0.7), staging dei commit b113efb e 0d106e7 e controllo del creative-director con Playwright (Chromium) da 320 a 2560 px, prova del generatore delle carte con la regola dei 6 px sulla carta d'Italia (copia nello scratchpad, 2026-10-06), docs/review/2026-10-06-regola-11-carte-ui-designer.md (R1–R3) e le sue immagini di confronto (scratchpad ui-apart), schermate SIII inviate dall'utente il 2026-10-07 (src/assets/images/siii-*.jpg), review del 2026-10-07 in docs/review/ (schermate SIII: cro-specialist, ux-designer, web-performance-specialist; carta della Terra di Bari: ux-designer; verifica di P4: ui-designer), docs/contenuti/alt-text.md (1.6), docs/contenuti/copy-deck/home.md (1.5, didascalia della foto dell'evento), staging di d3eba9c e prove del creative-director del 2026-10-07 (Playwright, Chromium: hero di /siii/ con la sala e con la facciata, ritagli 4:5 al centro, in alto e in basso; capitoli 01–03 della Home)]
 ---
@@ -89,6 +89,8 @@ Tutto il resto è tipografia e aria.
 - §7.3, riga 5, e §7.4, righe 1 e 6: allineate al sito. Decisioni richieste, punto 6: P4 decisa.
 
 **Modifiche della versione 0.14 (2026-10-07).** §4.3: eccezione per centrare il ritratto della Home, su segnalazione dell'utente («non è centrata»). Si tolgono dallo sfondo le lettere del marchio che il ritaglio taglierebbe e si usa una nuova maschera. Il ritratto di Contatti resta com'è.
+
+**Modifiche della versione 0.15 (2026-10-07).** §4.2: la foto nuova dell'evento è nella Home. La tabella dei ritagli ha due sorgenti, i ritagli sono corretti (margini sopra gli schermi), i nodi sono spostati e c'è la proposta per il ritaglio «Schermo» di `/puglia-digitale/`.
 
 
 Il concept delle linee guida (spazio fisico → spazio digitale → persone → imprese → territorio) diventa quattro segni riconoscibili, più una regola tipografica.
@@ -519,55 +521,57 @@ La scala è fluida, con i valori misurati a 390 e 1440 px.
 2. **Una foto non documentale non finge di esserlo.** I ritratti del fondatore con fondali generati si usano solo se l'utente lo decide (DR3, §4.3). In quel caso si trasformano: monocromia a inchiostro, taglio stretto, nota di trasparenza e nessuna didascalia che li leghi a un evento.
 3. **Dove manca un'immagine, lo spazio resta progettato.** In lavorazione mostra un segnaposto dichiarato, in pubblicazione una variante tipografica (§4.5). Mai stock, mai immagini generate da noi.
 
-### 4.2 Foto dell'evento Puglia Digitale (`evento-puglia-digitale.jpg`, 1365 × 768)
+### 4.2 Foto dell'evento Puglia Digitale (`evento-puglia-digitale.jpg`, 1365 × 768; `evento-puglia-digitale-pulita.webp`, 1672 × 941)
 
-È l'unica fotografia documentale disponibile e contiene tutto il concept in un'immagine:
+È l'unica immagine dell'evento disponibile e contiene tutto il concept. Le due versioni sono elaborazioni con strumenti di intelligenza artificiale e portano la nota (B4, I7), quindi non sono documenti finché il cliente non manda l'originale dello scatto. Si vedono:
 - il palco con il fondatore e il marchio Puglia Digitale;
 - due maxischermi con tour virtuali a 360° (una vista aerea di città con le attività come punti; una piazza storica);
 - una platea numerosa e reale.
 
-**Ritagli**, con coordinate in pixel sull'originale. Tutti escludono la cornice bianca, il marchio in sovrimpressione in alto a sinistra, la scritta «Digital Innovation for the Territory» e il simbolo ✦.
+**Ritagli**, con coordinate in pixel sulla loro sorgente.
+- I ritagli della versione del 2026-09-28 escludono la cornice bianca, il marchio in sovrimpressione in alto a sinistra, la scritta «Digital Innovation for the Territory» e il simbolo ✦.
+- La versione del 2026-10-07 non ha sovrimpressioni: i ritagli possono tenere interi i due schermi.
 
-| Ritaglio | Area (x, y, larghezza × altezza) | Formato | Uso |
-|---|---|---|---|
-| **Panorama** | 46, 124, 1272 × 560 | 2,27:1 | Home §3 «Documento» (desktop e tablet) |
-| **Città** | 46, 124, 448 × 560 | 4:5 | Home §3 su mobile: lo schermo con la città vista dall'alto a 360° e la platea |
-| **Palco** | 470, 124, 448 × 560 | 4:5 | Home §6, chiusura della timeline del fondatore (opzione DR3-a, §4.3) |
-| **Schermo** | 880, 124, 438 × 548 | 4:5 | Puglia Digitale §2: la piazza a 360° sul maxischermo e chi la guarda |
+| Ritaglio | Sorgente | Area (x, y, larghezza × altezza) | Formato | Uso |
+|---|---|---|---|---|
+| **Panorama** | `evento-puglia-digitale-pulita.webp` (dal 2026-10-07) | 0, 40, 1672 × 736 | 2,27:1 | Home §3 «Documento» (desktop e tablet). I due schermi e il marchio sul fondale sono interi, con 21 px di margine sopra lo spigolo più alto dello schermo destro |
+| **Città** | `evento-puglia-digitale-pulita.webp` | 24, 100, 549 × 686 | 4:5 | Home §3 su mobile: lo schermo con la città vista dall'alto a 360°, intero con 24 px di margine sopra, e la platea. Il bordo destro si ferma prima del leggio |
+| **Palco** | `evento-puglia-digitale.jpg` | 470, 124, 448 × 560 | 4:5 | Solo con DR3-a (§4.3), oggi non in uso |
+| **Schermo** | `evento-puglia-digitale.jpg` | 880, 124, 438 × 548 | 4:5 | Puglia Digitale §2: la piazza a 360° sul maxischermo e chi la guarda. Taglia lo schermo sopra e a destra. Con la sorgente nuova, se l'utente lo approva: 1112, 40, 560 × 700, con lo schermo intero e circa 20 px di margine su tre lati `[IPOTESI: da provare in pagina]` |
 
 In Home la foto compare al massimo due volte, in ritagli con soggetti diversi.
 
 - **Colore.** Intatto: nessun filtro, viraggio o duotono. Solo esportazione ottimizzata in AVIF e WebP.
-- **Limite di risoluzione.** Il ritaglio pulito misura 1272 px: la foto non va mai a tutto schermo e resta al massimo a 1200 px CSS. Sugli schermi ad alta densità si ammorbidisce, quindi l'originale è la prima richiesta (§4.6).
-- **Nodi sul Panorama.** Sono pulsanti numerati, con una legenda sotto la foto sempre visibile su mobile. La legenda descrive solo ciò che si vede, senza fatti da verificare. Posizioni in percentuale del ritaglio:
-  1. Schermo sinistro (13%, 18%): «Una città vista dall'alto a 360°: le attività sono punti da aprire».
-  2. Palco, sul leggio accanto all'oratore (36%, 31%): «Il palco». Il nome di chi parla si aggiunge solo dopo la conferma (registro F7). Nella versione 0.1 il nodo stava a (44%, 30%), sul busto di una persona non identificata: un segno d'interazione non va sul corpo di qualcuno (G4, N7; posizione misurata da ui-designer, C14-2).
-  3. Schermo destro (84%, 17%): «Una piazza storica esplorabile a 360°».
+- **Limite di risoluzione.** Il Panorama nuovo misura 1672 px (prima 1272): la foto non va mai a tutto schermo e resta al massimo a 1200 px CSS. Sugli schermi ad alta densità si ammorbidisce un poco, quindi l'originale resta la prima richiesta (§4.6).
+- **Nodi sul Panorama.** Sono pulsanti numerati, con una legenda sotto la foto sempre visibile su mobile. La legenda descrive solo ciò che si vede, senza fatti da verificare; i testi sono quelli del copy deck della Home (§3). Posizioni in percentuale dei ritagli del 2026-10-07, misurate dal creative-director sulla sorgente:
+  1. **Schermo sinistro, sui tetti della città**, sotto i segnaposto del portale: Panorama (17,9%, 37,8%), «Città» (50,3%, 31,8%). Testo: «Vista aerea a 360° di una città, con le attività in evidenza».
+     - Mai tra i segnaposto: sono dischi bianchi come i nostri nodi, e il nodo si leggerebbe come uno di loro (nella prima versione stava a 16,4%, 29,2%).
+  2. **Palco, sul leggio accanto all'oratore** (36,6%, 41,4%). Testo: «Il palco dell'evento Puglia Digitale».
+     - Il nome di chi parla si aggiunge solo dopo la conferma (registro F7).
+     - Un segno d'interazione non va mai sul corpo di qualcuno (G4, N7). Nella versione 0.1 il nodo stava sul busto di una persona non identificata.
+  3. **Schermo destro, in fondo alla piazza** (84,9%, 27,1%), lontano dal segnaposto azzurro del portale. Testo: «Una piazza storica esplorabile a 360°».
+
+  Sul telefono, nel ritaglio «Città», c'è solo il nodo 1.
 - **Didascalia.** Servono tre cose: l'originale dello scatto, cioè la conferma che la scena non è alterata; il luogo; la data (brief consolidato, registro A4). Solo allora va in mono il testo di copywriter-brand (2026-10-07): «L'evento Puglia Digitale · {luogo}, {data}». Se l'autore è noto ed è d'accordo, si aggiunge «· foto {autore}».
   - Senza «regionale», come nel nodo 2: non deve suggerire un legame istituzionale (brief, A2). È anche il nome della sezione.
   - Nessun numero di partecipanti se non documentato.
   - Su un'immagine elaborata con strumenti di intelligenza artificiale non va nessuna didascalia con luogo e data: legherebbe a un evento preciso una scena che non è un documento (§4.1, regola 2).
 - **Persone in platea (A4).** I ritagli scelti mostrano la platea di spalle, ma la liberatoria o l'informativa dell'evento va comunque verificata. Senza, si stringono i ritagli sui due schermi e sul palco, escludendo i profili ai margini.
 - **Nota di veridicità.** La sovrimpressione con il simbolo ✦ in basso a destra somiglia al segno che lasciano alcuni strumenti di editing generativo; la scritta «Digital Innovation for the Territory» non si usa (A6). Va chiesto il file originale senza sovrimpressioni e la conferma che la scena non è stata alterata.
-- **Nuova versione per la Home** (richiesta dell'utente del 2026-10-07: «aggiorna questa in home»). Indicazioni del creative-director prima di vedere il file (`docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md`, §4). I ritagli li rivedo nell'anteprima.
-  - **Che cos'è.** La stessa scena senza cornice, logo, scritta e ✦, più grande (circa 1672 × 941 px). Ma l'oratore ha un'altra posa, quindi è un'altra elaborazione, non l'originale dello scatto.
-    - La nota «Immagine elaborata con strumenti di intelligenza artificiale» resta (B4, I7), e nessuna didascalia con luogo e data.
+- **Nuova versione per la Home** (richiesta dell'utente del 2026-10-07: «aggiorna questa in home»). È pubblicata nel commit 920e497. Il creative-director l'ha rivista sulla sorgente e in pagina, con le correzioni già riportate nella tabella e nei nodi qui sopra.
+  - **Che cos'è.** La stessa scena senza cornice, logo, scritta e ✦, più grande (1672 × 941 px). Ma l'oratore ha un'altra posa, quindi è un'altra elaborazione, non l'originale dello scatto.
+    - La nota «Immagine elaborata con strumenti di intelligenza artificiale» resta (B4, I7), e non c'è didascalia con luogo e data.
     - Cambia solo con la conferma scritta del cliente che la scena non è alterata.
-  - **Stessi formati di oggi.** Panorama 2,27:1 per desktop e tablet, «Città» 4:5 per il telefono: impaginato, nodi e legenda non si spostano, e lo scambio non causa CLS. Le aree si ricalcolano sul file nuovo.
-  - **Panorama: usare lo spazio liberato.** Oggi il ritaglio taglia lo schermo destro, sopra e a destra, e la parte alta del marchio sul fondale, per evitare la cornice. Il nuovo ritaglio contiene interi i due schermi e il marchio Puglia Digitale del fondale, con un margine sopra di almeno il 2% dell'altezza. Sotto, la platea si taglia dove cade.
-    - Se l'inquadratura è la stessa di oggi (scala 1,225), l'area è all'incirca su tutta la larghezza: 0, 55, 1672 × 736 `[IPOTESI: da verificare sul file]`.
-  - **«Città» 4:5:** lo schermo sinistro intero, con il suo menu laterale, e la platea sotto. Più o meno 40, 120, 549 × 686 `[IPOTESI]`.
-  - **In tutti e due:** colore intatto; nessun profilo riconoscibile ai margini (A4); mai più di 1200 px CSS, come oggi.
-  - **Nodi:** gli stessi tre, rimisurati da ui-designer sui ritagli nuovi.
-    1. Sul contenuto dello schermo sinistro, non sul menu né sulla cornice.
-    2. Sul leggio accanto all'oratore, mai sulla persona (N7).
-    3. Sul contenuto dello schermo destro.
-
-    Sul telefono resta solo il nodo 1.
-  - **Legenda e testo alternativo:** descrivono solo ciò che si vede.
-    - Se sugli schermi si legge il portale Puglia Digitale con il suo menu, le voci 1 e 3 si riscrivono: legenda di copywriter-brand, testo alternativo di copywriter-content.
-    - Se non cambia nulla di visibile, restano.
-  - **`/puglia-digitale/`** (ritaglio «Schermo», §2) tiene la versione di oggi, perché l'utente ha detto «in home». Ma due pose diverse dello stesso oratore sullo stesso sito si notano, e indeboliscono tutte e due le immagini. Va chiesto all'utente se aggiornare anche quella pagina (Domande aperte).
+  - **Stessi formati di prima**, Panorama 2,27:1 e «Città» 4:5: impaginato e legenda non si spostano, e lo scambio non causa CLS.
+  - **Le due correzioni del creative-director**, misurate sulla sorgente.
+    - Gli schermi sono inclinati: lo spigolo più alto del destro è a y 61, quello del sinistro a y 124. Con i primi ritagli (cima a 55 e a 120) restavano 4–6 px di margine, e gli schermi sembravano schiacciati contro il bordo. Ora le cime sono a 40 e a 100, cioè 21 e 24 px di margine.
+    - Il nodo 1 è sceso dai segnaposto del portale ai tetti.
+  - **Verificati:** nessun profilo riconoscibile ai margini (A4): in basso la platea è di spalle. Il leggio resta fuori dal ritaglio «Città». Colore intatto.
+  - **Legenda e testo alternativo** restano: gli schermi mostrano ancora il portale con il menu laterale, una città vista dall'alto con le attività e una piazza.
+  - **`/puglia-digitale/`** (ritaglio «Schermo», §2) tiene la versione del 2026-09-28, perché l'utente ha detto «in home».
+    - In quel ritaglio l'oratore non c'è, quindi la differenza di posa non si vede.
+    - La sorgente nuova lo migliorerebbe comunque: lo schermo intero invece che tagliato sopra e a destra, più risoluzione e una sola versione della scena sul sito.
+    - Consigliato, non necessario: decide l'utente (Domande aperte).
 
 ### 4.3 Ritratti del fondatore (decisione DR3, in attesa dell'utente)
 
@@ -1147,7 +1151,7 @@ Da aggiungere, per la parte visiva:
 - **Riferimento.** Screenshot di aprildunford.com (vedi `analisi-riferimento.md`).
 - **Persone nella foto dell'evento.** Ai partecipanti è stata data un'informativa sulle riprese? Senza, i ritagli si stringono sui due schermi e sul palco, escludendo i profili riconoscibili ai margini (§4.2).
 - **Nuova versione della foto dell'evento (§4.2).** È l'originale dello scatto o un'elaborazione? La posa dell'oratore è diversa: finché il cliente non conferma che la scena non è alterata, restano la nota AI e nessuna didascalia con luogo e data.
-- **Foto dell'evento su `/puglia-digitale/`.** L'utente ha chiesto la nuova versione «in home». La aggiorniamo anche nella pagina, così sul sito c'è una sola versione della scena? Decide l'utente.
+- **Foto dell'evento su `/puglia-digitale/`.** L'utente ha chiesto la nuova versione «in home». La usiamo anche per il ritaglio «Schermo» della pagina? Avrebbe lo schermo intero e più risoluzione, e sul sito resterebbe una sola versione della scena. È consigliato, non necessario: decide l'utente.
 - **Elenco delle città di Città Digitali.** Le domande al cliente (città attive, data dell'elenco) sono in `docs/strategia/citta-digitali-elenco.md` e non si duplicano qui. Il legame con le «30+ città» di Puglia Digitale l'ha confermato l'utente il 2026-10-06: sono le 31 città pugliesi dell'elenco. Per la parte visiva, quindi, anche la carta del capitolo 02 della Home può passare al punto-città (P4). Il creative-director la consiglia, ma l'utente non l'aveva chiesta: decide lui (Decisioni richieste, punto 6).
 
 ## Decisioni richieste
@@ -1167,5 +1171,5 @@ Da aggiungere, per la parte visiva:
    **Aggiornamento del G4:** il sito applica (b). Anche la foto dell'evento porta ora la nota AI (B4), quindi (a) ha perso il suo vantaggio finché non arriva l'originale. Parere: (b) con le maschere del §4.3 per il lancio, (c) appena possibile. Decide l'utente, con l'ADR 002.
 3. **Produzione fotografica dei luoghi** (6 località) **e del ritratto del fondatore**: budget e tempi. Senza, il sito va online con le varianti tipografiche (§4.5), progettate per reggere da sole.
 4. **Concept della hero** («L'orizzonte dei luoghi»): pubblica i luoghi con direzione e distanza dalla sede di Acquaviva. Doveva essere approvato al gate G2 insieme a questa direzione visiva; G2 non è mai stato approvato formalmente, quindi l'approvazione va data ora, insieme al G4.
-5. **Approvazione di questa direzione visiva (versione 0.14)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
+5. **Approvazione di questa direzione visiva (versione 0.15)** da parte dell'utente, retroattiva per il G2: è la condizione perché passi allo stato «approvato».
 6. **Capitolo 02 della Home con la Puglia intera (P4 di ui-designer): decisa.** L'utente l'ha approvata il 2026-10-07 («sì, mettila»), e la Home la mostra dal commit 3e25c42, con la legenda e la descrizione L7. La carta della Terra di Bari non è più usata, e si toglie dal generatore e dal componente (decisione del creative-director del 2026-10-07, sulla proposta di ui-designer).

@@ -16,8 +16,8 @@ const OUT = `${SRC}/derivate`;
  *   top-left, tagline and ✦ symbol bottom-right).
  */
 const eventCrops = [
-  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-panorama.jpg', box: { left: 0, top: 55, width: 1672, height: 736 } }, // 2.27:1
-  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-citta.jpg', box: { left: 24, top: 120, width: 549, height: 686 } }, // 4:5, aerial city screen, stopping before the lectern
+  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-panorama.jpg', box: { left: 0, top: 40, width: 1672, height: 736 } }, // 2.27:1, 21 px above the highest screen corner
+  { src: 'evento-puglia-digitale-pulita.webp', out: 'evento-citta.jpg', box: { left: 24, top: 100, width: 549, height: 686 } }, // 4:5, aerial city screen with 24 px above it, stopping before the lectern
   { src: 'evento-puglia-digitale.jpg', out: 'evento-palco.jpg', box: { left: 470, top: 124, width: 448, height: 560 } }, // 4:5, stage
   { src: 'evento-puglia-digitale.jpg', out: 'evento-schermo.jpg', box: { left: 880, top: 124, width: 438, height: 548 } }, // 4:5, 360° square screen
 ];
