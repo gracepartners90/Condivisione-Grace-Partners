@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.8
-aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+versione: 0.9
+aggiornato: 2026-10-07
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -120,7 +120,7 @@ H2  Il Web si può abitare. Cominciamo dal tuo spazio.                (chiusura)
   - numero 01–03 e nome (H3), statement verbatim (LG §08), microdescrizione;
   - CTA interna: «Esplora SIII →», «Scopri Puglia Digitale →», «Esplora Città Digitali →». Nessun link esterno.
   - **Visual**
-    - 01: soglia «Schermo» 16:10, slot `siii-masseria-santella`;
+    - 01: soglia «Schermo» 16:10 con la schermata vera di Masseria Santella dall'interno (commit d06a3e9), informativa, con alt; i nodi decorativi sopra la schermata sono nascosti;
     - 02: carta della Puglia, finché non arriva una foto del territorio;
     - 03: carta d'Italia con un punto per ogni città di Città Digitali e i nomi dove c'è spazio, con la legenda di una riga in `<figcaption>` (nel sito dal commit 0a61546).
     - La carta 02 è decorativa (`aria-hidden`): i suoi luoghi sono nominati nella pagina di linea.
@@ -190,7 +190,7 @@ I testi dei titoli sono quelli del copy deck SIII; qui interessano i livelli.
   - Statement `<p>`.
   - CTA primaria «Esplora gli esempi ↓» → `#esempi`.
   - Link secondario «Richiedi un’offerta ↓» → `#richiesta`.
-  - Visual: slot `siii-masseria-santella`, oppure `ImmersivePreview` variante `poster`.
+  - Visual: la schermata di Masseria Santella su smartphone (la sala), informativa, con alt; porta 3:5 da 64em, 4:5 sotto, con ritaglio centrato (commit d06a3e9). Nessun nodo decorativo sopra.
 - **Desktop.** «SIII» alla scala massima (quattro caratteri: può essere enorme). La seconda riga dell'H1 e lo statement vanno su scale diverse. Visual grande.
 - **Mobile.** Breadcrumb → eyebrow → H1 → statement → CTA → visual.
 
@@ -227,7 +227,8 @@ I testi dei titoli sono quelli del copy deck SIII; qui interessano i livelli.
 - **Contenuti per esempio** (copy deck §6):
   - nome (H3), luogo, portale, frase;
   - CTA «Entra nell’esperienza ↗» (esterna, nuova scheda), con nome accessibile completo;
-  - schermata: slot `siii-*`, `[DA FORNIRE]`.
+  - schermata: la vista d'apertura dell'esperienza (commit d06a3e9), informativa, con alt; sopra, uno strato `<a>` trasparente verso l'esperienza in una nuova scheda, per il solo puntatore (`tabindex="-1"`, `aria-hidden`, decisione dell'utente del 2026-10-07; `accessibilita.md` §2.8).
+  - Ordine in ogni voce: schermata → nome → luogo e portale → frase → CTA. Il CTA è l'unico link per tastiera e screen reader.
 - **Desktop.** Tre showcase grandi, non tre card in fila: per esempio uno per fascia, oppure uno grande e due medi (creative-director).
 - **Mobile.** Impilati; schermata a tutta larghezza; CTA a tutta larghezza.
 - **Anteprima immersiva** (`immersive.ts`)
