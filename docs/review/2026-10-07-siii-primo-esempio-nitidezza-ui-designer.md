@@ -5,7 +5,7 @@ contributi: []
 stato: bozza
 versione: 0.1
 aggiornato: 2026-10-07
-fonti: [docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (S3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (osservazione 1), docs/performance/budget.md (0.5: §4, controllo n. 8), astro.config.mjs (qualità AVIF 50, WebP 75, JPEG 75 mozjpeg), src/assets/images/siii-masseria-santella-desktop-ingresso.jpg (2000 × 1250), build di f28649a (scratchpad/dist-link, http://127.0.0.1:4360), build di prova con la patch (copia nello scratchpad, non versionata), misure Playwright 1.56 (Chromium 141) e sharp del 2026-10-07]
+fonti: [docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (S3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (osservazione 1), docs/performance/budget.md (0.6: §4, controllo n. 8), astro.config.mjs (qualità AVIF 50, WebP 75, JPEG 75 mozjpeg), src/assets/images/siii-masseria-santella-desktop-ingresso.jpg (2000 × 1250), build di f28649a (scratchpad/dist-link, http://127.0.0.1:4360; 83d3a3f cambia solo documenti), build di prova con la patch (copia nello scratchpad, non versionata), misure Playwright 1.56 (Chromium 141) e sharp del 2026-10-07]
 ---
 
 # /siii/, primo esempio · nitidezza sugli schermi retina larghi (S3)
@@ -111,7 +111,7 @@ Impostazioni del progetto (`astro.config.mjs`). KB da 1024 byte, come in `budget
   - su `/siii/` cambia solo il `<picture>` del primo esempio. La hero, che passa dallo stesso codice di `Media`, ha lo stesso HTML;
   - l'`<img>` ha gli stessi attributi di prima, in un altro ordine;
   - candidati scelti come nel §1.
-- **`git apply --check`** sul repository al commit f28649a: passa.
+- **`git apply --check`** sul repository ai commit f28649a e 83d3a3f, che ha lo stesso `src/`: passa.
 - **Copia:** `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-s3/diff/siii-esempio-avif-retina.patch`.
 
 ```diff

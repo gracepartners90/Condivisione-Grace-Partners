@@ -167,3 +167,15 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `hero-crop.mjs`: ritaglio contro riferimento, sorgente scelta, prima schermata;
   - `hero-extra.mjs`: CLS e `object-position`;
   - `diff/siii-hero-fallback-position.patch`.
+
+## Nitidezza del primo esempio di /siii/ sugli schermi retina (S3, lezioni del 2026-10-07, sera)
+- **Esito:** con il limite a 1440 px, sugli schermi 2x il primo esempio scende a 0,48–0,61 pixel dell'immagine per pixel del dispositivo e al 63–78% dei contorni della sorgente; con il 1920 si arriva al 93–96%. Una variante uniforme a 1600 o 1800 px non entra nel controllo n. 8 (il WebP supera i 200 KB). Ho proposto `avifWidths` (AVIF fino a 1920, più un 1600 per gli schermi 1x larghi), provata. Decide web-performance-specialist. Design system 0.12.
+- **«1,08x» è ambiguo.** Può essere la densità per pixel CSS (1440 / 1339) o quella per pixel del dispositivo (0,54 su 2x). Prima di accettare un giudizio di nitidezza, ricalcolare la densità per pixel del dispositivo.
+- **Varianti di prova identiche a quelle di Astro:** sharp con le opzioni di `astro.config.mjs` (`avif({ quality: 50 })`, `webp({ quality: 75 })`, `jpeg({ quality: 75, mozjpeg: true })`) dà gli stessi byte. Si possono stimare pesi e nitidezza senza ricostruire il sito.
+- **Mostrare in pagina un'immagine di prova:** il CSP non c'entrava (il server di prova non lo applica). Serve una URL dello stesso sito servita con `page.route(...).fulfill({ path })`. Togliere `srcset` lasciando `sizes` cambia `naturalWidth`, che viene corretta con `sizes`: aspettare `currentSrc` invece di `naturalWidth`.
+- **Scelta del candidato con le `w`:** un candidato in più sopra il massimo attuale lo prende anche lo schermo 1x che supera di poco il massimo (1488 contro 1440). Serve una tappa intermedia (1600), oppure una sorgente con `min-resolution`.
+- **Script** in `scratchpad/ui-s3/`:
+  - `slot.mjs`: resa, candidato e densità;
+  - `variants.mjs`: pesi per larghezza e formato;
+  - `compare.mjs`: Tenengrad e PSNR per zona;
+  - `diff/siii-esempio-avif-retina.patch`.
