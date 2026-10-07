@@ -240,6 +240,21 @@ const phrases: Record<string, string> = {
                   alt={siiiExampleScreens[ex.id].alt}
                   sizes={i === 0 ? '(min-width: 100rem) 1488px, 93vw' : '(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw'}
                 />
+                {/* The whole screenshot opens the experience too, in a new tab (user, 2026-10-07). For pointers
+                    only: keyboard and screen readers have the CTA below, and the image keeps its alt. */}
+                <a
+                  class="example__screen-link"
+                  href={ex.url}
+                  target="_blank"
+                  rel="noopener"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  data-track="outbound_click"
+                  data-cta-id={`siii-showcase-${ex.id}-schermata`}
+                  data-cta-location="esempi"
+                  data-outbound-type="esperienza-siii"
+                  data-destination-id={ex.id}
+                />
               </div>
               <div class="example__body" data-reveal>
                 <h3 class="example__name">{ex.name}</h3>
@@ -776,6 +791,13 @@ const phrases: Record<string, string> = {
   .example__screen,
   .example__body {
     grid-column: 1 / -1;
+  }
+
+  /* A transparent layer over the whole screenshot, above the aperture shutters (z-index 2). */
+  .example__screen-link {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
   }
 
   .example__body {
