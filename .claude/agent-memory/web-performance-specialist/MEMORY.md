@@ -63,6 +63,12 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - `visual.mjs`.
   - Build di controllo: `perf-yes/dist-aaf` (`aaf4760`, con la sala di Masseria Santella, uguale a `bae201c` per `/siii/`).
   - Un giro completo (build, 24 dispositivi, 28 corse Lighthouse, profili, documenti) richiede circa 45 minuti. I server vanno avviati per primi, perché vivono 30 minuti.
+- **Immagini `lazy` e rete lenta** (Home, 2026-10-08).
+  - Con la rete di laboratorio (Lighthouse con throttling applicato, profilo «lab» di Playwright) Chromium scarica in anticipo anche schermate a y 3300 px. Con il 4G veloce e il 4G lento di Playwright no.
+  - Pesano sul caricamento ma non su un LCP testuale, perché partono dopo il primo rendering.
+  - Il caso da controllare è un'immagine pesante sotto la piega, con `profiles-home.mjs`, che segnala il capitolo 01 scaricato durante il caricamento.
+- **Base della Home da rifare** (budget §7.5): dal `920e497` la foto dell'evento entra nel caricamento. Rimisura dedicata da proporre, alternando `bae201c` e la build attuale.
+- **Prima di fermare un server** si guarda `/proc/<pid>/environ` (`DIST_DIR`, `PORT`): il 2026-10-08 sulla 4392 c'era un server del creative-director (`cd-tana-home`). Lo staging su 4321 cambia PID quando la sessione principale lo riavvia.
 - **La sessione principale committa i miei documenti mentre lavoro** (2026-10-08, `f0aecbb`, «in corso»). A fine incarico si controlla con `git diff HEAD` che cosa resta da committare.
 - **Incarico fermato dalla sessione principale.** Ordine di chiusura:
   - prima il ciclo, poi i figli: una corsa Lighthouse può partire nell'istante dello stop e restare orfana;

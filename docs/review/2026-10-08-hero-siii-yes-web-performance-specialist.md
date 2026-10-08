@@ -3,9 +3,9 @@ titolo: Review di performance · Hero di /siii/ con la schermata del negozio YES
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-10-08
-fonti: [§6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
+fonti: [§7: commit c11734b (Home, capitolo 01 con src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg) e 6c6f501 (solo l'alt), dist/ dello staging delle 15:27 (identica alla build di c11734b fatta in un worktree), build di controllo 2178f47, misure Lighthouse e Playwright delle 15:32–15:45 UTC, patch scratchpad/perf-yes/home-ch01-1440.patch; §6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
 ---
 
 # Review di performance · Hero di `/siii/` con la schermata YES
@@ -20,12 +20,17 @@ Rispondo alle richieste della sessione principale:
 2. parere sul meccanismo della prop `quality`;
 3. aggiornamento del budget, con la nota sulle viewport dove l'LCP è il testo.
 
-Non ho modificato `src/` e non propongo patch: non servono.
+Non ho modificato `src/`. Per la hero di `/siii/` non servono patch; per il capitolo 01 della Home (§7) ne propongo una, provata (osservazione 3).
 
 **Aggiornamento dopo `2178f47` (§6).** Su desktop la porta usa un derivato 3:5 di 1014 × 1690, senza le parti tagliate in fondo alla schermata; i telefoni scaricano gli stessi file di prima.
 - Desktop: 22,2–60,4 KB invece di 24,7–83,7. Controllo n. 8 vuoto.
 - Oltre 2,44x il desktop riceve meno pixel di quelli che chiede (81% a 3x), per un limite del derivato, non del codice.
 - Verdetto invariato: conforme, senza patch.
+
+**Aggiornamento dopo `c11734b` (§7): Home, capitolo 01 con La Tana di Aldo.**
+- La schermata pesa il doppio, ma l'LCP della Home non cambia: resta il testo, con LCP = FCP. Anche la finestra del ripiego non cambia.
+- Il peso al caricamento cresce di 19,2 KB solo con la rete lenta di laboratorio, dove Chromium scarica la schermata in anticipo.
+- Il WebP da 1920w (195,3 KB) è dentro il controllo n. 8, ma a 4,7 KB dal limite. Propongo una patch provata: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx (osservazione 3).
 
 **In breve** (misure di `1112c93`).
 - **Budget rispettato e controllo n. 8 vuoto.**
@@ -240,6 +245,29 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
   - Da sorvegliare insieme alla finestra del ripiego (`budget.md` §3). Dopo il lancio, il RUM `web-vitals` con l'attribuzione dell'LCP, se adottato, separa il ritardo di rendering dal download.
   - Se un giorno servisse intervenire, la leva è il costo dello scambio di carattere, non l'immagine. Per esempio `content-visibility: auto` sulle sezioni lontane dalla piega senza reveal né aperture (`architettura.md` §7), da misurare prima.
 
+### 3. [SUGGERIMENTO, consigliato prima del lancio] Home, capitolo 01: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx
+*Aggiunta il 2026-10-08 con `c11734b`; misure nel §7.*
+- **Dove:** `src/pages/index.astro`, `Media` del capitolo 01 (schermata de La Tana di Aldo).
+- **Problema.** Con le larghezze predefinite il WebP da 1920w pesa 195,3 KB: 4,7 KB dal limite di 200 KB del controllo n. 8. Il controllo oggi è superato, ma basta un piccolo cambio di ritaglio, di sorgente o di encoder per farlo fallire al prelancio. Il JPEG da 1920w pesa 249,8 KB, su 300.
+- **Motivazione.** `budget.md` §6.3, controllo n. 8. La stessa regola è già applicata al primo esempio di `/siii/`, una schermata dello stesso tipo (`d4511be`, review del 2026-10-07, §8): l'AVIF grande va solo dove serve, WebP e JPEG si fermano a 1440.
+- **Proposta: patch provata**, in `scratchpad/perf-yes/home-ch01-1440.patch`. Una sola modifica in `src/pages/index.astro`; `git apply --check` passa su `6c6f501`.
+
+  ```astro
+  <Media
+    image={siiiHomeScreen.image}
+    alt={siiiHomeScreen.alt}
+    sizes="(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw"
+    widths={[480, 768, 1080, 1440]}
+    hiDpiAvifWidths={[1600, 1920]}
+  />
+  ```
+
+  - WebP fino a 141,3 KB e JPEG fino a 168,1 KB. Controllo n. 8 vuoto, con 58,7 KB di margine sul WebP.
+  - AVIF scelto uguale in 13 casi su 14. Fa eccezione il desktop 1280×800 a 2x, che prende la nuova 1600w (103,2 KB) invece della 1920w (128,3 KB); la 1600w gli basta.
+  - Markup equivalente (stesse classi, `src`, `alt`, `sizes`, `loading`), più la sorgente `(min-resolution: 1.5dppx)`. Le altre pagine sono identiche byte per byte.
+  - Costo: solo i browser senza AVIF, sui desktop a 2x, ricevono il WebP da 1440w invece che da 1920w (81% dei pixel a 1440×900).
+- **Per il creative-director.** Se sui telefoni si userà la vista mobile della stessa esperienza, dal lato performance conviene ritagliarla in build (per esempio 4:5, come la porta di `/siii/`, con `mobileCrop` e `mobileCrop.image`). Una vista 3:5 intera sarebbe molto più alta della 16:10, e peserebbe di più proprio dove la rete lenta la fa scaricare in anticipo. Va rimisurata.
+
 ## 5. Aggiornamenti a budget e architettura (domanda 3)
 
 - **`budget.md` 0.7:**
@@ -295,7 +323,56 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
 
 **Esito della rimisura: conforme, senza patch.** Aggiornati il `budget.md` 0.8 (riga «Immagine LCP» del §4 e §7.4) e l'`architettura.md` 0.6 (§3.4, `mobileCrop.image`).
 
+## 7. Home, capitolo 01 con La Tana di Aldo (`c11734b`)
+
+**Cosa cambia.** Il capitolo 01 della Home mostra la schermata da desktop de La Tana di Aldo (2000 × 1250, `lazy`) al posto della sala di Masseria Santella. La volta in pietra pesa circa il doppio:
+
+| Formato | 480w | 768w | 1080w | 1440w | 1920w | Prima, 1920w |
+|---|---|---|---|---|---|---|
+| AVIF | 17,5 | 37,8 | 63,0 | 90,6 | 128,3 KB | 70,9 KB |
+| WebP | 29,2 | 62,6 | 99,3 | 141,3 | **195,3 KB** | 92,9 KB |
+| JPEG | 27,5 | 62,6 | 109,6 | 168,1 | 249,8 KB | 147,4 KB |
+
+**Condizioni.**
+- La build di `c11734b`, fatta in un worktree, è identica allo staging delle 15:27. Rispetto al controllo `2178f47` cambiano solo `index.html` e i file della schermata. `6c6f501`, arrivato dopo, cambia solo l'alt.
+- Lighthouse 13.5.0 sulla Home: 3 corse simulate e 5 con throttling applicato per variante, alternate (15:33–15:38 UTC, `benchmarkIndex` 1336–2105).
+- Playwright: variante scaricata su 12 dispositivi dopo lo scroll, e i tre profili di rete con 5 caricamenti per variante.
+
+**Peso e LCP della Home (domanda 1).**
+
+| Metodo | La Tana di Aldo | Controllo |
+|---|---|---|
+| Simulato: FCP / LCP (3 corse) | 1,27 / 1,65 s | 1,19 / 1,65 s |
+| Applicato: FCP = LCP (5 corse) | 1,16 s (1,06–1,24) | 1,19 s (1,14–1,32) |
+| Peso al caricamento: simulato; applicato | 130,4 KB, 7 richieste; **168,6 KB**, 8 | 130,3 KB, 7; 149,4 KB, 8 |
+| Schermata del capitolo 01 al caricamento | solo con l'applicato: 38,2 KB | solo con l'applicato: 19,1 KB |
+
+- **L'LCP non cambia.** È la riga dell'H1, con LCP = FCP in tutte le corse.
+  - La schermata `lazy` parte dopo il primo rendering (circa 340–500 ms dopo la fine del documento), quindi non può ritardare un LCP testuale.
+  - Con la rete lenta di laboratorio Chromium allarga la distanza di caricamento anticipato e la scarica durante il caricamento, come già annotato nel §7.3 del budget. Ora pesa 38,2 KB invece di 19,1 al Moto G.
+- **Profili di rete** (Playwright, mediane di 5 caricamenti):
+  - laboratorio di Lighthouse: schermata scaricata durante il caricamento in 5 casi su 5, 37,8 KB a 1,75x e 63,0 KB a 3x (prima 18,7 e 31,5). LCP = FCP: 1052 contro 1076 ms a 1,75x, 1056 contro 1036 ms a 3x. Finestra del ripiego: 685 contro 703 ms, e 654 contro 702 ms;
+  - 4G veloce e 4G lento: la schermata non viene scaricata durante il caricamento. LCP = FCP e finestra del ripiego nel rumore (sul 4G lento 345 contro 313 ms a 1,75x, con casi singoli tra 137 e 409 ms).
+- **Pesi dentro il T1:** con throttling applicato 168,6 KB su 300, immagini 70,8 KB su 150. La differenza di 19,2 KB c'è solo nel caso della rete lenta di laboratorio.
+- **Variante scaricata dopo lo scroll:**
+  - 768w (37,8 KB) sui telefoni a 1,75–2x;
+  - 1080w (63,0 KB) a 390 px 3x e su ogni desktop a 1x;
+  - 1440w (90,6 KB) a 430 px 3x e sui tablet a 2x;
+  - 1920w (128,3 KB) sui desktop a 2x.
+  - Dentro gli obiettivi del budget §4 per le foto a tutta larghezza: ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px.
+- **A margine, non dovuto a `c11734b`.** Il controllo misura 130,3 KB e 1,19 s, contro 117,2 KB e 1,04 s della base del budget §7.3 (`bae201c`).
+  - In mezzo c'è la nuova foto dell'evento (`920e497`, 2026-10-07), che entra nel caricamento con 32,6 KB.
+  - L'LCP resta lontano dall'obiettivo. La differenza (14%) supera però la regola del +10%, e due tornate diverse non bastano a dirne la causa.
+  - Annotato come [DA VERIFICARE] nel budget §7.5: serve una rimisura dedicata della Home, alternando `bae201c` e la build attuale.
+
+**Il WebP a 195,3 KB (domanda 2).**
+- Non serve un intervento per rispettare il budget: il controllo n. 8 è superato.
+- **Consiglio la patch dell'osservazione 3**, prima del lancio, per il margine (da 4,7 a 58,7 KB) e per coerenza con il primo esempio di `/siii/`.
+- Le larghezze vengono prima della qualità per immagine (`architettura.md` §3.2), e qui bastano: l'AVIF grande resta agli schermi che lo usano.
+
 ## Verdetto di dominio
+
+**Aggiornamento dopo `c11734b` (§7):** Home conforme. LCP invariato, peso dentro il T1 e controllo n. 8 superato. Patch consigliata per il margine del WebP (osservazione 3).
 
 **Aggiornamento dopo `2178f47` (§6):** invariato. Il derivato desktop pesa meno a ogni densità, i telefoni non cambiano, e il controllo n. 8 resta vuoto.
 
@@ -323,6 +400,11 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
 
 ## Decisioni richieste
 
-- **creative-director:** nessuna, se l'ancoraggio resta in alto. Altrimenti osservazione 1: qualità per formato (AVIF 48 o 46) solo per questa immagine, e nuova misura.
+- **creative-director:**
+  - hero di `/siii/`: nessuna, se l'ancoraggio resta in alto. Altrimenti osservazione 1: qualità per formato (AVIF 48 o 46) solo per questa immagine, e nuova misura;
+  - Home: se il capitolo 01 passa alla vista mobile sui telefoni, ritaglio in build e nuova misura (osservazione 3).
 - **cro-specialist:** la decisione sul RUM `web-vitals`, già richiesta nel `budget.md`, serve anche per sorvegliare l'osservazione 2 sul campo.
-- **Sessione principale:** nessuna patch da applicare. Resta la prova della finestra del ripiego sull'host (domanda 1).
+- **Sessione principale:**
+  - per la hero di `/siii/`, nessuna patch da applicare. Resta la prova della finestra del ripiego sull'host (domanda 1);
+  - dal 2026-10-08, per la Home: applicare la patch dell'osservazione 3 (`scratchpad/perf-yes/home-ch01-1440.patch`), consigliata prima del lancio. Io ricontrollo varianti e controllo n. 8 in pochi minuti;
+  - programmare con me la rimisura dedicata della Home (budget §7.5, [DA VERIFICARE]).

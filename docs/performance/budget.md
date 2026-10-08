@@ -3,7 +3,7 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.8
+versione: 0.9
 aggiornato: 2026-10-08
 fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md (§7.4), fonti web elencate nel §6.8]
 ---
@@ -155,7 +155,7 @@ Le soglie valgono per tutti i template:
 | Componente | Budget |
 |---|---|
 | Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`; dal 2026-10-08 con la schermata del negozio YES) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP (dove non lo è: §2). Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Per i browser senza AVIF valgono il limite «Immagini» del §3 e il controllo n. 8. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Se il desktop usa un derivato, i telefoni ritagliano l'originale (`mobileCrop.image`, dal commit `2178f47`). L'ancoraggio del ritaglio cambia il peso: ogni cambio si rimisura. Se l'immagine non sta nei pesi con i valori del sito, si seguono le leve dell'`architettura.md` §3.2. **Misurato con la schermata YES, dal commit `2178f47`** (telefoni: ritaglio 4:5 dell'originale, in alto; desktop: derivato 3:5 di 1014 × 1690). Telefoni: 27,3–54,0 KB (640w–1080w; margine di 6,0 KB a 1080w). Desktop: 22,2–60,4 KB (480w–1014w; con `1112c93` erano 24,7–83,7). Il derivato non supera i 1014 px e Astro non ingrandisce, quindi da 64em, oltre 2,44x, il desktop riceve meno pixel di quelli che chiede: 97% a 2,5x, 89% a 2,75x, 81% a 3x. Con la schermata intera, a 3x, si arrivava al 96%. WebP di ripiego fino a 76,8 KB sui telefoni e 82,4 KB su desktop (§7.4). Con la sala di Masseria Santella erano 21,4–40,7 e 18,0–51,4 KB (§7.3). |
-| Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. |
+| Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. **Home, capitolo 01, dal 2026-10-08** (schermata de La Tana di Aldo, `c11734b`, `lazy` sotto la piega): AVIF 37,8 KB a 768w, 63,0 a 1080w e 128,3 a 1920w, dentro gli obiettivi. Il WebP da 1920w pesa 195,3 KB, a 4,7 KB dal limite del controllo n. 8. Patch proposta con la stessa regola del primo esempio: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx (review del 2026-10-08, §7). |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
 | Carte (Puglia, Italia) | Inline, ≤ 20 KB non compresso ciascuna; tracciati semplificati con SVGO, precisione a 1 decimale. |
@@ -675,7 +675,7 @@ Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141. Cors
 
 Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`, §§2–6 e §7.
 
-**Base fino al 2026-10-08, `bae201c`** (poi la base di `/siii/` è il §7.4, con la schermata YES):
+**Base fino al 2026-10-08, `bae201c`** (poi la base di `/siii/` è il §7.4, con la schermata YES, e quella della Home il §7.5):
 
 | URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
 |---|---|---|---|---|---|---|---|---|
@@ -750,6 +750,25 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - A 3x, con la rete di laboratorio, l'LCP è 2,04 s: 40 ms sopra l'obiettivo di 2,0 s, mentre il controllo era a 1,98 s. L'obiettivo del §2 si misura sul dispositivo di Lighthouse (1,75x), dove è rispettato, e il limite di 2,5 s resta lontano.
 - **Finestra del ripiego** (§3): 447 ms a 1,75x e 464 ms a 3x sul 4G lento, sotto la soglia di 600 ms.
 - **Controlli statici:** superati tutti, n. 8 compreso.
+
+### 7.5 Home con La Tana di Aldo nel capitolo 01 (2026-10-08, commit `c11734b`)
+
+**Condizioni.** Corse alternate con il controllo `2178f47`, cioè la stessa Home con la sala di Masseria Santella (15:33–15:38 UTC, `benchmarkIndex` 1336–2105). Dettaglio: review del 2026-10-08, §7.
+
+| URL | Simulato: FCP / LCP (corse) | Applicato: FCP = LCP (corse) | TBT sim. / appl. | CLS | Peso e richieste: simulato; applicato | Immagini: simulato; applicato | Elemento LCP |
+|---|---|---|---|---|---|---|---|
+| `/` (T1) | 1,27 / 1,65 s (3) | 1,16 s (5) | 0 / 97 ms | 0 | 130,4 KB, 7; 168,6 KB, 8 | 32,6 KB; 70,8 KB | riga dell'H1 |
+
+- **Controllo nella stessa tornata:** simulato 1,19 / 1,65 s; applicato 1,19 s; 130,3 e 149,4 KB.
+- **La schermata cambia solo il peso, e solo con la rete lenta di laboratorio.**
+  - Lì Chromium la scarica durante il caricamento, perché allarga la distanza di caricamento anticipato: 38,2 KB invece di 19,1 al Moto G (Lighthouse, peso trasferito), 63,0 invece di 31,5 a 3x (Playwright).
+  - L'LCP resta il testo, con LCP = FCP, e la finestra del ripiego non cambia: 685 contro 703 ms a 1,75x.
+  - Con il 4G veloce e il 4G lento di Playwright la schermata non viene scaricata durante il caricamento.
+- **Base della Home.** Il §7.3 (`bae201c`: 117,2 KB, 1,04 s con throttling applicato) non è più attuale.
+  - Dal 2026-10-07 (`920e497`) la nuova foto dell'evento entra nel caricamento (32,6 KB).
+  - Il controllo di oggi misura 130,3 KB e 1,19 s con throttling applicato: sotto l'obiettivo, ma il 14% sopra quella base.
+  - [DA VERIFICARE con una rimisura dedicata, alternando `bae201c` e la build attuale: se la differenza viene dalla foto dell'evento o dal rumore tra due tornate diverse.]
+- **Controlli statici:** superati, n. 8 compreso (WebP 1920w a 195,3 KB; patch proposta nel §4).
 
 ## 8. Eccezioni e modifiche
 
