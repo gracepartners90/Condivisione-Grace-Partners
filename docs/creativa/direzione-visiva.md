@@ -1288,6 +1288,6 @@ Da aggiungere, per la parte visiva:
    - Deciso dal creative-director: sotto i 64em il ritaglio in alto; da 64em il derivato 3:5 senza l'interfaccia tagliata, finché non arriva una schermata pulita (patch `scratchpad/cd-yes/ripiego-desktop-yes.patch`, da applicare); la riserva della hero dell'ADR 002 §3.1, confermata.
    - Dall'utente: la schermata pulita (Domande aperte); consenso di YES e conferma che il SIII è di ITnode (ADR 002, A7 e A8); se vuole YES anche tra gli esempi.
 9. **Capitolo 01 della Home con La Tana di Aldo: scelta dell'utente (2026-10-08).**
-   - Deciso dal creative-director: vista desktop da 40em; sui telefoni in verticale la vista da smartphone in 4:5 (patch `scratchpad/cd-tana-home/home-capitolo01-telefono.patch`, da applicare); «APRI QUI» sovrapposta al logo resta; la riserva del capitolo dell'ADR 002 §3.1, confermata.
+   - Deciso dal creative-director: vista desktop da 40em; sui telefoni in verticale la vista da smartphone in 4:5 (patch `scratchpad/cd-tana-home/home-capitolo01-telefono-con-1440.patch`, da applicare, che contiene anche le larghezze proposte da web-performance-specialist); «APRI QUI» sovrapposta al logo resta; la riserva del capitolo dell'ADR 002 §3.1, confermata.
    - Da web-performance-specialist: la qualità del ritaglio per telefono, AVIF 40 come nella patch o i valori del sito con un'eccezione motivata.
    - Dall'utente: una vista desktop senza la sovrapposizione (Domande aperte); consenso e conferma A8 (ADR 002).

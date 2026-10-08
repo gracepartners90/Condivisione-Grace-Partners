@@ -36,6 +36,8 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **`position` di sharp (0.35) accetta solo parole chiave, gravità o strategie** (`top`, `centre`, `bottom`, `north`, `attention`…): una percentuale dà errore. Per un ritaglio a una quota precisa serve `extract` prima del resize, quindi una modifica a `Media.astro`, oppure un derivato in `scripts/prepare-assets.mjs`.
   - Una Porta 3:5 con una schermata 3:5 non si ritaglia con `object-fit`: serve un derivato. Se i telefoni devono ritagliare l'originale, `mobileCrop.image` (patch del 2026-10-08 per YES).
   - **Il nome di un derivato segue la convenzione dei file che i controlli leggono.** Il controllo A7 per impresa riconosce `siii-<impresa>-desktop-…` e `-mobile-…`: un derivato chiamato `siii-yes-desktop.jpg` sarebbe sfuggito. Prima di nominare un file, leggere le regex di `scripts/prelaunch-check.mjs`.
+  - Patch del 2026-10-08 per il capitolo 01 della Home (se applicata): `mobileCrop.media` (il ritaglio vale solo sotto un'altra soglia, per esempio 40em) e `mobileCrop.quality` (qualità del solo ritaglio). Prima di usarle, controllare in `Media.astro` che ci siano.
+  - **Un'immagine `lazy` non è gratis.** Con la rete lenta di laboratorio Chromium la scarica durante il caricamento (budget §7.5): si pesa come se entrasse nel caricamento.
 - **Prima schermata dei telefoni nelle catture della sessione principale: 390 × 664** (finestra visibile ridotta). Su `/siii/` la porta della hero comincia a circa 550 px: nella prima schermata se ne vedono solo circa 114 px, non 294 come a 844.
 - **Bloccati anche** (DNS): quirksmode.org, bugs.webkit.org. I risultati di WebSearch si citano come riassunti, con `[DA VERIFICARE]`.
 - **Misure durante lo scorrimento** (2026-09-29).
@@ -89,6 +91,8 @@ Lezioni e preferenze. Le decisioni ufficiali stanno in `docs/creativa/` e `docs/
 - **Le regole «opzione principale / ripiego» funzionano.** Per le coordinate la fonte a 4 decimali non era raggiungibile: il ripiego a 2 decimali, scritto nella DV, ha chiuso C11 senza un nuovo arbitrato.
 - **Allo stop si annullano i deliverable, non gli strumenti** (2026-10-08). Interrotto a metà, ho cancellato anche gli script di misura nello scratchpad, e alla ripresa li ho riscritti. Gli script generici restano finché l'incarico non è chiuso.
 - **Il ritaglio si sceglie dalle quote, non dai tre ancoraggi.** Prima le quote di ogni elemento d'interfaccia, poi le finestre pulite: per la schermata YES erano solo in alto (0–15 px) e in basso. E vale anche su desktop: una schermata intera può avere difetti in fondo che nessun ancoraggio dei telefoni mostra.
+- **Una riserva si prepara come modifica di soli dati.** Per il capitolo 01 la regola CSS del 4:5 dipende da una classe che c'è solo con `mobileImage`: togliendo il dato, il capitolo torna alla vista desktop senza toccare altro. L'ho provato con una build in copia.
+- **Due patch sulla stessa riga: se ne consegna una combinata, provata.** La mia e quella di web-performance-specialist toccavano la stessa `<Media>`: una combinata e quella singola, con l'avviso di non applicare anche l'altra.
 
 ## Preferenze e feedback del cliente e dell'utente
 - Nessun feedback diretto del cliente sul piano creativo. L'utente ha voluto vedere il sito online prima del G4 (anteprima su Railway, ADR 004).
