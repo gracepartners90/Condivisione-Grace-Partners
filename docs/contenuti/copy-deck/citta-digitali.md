@@ -3,14 +3,19 @@ titolo: Copy deck · Città Digitali
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, web-performance-specialist]
 stato: in revisione
-versione: 1.4
+versione: 1.5
 aggiornato: 2026-10-08
-fonti: [commit 426e6dc (nomi disegnati sulla carta, richiesta dell'utente del 2026-10-08) e 5f2f757 (descrizione della carta), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md, docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md, docs/ux/accessibilita.md (0.11, §2.8), docs/ux/struttura-pagine.md (0.11, CD-2), build di HEAD (639615c) servita in locale il 2026-10-08 (scratchpad, non versionata), docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md (0.4), docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (0.8: §1.4, §7.6 e nota O4, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§3), src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/lib/citta-digitali.ts, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de), staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+fonti: [commit b71268e (formula L8 della descrizione) e a95b5c6 (Lecce sulle carte più larghe), docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (1.4, L8), docs/creativa/direzione-visiva.md (0.17, §1.4), build di HEAD (441ca95) servita in locale il 2026-10-08 (scratchpad, non versionata), commit 426e6dc (nomi disegnati sulla carta, richiesta dell'utente del 2026-10-08) e 5f2f757 (descrizione della carta), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md, docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md, docs/ux/accessibilita.md (0.11, §2.8), docs/ux/struttura-pagine.md (0.11, CD-2), build di HEAD (639615c) servita in locale il 2026-10-08 (scratchpad, non versionata), docs/brief/linee-guida.md, docs/brief/brief-consolidato.md (glossario, omonimie, S7), docs/seo/mappa-keyword-url.md (0.4), docs/seo/specifiche-tecniche.md (§5.3), docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5.1), docs/contenuti/tone-of-voice.md, docs/creativa/direzione-visiva.md (0.8: §1.4, §7.6 e nota O4, §7.8), docs/ux/struttura-pagine.md (§2, §4), docs/strategia/citta-digitali-elenco.md (§1, §4, §5), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (§3), src/pages/citta-digitali.astro, src/components/sections/LocationShowcase.astro, src/lib/citta-digitali.ts, src/data/pages.ts, src/data/site.ts, src/data/asset-slots.ts, src/scripts/video.ts, dist/ del 2026-10-05 (commit 2a038de), staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Città Digitali
 
 Pagina `/citta-digitali/`. Copre le sezioni 17, 18, 19, 20 e 21 delle linee guida (LG) e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.5 (2026-10-08)**
+- **Descrizione della carta con la formula L8** di copywriter-brand: «… Tra queste anche Itri e Cosenza.», 171 caratteri (commit b71268e).
+- **Lecce sulle carte più larghe**, da 36rem di carta (patch A di ui-designer, approvata dal creative-director, commit a95b5c6). La descrizione non cambia.
+- La direzione visiva 0.17 è allineata alla carta con i nomi (V5, chiusa).
 
 **Novità della v1.4 (2026-10-08)**
 - **La carta della sezione 2 disegna i nomi delle città**, gli stessi della Home, per richiesta dell'utente (commit 426e6dc).
@@ -133,21 +138,21 @@ Note:
 **Legenda della carta** · `figcaption` · `label` mono · testo di copywriter-brand (L1)
 > Ogni punto è una città di Città Digitali
 
-**Descrizione della carta** · `aria-label` della carta (`role="img"`) · modello di copywriter-brand (L4), nomi secondo la regola di ux-designer del 2026-10-08 · costruita dai dati
-> Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Itri e Cosenza.
+**Descrizione della carta** · `aria-label` della carta (`role="img"`) · modello di copywriter-brand (L4) con la formula L8, nomi secondo la regola di ux-designer del 2026-10-08 · costruita dai dati · 171 caratteri
+> Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste anche Itri e Cosenza.
 
 **Dettagli della carta**
 | Campo | Valore |
 |---|---|
 | Che cosa mostra | I punti delle città dell'elenco di brand-strategist, letto dalla pagina «Tutte le città» del portale (`citta-digitali-elenco.md`), e i nodi delle tre città delle schede, che si accendono dalla scheda. In più, i nomi delle città principali: gli stessi della carta della Home, capitolo 03 (richiesta dell'utente del 2026-10-08, commit 426e6dc) |
-| Nomi disegnati | Con la carta più larga di 25rem: Varese, Itri, Bari, Altamura, Cosenza, Caltanissetta e Caltagirone. Fino a 25rem, solo i primi cinque, senza Bari e Caltagirone. Sono `aria-hidden`: per gli screen reader li dice la descrizione |
+| Nomi disegnati | Dipendono dalla larghezza della carta. Fino a 25rem, 5 nomi: Varese, Itri, Altamura, Cosenza e Caltanissetta. Da 25 a 36rem, 7: in più Bari e Caltagirone. Da 36rem, cioè da circa 1270 px di finestra, 8: in più Lecce, appesa a un richiamo di 40 px (commit a95b5c6). Brindisi non entra. I nomi sono `aria-hidden`: per gli screen reader li dice la descrizione |
 | Legenda nel sorgente | `Ogni punto è una città di&nbsp;Città&nbsp;Digitali`: con gli spazi unificatori il nome del marchio non si spezza e la preposizione resta con il nome. Niente punto finale (tone of voice §8), niente numero, niente link |
 | A capo della legenda | Una riga da 360 px; due a 320 px, «Ogni punto è una città / di Città Digitali» (misurato sullo staging il 2026-10-05, come nella review di copywriter-brand) |
-| Come si costruisce la descrizione | Dagli stessi dati dei punti: `describeCittaDigitali()` in `src/lib/citta-digitali.ts`. Regioni da nord a sud; «la maggior parte in» solo se una regione ha più della metà delle città, altrimenti «più che altrove in» (L4). Poi «Tra queste:» con i nomi disegnati a ogni larghezza, da nord a sud, senza le città delle schede: chi usa lo screen reader le sente già nel testo prima della carta e nelle schede subito dopo (ux-designer, review del 2026-10-08; `accessibilita.md` §2.8). Oggi restano Itri e Cosenza. Se cambiano i nomi disegnati o le città delle schede, la descrizione si aggiorna da sola |
+| Come si costruisce la descrizione | Dagli stessi dati dei punti: `describeCittaDigitali()` in `src/lib/citta-digitali.ts`. Regioni da nord a sud; «la maggior parte in» solo se una regione ha più della metà delle città, altrimenti «più che altrove in» (L4). Poi i nomi disegnati a ogni larghezza, da nord a sud, senza le città delle schede: chi usa lo screen reader le sente già nel testo prima della carta e nelle schede subito dopo (ux-designer, review del 2026-10-08; `accessibilita.md` §2.8). Oggi restano Itri e Cosenza. La terza frase è «Tra queste anche …», perché lascia fuori città nominate accanto alla carta: «anche» dice che le città sono più di quelle nominate (copywriter-brand, L8). Le carte senza schede accanto tengono «Tra queste: …». Se cambiano i nomi disegnati o le città delle schede, la descrizione si aggiorna da sola |
 | Ordine di lettura | H2, testo, statement, link all'elenco, carta con la descrizione, legenda, schede (ux-designer, review della carta della pagina, §3.5) |
 | Quando arriva l'elenco in testo | La descrizione si toglie, e carta e legenda tornano insieme `aria-hidden`, se l'elenco è completo, raggruppato per regione, nella stessa sezione e visibile, oppure in un `<details>` con un sommario chiaro (ux-designer, review della carta della pagina, §3.4) |
-| Nomi solo sulle carte più larghe | Il creative-director valuta Lecce (patch A di ui-designer). Se passa, va aggiunto nella riga «Nomi disegnati», ma la descrizione non cambia: un nome che non è disegnato a ogni larghezza non entra nella descrizione |
-| Stato | Punto-città e legenda dal commit c98f565; nomi dal commit 426e6dc; descrizione dal commit 5f2f757. Verificato il 2026-10-08 su una build di HEAD (639615c): descrizione di 166 caratteri, legenda come sopra, 7 nomi a 1024 e 1440 px, 5 a 768, 390 e 320 px |
+| Nomi solo sulle carte più larghe | Lecce, da 36rem di carta. Non entra nella descrizione, perché non è disegnata a ogni larghezza |
+| Stato | Punto-città e legenda dal commit c98f565; nomi dal commit 426e6dc, Lecce dal commit a95b5c6; descrizione dal commit 5f2f757, con la formula L8 dal commit b71268e. Verificato il 2026-10-08 su una build di HEAD (441ca95): descrizione di 171 caratteri e legenda come sopra; 8 nomi a 1270, 1280, 1440 e 1920 px, 7 a 1024 px, 5 a 768, 390 e 320 px |
 
 **Schede delle città** · copy · da nord a sud, come nelle LG
 | Campo | Città 1 | Città 2 | Città 3 |
@@ -171,7 +176,7 @@ Note:
 - **Niente foto e niente riga del dominio.** La v1.1 prevedeva per ogni città il dominio visibile e una foto (slot `luogo-*`). La composizione della direzione visiva (§7.6: carta d'Italia, città allineate alla latitudine del loro nodo) non li ha, e gli slot non esistono in `src/data/asset-slots.ts`. Il dominio della città resta nel nome accessibile di «Esplora».
 - **Portali delle città da verificare.** seo-technical trova indizi di indirizzi superati per i tre portali (review del dominio, oss. 2). Se dopo la verifica un link passa alla pagina della città su cittàdigitali.it, il testo visibile resta «Esplora ↗» e il nome accessibile diventa «Esplora [città] su cittàdigitali.it (si apre in una nuova scheda)». L'URL lo indica seo-technical.
 - **Carta e legenda** (dal commit c98f565). La legenda descrive ogni punto e non promette che l'elenco sia completo: resta vera se il portale aggiunge una città prima che la carta si aggiorni (L1). La descrizione non ha numeri, perché un numero è un claim.
-- **Nomi sulla carta** (dal commit 426e6dc). Li ha chiesti l'utente il 2026-10-08: «mettiamo anche lì qualche nome di città tra le più importanti». Sono gli stessi che la Home mostra già.
+- **Nomi sulla carta** (dal commit 426e6dc). Li ha chiesti l'utente il 2026-10-08: «mettiamo anche lì qualche nome di città tra le più importanti». Sono gli stessi che la Home mostra già, più Lecce sulle carte più larghe.
   - Oltre ai tre delle linee guida, i nomi vengono dall'elenco di brand-strategist, letto da un riassunto della pagina «Tutte le città».
   - La lettura si chiude con il testo o uno screenshot della pagina (`citta-digitali-elenco.md` §4, ipotesi aperta). Vale anche per la descrizione, che nomina Itri e Cosenza.
 - **Elenco in testo, il prossimo passo.** Quando il testo della pagina «Tutte le città» è confermato arriva l'elenco completo, per regione, con fonte e data (seo-content, review sull'omonimia, §5; ux-designer, §3.2 della review della carta e §3.4 della review della carta della pagina). Ne scrivo io i testi, con i criteri della direzione visiva (§1.4, «Elenco in testo»).
@@ -323,13 +328,13 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | Chiusura | «Entra in Città Digitali» come titolo del form, senza link | `struttura-pagine.md` CD-5 |
 | Schede delle città | Senza foto e senza riga del dominio | Direzione visiva §7.6 |
 | Meta description | Versione del 2026-10-05, con ITnode | seo-content, review sull'omonimia, O3 |
-| Carta della sezione 2 | Legenda L1; i nomi della Home disegnati sulla carta; descrizione con «Tra queste: Itri e Cosenza.» | Richiesta dell'utente del 2026-10-08 (commit 426e6dc); ux-designer, review del 2026-10-08 (commit 5f2f757) e `accessibilita.md` 0.11, §2.8; copywriter-brand, L1 e L4. La direzione visiva §1.4 (regola 9: nessun nome accanto alle schede) è ancora da allineare (V5) |
+| Carta della sezione 2 | Legenda L1; i nomi della Home, più Lecce sulle carte più larghe; descrizione con «Tra queste anche Itri e Cosenza.» | Richiesta dell'utente del 2026-10-08 (commit 426e6dc); ux-designer, review del 2026-10-08 (commit 5f2f757) e `accessibilita.md` 0.11, §2.8; copywriter-brand, L1, L4 e L8 (commit b71268e); patch A di ui-designer (commit a95b5c6); direzione visiva 0.17, §1.4 |
 | Dominio sotto la CTA della hero | «cittàdigitali.it», testo semplice in `label` mono | O4 di seo-content, approvata dal creative-director; direzione visiva 0.8, §7.6 |
 
 ## Verifica sul sito (2026-10-05 e 2026-10-08)
 
 **Metodo.**
-- **Terza verifica (v1.4), il 2026-10-08, solo per la carta della sezione 2.** Lo staging condiviso era fermo a prima del commit 5f2f757. Ho costruito in una cartella di lavoro una copia di `HEAD` (639615c) e l'ho servita in locale, senza toccare il repository. Ho letto descrizione, legenda, nomi disegnati e ordine di lettura a 1440, 1024, 768, 390 e 320 px, poi ho rifatto il controllo di tutti i testi del documento.
+- **Terza verifica (v1.4 e v1.5), il 2026-10-08, solo per la carta della sezione 2.** Lo staging condiviso era fermo a prima dei commit del giorno. Ho costruito in una cartella di lavoro una copia di `HEAD`, prima 639615c e poi 441ca95, e l'ho servita in locale, senza toccare il repository. Ho letto descrizione, legenda, nomi disegnati e ordine di lettura a 1920, 1440, 1280, 1270, 1024, 768, 390 e 320 px, poi ho rifatto il controllo di tutti i testi del documento.
 - Build `dist/` del 2026-10-05, che corrisponde al commit 2a038de. L'ho copiata e servita in locale. Dopo quel commit `src/` è cambiato in un solo punto, che non tocca i testi: `data-cta-location` del link all'elenco (commit ce276be, controllato sul codice).
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 390 e a 1440 px. Confronto con `src/pages/citta-digitali.astro`, `src/data/pages.ts` e `src/data/site.ts`.
 - Uno script controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere.
@@ -358,7 +363,7 @@ Nella pagina c'è anche il link del footer («cittàdigitali.it ↗», `microcop
 | V2 | `docs/ux/struttura-pagine.md` CD-1 e CD-2 | Citavano l'occhiello, il link secondario «Porta la tua attività in Città Digitali ↓» e, per ogni città, dominio e foto | **Chiusa il 2026-10-05**: `struttura-pagine.md` 0.5 descrive la pagina come il sito | ux-designer |
 | V3 | `docs/creativa/direzione-visiva.md`, §1.4 e §7.6 | Nella 0.7 la riga 5 di §7.6 citava la CTA «Entra in Città Digitali →» sopra il form, e §1.4 dava alla carta la descrizione a tre nomi | **Chiusa il 2026-10-05**: la 0.7 ha allineato la chiusura, la 0.8 la descrizione L6 | creative-director |
 | V4 | `docs/seo/mappa-keyword-url.md` §3.4 | Nella mappa 0.3: `#entra` per il form e le «immagini dei territori» tra i materiali mancanti | **Chiusa il 2026-10-05**: la mappa 0.4 (commit 2f5853a) ha `#richiesta`, «Entra in Città Digitali» come titolo del form e, tra i materiali mancanti, solo quelli del video | seo-content |
-| V5 | `docs/creativa/direzione-visiva.md` §1.4 | La regola 9 dice che la carta accanto alle schede non porta nomi; i conteggi e la descrizione L6 sono citati come vigenti. La richiesta dell'utente del 2026-10-08 supera la regola (lo segnala anche ux-designer, review del 2026-10-08, §5) | Allineare §1.4 alla carta con i nomi. Il sito non cambia | creative-director |
+| V5 | `docs/creativa/direzione-visiva.md` §1.4 | Nella 0.15 la regola 9 diceva che la carta accanto alle schede non porta nomi, e la descrizione L6 era citata come vigente | **Chiusa il 2026-10-08**: la 0.16 supera la regola 9 e la 0.17 riporta la descrizione con la formula L8 | creative-director |
 
 ## Testi originali mancanti
 
@@ -375,7 +380,7 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, statement
 | Paragrafi e tabelle | 20 | 255 | 1.324 | **60,6** |
 | Tutti i testi principali | 38 | 347 | 1.875 | 67,8 |
 
-Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 39 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi non cambiano (il dominio con l'accento ha le stesse lettere); il totale sale di una frase perché conta il titolo del form. Legenda e descrizione della carta sono fuori da questi insiemi, perché sono testi dell'interfaccia e dell'accessibilità: da sole hanno Gulpease 85,2 (legenda, 40 caratteri) e 74,2 (descrizione, 166 caratteri, ricalcolata il 2026-10-08).
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 39 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi non cambiano (il dominio con l'accento ha le stesse lettere); il totale sale di una frase perché conta il titolo del form. Legenda e descrizione della carta sono fuori da questi insiemi, perché sono testi dell'interfaccia e dell'accessibilità: da sole hanno Gulpease 85,2 (legenda, 40 caratteri) e 72,9 (descrizione, 171 caratteri, ricalcolata il 2026-10-08 con la formula L8).
 
 ## Ipotesi da validare
 
@@ -400,8 +405,6 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **Utente, tramite la sessione principale** (DR2): allineare il sottotitolo a «Siti Interattivi Immersivi».
 - **Cliente e cro-specialist** (N10): titolo 05 «La forza di un portale ad alto traffico» solo con dati documentati, altrimenti «La forza di un portale nazionale».
 - **cro-specialist**: etichetta della CTA secondaria della hero.
-- **creative-director**: allineare la direzione visiva §1.4 alla carta con i nomi (V5); decidere su Lecce, che non cambia la descrizione ma va aggiunto in «Nomi disegnati».
-- **copywriter-brand**: la domanda di ux-designer su «Tra queste:» con due soli nomi, o «Tra le altre:» (review del 2026-10-08). Oggi resta la formula comune alle carte.
 
 ## Fonti consultate
 

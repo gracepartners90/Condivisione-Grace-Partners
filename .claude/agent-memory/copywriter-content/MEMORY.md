@@ -66,6 +66,8 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Regola dei nomi (ux-designer, `accessibilita.md` §2.8): nella descrizione vanno i nomi disegnati a ogni larghezza, classe più stretta compresa, tranne la sede e le città che hanno una scheda nella stessa sezione. Un nome che compare solo sulle carte larghe (Lecce, Brindisi) non cambia la descrizione.
 - Un nome mostrato è un'affermazione più forte di un punto: oltre ai tre delle linee guida, i nomi vengono da un elenco letto da un riassunto (`citta-digitali-elenco.md` §4). Va annotato come ipotesi aperta, non dato per verificato.
 - `git status` prima di verificare: nel working tree possono esserci modifiche di altri non committate (il 2026-10-08, Lecce in corso). Verifico su una build di `HEAD` e lo dico. Le loro modifiche non le tocco.
+- Formula L8 di copywriter-brand: quando la descrizione lascia fuori città nominate accanto alla carta (le schede), la terza frase è «Tra queste anche …», non «Tra queste: …».
+- Prima di avviare `serve.mjs` controllare che la porta sia libera (`curl` → 000) e leggere il log: il 2026-10-08 la 4393 era occupata da un server di altri con una build vecchia, il mio è uscito con EADDRINUSE e la verifica ha letto la pagina sbagliata. Confrontare sempre l'`aria-label` servito con quello della build (`grep` su `dist/`).
 
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)
