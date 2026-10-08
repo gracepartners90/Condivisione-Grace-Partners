@@ -3,15 +3,19 @@ titolo: Carta d'Italia di /citta-digitali/ con i nomi delle città · verifica d
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-10-08
-fonti: [richiesta dell'utente del 2026-10-08 riferita dalla sessione principale («la mappa in città digitali, mettiamo anche lì qualche nome di città tra le più importanti»), commit 426e6dc, src/components/sections/LocationShowcase.astro, src/components/ui/MapItaly.astro, src/lib/citta-digitali.ts, src/pages/citta-digitali.astro, src/pages/index.astro, docs/ux/accessibilita.md (0.10, §2.8 e §2.14, Appendici A e D), docs/ux/struttura-pagine.md (0.10, CD-2 e HM-5), docs/creativa/direzione-visiva.md (0.15, §1.4), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6), docs/review/2026-10-06-descrizione-carta-home-ux-designer.md (regola dei nomi, scelta B), staging http://127.0.0.1:4321 a 426e6dc, copia del repository a 426e6dc con la patch (build in locale), albero di accessibilità via CDP (Chromium 141) e axe-core 4.13 del 2026-10-08; per §6: docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e patch B), commit 5f2f757, b71268e (L8) e a95b5c6 (patch A), copie della HEAD c2d368a con e senza la patch B (build in locale)]
-oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6)
+fonti: [richiesta dell'utente del 2026-10-08 riferita dalla sessione principale («la mappa in città digitali, mettiamo anche lì qualche nome di città tra le più importanti»), commit 426e6dc, src/components/sections/LocationShowcase.astro, src/components/ui/MapItaly.astro, src/lib/citta-digitali.ts, src/pages/citta-digitali.astro, src/pages/index.astro, docs/ux/accessibilita.md (0.10, §2.8 e §2.14, Appendici A e D), docs/ux/struttura-pagine.md (0.10, CD-2 e HM-5), docs/creativa/direzione-visiva.md (0.15, §1.4), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6), docs/review/2026-10-06-descrizione-carta-home-ux-designer.md (regola dei nomi, scelta B), staging http://127.0.0.1:4321 a 426e6dc, copia del repository a 426e6dc con la patch (build in locale), albero di accessibilità via CDP (Chromium 141) e axe-core 4.13 del 2026-10-08; per §6: docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e patch B), commit 5f2f757, b71268e (L8) e a95b5c6 (patch A), copie della HEAD c2d368a con e senza la patch B (build in locale); per §7: docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4 e §7, variante B2), commit 474e2df (patch B) e 21faf34, copie della HEAD 21faf34 con la patch B e con la variante B2 (build in locale; la B uguale byte per byte allo staging, la B2 alla build di ui-designer)]
+oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6); dalla 1.2 la variante B2 (§7)
 ---
 
 # Carta d'Italia di `/citta-digitali/` con i nomi delle città
 
 ## In sintesi
+- **[IMPORTANTE] Variante B2 al posto della patch B: sì (§7, aggiunto nella 1.2).**
+  - Con la B2 le schede stanno sempre dentro la sezione, qualunque sia la lunghezza del testo. Con la B bastano 4 parole in più nella descrizione di Caltanissetta perché, con le spaziature, il testo esca dalla sezione e diventi illeggibile sul fondo chiaro di quella dopo.
+  - Il resto non cambia. Senza spaziature l'impaginato è identico; nessun testo si copre; ordine di lettura, Tab e scheda → nodo restano uguali.
+  - Il ripiego dei browser senza unità di contenitore è accessibile. Ho un suggerimento per l'impaginato, a ui-designer.
 - **[IMPORTANTE] Schede da 1280 px con le spaziature di 1.4.12: scelgo la patch B di ui-designer (§6, aggiunto nella 1.1).**
   - Il problema l'ha trovato ui-designer, ed era presente già prima di 426e6dc. Con le spaziature «Caltanissetta» passa sotto «Esplora ↗», e tra 1280 e 1345 px il testo di Altamura tocca o copre l'inizio della scheda di Caltanissetta.
   - Con la patch B, provata sulla HEAD c2d368a, non si copre più nulla, e senza spaziature non cambia niente.
@@ -181,29 +185,78 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
     - Tastiera e focus non cambiano.
 - **Patch.** È quella di ui-designer, senza modifiche: `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-cdn/diff/citta-digitali-schede-1412.patch`. Il diff è nella sua review, §5.
 
+## 7. [IMPORTANTE] Variante B2 al posto della patch B (decisione del 2026-10-08)
+- **Fonte.** `docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md`: §4 per i due effetti della B e la proposta, §7 per la patch.
+- **Stato.** La patch B è nel sito dal commit 474e2df. La B2 è una patch di poche righe sopra la B:
+  - calcola le latitudini sull'altezza della carta, ricavata dalla larghezza della griglia con le unità di contenitore (`container-type: inline-size` su `.places__italy`, `--map-h` in `cqw`), e non più sull'altezza dell'elenco;
+  - lascia scendere l'ultima scheda sotto la carta al massimo di `--space-4xl`. Oltre, cresce la riga, e con lei la sezione.
+- **Il problema della B, per 1.4.12.**
+  - Con le spaziature l'elenco diventa più alto della carta, e le percentuali si calcolano sull'elenco cresciuto. Il contenuto supera l'elenco e consuma l'aria in fondo alla sezione: ne restano 17–24 px.
+  - La sezione dopo ha il fondo calce, e il testo delle schede è chiaro. Basta un testo un po' più lungo perché l'ultima riga esca dalla sezione e non si legga più.
+  - È una perdita di contenuto con le spaziature dell'utente, cioè una mancanza di 1.4.12, e nessun controllo automatico la vede.
+- **Decisione: la B2 sostituisce la B.**
+  - Toglie la dipendenza dalla lunghezza del testo. Con le spaziature, sotto l'ultima scheda restano sempre almeno 145 px, anche con 32 parole in più.
+  - Senza spaziature cambia nulla.
+  - Con le spaziature si sposta solo la scheda che deve: oggi Caltanissetta. È anche la risposta alla domanda sull'allineamento che avevo posto al creative-director nel §6.
+  - Ordine del DOM, albero di accessibilità, ordine di tabulazione e scheda → nodo restano quelli della B.
+- **Prove, con il metodo di `accessibilita.md` §4.3.** Copie mie della HEAD 21faf34: una con la B, uguale byte per byte allo staging, e una con la B2, uguale byte per byte alla build di ui-designer. La patch passa `git apply --check` sulla HEAD.
+
+| Prova | Patch B | Variante B2 |
+|---|---|---|
+| Senza spaziature, 188 finestre da 320 a 1920 px | — | Posizioni identiche alla B entro 0,04 px. La sezione è identica byte per byte, in immagine, a 1024, 1280, 1366, 1440 e 1920 px |
+| Con le spaziature, 131 finestre da 1280 a 1920 px: testi che si coprono | Nessuno: almeno 42,9 px tra le schede e 24,1 px tra titolo e «Esplora» | Uguale |
+| Con le spaziature: discesa sotto il proprio nodo | Varese 11–29 px, Altamura 50–135, Caltanissetta 77–215 | Varese 0, Altamura 0, Caltanissetta 12–80 |
+| Con le spaziature: aria sotto l'ultima scheda | 17–24 px | 145–187 px |
+| Testi più lunghi, 65 finestre da 1280 a 1920 px, con le spaziature: +4, +8, +16 e +32 parole a Caltanissetta; +4, +8 e +16 ad Altamura; +16 a Varese; +8 a tutte e tre | Il testo esce dalla sezione in 7 casi su 9, fino a 196 px; in un altro restano 0,7 px. Con +4 parole a Caltanissetta esce di 10 px, a 1920 px | Mai: sempre almeno 145 px sotto l'ultima scheda. Nessun testo copre la scheda successiva |
+| Gli stessi testi, senza spaziature | Con +32 parole a Caltanissetta il testo esce di 49 px | Sempre almeno 106 px |
+| Caratteri predefiniti del browser a 20 e 24 px, con le spaziature, da 1600 a 2560 px | Nessuna sovrapposizione; 18–35 px in fondo | Nessuna sovrapposizione; 181–262 px in fondo. Varese e Altamura restano al loro nodo |
+| Albero di accessibilità e Tab, a 390, 1280, 1440 e 1920 px, con e senza spaziature | — | Identici alla B |
+| Scheda → nodo, a 1280, 1440 e 1920 px, con e senza spaziature | — | Uguale alla B: si accende solo il proprio nodo, un nodo alla volta, mai dalla carta. Con le spaziature la fascia vuota sotto Varese è di 90–141 px invece di circa 200 |
+| axe-core 4.13 e Appendice A | — | Nessun problema a 390 e 1280 px. Con le spaziature, 0 violazioni a 1280 e 1920 px |
+
+- **Testi un po' più lunghi senza spaziature.** Con 16 parole in più ad Altamura, la scheda sotto parte 3 px dopo l'ultima riga. Succede con la B e con la B2: il testo non si copre, ma il filetto tocca quasi la riga. Lo segnalo per l'impaginato; per 1.4.12 non è un problema.
+- **Ripiego senza unità di contenitore** (Safari prima della 16, Firefox prima della 110).
+  - **Come l'ho provato.** In Chromium ho reso non valido `--map-h`, come fa un browser che non conosce `cqw`: `height` e `min-height` tornano ai valori iniziali. Ho anche tolto `container-type`.
+  - **Esito.** Le schede si impilano dall'alto della carta, senza latitudine. Nessun testo si copre e nessuno scorrimento orizzontale. Con le spaziature restano almeno 145 px sotto l'ultima scheda, anche con i testi più lunghi e con i caratteri a 24 px.
+  - L'ordine di lettura è quello del DOM, quindi non cambia.
+  - **Accessibile: lo accetto.**
+  - **[SUGGERIMENTO] per ui-designer.** Nel ripiego le schede si toccano: tra il testo di una scheda e il filetto della successiva restano 3 px. Un blocco `@supports not (width: 1cqw)` potrebbe rimettere l'elenco della fascia 1024–1279 px (`display: grid` con `gap: var(--space-xl)`, senza `::before`). L'ho provato emulando il ripiego: 51 px tra le schede e nessuna sovrapposizione. È una scelta di impaginato, non una condizione.
+- **Limiti della B2, già scritti da ui-designer.**
+  - La formula vale finché la carta occupa le colonne 7 / −1 di 12. Se cambiano le colonne, le schede si disallineano ma non si coprono, perché restano nel flusso.
+  - Le unità di contenitore vanno riprovate in Safari e Firefox reali. `[DA VERIFICARE]`
+- **«Caltaniss / etta».** Per l'accessibilità vanno bene sia l'a capo di oggi sia `hyphens: auto`: non si perde nulla. Decide il creative-director.
+- **Patch.** `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-cdn/diff/citta-digitali-schede-1412-b2.patch`, quella di ui-designer, senza modifiche. Il testo è nella sua review, §7.
+
 ## Verdetto di dominio (accessibilità)
 - **La carta con i nomi è conforme a WCAG 2.2 AA per gli aspetti verificati, così com'è in 426e6dc.** I criteri verificati sono 1.1.1, 1.3.1, 1.3.2, 1.4.3, 1.4.4, 1.4.10, 1.4.11, 1.4.12, 2.1.1, 2.4.3 e 2.4.7, più i colori forzati di §2.14.
 - **La patch di §3 è applicata** (5f2f757), con la formula L8 (b71268e).
-- **Le schede della stessa sezione, da 1280 px, non rispettano 1.4.12** (§6), e il problema c'era già prima di 426e6dc.
-  - Con la patch B lo rispettano.
-  - È una condizione per il go-live, perché 1.4.12 è una soglia del progetto.
-- Il verdetto di gate spetta al creative-director, che conferma anche il lato dell'impaginato della patch B.
+- **Le schede della stessa sezione, da 1280 px, non rispettavano 1.4.12** (§6). Il problema c'era già prima di 426e6dc.
+  - Con la patch B, nel sito dal commit 474e2df, lo rispettano con il testo di oggi.
+  - Con la variante B2 lo rispettano qualunque sia la lunghezza del testo (§7). **Sostituisce la B, prima del go-live.**
+  - Anche il ripiego senza unità di contenitore è accessibile.
+- Il verdetto di gate spetta al creative-director, che decide anche l'impaginato della B2 e l'a capo di «Caltanissetta».
 
 ## Ipotesi da validare
 - Con screen reader reali (NVDA, VoiceOver) la descrizione si legge come nome dell'immagine, come per le altre carte. `[DA FORNIRE: dispositivi o servizio di test]`
 - «Tra queste anche Itri e Cosenza» (L8) si capisce senza ripetere le tre città delle schede: chi ascolta le ha appena sentite e le ritrova subito dopo.
-- **Browser.** Le misure di §6 sono in Chromium. Le schede con la patch B vanno riprovate con le spaziature anche in Safari e Firefox. `[DA VERIFICARE]`
-- **Margine in fondo alla sezione.** Con le spaziature, sotto l'ultima scheda restano 17 px. Se cambia il testo delle schede, la prova si ripete.
+- **Browser.** Le misure di §6 e §7 sono in Chromium. Le schede vanno riprovate con le spaziature anche in Safari e Firefox. Con la B2 serve anche una prova delle unità di contenitore (Safari 16 e successivi, Firefox 110 e successivi). `[DA VERIFICARE]`
+- **Margine in fondo alla sezione.** Con la B restavano 17 px, e la prova andava ripetuta a ogni cambio di testo. Con la B2 la sezione contiene sempre le schede: la prova si ripete solo se cambiano le colonne della griglia.
+- **Ripiego.** Ho emulato i browser senza `cqw` in Chromium, rendendo non valido il valore. Il comportamento reale va visto su un browser vecchio. `[DA VERIFICARE]`
 
 ## Domande aperte
 - **Chiuse:**
   - la formula della descrizione: L8 di copywriter-brand;
   - la regola 9 della direzione visiva, allineata nella 0.17.
-- **creative-director**: va bene, per l'impaginato, che con le spaziature dell'utente le schede perdano l'allineamento ai nodi (§6, costi accettati)?
+- **creative-director**:
+  - l'impaginato della B2 con le spaziature: scende solo Caltanissetta, di 12–80 px;
+  - l'a capo di «Caltanissetta», con o senza `hyphens: auto`.
+  La domanda del §6 sulle schede che perdono l'allineamento è assorbita dalla B2.
+- **ui-designer**: il ripiego a elenco con `@supports not (width: 1cqw)` (§7, suggerimento).
 
 ## Decisioni richieste
-- **Sessione principale (sviluppo):** applicare la patch B di ui-designer (§6) prima del go-live, poi ripetere sulla staging la prova delle schede con le spaziature.
-- **creative-director:** confermare l'impaginato della patch B.
+- **Sessione principale (sviluppo):** applicare la variante B2 di ui-designer (§7) prima del go-live, poi ripetere sulla staging le prove della tabella del §7. Gli script sono in `scratchpad/ux-b2/`.
+- **creative-director:** impaginato della B2 e a capo di «Caltanissetta».
 - **Chiuse:**
   - la patch di §3, applicata;
+  - la patch B, applicata in 474e2df; la sostituisce la B2;
   - direzione visiva, `alt-text.md` e copy deck, allineati.

@@ -3,9 +3,9 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.12
+versione: 0.13
 aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-carta-terra-di-bari-ux-designer.md, docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (staging 426e6dc; §6 su copie della HEAD c2d368a), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2, patch A e B), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-carta-terra-di-bari-ux-designer.md, docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (staging 426e6dc; §6 su copie della HEAD c2d368a; §7 su copie della HEAD 21faf34), docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (variante B2), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2, patch A e B), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
 
 # Struttura delle pagine e form di contatto
@@ -417,8 +417,10 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
 - **Desktop.**
   - Da 1280 px: carta a destra e città allineate alla latitudine del loro nodo.
     - Le schede restano nel flusso: con le spaziature del testo dell'utente (1.4.12) una scheda più alta spinge in basso la successiva invece di coprirla.
-    - In quel caso l'allineamento si può perdere, il testo no. Il nome lungo va a capo dentro la sua colonna, e non sotto «Esplora ↗».
-    - È la patch B di ui-designer, decisa il 2026-10-08 (review di ux-designer §6), da applicare prima del go-live.
+    - Le latitudini si calcolano sull'altezza della carta, non sull'elenco. Con le spaziature scende solo la scheda che deve (oggi Caltanissetta), e la sezione cresce con le schede, qualunque sia la lunghezza del testo.
+    - Il nome lungo va a capo dentro la sua colonna, e non sotto «Esplora ↗».
+    - Nei browser senza unità di contenitore (Safari prima della 16, Firefox prima della 110) le schede si impilano dall'alto della carta, senza latitudine e senza coprirsi.
+    - La patch B è nel sito dal commit 474e2df. La sostituisce la variante B2 di ui-designer, decisa il 2026-10-08 (review di ux-designer §7), da applicare prima del go-live.
   - Tra 1024 e 1279 px: città in elenco accanto alla carta, con l'ordine del DOM uguale all'ordine visivo.
   - Hover o focus su una città accende il suo nodo. È un'eco visiva: le città sono già nominate nella lista.
 - **Mobile.** Carta in alto con la legenda, poi le città in pila nello stesso ordine, da nord a sud.
