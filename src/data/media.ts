@@ -52,11 +52,11 @@ export const founderPortraitContacts = {
  * Home, chapter 01: a SIII in use, inside the space (La Tana di Aldo since 2026-10-08, user request). Lazy, below
  * the fold: at the site defaults the AVIF is 42.6 KB at 828 px, 63.0 at 1080 and 128.3 at 1920; the 1920 WebP is
  * 195.3 KB, close to the 200 KB of check 8 (docs/performance/budget.md).
- * Alt text: provisional, to be confirmed in docs/contenuti/alt-text.md.
+ * Alt text: docs/contenuti/alt-text.md v1.11 (article joined to the preposition: «della Tana di Aldo»).
  */
 export const siiiHomeScreen = {
   image: tanaSala,
-  alt: 'Il SIII de La Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.',
+  alt: 'Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.',
 };
 
 /**

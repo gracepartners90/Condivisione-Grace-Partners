@@ -77,5 +77,10 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Dopo aver allineato un copy deck, rilanciare `verify-deck2.mjs` e `reverse-check.mjs`: l'unico scarto atteso è l'alt ancora da applicare, da registrare come differenza aperta. Nelle sezioni che tocco, aggiornare anche le frasi superate («cro-specialist propone un controllo» quando il controllo esiste già: `git log -S`).
 - Strumenti riusabili in `scratchpad/copywriter-content/tana/`: `hero.mjs <porta>` (sorgente scelta, riquadro, parte visibile dell'originale e albero di accessibilità della hero di `/siii/` a 13 larghezze), `zoom.mjs` (ingrandimenti con sharp). Per un file nuovo vanno adattati il rapporto e l'ancoraggio del ritaglio.
 
+## Deliverable di altri e viste candidate (lezione del 2026-10-08)
+- Se la sessione principale mi chiede di aggiornare un deliverable di un altro membro (il copy deck della Home è di copywriter-brand), tocco solo le righe richieste. Aggiungo una riga di versione con la nota «aggiornamento di copywriter-content su richiesta della sessione principale, da rivedere per copywriter-brand», e lancio lo script di verifica su HEAD e sul file modificato, per mostrare che l'esito non cambia.
+- Nomi d'impresa con l'articolo: «Il SIII della Tana di Aldo», non «de La». Letto ad alta voce suona naturale.
+- Se per i telefoni è candidata un'altra vista dello stesso luogo, l'alt va provato sulla vista intera e sui ritagli verticali, a ogni ancoraggio. Va detto quali ritagli non reggono (qui una fascia orizzontale in alto o in basso).
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

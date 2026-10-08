@@ -3,14 +3,18 @@ titolo: Copy deck · SIII (Siti Interattivi Immersivi)
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.4
+versione: 1.5
 aggiornato: 2026-10-08
-fonti: [commit 1112c93 (schermata del negozio YES nella hero, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.10), staging http://127.0.0.1:4321 del 2026-10-08 (build di 1112c93), scripts/prelaunch-check.mjs (controllo A7, commit 58715c4), docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
+fonti: [commit d97aa29 (alt della hero nel sito), 2178f47 (derivato desktop della hero), docs/review/2026-10-08-hero-siii-yes-creative-director.md (ritaglio in alto confermato), docs/contenuti/alt-text.md (1.11), staging http://127.0.0.1:4321 del 2026-10-08 (build di c11734b), commit 1112c93 (schermata del negozio YES nella hero, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.10), staging http://127.0.0.1:4321 del 2026-10-08 (build di 1112c93), scripts/prelaunch-check.mjs (controllo A7, commit 58715c4), docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
 ---
 
 # Copy deck · SIII
 
 Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusura e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.5 (2026-10-08)**
+- **Hero.** Il creative-director ha confermato il ritaglio in alto per i telefoni (verdetto del 2026-10-08). Da 64em la hero usa un derivato 3:5 della schermata, senza il menu e senza le parti tagliate in basso (commit 2178f47). L'alt vale per tutti e due.
+- **L'alt della v1.10 è nel sito** (commit d97aa29): V5 è chiusa, e nel sito ci sono 100 testi su 100 di questo documento.
 
 **Novità della v1.4 (2026-10-08)**
 - **Nuova schermata nella hero.** Dal commit 1112c93, su richiesta dell'utente, la hero mostra il negozio YES da smartphone, al posto della sala di Masseria Santella. Alt e note vengono da `alt-text.md` (1.10). Nel sito l'alt è ancora provvisorio (Differenze aperte, V5).
@@ -95,9 +99,9 @@ Note:
 > Il negozio YES da smartphone: la parete verde, la scala che sale al soppalco, gli scaffali di legno e l’interfaccia dell’esperienza.
 
 Note sulla schermata:
-- **Che cos'è.** La schermata del negozio YES vista da smartphone (`siii-yes-mobile-negozio.jpg`, commit 1112c93). Si vedono la parete verde, la scala che sale al soppalco, gli scaffali di legno e, sopra, logo, menu e icone dell'esperienza. È l'elemento LCP della pagina.
+- **Che cos'è.** La schermata del negozio YES vista da smartphone (`siii-yes-mobile-negozio.jpg`, commit 1112c93). Si vedono la parete verde, la scala che sale al soppalco, gli scaffali di legno e, sopra, logo e icone dell'esperienza; sui telefoni anche il menu. È l'elemento LCP della pagina.
 - **Nome dell'impresa.** [DA VERIFICARE] Il logo dice «YES» e, in piccolo, «pure design 100% flowers», che potrebbe essere un payoff. L'alt usa «YES».
-- **Formato.** Porta 3:5 da 1024 px. Sotto è 4:5, con un ritaglio fatto in build e ancorato in alto: restano logo, menu, icone e soppalco (commit 1112c93). Il ritaglio va confermato dal creative-director, e l'alt vale per tutte e tre le prove (in alto, al centro, in basso).
+- **Formato.** Sotto i 64em la hero è 4:5, con un ritaglio fatto in build e ancorato in alto: restano logo, menu, icone e soppalco (commit 1112c93, confermato dal creative-director). Da 1024 px è una Porta 3:5, con un derivato senza il menu e senza le parti tagliate in basso (commit 2178f47). L'alt vale per tutti e due.
 - **Accessibilità.** È informativa, con alt. Sopra non ci sono nodi decorativi (`accessibilita.md` §2.8). Non è un link.
 - **Perché l'alt nomina l'impresa.** La hero non la nomina. «Il negozio» prima del nome evita che «YES», a inizio frase, si senta come una parola inglese. L'alt non ripete «Siti Interattivi Immersivi», che è nell'H1 (criterio 5 di `alt-text.md`).
 - **Perché «l’interfaccia dell’esperienza».** Il menu non si vede in tutti i ritagli, e «i contatti» nominerebbe dei comandi (criterio 12 di `alt-text.md`).
@@ -342,7 +346,11 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 - Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere, compresi alt e `cta_id`. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
 - La verifica precedente, del 2026-10-05, era sulla build del commit c98f565.
 
-**Esito del 2026-10-08.**
+**Esito del 2026-10-08, sulla build di c11734b.**
+- Nel sito ci sono tutti i 100 testi di questo documento, identici, compreso l'alt della hero (V5, chiusa).
+- Nel senso inverso, mancano solo i gradi della figura di confronto, decorativi e nascosti agli screen reader (sezione 3).
+
+**Esito del 2026-10-08, sulla build di 1112c93.**
 - Nel sito ci sono 99 testi su 100 di questo documento, identici. Manca solo l'alt della hero, perché nel sito c'è ancora il provvisorio del commit 1112c93 (Differenze aperte, V5).
 - Nel senso inverso, mancano solo i gradi della figura di confronto, decorativi e nascosti agli screen reader (sezione 3), e l'alt provvisorio.
 - Gli alt della v1.6 dei tre esempi sono nel sito: V4 è chiusa.
@@ -391,7 +399,7 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 | V2 | `docs/creativa/direzione-visiva.md` §7.4, riga 7 | Cita ancora la CTA «Richiedi un'offerta →» sopra il form (lo segnala anche il tone of voice) | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V3 | `docs/seo/mappa-keyword-url.md` §3.2 | Usa ancora `#richiedi-offerta` e l'H2 «Cosa puoi fare dentro un SIII» | Allineare il documento al sito. Il sito non cambia | seo-content |
 | V4 | `src/data/media.ts`, alt dei tre esempi | Nel sito c'era ancora la v1.5 di `alt-text.md`, con «il pulsante di avvio» | **Chiusa** il 2026-10-07: gli alt della v1.6 sono nel sito dal commit d211ba4 | Sessione principale |
-| V5 | `src/data/media.ts`, alt della hero | Nel sito c'è l'alt provvisorio del commit 1112c93, che finisce con «con il menu e i contatti» | Applicare l'alt della sezione 1 (`alt-text.md` 1.10, V5) | Sessione principale |
+| V5 | `src/data/media.ts`, alt della hero | Nel sito c'era l'alt provvisorio del commit 1112c93, che finiva con «con il menu e i contatti» | **Chiusa** il 2026-10-08: l'alt della sezione 1 è nel sito dal commit d97aa29 | Sessione principale |
 
 ## Testi originali mancanti
 
@@ -434,7 +442,6 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **brand-strategist**: forma della didascalia della figura se si applica la riserva I7 (proposta nella sezione 3).
 - **creative-director**: approvazione dello statement «Un tour 360° è una visita. Un SIII è un sito.» e della regola «H2 piccolo + statement grande»; allineamento della direzione visiva (V2).
 - **ux-designer**: togliere l'occhiello da `struttura-pagine.md` SI-1 (V1).
-- **Sessione principale**: alt della hero della v1.10 di `alt-text.md` in `src/data/media.ts` (V5).
 - **Utente, con brand-strategist** (owner dell'ADR 002): consenso scritto delle tre imprese degli esempi e del negozio YES per le schermate (A7).
 - **seo-content**: allineare l'ancora `#richiesta` e l'H2 della sezione 4 nella mappa (V3).
 
