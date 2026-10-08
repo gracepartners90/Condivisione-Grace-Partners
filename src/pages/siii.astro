@@ -69,16 +69,17 @@ const phrases: Record<string, string> = {
       <Cta href="#richiesta" label="Richiedi un’offerta" variant="link" ctaId="siii-hero-offerta" location="hero" interest="siii" />
     </div>
     <div slot="visual" class="siii-hero__door aperture">
-      {/* Below 64em the door is 4:5: phones get a crop made at build time, anchored at the top so the logo,
-          the menu, the contact icons and the mezzanine stay in view; at the bottom the crop would cut the
-          privacy link and a button in half (YES screenshot, 2026-10-08). */}
+      {/* Below 64em the door is 4:5: phones get a crop of the original made at build time, anchored at the
+          top so the logo, the menu, the contact icons and the mezzanine stay in view; at the bottom the crop
+          would cut the privacy link and a button in half (YES screenshot, 2026-10-08). From 64em the door
+          shows a 3:5 derivative that stops above the clipped label and the privacy widget (DV §4.8). */}
       <Media
         image={siiiHeroScreen.image}
         alt={siiiHeroScreen.alt}
         sizes="(min-width: 30rem) 26rem, 90vw"
         priority
         position="50% 0%"
-        mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'top' }}
+        mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'top', image: siiiHeroScreen.mobileImage }}
         class="siii-hero__media"
       />
     </div>

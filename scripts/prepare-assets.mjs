@@ -34,6 +34,16 @@ const placeCrops = [
 ];
 
 /**
+ * SIII screenshots: desktop crops of a phone view (visual direction §4.8), in pixels on the original.
+ * The YES view, 3:5 like the door: it stops above the clipped «APRI QUI» label and the privacy widget
+ * cut by the screen edge, and leaves out the menu, the only way to keep the logo and the contacts whole.
+ * Phones keep their 4:5 crop of the original (Media mobileCrop.image). Colour untouched, no resize.
+ */
+const siiiCrops = [
+  { src: 'siii-yes-mobile-negozio.jpg', out: 'siii-yes-desktop-negozio.jpg', box: { left: 0, top: 0, width: 1014, height: 1690 } }, // 3:5
+];
+
+/**
  * Founder portraits, «inchiostro» treatment (only because the user chose to use these photos):
  * 1. luminance weighted on the blue channel, so the blue skyline fades towards paper;
  * 2. contrast ×1.2 −30 and tone mapping from inchiostro #141413 to calce #F3F1EC, in one linear step.
@@ -132,6 +142,11 @@ for (const { src, out, box } of eventCrops) {
 
 for (const { src, out, box } of placeCrops) {
   await sharp(`${SRC}/${src}`).extract(box).jpeg({ quality: 90, mozjpeg: true }).toFile(`${OUT}/${out}`);
+  console.log(`${out}  ${box.width}×${box.height}`);
+}
+
+for (const { src, out, box } of siiiCrops) {
+  await sharp(`${SRC}/${src}`).extract(box).jpeg({ quality: 92, mozjpeg: true }).toFile(`${OUT}/${out}`);
   console.log(`${out}  ${box.width}×${box.height}`);
 }
 

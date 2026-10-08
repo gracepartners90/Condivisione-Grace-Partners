@@ -31,8 +31,10 @@ interface Props {
    * Art direction below 64em: the same image cropped to another ratio at build time (e.g. 4 / 5
    * for a 3:5 door shown 4:5 on phones), with its own widths. Phones then download only the
    * pixels they show, not a taller image that object-fit crops (docs/performance/budget.md §4).
+   * `image`: crop another source instead, when `image` is itself a crop that phones must not use
+   * (e.g. a desktop derivative that leaves out what the phone crop keeps).
    */
-  mobileCrop?: { ratio: number; widths?: number[]; position?: string };
+  mobileCrop?: { ratio: number; widths?: number[]; position?: string; image?: ImageMetadata };
   /**
    * Extra AVIF widths for screens of 1.5 dppx and more (desktops and tablets at 2x), for a detailed
    * image that would look soft there. They go in a source with media="(min-resolution: 1.5dppx)" that
@@ -87,10 +89,11 @@ const art =
           hiDpiWidths ? getImage({ src: image, widths: hiDpiWidths, format: 'avif' }) : undefined,
         ]);
         if (!mobileCrop) return { avif, webp, jpg, hiDpi, mobile: undefined };
-        const mWidths = [...new Set((mobileCrop.widths ?? [480, 640, 768]).filter((w) => w <= image.width))];
+        const mImage = mobileCrop.image ?? image;
+        const mWidths = [...new Set((mobileCrop.widths ?? [480, 640, 768]).filter((w) => w <= mImage.width))];
         const mWidth = Math.max(...mWidths);
         const mHeight = Math.round(mWidth / mobileCrop.ratio);
-        const crop = { src: image, width: mWidth, height: mHeight, widths: mWidths, fit: 'cover' as const, position: mobileCrop.position ?? 'centre' };
+        const crop = { src: mImage, width: mWidth, height: mHeight, widths: mWidths, fit: 'cover' as const, position: mobileCrop.position ?? 'centre' };
         const [mAvif, mWebp] = await Promise.all([getImage({ ...crop, format: 'avif' }), getImage({ ...crop, format: 'webp' })]);
         return { avif, webp, jpg, hiDpi, mobile: { avif: mAvif, webp: mWebp, width: mWidth, height: mHeight } };
       })()

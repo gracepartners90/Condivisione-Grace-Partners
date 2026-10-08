@@ -10,6 +10,7 @@ import ritrattoContatti from '../assets/images/derivate/fondatore-contatti.jpg';
 import santellaInterno from '../assets/images/siii-masseria-santella-desktop-interno.jpg';
 import santellaIngresso from '../assets/images/siii-masseria-santella-desktop-ingresso.jpg';
 import yesNegozio from '../assets/images/siii-yes-mobile-negozio.jpg';
+import yesDesktop from '../assets/images/derivate/siii-yes-desktop-negozio.jpg';
 import miminaIngresso from '../assets/images/siii-maison-mimina-desktop-ingresso.jpg';
 import dielleIngresso from '../assets/images/siii-dielle-desktop-ingresso.jpg';
 import { founder } from './site';
@@ -60,7 +61,10 @@ export const siiiHomeScreen = {
  * Alt text: docs/contenuti/alt-text.md v1.10 (the interface is named as a whole: menu and icons are controls).
  */
 export const siiiHeroScreen = {
-  image: yesNegozio,
+  // Desktop: 3:5 crop of the view without the clipped label and the privacy widget at the bottom
+  // (creative-director, fallback of 2026-10-08: docs/creativa/direzione-visiva.md §4.8). Phones: the original.
+  image: yesDesktop,
+  mobileImage: yesNegozio,
   alt: 'Il negozio YES da smartphone: la parete verde, la scala che sale al soppalco, gli scaffali di legno e l’interfaccia dell’esperienza.',
 };
 
