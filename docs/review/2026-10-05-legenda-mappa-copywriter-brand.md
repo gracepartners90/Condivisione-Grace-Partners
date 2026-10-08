@@ -3,9 +3,9 @@ titolo: Legenda della carta del capitolo 03 della Home e testi collegati
 owner: copywriter-brand
 contributi: []
 stato: in revisione
-versione: 1.3
-aggiornato: 2026-10-06
-fonti: [richiesta della sessione principale del 2026-10-05 e del 2026-10-06, docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P2, P3), src/data/citta-digitali.json, src/lib/citta-digitali.ts, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P4), dist/citta-digitali/index.html (testo della sezione e schede), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
+versione: 1.4
+aggiornato: 2026-10-08
+fonti: [docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md, commit 426e6dc e 5f2f757, richiesta della sessione principale del 2026-10-05 e del 2026-10-06, docs/review/2026-10-06-carta-puglia-intera-ui-designer.md (P2, P3), src/data/citta-digitali.json, src/lib/citta-digitali.ts, docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md (P2, P4, §4), docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md (§1–§3), docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md (P1–P4), dist/citta-digitali/index.html (testo della sezione e schede), docs/creativa/direzione-visiva.md 0.6 (§1.4, «Il punto-città»: accessibilità, legenda, elenco in testo; commit ea33cc1), docs/strategia/citta-digitali-elenco.md v0.2 (§1, §4, §5), docs/review/2026-10-05-omonimia-citta-digitali-seo-content.md (§3, §5, O7), docs/review/2026-10-05-dominio-citta-digitali-seo-technical.md, docs/cro/strategia-conversione.md (righe 37–38 e 68), docs/contenuti/tone-of-voice.md (§§ 4, 5, 6, 7, 8), docs/contenuti/microcopy.md (§§ 3, 8), docs/contenuti/copy-deck/home.md (§ 5), src/pages/index.astro (anche le modifiche in corso della sessione principale), src/pages/citta-digitali.astro, src/components/layout/Footer.astro, src/data/site.ts, build di prova di ui-designer (scratchpad ui-mappa/site/dist) servita in locale, dist/ del 2026-10-05, misure Playwright (Chromium) del 2026-10-05]
 ---
 
 # Legenda della carta del capitolo 03 · testi
@@ -138,6 +138,8 @@ Gli stessi testi sono nel copy deck della Home (v1.4, § 5, «Capitolo 03 con la
 
 ## L6 · [IMPORTANTE] Descrizione della carta su `/citta-digitali/`: senza «Tra queste»
 
+> **Superata il 2026-10-08** (L8): dal commit 426e6dc la carta di `/citta-digitali/` disegna anche dei nomi. La regola di fondo resta: la descrizione non ripete le città che chi ascolta sente accanto alla carta.
+
 - **Dove.** `/citta-digitali/`, «L’Italia in un unico portale.» (`#portale`): proposta di ui-designer (`docs/review/2026-10-05-carta-citta-digitali-pagina-ui-designer.md`, P3), che dà alla carta `role="img"` con la forma di L4 a tre nomi.
 - **Problema.** Su questa pagina «Tra queste: Varese, Altamura e Caltanissetta.» ripete nomi che chi usa uno screen reader ha appena sentito, e che sente di nuovo subito dopo.
   - Prima della carta: il paragrafo («… città come Varese, Altamura e Caltanissetta.») e lo statement («Da Varese a Caltanissetta, passando per Altamura…»).
@@ -172,6 +174,33 @@ Gli stessi testi sono nel copy deck della Home (v1.4, § 5, «Capitolo 03 con la
   - **Al go-live senza il testo della pagina** restano i nomi solidi: «Tra queste: Monopoli e Gravina in Puglia.» (descrizione di 186 caratteri, Gulpease 70).
   - **Se ux-designer vuole i nomi della hero**, la carta più ricca: «Tra queste: Manfredonia, Barletta, Bari, Monopoli, Altamura, Gravina in Puglia, Ostuni, Brindisi, Massafra, Lecce e Nardò.» (267 caratteri in tutto).
   - **Sede:** «sede di ITnode» dice dove sta l’azienda, senza attribuirle Puglia Digitale (condizione 1). Nessun numero, nessun «tutte».
+
+## L8 · [IMPORTANTE] `/citta-digitali/` con i nomi: «Tra queste anche Itri e Cosenza.» (2026-10-08)
+
+- **Dove.** `src/lib/citta-digitali.ts`, `describeCittaDigitali`; `src/pages/citta-digitali.astro`, descrizione della carta d’Italia (commit 5f2f757).
+- **Contesto.** Dal commit 426e6dc la carta di `/citta-digitali/` disegna i nomi della carta della Home. ux-designer ha tolto dalla descrizione le tre città delle schede: chi usa lo screen reader le sente già nel paragrafo e nello statement prima della carta, e nelle schede subito dopo (review del 2026-10-08). Restano i due nomi disegnati a ogni larghezza: Itri e Cosenza.
+- **Problema.** «Tra queste: Itri e Cosenza.» è corretta, ma con due nomi soli li presenta come gli esempi della carta. Sulla carta, però, le città in evidenza sono le tre delle schede. «Tra le altre: Itri e Cosenza.», l’alternativa di ux-designer, ha bisogno di un antecedente che la descrizione non contiene. Se la si ascolta da sola, per esempio dall’elenco delle immagini dello screen reader, non dice «altre» rispetto a che cosa, e si può sentire come il modo di dire «tra l’altro».
+- **Decisione** (copywriter-brand, owner delle formule L4, L6 e L7):
+  > Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste anche Itri e Cosenza.
+  - 171 caratteri, Gulpease 73.
+  - «Tra queste» tiene la radice comune a tutte le carte; «queste» rimanda alle città della prima frase, quindi la descrizione si regge anche da sola. «anche» dice che ci sono altre città oltre a queste, senza nominarle di nuovo e senza farne gli esempi principali.
+  - Vale con un nome solo («Tra queste anche Itri.») e con molti. Con nessun nome, nessuna terza frase, come oggi.
+- **Quando si usa.** Solo quando la descrizione lascia fuori città che chi ascolta ha appena sentito accanto alla carta, come le città con una scheda. Negli altri casi resta «Tra queste: {nomi}.»: Home, capitolo 03 (5 nomi) e hero di `/puglia-digitale/` (la sede è esclusa ma ha la sua frase, «Un anello segna…»).
+- **Righe per il codice** (le applica la sessione principale):
+  - in `src/lib/citta-digitali.ts`, firma e terza frase:
+    ```ts
+    export function describeCittaDigitali(names: string[] = [], { besides = false }: { besides?: boolean } = {}): string {
+    ```
+    ```ts
+    const among = names.length ? (besides ? ` Tra queste anche ${andList(names)}.` : ` Tra queste: ${andList(names)}.`) : '';
+    ```
+    con un commento sulla prop: `besides`: true quando `names` lascia fuori città già nominate accanto alla carta (le schede di `/citta-digitali/`), copywriter-brand L8;
+  - in `src/pages/citta-digitali.astro`, la chiamata con il filtro di oggi:
+    ```ts
+    label: describeCittaDigitali(italyNamesAtEveryWidth().filter((name) => !cities.some((c) => c.name === name)), { besides: true }),
+    ```
+  - La Home e la carta della Puglia non cambiano.
+- **Registrato** nel copy deck della Home (v1.6, sezione 5, riga «Descrizione della carta»).
 
 ## Misure
 

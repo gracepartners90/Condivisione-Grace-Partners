@@ -101,7 +101,7 @@ const cities = italyPlaces.map((p) => ({
       // except the cities of the cards: screen readers hear them in the text before the map and in the
       // cards right after it (ux-designer, 2026-10-08; L6).
       legend: 'Ogni punto è una città di\u00a0Città\u00a0Digitali',
-      label: describeCittaDigitali(italyNamesAtEveryWidth().filter((name) => !cities.some((c) => c.name === name))),
+      label: describeCittaDigitali(italyNamesAtEveryWidth().filter((name) => !cities.some((c) => c.name === name)), { besides: true }),
       names: true,
     }}
     allPlaces={{

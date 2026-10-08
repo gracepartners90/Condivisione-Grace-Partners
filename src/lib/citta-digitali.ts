@@ -30,12 +30,16 @@ const inRegion = (r: string) => (r === 'Lazio' ? `nel ${r}` : `in ${r}`);
 /** «la maggior parte» only above half; otherwise «più che altrove» (copywriter-brand, L4). */
 const shareOf = (count: number, total: number) => (count > total / 2 ? 'la maggior parte' : 'più che altrove');
 
-/** `names`: the names the map draws at every width, north → south; none for a map without names. */
-export function describeCittaDigitali(names: string[] = []): string {
+/**
+ * `names`: the names the map draws at every width, north → south; none for a map without names.
+ * `besides`: true when `names` leaves out cities already named beside the map (the cards of
+ * /citta-digitali/): «Tra queste anche …» (copywriter-brand, L8).
+ */
+export function describeCittaDigitali(names: string[] = [], { besides = false }: { besides?: boolean } = {}): string {
   const regions = REGIONS.filter((r) => perRegion.has(r));
   const [mostRegion, mostCount] = [...perRegion].sort((a, b) => b[1] - a[1])[0];
   const share = shareOf(mostCount, cittaDigitali.citta.length);
-  const among = names.length ? ` Tra queste: ${andList(names)}.` : '';
+  const among = names.length ? (besides ? ` Tra queste anche ${andList(names)}.` : ` Tra queste: ${andList(names)}.`) : '';
   return `Carta d’Italia con le città di Città Digitali. Sono in ${andList(regions)}, ${share} ${inRegion(mostRegion)}.${among}`;
 }
 

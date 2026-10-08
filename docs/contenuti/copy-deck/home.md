@@ -3,14 +3,16 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.5
-aggiornato: 2026-10-07
+versione: 1.6
+aggiornato: 2026-10-08
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.12), docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md (§2.8), docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md (1.5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (H5), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/pages/index.astro, src/data/site.ts, src/data/media.ts, src/data/maps.json, src/lib/citta-digitali.ts, src/components/ui/Horizon.astro, build di HEAD 326f354 del 2026-10-07 (copia nello scratchpad), prove Playwright del 2026-10-07]
 ---
 
 # Copy deck · Home
 
 Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA verso i contatti, nell’ordine delle sette sezioni fissato dalla direzione visiva (`docs/creativa/direzione-visiva.md`, § 7.3). I testi sono pronti da impaginare. Le parti provvisorie sono elencate in fondo, in «Testi da sostituire con gli originali del cliente».
+
+**Versione 1.6 (2026-10-08).** Regola «Tra queste anche» per le carte la cui descrizione lascia fuori città già nominate accanto (sezione 5, capitolo 03). Nessun testo della Home cambia.
 
 **Versione 1.5 (2026-10-07): il copy deck descrive il sito com’è oggi.** Nessun testo approvato è cambiato. Rispetto alla 1.4:
 - capitolo 01: la schermata reale del SIII di Masseria Santella, con il suo testo alternativo, e i nodi decorativi nascosti;
@@ -230,7 +232,7 @@ Note:
 | Elemento | Tag e stile | Testo | Note |
 |---|---|---|---|
 | Legenda | `figcaption` · `t-label` · max 40 (40) | Ogni punto è una città di Città Digitali | Adottata dal creative-director (direzione visiva 0.6, § 1.4). Spazi unificatori tra «di», «Città» e «Digitali» (`di&nbsp;Città&nbsp;Digitali`). Una riga da 360 px; a 320 px «Ogni punto è una città / di Città Digitali». Nessun numero nella Home: quando si potrà, va nell’elenco di `/citta-digitali/`. Mai «Un punto per ogni città», che dichiara la completezza dell’elenco |
-| Descrizione della carta | `aria-label` della carta con `role="img"` (decisione di ux-designer) · costruita dai dati (`describeCittaDigitali`, `src/lib/citta-digitali.ts`) · 199 caratteri | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Itri, Altamura, Cosenza e Caltanissetta. | Forma B (ux-designer, review del 2026-10-06). Modello: «… Sono in {regioni da nord a sud}, {quota} {regione con più città}. Tra queste: {nomi disegnati a ogni larghezza, da nord a sud}.» I nomi d’esempio sono quelli della carta stretta, così ogni nome detto è sulla carta anche al telefono (stessa regola della L7; `accessibilita.md`, § 2.8). «la maggior parte in» solo se quella regione ha più della metà delle città, altrimenti «più che altrove in». Niente numeri, mai «ogni» o «tutte» (review, L4) |
+| Descrizione della carta | `aria-label` della carta con `role="img"` (decisione di ux-designer) · costruita dai dati (`describeCittaDigitali`, `src/lib/citta-digitali.ts`) · 199 caratteri | Carta d’Italia con le città di Città Digitali. Sono in Lombardia, Lazio, Campania, Puglia, Calabria e Sicilia, la maggior parte in Puglia. Tra queste: Varese, Itri, Altamura, Cosenza e Caltanissetta. | Forma B (ux-designer, review del 2026-10-06). Modello: «… Sono in {regioni da nord a sud}, {quota} {regione con più città}. Tra queste: {nomi disegnati a ogni larghezza, da nord a sud}.» I nomi d’esempio sono quelli della carta stretta, così ogni nome detto è sulla carta anche al telefono (stessa regola della L7; `accessibilita.md`, § 2.8). «la maggior parte in» solo se quella regione ha più della metà delle città, altrimenti «più che altrove in». Niente numeri, mai «ogni» o «tutte» (review, L4). **Variante «Tra queste anche {nomi}.»** (2026-10-08, review L8): solo quando la descrizione lascia fuori città che chi ascolta ha appena sentito accanto alla carta. Oggi vale per `/citta-digitali/`, senza le tre città delle schede: «… Tra queste anche Itri e Cosenza.» (171 caratteri). Sulla Home resta «Tra queste:», perché la descrizione dice tutti i nomi disegnati a ogni larghezza |
 | Link | — | Nessuno nel capitolo | Una sola CTA per capitolo (ux-designer, HM-5) e niente link esterni nei capitoli della Home (strategia di conversione). Il link «Tutte le città sul portale ↗» va su `/citta-digitali/`, sezione «L’Italia in un unico portale.» (review, L2) |
 | Microdescrizione | p | Invariata | Resta vera con la carta piena: le tre città del testo sono i nomi obbligatori della carta, visibili a ogni larghezza |
 

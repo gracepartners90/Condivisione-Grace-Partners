@@ -9,6 +9,7 @@ Solo lezioni di metodo, formule approvate o rifiutate e feedback. Voce, grafie e
 - Da non riproporre: «Da un’impresa a un territorio, fino all’Italia» e simili. Suggeriscono una copertura nazionale che il brief vieta (N12). Al suo posto: «Un’impresa. Un territorio. Una rete di città.»
 - Nella timeline del fondatore, i numeri del percorso vanno etichettati in modo che non si possano attribuire a ITnode: «10.000+ clienti, prima di ITnode».
 - Rifiutata dal creative-director al G4 (I4): la frase di posizionamento nell’occhiello. Il test dei cinque secondi si gioca su ciò che sta subito sotto l’H1: la frase che dice che cosa fa ITnode non va mai nel corpo più piccolo della pagina. L’occhiello porta il concetto, il `lead` il posizionamento.
+- Descrizioni delle carte: «Tra queste: {nomi}.» di norma. «Tra queste anche {nomi}.» quando la descrizione lascia fuori città appena sentite accanto alla carta (le schede di `/citta-digitali/`, L8). Scartata «Tra le altre:», perché non ha un antecedente dentro la descrizione. Quando cambia il disegno di una carta (qui i nomi arrivati con 426e6dc), le formule che ne dipendono vanno rilette e segnate come superate.
 - Link verso una sezione di un’altra pagina: verbo più oggetto, e la destinazione nel testo nascosto se il visibile non la dice («Scopri il suo percorso» più « nella home»). Gli esempi di testo del creative-director («Il suo percorso →») vanno confrontati con le regole CTA del tone of voice, motivando la differenza.
 
 ## Lezioni di metodo (2026-09-28)
