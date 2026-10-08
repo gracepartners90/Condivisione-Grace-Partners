@@ -125,9 +125,29 @@ const pugliaLabel = describePugliaDigitale(
         text="Il SIII replica digitalmente gli spazi della tua impresa. Chi entra li esplora da desktop e smartphone, guarda prodotti e video, chiede informazioni e prenota."
         cta={{ label: 'Esplora SIII', href: '/siii/', id: 'home-capitolo-siii' }}
       >
-        <div slot="visual" class="worlds__screen aperture">
-          {/* La Tana di Aldo's SIII from inside: the alt names it, the chapter text speaks of SIII in general. */}
-          <Media image={siiiHomeScreen.image} alt={siiiHomeScreen.alt} sizes="(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw" />
+        <div slot="visual" class:list={['worlds__screen aperture', { 'worlds__screen--phone': siiiHomeScreen.mobileImage }]}>
+          {/* La Tana di Aldo's SIII from inside: the alt names it, the chapter text speaks of SIII in general.
+              Portrait phones (below 40em) get the smartphone view of the same experience, cropped 4:5 at build
+              time; tablets and phones held sideways keep the desktop view (DV §4.8).
+              WebP and JPEG stop at 1440 (check 8 of docs/performance/budget.md); AVIF goes to 1920 only on
+              screens of 1.5 dppx and more, which ask for more than 1440 px (same rule as the first /siii/ example;
+              web-performance-specialist, review of 2026-10-08, observation 3). */}
+          <Media
+            image={siiiHomeScreen.image}
+            alt={siiiHomeScreen.alt}
+            sizes="(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw"
+            widths={[480, 768, 1080, 1440]}
+            hiDpiAvifWidths={[1600, 1920]}
+            mobileCrop={
+              siiiHomeScreen.mobileImage && {
+                ratio: 4 / 5,
+                widths: [480, 640, 768, 1080],
+                image: siiiHomeScreen.mobileImage,
+                media: '(max-width: 39.99em)',
+                quality: { avif: 40 },
+              }
+            }
+          />
         </div>
       </ProjectShowcase>
 
@@ -277,5 +297,12 @@ const pugliaLabel = describePugliaDigitale(
   .worlds__atlas-note {
     margin-top: var(--space-s);
     color: var(--fg-2);
+  }
+
+  /* Chapter 01 on portrait phones: the smartphone view, 4:5 (the same breakpoint as the Media crop). */
+  @media (max-width: 39.99em) {
+    .worlds__screen--phone :global(.media-picture) {
+      aspect-ratio: 4 / 5;
+    }
   }
 </style>

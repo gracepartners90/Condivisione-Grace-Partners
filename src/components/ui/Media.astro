@@ -28,13 +28,24 @@ interface Props {
       (they would be visible but hidden from assistive technology, WCAG 1.3.1). */
   pendingText?: boolean;
   /**
-   * Art direction below 64em: the same image cropped to another ratio at build time (e.g. 4 / 5
+   * Art direction below 64em (or `media`): the same image cropped to another ratio at build time (e.g. 4 / 5
    * for a 3:5 door shown 4:5 on phones), with its own widths. Phones then download only the
    * pixels they show, not a taller image that object-fit crops (docs/performance/budget.md §4).
    * `image`: crop another source instead, when `image` is itself a crop that phones must not use
-   * (e.g. a desktop derivative that leaves out what the phone crop keeps).
+   * (e.g. a desktop derivative that leaves out what the phone crop keeps), or another view of the same
+   * thing (e.g. the smartphone view of a SIII whose desktop view is `image`).
+   * `media`: where the crop applies, when it should stop before 64em (e.g. portrait phones only).
+   * `quality`: encoder quality of the crop only, when its texture breaks the weight targets of
+   * docs/performance/budget.md §4 at the site defaults (AVIF 50, WebP 75); the other sources keep them.
    */
-  mobileCrop?: { ratio: number; widths?: number[]; position?: string; image?: ImageMetadata };
+  mobileCrop?: {
+    ratio: number;
+    widths?: number[];
+    position?: string;
+    image?: ImageMetadata;
+    media?: string;
+    quality?: { avif?: number; webp?: number };
+  };
   /**
    * Extra AVIF widths for screens of 1.5 dppx and more (desktops and tablets at 2x), for a detailed
    * image that would look soft there. They go in a source with media="(min-resolution: 1.5dppx)" that
@@ -71,10 +82,11 @@ const usableWidths = image
   : [];
 
 // Sources built here instead of <Picture> when a viewport or a screen density needs its own widths.
-// - Art direction (mobileCrop): mobile sources cropped by sharp (fit cover), first, so they win below 64em.
+// - Art direction (mobileCrop): mobile sources cropped by sharp (fit cover), first, so they win below 64em
+//   (or where mobileCrop.media says).
 // - High density (hiDpiAvifWidths): an AVIF source for 1.5 dppx and more with every width, before the
 //   normal sources. Without either prop Media renders <Picture>.
-const MOBILE_MEDIA = '(max-width: 63.99em)';
+const MOBILE_MEDIA = mobileCrop?.media ?? '(max-width: 63.99em)';
 const HIDPI_MEDIA = '(min-resolution: 1.5dppx)';
 const hiDpiWidths =
   image && hiDpiAvifWidths ? [...new Set([...usableWidths, ...hiDpiAvifWidths.filter((w) => w <= image.width)])].sort((a, b) => a - b) : undefined;
@@ -94,7 +106,10 @@ const art =
         const mWidth = Math.max(...mWidths);
         const mHeight = Math.round(mWidth / mobileCrop.ratio);
         const crop = { src: mImage, width: mWidth, height: mHeight, widths: mWidths, fit: 'cover' as const, position: mobileCrop.position ?? 'centre' };
-        const [mAvif, mWebp] = await Promise.all([getImage({ ...crop, format: 'avif' }), getImage({ ...crop, format: 'webp' })]);
+        const [mAvif, mWebp] = await Promise.all([
+          getImage({ ...crop, format: 'avif', quality: mobileCrop.quality?.avif }),
+          getImage({ ...crop, format: 'webp', quality: mobileCrop.quality?.webp }),
+        ]);
         return { avif, webp, jpg, hiDpi, mobile: { avif: mAvif, webp: mWebp, width: mWidth, height: mHeight } };
       })()
     : undefined;

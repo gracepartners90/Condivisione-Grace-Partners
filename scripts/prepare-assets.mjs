@@ -34,13 +34,18 @@ const placeCrops = [
 ];
 
 /**
- * SIII screenshots: desktop crops of a phone view (visual direction §4.8), in pixels on the original.
- * The YES view, 3:5 like the door: it stops above the clipped «APRI QUI» label and the privacy widget
- * cut by the screen edge, and leaves out the menu, the only way to keep the logo and the contacts whole.
- * Phones keep their 4:5 crop of the original (Media mobileCrop.image). Colour untouched, no resize.
+ * SIII screenshots: crops of a phone view (visual direction §4.8), in pixels on the original. Colour untouched,
+ * no resize. Names follow siii-<business>-desktop|mobile-<view>, which the A7 launch check reads.
+ * - YES, for the /siii/ hero from 64em: 3:5 like the door. It stops above the clipped «APRI QUI» label and the
+ *   privacy widget cut by the screen edge, and leaves out the menu, the only way to keep the logo and the
+ *   contacts whole. Phones keep their 4:5 crop of the original (Media mobileCrop.image).
+ * - La Tana di Aldo, for chapter 01 of the Home on portrait phones: 4:5 from the smartphone view, at full
+ *   resolution. It leaves out the air conditioner on the left edge and most of the vault, and keeps the three
+ *   contact icons whole (55 px above the bottom edge, 37 px from the left one).
  */
 const siiiCrops = [
   { src: 'siii-yes-mobile-negozio.jpg', out: 'siii-yes-desktop-negozio.jpg', box: { left: 0, top: 0, width: 1014, height: 1690 } }, // 3:5
+  { src: 'siii-la-tana-di-aldo-mobile-sala.jpg', out: 'siii-la-tana-di-aldo-mobile-sala-4x5.jpg', box: { left: 120, top: 650, width: 1080, height: 1350 } }, // 4:5
 ];
 
 /**

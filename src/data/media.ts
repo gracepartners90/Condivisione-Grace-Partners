@@ -5,9 +5,11 @@
  * edited with AI tools, so a transparency note is shown under them (AI Act art. 50):
  * set `showAiNote` to false only after the client and legal counsel say so.
  */
+import type { ImageMetadata } from 'astro';
 import ritratto from '../assets/images/derivate/fondatore-ritratto.jpg';
 import ritrattoContatti from '../assets/images/derivate/fondatore-contatti.jpg';
 import tanaSala from '../assets/images/siii-la-tana-di-aldo-desktop-sala.jpg';
+import tanaSalaTelefono from '../assets/images/derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg';
 import santellaIngresso from '../assets/images/siii-masseria-santella-desktop-ingresso.jpg';
 import yesNegozio from '../assets/images/siii-yes-mobile-negozio.jpg';
 import yesDesktop from '../assets/images/derivate/siii-yes-desktop-negozio.jpg';
@@ -54,8 +56,12 @@ export const founderPortraitContacts = {
  * 195.3 KB, close to the 200 KB of check 8 (docs/performance/budget.md).
  * Alt text: docs/contenuti/alt-text.md v1.11 (article joined to the preposition: «della Tana di Aldo»).
  */
-export const siiiHomeScreen = {
+export const siiiHomeScreen: { image: ImageMetadata; mobileImage?: ImageMetadata; alt: string } = {
   image: tanaSala,
+  // Portrait phones: a 4:5 crop of the smartphone view of the same experience (creative-director, verdict of
+  // 2026-10-08 on chapter 01; docs/creativa/direzione-visiva.md §4.8). The alt holds for both views. Without
+  // mobileImage (e.g. the ADR 002 §3.1 reserve) the chapter shows `image` at every width.
+  mobileImage: tanaSalaTelefono,
   alt: 'Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.',
 };
 
