@@ -5,7 +5,7 @@ contributi: []
 stato: in revisione
 versione: 1.0
 aggiornato: 2026-10-08
-fonti: [richiesta della sessione principale del 2026-10-08 (domande 1–4) e sua integrazione (R4, R5, riserva della hero), src/assets/images/siii-yes-mobile-negozio.jpg (commit 1112c93), commit d97aa29 (alt definitivo), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.3), docs/brief/brief-consolidato.md (A7, A8), docs/contenuti/alt-text.md (1.10), docs/contenuti/copy-deck/siii.md (1.4), docs/performance/budget.md (0.7, §4 e §7.4), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md, docs/creativa/direzione-visiva.md (0.19 → 0.20), catture della sessione principale in scratchpad/yes/, staging http://127.0.0.1:4321 (build di 1112c93), prove del creative-director del 2026-10-08 in scratchpad/cd-yes/ (Playwright 1.56, Chromium 141, sharp 0.35; copia di HEAD con il derivato desktop, costruita e servita in locale)]
+fonti: [richiesta della sessione principale del 2026-10-08 (domande 1–4) e sua integrazione (R4, R5, riserva della hero), src/assets/images/siii-yes-mobile-negozio.jpg (commit 1112c93), commit d97aa29 (alt definitivo), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md, commit a5dac14 (controllo A7 per impresa), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.3), docs/brief/brief-consolidato.md (A7, A8), docs/contenuti/alt-text.md (1.10), docs/contenuti/copy-deck/siii.md (1.4), docs/performance/budget.md (0.7, §4 e §7.4), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md, docs/creativa/direzione-visiva.md (0.19 → 0.20), catture della sessione principale in scratchpad/yes/, staging http://127.0.0.1:4321 (build di 1112c93), prove del creative-director del 2026-10-08 in scratchpad/cd-yes/ (Playwright 1.56, Chromium 141, sharp 0.35; copia di HEAD con il derivato desktop, costruita e servita in locale)]
 ---
 
 # Verdetto · hero di `/siii/` con il negozio YES
@@ -14,7 +14,7 @@ Dal commit 1112c93 la hero di `/siii/` mostra la schermata di un negozio con il 
 
 ## In sintesi
 
-- **Verdetto: approvato con modifiche.** La scelta dell'utente regge il sistema e lo allarga: dopo le strutture ricettive degli esempi, un negozio, con un'interfaccia che si legge al primo sguardo. Da correggere c'è una cosa sola: sulla Porta desktop l'interfaccia è tagliata in basso.
+- **Verdetto: approvato con modifiche.** La scelta dell'utente regge il sistema e lo allarga: dopo le strutture ricettive degli esempi, un negozio, con un'interfaccia che si legge al primo sguardo. Da correggere subito c'è una cosa sola: sulla Porta desktop l'interfaccia è tagliata in basso.
 - **Decisioni:**
 
 | # | Domanda | Decisione |
@@ -79,7 +79,7 @@ Dal commit 1112c93 la hero di `/siii/` mostra la schermata di un negozio con il 
 - **Di chi è, rispetto agli esempi.** La CTA accanto all'immagine è «Esplora gli esempi», e porta a tre imprese diverse.
   - Con la sala di Masseria Santella la storia continuava nel primo esempio. Con YES chi cerca quel negozio tra gli esempi non lo trova.
   - Peggio: potrebbe attribuirlo a un'altra impresa.
-- **Il nome da solo.** «YES» in un cerchio, accanto a «Falla esplorare.», può leggersi come la parola inglese. copywriter-content l'ha notato per l'alt, e ha scritto «Il negozio YES».
+- **Il nome da solo.** «YES» in un cerchio, senza altro intorno, può leggersi come la parola inglese. copywriter-content l'ha notato per l'alt, e ha scritto «Il negozio YES».
 
 **Decisione.**
 - **La risposta è la riga già decisa il 2026-10-07: «YES · {comune} ({provincia})»**, in `label` mono sotto la porta.
@@ -123,14 +123,14 @@ A 1440 × 900 la porta è tutta nella prima schermata, quindi si vedono subito; 
 - **Il riquadro sull'originale è x 0, y 0, 1014 × 1690.**
   - Un 3:5 che si ferma sopra l'etichetta è alto al massimo 1700 px, quindi largo al massimo 1020: tiene il logo e le icone, e lascia fuori il menu.
   - Si ferma 31 px sopra l'etichetta, e a destra 29 px prima del montante del soppalco, che resta fuori intero.
-  - Il menu resta nel ritaglio dei telefoni, cioè per la maggior parte delle visite.
+  - Il menu resta nel ritaglio dei telefoni.
 - **L'alt di d97aa29 resta vero:** «l'interfaccia dell'esperienza» vale anche senza il menu.
 - **Verificato sulla copia di HEAD con la patch:**
   - le altre sei pagine e la 404 sono identiche byte per byte; su `/siii/` cambia solo la `<picture>` della hero;
   - le varianti dei telefoni sono gli stessi file di oggi;
   - pesi del derivato: AVIF 22,2 / 41,8 / 60,4 KB (480, 768, 1014 px) invece di 24,7–83,7; WebP fino a 82,4 KB, JPEG fino a 127,0 KB, quindi il controllo n. 8 passa;
   - `astro check`: 0 errori; `check:seo`: nessun problema;
-  - `check:launch`: il controllo A7 vede la hero.
+  - `check:launch`: il controllo A7 vede la hero, anche nella versione per impresa di a5dac14 (`yes (/siii/index.html)`).
 - **Il nome del file conta.** Il derivato si chiama `siii-yes-desktop-negozio.jpg`, come le altre schermate (`siii-<impresa>-desktop-<vista>`). Con un nome diverso il controllo A7 per impresa di brand-strategist non l'avrebbe riconosciuto: il prefisso è la chiave dell'impresa.
 
 ## 5. I punti di brand-strategist
@@ -192,7 +192,7 @@ A 1440 × 900 la porta è tutta nella prima schermata, quindi si vedono subito; 
 |---|---|---|
 | brand-strategist, veridicità della hero YES | Anteprima conforme; go-live solo con A7 e A8 | Accolte R1–R3. R4 e R5 decise al §5, la riserva confermata |
 | copywriter-content, `alt-text.md` 1.10 e copy deck 1.4 | Alt definitivo | Approvato. Vale anche per il derivato desktop |
-| web-performance-specialist, budget 0.7, §7.4 | Dentro il §4 | Preso atto. Dopo la patch del §4 va rimisurata la variante desktop |
+| web-performance-specialist, hero YES (budget 0.7, §7.4) | Conforme, senza patch, a due condizioni: ritaglio in alto, 4G lento sorvegliato | Accolta: l'ancoraggio resta in alto. Con la patch del §4 la variante desktop cambia, ed è più leggera: va rimisurata |
 
 ## 9. Verdetto
 
@@ -212,7 +212,7 @@ A 1440 × 900 la porta è tutta nella prima schermata, quindi si vedono subito; 
      - le altre pagine sono identiche;
      - `check:launch`, controllo A7, vede la hero.
    - Poi web-performance-specialist rimisura `/siii/` su desktop.
-2. **Controllo A7 per impresa:** la patch di brand-strategist (`scratchpad/bs-yes/prelaunch-check-a7-per-impresa.patch`, R3). Riconosce anche il derivato, grazie al nome.
+2. **Controllo A7 per impresa:** già applicato (a5dac14, patch di brand-strategist). Riconosce anche il derivato, grazie al nome: sulla copia con la patch 1 elenca `yes (/siii/index.html)`.
 
 ## Ipotesi da validare
 
@@ -232,6 +232,6 @@ A 1440 × 900 la porta è tutta nella prima schermata, quindi si vedono subito; 
 
 ## Decisioni richieste
 
-- **Sessione principale:** applicare le patch 1 e 2 e ricostruire.
+- **Sessione principale:** applicare la patch 1 e ricostruire.
 - **Utente:** la schermata pulita (Y4); YES tra gli esempi (Y5); l'ADR 002 §3.1 e §3.2, già richiesti da brand-strategist.
 - **web-performance-specialist:** rimisurare la variante desktop della hero dopo la patch 1.
