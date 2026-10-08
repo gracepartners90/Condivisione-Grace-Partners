@@ -97,9 +97,11 @@ const cities = italyPlaces.map((p) => ({
     location="luoghi"
     cityDots={{
       // Legend: copywriter-brand L1. The map draws the names of the Home map (user, 2026-10-08: «qualche
-      // nome di città tra le più importanti»); its text alternative names those drawn at every width.
+      // nome di città tra le più importanti»). Its text alternative names those drawn at every width,
+      // except the cities of the cards: screen readers hear them in the text before the map and in the
+      // cards right after it (ux-designer, 2026-10-08; L6).
       legend: 'Ogni punto è una città di\u00a0Città\u00a0Digitali',
-      label: describeCittaDigitali(italyNamesAtEveryWidth()),
+      label: describeCittaDigitali(italyNamesAtEveryWidth().filter((name) => !cities.some((c) => c.name === name))),
       names: true,
     }}
     allPlaces={{
