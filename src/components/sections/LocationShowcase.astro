@@ -84,6 +84,13 @@ const italyPoints: ItalyPoint[] = [...(italia?.places ?? []), ...(italia?.dots ?
 const north = [...locations]
   .sort((a, b) => b.lat - a.lat)
   .map((l) => ({ ...l, y: italyPoints.find((p) => p.id === l.id)?.yPct }));
+// From 80em each city stands at the latitude of its node: the list starts at the first latitude, and each
+// city is at least as tall as the gap to the next one (in % of the map's height). A taller city (WCAG 1.4.12
+// text spacing) pushes the next one down instead of covering it.
+const gapToNext = (i: number) => {
+  const [a, b] = [north[i]?.y, north[i + 1]?.y];
+  return a !== undefined && b !== undefined ? +(b - a).toFixed(2) : undefined;
+};
 ---
 
 <section id={id} class:list={['places', `places--${variant}`, `surface-${surface}`]} aria-labelledby={`${id}-title`}>
@@ -182,9 +189,9 @@ const north = [...locations]
               <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
             )}
           </div>
-          <ol role="list" class="places__cities">
-            {north.map((c) => (
-              <li class="city" data-place-link={c.id} style={c.y !== undefined ? `--y: ${c.y}` : undefined}>
+          <ol role="list" class="places__cities" style={north[0]?.y !== undefined ? `--first: ${north[0].y}` : undefined}>
+            {north.map((c, i) => (
+              <li class="city" data-place-link={c.id} style={gapToNext(i) !== undefined ? `--to-next: ${gapToNext(i)}` : undefined}>
                 <h3 class="city__name">{c.name}</h3>
                 <p class="city__meta t-label">
                   {c.region && <span>{c.region}</span>}
@@ -498,11 +505,19 @@ const north = [...locations]
       padding-bottom: var(--space-3xl);
     }
 
+    /* As tall as the map (stretched in its row), so that the latitudes below are % of the map's height. If
+       the cities need more room than the map (WCAG 1.4.12 text spacing), the row grows: nothing overflows. */
     .places__cities {
-      position: relative;
       align-self: stretch;
       display: block;
       padding: 0;
+    }
+
+    /* From the top of the map to the first city's rule, 1.2rem above its node. */
+    .places__cities::before {
+      content: '';
+      display: block;
+      height: calc(var(--first, 0) * 1% - 1.2rem);
     }
 
     /* The cities stand at the latitude of their node: the legend must not lengthen the map's row. */
@@ -517,13 +532,16 @@ const north = [...locations]
     }
 
     .city {
-      position: absolute;
-      inset-inline: 0;
-      top: calc(var(--y, 0) * 1%);
-      translate: 0 -1.2rem;
+      min-height: calc(var(--to-next, 0) * 1%);
       grid-template-columns: minmax(0, 1fr) auto;
       column-gap: var(--space-m);
       align-items: baseline;
+      align-content: start;
+    }
+
+    /* A long name breaks inside its column (WCAG 1.4.12) instead of running under «Esplora». */
+    .city__name {
+      max-width: 100%;
     }
 
     .city__name,
