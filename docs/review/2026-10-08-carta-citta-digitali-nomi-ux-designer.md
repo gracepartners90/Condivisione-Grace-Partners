@@ -3,10 +3,10 @@ titolo: Carta d'Italia di /citta-digitali/ con i nomi delle città · verifica d
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.3
+versione: 1.4
 aggiornato: 2026-10-08
 fonti: [richiesta dell'utente del 2026-10-08 riferita dalla sessione principale («la mappa in città digitali, mettiamo anche lì qualche nome di città tra le più importanti»), commit 426e6dc, src/components/sections/LocationShowcase.astro, src/components/ui/MapItaly.astro, src/lib/citta-digitali.ts, src/pages/citta-digitali.astro, src/pages/index.astro, docs/ux/accessibilita.md (0.10, §2.8 e §2.14, Appendici A e D), docs/ux/struttura-pagine.md (0.10, CD-2 e HM-5), docs/creativa/direzione-visiva.md (0.15, §1.4), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6), docs/review/2026-10-06-descrizione-carta-home-ux-designer.md (regola dei nomi, scelta B), staging http://127.0.0.1:4321 a 426e6dc, copia del repository a 426e6dc con la patch (build in locale), albero di accessibilità via CDP (Chromium 141) e axe-core 4.13 del 2026-10-08; per §6: docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e patch B), commit 5f2f757, b71268e (L8) e a95b5c6 (patch A), copie della HEAD c2d368a con e senza la patch B (build in locale); per §7: docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4 e §7, variante B2), commit 474e2df (patch B) e 21faf34, copie della HEAD 21faf34 con la patch B e con la variante B2 (build in locale; la B uguale byte per byte allo staging, la B2 alla build di ui-designer); per §8: docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (§2 variante E, §3 proposta M), commit 51d23cd e d5ad7b0, staging http://127.0.0.1:4321 (d5ad7b0, B2 ed E), build della B su :4362 e di B2, E e M su :4392]
-oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6); dalla 1.2 la variante B2 (§7); dalla 1.3 la variante E e la proposta M (§8)
+oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6); dalla 1.2 la variante B2 (§7); dalla 1.3 la variante E e la proposta M (§8); nella 1.4 lo stato di M, adottata e applicata
 ---
 
 # Carta d'Italia di `/citta-digitali/` con i nomi delle città
@@ -15,7 +15,7 @@ oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta
 - **Variante E, nel sito dal commit d5ad7b0: conforme a 1.4.12, 1.3.2 e 2.4.3 (§8, aggiunto nella 1.3).**
   - Con le spaziature «Caltanissetta» resta intero, e «Esplora» va sotto il nome.
   - Lo scarto tra ordine a schermo e ordine del DOM è quello di prima: «Esplora» si vede accanto o sotto il nome, ma si legge dopo la descrizione. Il nome del link è completo e la scheda ha una sola fermata, quindi né il senso né l'ordine del focus cambiano.
-- **Proposta M: sì, la consiglio.** Con i testi di oggi non cambia nulla, e con le spaziature dell'utente lascia il posto alle sue. Con testi più lunghi, e nel ripiego senza unità di contenitore, il filetto della scheda dopo resta a 27 px dal testo invece di 3. Con M il ripiego con `@supports` non serve più per l'accessibilità: se ui-designer lo vuole per l'impaginato, è compatibile.
+- **Proposta M: sì, la consiglio.** Aggiornamento: ui-designer l'ha adottata senza il ripiego con `@supports` (commit aef5d32), ed è nel sito dal commit ae91aa2. Con i testi di oggi non cambia nulla, e con le spaziature dell'utente lascia il posto alle sue. Con testi più lunghi, e nel ripiego senza unità di contenitore, il filetto della scheda dopo resta a 27 px dal testo invece di 3. Con M il ripiego con `@supports` non serve più per l'accessibilità: se ui-designer lo vuole per l'impaginato, è compatibile.
 - **[IMPORTANTE] Variante B2 al posto della patch B: sì (§7, aggiunto nella 1.2).**
   - Con la B2 le schede stanno sempre dentro la sezione, qualunque sia la lunghezza del testo. Con la B bastano 4 parole in più nella descrizione di Caltanissetta perché, con le spaziature, il testo esca dalla sezione e diventi illeggibile sul fondo chiaro di quella dopo.
   - Il resto non cambia. Senza spaziature l'impaginato è identico; nessun testo si copre; ordine di lettura, Tab e scheda → nodo restano uguali.
@@ -267,6 +267,11 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
   - Per l'accessibilità M basta. Copre con una regola sola sia i testi lunghi sia il ripiego, a cui dà 27 px tra le schede.
   - L'elenco con `@supports not (width: 1cqw)`, che avevo suggerito nel §7, resta una scelta di impaginato: darebbe al ripiego lo stacco dell'elenco tra 1024 e 1279 px. È compatibile con M, e non ho obiezioni.
   - Decide ui-designer.
+- **Stato.** ui-designer ha adottato M senza il ripiego con `@supports` (aef5d32), applicata in ae91aa2. La sessione principale ha ripetuto le prove di questo paragrafo sullo staging di ae91aa2:
+  - geometria identica a d5ad7b0, con e senza spaziature;
+  - con i testi più lunghi senza spaziature, e nel ripiego, almeno 27 px prima del filetto;
+  - con i caratteri a 20 e 24 px nessuna sovrapposizione;
+  - axe senza violazioni.
 
 ## Verdetto di dominio (accessibilità)
 - **La carta con i nomi è conforme a WCAG 2.2 AA per gli aspetti verificati, così com'è in 426e6dc.** I criteri verificati sono 1.1.1, 1.3.1, 1.3.2, 1.4.3, 1.4.4, 1.4.10, 1.4.11, 1.4.12, 2.1.1, 2.4.3 e 2.4.7, più i colori forzati di §2.14.
@@ -275,7 +280,7 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
   - Con la patch B, nel sito dal commit 474e2df, lo rispettano con il testo di oggi.
   - Con la variante B2 lo rispettano qualunque sia la lunghezza del testo (§7). B2 ed E sono nel sito dal commit d5ad7b0.
   - **La variante E è conforme a 1.4.12, 1.3.2 e 2.4.3** (§8).
-  - M è facoltativa: per l'accessibilità la consiglio.
+  - M, consigliata per l'accessibilità, è adottata e nel sito dal commit ae91aa2, senza il ripiego con `@supports`.
   - Anche il ripiego senza unità di contenitore è accessibile.
 - Il verdetto di gate spetta al creative-director, che decide anche l'impaginato della B2 e l'a capo di «Caltanissetta».
 
@@ -293,11 +298,11 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
 - **Chiuse dal verdetto del creative-director (51d23cd):**
   - impaginato della B2;
   - a capo di «Caltanissetta»: variante E, senza `hyphens`.
-- **ui-designer**: M, il ripiego a elenco con `@supports not (width: 1cqw)`, o tutte e due (§8). Per l'accessibilità va bene M da sola, e va bene anche con l'elenco.
+- **Chiusa:** M adottata da ui-designer, senza il ripiego a elenco con `@supports` (aef5d32).
 
 ## Decisioni richieste
-- **Sessione principale (sviluppo):** se ui-designer adotta M, applicare `scratchpad/cd-1412/diff/citta-digitali-schede-aria-minima.patch`, poi ripetere sullo staging le prove del §8. Gli script sono `scratchpad/ux-e/probe3.mjs` e `agg3.py`.
 - **Chiuse:**
+  - M, applicata in ae91aa2 e riprovata sullo staging dalla sessione principale (§8, «Stato»);
   - B2 ed E, applicate in d5ad7b0 e verificate (§8);
   - la patch di §3, applicata;
   - la patch B, applicata in 474e2df e sostituita dalla B2;

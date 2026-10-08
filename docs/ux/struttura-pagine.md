@@ -3,7 +3,7 @@ titolo: Struttura delle pagine e form di contatto
 owner: ux-designer
 contributi: [creative-director, ui-designer, cro-specialist, copywriter-brand, copywriter-content, seo-content, seo-technical]
 stato: in revisione
-versione: 0.14
+versione: 0.15
 aggiornato: 2026-10-08
 fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.3; 0.7 per §1.4 e §7.6), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (L4, L6), staging http://localhost:4321 del 2026-10-05 (Città Digitali e Contatti; O4 al commit 5c4a6cb) e del 2026-10-06 (Puglia Digitale, commit b113efb), docs/review/2026-10-06-carta-puglia-intera-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-carta-terra-di-bari-ux-designer.md, docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (staging 426e6dc; §6 su copie della HEAD c2d368a; §7 su copie della HEAD 21faf34), docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (variante B2), docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (variante E, proposta M), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2, patch A e B), docs/strategia/citta-digitali-elenco.md, docs/contenuti/copy-deck/, docs/contenuti/alt-text.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/seo/specifiche-tecniche.md, docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, src/scripts/, src/data/, src/components/]
 ---
@@ -422,7 +422,8 @@ Anche qui l'H1 su due righe segue `mappa-keyword-url.md` e il copy deck: lo stat
     - A schermo «Esplora» viene dopo il nome. Nel DOM, quindi per lo screen reader e per il Tab, resta dopo la descrizione, con il suo nome completo.
     - Nei browser senza unità di contenitore (Safari prima della 16, Firefox prima della 110) le schede si impilano dall'alto della carta, senza latitudine e senza coprirsi.
     - B2 ed E sono nel sito dal commit d5ad7b0 (review di ux-designer §7 e §8).
-    - Facoltativa, la proposta M: `--space-m` sotto la descrizione di ogni scheda tranne l'ultima, così il filetto della scheda dopo resta staccato anche quando un testo si allunga.
+    - M: `--space-m` sotto la descrizione di ogni scheda tranne l'ultima, così il filetto della scheda dopo resta staccato anche quando un testo si allunga.
+    - M è stata adottata da ui-designer senza il ripiego con `@supports` (aef5d32), ed è nel sito dal commit ae91aa2.
   - Tra 1024 e 1279 px: città in elenco accanto alla carta, con l'ordine del DOM uguale all'ordine visivo.
   - Hover o focus su una città accende il suo nodo. È un'eco visiva: le città sono già nominate nella lista.
 - **Mobile.** Carta in alto con la legenda, poi le città in pila nello stesso ordine, da nord a sud.
