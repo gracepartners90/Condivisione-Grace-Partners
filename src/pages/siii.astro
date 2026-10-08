@@ -69,18 +69,16 @@ const phrases: Record<string, string> = {
       <Cta href="#richiesta" label="Richiedi un’offerta" variant="link" ctaId="siii-hero-offerta" location="hero" interest="siii" />
     </div>
     <div slot="visual" class="siii-hero__door aperture">
-      {/* Below 64em the door is 4:5: phones get a crop made at build time, anchored at the bottom so the
-          room and the contact icons stay in view (creative-director, verdict of 2026-10-07, same anchor
-          for La Tana di Aldo). Desktop widths stop at 1080: 26rem at 2x needs 832 px. */}
+      {/* Below 64em the door is 4:5: phones get a crop made at build time, anchored at the top so the logo,
+          the menu, the contact icons and the mezzanine stay in view; at the bottom the crop would cut the
+          privacy link and a button in half (YES screenshot, 2026-10-08). */}
       <Media
         image={siiiHeroScreen.image}
         alt={siiiHeroScreen.alt}
         sizes="(min-width: 30rem) 26rem, 90vw"
-        widths={[480, 768, 1080]}
-        quality={siiiHeroScreen.quality}
         priority
-        position="50% 100%"
-        mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'bottom' }}
+        position="50% 0%"
+        mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'top' }}
         class="siii-hero__media"
       />
     </div>

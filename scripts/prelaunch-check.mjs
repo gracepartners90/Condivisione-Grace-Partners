@@ -53,7 +53,7 @@ const checks = [
   },
   {
     // ADR 002, A7: screenshots of the businesses' experiences (the three examples and, since 2026-10-08,
-    // La Tana di Aldo in the /siii/ hero) only with their written consent, recorded in docs/.
+    // the YES shop in the /siii/ hero) only with their written consent, recorded in docs/.
     name: 'Schermate delle esperienze SIII con il consenso scritto delle imprese (A7)',
     ok: CONFIRMED.showcaseConsent || anyPage(/_astro\/siii-[a-z0-9-]+-(desktop|mobile)-/).length === 0,
     detail: anyPage(/_astro\/siii-[a-z0-9-]+-(desktop|mobile)-/),

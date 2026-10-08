@@ -9,7 +9,7 @@ import ritratto from '../assets/images/derivate/fondatore-ritratto.jpg';
 import ritrattoContatti from '../assets/images/derivate/fondatore-contatti.jpg';
 import santellaInterno from '../assets/images/siii-masseria-santella-desktop-interno.jpg';
 import santellaIngresso from '../assets/images/siii-masseria-santella-desktop-ingresso.jpg';
-import tanaSala from '../assets/images/siii-la-tana-di-aldo-mobile-sala.jpg';
+import yesNegozio from '../assets/images/siii-yes-mobile-negozio.jpg';
 import miminaIngresso from '../assets/images/siii-maison-mimina-desktop-ingresso.jpg';
 import dielleIngresso from '../assets/images/siii-dielle-desktop-ingresso.jpg';
 import { founder } from './site';
@@ -40,7 +40,7 @@ export const founderPortraitContacts = {
 };
 
 // SIII screenshots sent by the user on 2026-10-07: desktop 2000 × 1250 (16:10), mobile 1200 × 2000 (3:5); on
-// 2026-10-08 La Tana di Aldo, mobile 1200 × 2000, for the /siii/ hero (user request).
+// 2026-10-08 the YES shop, mobile 1200 × 2000, for the /siii/ hero (user request).
 // Unused views stay in src/assets/images/ for the creative-director (siii-*-mobile-*, Masseria's other view).
 // Alt texts: docs/contenuti/alt-text.md v1.6 («Nel sito»). They describe the view, not the controls drawn
 // in it (docs/ux/accessibilita.md §2.8). On /siii/ the examples do not repeat the business name: the h3
@@ -55,15 +55,13 @@ export const siiiHomeScreen = {
 /**
  * /siii/ hero: an experience on a smartphone (Porta 3:5 on desktop, 4:5 below the text). It is the LCP
  * element at every width, so it must stay within the LCP image budget (docs/performance/budget.md §4:
- * AVIF ≤ 60 KB in every phone variant, ≤ 150 KB on desktop). La Tana di Aldo's stone vault compresses
- * badly: at the site defaults (AVIF 50) the phone crop is 101 KB at 1080 px. With AVIF 35 it is 56.6 KB,
- * and the desktop view 88 KB at 1200 px; WebP and JPEG 65 keep them within check 8 (≤ 200 / 300 KB).
+ * AVIF ≤ 60 KB in every phone variant, ≤ 150 KB on desktop): the 4:5 crop from the top is 54.0 KB in AVIF
+ * at 1080 px (from the bottom it would be 64.2), the desktop view 83.7 KB at 1200 px.
  * Alt text: provisional, to be confirmed in docs/contenuti/alt-text.md.
  */
 export const siiiHeroScreen = {
-  image: tanaSala,
-  alt: 'La Tana di Aldo da smartphone: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, con le icone di WhatsApp, Facebook e Instagram.',
-  quality: { avif: 35, webp: 65, jpg: 65 },
+  image: yesNegozio,
+  alt: 'YES da smartphone: un negozio con la parete verde, la scala che sale al soppalco e gli scaffali di legno, con il menu e i contatti.',
 };
 
 /** /siii/ examples, by showcase id (site.ts): the opening view of each experience. */
