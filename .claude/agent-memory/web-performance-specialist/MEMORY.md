@@ -43,17 +43,25 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - `chromaSubsampling` ed `effort` sono solo globali. Per una singola immagine servirebbe un servizio d'immagine personalizzato, con l'opzione aggiunta a `propertiesToHash`; altrimenti due codifiche diverse avrebbero lo stesso nome di file.
   - Il nome dei file dipende da `src, width, height, format, quality, fit, position, background`. Passare `quality: undefined` non cambia i file delle altre immagini (verificato: le altre pagine restano identiche byte per byte).
   - Con trame fitte il formato più vicino ai limiti è il WebP di ripiego (controllo n. 8, e «Immagini» del §3 per i browser senza AVIF): va sempre controllato insieme all'AVIF.
-- **Hero di `/siii/`, a livello di pagina** (vale per qualunque immagine, già con la sala di Masseria Santella): a 320×568 e col telefono in orizzontale (844×390 a 3x) l'LCP è il testo, non la porta.
-  - Il budget dice «19 viewport su 19 da 320 px» perché misurava 320×640.
-  - Da correggere alla prossima revisione del budget, con l'immagine definitiva.
-- **Script per una nuova immagine della hero** in `scratchpad/perf-tana/`:
+- **Hero di `/siii/`, a livello di pagina:** confine dell'elemento LCP (viewport basse, telefono in orizzontale) misurato il 2026-10-08 e scritto nel `budget.md` §2. Vale per qualunque immagine.
+- **Descrittori di Playwright:** `iPhone 13` è 390×664 (con le barre del browser), ma `iPhone SE (3rd gen)` è 375×667, cioè lo schermo intero. Per l'elemento LCP sulle viewport basse non bastano: si usa `lcp-boundary.mjs`.
+- **Immagine LCP e font in preload che arrivano insieme** (scoperto il 2026-10-08 con la schermata YES, 4G lento).
+  - Lo scambio di carattere ricalcola il layout di tutta la pagina (157–172 ms con CPU 4x su `/siii/`) e rimanda il disegno dell'immagine, se questa arriva subito dopo.
+  - La distribuzione diventa bimodale: la mediana di 5 caricamenti inganna, ne servono almeno 8–13.
+  - Diagnosi: `delay.mjs` (LCP meno `responseEnd`, più i task lunghi) e `trace-tasks.mjs` (RunTask oltre 40 ms con i figli, più gli arrivi delle risorse dalla traccia).
+  - Un'immagine più pesante può peggiorare l'LCP più di quanto dicano i suoi byte.
+- **L'ancoraggio del ritaglio cambia il peso** (stessa immagine, stesse larghezze): si misura con `anchor.mjs`.
+- **sharp AVIF va a gradini:** qualità vicine danno lo stesso file (con la YES, q47 = q48 e q45 = q46). Per stare sotto un limite si cerca il gradino, non il numero.
+- **Script per una nuova immagine della hero** in `scratchpad/perf-yes/` (copie aggiornate di quelli di `perf-tana/`):
   - `devices.mjs`: variante, peso, `sizes` ed elemento LCP su 24 dispositivi, con il controllo accanto;
   - `hero-variants.mjs`: sorgenti e pesi del `<picture>`;
-  - `lhrun.sh` più `lhsum.mjs`: corse alternate e mediane, con inizio della richiesta e fasi dell'LCP;
-  - `profiles.mjs`;
-  - `enc-matrix.mjs` più `ssim.mjs`: matrice sharp con SSIM su Y, Cb e Cr; il percorso della sorgente è scritto nel file;
+  - `lhrun.sh` più `lhsum.mjs`: corse alternate e mediane, con inizio della richiesta e fasi dell'LCP. Nel regex della porta va aggiunto il nome del nuovo file;
+  - `profiles.mjs`, `delay.mjs`, `trace-tasks.mjs`, `textlcp.mjs`, `lcp-boundary.mjs`, `anchor.mjs`;
+  - `enc-matrix.mjs` più `ssim.mjs`: matrice sharp con SSIM su Y, Cb e Cr. Il percorso della sorgente è scritto nel file;
   - `visual.mjs`.
-  - Build di controllo: `dist-aaf` (`aaf4760`, con la sala di Masseria Santella, uguale a `bae201c` per `/siii/`).
+  - Build di controllo: `perf-yes/dist-aaf` (`aaf4760`, con la sala di Masseria Santella, uguale a `bae201c` per `/siii/`).
+  - Un giro completo (build, 24 dispositivi, 28 corse Lighthouse, profili, documenti) richiede circa 45 minuti. I server vanno avviati per primi, perché vivono 30 minuti.
+- **La sessione principale committa i miei documenti mentre lavoro** (2026-10-08, `f0aecbb`, «in corso»). A fine incarico si controlla con `git diff HEAD` che cosa resta da committare.
 - **Incarico fermato dalla sessione principale.** Ordine di chiusura:
   - prima il ciclo, poi i figli: una corsa Lighthouse può partire nell'istante dello stop e restare orfana;
   - poi i server, poi i worktree;
@@ -138,6 +146,10 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - **Prova sull'host ancora da fare:** script portabile `siii-fallback.mjs`, testo nella review §7.2.
   - Lezione: la regola «richiesta prima della fine del documento» era troppo rigida, perché ci sono ±40 ms di rumore. Ora ha una tolleranza di 50 ms (budget §2).
   - Una build di `d06a3e9` ricostruita in un worktree è risultata identica per dimensione a quella misurata: si possono rifare le build storiche per i confronti alternati.
+- **Hero di `/siii/` con la schermata YES (2026-10-08, review `2026-10-08-hero-siii-yes`):** conforme e senza patch.
+  - L'ancoraggio in alto è anche un vincolo di peso: in basso servirebbe di nuovo una qualità per formato.
+  - Da sorvegliare la coincidenza tra la porta e lo scambio del font sul 4G lento (osservazione 2).
+  - La prop `quality` è stata tolta in `1112c93`; il parere sul meccanismo è nell'`architettura.md` §3.2.
 - **Nitidezza del primo esempio sugli schermi 2x (S3, 2026-10-07): scelta la strada (b).**
   - Una sorgente AVIF con `media="(min-resolution: 1.5dppx)"` fino a 1920 px (173,7 KB), solo per gli schermi ad alta densità. WebP, JPEG e schermi 1x restano a 1440 px.
   - Obiettivo §4 di 150 KB superato con motivazione (`lazy`, sotto la piega, dettagli d'interfaccia).

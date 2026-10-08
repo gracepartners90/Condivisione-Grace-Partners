@@ -135,6 +135,11 @@ Le soglie valgono per tutti i template:
   - **In laboratorio, dopo il ritaglio 4:5** (`bae201c`, HTTP/1.1, mediane di 5 caricamenti): 449 ms a 1,75x e 483 ms a 3x, quindi sotto la soglia.
     - Un caricamento a 3x è arrivato a 669 ms: si valuta la mediana.
     - La prova formale va fatta sull'host reale, perché le priorità di HTTP/2 qui non si vedono.
+  - **Con la schermata YES** (`1112c93`, 2026-10-08, mediane di 5 caricamenti alternati col controllo `aaf4760`): 447 ms a 1,75x e 464 ms a 3x, contro 394 e 428 ms del controllo. Sotto la soglia di 600 ms; caso singolo più alto 547 ms.
+  - **Effetto nuovo sull'LCP, visto con la schermata YES.** Sul 4G lento la porta e il font finiscono di scaricarsi quasi insieme (846–925 e 919–928 ms, a 1,75x). Lo scambio di carattere ricalcola il layout di tutta la pagina in un task di 157–172 ms con CPU 4x.
+    - Se la porta arriva subito dopo, aspetta la fine di quel task: in 6 caricamenti su 13 l'LCP passa da 0,92–0,95 a 1,04–1,16 s.
+    - Mediana di 13 caricamenti: 948 ms contro 800 ms del controllo, dove la porta (26,8 KB) arrivava prima del font.
+    - Resta lontano dall'obiettivo di 2,0 s. Si sorveglia insieme alla finestra del ripiego; dettaglio nella review del 2026-10-08, osservazione 2.
 
 **Registro dei confronti**
 
@@ -732,7 +737,13 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - WebP di ripiego: 40,7–76,8 KB sui telefoni, fino a 112,8 KB su desktop.
   - Tutte dentro il §4.
 - **Ancoraggio.** Con il ritaglio in basso la 1080w peserebbe 64,2 KB, oltre il §4: servirebbe una qualità per formato (`architettura.md` §3.2).
-- **Elemento LCP:** la porta in 22 casi su 24 dispositivi. Sulle viewport basse e col telefono in orizzontale è il testo (§2).
+- **Elemento LCP:** la porta in 22 casi su 24 dispositivi. Sulle viewport basse e col telefono in orizzontale è il testo (§2). Lì, con la rete di laboratorio e CPU 4x, LCP = FCP (1,02–1,09 s) in 9 caricamenti su 9.
+- **Profili di rete** (Playwright, mediane di 5 caricamenti, LCP di YES e del controllo):
+  - laboratorio di Lighthouse: 1800 contro 1664 ms a 1,75x; 2040 contro 1980 ms a 3x;
+  - 4G veloce: 384 contro 404 ms a 1,75x; 460 contro 464 ms a 3x;
+  - 4G lento: 1116 contro 796 ms a 1,75x (su 13 caricamenti 948 contro 800 ms, per l'effetto descritto nel §3); 1160 contro 1120 ms a 3x.
+  - A 3x, con la rete di laboratorio, l'LCP è 2,04 s: 40 ms sopra l'obiettivo di 2,0 s, mentre il controllo era a 1,98 s. L'obiettivo del §2 si misura sul dispositivo di Lighthouse (1,75x), dove è rispettato, e il limite di 2,5 s resta lontano.
+- **Finestra del ripiego** (§3): 447 ms a 1,75x e 464 ms a 3x sul 4G lento, sotto la soglia di 600 ms.
 - **Controlli statici:** superati tutti, n. 8 compreso.
 
 ## 8. Eccezioni e modifiche
