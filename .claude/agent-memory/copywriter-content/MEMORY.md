@@ -69,5 +69,11 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Formula L8 di copywriter-brand: quando la descrizione lascia fuori città nominate accanto alla carta (le schede), la terza frase è «Tra queste anche …», non «Tra queste: …».
 - Prima di avviare `serve.mjs` controllare che la porta sia libera (`curl` → 000) e leggere il log: il 2026-10-08 la 4393 era occupata da un server di altri con una build vecchia, il mio è uscito con EADDRINUSE e la verifica ha letto la pagina sbagliata. Confrontare sempre l'`aria-label` servito con quello della build (`grep` su `dist/`).
 
+## Asset cambiato a metà incarico (lezione del 2026-10-08)
+- L'utente può cambiare immagine mentre lavoro: prima tutte le verifiche (originale, sito, ritagli), poi le modifiche ai documenti in un solo passaggio alla fine. Così uno stop non lascia niente da annullare.
+- Guardare anche le prove di ritaglio in corso nella scratchpad della sessione principale: l'alt deve valere per ogni ritaglio che il creative-director sta valutando, non solo per quello in build.
+- Icone di app (WhatsApp, Facebook, Instagram) sono comandi: non si elencano (criterio 12). Se a qualche larghezza non restano né il menu né punti interattivi, valutare un nome in blocco («l’interfaccia dell’esperienza») da proporre nel criterio 12. «Il menu» accanto a tavoli apparecchiati si confonde con quello del locale.
+- Strumenti riusabili in `scratchpad/copywriter-content/tana/`: `hero.mjs <porta>` (sorgente scelta, riquadro, parte visibile dell'originale e albero di accessibilità della hero di `/siii/` a 13 larghezze), `zoom.mjs` (ingrandimenti con sharp). Per un file nuovo vanno adattati il rapporto e l'ancoraggio del ritaglio.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)

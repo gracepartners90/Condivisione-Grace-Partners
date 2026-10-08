@@ -38,6 +38,27 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
 - **`naturalWidth` con descrittori `w`** restituisce la larghezza di `sizes`, non quella della variante: per sapere quale variante è scaricata si cerca `currentSrc` nei `srcset`.
 - **Astro copia in `_astro/` gli originali delle immagini importate**, anche se nessuna pagina li richiama: il vecchio `find -size` del controllo n. 8 dava falsi positivi (comando affinato nel budget §6.3).
 - **sharp AVIF:** `chromaSubsampling: '4:2:0'` fa guadagnare solo il 2–4% sulle schermate SIII. Le codifiche a 1920 px sono lente (una matrice di circa 100 file ha richiesto 10 minuti): vanno lanciate in background.
+- **Astro 7.3.5, qualità per immagine** (sorgente di `services/sharp.js` e `utils/hash.js`, letto il 2026-10-08).
+  - `getImage({ quality })` sovrascrive solo `quality` e tiene le altre opzioni di `sharpImageService` per formato (`mozjpeg` resta).
+  - `chromaSubsampling` ed `effort` sono solo globali. Per una singola immagine servirebbe un servizio d'immagine personalizzato, con l'opzione aggiunta a `propertiesToHash`; altrimenti due codifiche diverse avrebbero lo stesso nome di file.
+  - Il nome dei file dipende da `src, width, height, format, quality, fit, position, background`. Passare `quality: undefined` non cambia i file delle altre immagini (verificato: le altre pagine restano identiche byte per byte).
+  - Con trame fitte il formato più vicino ai limiti è il WebP di ripiego (controllo n. 8, e «Immagini» del §3 per i browser senza AVIF): va sempre controllato insieme all'AVIF.
+- **Hero di `/siii/`, a livello di pagina** (vale per qualunque immagine, già con la sala di Masseria Santella): a 320×568 e col telefono in orizzontale (844×390 a 3x) l'LCP è il testo, non la porta.
+  - Il budget dice «19 viewport su 19 da 320 px» perché misurava 320×640.
+  - Da correggere alla prossima revisione del budget, con l'immagine definitiva.
+- **Script per una nuova immagine della hero** in `scratchpad/perf-tana/`:
+  - `devices.mjs`: variante, peso, `sizes` ed elemento LCP su 24 dispositivi, con il controllo accanto;
+  - `hero-variants.mjs`: sorgenti e pesi del `<picture>`;
+  - `lhrun.sh` più `lhsum.mjs`: corse alternate e mediane, con inizio della richiesta e fasi dell'LCP;
+  - `profiles.mjs`;
+  - `enc-matrix.mjs` più `ssim.mjs`: matrice sharp con SSIM su Y, Cb e Cr; il percorso della sorgente è scritto nel file;
+  - `visual.mjs`.
+  - Build di controllo: `dist-aaf` (`aaf4760`, con la sala di Masseria Santella, uguale a `bae201c` per `/siii/`).
+- **Incarico fermato dalla sessione principale.** Ordine di chiusura:
+  - prima il ciclo, poi i figli: una corsa Lighthouse può partire nell'istante dello stop e restare orfana;
+  - poi i server, poi i worktree;
+  - infine `git status`, che deve mostrare solo modifiche di altri.
+- **Prima corsa Lighthouse dopo una tornata Playwright:** può avere un trace osservato lento (ritardo di rendering di oltre 1 s, TBT 72 ms) senza effetto sull'LCP simulato. È rumore dell'ambiente.
 - **Fasi dell'LCP di un'immagine:** in `lcp-breakdown-insight` sono ttfb, attesa, download e rendering; `runs.mjs` le stampa come t/r/r/e.
 - **Rete.**
   - Bloccati: docs.astro.build, docs.railway.com, railway.com, station.railway.com, `*.up.railway.app` (anteprima compresa: CONNECT 403, 2026-09-28), developers.cloudflare.com, MDN, web.dev, caniuse, jsDelivr, api.fontsource.org, railway.app, itnode.it, erwinhofman.com, webpagetest.org.
