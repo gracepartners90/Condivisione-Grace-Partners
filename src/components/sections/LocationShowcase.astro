@@ -581,6 +581,13 @@ const listStyle = [
       order: 3;
       flex-basis: 100%;
     }
+
+    /* At least --space-m between a city's last line and the next city's rule: when a text outgrows its
+       latitude band, and where container units are missing and the cities stack from the top. The user's
+       text spacing (WCAG 1.4.12) replaces it with its own paragraph spacing. */
+    .city:not(:last-child) .city__line {
+      margin-bottom: var(--space-m);
+    }
   }
 
   /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
