@@ -89,7 +89,7 @@ Se al go-live alcuni asset mancano ancora, la build con `PUBLIC_SLOT_MODE=publis
 
 | Asset | Formato | Dove |
 |---|---|---|
-| Schermate delle esperienze SIII: **ricevute il 2026-10-07 e in uso** (desktop 2000 × 1250 px, mobile 1200 × 2000 px); dal 2026-10-08 la hero di /siii/ mostra il negozio YES. Se possibile, le viste desktop anche a 2560 × 1600 px per gli schermi grandi | 16:10 | Home (capitolo SIII), /siii/ (hero ed esempi) |
+| Schermate delle esperienze SIII: **ricevute il 2026-10-07 e in uso** (desktop 2000 × 1250 px, mobile 1200 × 2000 px); dal 2026-10-08 la hero di /siii/ mostra il negozio YES e il capitolo SIII della Home La Tana di Aldo. Se possibile, le viste desktop anche a 2560 × 1600 px per gli schermi grandi | 16:10 | Home (capitolo SIII), /siii/ (hero ed esempi) |
 | Foto reali di Monopoli, Acquaviva delle Fonti, Gravina in Puglia | Porta 3:5, lato lungo di almeno 2400 px | /puglia-digitale/ (I luoghi) |
 | Video di Città Digitali: file sorgente e permesso di ospitarlo, fotogramma di copertina, durata, sottotitoli se c'è parlato | 16:9, poster 1920 × 1080 px | /citta-digitali/ (video) |
 | Foto evento Puglia Digitale originale, senza cornice né sovrimpressioni, con luogo, data e autore | originale ad alta risoluzione | Home, /puglia-digitale/ |

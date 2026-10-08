@@ -26,7 +26,7 @@ const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.r
 // docs/brief/brief-consolidato.md §5 («Consensi delle imprese»). Keys are the file prefixes in src/assets/images/
 // (siii-<key>-desktop-… or siii-<key>-mobile-…). Set a key to true only when that consent is recorded.
 // A screenshot whose key is not listed here fails the check, so a new business cannot slip through.
-const SHOWCASE_CONSENT = { 'masseria-santella': false, 'maison-mimina': false, dielle: false, yes: false };
+const SHOWCASE_CONSENT = { 'masseria-santella': false, 'maison-mimina': false, dielle: false, yes: false, 'la-tana-di-aldo': false };
 const showcaseShots = pages.flatMap((p) =>
   [...p.html.matchAll(/_astro\/siii-([a-z0-9-]+?)-(?:desktop|mobile)-/g)].map((m) => ({ key: m[1], page: p.path.replace(dist, '') })),
 );

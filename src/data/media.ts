@@ -7,7 +7,7 @@
  */
 import ritratto from '../assets/images/derivate/fondatore-ritratto.jpg';
 import ritrattoContatti from '../assets/images/derivate/fondatore-contatti.jpg';
-import santellaInterno from '../assets/images/siii-masseria-santella-desktop-interno.jpg';
+import tanaSala from '../assets/images/siii-la-tana-di-aldo-desktop-sala.jpg';
 import santellaIngresso from '../assets/images/siii-masseria-santella-desktop-ingresso.jpg';
 import yesNegozio from '../assets/images/siii-yes-mobile-negozio.jpg';
 import yesDesktop from '../assets/images/derivate/siii-yes-desktop-negozio.jpg';
@@ -41,16 +41,22 @@ export const founderPortraitContacts = {
 };
 
 // SIII screenshots sent by the user on 2026-10-07: desktop 2000 × 1250 (16:10), mobile 1200 × 2000 (3:5); on
-// 2026-10-08 the YES shop, mobile 1200 × 2000, for the /siii/ hero (user request).
+// 2026-10-08 the YES shop, mobile 1200 × 2000, for the /siii/ hero, and La Tana di Aldo, desktop 2000 × 1250, for
+// chapter 01 of the Home (user requests).
 // Unused views stay in src/assets/images/ for the creative-director (siii-*-mobile-*, Masseria's other view).
 // Alt texts: docs/contenuti/alt-text.md v1.6 («Nel sito»). They describe the view, not the controls drawn
 // in it (docs/ux/accessibilita.md §2.8). On /siii/ the examples do not repeat the business name: the h3
 // right after the image says it.
 
-/** Home, chapter 01: a SIII in use, inside the space, with its menu and hotspots. */
+/**
+ * Home, chapter 01: a SIII in use, inside the space (La Tana di Aldo since 2026-10-08, user request). Lazy, below
+ * the fold: at the site defaults the AVIF is 42.6 KB at 828 px, 63.0 at 1080 and 128.3 at 1920; the 1920 WebP is
+ * 195.3 KB, close to the 200 KB of check 8 (docs/performance/budget.md).
+ * Alt text: provisional, to be confirmed in docs/contenuti/alt-text.md.
+ */
 export const siiiHomeScreen = {
-  image: santellaInterno,
-  alt: 'Il SIII di Masseria Santella: una sala con la volta bianca e una porta a vetri ad arco aperta sugli altri ambienti, con il menu e i punti interattivi.',
+  image: tanaSala,
+  alt: 'Il SIII de La Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.',
 };
 
 /**
