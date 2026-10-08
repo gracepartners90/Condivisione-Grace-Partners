@@ -3,19 +3,19 @@ titolo: "ADR 002 · Veridicità: testi del cliente in staging, conferma o riserv
 owner: brand-strategist
 contributi: [creative-director, sessione principale]
 stato: proposta
-versione: 0.3
+versione: 0.4
 aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.7, §3.8, §5.2, §6), docs/creativa/direzione-visiva.md (0.2: §4.2, §4.3, §7.3, §7.5; dalla 0.13: §4.5, §4.8), docs/decisioni/004-anteprima-su-railway.md, docs/contenuti/copy-deck/ (home, puglia-digitale, citta-digitali), codice letto il 2026-09-28 in sola lettura (src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/citta-digitali.astro, src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/media.ts, src/data/figures.ts), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (decisione 5, S1), docs/contenuti/alt-text.md (1.6), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, codice letto il 2026-10-08 in sola lettura (src/data/media.ts, src/pages/siii.astro, src/data/asset-slots.ts, scripts/prelaunch-check.mjs; dist/ della build di 1112c93), ricerche web del 2026-10-08 (brief consolidato §8)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.7, §3.8, §5.2, §6), docs/creativa/direzione-visiva.md (0.2: §4.2, §4.3, §7.3, §7.5; dalla 0.13: §4.5, §4.8), docs/decisioni/004-anteprima-su-railway.md, docs/contenuti/copy-deck/ (home, puglia-digitale, citta-digitali), codice letto il 2026-09-28 in sola lettura (src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/citta-digitali.astro, src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/media.ts, src/data/figures.ts), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (decisione 5, S1), docs/contenuti/alt-text.md (1.6), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, codice letto il 2026-10-08 in sola lettura (src/data/media.ts, src/pages/siii.astro, src/data/asset-slots.ts, scripts/prelaunch-check.mjs, src/pages/index.astro; dist/ delle build di 1112c93 e c11734b), commit a5dac14 (controllo A7 per impresa) e c11734b (Home, capitolo 01), docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20, §4.8), ricerche web del 2026-10-08 (brief consolidato §8)]
 ---
 
 # ADR 002 · Veridicità in staging e al go-live; immagini elaborate con AI
 
 | Campo | Valore |
 |---|---|
-| Stato | **Proposta, pronta per l'approvazione dell'utente.** Si approvano la regola (§1) e i testi di riserva (§3), cioè le parole esatte che vanno online se il cliente non conferma per iscritto entro il lancio. Dalla 0.3 anche le regole sul consenso delle imprese, la riserva della hero di `/siii/` (§3.1) e il testo della richiesta di consenso (§3.2). |
+| Stato | **Proposta, pronta per l'approvazione dell'utente.** Si approvano la regola (§1) e i testi di riserva (§3), cioè le parole esatte che vanno online se il cliente non conferma per iscritto entro il lancio. Dalla 0.3 anche le regole sul consenso delle imprese, la riserva della hero di `/siii/` (§3.1) e il testo della richiesta di consenso (§3.2). Dalla 0.4 anche la riserva del capitolo 01 della Home (§3.1). |
 | Data | 2026-09-28; aggiornato il 2026-10-08 |
 | Owner | brand-strategist (registro dei claim e scelta delle riserve, condizione C06); creative-director per le immagini |
-| Versioni | 0.1: prima stesura. 0.2: allineata al codice e con le riserve scritte per esteso (verdetto G4, §3.7). 0.3: A7 vale per ogni impresa di cui il sito mostra una schermata, compreso il negozio YES nella hero di `/siii/`; consenso impresa per impresa, anche nel controllo di go-live (proposta); riga con nome e comune sotto la hero; nuova voce A8 (chi ha realizzato il SIII di YES); contesto dell'anteprima aggiornato (aperta dal 2026-09-29) |
+| Versioni | 0.1: prima stesura. 0.2: allineata al codice e con le riserve scritte per esteso (verdetto G4, §3.7). 0.3: A7 vale per ogni impresa di cui il sito mostra una schermata, compreso il negozio YES nella hero di `/siii/`; consenso impresa per impresa, anche nel controllo di go-live (proposta); riga con nome e comune sotto la hero; nuova voce A8 (chi ha realizzato il SIII di YES); contesto dell'anteprima aggiornato (aperta dal 2026-09-29). 0.4: La Tana di Aldo nel capitolo 01 della Home, quindi le imprese sono cinque; A8 vale anche per La Tana di Aldo; riserva del capitolo 01; controllo per impresa applicato (a5dac14) |
 
 ## Contesto
 
@@ -28,12 +28,14 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 - Le foto del fondatore e la foto dell'evento sono generate o ritoccate con strumenti di AI (brief I7; il file della foto dell'evento porta la filigrana di un editor generativo). L'AI Act, art. 50, prevede obblighi di trasparenza.
 - Lo staging esiste ed è fuori dai motori di ricerca: è l'anteprima su Railway, sempre `noindex` (ADR 004). Fino al 2026-09-29 era protetta da password; da allora è aperta a chi ha il link, per decisione dell'utente.
 - Dal 2026-10-07 il sito mostra schermate vere delle esperienze SIII: Home, capitolo 01; `/siii/`, hero ed esempi. Mostrano spazi, loghi e nomi di imprese reali.
-- Dal 2026-10-08 la hero di `/siii/` mostra un negozio con il logo «YES» (commit 1112c93). È l'unica impresa del sito che non viene dalle linee guida: non è tra i tre esempi della LG §12. L'utente l'ha chiesta con queste parole: «scusami usa questa non quella». Poco prima, per un'altra schermata, aveva scritto: «usa questa come immagine iniziale della sezione SIII». Non ha detto chi ha realizzato il SIII, né il nome ufficiale dell'impresa, né il comune.
+- Dal 2026-10-08 la hero di `/siii/` mostra un negozio con il logo «YES» (commit 1112c93). Non è tra i tre esempi della LG §12. L'utente l'ha chiesta con queste parole: «scusami usa questa non quella». Poco prima, per un'altra schermata, aveva scritto: «usa questa come immagine iniziale della sezione SIII». Non ha detto chi ha realizzato il SIII, né il nome ufficiale dell'impresa, né il comune.
+- Dal 2026-10-08 il capitolo 01 (SIII) della Home mostra da desktop la sala de La Tana di Aldo, al posto di quella di Masseria Santella (commit c11734b). Le parole dell'utente, inviate con la vista desktop e quella da smartphone: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai». Anche qui l'utente non dice chi ha realizzato il SIII, né il nome ufficiale, né il comune, e non parla di consenso.
+- Masseria Santella ora compare solo tra gli esempi di `/siii/`. Le imprese del sito che non vengono dalle linee guida sono due: YES e La Tana di Aldo.
 
 ## Opzioni considerate
 
 1. **Pubblicare subito le riserve ovunque.** Pro: rischio minimo. Contro: cambia il significato dei testi del cliente prima che il cliente li abbia rivisti.
-2. **Testi del cliente in staging; al go-live conferma scritta oppure riserva** (proposta). Pro: il cliente rivede il sito con le sue parole e risponde alle domande; nessun claim non verificato va in produzione. Contro: lo staging deve restare protetto e non indicizzabile.
+2. **Testi del cliente in staging; al go-live conferma scritta oppure riserva** (proposta). Pro: il cliente rivede il sito con le sue parole e risponde alle domande; nessun claim non verificato va in produzione. Contro: lo staging deve restare non indicizzabile; e, poiché dal 2026-09-29 è aperto a chi ha il link, serve il ritiro immediato dei contenuti contestati (§1).
 3. **Pubblicare i testi del cliente così come sono.** Esclusa: viola la soglia n. 1 se un'affermazione risulta falsa.
 
 ## Decisione proposta
@@ -68,10 +70,14 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 
 **Correzione rispetto alla versione 0.1.** La v0.1 diceva che il testo visibile della Home restava quello delle linee guida fino alla risposta del cliente. Non è più così: la riserva B1 è già nel codice, e quindi anche nell'anteprima, sia nel testo della Home sia nel JSON-LD.
 
-**Verificato il 2026-10-08 (A7), sulla build di 1112c93.**
-- **Hero di `/siii/`** (`src/data/media.ts`, righe 62–65; `src/pages/siii.astro`, righe 71–84). Mostra la schermata `siii-yes-mobile-negozio.jpg`. Sui telefoni il ritaglio 4:5 è ancorato in alto, quindi il logo «YES» resta nell'immagine a ogni larghezza. È piccolo, però: circa 60 px di lato da 64em e circa 50 px su un telefono largo 390 px.
-- **Nome.** L'alt provvisorio nomina l'impresa: «YES da smartphone: …». In tutto `dist/` «YES» compare solo lì: non è nel testo visibile né nel JSON-LD.
-- **Controllo di go-live** (`scripts/prelaunch-check.mjs`, righe 22 e 54–60). Blocca la pubblicazione se nella build c'è una schermata SIII (`_astro/siii-…-desktop-` o `-mobile-`) e `CONFIRMED.showcaseConsent` non è `true`. Copre anche la hero: in `dist/siii/index.html` i file `siii-yes-mobile-negozio.*` compaiono in cinque righe (214–219). L'interruttore però è uno solo per quattro imprese (§3.1).
+**Verificato il 2026-10-08 (A7), sulla build di c11734b.**
+- **Hero di `/siii/`** (`src/data/media.ts`, `siiiHeroScreen`).
+  - Sui telefoni c'è la schermata `siii-yes-mobile-negozio.jpg`, con il ritaglio 4:5 ancorato in alto.
+  - Da 64em c'è il derivato 3:5 `derivate/siii-yes-desktop-negozio.jpg`, senza l'interfaccia tagliata in basso (verdetto del creative-director del 2026-10-08, decisione 3).
+  - Il logo «YES» resta in tutte e due, ma è piccolo: da circa 50 a 72 px di lato.
+- **Home, capitolo 01** (`src/data/media.ts`, `siiiHomeScreen`; `src/pages/index.astro`, righe 128–130). Mostra la schermata `siii-la-tana-di-aldo-desktop-sala.jpg`, in 16:10, con il logo «La Tana di Aldo» in alto a sinistra.
+- **Nomi.** Gli alt nominano le due imprese: «Il negozio YES da smartphone: …» (definitivo, d97aa29) e «Il SIII de La Tana di Aldo: …» (provvisorio). In tutto `dist/` i due nomi compaiono solo in questi alt: non sono nel testo visibile né nel JSON-LD. Masseria Santella compare solo in `/siii/`, negli esempi.
+- **Controllo di go-live** (`scripts/prelaunch-check.mjs`, righe 25–33 e 64–69). Dal commit a5dac14 è impresa per impresa: `SHOWCASE_CONSENT` ha cinque chiavi, compresa `la-tana-di-aldo`, tutte a `false`, e oggi il controllo elenca le cinque imprese. Riconosce anche il derivato di YES, perché il nome del file segue la convenzione `siii-<impresa>-desktop-<vista>`.
 
 ### 3. Riserve di go-live: i testi da approvare
 
@@ -100,8 +106,8 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 | I5 | Provenienza dei ritratti | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale». «Elaborata» da sola torna solo se il cliente conferma che sono foto reali ritoccate |
 | I7 | Funzioni del SIII (`/siii/` e capitolo 01 della Home) | «Nel tuo SIII, in base alle funzioni che scegli, chi ti visita può:». «Vendita diretta» diventa «Dalla visita alla vendita», a meno che il cliente confermi che prenotazione o vendita partono dall'esperienza. Nella Home, al posto di «…chiede informazioni e prenota.», proposta «…chiede informazioni e, dove previsto, prenota.» (rifinitura di copywriter-brand) |
 | I8 | «Tre Siti Interattivi Immersivi già online» | Un'esperienza che al lancio non risponde si toglie, e il numero nel testo si adegua |
-| A7 | Consenso scritto di ogni impresa di cui il sito mostra una schermata: le tre degli esempi (LG §12) e YES, nella hero di `/siii/` dal 2026-10-08 | Impresa per impresa, come nel §3.1: senza il suo consenso escono le sue schermate e la sua riga con il nome |
-| A8 | Il SIII di YES l'ha realizzato ITnode. Nessun testo lo dice, ma la hero della pagina che vende il SIII lo presuppone | Come A7 senza consenso: la schermata esce e la hero passa alla riserva del §3.1. Si chiude con il consenso del §3.2, che lo dichiara, oppure con una riga dell'utente |
+| A7 | Consenso scritto di ogni impresa di cui il sito mostra una schermata: le tre degli esempi (LG §12); YES, nella hero di `/siii/`; La Tana di Aldo, nel capitolo 01 della Home. Le ultime due dal 2026-10-08 | Impresa per impresa, come nel §3.1: senza il suo consenso escono le sue schermate e la sua riga con il nome |
+| A8 | I SIII di YES e de La Tana di Aldo li ha realizzati ITnode. Nessun testo visibile lo dice, ma lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home. L'alt della Home lo scrive: «Il SIII de La Tana di Aldo» | Come A7 senza consenso: la schermata esce e si applica la riserva del §3.1. Si chiude impresa per impresa, con il consenso del §3.2, che lo dichiara, oppure con una riga dell'utente |
 
 ### 3.1 A7 · Consenso delle imprese di cui il sito mostra le schermate
 
@@ -109,22 +115,25 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 - **Impresa per impresa.** Il consenso di un'impresa copre solo le sue schermate e il suo nome. Se un consenso manca, le altre imprese non si fermano.
 - **Che cosa copre:** il nome, il comune, il logo e le schermate del SIII dell'impresa nel sito di ITnode (Home e `/siii/`) e, se l'esperienza è online, il link.
 - **Forma.** Basta la conferma scritta dell'utente, impresa per impresa, con la data e la forma del consenso: email dell'impresa, documento o clausola del contratto con ITnode. L'originale resta al cliente. La brand-strategist registra la conferma nel brief consolidato (§5, «Consensi delle imprese»).
-- **Riga con il nome.** Sotto la hero di `/siii/` e sotto il capitolo 01 della Home va una riga con il nome e il comune (DV §4.8; verdetto del creative-director del 2026-10-07, decisione 5). Va online solo con il consenso dell'impresa e solo con nome ufficiale e comune confermati. Se il consenso manca, schermata e riga escono insieme. Per YES nome e comune non ci sono: finché non arrivano, la hero resta senza riga e il nome sta solo nell'alt.
+- **Riga con il nome.** Sotto la hero di `/siii/` e sotto il capitolo 01 della Home va una riga con il nome e il comune (DV §4.8; verdetto del creative-director del 2026-10-07, decisione 5). Va online solo con il consenso dell'impresa e solo con nome ufficiale e comune confermati. Se il consenso manca, schermata e riga escono insieme. Per YES e La Tana di Aldo nome ufficiale e comune non ci sono: finché non arrivano, hero e capitolo 01 restano senza riga, e il nome sta solo nell'alt.
+- **Nomi delle schede degli esempi.** Nome, luogo e link delle tre imprese degli esempi vengono dalle linee guida (LG §12): restano anche senza consenso, come le schede. Fuori dalle schede il nome di un'impresa va online solo con il suo consenso.
 
 **Al go-live, senza consenso scritto:**
 
 | Impresa | Dove nel sito | Perché c'è | Al go-live senza consenso |
 |---|---|---|---|
-| Masseria Santella | Home, capitolo 01; `/siii/`, primo esempio | LG §12 | Le sue schermate escono e tornano gli slot con la variante «in pubblicazione» (DV §4.5). La scheda dell'esempio resta, senza la schermata (LG §12). La riga con il nome del capitolo 01 non va online |
+| Masseria Santella | `/siii/`, primo esempio. Le sue viste sono anche la prima riserva della hero e del capitolo 01 della Home | LG §12 | La schermata esce e torna lo slot con la variante «in pubblicazione» (DV §4.5). La scheda dell'esempio resta, senza la schermata (LG §12). Le due riserve che usano le sue viste non sono disponibili |
 | Maison Miminà | `/siii/`, secondo esempio | LG §12 | La schermata esce e torna lo slot con la variante «in pubblicazione». La scheda resta |
 | D.L. Natura Dentro | `/siii/`, terzo esempio | LG §12 | Come Maison Miminà |
-| YES | `/siii/`, hero. Il nome è solo nell'alt | Richiesta dell'utente del 2026-10-08 | La schermata esce insieme al suo alt, e il nome non resta in nessun punto del sito. Nella hero va, in quest'ordine: (1) la sala di Masseria Santella da smartphone, se Masseria Santella ha dato il consenso. È la hero approvata dal creative-director il 2026-10-07 (decisioni 1 e 2, ritaglio ancorato in basso): è già misurata e ha il suo alt in `alt-text.md`. (2) Altrimenti la variante «in pubblicazione» dello slot `siii-anteprima` (DV §4.5). Un'altra schermata con consenso può prendere il posto della (1) solo con il parere del creative-director e la misura di web-performance-specialist, perché è l'elemento LCP |
+| YES | `/siii/`, hero. Il nome è solo nell'alt | Richiesta dell'utente del 2026-10-08 | La schermata esce insieme al suo alt, e il nome non resta in nessun punto del sito. Nella hero va, in quest'ordine: (1) la sala di Masseria Santella da smartphone, se Masseria Santella ha dato il consenso. È la hero approvata dal creative-director il 2026-10-07 (decisioni 1 e 2, ritaglio ancorato in basso): è già misurata e ha il suo alt in `alt-text.md`. (2) Altrimenti la variante «in pubblicazione» dello slot `siii-anteprima` (DV §4.5). Un'altra schermata con consenso può prendere il posto della (1) solo con il parere del creative-director e la misura di web-performance-specialist, perché è l'elemento LCP. La riserva è confermata dal creative-director (verdetto del 2026-10-08, decisione 6) |
+| La Tana di Aldo | Home, capitolo 01. Il nome è solo nell'alt | Richiesta dell'utente del 2026-10-08 | La schermata esce insieme al suo alt, e il nome non resta in nessun punto del sito. Nel capitolo va, in quest'ordine: (1) l'interno di Masseria Santella da desktop (`siii-masseria-santella-desktop-interno.jpg`), se Masseria Santella ha dato il consenso. È la vista approvata per il capitolo dal creative-director il 2026-10-07, è stata nella Home fino a c11734b e ha il suo alt in `alt-text.md`. (2) Altrimenti la variante «in pubblicazione» del capitolo (DV §4.5), senza il nome di un'impresa che non ha dato il consenso. Un'altra schermata con consenso entra solo con il parere del creative-director e la misura di web-performance-specialist (controllo n. 8 del budget) |
 
-- **I8 non cambia.** «Tre Siti Interattivi Immersivi già online» conta gli esempi con il link, non la hero.
-- **Controllo di go-live (proposta).** Oggi `check:launch` ha un solo interruttore per tutte le imprese (`CONFIRMED.showcaseConsent`). Con tre consensi su quattro resterebbe tutto bloccato, oppure, con l'interruttore a `true`, passerebbe anche l'impresa senza consenso.
-  - La proposta è un interruttore per impresa, con chiave il prefisso del file: `masseria-santella`, `maison-mimina`, `dielle`, `yes`.
+- **I8 non cambia.** «Tre Siti Interattivi Immersivi già online» conta gli esempi con il link, non la hero né il capitolo 01 della Home.
+- **Controllo di go-live: impresa per impresa** (commit a5dac14, con la patch della review del 2026-10-08, R3).
+  - `SHOWCASE_CONSENT` ha una chiave per impresa, il prefisso del file: `masseria-santella`, `maison-mimina`, `dielle`, `yes`, `la-tana-di-aldo`.
   - Una schermata con una chiave non elencata fa fallire il controllo, così una nuova impresa non passa inosservata.
-  - La patch è in `scratchpad/bs-yes/prelaunch-check-a7-per-impresa.patch` (review del 2026-10-08, R3). La applica la sessione principale.
+  - A ogni consenso registrato nel brief, la sessione principale mette a `true` la chiave dell'impresa.
+  - I file derivati seguono la convenzione `siii-<impresa>-desktop-<vista>` (DV §4.8): con un altro nome il controllo non li riconoscerebbe.
 
 ### 3.2 Richiesta di consenso: testo proposto
 
@@ -133,7 +142,7 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
 > **Oggetto:** Il vostro SIII sul sito di ITnode
 >
 > Buongiorno,
-> stiamo preparando il nuovo sito di ITnode e vorremmo mostrare il SIII che ITnode ha realizzato per [nome dell'impresa] come esempio del nostro lavoro. Useremmo [una schermata / alcune schermate] dell'esperienza, con il logo che vi compare, e scriveremmo il vostro nome e il comune[, con il link all'esperienza]. Le immagini sarebbero nella pagina dedicata ai SIII[ e nella Home].
+> stiamo preparando il nuovo sito di ITnode e vorremmo mostrare il SIII che ITnode ha realizzato per [nome dell'impresa] come esempio del nostro lavoro. Useremmo [una schermata / alcune schermate] dell'esperienza, con il logo che vi compare, e scriveremmo il vostro nome e il comune[, con il link all'esperienza]. Le immagini sarebbero [nella pagina dedicata ai SIII / nella Home].
 > Ci autorizzate? Basta rispondere a questa email. Potrete chiederci di toglierle in qualsiasi momento scrivendo a info@itnode.it.
 
 - La frase «il SIII che ITnode ha realizzato per [nome dell'impresa]» serve anche ad A8: un sì dell'impresa la conferma.
@@ -160,7 +169,7 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
 - La sessione principale estende `check:launch`:
   - con N10 del verdetto G4, per B2 e I2;
   - con la stessa logica, se lo ritiene utile, per I6 e I7;
-  - per A7, impresa per impresa (§3.1; patch in `scratchpad/bs-yes/`).
+  - per A7, impresa per impresa: applicato in a5dac14 (§3.1).
 
   Il controllo passa solo con la riserva applicata o con la conferma registrata.
 - L'anteprima resta fuori dai motori di ricerca (ADR 004) ed è aperta a chi ha il link dal 2026-09-29. Per questo vale il ritiro immediato del §1. Il sito non contiene `noindex` legati all'ambiente (specifiche SEO §3.2).
@@ -171,8 +180,11 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
 - La nota proposta basta per l'art. 50 dell'AI Act `[DA VERIFICARE con il consulente legale]`.
 - `[IPOTESI: i testi di riserva rispettano la voce di marca. copywriter-brand li rivede, senza cambiarne il significato: «I tre mondi», «Porta la tua impresa in Puglia Digitale», il titolo al singolare dei numeri, la frase I7 della Home.]`
 - `[IPOTESI: il testo del §3.2 basta come consenso. Lo verifica il consulente legale del cliente.]`
-- `[DA VERIFICARE: il SIII di YES l'ha realizzato ITnode (A8).]` Lo presuppone la richiesta dell'utente, che però non lo dice. In rete non c'è traccia né dell'impresa né dell'esperienza (ricerche del 2026-10-08). L'interfaccia somiglia a quella di Masseria Santella e Maison Miminà, ma questo è un indizio, non una prova.
-- `[IPOTESI: «YES» è il nome con cui l'impresa si presenta.]` È la lettura del logo, che dice anche «pure design 100% flowers».
+- `[DA VERIFICARE: i SIII di YES e de La Tana di Aldo li ha realizzati ITnode (A8).]`
+  - Lo presuppongono le richieste dell'utente, che però non lo dicono.
+  - In rete non c'è traccia né delle imprese né delle esperienze (ricerche del 2026-10-08).
+  - Le due interfacce si somigliano tra loro: l'etichetta «APRI QUI» con la freccia, le icone di contatto tonde con una foglia. Somigliano anche a quelle di Masseria Santella e Maison Miminà. È un indizio, non una prova.
+- `[IPOTESI: «YES» e «La Tana di Aldo» sono i nomi con cui le imprese si presentano.]` Sono le letture dei loghi; quello di YES dice anche «pure design 100% flowers».
 
 ## Domande aperte
 
@@ -183,8 +195,8 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
   - perimetro di «10.000+»;
   - originale e informativa della foto dell'evento;
   - provenienza dei ritratti;
-  - consenso scritto di ogni impresa di cui il sito mostra le schermate: Masseria Santella, Maison Miminà, D.L. Natura Dentro e YES (§3.1; testo nel §3.2);
-  - per YES: chi ha realizzato il SIII (A8); nome ufficiale, comune e provincia; indirizzo dell'esperienza, se è online (brief consolidato, D12);
+  - consenso scritto di ogni impresa di cui il sito mostra le schermate: Masseria Santella, Maison Miminà, D.L. Natura Dentro, YES e La Tana di Aldo (§3.1; testo nel §3.2);
+  - per YES e La Tana di Aldo: chi ha realizzato il SIII (A8); nome ufficiale, comune e provincia; indirizzo dell'esperienza, se è online (brief consolidato, D12);
   - funzioni del SIII;
   - video.
 - **Per l'utente:**
@@ -198,10 +210,13 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
   - approvazione dei testi di riserva del §3;
   - DR3: (b) per il lancio e (c) appena possibile, con budget e tempi dello shooting;
   - scadenza per le risposte del cliente;
-  - approvazione del §3.1 (consenso impresa per impresa, riserva della hero) e del testo del §3.2, da inoltrare alle quattro imprese.
+  - approvazione del §3.1 (consenso impresa per impresa, riserve della hero e del capitolo 01 della Home) e del testo del §3.2, da inoltrare alle cinque imprese.
 - **Sessione principale:**
   - alla scadenza, applicare le riserve rimaste senza conferma; estendere `check:launch` (C13);
-  - applicare la patch di A7 per impresa (§3.1). A ogni consenso registrato nel brief, mettere a `true` la chiave dell'impresa.
-- **creative-director:** estendere la DV §4.8, che parla del consenso «delle tre imprese», a ogni impresa di cui il sito mostra una schermata; confermare la riserva della hero (§3.1).
-- **copywriter-brand:** titolo al singolare per il solo «30+»; rifinitura della frase I7 della Home; la riga con il nome della hero, quando arrivano nome e comune di YES.
-- **copywriter-content:** l'alt della hero (review del 2026-10-08, §2).
+  - a ogni consenso registrato nel brief, mettere a `true` la chiave dell'impresa (controllo per impresa in a5dac14).
+- **creative-director:**
+  - allineare la DV §4.8 al capitolo 01 con La Tana di Aldo: vista, riga con il nome, elenco delle imprese;
+  - precisare nella DV §4.8 che nome, luogo e link delle schede degli esempi restano anche senza consenso (LG §12);
+  - confermare la riserva del capitolo 01 (§3.1).
+- **copywriter-brand:** titolo al singolare per il solo «30+»; rifinitura della frase I7 della Home; le righe con il nome sotto la hero e sotto il capitolo 01, quando arrivano nome e comune di YES e de La Tana di Aldo.
+- **copywriter-content:** l'alt del capitolo 01 della Home, oggi provvisorio (review del 2026-10-08, §6).

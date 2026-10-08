@@ -57,3 +57,7 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Patch per la sessione principale: «scratchpad/» è la scratchpad condivisa della sessione (`/tmp/claude-0/-home-user-itnode/<sessione>/scratchpad`, dove c'è `siii-lcp/`). Write toglie lo spazio delle righe di contesto vuote: `git apply` le accetta, ma va detto e va chiesto `git apply --check`.
 - Il Contesto di un ADR invecchia (l'anteprima era «protetta», poi è stata aperta): rileggerlo a ogni nuova versione.
 - Piccole imprese locali: spesso non hanno traccia indicizzata. Quattro ricerche bastano; i risultati spuri (pagine di città dei portali) non sono piste.
+- Le riserve si scrivono per posto, non solo per impresa: hero di `/siii/` e capitolo 01 della Home hanno ciascuno la sua cascata (vista approvata in precedenza con consenso, poi variante «in pubblicazione» senza nomi non autorizzati).
+- Un alt che dice «Il SIII di [impresa]» è un'affermazione in parole: la paternità (A8) pesa più che per un'immagine muta. Segnalarlo.
+- Prima di riprendere un incarico dopo altri commit, leggere il log (`.git/logs/HEAD`) e le review nuove: qui patch già applicata, alt definitivo e verdetto del creative-director avevano cambiato i fatti da citare.
+- Tenere stabili i numeri di sezione citati da altri (§4 degli input, citato dal creative-director): aggiornare in loco con «Stato» e aggiungere le novità in una sezione nuova, con versione 1.1.
