@@ -16,7 +16,7 @@ import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { italyPlaces, office, portals, video } from '../data/site';
 import { bearing, distanceKm } from '../lib/geo';
-import { describeCittaDigitali } from '../lib/citta-digitali';
+import { describeCittaDigitali, italyNamesAtEveryWidth } from '../lib/citta-digitali';
 import { pageGraph, videoObject, ids } from '../lib/structured-data';
 
 const portal = portals.cittaDigitali;
@@ -96,10 +96,11 @@ const cities = italyPlaces.map((p) => ({
     surface="notte"
     location="luoghi"
     cityDots={{
-      // Legend: copywriter-brand L1. Text alternative while the full list of cities is not in this
-      // section; no names: the map draws none, the cards beside it name its three nodes (L6).
+      // Legend: copywriter-brand L1. The map draws the names of the Home map (user, 2026-10-08: «qualche
+      // nome di città tra le più importanti»); its text alternative names those drawn at every width.
       legend: 'Ogni punto è una città di\u00a0Città\u00a0Digitali',
-      label: describeCittaDigitali(),
+      label: describeCittaDigitali(italyNamesAtEveryWidth()),
+      names: true,
     }}
     allPlaces={{
       // Source of the full list of cities until it is confirmed and published here (citta-digitali-elenco.md §4).

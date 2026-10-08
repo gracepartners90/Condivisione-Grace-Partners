@@ -21,18 +21,14 @@ import { pageGraph, person, ids } from '../lib/structured-data';
 import eventoPanorama from '../assets/images/derivate/evento-panorama.jpg';
 import eventoCitta from '../assets/images/derivate/evento-citta.jpg';
 import maps from '../data/maps.json';
-import { describeCittaDigitali, describePugliaDigitale } from '../lib/citta-digitali';
+import { describeCittaDigitali, describePugliaDigitale, drawnAtEveryWidth, italyNamesAtEveryWidth } from '../lib/citta-digitali';
 
 const places = horizonPlaces.map((p) => ({ id: p.id, name: p.name, bearing: bearing(office, p), km: distanceKm(office, p) }));
 const schema = pageGraph('home', [person()], { about: ids.organization });
 
 // Text alternative of the chapter 03 map: the names drawn at every width, north → south, so that every
 // name said is on the map on a phone too (rule of copywriter-brand L7; ux-designer, 2026-10-06).
-const drawnAtEveryWidth = (p: { anchor?: { wide?: string; narrow?: string } }) =>
-  (['wide', 'narrow'] as const).every((c) => p.anchor?.[c] && p.anchor[c] !== 'none');
-const mapLabel = describeCittaDigitali(
-  [...maps.maps.italia.places].filter(drawnAtEveryWidth).sort((a, b) => b.lat - a.lat).map((p) => p.name),
-);
+const mapLabel = describeCittaDigitali(italyNamesAtEveryWidth());
 // Chapter 02: the whole of Puglia with the cities of Puglia Digitale, as on /puglia-digitale/ (compact map;
 // P4, approved by the user on 2026-10-07). Same rule for its text alternative (copywriter-brand, L7): the
 // names drawn at every width, north → south, without the office, which has its own sentence.

@@ -4,10 +4,18 @@
  * No number: a count is a claim (docs/strategia/citta-digitali-elenco.md §4).
  * Wording: copywriter-brand (L4, L6, L7). «Tra queste» only when the map draws names, and only the names
  * drawn at every width, so that each one is on the map on a phone too (ux-designer, 2026-10-06). A map
- * that draws none, like the one of /citta-digitali/ whose nodes are named by the cards beside it, gets no
- * third sentence (ux-designer, 2026-10-05).
+ * that draws none gets no third sentence (ux-designer, 2026-10-05).
  */
 import cittaDigitali from '../data/citta-digitali.json';
+import maps from '../data/maps.json';
+
+/** True when a map draws the name at every width: in its wide and its narrow class (ux-designer, 2026-10-06). */
+export const drawnAtEveryWidth = (p: { anchor?: { wide?: string; narrow?: string } }) =>
+  (['wide', 'narrow'] as const).every((c) => p.anchor?.[c] && p.anchor[c] !== 'none');
+
+/** The names the map of Italy draws at every width, north → south (Home chapter 03, /citta-digitali/). */
+export const italyNamesAtEveryWidth = (): string[] =>
+  [...maps.maps.italia.places].filter(drawnAtEveryWidth).sort((a, b) => b.lat - a.lat).map((p) => p.name);
 
 const REGIONS = ['Lombardia', 'Lazio', 'Campania', 'Puglia', 'Calabria', 'Sicilia']; // ISTAT order, north → south
 
