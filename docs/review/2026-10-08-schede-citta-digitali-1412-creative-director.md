@@ -3,9 +3,9 @@ titolo: Schede di /citta-digitali/ con le spaziature dell'utente (WCAG 1.4.12) �
 owner: creative-director
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-08
-fonti: [richieste della sessione principale del 2026-10-08 (conferma dell'impaginato della patch B; poi B o B2 e a capo del nome lungo), commit 474e2df (patch B), 21faf34 e 0da39e4, docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.2, §6 e §7), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2, patch B), docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4, §5 e §7, variante B2), docs/ux/accessibilita.md (0.13, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.15, §3.8), docs/creativa/direzione-visiva.md (0.17, §1.4 regola 9, §3.2, §7.6), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, build B2 di ui-designer http://127.0.0.1:4381, catture della sessione principale (scratchpad/b-main/) e di ui-designer (scratchpad/ui-1412b/shots/), copie della HEAD con B2 ed E e con B2, E e M (build in locale, porte 4391 e 4392), prove del creative-director con Playwright 1.56, Chromium 141, axe-core 4.13 e sharp (scratchpad/cd-1412/), risultati di ricerca sulla sillabazione delle parole con la maiuscola (2026-10-08, sotto)]
+fonti: [richieste della sessione principale del 2026-10-08 (conferma dell'impaginato della patch B; poi B o B2 e a capo del nome lungo), commit 474e2df (patch B), 21faf34 e 0da39e4, docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.2, §6 e §7), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2, patch B), docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4, §5 e §7, variante B2), docs/ux/accessibilita.md (0.13, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.15, §3.8), docs/creativa/direzione-visiva.md (0.17, §1.4 regola 9, §3.2, §7.6), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, build B2 di ui-designer http://127.0.0.1:4381, catture della sessione principale (scratchpad/b-main/) e di ui-designer (scratchpad/ui-1412b/shots/), copie della HEAD con B2 ed E e con B2, E e M (build in locale, porte 4391 e 4392), prove del creative-director con Playwright 1.56, Chromium 141, axe-core 4.13 e sharp (scratchpad/cd-1412/), risultati di ricerca sulla sillabazione delle parole con la maiuscola (2026-10-08, sotto); per la 1.1: commit d5ad7b0 (B2 ed E), 884a042 (ux-designer, review 1.3), aef5d32 (ui-designer, review 0.2, design system 0.16), ae91aa2 (M) e 4b8778a (design system 0.17, review 0.3)]
 oggetto: sezione «L'Italia in un unico portale» di /citta-digitali/ da 1280 px, con le spaziature del testo dell'utente
 ---
 
@@ -36,6 +36,8 @@ Il mio sì alla B2 era condizionato a quello di ux-designer: è arrivato nel com
 | 4 | Direzione visiva | **0.18**: §1.4 regola 9, §3.2 «A capo», §7.6 riga 3, ipotesi e decisioni |
 
 **Verdetto: approvato con modifiche.** B2 ed E vanno applicate insieme, prima del go-live. M è facoltativa.
+
+**Stato (versione 1.1).** Tutto applicato e verificato: B2 ed E nel commit d5ad7b0, M nel commit ae91aa2. Dettagli nel §5 e in fondo.
 
 ## 1. Impaginato con le spaziature: la B2 (decisione)
 
@@ -156,8 +158,8 @@ Il mio sì alla B2 era condizionato a quello di ux-designer: è arrivato nel com
 
 ## 5. Stato delle review di dominio
 
-- **ux-designer** (accessibilità): B2 sì (0da39e4). Per l'a capo del nome, sia quello di oggi sia `hyphens: auto` vanno bene per 1.4.12. **E e M non le ha ancora viste.**
-- **ui-designer** (UI): B fedele alla patch, B2 proposta e consigliata (21faf34, design system 0.15). **E e M non le ha ancora viste.**
+- **ux-designer** (accessibilità): B2 sì (0da39e4). E conforme a 1.3.2, 1.4.12 e 2.4.3, parere favorevole su M (884a042, review 1.3).
+- **ui-designer** (UI): B fedele alla patch, B2 proposta e consigliata (21faf34). Fedeltà di E confermata, M adottata senza il ripiego `@supports`, design system 0.16 (aef5d32, review 0.2). M registrata come applicata nel design system 0.17 (4b8778a, review 0.3).
 
 ## 6. Verdetto
 
@@ -168,6 +170,8 @@ Il mio sì alla B2 era condizionato a quello di ux-designer: è arrivato nel com
 - Il G4 resta approvato con le sue condizioni. Questo verdetto non le cambia.
 
 ## Patch da applicare (sessione principale)
+
+**Applicate:** B2 ed E nel commit d5ad7b0, M nel commit ae91aa2. Senza spaziature la pagina è identica: geometria da 320 a 2560 px, pixel a 390, 1024, 1280, 1440, 1920 e 2560 px (verifiche della sessione principale).
 
 In quest'ordine, sulla HEAD 0da39e4. Ho controllato che le tre si applichino in fila (`git apply --check`) e che diano esattamente il file provato.
 1. **B2** di ui-designer: `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-cdn/diff/citta-digitali-schede-1412-b2.patch`.
@@ -258,13 +262,15 @@ index 782a040..f35ceb7 100644
 
 ## Domande aperte
 
-- **ux-designer:** E va bene per 1.4.12, 1.3.2 e 2.4.3 (§2, «Da confermare»)? E M (§3)?
-- **ui-designer:** fedeltà di E e M, testo dei commenti e design system §3.8. M al posto del ripiego con `@supports`, o insieme?
+- **Chiuse:**
+  - ux-designer: E conforme a 1.3.2, 1.4.12 e 2.4.3, M favorevole (884a042);
+  - ui-designer: fedeltà di E confermata, M adottata al posto del ripiego con `@supports` (aef5d32).
 - Nessuna domanda per il cliente.
 
 ## Decisioni richieste
 
-- **Sessione principale:** applicare B2 ed E, e M se ui-designer la adotta. Poi ripetere sullo staging le prove delle schede con le spaziature, testi più lunghi compresi.
-- **ux-designer:** verifica di E e M per l'accessibilità.
-- **ui-designer:** verifica di fedeltà di E e M, design system.
-- **Utente:** nessuna decisione nuova. La direzione visiva 0.18 resta da approvare con le altre (DV, Decisioni richieste, punto 5).
+- **Chiuse:**
+  - sessione principale: B2 ed E applicate in d5ad7b0, M in ae91aa2, con le prove sullo staging;
+  - ux-designer e ui-designer: verifiche di E e M (884a042, aef5d32).
+- **Aperta, non bloccante:** la prova delle schede con le spaziature in Safari e Firefox (Ipotesi da validare).
+- **Utente:** nessuna decisione nuova. La direzione visiva, ora alla 0.19, resta da approvare con le altre (DV, Decisioni richieste, punto 5).
