@@ -79,7 +79,8 @@ const doors = west.map((l) => ({
 // Italy: north → south, each city at the height of its node on the map (yPct of maps.json, named
 // places or dots: a city may be either, depending on the names of the Home map).
 type ItalyPoint = { id: string; yPct: number };
-const italia = (maps as { maps?: { italia?: { places?: ItalyPoint[]; dots?: ItalyPoint[] } } }).maps?.italia;
+type ItalyMap = { width?: number; height?: number; places?: ItalyPoint[]; dots?: ItalyPoint[] };
+const italia = (maps as { maps?: { italia?: ItalyMap } }).maps?.italia;
 const italyPoints: ItalyPoint[] = [...(italia?.places ?? []), ...(italia?.dots ?? [])];
 const north = [...locations]
   .sort((a, b) => b.lat - a.lat)
@@ -91,6 +92,15 @@ const gapToNext = (i: number) => {
   const [a, b] = [north[i]?.y, north[i + 1]?.y];
   return a !== undefined && b !== undefined ? +(b - a).toFixed(2) : undefined;
 };
+// The map's height over its width (its aspect-ratio): from 80em the CSS computes the map's height from the
+// width of its columns.
+const mapRatio = italia?.width && italia?.height ? +(italia.height / italia.width).toFixed(6) : undefined;
+const listStyle = [
+  north[0]?.y !== undefined ? `--first: ${north[0].y}` : '',
+  mapRatio !== undefined ? `--map-ratio: ${mapRatio}` : '',
+]
+  .filter(Boolean)
+  .join('; ');
 ---
 
 <section id={id} class:list={['places', `places--${variant}`, `surface-${surface}`]} aria-labelledby={`${id}-title`}>
@@ -189,7 +199,7 @@ const gapToNext = (i: number) => {
               <MapItaly map="italia" places={north} showLabels={false} class="places__map-svg" />
             )}
           </div>
-          <ol role="list" class="places__cities" style={north[0]?.y !== undefined ? `--first: ${north[0].y}` : undefined}>
+          <ol role="list" class="places__cities" style={listStyle || undefined}>
             {north.map((c, i) => (
               <li class="city" data-place-link={c.id} style={gapToNext(i) !== undefined ? `--to-next: ${gapToNext(i)}` : undefined}>
                 <h3 class="city__name">{c.name}</h3>
@@ -500,14 +510,19 @@ const gapToNext = (i: number) => {
   /* From 1280 px each city stands at the latitude of its node: Altamura → Caltanissetta is
      31.6% of the map (≥ 217 px), more than a city block (~175 px). */
   @media (min-width: 80em) {
-    /* Caltanissetta hangs ~95 px below the map: keep the section's own bottom air. */
+    /* Caltanissetta hangs ~95 px below the map: keep the section's own bottom air. The grid is also the
+       container whose width gives the cities the map's height (cqw, below). */
     .places__italy {
       padding-bottom: var(--space-3xl);
+      container-type: inline-size;
     }
 
-    /* As tall as the map (stretched in its row), so that the latitudes below are % of the map's height. If
-       the cities need more room than the map (WCAG 1.4.12 text spacing), the row grows: nothing overflows. */
+    /* The latitudes below are shares of the map's height, computed from the map's width (columns 7 / -1:
+       half the grid less half a gutter) and its aspect ratio, not % of the list. When the cities need more
+       room than the map (WCAG 1.4.12 text spacing), only the cities that must move do, and the row grows
+       with them: the section always contains them. */
     .places__cities {
+      --map-h: calc((50cqw - var(--gutter) / 2) * var(--map-ratio, 0));
       align-self: stretch;
       display: block;
       padding: 0;
@@ -517,7 +532,7 @@ const gapToNext = (i: number) => {
     .places__cities::before {
       content: '';
       display: block;
-      height: calc(var(--first, 0) * 1% - 1.2rem);
+      height: calc(var(--first, 0) * var(--map-h) / 100 - 1.2rem);
     }
 
     /* The cities stand at the latitude of their node: the legend must not lengthen the map's row. */
@@ -531,28 +546,40 @@ const gapToNext = (i: number) => {
       top: 100%;
     }
 
+    /* The name and «Esplora» share the first line, «Esplora» at the right edge. When the name does not fit
+       beside it (WCAG 1.4.12 text spacing, a longer name), «Esplora» wraps under the name, still at the right
+       edge, and the name takes the whole card instead of breaking inside the word. Region and text follow on
+       lines of their own. Without text spacing nothing moves (creative-director, 2026-10-08). */
     .city {
-      min-height: calc(var(--to-next, 0) * 1%);
-      grid-template-columns: minmax(0, 1fr) auto;
+      min-height: calc(var(--to-next, 0) * var(--map-h) / 100);
+      display: flex;
+      flex-wrap: wrap;
       column-gap: var(--space-m);
       align-items: baseline;
-      align-content: start;
+      align-content: flex-start;
     }
 
-    /* A long name breaks inside its column (WCAG 1.4.12) instead of running under «Esplora». */
+    /* The last city may hang below the map into the section's bottom air (93–102 px today), as far as
+       --space-4xl; if it needs more (WCAG 1.4.12), the row grows instead and the section keeps its air. */
+    .city:last-child {
+      margin-bottom: calc(-1 * var(--space-4xl));
+    }
+
+    /* A name wider than the whole card still breaks inside it: the titles' safety net (overflow-wrap). */
     .city__name {
+      order: 1;
       max-width: 100%;
     }
 
-    .city__name,
-    .city__meta,
-    .city__line {
-      grid-column: 1;
+    .city__cta {
+      order: 2;
+      margin-inline-start: auto;
     }
 
-    .city__cta {
-      grid-column: 2;
-      grid-row: 1;
+    .city__meta,
+    .city__line {
+      order: 3;
+      flex-basis: 100%;
     }
   }
 
