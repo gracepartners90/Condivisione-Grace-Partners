@@ -19,8 +19,18 @@ const page = (rel) => pages.find((p) => p.path === join(dist, rel))?.html ?? '';
 
 // Veridicity reserves still open (ADR 002; veracity review B2, I2; G4 verdict N10). Set to true
 // only with the client's written confirmation, recorded in docs/.
-const CONFIRMED = { highTraffic: false, clients10k: false, showcaseConsent: false };
+const CONFIRMED = { highTraffic: false, clients10k: false };
 const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.replace(dist, ''));
+
+// ADR 002 §3.1, A7: the written consent of each business whose SIII screenshots are in the build, recorded in
+// docs/brief/brief-consolidato.md §5 («Consensi delle imprese»). Keys are the file prefixes in src/assets/images/
+// (siii-<key>-desktop-… or siii-<key>-mobile-…). Set a key to true only when that consent is recorded.
+// A screenshot whose key is not listed here fails the check, so a new business cannot slip through.
+const SHOWCASE_CONSENT = { 'masseria-santella': false, 'maison-mimina': false, dielle: false, yes: false };
+const showcaseShots = pages.flatMap((p) =>
+  [...p.html.matchAll(/_astro\/siii-([a-z0-9-]+?)-(?:desktop|mobile)-/g)].map((m) => ({ key: m[1], page: p.path.replace(dist, '') })),
+);
+const withoutConsent = [...new Set(showcaseShots.filter((s) => SHOWCASE_CONSENT[s.key] !== true).map((s) => `${s.key} (${s.page})`))];
 
 const checks = [
   {
@@ -52,11 +62,10 @@ const checks = [
     detail: anyPage(/\d\.\d{3,}° [NSEO]/),
   },
   {
-    // ADR 002, A7: screenshots of the businesses' experiences (the three examples and, since 2026-10-08,
-    // the YES shop in the /siii/ hero) only with their written consent, recorded in docs/.
-    name: 'Schermate delle esperienze SIII con il consenso scritto delle imprese (A7)',
-    ok: CONFIRMED.showcaseConsent || anyPage(/_astro\/siii-[a-z0-9-]+-(desktop|mobile)-/).length === 0,
-    detail: anyPage(/_astro\/siii-[a-z0-9-]+-(desktop|mobile)-/),
+    // ADR 002 §3.1, A7: each business's screenshots only with its own written consent (SHOWCASE_CONSENT above).
+    name: 'Schermate delle esperienze SIII con il consenso scritto di ogni impresa (A7)',
+    ok: withoutConsent.length === 0,
+    detail: withoutConsent,
   },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];
