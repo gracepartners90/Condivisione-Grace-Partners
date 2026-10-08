@@ -62,5 +62,10 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Nelle tabelle dei ritagli, quando cambia la sorgente di una riga, i «come sopra» delle righe seguenti cambiano significato: scrivere la sorgente per esteso.
 - Prima di aggiornare un mio documento, `git log` dall'ultima versione: in mezza giornata altri commit avevano cambiato carte, nodi, ritagli e ritratto. Il documento va riallineato anche lì, non solo sul punto richiesto.
 
+## Descrizioni delle carte (lezione del 2026-10-08)
+- Regola dei nomi (ux-designer, `accessibilita.md` §2.8): nella descrizione vanno i nomi disegnati a ogni larghezza, classe più stretta compresa, tranne la sede e le città che hanno una scheda nella stessa sezione. Un nome che compare solo sulle carte larghe (Lecce, Brindisi) non cambia la descrizione.
+- Un nome mostrato è un'affermazione più forte di un punto: oltre ai tre delle linee guida, i nomi vengono da un elenco letto da un riassunto (`citta-digitali-elenco.md` §4). Va annotato come ipotesi aperta, non dato per verificato.
+- `git status` prima di verificare: nel working tree possono esserci modifiche di altri non committate (il 2026-10-08, Lecce in corso). Verifico su una build di `HEAD` e lo dico. Le loro modifiche non le tocco.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)
