@@ -3,9 +3,9 @@ titolo: Review di performance · Hero di /siii/ con la schermata del negozio YES
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-08
-fonti: [commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7), docs/performance/architettura.md (0.4, aggiornato a 0.5), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
+fonti: [§6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
 ---
 
 # Review di performance · Hero di `/siii/` con la schermata YES
@@ -22,7 +22,12 @@ Rispondo alle richieste della sessione principale:
 
 Non ho modificato `src/` e non propongo patch: non servono.
 
-**In breve.**
+**Aggiornamento dopo `2178f47` (§6).** Su desktop la porta usa un derivato 3:5 di 1014 × 1690, senza le parti tagliate in fondo alla schermata; i telefoni scaricano gli stessi file di prima.
+- Desktop: 22,2–60,4 KB invece di 24,7–83,7. Controllo n. 8 vuoto.
+- Oltre 2,44x il desktop riceve meno pixel di quelli che chiede (81% a 3x), per un limite del derivato, non del codice.
+- Verdetto invariato: conforme, senza patch.
+
+**In breve** (misure di `1112c93`).
 - **Budget rispettato e controllo n. 8 vuoto.**
   - Porta da 27,3–54,0 KB sui telefoni (limite 60 KB) e da 24,7–72,7 KB su desktop fino a 2x (limite 150 KB).
   - Tutti i controlli statici superati.
@@ -248,7 +253,51 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
   - §3.2: la schermata YES, dove la porta non è l'LCP, le leve quando un'immagine non sta nel budget (con il parere sulla qualità per formato) e le misure;
   - §3.4: `mobileCrop` risultava «non ancora applicato», mentre lo è da `bae201c`. Aggiunto l'effetto dell'ancoraggio sul peso.
 
+## 6. Rimisura dopo `2178f47`: derivato per il desktop
+
+**Cosa cambia.** Lo ha chiesto il creative-director, per togliere «APRI QUI» tagliata, «Privacy Polic…» e «Go» in fondo alla schermata intera.
+- Da 64em la porta mostra un derivato 3:5: `src/assets/images/derivate/siii-yes-desktop-negozio.jpg`, 1014 × 1690.
+  - È ritagliato senza ridimensionamento (x 0, y 0) da `scripts/prepare-assets.mjs`.
+  - È salvato in JPEG q92 con `mozjpeg`, quindi rispetta la regola delle sorgenti dell'`architettura.md` §3.1 (qualità 90 o più).
+- Sotto 64em `Media` ritaglia l'originale, grazie alla nuova opzione `mobileCrop.image`.
+
+**Condizioni.**
+- La build di `2178f47`, fatta in un worktree, è identica byte per byte allo staging delle 15:03.
+- Controllo: la build di `1112c93` misurata stamattina.
+- Varianti con Playwright su 17 casi, con un contesto nuovo e senza cache per ogni caso (15:05–15:06 UTC).
+- `scripts/serve.mjs` su porte mie.
+
+**Verifiche.**
+- **Telefoni invariati.**
+  - I file del ritaglio 4:5 sono gli stessi di `1112c93`, byte per byte.
+  - Il Moto G scarica la 768w (34,3 KB), un telefono a 3x la 1080w (54,0 KB).
+  - Le altre 7 pagine sono identiche.
+- **Box invariato.** Il derivato ha la stessa proporzione 3:5 (1014/1690 = 0,6). L'`<img>` ha `width="1014" height="1690"`, e `--media-ratio` cambia valore ma non proporzione: nessun effetto sul CLS.
+- **Controlli statici:** superati tutti, n. 8 compreso. Il file più grande è il JPEG da 1014w, 127,0 KB contro 300; il WebP più grande è di 82,4 KB.
+
+| Schermo da 64em | Pixel necessari | Variante | AVIF (prima, schermata intera) | Pixel ricevuti / necessari |
+|---|---|---|---|---|
+| Desktop a 1x, da 1024 a 2560 px | 382–416 | 480w | **22,2 KB** (24,7) | pieni |
+| Desktop a 1,25x e 1,5x | 520–624 | 768w | **41,8 KB** (46,6) | pieni |
+| Desktop a 2x (1024, 1440 e 1920 px); iPad Pro a 2x, in verticale e in orizzontale | 764–832 | 1014w | **60,4 KB** (72,7) | pieni |
+| Desktop a 2,25x (4K al 225%) | 936 | 1014w | 60,4 KB (72,7) | pieni |
+| Desktop a 2,5x (4K al 250%) | 1040 | 1014w | 60,4 KB (72,7) | **97%** |
+| Desktop a 2,75x (4K al 275%) | 1144 | 1014w | 60,4 KB (83,7) | **89%** |
+| Desktop a 3x (4K al 300%) | 1248 | 1014w | 60,4 KB (83,7) | **81%** (prima 96%) |
+
+- **Pesi:** da −2,5 KB a 1x a −23,3 KB a 2,75–3x. L'LCP desktop non può peggiorare: il preset desktop di Lighthouse (1x) scarica 22,2 invece di 24,7 KB. Non ho rifatto le corse, perché su mobile i file sono gli stessi.
+- **Sotto risoluzione oltre 2,44x** (oltre 2,65x a 1024 px, dove la colonna è di 382 px).
+  - Il derivato non ha più di 1014 px e Astro non ingrandisce. Non è un limite del codice: più pixel non esistono, se non riprendendo la parte tagliata.
+  - Riguarda soprattutto i portatili Windows con schermo 4K al 250–300%. I Mac e gli iPad sono a 2x, dove i pixel bastano.
+  - A 3x la porta ha 2,44 pixel d'immagine per pixel CSS: resta un'immagine ad alta densità, appena più morbida nei dettagli d'interfaccia.
+  - La scelta tra questa morbidezza e le parti tagliate in fondo è d'inquadratura, quindi del creative-director. Dal lato performance va bene così.
+- **Elemento LCP:** la porta in 17 casi su 17.
+
+**Esito della rimisura: conforme, senza patch.** Aggiornati il `budget.md` 0.8 (riga «Immagine LCP» del §4 e §7.4) e l'`architettura.md` 0.6 (§3.4, `mobileCrop.image`).
+
 ## Verdetto di dominio
+
+**Aggiornamento dopo `2178f47` (§6):** invariato. Il derivato desktop pesa meno a ogni densità, i telefoni non cambiano, e il controllo n. 8 resta vuoto.
 
 **Conforme, senza patch.**
 - `/siii/` con la schermata YES rispetta tempi, pesi, richieste e CLS del template T2.

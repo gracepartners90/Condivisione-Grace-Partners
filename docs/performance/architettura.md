@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.5
+versione: 0.6
 aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e e 1112c93), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e, 1112c93 e 2178f47), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -235,6 +235,11 @@ Si usa solo quando cambia il ritaglio; altrimenti basta `Media`.
 - Senza il prop, l'HTML di tutte le pagine resta identico.
 - Sulla porta di `/siii/`, a parità di inquadratura (sala di Masseria Santella, 2026-10-07): 25,8 KB invece di 33,6 KB a 768 px e 39,5 KB invece di 51,4 KB a 1080 px.
 - **L'ancoraggio (`position`: `top`, `centre`, `bottom`) cambia anche il peso**, perché cambia la porzione d'immagine codificata. Lo sceglie il creative-director per l'inquadratura, e ogni cambio si rimisura. Con la schermata YES (commit `1112c93`), a 1080w: 54,0 KB in alto, 64,2 KB in basso, oltre il limite di 60 KB del `budget.md` §4.
+- **Derivato per il desktop** (`mobileCrop.image`, dal commit `2178f47`).
+  - Se `image` è un ritaglio pensato per il desktop, i telefoni ritagliano un'altra sorgente, di solito l'originale.
+  - La larghezza del derivato è il massimo delle varianti desktop, perché Astro non ingrandisce. Oltre la densità «larghezza del derivato / larghezza resa» le varianti sono sotto risoluzione.
+  - Con la schermata YES, 1014 px su 416 px di resa: sotto risoluzione oltre 2,44x, all'81% a 3x.
+  - Il derivato si prepara in `scripts/prepare-assets.mjs`, senza ridimensionare, in JPEG di qualità 90 o più (§3.1).
 
 ```astro
 <Media image={screen} alt="…" sizes="(min-width: 30rem) 26rem, 90vw" priority

@@ -3,7 +3,7 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.7
+versione: 0.8
 aggiornato: 2026-10-08
 fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md (§7.4), fonti web elencate nel §6.8]
 ---
@@ -154,7 +154,7 @@ Le soglie valgono per tutti i template:
 
 | Componente | Budget |
 |---|---|
-| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`; dal 2026-10-08 con la schermata del negozio YES) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP (dove non lo è: §2). Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Per i browser senza AVIF valgono il limite «Immagini» del §3 e il controllo n. 8. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). L'ancoraggio del ritaglio cambia il peso: ogni cambio si rimisura. Se l'immagine non sta nei pesi con i valori del sito, si seguono le leve dell'`architettura.md` §3.2. **Misurato con la schermata YES** (`1112c93`, ritaglio 4:5 in alto): 27,3–54,0 KB sui telefoni (640w–1080w; margine di 6,0 KB a 1080w), 24,7–72,7 KB su desktop da 1x a 2x, 83,7 KB (1200w) solo da 64em con densità oltre 2,6x. WebP di ripiego fino a 76,8 KB sui telefoni (§7.4). Con la sala di Masseria Santella erano 21,4–40,7 e 18,0–51,4 KB (§7.3). |
+| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`; dal 2026-10-08 con la schermata del negozio YES) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP (dove non lo è: §2). Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Per i browser senza AVIF valgono il limite «Immagini» del §3 e il controllo n. 8. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Se il desktop usa un derivato, i telefoni ritagliano l'originale (`mobileCrop.image`, dal commit `2178f47`). L'ancoraggio del ritaglio cambia il peso: ogni cambio si rimisura. Se l'immagine non sta nei pesi con i valori del sito, si seguono le leve dell'`architettura.md` §3.2. **Misurato con la schermata YES, dal commit `2178f47`** (telefoni: ritaglio 4:5 dell'originale, in alto; desktop: derivato 3:5 di 1014 × 1690). Telefoni: 27,3–54,0 KB (640w–1080w; margine di 6,0 KB a 1080w). Desktop: 22,2–60,4 KB (480w–1014w; con `1112c93` erano 24,7–83,7). Il derivato non supera i 1014 px e Astro non ingrandisce, quindi da 64em, oltre 2,44x, il desktop riceve meno pixel di quelli che chiede: 97% a 2,5x, 89% a 2,75x, 81% a 3x. Con la schermata intera, a 3x, si arrivava al 96%. WebP di ripiego fino a 76,8 KB sui telefoni e 82,4 KB su desktop (§7.4). Con la sala di Masseria Santella erano 21,4–40,7 e 18,0–51,4 KB (§7.3). |
 | Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
@@ -733,8 +733,13 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - 640w, 27,3 KB (21,4): 320 px a 2x, tablet a 1,5x;
   - 768w, 34,3 KB (26,8): da 375 a 412 px a 1,75–2x, Moto G compreso;
   - 1080w, 54,0 KB (40,7): telefoni da 2,6x a 4x, telefono in orizzontale, tablet a 2x sotto 64em. È la variante con meno margine: 6,0 KB;
-  - desktop: 480w, 24,7 KB (18,0) a 1x; 768w, 46,6 KB (33,6) a 1,25–1,5x; 1080w, 72,7 KB (51,4) a 2x; 1200w, 83,7 KB (58,3) solo oltre 2,6x;
-  - WebP di ripiego: 40,7–76,8 KB sui telefoni, fino a 112,8 KB su desktop.
+  - desktop con la schermata intera (`1112c93`): 480w, 24,7 KB (18,0) a 1x; 768w, 46,6 KB (33,6) a 1,25–1,5x; 1080w, 72,7 KB (51,4) a 2x; 1200w, 83,7 KB (58,3) solo oltre 2,6x;
+  - **desktop con il derivato 3:5 di 1014 × 1690 (dal commit `2178f47`, verificato su 17 casi):**
+    - 480w, 22,2 KB a 1x; 768w, 41,8 KB a 1,25–1,5x; 1014w, 60,4 KB da 2x in su, compresi gli iPad Pro a 2x;
+    - oltre 2,44x è sotto risoluzione: 97% dei pixel necessari a 2,5x, 89% a 2,75x, 81% a 3x;
+    - telefoni: stessi file di `1112c93`, byte per byte;
+  - WebP di ripiego: 40,7–76,8 KB sui telefoni, fino a 82,4 KB su desktop (112,8 KB con la schermata intera).
+  - Tempi di `1112c93` non rimisurati: sui telefoni i file sono gli stessi, su desktop l'immagine pesa meno a ogni densità.
   - Tutte dentro il §4.
 - **Ancoraggio.** Con il ritaglio in basso la 1080w peserebbe 64,2 KB, oltre il §4: servirebbe una qualità per formato (`architettura.md` §3.2).
 - **Elemento LCP:** la porta in 22 casi su 24 dispositivi. Sulle viewport basse e col telefono in orizzontale è il testo (§2). Lì, con la rete di laboratorio e CPU 4x, LCP = FCP (1,02–1,09 s) in 9 caricamenti su 9.

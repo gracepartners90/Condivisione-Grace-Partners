@@ -51,6 +51,8 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Diagnosi: `delay.mjs` (LCP meno `responseEnd`, più i task lunghi) e `trace-tasks.mjs` (RunTask oltre 40 ms con i figli, più gli arrivi delle risorse dalla traccia).
   - Un'immagine più pesante può peggiorare l'LCP più di quanto dicano i suoi byte.
 - **L'ancoraggio del ritaglio cambia il peso** (stessa immagine, stesse larghezze): si misura con `anchor.mjs`.
+- **Un derivato senza ridimensionamento fissa il massimo delle varianti alla sua larghezza** (Astro non ingrandisce): sotto risoluzione oltre «larghezza / resa» di densità. Si verifica con `devices-desk.mjs`, che prova i desktop fino a 3x (4K al 250–300%).
+  - Rimisura breve, senza Lighthouse, quando i file dei telefoni sono identici byte per byte e il desktop pesa meno a ogni densità (YES, `2178f47`).
 - **sharp AVIF va a gradini:** qualità vicine danno lo stesso file (con la YES, q47 = q48 e q45 = q46). Per stare sotto un limite si cerca il gradino, non il numero.
 - **Script per una nuova immagine della hero** in `scratchpad/perf-yes/` (copie aggiornate di quelli di `perf-tana/`):
   - `devices.mjs`: variante, peso, `sizes` ed elemento LCP su 24 dispositivi, con il controllo accanto;
