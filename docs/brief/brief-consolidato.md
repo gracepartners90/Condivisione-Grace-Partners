@@ -223,7 +223,19 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 | A4 | Evento «Puglia Digitale · Evento regionale digitale · Puglia» | Foto negli asset | Utilizzabile come immagine; dettagli `[DA FORNIRE]` | Didascalia solo con data e luogo confermati; nessun numero di partecipanti se non documentato. In platea ci sono persone riconoscibili: vanno verificate liberatorie o informativa dell'evento, altrimenti si ritaglia. |
 | A5 | Simbolo ® sui marchi Puglia Digitale e Città Digitali | Loghi nelle foto | Da verificare | Il ® si usa nei testi solo se abbiamo il numero di registrazione. |
 | A6 | Payoff «Digital Innovation for the Territory» (foto dell'evento) e «La trasformazione digitale per città, imprese e persone» (immagini AI) | Asset | Da verificare | Sono payoff ufficiali? Finché non lo sappiamo, non si usano. |
-| A7 | Showcase: Masseria Santella, Maison Miminà, D.L. Natura Dentro | LG §12 | Utilizzabile | Vanno confermati i nomi ufficiali e il consenso delle tre imprese a comparire con nome e immagini. |
+| A7 | Schermate e nomi delle imprese nel sito: Masseria Santella, Maison Miminà, D.L. Natura Dentro (esempi); YES (hero di `/siii/`, dal 2026-10-08) | LG §12; utente, 2026-10-08 | Utilizzabile in anteprima; al go-live solo con il consenso | Serve il consenso scritto di ogni impresa a comparire con nome, logo e schermate, registrato nella tabella qui sotto con data e forma (ADR 002 §3.1; testo della richiesta nel §3.2). Vanno confermati anche i nomi ufficiali. |
+| A8 | Il SIII di YES l'ha realizzato ITnode | Utente, 2026-10-08: «scusami usa questa non quella», dopo aver scritto, per un'altra schermata, «usa questa come immagine iniziale della sezione SIII» | Da verificare | Nessun testo lo dice: lo presuppone la hero della pagina che vende il SIII. Si chiude con il consenso dell'impresa (il testo dell'ADR 002 §3.2 lo dichiara) o con una riga dell'utente.<br>«YES» è la lettura del logo, che dice anche «pure design 100% flowers». Nome ufficiale, comune e provincia: `[DA FORNIRE]`. Indirizzo dell'esperienza: `[DA FORNIRE, se è online]`.<br>In rete nessun riscontro (sezione 8). |
+
+**Consensi delle imprese (A7)**
+
+Si aggiorna a ogni conferma dell'utente, con data e forma (ADR 002 §3.1). Quando la patch dell'ADR 002 §3.1 è applicata, la sessione principale mette a `true` la chiave dell'impresa nel controllo di go-live.
+
+| Impresa | Chiave nel controllo | Consenso | Data e forma |
+|---|---|---|---|
+| Masseria Santella | `masseria-santella` | Non ricevuto | — |
+| Maison Miminà | `maison-mimina` | Non ricevuto | — |
+| D.L. Natura Dentro | `dielle` | Non ricevuto | — |
+| YES | `yes` | Non ricevuto | — |
 
 **Dati societari e contatti** (obbligatori nel footer: soglia 5 di CLAUDE.md)
 
@@ -272,7 +284,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 | P1 | Dati societari: denominazione esatta, REA, capitale sociale versato, PEC; conferma della sede legale | Footer, privacy e cookie policy, JSON-LD Organization | Obbligatori |
 | P1 | Testi (o dati) per privacy e cookie policy: titolare, finalità, destinatari, strumenti di analisi, terze parti (video, eventuali embed) | /privacy-policy, /cookie-policy, consensi del form | Dal cliente o da un consulente legale |
 | P1 | Destinatario e sistema di ricezione del form (email, CRM, servizio) | Form su quattro pagine | LG §23: niente invio simulato senza endpoint |
-| P1 | Screenshot o cover delle tre esperienze SIII, oppure l'autorizzazione a catturarle | Showcase in /siii | Dal nostro ambiente i portali non sono raggiungibili |
+| P1 | Schermate delle esperienze SIII | Home, capitolo 01; /siii, hero ed esempi | **Ricevute:** le tre degli esempi il 2026-10-07, YES per la hero il 2026-10-08 |
 | P1 | Foto dei luoghi con diritti d'uso: Acquaviva delle Fonti, Gravina in Puglia, Monopoli; Varese, Altamura, Caltanissetta | «I luoghi» in /puglia-digitale; «L’Italia in un unico portale» in /citta-digitali | Ideali i fotogrammi dei tour: sono insieme immagine e prova |
 | P1 | Immagini della Puglia (costa, entroterra, borghi) con diritti d'uso | Hero e concept di /puglia-digitale | Niente stock (LG §31) |
 | P1 | Marchi Puglia Digitale e Città Digitali in vettoriale (SVG) con le regole d'uso | Tre mondi, pagine, footer | |
@@ -282,7 +294,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 | P2 | File del video Città Digitali, fotogramma per il poster, sottotitoli se c'è parlato | /citta-digitali (VideoObject) | S8; i sottotitoli servono all'accessibilità |
 | P2 | Fonti dei numeri: data per «30+»; fonte, anno e definizione per «~200.000» e «60%». L'elenco delle città c'è (31 città pugliesi, conferma dell'utente del 2026-10-06) | Sezione numeri di /puglia-digitale | N1–N3 |
 | P2 | Atto di patrocinio e autorizzazione all'uso del logo | Eventuale fascia di fiducia | A2 |
-| P2 | Consenso delle imprese dello showcase e loro nomi ufficiali | /siii | A7 |
+| P2 | Consenso scritto di ogni impresa di cui il sito mostra le schermate, e nomi ufficiali. Per YES anche: chi ha realizzato il SIII, comune e provincia, indirizzo dell'esperienza | /siii (hero ed esempi), Home (capitolo 01) | A7, A8. Senza consenso, al go-live si applicano le riserve dell'ADR 002 §3.1 |
 | P3 | Dati analytics per «5–10 volte», «4 volte», «250.000 visite mensili» | Layout dei numeri già predisposto | Solo se il cliente vuole mostrarli |
 | P3 | URL incorporabili delle esperienze, se i portali permettono l'embed | Anteprime immersive dello showcase | Da valutare con web-performance-specialist |
 | P3 | Brevi clip dei tour, senza audio | Hero e momenti di motion | Alternativa reale alle immagini AI |
@@ -313,6 +325,14 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 | https://www.agendadigitale.eu/sicurezza/art-50-ai-act-la-trasparenza-diventa-operativa-cosa-cambia-dal-2-agosto/ | AI Act, art. 50: dal 2 agosto 2026 l'obbligo di trasparenza sui deep fake spetta a chi usa il sistema (deployer) |
 | https://masseria-santella.apuliahotelspage.com/en/ | Masseria Santella: struttura ricettiva a Cassano delle Murge |
 
+**Ricerche del 2026-10-08 (A8).** Quattro ricerche (WebSearch) non hanno trovato né l'impresa del logo «YES · pure design 100% flowers» né la sua esperienza:
+- `"YES" "pure design" "100% flowers" negozio`;
+- `"Yes pure design" fiori`;
+- `"yespuredesign" OR "yes pure design" OR "yes puredesign" flowers Puglia`;
+- `YES fiori design negozio`, limitata a cittàdigitali.it, lapugliadigitale.it, acquavivadigitale.com, cassanodigitale.it e monopolidigitale.it.
+
+Nessun risultato contiene il nome. Comune e indirizzo dell'esperienza restano `[DA FORNIRE]`.
+
 ## Ipotesi da validare
 
 - I1. La conversione primaria è la richiesta tramite form; la visita ai portali è secondaria.
@@ -322,6 +342,7 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 - I5. «36 anni» significa un percorso iniziato nel 1990; «2002» è l'anno di MyComm.
 - I6. «~200.000» e «60%» si riferiscono ai territori delle 31 città di Puglia Digitale. Per «30+ città» non è più un'ipotesi: sono le 31 città pugliesi dell'elenco di Città Digitali (conferma dell'utente del 2026-10-06).
 - I7. I quattro ritratti del fondatore sono generati o elaborati con AI. La foto dell'evento è reale, ma elaborata.
+- A8 (registro). Il SIII di YES l'ha realizzato ITnode: lo presuppone la richiesta dell'utente, che però non lo dice.
 
 ## Domande aperte
 
@@ -341,6 +362,9 @@ Per il cliente, in ordine di priorità.
 - **D9. Immagini.** Le foto del fondatore sono generate o elaborate con AI? Avete foto reali (ritratto, eventi) e l'originale della foto dell'evento Puglia Digitale, con data e luogo?
 - **D10. Nome e dati legali.** Confermate «ITnode» nei testi, lasciando invariato il logotipo «itNode»? Ci inviate REA, capitale sociale versato e PEC? Sede legale e sede operativa coincidono?
 - **D11. Form.** A quale indirizzo o sistema devono arrivare le richieste?
+- **D12. Imprese di cui il sito mostra le schermate (A7, A8).**
+  - Masseria Santella, Maison Miminà, D.L. Natura Dentro e YES hanno dato il consenso scritto a comparire con nome, logo e schermate? Il testo della richiesta è pronto (ADR 002 §3.2). Oppure il contratto con ITnode prevede già l'uso nel portfolio?
+  - YES: il SIII l'ha realizzato ITnode? Qual è il nome ufficiale dell'impresa, e in quale comune e provincia si trova? L'esperienza è online, e a quale indirizzo?
 
 ## Decisioni richieste
 
