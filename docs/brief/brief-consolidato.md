@@ -3,9 +3,9 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.4
-aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md)]
+versione: 0.5
+aggiornato: 2026-10-08
+fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md), richiesta dell'utente del 2026-10-08 sulla hero di /siii/ (parole esatte in A8), ricerche web del 2026-10-08 (sezione 8), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.3)]
 ---
 
 # Brief consolidato · Nuovo sito ITnode
@@ -98,10 +98,11 @@ I testi tra «» sono delle LG. Le note rimandano al registro (sezione 5).
 |---|---|---|
 | H1 | «SIII» · «Siti Interattivi Immersivi» | Scioglimento della sigla: D3 |
 | Statement | «Non raccontare la tua azienda. Falla esplorare.» | |
+| Visual | Schermata di un SIII da smartphone: dal 2026-10-08 il negozio YES (richiesta dell'utente) | Il testo non nomina l'impresa: il nome è solo nell'alt. A7, A8 |
 | 2 | Il SIII replica digitalmente gli spazi fisici dell'impresa: un ambiente navigabile da desktop e smartphone. | |
 | 3 | Differenza tra tour 360° e Sito Interattivo Immersivo; cosa si può fare: esplorare gli ambienti, interagire con hotspot, vedere prodotti, guardare video, richiedere informazioni, prenotare servizi, accedere ad azioni commerciali. | Criteri del confronto `[DA FORNIRE]` (D4); N13 |
 | 4 | Benefici: «Fiducia istantanea» · «Più coinvolgimento» · «Vendita diretta» · «Uno strumento commerciale sempre accessibile» | Solo in forma qualitativa (N6, N9, N13); testi `[DA FORNIRE]` |
-| 5 | «Entra. Esplora. Interagisci.»: Masseria Santella, Maison Miminà, D.L. Natura Dentro → «Entra nell’esperienza →» (nuova scheda) | Cover `[DA FORNIRE]`; A7 |
+| 5 | «Entra. Esplora. Interagisci.»: Masseria Santella, Maison Miminà, D.L. Natura Dentro → «Entra nell’esperienza →» (nuova scheda) | Schermate ricevute il 2026-10-07; A7 |
 | Chiusura | «La tua azienda può diventare un’esperienza.» → «Richiedi un’offerta →» + form | |
 
 **Puglia Digitale (LG §13–16)**
