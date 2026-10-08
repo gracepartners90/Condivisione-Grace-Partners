@@ -57,11 +57,11 @@ export const siiiHomeScreen = {
  * element at every width, so it must stay within the LCP image budget (docs/performance/budget.md §4:
  * AVIF ≤ 60 KB in every phone variant, ≤ 150 KB on desktop): the 4:5 crop from the top is 54.0 KB in AVIF
  * at 1080 px (from the bottom it would be 64.2), the desktop view 83.7 KB at 1200 px.
- * Alt text: provisional, to be confirmed in docs/contenuti/alt-text.md.
+ * Alt text: docs/contenuti/alt-text.md v1.10 (the interface is named as a whole: menu and icons are controls).
  */
 export const siiiHeroScreen = {
   image: yesNegozio,
-  alt: 'YES da smartphone: un negozio con la parete verde, la scala che sale al soppalco e gli scaffali di legno, con il menu e i contatti.',
+  alt: 'Il negozio YES da smartphone: la parete verde, la scala che sale al soppalco, gli scaffali di legno e l’interfaccia dell’esperienza.',
 };
 
 /** /siii/ examples, by showcase id (site.ts): the opening view of each experience. */

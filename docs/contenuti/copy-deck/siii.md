@@ -3,14 +3,19 @@ titolo: Copy deck · SIII (Siti Interattivi Immersivi)
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.3
-aggiornato: 2026-10-07
-fonti: [docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
+versione: 1.4
+aggiornato: 2026-10-08
+fonti: [commit 1112c93 (schermata del negozio YES nella hero, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.10), staging http://127.0.0.1:4321 del 2026-10-08 (build di 1112c93), scripts/prelaunch-check.mjs (controllo A7, commit 58715c4), docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
 ---
 
 # Copy deck · SIII
 
 Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusura e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.4 (2026-10-08)**
+- **Nuova schermata nella hero.** Dal commit 1112c93, su richiesta dell'utente, la hero mostra il negozio YES da smartphone, al posto della sala di Masseria Santella. Alt e note vengono da `alt-text.md` (1.10). Nel sito l'alt è ancora provvisorio (Differenze aperte, V5).
+- **Consenso A7** anche per YES (sezioni 1 e 6, Rischi). Il nome completo dell'impresa è [DA VERIFICARE].
+- V4 chiusa: gli alt della v1.6 dei tre esempi sono nel sito.
 
 **Novità della v1.3 (2026-10-07)**
 - **Le schermate ci sono.** Hero ed esempi mostrano schermate vere delle esperienze, inviate dall'utente (commit d06a3e9). Il documento non le dà più per mancanti: per questa pagina non ci sono più segnaposto né asset da fornire.
@@ -87,14 +92,16 @@ Note:
 - CTA confermate dalla strategia di conversione §4: la prova più forte del SIII è provarlo. La CTA secondaria porta al form della stessa pagina, quindi la sua icona è ↓, non →; le parole del cliente restano identiche (tone of voice §6, regole 3 e 4).
 
 **Alt della schermata** · testo alternativo (`alt`) · fa fede `docs/contenuti/alt-text.md`
-> Masseria Santella da smartphone: una sala con la volta bianca e una porta a vetri aperta sulla stanza accanto, con il menu e un punto interattivo.
+> Il negozio YES da smartphone: la parete verde, la scala che sale al soppalco, gli scaffali di legno e l’interfaccia dell’esperienza.
 
 Note sulla schermata:
-- **Che cos'è.** La schermata di Masseria Santella vista da smartphone: la sala con la volta (`siii-masseria-santella-mobile-sala.jpg`, commit d06a3e9). È l'elemento LCP della pagina.
-- **Formato.** Porta 3:5 da 1024 px; sotto è 4:5, con ritaglio centrato (`struttura-pagine.md` SI-1).
-- **Accessibilità.** È informativa, con alt. Sopra non ci sono nodi decorativi: la schermata ha già i suoi punti interattivi (`accessibilita.md` §2.8). Non è un link.
-- **Perché l'alt nomina la struttura.** La hero non la nomina. L'alt non ripete «Siti Interattivi Immersivi», che è nell'H1 (criterio 5 di `alt-text.md`).
-- **Proposta di cro-specialist** (review del 2026-10-07, oss. 4): una riga «Masseria Santella · Cassano delle Murge (BA)» sotto la schermata, solo con il consenso A7. Il testo è di copywriter-brand e decide il creative-director. Se arriva, l'alt passa alla variante senza il nome (`alt-text.md`).
+- **Che cos'è.** La schermata del negozio YES vista da smartphone (`siii-yes-mobile-negozio.jpg`, commit 1112c93). Si vedono la parete verde, la scala che sale al soppalco, gli scaffali di legno e, sopra, logo, menu e icone dell'esperienza. È l'elemento LCP della pagina.
+- **Nome dell'impresa.** [DA VERIFICARE] Il logo dice «YES» e, in piccolo, «pure design 100% flowers», che potrebbe essere un payoff. L'alt usa «YES».
+- **Formato.** Porta 3:5 da 1024 px. Sotto è 4:5, con un ritaglio fatto in build e ancorato in alto: restano logo, menu, icone e soppalco (commit 1112c93). Il ritaglio va confermato dal creative-director, e l'alt vale per tutte e tre le prove (in alto, al centro, in basso).
+- **Accessibilità.** È informativa, con alt. Sopra non ci sono nodi decorativi (`accessibilita.md` §2.8). Non è un link.
+- **Perché l'alt nomina l'impresa.** La hero non la nomina. «Il negozio» prima del nome evita che «YES», a inizio frase, si senta come una parola inglese. L'alt non ripete «Siti Interattivi Immersivi», che è nell'H1 (criterio 5 di `alt-text.md`).
+- **Perché «l’interfaccia dell’esperienza».** Il menu non si vede in tutti i ritagli, e «i contatti» nominerebbe dei comandi (criterio 12 di `alt-text.md`).
+- **Proposta di cro-specialist** (review del 2026-10-07, oss. 4): una riga con nome e luogo sotto la schermata, solo con il consenso A7. Era per Masseria Santella; per YES nome completo e luogo non sono noti. Il testo è di copywriter-brand e decide il creative-director. Se arriva, l'alt passa alla variante senza il nome (`alt-text.md`).
 - **Consenso.** La schermata mostra un'impresa reale: vale la riserva A7 della sezione 6.
 
 ## 2. Cos’è un Sito Interattivo Immersivo
@@ -267,7 +274,7 @@ Note:
   - Lo strato non ha testo visibile: non serve copy.
   - Tracciamento: `outbound_click`, tipo `esperienza-siii`, `cta_location` esempi, con il `cta_id` della schermata, distinto da quello del CTA (piano di misurazione 0.5).
   - Limite noto, da verificare con VoiceOver e TalkBack: nell'esplorazione al tocco, sopra la schermata lo screen reader non legge nulla (review di ux-designer del 2026-10-07, §2.3).
-- **Riserva A7** (ADR 002, in stato di proposta; condizione C06 del verdetto G4). Le schermate mostrano nome, logo e ambienti di tre imprese reali. Senza il loro consenso, nessuna schermata delle loro esperienze: si torna agli slot, e restano nomi e link (LG §12). Oggi le schermate entrano senza passare dagli slot, quindi tornare indietro richiede una modifica del codice: cro-specialist propone un controllo di go-live che blocca (review CRO del 2026-10-07, oss. 2). [DA VERIFICARE: consenso scritto delle tre imprese]
+- **Riserva A7** (ADR 002, in stato di proposta; condizione C06 del verdetto G4). Le schermate mostrano nome, logo e ambienti di tre imprese reali. Senza il loro consenso, nessuna schermata delle loro esperienze: si torna agli slot, e restano nomi e link (LG §12). Oggi le schermate entrano senza passare dagli slot, quindi tornare indietro richiede una modifica del codice. Il controllo di go-live che blocca c'è (`scripts/prelaunch-check.mjs`, voce A7, commit 58715c4) e vale anche per la schermata del negozio YES nella hero (sezione 1). [DA VERIFICARE: consenso scritto delle tre imprese e di YES]
 - **Riserva I8** (ADR 002): un'esperienza che al lancio non risponde si toglie, con la sua schermata, e «Tre Siti Interattivi Immersivi già online» si adegua al numero vero.
 - **Anteprima immersiva: non al lancio.** Al lancio ci sono schermata e link (`struttura-pagine.md` SI-6). Il pulsante compare solo da 1024 px, e solo dopo tre verifiche: i portali permettono l'incorporamento, non impostano cookie non tecnici senza consenso, il viewer non trattiene il focus. Quando si attiva, ux-designer chiede anche un pulsante «Chiudi l’anteprima» subito dopo l'iframe. La nota sotto il pulsante serve alla trasparenza, perché l'anteprima carica un sito di terze parti (vedi Rischi).
 
@@ -326,19 +333,31 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 | Schermate degli esempi | Cliccabili, con uno strato per il solo puntatore; l'immagine tiene l'alt | Decisione dell'utente del 2026-10-07 (commit 88d7083); `accessibilita.md` §2.8; `struttura-pagine.md` SI-6. |
 | Testi alternativi delle schermate | La vista, non i comandi disegnati | `accessibilita.md` §2.8; `alt-text.md` (1.6), criterio 12. |
 
-## Verifica sul sito (2026-10-07)
+## Verifica sul sito (2026-10-07 e 2026-10-08)
 
 **Metodo.**
-- Lo staging condiviso era fermo al commit d06a3e9, prima della schermata cliccabile. Ho costruito in una cartella di lavoro una copia di `HEAD` (326f354), con gli alt della v1.6 di `alt-text.md` applicati, e l'ho servita in locale. Il repository non è stato toccato.
+- **2026-10-08, per la v1.4.** Staging http://127.0.0.1:4321, build del commit 1112c93. Hero letta da 320 a 1920 px (sorgente, ritaglio, albero di accessibilità: `alt-text.md` 1.10, «Verifica sul sito»). Gli altri testi li ho ricontrollati con lo stesso script del 2026-10-07.
+- **2026-10-07.** Lo staging condiviso era fermo al commit d06a3e9, prima della schermata cliccabile. Ho costruito in una cartella di lavoro una copia di `HEAD` (326f354), con gli alt della v1.6 di `alt-text.md` applicati, e l'ho servita in locale. Il repository non è stato toccato.
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 1440 px. Per gli strati sulle schermate ho letto anche URL, `target`, `tabindex`, `aria-hidden` e `cta_id`.
 - Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere, compresi alt e `cta_id`. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
 - La verifica precedente, del 2026-10-05, era sulla build del commit c98f565.
 
-**Esito.**
+**Esito del 2026-10-08.**
+- Nel sito ci sono 99 testi su 100 di questo documento, identici. Manca solo l'alt della hero, perché nel sito c'è ancora il provvisorio del commit 1112c93 (Differenze aperte, V5).
+- Nel senso inverso, mancano solo i gradi della figura di confronto, decorativi e nascosti agli screen reader (sezione 3), e l'alt provvisorio.
+- Gli alt della v1.6 dei tre esempi sono nel sito: V4 è chiusa.
+
+**Esito del 2026-10-07.**
 - I testi da pubblicare di questo documento sono tutti nel sito, identici: 100 su 100, compresi i quattro alt delle schermate e i tre `cta_id` delle schermate. Title e meta li ho controllati a parte.
 - Fa eccezione solo l'anteprima immersiva, che non è al lancio.
 - Nel senso inverso, mancano solo i gradi della figura di confronto, decorativi e nascosti agli screen reader (sezione 3).
 - Gli alt dei tre esempi coincidono solo dopo la patch della v1.6 (Differenze aperte, V4).
+
+**Allineato nella v1.4.**
+
+| Punto | v1.3 | Sito, ora anche qui | Decisione |
+|---|---|---|---|
+| Visual della hero | Schermata di Masseria Santella su smartphone; sotto i 64em, ritaglio centrato | Schermata del negozio YES su smartphone; sotto i 64em, ritaglio 4:5 ancorato in alto | Richiesta dell'utente del 2026-10-08, commit 1112c93 |
 
 **Allineato nella v1.3.**
 
@@ -371,7 +390,8 @@ Link esterni: le tre «Entra nell’esperienza ↗» della sezione 6, più il fo
 | V1 | `docs/ux/struttura-pagine.md` SI-1 (0.9) | Il visual ora è allineato al sito, ma tra i contenuti e nell'ordine su mobile c'è ancora l'occhiello, che il breadcrumb ha sostituito | Togliere l'occhiello da SI-1. Il sito non cambia | ux-designer |
 | V2 | `docs/creativa/direzione-visiva.md` §7.4, riga 7 | Cita ancora la CTA «Richiedi un'offerta →» sopra il form (lo segnala anche il tone of voice) | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V3 | `docs/seo/mappa-keyword-url.md` §3.2 | Usa ancora `#richiedi-offerta` e l'H2 «Cosa puoi fare dentro un SIII» | Allineare il documento al sito. Il sito non cambia | seo-content |
-| V4 | `src/data/media.ts`, alt dei tre esempi | Nel sito c'è ancora la v1.5 di `alt-text.md`, con «il pulsante di avvio» | Applicare la v1.6 (snippet nell'Esito del 2026-10-07) | Sessione principale |
+| V4 | `src/data/media.ts`, alt dei tre esempi | Nel sito c'era ancora la v1.5 di `alt-text.md`, con «il pulsante di avvio» | **Chiusa** il 2026-10-07: gli alt della v1.6 sono nel sito dal commit d211ba4 | Sessione principale |
+| V5 | `src/data/media.ts`, alt della hero | Nel sito c'è l'alt provvisorio del commit 1112c93, che finisce con «con il menu e i contatti» | Applicare l'alt della sezione 1 (`alt-text.md` 1.10, V5) | Sessione principale |
 
 ## Testi originali mancanti
 
@@ -388,12 +408,14 @@ Indice Gulpease calcolato con uno script sui testi principali (titoli, statement
 | Paragrafi e tabelle | 38 | 450 | 2.321 | **62,8** |
 | Tutti i testi principali | 66 | 547 | 2.836 | 73,4 |
 
-Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 68 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi salgono da 62,1 a 62,8 perché il Testo 03 è in due frasi; un elemento in meno perché l'occhiello non c'è più. Ricontrollato il 2026-10-07: invariato. Gli alt delle schermate non entrano in questo calcolo: il loro indice è in `alt-text.md`.
+Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 per i testi descrittivi. Esito: raggiunto. Il valore di riferimento è quello dei soli paragrafi, più prudente. I blocchi di risposta della mappa SEO, pieni di nomi di prodotto lunghi, abbassano l'indice: per questo alcune frasi sono state spezzate, a parole invariate. Lo stesso script ha controllato 68 elementi con limite di lunghezza (nessuno supera il massimo) e i limiti di title e meta description. Ricalcolato il 2026-10-05: i paragrafi salgono da 62,1 a 62,8 perché il Testo 03 è in due frasi; un elemento in meno perché l'occhiello non c'è più. Ricontrollato il 2026-10-07 e il 2026-10-08: invariato. Gli alt delle schermate non entrano in questo calcolo: il loro indice è in `alt-text.md`.
 
 ## Ipotesi da validare
 
 - [IPOTESI: la sigla SIII corrisponde a «Sito Interattivo Immersivo». La sigla ha tre «I» e lo scioglimento ne spiega due (brief D3). Il testo abbina sigla e nome come la §10, senza spiegare le lettere una per una]
 - [IPOTESI: i tre esempi sono realizzati da ITnode e le imprese hanno autorizzato nome e schermate (brief A7). La pagina non lo afferma in modo esplicito. Le schermate sono nel sito dal 2026-10-07, ma il consenso non risulta in `docs/` (review CRO del 2026-10-07, oss. 2)]
+- [IPOTESI: anche l'esperienza del negozio YES, nella hero, è un SIII realizzato da ITnode. Una schermata nella hero di questa pagina lo lascia intendere (soglia 1). L'ha mandata l'utente il 2026-10-08, e l'interfaccia è dello stesso tipo delle altre schermate, ma non risulta in `docs/`]
+- [DA VERIFICARE: nome completo del negozio della hero: «YES», oppure «YES» con «pure design 100% flowers»]
 - [IPOTESI: la vista a piccolo pianeta degli esempi è la schermata d’avvio di ogni esperienza, come dicono il commit d06a3e9 e le review del 2026-10-07. Gli alt la chiamano così (`alt-text.md`, «Ipotesi da validare»)]
 - [IPOTESI: ogni SIII può includere tutte le azioni della §10, a seconda di come è configurato. Per questo il testo usa «può»]
 - [DA VERIFICARE: Masseria Santella si trova a Cassano delle Murge (BA)]
@@ -405,24 +427,25 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 3. Acquisto e prenotazione avvengono dentro il SIII o su sistemi esterni (N13)?
 4. Esistono dati documentati sul comportamento dei visitatori, per esempio il tempo di permanenza, con fonte e periodo (D7)?
 5. Il SIII vive sempre dentro un portale città o anche sul dominio dell'impresa (D4)? La risposta conferma o corregge lo statement «Un SIII è un sito».
+6. Il negozio della hero: si chiama solo «YES»? «pure design 100% flowers» è un payoff? Il SIII è di ITnode, e c'è il consenso a mostrarne la schermata (A7)?
 
 ## Decisioni richieste
 
 - **brand-strategist**: forma della didascalia della figura se si applica la riserva I7 (proposta nella sezione 3).
 - **creative-director**: approvazione dello statement «Un tour 360° è una visita. Un SIII è un sito.» e della regola «H2 piccolo + statement grande»; allineamento della direzione visiva (V2).
 - **ux-designer**: togliere l'occhiello da `struttura-pagine.md` SI-1 (V1).
-- **Sessione principale**: alt della v1.6 per i tre esempi in `src/data/media.ts` (V4).
-- **Utente, con brand-strategist** (owner dell'ADR 002): consenso scritto delle tre imprese per le schermate (A7).
+- **Sessione principale**: alt della hero della v1.10 di `alt-text.md` in `src/data/media.ts` (V5).
+- **Utente, con brand-strategist** (owner dell'ADR 002): consenso scritto delle tre imprese degli esempi e del negozio YES per le schermate (A7).
 - **seo-content**: allineare l'ancora `#richiesta` e l'H2 della sezione 4 nella mappa (V3).
 
 ## Rischi
 
-- **Consenso delle imprese degli esempi (A7).** Le schermate di tre imprese reali sono già nel sito, anche nella variante «in pubblicazione», e il consenso non è registrato. Per cro-specialist è bloccante per il go-live (condizione C06). Senza consenso, si tolgono le schermate e restano nomi e link (sezione 6).
+- **Consenso delle imprese delle schermate (A7).** Le schermate di quattro imprese reali sono già nel sito: le tre degli esempi, anche nella variante «in pubblicazione», e il negozio YES nella hero. Il consenso non è registrato. Per cro-specialist è bloccante per il go-live (condizione C06), e il controllo A7 di `scripts/prelaunch-check.mjs` blocca. Senza consenso, si tolgono le schermate: negli esempi restano nomi e link (sezione 6).
 - **Cookie di terze parti nelle anteprime.** Se l'anteprima immersiva viene attivata, l'iframe carica un portale esterno che potrebbe impostare cookie non tecnici. Il clic su «Avvia l’anteprima» non equivale a un consenso secondo le linee guida del Garante. Per questo al lancio non c'è, e prima di attivarla va verificato (soglia 5; `struttura-pagine.md` SI-6).
 
 ## Fonti consultate
 
-Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente: le informazioni sui portali vengono solo da risultati di ricerca. Il 2026-10-05 e il 2026-10-07 non ho consultato nuove fonti web.
+Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente: le informazioni sui portali vengono solo da risultati di ricerca. Il 2026-10-05 e il 2026-10-07 non ho consultato nuove fonti web. Il 2026-10-08 ho cercato il negozio della hero («YES» «pure design» «100% flowers»): nessun risultato pertinente.
 
 - Masseria Santella a Cassano delle Murge: https://www.booking.com/hotel/it/masseria-santella.de.html · https://masseria-santella.apuliahotelspage.com/en/ · https://www.facebook.com/masseriasantella/
 - Città Digitali e tecnologia VR 360 (solo sintesi di ricerca): https://xn--cittdigitali-19a.it/il-progetto/

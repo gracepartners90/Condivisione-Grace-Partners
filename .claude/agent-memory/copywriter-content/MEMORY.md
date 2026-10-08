@@ -72,7 +72,9 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 ## Asset cambiato a metà incarico (lezione del 2026-10-08)
 - L'utente può cambiare immagine mentre lavoro: prima tutte le verifiche (originale, sito, ritagli), poi le modifiche ai documenti in un solo passaggio alla fine. Così uno stop non lascia niente da annullare.
 - Guardare anche le prove di ritaglio in corso nella scratchpad della sessione principale: l'alt deve valere per ogni ritaglio che il creative-director sta valutando, non solo per quello in build.
-- Icone di app (WhatsApp, Facebook, Instagram) sono comandi: non si elencano (criterio 12). Se a qualche larghezza non restano né il menu né punti interattivi, valutare un nome in blocco («l’interfaccia dell’esperienza») da proporre nel criterio 12. «Il menu» accanto a tavoli apparecchiati si confonde con quello del locale.
+- Icone di app (WhatsApp, Facebook, Instagram) sono comandi: non si elencano, e neppure «i contatti», che ne dice la funzione. Il nome in blocco «l’interfaccia dell’esperienza» ora è nel criterio 12 di `alt-text.md`: serve quando menu o punti interattivi non si vedono in ogni ritaglio. «Il menu» accanto a tavoli apparecchiati si confonde con quello del locale.
+- Un nome d'impresa che è anche una parola comune («YES») a inizio alt si sente come quella parola: lo precede il tipo di luogo che la schermata mostra («Il negozio YES da smartphone: …»).
+- Dopo aver allineato un copy deck, rilanciare `verify-deck2.mjs` e `reverse-check.mjs`: l'unico scarto atteso è l'alt ancora da applicare, da registrare come differenza aperta. Nelle sezioni che tocco, aggiornare anche le frasi superate («cro-specialist propone un controllo» quando il controllo esiste già: `git log -S`).
 - Strumenti riusabili in `scratchpad/copywriter-content/tana/`: `hero.mjs <porta>` (sorgente scelta, riquadro, parte visibile dell'originale e albero di accessibilità della hero di `/siii/` a 13 larghezze), `zoom.mjs` (ingrandimenti con sharp). Per un file nuovo vanno adattati il rapporto e l'ancoraggio del ritaglio.
 
 ## Preferenze e correzioni ricevute
