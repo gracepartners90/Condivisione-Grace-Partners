@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.4
-aggiornato: 2026-10-07
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1) e al 2026-10-07 (commit d06a3e9), prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md]
+versione: 0.5
+aggiornato: 2026-10-08
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e e 1112c93), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -181,7 +181,7 @@ Si usa `src/components/ui/Media.astro`, già nel repository.
 
 ### 3.2 Immagine LCP
 
-**Dal 2026-10-07 `/siii/` ha un'immagine LCP:** la schermata nella porta della hero, `Media` con `priority` (commit `d06a3e9`). Le altre pagine hanno hero tipografiche. Regole per ogni immagine LCP:
+**Dal 2026-10-07 `/siii/` ha un'immagine LCP:** la schermata nella porta della hero, `Media` con `priority` (commit `d06a3e9`). Dal 2026-10-08 è la schermata del negozio YES, con il ritaglio 4:5 ancorato in alto (commit `1112c93`). Le altre pagine hanno hero tipografiche. Regole per ogni immagine LCP:
 - un solo `priority` per pagina, sul tag `<img>` nell'HTML. Niente `background-image` CSS: il preload scanner non lo vede;
 - `priority` anche quando l'immagine è in parte sotto la piega, se resta l'elemento LCP. Sulla porta di `/siii/`, con `lazy` l'LCP peggiora di 271 ms;
 - nessun `loading="lazy"`, nessun `<link rel="preload">` aggiuntivo: la porta viene richiesta prima della fine del download del documento;
@@ -189,9 +189,25 @@ Si usa `src/components/ui/Media.astro`, già nel repository.
 - pesi del `budget.md` §4 per ogni variante che un telefono può scaricare, densità 3x compresa.
 - **Se su mobile l'immagine si vede con un'altra proporzione** (la porta è 3:5 su desktop e 4:5 su mobile), si ritaglia in build invece di lasciar tagliare `object-fit` (§3.4).
 
+**Dove la porta non è l'elemento LCP** (verificato il 2026-10-08; dipende dall'impaginazione, non dall'immagine).
+- Sui telefoni in verticale la porta comincia a y 546–569 px. Diventa l'LCP quando se ne vedono almeno 52–74 px, cioè con un'altezza visibile di almeno 600–640 px, secondo la larghezza. Con meno altezza vince la riga più grande dello statement.
+- Col telefono in orizzontale la porta è tutta sotto la piega e l'LCP è il nome «SIII».
+- In pratica hanno l'LCP testuale i telefoni con poco spazio verticale nel browser: un Android con lo schermo di 640 dp meno la barra dell'indirizzo, e probabilmente un iPhone SE in Safari [DA VERIFICARE sul dispositivo: altezza visibile con le barre del browser, stimata intorno ai 550 px].
+- `priority` resta giusto, perché su tutte le altre viewport la porta è l'LCP. Dove non lo è, l'immagine non pesa sull'LCP ma divide comunque la banda con il font in preload (`budget.md` §3).
+
+**Se l'immagine non sta nel budget con i valori del sito** (AVIF 50, WebP 75, JPEG 75), le leve in quest'ordine:
+1. ancoraggio e ritaglio (`mobileCrop`, §3.4), da scegliere con il creative-director;
+2. larghezze (`widths`, `mobileCrop.widths`) adeguate alla resa del §3.3;
+3. solo dopo, una qualità per formato per quella sola immagine.
+   - Il meccanismo è stato provato nel commit `7326a1e`, con la prop `quality` di `Media`, e tolto in `1112c93` perché la nuova immagine non ne aveva bisogno: si recupera dalla storia.
+   - In Astro 7.3.5 `getImage` passa a sharp un solo parametro per immagine, `quality`. Il servizio lo unisce alle opzioni di `astro.config.mjs` per formato, quindi `mozjpeg` resta. `chromaSubsampling` ed `effort` valgono invece per tutto il sito.
+   - Il valore va accanto all'immagine in `src/data/media.ts`, e si rimisura a ogni cambio d'immagine.
+   - Va controllato anche il WebP di ripiego, che con le trame fitte è il formato più vicino al controllo n. 8.
+
 Misure:
 - prototipo, foto evento in hero con `priority`: LCP 1,51 s (variante AVIF 750w, 30 KB);
-- `/siii/`, porta 3:5 da 768w e 33,6 KB: LCP 1,80 s simulato, 1,70 s con throttling applicato (`budget.md` §7.3).
+- `/siii/`, porta 3:5 da 768w e 33,6 KB: LCP 1,80 s simulato, 1,70 s con throttling applicato (`budget.md` §7.3);
+- `/siii/` con la schermata YES, ritaglio 4:5 in alto da 768w e 34,3 KB: LCP 1,80 s simulato, 1,71 s con throttling applicato (`budget.md` §7.4).
 
 ### 3.3 `sizes` per slot della griglia a 12 colonne
 
@@ -214,14 +230,15 @@ Misure:
 
 Si usa solo quando cambia il ritaglio; altrimenti basta `Media`.
 
-**Stessa immagine, proporzione diversa su mobile.** C'è una via più semplice del componente qui sotto: il prop `mobileCrop` di `Media.astro`, nella patch provata della review del 2026-10-07 (§6), non ancora applicata.
+**Stessa immagine, proporzione diversa su mobile.** C'è una via più semplice del componente qui sotto: il prop `mobileCrop` di `Media.astro`, applicato nel commit `bae201c` (review del 2026-10-07, §6).
 - Sotto 64em sharp ritaglia l'immagine in build (fit cover), con larghezze proprie; sopra resta l'immagine intera.
 - Senza il prop, l'HTML di tutte le pagine resta identico.
-- Sulla porta di `/siii/`, a parità di inquadratura: 25,8 KB invece di 33,6 KB a 768 px e 39,5 KB invece di 51,4 KB a 1080 px.
+- Sulla porta di `/siii/`, a parità di inquadratura (sala di Masseria Santella, 2026-10-07): 25,8 KB invece di 33,6 KB a 768 px e 39,5 KB invece di 51,4 KB a 1080 px.
+- **L'ancoraggio (`position`: `top`, `centre`, `bottom`) cambia anche il peso**, perché cambia la porzione d'immagine codificata. Lo sceglie il creative-director per l'inquadratura, e ogni cambio si rimisura. Con la schermata YES (commit `1112c93`), a 1080w: 54,0 KB in alto, 64,2 KB in basso, oltre il limite di 60 KB del `budget.md` §4.
 
 ```astro
 <Media image={screen} alt="…" sizes="(min-width: 30rem) 26rem, 90vw" priority
-  mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080] }} />
+  mobileCrop={{ ratio: 4 / 5, widths: [480, 640, 768, 1080], position: 'top' }} />
 ```
 
 ```astro

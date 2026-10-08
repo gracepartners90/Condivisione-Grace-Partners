@@ -3,9 +3,9 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.6
-aggiornato: 2026-10-07
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), fonti web elencate nel §6.8]
+versione: 0.7
+aggiornato: 2026-10-08
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md (§7.4), fonti web elencate nel §6.8]
 ---
 
 # Budget di performance
@@ -40,17 +40,17 @@ Lighthouse 13.5.0 in emulazione mobile, throttling simulato, mediana di 5 esecuz
 
 Le soglie valgono per tutti i template:
 
-| Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1 e §7.3) |
+| Metrica | Limite | Obiettivo | Sito costruito, caso peggiore tra i template (§7.1, §7.3 e §7.4) |
 |---|---|---|---|
-| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,80 s (`/siii/`, immagine LCP, §7.3) |
+| LCP | ≤ 2,5 s | ≤ 2,0 s | 1,80 s (`/siii/`, immagine LCP, §7.4; con throttling applicato 1,71 s) |
 | FCP | ≤ 1,8 s | ≤ 1,5 s | 1,34 s (con il preload del font, ADR 005) |
 | TBT | ≤ 200 ms | ≤ 100 ms | 0 ms |
 | CLS | ≤ 0,1 | ≤ 0,05 | 0 |
 | Speed Index | ≤ 3,4 s | ≤ 2,5 s | 1,34 s |
 | Punteggio Performance | ≥ 90 | ≥ 95 | 99 |
 | **LCP − FCP** con throttling applicato (`devtools`), pagine con LCP testuale | ≤ 200 ms | ≤ 100 ms | 0 ms |
-| **Immagine LCP**, throttling applicato: inizio della richiesta rispetto alla fine del download del documento | ≤ +50 ms | prima della fine | `/siii/` (`bae201c`): da −25 a +5 ms. Con `lazy`: circa +300 ms |
-| **Immagine LCP**, throttling applicato: ritardo di rendering (`lcp-breakdown-insight`) | ≤ 200 ms | ≤ 100 ms | 41–71 ms (`/siii/`, `bae201c`) |
+| **Immagine LCP**, throttling applicato: inizio della richiesta rispetto alla fine del download del documento | ≤ +50 ms | prima della fine | `/siii/` (`1112c93`, schermata YES): da −25 a +14 ms; con `bae201c` da −25 a +5 ms. Con `lazy`: circa +300 ms |
+| **Immagine LCP**, throttling applicato: ritardo di rendering (`lcp-breakdown-insight`) | ≤ 200 ms | ≤ 100 ms | 49–111 ms, mediana 62 ms (`/siii/`, `1112c93`; una corsa su 6 sopra l'obiettivo); con `bae201c` 41–71 ms |
 
 **Perché serve la riga LCP − FCP.** Il throttling simulato non vede i ritardi dovuti alle animazioni.
 - Un H1 che entra da `opacity: 0` sposta l'LCP di +0,66 s con throttling applicato, e di soli +0,05 s in quello simulato (§7.2).
@@ -65,6 +65,11 @@ Le soglie valgono per tutti i template:
   - l'inizio della richiesta in `audits['network-requests']` (`networkRequestTime` dell'immagine, `networkEndTime` del documento);
   - il ritardo di rendering in `audits['lcp-breakdown-insight']`.
 - **Valgono anche le altre righe:** l'LCP resta entro limite e obiettivo con entrambi i metodi, e l'immagine rispetta il §4.
+- **Dove l'immagine non è l'LCP** (verificato il 2026-10-08 su 26 viewport; dipende dall'impaginazione della hero, non dall'immagine).
+  - Sui telefoni in verticale la porta comincia a y 546–569 px. Con meno di 600–640 px di altezza visibile, secondo la larghezza, l'LCP è la riga più grande dello statement. Per esempio: 320×568 e 320×620, 360×600, 375×580.
+  - Su ogni telefono in orizzontale, da 568×320 a 932×430, la porta è tutta sotto la piega e l'LCP è il nome «SIII».
+  - In questi casi valgono le regole delle pagine con LCP testuale (riga LCP − FCP). L'immagine resta in `priority` perché è l'LCP su tutte le altre viewport, compreso il dispositivo di Lighthouse (412×823); lì divide comunque la banda con il font (§3).
+  - La review del 2026-10-07 («19 viewport su 19») misurava da 320×640 in su: il dato resta giusto per quelle viewport.
 
 **FCP simulato e font.** Il sito tiene il preload di Schibsted Grotesk (ADR 005, §3). Le misure del §7.1 sono fatte con il preload, e l'obiettivo di 1,5 s è rispettato su tutti i template. Se un giorno il preload verrà tolto (condizioni del §3), vale questa avvertenza:
 - il modello simulato (Lantern) tratta il font come una dipendenza dell'FCP, mentre con `font-display: swap` il testo si dipinge con il ripiego;
@@ -144,7 +149,7 @@ Le soglie valgono per tutti i template:
 
 | Componente | Budget |
 |---|---|
-| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP. Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Misurato con il ritaglio: 21,4–40,7 KB sui telefoni (640w–1080w; prima 33,6–58,3), 18,0–51,4 KB su desktop (§7.3). |
+| Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`; dal 2026-10-08 con la schermata del negozio YES) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP (dove non lo è: §2). Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Per i browser senza AVIF valgono il limite «Immagini» del §3 e il controllo n. 8. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). L'ancoraggio del ritaglio cambia il peso: ogni cambio si rimisura. Se l'immagine non sta nei pesi con i valori del sito, si seguono le leve dell'`architettura.md` §3.2. **Misurato con la schermata YES** (`1112c93`, ritaglio 4:5 in alto): 27,3–54,0 KB sui telefoni (640w–1080w; margine di 6,0 KB a 1080w), 24,7–72,7 KB su desktop da 1x a 2x, 83,7 KB (1200w) solo da 64em con densità oltre 2,6x. WebP di ripiego fino a 76,8 KB sui telefoni (§7.4). Con la sala di Masseria Santella erano 21,4–40,7 e 18,0–51,4 KB (§7.3). |
 | Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. |
 | Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
@@ -604,7 +609,7 @@ Dove leggere i valori nel JSON:
 
 Sono la base per la regola del +10% del §8. Condizioni: quelle del §6.1, con Lighthouse 13.5.0, Chromium 141, `benchmarkIndex` 1642–2690 e build con il preload del font. Dettaglio e confronti in `docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md`.
 
-**Per `/siii/` dal 2026-10-07 la base è il §7.3**: la porta della hero è diventata l'immagine LCP. La riga di `/siii/` qui sotto resta come storico.
+**Per `/siii/` la base è il §7.4** dal 2026-10-08, e prima era il §7.3 (dal 2026-10-07): la porta della hero è l'immagine LCP. La riga di `/siii/` qui sotto resta come storico.
 
 | URL (template) | Simulato: FCP / LCP (corse) | Applicato: FCP = LCP (corse) | TBT sim. / appl. | CLS | Peso, richieste | JS | Elemento LCP |
 |---|---|---|---|---|---|---|---|
@@ -665,7 +670,7 @@ Condizioni del §6.1: `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141. Cors
 
 Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-web-performance-specialist.md`, §§2–6 e §7.
 
-**Base attuale, `bae201c`:**
+**Base fino al 2026-10-08, `bae201c`** (poi la base di `/siii/` è il §7.4, con la schermata YES):
 
 | URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
 |---|---|---|---|---|---|---|---|---|
@@ -702,6 +707,34 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - `bae201c`: superati tutti, n. 8 compreso;
   - `d06a3e9`: n. 8 non superato per il primo esempio, poi corretto in `d3eba9c` con larghezze fino a 1440 px.
 
+### 7.4 Schermata YES nella hero di `/siii/` (2026-10-08, commit `1112c93`)
+
+**Cosa cambia.** La porta mostra la schermata del negozio YES (1200 × 2000), con il ritaglio 4:5 ancorato in alto sotto 64em, la compressione del sito e le larghezze predefinite. Le altre pagine sono identiche byte per byte al controllo.
+
+**Condizioni del §6.1.** `scripts/serve.mjs`, Lighthouse 13.5.0, Chromium 141.
+- 28 corse alternate tra `1112c93` e il controllo `aaf4760` (14:39–14:47 UTC, `benchmarkIndex` 1585–2181, carico 0,8–2,0). Per `/siii/` il controllo è uguale a `bae201c`: sala di Masseria Santella, ritaglio in basso.
+- Playwright per varianti, elemento LCP e profili di rete.
+- Dettaglio: `docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md`.
+
+**Base attuale, `1112c93`:**
+
+| URL | Simulato: FCP / LCP (corse) | Applicato: FCP / LCP (corse) | Desktop, simulato: FCP / LCP | TBT sim. / appl. | CLS | Peso, richieste | Immagini | Elemento LCP |
+|---|---|---|---|---|---|---|---|---|
+| `/siii/` (T2) | 1,25 / **1,80 s** (5) | 1,06 / **1,71 s** (6) | 0,32 / 0,40 s (3) | 0 / 68 ms | 0 | 133,0 KB, 8 | 34,8 KB (porta, ritaglio 4:5 in alto, 768w AVIF) | **porta della hero** (schermata del negozio YES), salvo le viewport del §2 |
+
+- **Controllo nella stessa tornata:** simulato 1,26 / 1,81 s; applicato 1,08 / 1,61 s; desktop 0,31 / 0,40 s; 125,4 KB e 27,2 KB di porta.
+- **Regola del +10% del §8:** con throttling applicato l'LCP cresce del 6% (+100 ms). La differenza viene tutta dal download della porta (963–1000 contro 882–890 ms); il simulato resta sullo stesso gradino del modello.
+- **Immagine LCP per dispositivo** (tra parentesi il controllo):
+  - 640w, 27,3 KB (21,4): 320 px a 2x, tablet a 1,5x;
+  - 768w, 34,3 KB (26,8): da 375 a 412 px a 1,75–2x, Moto G compreso;
+  - 1080w, 54,0 KB (40,7): telefoni da 2,6x a 4x, telefono in orizzontale, tablet a 2x sotto 64em. È la variante con meno margine: 6,0 KB;
+  - desktop: 480w, 24,7 KB (18,0) a 1x; 768w, 46,6 KB (33,6) a 1,25–1,5x; 1080w, 72,7 KB (51,4) a 2x; 1200w, 83,7 KB (58,3) solo oltre 2,6x;
+  - WebP di ripiego: 40,7–76,8 KB sui telefoni, fino a 112,8 KB su desktop.
+  - Tutte dentro il §4.
+- **Ancoraggio.** Con il ritaglio in basso la 1080w peserebbe 64,2 KB, oltre il §4: servirebbe una qualità per formato (`architettura.md` §3.2).
+- **Elemento LCP:** la porta in 22 casi su 24 dispositivi. Sulle viewport basse e col telefono in orizzontale è il testo (§2).
+- **Controlli statici:** superati tutti, n. 8 compreso.
+
 ## 8. Eccezioni e modifiche
 
 - **Owner.** Il budget lo modifica solo web-performance-specialist.
@@ -719,6 +752,7 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
 - [DA VERIFICARE sull'anteprima (§6.8): l'edge di Railway inoltra la compressione del server; HTTP/2 attivo; modalità Serverless spenta.]
 - [DA VERIFICARE: CLS dello swap dei font su un Android di fascia media reale (Roboto) e su iPhone (Helvetica Neue). In laboratorio, con Liberation Sans, è 0–0,002.]
 - [DA VERIFICARE: INP della prima apertura del menu su un Android di fascia media reale (in laboratorio fino a 200 ms).]
+- [DA VERIFICARE: altezza visibile di un iPhone SE in Safari, con le barre del browser, stimata intorno ai 550 px. Se è sotto i 600 px, su quel telefono l'LCP di `/siii/` è il testo e non la porta (§2). Il RUM `web-vitals`, se adottato, lo dirà con l'elemento LCP per dispositivo.]
 
 ## Domande aperte
 1. È disponibile un Android di fascia media per una verifica sul campo prima del lancio, oppure un servizio di test su dispositivi reali?
@@ -731,10 +765,12 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - chi misura dall'Italia (domanda 3). Con l'anteprima aperta (dal 2026-09-29) non servono credenziali, e si può usare anche PageSpeed Insights dal browser (§6.8, punto 4).
 - **brand-strategist:** superata la richiesta di assenso per WebPageTest. Con l'anteprima aperta per decisione dell'utente (ADR 004), il risultato del test non espone niente di più.
 - **cro-specialist:** RUM `web-vitals` senza cookie dopo il lancio, sì o no, da inserire nell'ADR sull'analytics. Serve per l'INP del menu, per il TTFB reale e per la prima condizione di riapertura dell'ADR 005 (nota del §3).
-- **creative-director:** nessuna decisione aperta sulla performance. Chiuse il 2026-10-07:
-  - porta con la sala, ritaglio 4:5 ancorato in basso;
-  - finestra del ripiego accettata, con la soglia di sorveglianza di 600 ms dell'ADR 005, versione 1.3;
-  - 6 corse per variante, nell'ADR 005 versione 1.2.
+- **creative-director:** nessuna decisione aperta sulla performance.
+  - Hero di `/siii/` con la schermata YES (2026-10-08): il ritaglio ancorato in alto sta nel §4 con i valori del sito. Se si preferisse l'ancoraggio in basso, servirebbero una qualità per formato e una nuova misura (review del 2026-10-08, osservazione 1).
+  - Chiuse il 2026-10-07:
+    - porta con la sala, ritaglio 4:5 ancorato in basso (superata il 2026-10-08 dalla schermata YES, ancorata in alto);
+    - finestra del ripiego accettata, con la soglia di sorveglianza di 600 ms dell'ADR 005, versione 1.3;
+    - 6 corse per variante, nell'ADR 005 versione 1.2.
 - **ui-designer:** chiuso. La patch della sorgente AVIF per gli schermi da 1,5 dppx in su è applicata (`d4511be`) e verificata (review del 2026-10-07, §8).
 - **Sessione principale:**
   - fatto:
