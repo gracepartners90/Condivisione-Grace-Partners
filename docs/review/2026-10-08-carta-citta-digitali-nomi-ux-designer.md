@@ -3,15 +3,19 @@ titolo: Carta d'Italia di /citta-digitali/ con i nomi delle città · verifica d
 owner: ux-designer
 contributi: []
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-10-08
-fonti: [richiesta dell'utente del 2026-10-08 riferita dalla sessione principale («la mappa in città digitali, mettiamo anche lì qualche nome di città tra le più importanti»), commit 426e6dc, src/components/sections/LocationShowcase.astro, src/components/ui/MapItaly.astro, src/lib/citta-digitali.ts, src/pages/citta-digitali.astro, src/pages/index.astro, docs/ux/accessibilita.md (0.10, §2.8 e §2.14, Appendici A e D), docs/ux/struttura-pagine.md (0.10, CD-2 e HM-5), docs/creativa/direzione-visiva.md (0.15, §1.4), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6), docs/review/2026-10-06-descrizione-carta-home-ux-designer.md (regola dei nomi, scelta B), staging http://127.0.0.1:4321 a 426e6dc, copia del repository a 426e6dc con la patch (build in locale), albero di accessibilità via CDP (Chromium 141) e axe-core 4.13 del 2026-10-08; per §6: docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e patch B), commit 5f2f757, b71268e (L8) e a95b5c6 (patch A), copie della HEAD c2d368a con e senza la patch B (build in locale); per §7: docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4 e §7, variante B2), commit 474e2df (patch B) e 21faf34, copie della HEAD 21faf34 con la patch B e con la variante B2 (build in locale; la B uguale byte per byte allo staging, la B2 alla build di ui-designer)]
-oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6); dalla 1.2 la variante B2 (§7)
+fonti: [richiesta dell'utente del 2026-10-08 riferita dalla sessione principale («la mappa in città digitali, mettiamo anche lì qualche nome di città tra le più importanti»), commit 426e6dc, src/components/sections/LocationShowcase.astro, src/components/ui/MapItaly.astro, src/lib/citta-digitali.ts, src/pages/citta-digitali.astro, src/pages/index.astro, docs/ux/accessibilita.md (0.10, §2.8 e §2.14, Appendici A e D), docs/ux/struttura-pagine.md (0.10, CD-2 e HM-5), docs/creativa/direzione-visiva.md (0.15, §1.4), docs/review/2026-10-05-carta-citta-digitali-pagina-ux-designer.md (L6), docs/review/2026-10-06-descrizione-carta-home-ux-designer.md (regola dei nomi, scelta B), staging http://127.0.0.1:4321 a 426e6dc, copia del repository a 426e6dc con la patch (build in locale), albero di accessibilità via CDP (Chromium 141) e axe-core 4.13 del 2026-10-08; per §6: docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e patch B), commit 5f2f757, b71268e (L8) e a95b5c6 (patch A), copie della HEAD c2d368a con e senza la patch B (build in locale); per §7: docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md (§4 e §7, variante B2), commit 474e2df (patch B) e 21faf34, copie della HEAD 21faf34 con la patch B e con la variante B2 (build in locale; la B uguale byte per byte allo staging, la B2 alla build di ui-designer); per §8: docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (§2 variante E, §3 proposta M), commit 51d23cd e d5ad7b0, staging http://127.0.0.1:4321 (d5ad7b0, B2 ed E), build della B su :4362 e di B2, E e M su :4392]
+oggetto: carta d'Italia della sezione «L'Italia in un unico portale» di /citta-digitali/, dopo il commit 426e6dc; dalla 1.1 anche le schede delle città con le spaziature di 1.4.12 (§6); dalla 1.2 la variante B2 (§7); dalla 1.3 la variante E e la proposta M (§8)
 ---
 
 # Carta d'Italia di `/citta-digitali/` con i nomi delle città
 
 ## In sintesi
+- **Variante E, nel sito dal commit d5ad7b0: conforme a 1.4.12, 1.3.2 e 2.4.3 (§8, aggiunto nella 1.3).**
+  - Con le spaziature «Caltanissetta» resta intero, e «Esplora» va sotto il nome.
+  - Lo scarto tra ordine a schermo e ordine del DOM è quello di prima: «Esplora» si vede accanto o sotto il nome, ma si legge dopo la descrizione. Il nome del link è completo e la scheda ha una sola fermata, quindi né il senso né l'ordine del focus cambiano.
+- **Proposta M: sì, la consiglio.** Con i testi di oggi non cambia nulla, e con le spaziature dell'utente lascia il posto alle sue. Con testi più lunghi, e nel ripiego senza unità di contenitore, il filetto della scheda dopo resta a 27 px dal testo invece di 3. Con M il ripiego con `@supports` non serve più per l'accessibilità: se ui-designer lo vuole per l'impaginato, è compatibile.
 - **[IMPORTANTE] Variante B2 al posto della patch B: sì (§7, aggiunto nella 1.2).**
   - Con la B2 le schede stanno sempre dentro la sezione, qualunque sia la lunghezza del testo. Con la B bastano 4 parole in più nella descrizione di Caltanissetta perché, con le spaziature, il testo esca dalla sezione e diventi illeggibile sul fondo chiaro di quella dopo.
   - Il resto non cambia. Senza spaziature l'impaginato è identico; nessun testo si copre; ordine di lettura, Tab e scheda → nodo restano uguali.
@@ -227,12 +231,51 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
 - **«Caltaniss / etta».** Per l'accessibilità vanno bene sia l'a capo di oggi sia `hyphens: auto`: non si perde nulla. Decide il creative-director.
 - **Patch.** `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-cdn/diff/citta-digitali-schede-1412-b2.patch`, quella di ui-designer, senza modifiche. Il testo è nella sua review, §7.
 
+## 8. Variante E nel sito e proposta M (verifica del 2026-10-08)
+- **Fonte.** Verdetto del creative-director, `docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md`: §2 per la variante E, §3 per la proposta M.
+- **Che cosa fa E.** Da 80em la scheda passa da griglia a flex che va a capo, con `order` 1, 2 e 3: nome, «Esplora» spinto a destra (`margin-inline-start: auto`), poi regione e descrizione su righe loro.
+  - Quando nome e «Esplora» stanno su una riga, l'impaginato è quello di prima.
+  - Quando non ci stanno, «Esplora» va sotto il nome, sul bordo destro, e il nome resta intero.
+  - Il DOM non cambia: nome, regione, descrizione, «Esplora».
+- **Che cosa fa M.** Da 80em, un margine di `--space-m` sotto la descrizione di ogni scheda tranne l'ultima.
+- **Prove, con il metodo di `accessibilita.md` §4.3.** Staging d5ad7b0 (B2 ed E) su :4321, B su :4362, B2 con E e M su :4392.
+
+| Prova | E (nel sito) | E con M |
+|---|---|---|
+| Senza spaziature, 202 finestre da 320 a 2560 px | Posizioni identiche alla B entro 0,04 px: schede, nome, «Esplora», carta, legenda, sezione | Identica a E: 0 px |
+| Con le spaziature, 146 finestre da 1280 a 2560 px | Nessun testo si copre, né dentro una scheda né tra due schede (almeno 42,9 px). Il nome resta su una riga, ad almeno 4,1 px dal bordo della scheda. «Esplora» va sotto il nome solo per Caltanissetta. Varese e Altamura restano al loro nodo, e Caltanissetta scende di 12–51 px. Sotto l'ultima scheda restano 145–187 px. Nessuno scorrimento orizzontale | Identica a E: 0 px. Il margine dei paragrafi dell'utente sostituisce M |
+| Testi più lunghi, 65 finestre da 1280 a 1920 px: 10 varianti, da +4 parole su una scheda a +32 su tutte e tre, con e senza spaziature | Mai testo fuori dalla sezione: almeno 106 px in fondo senza spaziature, 145 con. Nessuna sovrapposizione. Senza spaziature però il filetto della scheda dopo arriva a 3 px dal testo (+16 parole ad Altamura, o +32 su tutte, a 1370 px) | Lo stesso, con almeno 27 px tra il testo e il filetto della scheda dopo |
+| Caratteri predefiniti a 20 e 24 px, da 1600 a 2560 px, con e senza spaziature | Nessuna sovrapposizione, nome intero (con le spaziature, a 20 px, ad almeno 3,4 px dal bordo), almeno 179 px in fondo | Identica a E |
+| Ripiego senza unità di contenitore, emulato, con i testi di oggi e con +8 parole su tutte | Schede impilate dall'alto senza sovrapposizioni, almeno 145 px in fondo. Senza spaziature però tra le schede restano 3 px | Almeno 27 px tra le schede |
+| Albero di accessibilità e Tab, a 390, 1280, 1440 e 1920 px, con e senza spaziature | Identici alla B. Il Tab passa dal link al portale ai tre «Esplora» | Identici |
+| Focus con le spaziature, a 1280 e 1920 px | Ogni «Esplora», anche quello andato sotto il nome, arriva a schermo, non è coperto dall'header e ha il suo contorno (2 px). Bersaglio di 44 px | — |
+| Scheda → nodo, con mouse e tastiera, con e senza spaziature | Si accende solo il proprio nodo, un nodo alla volta, mai dalla carta | — |
+| axe-core 4.13 e Appendice A | Nessun problema; 0 violazioni anche con le spaziature, a 1280 e 1920 px | Lo stesso |
+
+- **1.3.2, Sequenza significativa: conforme.**
+  - A schermo una scheda si legge nome, «Esplora», regione, descrizione: «Esplora» sta accanto al nome, o sotto se non ci sta. Nel DOM, e quindi per lo screen reader, «Esplora» viene dopo la descrizione.
+  - È lo stesso scarto della B e della B2, dove «Esplora» stava nella seconda colonna della prima riga.
+  - Il senso non cambia. Il link ha un nome completo, «Esplora Caltanissetta su caltanissettadigitale.it (si apre in una nuova scheda)». La sequenza del DOM è sensata: prima la città, poi l'azione. Il fallimento F1 (posizione CSS che cambia il significato) non si applica.
+- **2.4.3, Ordine del focus: conforme.** «Esplora» è l'unica fermata della scheda. L'ordine del Tab è quello delle schede, da nord a sud, uguale all'ordine a schermo dall'alto in basso, e non cambia con le spaziature.
+- **1.4.12: conforme, e migliore della B2 per chi usa le spaziature.** Il nome non si spezza più a metà parola. Se non sta nemmeno nella scheda intera, resta la rete `overflow-wrap` dei titoli (A5): nelle prove non è mai successo.
+- **Parere su M: favorevole.**
+  - Nessun effetto con i testi di oggi.
+  - Con le spaziature non si somma al margine dell'utente.
+  - Con testi più lunghi, e nel ripiego, un filetto a 3 px dal testo si legge come una sottolineatura della riga sopra. Così la scheda dopo sembra cominciare prima, e il raggruppamento a colpo d'occhio si perde. Con M lo stacco resta di 27 px.
+  - Non è una soglia, ma aiuta chi legge con fatica.
+- **M e il ripiego con `@supports`.**
+  - Per l'accessibilità M basta. Copre con una regola sola sia i testi lunghi sia il ripiego, a cui dà 27 px tra le schede.
+  - L'elenco con `@supports not (width: 1cqw)`, che avevo suggerito nel §7, resta una scelta di impaginato: darebbe al ripiego lo stacco dell'elenco tra 1024 e 1279 px. È compatibile con M, e non ho obiezioni.
+  - Decide ui-designer.
+
 ## Verdetto di dominio (accessibilità)
 - **La carta con i nomi è conforme a WCAG 2.2 AA per gli aspetti verificati, così com'è in 426e6dc.** I criteri verificati sono 1.1.1, 1.3.1, 1.3.2, 1.4.3, 1.4.4, 1.4.10, 1.4.11, 1.4.12, 2.1.1, 2.4.3 e 2.4.7, più i colori forzati di §2.14.
 - **La patch di §3 è applicata** (5f2f757), con la formula L8 (b71268e).
 - **Le schede della stessa sezione, da 1280 px, non rispettavano 1.4.12** (§6). Il problema c'era già prima di 426e6dc.
   - Con la patch B, nel sito dal commit 474e2df, lo rispettano con il testo di oggi.
-  - Con la variante B2 lo rispettano qualunque sia la lunghezza del testo (§7). **Sostituisce la B, prima del go-live.**
+  - Con la variante B2 lo rispettano qualunque sia la lunghezza del testo (§7). B2 ed E sono nel sito dal commit d5ad7b0.
+  - **La variante E è conforme a 1.4.12, 1.3.2 e 2.4.3** (§8).
+  - M è facoltativa: per l'accessibilità la consiglio.
   - Anche il ripiego senza unità di contenitore è accessibile.
 - Il verdetto di gate spetta al creative-director, che decide anche l'impaginato della B2 e l'a capo di «Caltanissetta».
 
@@ -247,16 +290,15 @@ Ho aggiornato i nomi d'esempio in `docs/ux/accessibilita.md` §2.8, riga «Carte
 - **Chiuse:**
   - la formula della descrizione: L8 di copywriter-brand;
   - la regola 9 della direzione visiva, allineata nella 0.17.
-- **creative-director**:
-  - l'impaginato della B2 con le spaziature: scende solo Caltanissetta, di 12–80 px;
-  - l'a capo di «Caltanissetta», con o senza `hyphens: auto`.
-  La domanda del §6 sulle schede che perdono l'allineamento è assorbita dalla B2.
-- **ui-designer**: il ripiego a elenco con `@supports not (width: 1cqw)` (§7, suggerimento).
+- **Chiuse dal verdetto del creative-director (51d23cd):**
+  - impaginato della B2;
+  - a capo di «Caltanissetta»: variante E, senza `hyphens`.
+- **ui-designer**: M, il ripiego a elenco con `@supports not (width: 1cqw)`, o tutte e due (§8). Per l'accessibilità va bene M da sola, e va bene anche con l'elenco.
 
 ## Decisioni richieste
-- **Sessione principale (sviluppo):** applicare la variante B2 di ui-designer (§7) prima del go-live, poi ripetere sulla staging le prove della tabella del §7. Gli script sono in `scratchpad/ux-b2/`.
-- **creative-director:** impaginato della B2 e a capo di «Caltanissetta».
+- **Sessione principale (sviluppo):** se ui-designer adotta M, applicare `scratchpad/cd-1412/diff/citta-digitali-schede-aria-minima.patch`, poi ripetere sullo staging le prove del §8. Gli script sono `scratchpad/ux-e/probe3.mjs` e `agg3.py`.
 - **Chiuse:**
+  - B2 ed E, applicate in d5ad7b0 e verificate (§8);
   - la patch di §3, applicata;
-  - la patch B, applicata in 474e2df; la sostituisce la B2;
+  - la patch B, applicata in 474e2df e sostituita dalla B2;
   - direzione visiva, `alt-text.md` e copy deck, allineati.
