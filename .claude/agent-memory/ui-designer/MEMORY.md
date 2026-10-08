@@ -225,7 +225,7 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Differenze al pixel di solo testo:** cercare lo spostamento intero migliore per banda (`shiftcmp.cjs`). (0, 0) con differenza media bassa vuol dire antialiasing; uno spostamento di 2 pixel del dispositivo a 2× vuol dire 1 px di arrotondamento.
 - **Chromium:** il punto in cui una parola si spezza con `overflow-wrap` e `letter-spacing` può variare di una lettera tra un calcolo e l'altro della stessa pagina. Non fidarsi di una sola cattura per dire dove va a capo. Il Chromium headless di Linux non ha dizionari di sillabazione: `hyphens: auto` non si prova qui.
 - **`astro check` nella cartella del progetto riscrive `.astro/content.d.ts`** (ignorato da git): farlo solo nelle copie.
-- **Server:** la build B2 è servita su 4381 da `scratchpad/ui-1412b/dist-b2`, lasciata accesa per chi deve valutarla.
+- **Server:** la 4381 (B2) l'ho lasciata accesa per chi doveva valutarla, poi l'ho chiusa nel giro successivo, su richiesta del coordinatore: chiudere sempre le proprie porte a fine incarico.
 - **Script** in `scratchpad/ui-1412b/`:
   - `probe.mjs`: schede, nodi, legenda, aria e discesa minima;
   - `sens.mjs`: tenuta con testi più lunghi;
@@ -235,3 +235,15 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `cmpfull.cjs` e `agg.cjs`;
   - `breakat.mjs`, `fontrace.mjs` e `hyph.mjs`;
   - copia del sito in `site/`; la patch è in `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-b2.patch`.
+
+## B2 ed E nel sito, scelta di M (lezioni del 2026-10-08, sera)
+- **Esito:** ux-designer ha scelto la B2; il creative-director l'ha approvata con la variante E («Esplora» a capo solo quando il nome non gli sta accanto, DV 0.18), applicate insieme in d5ad7b0. La verifica sulla build è conforme. Tra M (aria minima del creative-director) e il ripiego `@supports` di ux-designer ho scelto M sola: patch `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-m.patch`, da applicare. Review 0.2 §8, design system 0.16.
+- **Il mio consiglio «accettare Caltaniss / etta» è stato superato** dalla quarta strada del creative-director, che non avevo considerato: spostare a capo il link invece di spezzare il nome (flex che va a capo, `margin-inline-start: auto`). Prima di proporre di accettare un difetto, cercare se si può muovere un altro elemento invece di quello che si rompe.
+- **Un ripiego «come l'impaginato X» va emulato nel contesto vero.** L'elenco a griglia della fascia 1024–1279, da 1280 px è stirato in una riga più alta e allarga le righe (99 px tra le schede). Le stesse regole non danno lo stesso risultato.
+- **Pixel diversi su tutta una cattura:** la prima cattura di una serie può essere spostata di qualche pixel, se la pagina sopra non è ancora ferma. Ripeterla prima di concludere; la geometria a 0 px è il controllo più affidabile.
+- **Margine di un testo:** il rettangolo di un Range comprende la spaziatura dopo l'ultima lettera (0,12em con 1.4.12). Il margine visibile dell'inchiostro è più grande: dirlo quando si riporta un margine stretto.
+- **Risparmio di tempo:** confrontare con md5 la propria build con quelle già misurate dagli altri membri (`cd-1412/dist-e`, `dist-em`). Se sono identiche, le loro misure e le mie valgono per lo stesso file.
+- **Script** in `scratchpad/ui-1412b/`:
+  - `probe-e.mjs` (rettangoli di nome, «Esplora», regione e descrizione; `FONT=20` per i caratteri predefiniti), `ana-e.cjs` e `agg-e.cjs`;
+  - `nocq.mjs`: ripiego emulato, con o senza l'elenco `@supports`;
+  - copia di d5ad7b0 con M in `site-e/`.

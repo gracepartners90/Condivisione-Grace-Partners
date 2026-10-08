@@ -1,12 +1,12 @@
 ---
-titolo: Schede di /citta-digitali/ con WCAG 1.4.12, patch B nella build · verifica di fedeltà e variante B2
+titolo: Schede di /citta-digitali/ con WCAG 1.4.12, patch B nella build · verifica di fedeltà e variante B2; B2 ed E nel sito e aria minima M
 owner: ui-designer
 contributi: []
 stato: in revisione
-versione: 0.1
+versione: 0.2
 aggiornato: 2026-10-08
-fonti: [commit 474e2df (patch B applicata dalla sessione principale), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.1, §6: scelta della patch B), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e §5: patch B), docs/ux/accessibilita.md (0.12, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.14), docs/creativa/direzione-visiva.md (0.17, §1.4), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, misure della sessione principale in scratchpad/b-main/, sonde di ux-designer in scratchpad/ux-1412/ (probe.mjs, probe-font.mjs), copia pulita di 474e2df con e senza la variante B2 (build in locale), Playwright 1.56 (Chromium 141), axe-core 4.13 e sharp 0.35 del 2026-10-08]
-oggetto: sezione «L'Italia in un unico portale» di /citta-digitali/ da 1280 px, dopo il commit 474e2df
+fonti: [per §8: commit d5ad7b0 (B2 ed E), 51d23cd, 0da39e4 e 884a042, docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (variante E, suggerimento M), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.3, §7 e §8: ripiego @supports, E e M), docs/creativa/direzione-visiva.md (0.18, §3.2), docs/ux/accessibilita.md (0.14), patch del creative-director in scratchpad/cd-1412/diff/, staging http://127.0.0.1:4321 (build di d5ad7b0), build B2 di ui-designer http://127.0.0.1:4381, build B2+E+M del creative-director (scratchpad/cd-1412/dist-em), copia pulita di d5ad7b0 con e senza M (build in locale, porta 4383); per §1–§7: commit 474e2df (patch B applicata dalla sessione principale), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.1, §6: scelta della patch B), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e §5: patch B), docs/ux/accessibilita.md (0.12, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.14), docs/creativa/direzione-visiva.md (0.17, §1.4), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, misure della sessione principale in scratchpad/b-main/, sonde di ux-designer in scratchpad/ux-1412/ (probe.mjs, probe-font.mjs), copia pulita di 474e2df con e senza la variante B2 (build in locale), Playwright 1.56 (Chromium 141), axe-core 4.13 e sharp 0.35 del 2026-10-08]
+oggetto: sezione «L'Italia in un unico portale» di /citta-digitali/ da 1280 px, dopo il commit 474e2df; dalla 0.2 anche dopo il commit d5ad7b0 (B2 ed E), con la scelta tra l'aria minima M e il ripiego @supports (§8)
 ---
 
 # Schede di `/citta-digitali/` con WCAG 1.4.12: la patch B nella build
@@ -23,6 +23,14 @@ oggetto: sezione «L'Italia in un unico portale» di /citta-digitali/ da 1280 px
 - **Vincoli rispettati.** Non ho toccato `src/` né `docs/creativa/`. La correzione che propongo (§4) è una patch nello scratchpad, già provata.
 
 ## In sintesi
+
+- **Aggiornamento della 0.2 (§8).** B2 ed E sono nel sito dal commit d5ad7b0.
+  - **E nella build: conforme.** Senza spaziature E è identica alla B2, al pixel. Con le spaziature «Caltanissetta» resta intera, «Esplora» va sotto il nome sul bordo destro, e scende solo Caltanissetta.
+  - **I due punti del creative-director sono confermati e accettati:** la descrizione con la sua misura di 34ch tra 1280 e 1430 px, e il margine del nome di 4,1 px da 1970 px.
+  - **Scelgo l'aria minima M, senza il ripiego `@supports`.** Con i testi di oggi non cambia nulla; con testi più lunghi tiene 27 px sopra ogni filetto, anche nei browser senza unità di contenitore. Patch unica sulla HEAD d5ad7b0: `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-m.patch`.
+  - Design system 0.16.
+
+Quanto segue, fino al §7, è la verifica della patch B (versione 0.1).
 
 - **La build corrisponde alla patch.** Ci sono tre prove (§1):
   - il file del commit è identico alla patch applicata alla base;
@@ -271,25 +279,152 @@ index e72ee4b..782a040 100644
        max-width: 100%;
 ```
 
+## 8. B2 ed E nel sito, e aria minima M (aggiunto nella 0.2)
+
+**Richiesta** (sessione principale, 2026-10-08, pomeriggio). ux-designer ha scelto la B2 (0da39e4). Il creative-director l'ha approvata con una modifica, la variante E: «Esplora» passa sotto il nome solo quando il nome non gli sta accanto, sempre sul bordo destro, e il nome resta intero (51d23cd, direzione 0.18). B2 ed E sono nel sito dal commit d5ad7b0. Le richieste:
+1. fedeltà di E sullo staging a 1280, 1366, 1440, 1920 e 2560 px, con e senza spaziature, compresi i due punti segnalati dal creative-director;
+2. scelta tra l'aria minima M del creative-director e il ripiego `@supports not (width: 1cqw)` di ux-designer, con una patch unica sulla HEAD d5ad7b0;
+3. design system 0.16.
+
+Durante il lavoro ux-designer ha dato E conforme a 1.3.2, 1.4.12 e 2.4.3, con parere favorevole su M; per l'accessibilità il ripiego non serve più (884a042, §8 della sua review).
+
+### 8.1 Fedeltà: la build è B2 + E
+
+| Prova | Esito |
+|---|---|
+| File | 474e2df con le patch B2 ed E applicate in fila dà esattamente il file di d5ad7b0 (blob `f7d7619`). La HEAD 884a042 non tocca `src/` |
+| Build | md5 dei 165 file: lo staging è identico a una mia build pulita di d5ad7b0 e alla build B2+E misurata dal creative-director (`cd-1412/dist-e`) |
+| Markup e CSS | rispetto alla mia build B2 il markup non cambia; cambiano solo le regole delle schede della patch E (`display: flex`, `flex-wrap`, `order`, `margin-inline-start: auto` su «Esplora», `flex-basis: 100%` su regione e descrizione). Su `/puglia-digitale/` cambia solo il CSS, che lì nessun elemento usa |
+
+### 8.2 Senza spaziature
+
+- **Uguale alla B2.** In 258 finestre da 1280 a 2560 px lo scarto è 0 px, su filetti, nodi, testi, «Esplora», carta, legenda e sezione. La sezione è identica pixel per pixel a 1280, 1366, 1440, 1920 e 2560 px, a 1× e 2×.
+  - A 1280 px, a 2×, la prima cattura di una serie risultava spostata di 7–8 px. Ripetuta, i pixel diversi sono 0: era la cattura, non la pagina.
+- **«Esplora»** resta accanto al nome, sul bordo destro, in tutte le finestre, e il nome sta su una riga. La distanza più piccola tra nome e «Esplora» è di Caltanissetta: 39,3 px a 1960.
+- **Primo punto del creative-director, la misura della descrizione: confermato.**
+  - La descrizione ha ora un riquadro di 34ch, 408 px, invece della colonna accanto a «Esplora»: 354 px a 1280, 385 a 1366, 413 a 1440. Il passaggio è a circa 1430 px.
+  - Con i testi di oggi le righe e la larghezza del testo sono le stesse della B2, e nessuna riga arriva sotto «Esplora»: la più vicina, Varese a 1280 px, ne resta 25 px a sinistra.
+  - Con un testo più lungo, a 1280 px una riga potrebbe passare fino a 54 px sotto «Esplora», due righe più in basso.
+  - Non è una collisione, e 34ch è la misura che il design system già dichiara per `.city__line`. **Lo accetto**, e lo registro nel §3.8.
+
+### 8.3 Con le spaziature
+
+| Finestra | «Esplora» di Caltanissetta | Margine del nome nella scheda | Caltanissetta sotto il nodo | Tra le schede | Aria in fondo |
+|---|---|---|---|---|---|
+| 1280 | sotto il nome | 46,8 px | 50,9 px | 93,6 · 42,9 px | 145,3 px |
+| 1366 | sotto il nome | 59,9 | 41,4 | 110,1 · 42,9 | 151,3 |
+| 1440 | sotto il nome | 68,0 | 32,1 | 125,5 · 43,0 | 156,6 |
+| 1920 | sotto il nome | 16,3 | 26,6 | 143,9 · 43,0 | 187,0 |
+| 2560 | sotto il nome | 4,1 | 28,7 | 141,8 · 43,0 | 187,0 |
+
+- **In tutte le 258 finestre** da 1280 a 2560 px:
+  - «Caltanissetta» sta su una riga;
+  - «Esplora» va sotto il nome, sul bordo destro (0 px), 15–19 px sotto il testo del nome e 10 px sopra la regione;
+  - Varese e Altamura hanno «Esplora» accanto al nome (almeno 140,1 e 64,9 px) e restano alla loro latitudine;
+  - nessuna sovrapposizione, nessuno scorrimento orizzontale;
+  - l'ordine a schermo è nome, «Esplora», regione, descrizione. Nel DOM «Esplora» è ultimo, come già prima.
+- **Le descrizioni a 34ch.** A 1280 px Altamura passa da 3 a 2 righe rispetto alla B2: per questo Caltanissetta scende di 51 px invece di 80. La descrizione di Caltanissetta entra di 28 px nella fascia orizzontale di «Esplora» (3 px a 1366), ma «Esplora» sta su una riga sua, sopra la regione: nessuna collisione.
+- **Secondo punto del creative-director, il margine del nome: confermato.** Da 1970 px, dove `display-m` arriva al massimo (76 px), il riquadro del nome lascia 4,1 px nella scheda. L'ultima lettera ne è a circa 14 px, perché il riquadro comprende la spaziatura dopo la «a» (0,12em, circa 9 px).
+  - In Chromium regge. In Safari e Firefox va riprovato `[DA VERIFICARE]`: se disegnano il nome un poco più largo, solo a quelle larghezze scatta la rete `overflow-wrap`.
+  - Non propongo modifiche. Le alternative, un corpo più piccolo per il nome o un nome che sborda nel gutter, cambierebbero la scala tipografica o rinuncerebbero al contenimento.
+- **Controlli.**
+  - axe-core 4.13: 0 violazioni a 390, 1280 e 1440 px, e con le spaziature a 1280 e 1920.
+  - Ogni scheda accende solo il proprio nodo, con il mouse e con il focus.
+  - Colori forzati invariati.
+- **A occhio.** A 1280 px «Esplora» di Caltanissetta sta nella colonna di destra, allineato agli altri due, e la sezione chiude con la sua aria. A 2560 px il nome riempie la scheda senza toccarne il bordo.
+- **Immagini** (in `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-1412b/shots/`):
+  - con le spaziature: `E1-1280-row2x.png` e `_E1-2560-calt.png`, più `E1-*.png` alle cinque larghezze;
+  - senza spaziature: `E0-*.png`, `E0b-1280*.png` e `C0b-1280*.png`.
+
+### 8.4 Scelta: l'aria minima M, senza il ripiego `@supports`
+
+**Decisione: M.** Il ripiego `@supports not (width: 1cqw)` non lo adotto.
+
+- **Perché M.**
+  - **Con i testi di oggi non cambia nulla.** Finché il testo sta nella sua fascia di latitudine, l'altezza minima della scheda assorbe il margine.
+  - **Con un testo più lungo il filetto non tocca più il testo.** Tra l'ultima riga e il filetto della scheda dopo restano almeno 27 px, invece di 3–6.
+  - **Con le spaziature dell'utente** la sua regola sui paragrafi (`margin-bottom: 2em !important`) sostituisce M, e l'esito è identico a E.
+  - **Nei browser senza unità di contenitore** le schede si impilano dall'alto della carta. Con M restano 27 px tra le schede, 24 sotto ogni filetto: si leggono come un elenco ordinato.
+- **Perché non il ripiego.**
+  - Per l'accessibilità non serve più: ux-designer, 884a042.
+  - Servirebbe solo ai browser prima di Safari 16 e Firefox 110, sopra i 1280 px.
+  - **Non è l'elenco della fascia 1024–1279 px così com'è.** Da 1280 px la carta è più alta dell'elenco, e la griglia dell'elenco, stirata nella riga, distribuisce l'altezza in più. Nella mia emulazione, a 1440 px, le schede si aprono a 99 px l'una dall'altra. Servirebbero altre regole: `align-content`, M da annullare, `::before`, `min-height`, l'ultima scheda. Sarebbe un secondo impaginato da 80em da mantenere, provabile solo per emulazione.
+- **Prove.** Copia pulita di d5ad7b0 con la patch, build in locale.
+
+| Prova | Esito |
+|---|---|
+| Build | identica, in tutti i 165 file, alla build B2+E+M del creative-director (`cd-1412/dist-em`): il commento più lungo non entra nel CSS compilato |
+| `astro check` | 0 errori, 0 avvisi (gli stessi 2 suggerimenti della HEAD) |
+| Senza spaziature, 450 finestre da 320 a 2560 px | identica a E: scarto 0 px |
+| Con le spaziature, 258 finestre da 1280 a 2560 px | identica a E: scarto 0 px |
+| Caratteri predefiniti a 20 e 24 px, senza spaziature (162 finestre da 1600 a 2560 px) | identica a E: scarto 0 px |
+| Pixel della sezione a 390, 1024, 1280, 1366, 1440, 1920 e 2560 px, a 1× e 2× | 0 pixel diversi |
+| Testi più lunghi senza spaziature: +8, +16 e +32 parole ad Altamura, +32 a Varese, a 1280, 1380, 1440, 1920 e 2560 px | tra l'ultima riga e il filetto successivo almeno 27 px; con E si scende fino a 3 px (16 parole ad Altamura, da 1380 px). In fondo almeno 105,9 px |
+| Con le spaziature, +16 parole ad Altamura o a Caltanissetta | come E: almeno 42,9 px tra le schede, 145–187 px in fondo |
+| Ripiego emulato (`--map-h` non valido) | E, a 1440 px: 3 px tra le schede. Con M: 27 px a 1280, 1440 e 1920 px; con le spaziature, a 1440, 43 px e 178 px in fondo. L'elenco `@supports` emulato: 99 px a 1440 |
+| axe-core 4.13, scheda → nodo, colori forzati | 0 violazioni; come E |
+| HTML e pesi | una regola in più su `/citta-digitali/` e `/puglia-digitale/`: +64 e +56 byte con Brotli, +15 e +19 con gzip |
+
+- **Patch:** `/tmp/claude-0/-home-user-itnode/fe3c835e-6b29-5abd-af6c-2c27dd8f28f0/scratchpad/ui-cdn/diff/citta-digitali-schede-1412-m.patch`.
+  - Si applica alla HEAD d5ad7b0 e alla 884a042, che non tocca `src/` (`git apply --check` passa). Applicata al file della HEAD, dà esattamente il file provato.
+  - È la M del creative-director, con il commento esteso al caso dei browser senza unità di contenitore.
+
+```diff
+diff --git a/src/components/sections/LocationShowcase.astro b/src/components/sections/LocationShowcase.astro
+index f7d7619..1631d34 100644
+--- a/src/components/sections/LocationShowcase.astro
++++ b/src/components/sections/LocationShowcase.astro
+@@ -581,6 +581,13 @@ const listStyle = [
+       order: 3;
+       flex-basis: 100%;
+     }
++
++    /* At least --space-m between a city's last line and the next city's rule: when a text outgrows its
++       latitude band, and where container units are missing and the cities stack from the top. The user's
++       text spacing (WCAG 1.4.12) replaces it with its own paragraph spacing. */
++    .city:not(:last-child) .city__line {
++      margin-bottom: var(--space-m);
++    }
+   }
+ 
+   /* Forced colors (Windows contrast themes): the system paints every background in its canvas colour,
+```
+
+- **Immagine** del ripiego emulato a 1440 px: E, E con M ed E con l'elenco `@supports`, nell'ordine (`…/shots/pair-nocq-1440-E-M-list.png`).
+- **Commenti di E nel componente:** corretti, nessuna modifica.
+
+### 8.5 Design system 0.16
+
+`docs/ui/design-system.md`:
+- **§3.8, `italy`.** B2 ed E come sono nel sito, con le misure: latitudini su `--map-h`, scheda flex con «Esplora» a capo, descrizione a 34ch. In più M, il comportamento con le spaziature, il margine del nome da 1970 px e il ripiego senza unità di contenitore.
+- **§2.4.** Con le spaziature scende solo la scheda che deve.
+- **§6.** Due righe nuove: B2 ed E nella build; M e il ripiego.
+- **Ipotesi, domande e decisioni.** Chiuse B2, E, M e il ripiego. Aperta l'applicazione di M.
+
 ## Verdetto di dominio (UI)
 
-- **Fedeltà: conforme.** La build di 474e2df è la patch B, senza differenze. Senza le spaziature dell'utente l'impaginato è quello approvato, a tutte le larghezze.
-- **Con le spaziature non si copre più nulla.** WCAG 1.4.12 è rispettato con il testo attuale.
-- **[IMPORTANTE] Consiglio la variante B2 prima del go-live.** Toglie la dipendenza dal testo attuale: oggi bastano quattro parole in più per far uscire il testo dalla sezione. In più riduce l'allineamento perso al minimo necessario, e senza spaziature resta identica pixel per pixel.
+- **B2 ed E nel sito: conformi.** La build di d5ad7b0 è B2 + E, senza differenze. Senza le spaziature dell'utente l'impaginato è quello approvato, pixel per pixel. Con le spaziature «Caltanissetta» resta intera, si sposta solo ciò che deve, e la sezione tiene la sua aria.
+- **I due punti del creative-director sono accettati:** la descrizione a 34ch e il margine del nome di 4,1 px da 1970 px (§8.2, §8.3).
+- **Aria minima M: scelta, da applicare.** Con i testi di oggi non cambia nulla. Il ripiego `@supports` non è adottato (§8.4).
+- La verifica della patch B (§1–§7) resta come storico: la B2 l'ha sostituita.
 - Il verdetto di gate spetta al creative-director.
 
 ## Ipotesi da validare
 
-- **Browser.** Le misure sono in Chromium 141. Safari iOS e Firefox, con e senza spaziature, `[DA VERIFICARE]`, per la patch B e per la variante B2. Nella B2 le unità di contenitore servono da Safari 16 e Firefox 110.
-- **«Quattro parole in più» è un caso di prova, non un testo previsto.** Indica di quanto può crescere una descrizione prima che, con le spaziature, il testo esca dalla sezione.
-- **Punto di a capo.** In Chromium il punto in cui «Caltanissetta» si spezza può variare di una lettera tra due calcoli dell'impaginato della stessa pagina. Non cambia l'esito delle prove.
+- **Browser.** Le misure sono in Chromium 141. Safari iOS e Firefox, con e senza spaziature, `[DA VERIFICARE]`, per B2, E e M: le unità di contenitore (da Safari 16 e Firefox 110), l'a capo di «Esplora» sulla linea di base, e il nome intero da 1970 px, che lascia 4,1 px nella scheda.
+- **Ripiego senza unità di contenitore.** L'ho emulato in Chromium rendendo non valido `--map-h`. Su un browser vecchio vero `[DA VERIFICARE]`.
+- **Testi più lunghi.** Le prove con 4–32 parole in più sono casi di prova, non testi previsti.
+- **Punto di a capo.** In Chromium il punto in cui una parola si spezza con la rete di sicurezza può variare di una lettera tra due calcoli dell'impaginato della stessa pagina. Con E, in Chromium, «Caltanissetta» non si spezza più.
 
 ## Domande aperte
 
-- **ux-designer:** la variante B2 va bene per 1.4.12? Toglie il margine di 17 px che la sua review mette tra le ipotesi da riprovare a ogni cambio di testo.
-- **creative-director:** con la B2 l'allineamento con le spaziature regge? E «Caltaniss / etta» resta come oggi (§5)?
+- Nessuna per gli altri membri. La sessione principale applica M (sotto).
+- Chiuse il 2026-10-08:
+  - la B2: scelta da ux-designer, approvata dal creative-director;
+  - l'a capo del nome: variante E del creative-director, conforme per ux-designer;
+  - M o il ripiego: M, scelta da ui-designer con il parere favorevole di ux-designer.
 
 ## Decisioni richieste
 
-- **ux-designer, poi creative-director:** adottare la variante B2 (§4).
-- **Sessione principale:** se approvata, applicare la patch del §7 e ripetere sullo staging le prove delle schede con le spaziature, compresa quella dei testi più lunghi.
+- **Sessione principale:** applicare `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-m.patch` sulla HEAD (d5ad7b0 o 884a042). Poi ripetere sullo staging le prove del §8.4: senza spaziature identica, testi più lunghi, ripiego emulato.
+- Chiuse: B2 ed E, applicate in d5ad7b0.
