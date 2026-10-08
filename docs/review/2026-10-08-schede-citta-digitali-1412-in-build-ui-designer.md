@@ -3,9 +3,9 @@ titolo: Schede di /citta-digitali/ con WCAG 1.4.12, patch B nella build · verif
 owner: ui-designer
 contributi: []
 stato: in revisione
-versione: 0.2
+versione: 0.3
 aggiornato: 2026-10-08
-fonti: [per §8: commit d5ad7b0 (B2 ed E), 51d23cd, 0da39e4 e 884a042, docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (variante E, suggerimento M), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.3, §7 e §8: ripiego @supports, E e M), docs/creativa/direzione-visiva.md (0.18, §3.2), docs/ux/accessibilita.md (0.14), patch del creative-director in scratchpad/cd-1412/diff/, staging http://127.0.0.1:4321 (build di d5ad7b0), build B2 di ui-designer http://127.0.0.1:4381, build B2+E+M del creative-director (scratchpad/cd-1412/dist-em), copia pulita di d5ad7b0 con e senza M (build in locale, porta 4383); per §1–§7: commit 474e2df (patch B applicata dalla sessione principale), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.1, §6: scelta della patch B), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e §5: patch B), docs/ux/accessibilita.md (0.12, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.14), docs/creativa/direzione-visiva.md (0.17, §1.4), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, misure della sessione principale in scratchpad/b-main/, sonde di ux-designer in scratchpad/ux-1412/ (probe.mjs, probe-font.mjs), copia pulita di 474e2df con e senza la variante B2 (build in locale), Playwright 1.56 (Chromium 141), axe-core 4.13 e sharp 0.35 del 2026-10-08]
+fonti: [per la 0.3: commit ae91aa2 (M applicata) e prove della sessione principale sulla staging; per §8: commit d5ad7b0 (B2 ed E), 51d23cd, 0da39e4 e 884a042, docs/review/2026-10-08-schede-citta-digitali-1412-creative-director.md (variante E, suggerimento M), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.3, §7 e §8: ripiego @supports, E e M), docs/creativa/direzione-visiva.md (0.18, §3.2), docs/ux/accessibilita.md (0.14), patch del creative-director in scratchpad/cd-1412/diff/, staging http://127.0.0.1:4321 (build di d5ad7b0), build B2 di ui-designer http://127.0.0.1:4381, build B2+E+M del creative-director (scratchpad/cd-1412/dist-em), copia pulita di d5ad7b0 con e senza M (build in locale, porta 4383); per §1–§7: commit 474e2df (patch B applicata dalla sessione principale), docs/review/2026-10-08-carta-citta-digitali-nomi-ux-designer.md (1.1, §6: scelta della patch B), docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md (§2.2 e §5: patch B), docs/ux/accessibilita.md (0.12, riga «Spaziatura del testo» e §4.3), docs/ui/design-system.md (0.14), docs/creativa/direzione-visiva.md (0.17, §1.4), staging http://127.0.0.1:4321 (build di 474e2df), build di prima della patch http://127.0.0.1:4360, misure della sessione principale in scratchpad/b-main/, sonde di ux-designer in scratchpad/ux-1412/ (probe.mjs, probe-font.mjs), copia pulita di 474e2df con e senza la variante B2 (build in locale), Playwright 1.56 (Chromium 141), axe-core 4.13 e sharp 0.35 del 2026-10-08]
 oggetto: sezione «L'Italia in un unico portale» di /citta-digitali/ da 1280 px, dopo il commit 474e2df; dalla 0.2 anche dopo il commit d5ad7b0 (B2 ed E), con la scelta tra l'aria minima M e il ripiego @supports (§8)
 ---
 
@@ -405,7 +405,7 @@ index f7d7619..1631d34 100644
 
 - **B2 ed E nel sito: conformi.** La build di d5ad7b0 è B2 + E, senza differenze. Senza le spaziature dell'utente l'impaginato è quello approvato, pixel per pixel. Con le spaziature «Caltanissetta» resta intera, si sposta solo ciò che deve, e la sezione tiene la sua aria.
 - **I due punti del creative-director sono accettati:** la descrizione a 34ch e il margine del nome di 4,1 px da 1970 px (§8.2, §8.3).
-- **Aria minima M: scelta, da applicare.** Con i testi di oggi non cambia nulla. Il ripiego `@supports` non è adottato (§8.4).
+- **Aria minima M: scelta e applicata in ae91aa2**, riverificata dalla sessione principale sulla staging. Con i testi di oggi non cambia nulla. Il ripiego `@supports` non è adottato (§8.4).
 - La verifica della patch B (§1–§7) resta come storico: la B2 l'ha sostituita.
 - Il verdetto di gate spetta al creative-director.
 
@@ -426,5 +426,5 @@ index f7d7619..1631d34 100644
 
 ## Decisioni richieste
 
-- **Sessione principale:** applicare `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-m.patch` sulla HEAD (d5ad7b0 o 884a042). Poi ripetere sullo staging le prove del §8.4: senza spaziature identica, testi più lunghi, ripiego emulato.
-- Chiuse: B2 ed E, applicate in d5ad7b0.
+- Nessuna.
+- Chiuse: B2 ed E, applicate in d5ad7b0; M, applicata in ae91aa2 e riverificata dalla sessione principale sulla staging (geometria identica con e senza spaziature, pagina identica al pixel, almeno 27 px prima del filetto con testi più lunghi e nel ripiego).
