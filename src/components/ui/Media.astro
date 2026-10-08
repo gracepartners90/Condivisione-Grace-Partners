@@ -41,6 +41,11 @@ interface Props {
    * of docs/performance/budget.md (check 8).
    */
   hiDpiAvifWidths?: number[];
+  /**
+   * Encoder quality per format, for an image whose texture compresses badly and would break the weight
+   * limits of docs/performance/budget.md at the defaults of astro.config (AVIF 50, WebP 75, JPEG 75).
+   */
+  quality?: { avif?: number; webp?: number; jpg?: number };
   class?: string;
 }
 
@@ -56,6 +61,7 @@ const {
   pendingText = true,
   mobileCrop,
   hiDpiAvifWidths,
+  quality,
   class: className,
 } = Astro.props;
 
@@ -71,27 +77,30 @@ const usableWidths = image
 // Sources built here instead of <Picture> when a viewport or a screen density needs its own widths.
 // - Art direction (mobileCrop): mobile sources cropped by sharp (fit cover), first, so they win below 64em.
 // - High density (hiDpiAvifWidths): an AVIF source for 1.5 dppx and more with every width, before the
-//   normal sources. Without either prop Media renders <Picture>.
+//   normal sources.
+// - Encoder quality per format (quality): <Picture> takes one quality for every format.
+// Without any of these props Media renders <Picture>.
 const MOBILE_MEDIA = '(max-width: 63.99em)';
 const HIDPI_MEDIA = '(min-resolution: 1.5dppx)';
 const hiDpiWidths =
   image && hiDpiAvifWidths ? [...new Set([...usableWidths, ...hiDpiAvifWidths.filter((w) => w <= image.width)])].sort((a, b) => a - b) : undefined;
+const q = { avif: quality?.avif, webp: quality?.webp, jpg: quality?.jpg };
 const art =
-  image && (mobileCrop || hiDpiWidths)
+  image && (mobileCrop || hiDpiWidths || quality)
     ? await (async () => {
         const full = { src: image, widths: usableWidths };
         const [avif, webp, jpg, hiDpi] = await Promise.all([
-          getImage({ ...full, format: 'avif' }),
-          getImage({ ...full, format: 'webp' }),
-          getImage({ ...full, format: 'jpg' }),
-          hiDpiWidths ? getImage({ src: image, widths: hiDpiWidths, format: 'avif' }) : undefined,
+          getImage({ ...full, format: 'avif', quality: q.avif }),
+          getImage({ ...full, format: 'webp', quality: q.webp }),
+          getImage({ ...full, format: 'jpg', quality: q.jpg }),
+          hiDpiWidths ? getImage({ src: image, widths: hiDpiWidths, format: 'avif', quality: q.avif }) : undefined,
         ]);
         if (!mobileCrop) return { avif, webp, jpg, hiDpi, mobile: undefined };
         const mWidths = [...new Set((mobileCrop.widths ?? [480, 640, 768]).filter((w) => w <= image.width))];
         const mWidth = Math.max(...mWidths);
         const mHeight = Math.round(mWidth / mobileCrop.ratio);
         const crop = { src: image, width: mWidth, height: mHeight, widths: mWidths, fit: 'cover' as const, position: mobileCrop.position ?? 'centre' };
-        const [mAvif, mWebp] = await Promise.all([getImage({ ...crop, format: 'avif' }), getImage({ ...crop, format: 'webp' })]);
+        const [mAvif, mWebp] = await Promise.all([getImage({ ...crop, format: 'avif', quality: q.avif }), getImage({ ...crop, format: 'webp', quality: q.webp })]);
         return { avif, webp, jpg, hiDpi, mobile: { avif: mAvif, webp: mWebp, width: mWidth, height: mHeight } };
       })()
     : undefined;
