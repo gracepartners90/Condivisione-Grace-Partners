@@ -47,3 +47,13 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Le risposte dell'utente vanno registrate subito anche nel brief consolidato: glossario, omonimie e righe del registro (qui S4, S7), con la data della conferma.
 - Quando una conferma chiude un'ipotesi, propagarla in tutti i punti che la citano (registro N, materiali P, ipotesi I, domande D, note di sintesi) e cercarli con grep, non a memoria. Nel deliverable l'ipotesi chiusa passa a una riga «chiuse il …».
 - La data dei dati di un numero di prima parte può essere «vera per costruzione»: mese della consultazione della fonte primaria più la data della conferma dell'utente. Proporla come opzione, ma la decisione resta all'utente o al cliente.
+
+## Lezioni dalla hero di /siii/ (2026-10-08, Fase 5)
+- Se il coordinatore ferma l'incarico (l'utente cambia asset): annullare con Edit inversi usando il testo originale letto all'inizio, poi grep per verificare che non resti traccia. Non scrivere sull'asset scartato nemmeno dopo.
+- Un asset dell'utente che non viene dalle LG porta tre questioni distinte: chi l'ha realizzato (implicito non è dichiarato: registrare le parole esatte), identità (nome ufficiale e comune, che servono alla riga con il nome della DV §4.8), consenso. Un testo di consenso che dice «realizzato da ITnode» chiude anche la paternità.
+- La lettura di un logo non è un nome ufficiale. Un nome tutto maiuscolo uguale a una parola inglese («YES») può essere letto come parola dagli screen reader: proporre «con il logo X» finché non è confermato.
+- Prima di dire che logo o menu sono «nell'immagine», controllare l'ancoraggio del ritaglio dei telefoni (in alto o in basso): l'alt deve valere per tutti i ritagli.
+- Controlli di go-live con un solo interruttore per più entità (consensi): proporli per entità, con chiave dal prefisso del file, e far fallire le chiavi non elencate.
+- Patch per la sessione principale: «scratchpad/» è la scratchpad condivisa della sessione (`/tmp/claude-0/-home-user-itnode/<sessione>/scratchpad`, dove c'è `siii-lcp/`). Write toglie lo spazio delle righe di contesto vuote: `git apply` le accetta, ma va detto e va chiesto `git apply --check`.
+- Il Contesto di un ADR invecchia (l'anteprima era «protetta», poi è stata aperta): rileggerlo a ogni nuova versione.
+- Piccole imprese locali: spesso non hanno traccia indicizzata. Quattro ricerche bastano; i risultati spuri (pagine di città dei portali) non sono piste.
