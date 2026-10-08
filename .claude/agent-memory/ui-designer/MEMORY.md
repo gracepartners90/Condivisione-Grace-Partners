@@ -189,3 +189,31 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
 - **Script** in `scratchpad/ui-s3b/`:
   - `choice.mjs` e `choice2.mjs`: variante e sorgente scelte, oggi e con la patch; il secondo prende i formati come JSON;
   - `diff/siii-esempio-avif-hidpi.patch`.
+
+## Carta di /citta-digitali/ con i nomi (lezioni del 2026-10-08)
+- **Esito:** la carta con i nomi della Home (426e6dc, richiesta dell'utente) è conforme: regola 11 e sovrapposizioni a posto da 320 a 1920 px, anche oltre i 480 px, dove la distanza cresce con la carta. Ho proposto due patch, non ancora applicate:
+  - A: classe «ampie» da 36rem, solo su `/citta-digitali/`, con la lista `nomi.ampie`; oggi aggiunge Lecce;
+  - B: le schede nel flusso, per 1.4.12.
+
+  Review `docs/review/2026-10-08-carta-citta-digitali-nomi-ui-designer.md`, design system 0.14.
+- **Prima di valutare un nome, controllare che la città sia nell'elenco.** Taranto, l'esempio della sessione principale, non è tra le 45 città: nominarla sarebbe un dato falso.
+- **Il generatore non conosce la costa.** Il fondo di «MANFREDONIA» (`ne`) copriva la punta del Gargano. I metri non lo vedono: la lunghezza di costa coperta non distingue, perché CALTANISSETTA ne copre di più, ma lungo una costa diritta. Guardare sempre le immagini delle zone con promontori.
+- **Classe annidata con i nomi fermi** (`keep`): i nomi della classe precedente mantengono la loro posizione. Così il CSS della classe nuova è di 4 regole (`data-from`), senza duplicare tutte le ancore come per le strette.
+- **Confronti di layout tra due build:** le coordinate di pagina, misurate subito dopo un ridimensionamento, oscillano fino a 30 px anche tra build identiche. Misurare relativo alla sezione, dopo 120 ms e due frame: così il rumore va a zero.
+- **Schede alla latitudine, cose che non funzionano:**
+  - `minmax(%, auto)` in griglia non garantisce l'altezza del contenuto quando manca spazio: il contenuto conta solo nel limite di crescita;
+  - gli elementi con riga definita vengono posizionati prima: uno spaziatore con `grid-row-start` sul primo figlio non funziona, uno pseudo-elemento `::before` sì;
+  - `container-type: size` fa uscire l'ultima scheda dalla sezione, e la sezione successiva è chiara: testo invisibile.
+
+  Funziona il flusso con `min-height` in %: la riga cresce solo con le spaziature dell'utente.
+- **Prova di 1.4.12 completa sulle schede:** anche schede contro schede, con lo spazio dopo i paragrafi. Con `justify-items: start`, `overflow-wrap: break-word` non scatta mai, perché la larghezza minima resta quella della parola. Serve `max-width: 100%` sul titolo.
+- **`rm -rf` su variabili è bloccato** dal controllo di sicurezza: usare cartelle nuove, oppure `"${S:?}"`.
+- **La HEAD si è mossa durante l'incarico** (5f2f757 di ux-designer). Ho rifatto le prove finali delle patch sulla nuova HEAD, in tutti e due gli ordini di applicazione.
+- **Script** in `scratchpad/ui-cdn/tools/`:
+  - `probe-map.mjs` e `gaps.mjs`: i due metri;
+  - `cards.mjs`, `cards1412.mjs` e `fixcheck.mjs`: le schede;
+  - `relcmp.mjs`: confronto relativo alla sezione;
+  - `checks2.mjs`, `pix.mjs` e `fullpage.mjs`: axe, Lecce, colori forzati e confronto al pixel;
+  - `lecce.mjs`;
+  - le esplorazioni del generatore sono in `scratchpad/ui-cdn/explore/` (variabili `GROWFIXED`, `ORDER`, `ONLY`, `WHY`, `COAST`);
+  - le patch sono in `scratchpad/ui-cdn/diff/`.
