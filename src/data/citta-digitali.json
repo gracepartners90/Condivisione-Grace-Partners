@@ -65,6 +65,7 @@
       ["caltagirone", "grammichele", "comiso", "chiaramonte-gulfi"]
     ],
     "poi": ["acquaviva", "gravina", "monopoli", "cassano", "massafra", "itri", "bitonto", "santeramo", "manfredonia", "martina-franca", "bari", "lecce", "brindisi", "cosenza", "pompei"],
+    "ampie": ["lecce", "brindisi"],
     "senzaNome": ["polignano", "san-cataldo"]
   },
   "nomiPuglia": {

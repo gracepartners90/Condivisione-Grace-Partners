@@ -58,7 +58,7 @@ const CITIES = JSON.parse(await readFile('src/data/citta-digitali.json', 'utf8')
   }
   for (const [key, nomi] of [['nomi', CITIES.nomi], ['nomiPuglia', CITIES.nomiPuglia]]) {
     if (!nomi) continue;
-    const named = [...nomi.obbligatori, ...(nomi.solidi ?? []), ...nomi.gruppi.flat(), ...nomi.poi, ...(nomi.senzaNome ?? [])];
+    const named = [...nomi.obbligatori, ...(nomi.solidi ?? []), ...nomi.gruppi.flat(), ...nomi.poi, ...(nomi.ampie ?? []), ...(nomi.senzaNome ?? [])];
     const unknown = named.filter((id) => !ids.has(id));
     if (unknown.length) throw new Error(`citta-digitali.json: ${key} names unknown cities ${unknown.join(', ')}`);
   }
@@ -201,10 +201,12 @@ function toCurvePath(lines, decimals) {
 }
 
 // ─── Names on the maps with city dots ───
-// Classes of map width per map. italia: two, at the same 25rem threshold as the coordinates in
-// MapItaly.astro, narrow maps (phones, and the 1024 px desktop at 382 px) and wide maps (up to
-// 30rem). pugliaRegione: three, narrow and wide on the compact map (the same 25rem threshold) and
-// hero on the wide map of /puglia-digitale/ (another element).
+// Classes of map width per map. italia: three, nested. Narrow maps (phones, and the Home at 1024 px,
+// 382 px) and wide maps switch at 25rem, the threshold of MapItaly.astro; the large class, from 36rem,
+// only exists on /citta-digitali/ (MapItaly `large`), the one map that grows past 36rem: it keeps the
+// wide names where they are and adds, where they fit, the cities of `nomi.ampie` (the most important ones
+// not yet named: user, 2026-10-08). pugliaRegione: three, narrow and wide on the compact map (the same
+// 25rem threshold) and hero on the wide map of /puglia-digitale/ (another element).
 // Each name takes one position around its node: beside it, on a corner, or hanging below it on a
 // vertical leader, the gesture of the Horizon labels (design system §2.1). A name is shown only if
 // it covers no dot, no node, no other name, no other leader and no area name at every width of its
@@ -214,7 +216,9 @@ function toCurvePath(lines, decimals) {
 // Metrics: mono label at 13 px, uppercase, with the user text spacing of WCAG 1.4.12 (0.12em
 // tracking, line-height 1.5). Offsets match the anchor rules in MapItaly.astro.
 const LABEL = { advance: 9.6, pad: 2, line: 19.5, node: 6.5, dot: 4, ring: 13.5, clear: 1, indent: 8, areaMax: 104, apart: 6 }; // node and dot radii include the 1.5 px knockout ring; ring: the office; areaMax: 8em; apart: rule 11, from the knockout ring
-const NAME_CLASSES = { narrow: [280, 400], wide: [400, 480] }; // px; .worlds__map is 280 px at 320 and 30rem at most
+// px. Home chapter 03 (.worlds__map): 280 px at 320, 30rem at most. /citta-digitali/ (.places__map): 280–352 px
+// under 64em, then 6 of the 12 columns, 463 px at 1024 and 730 px from 1600 (the page is 100rem at most).
+const NAME_CLASSES = { narrow: [280, 400], wide: [400, 576], large: [576, 731] };
 const STEP = 5;
 const DROPS = { 'drop-r': 24, 'drop-l': 24, 'drop2-r': 40, 'drop2-l': 40, 'drop3-r': 56, 'drop3-l': 56 }; // px from the node centre to the first line
 // Vertical offsets from the first line (top: -0.7em in CSS), so that names on two lines grow downwards.
@@ -291,9 +295,10 @@ function areaBox(a, W, view) {
  * Anchors (and line breaks) for every city of `named` together (backtracking), or null if they do not
  * all fit at `widths`. `opts.home`: id of the office (its ring keeps other names away, its own name
  * stays beside it); `opts.areas`: area names to keep clear; `opts.wrap`: ids that may break on two lines;
- * `opts.longDrops`: leaders of 56 px too.
+ * `opts.longDrops`: leaders of 56 px too; `opts.fixed`: { id: { anchor, lines } } of names that keep
+ * the position they have in the previous class.
  */
-function placeNames(named, cities, view, widths, { home = null, areas = [], wrap = [], longDrops = false } = {}, budget = 300000) {
+function placeNames(named, cities, view, widths, { home = null, areas = [], wrap = [], longDrops = false, fixed = {} } = {}, budget = 300000) {
   const others = cities.filter((c) => !named.includes(c));
   const radius = (q) => (q.id === home ? LABEL.ring : LABEL.node);
   const free = (p, a, lines) => widths.every((W) => {
@@ -304,7 +309,7 @@ function placeNames(named, cities, view, widths, { home = null, areas = [], wrap
     return !others.some((d) => touches(d.x, d.y, LABEL.dot)) && !named.some((q) => q !== p && touches(q.x, q.y, radius(q) + LABEL.apart - LABEL.clear));
   });
   const layouts = (p) => [[p.name], ...(wrap.includes(p.id) && twoLines(p.name) ? [twoLines(p.name)] : [])];
-  const options = named.map((p) => layouts(p).flatMap((lines) => anchorOrder(p, view, longDrops)
+  const options = named.map((p) => (fixed[p.id] ? [fixed[p.id].lines] : layouts(p)).flatMap((lines) => (fixed[p.id] ? [fixed[p.id].anchor] : anchorOrder(p, view, longDrops))
     .filter((a) => free(p, a, lines))
     .map((a) => ({ a, lines, geo: widths.map((W) => nameGeometry(p, a, W, view, lines, p.id === home)) }))));
   if (options.some((o) => o.length === 0)) return null;
@@ -352,23 +357,25 @@ function checkApart(id, result, cities, view, classes, home) {
  * Names per class of width, in the editorial order of `nomi`: the required names (those of the text
  * beside the map), the solid names (project materials), then one name per group (the first that
  * fits), then the others. Classes go from the narrowest; each starts from the names of the previous
- * one, so names only appear as the map grows. Returns { id: { anchor: { [class]: position | 'none' },
+ * one, so names only appear as the map grows; in a class with `keep` they also stay where they are,
+ * and a class with `candidates` adds only the cities of that list of `nomi`.
+ * Returns { id: { anchor: { [class]: position | 'none' },
  * lines? } }, with `lines` holding the classes where a name allowed on two lines breaks. A required
  * name may be missing from a class with a warning (the text beside the map names it), except in the
  * last class, where the build stops.
  */
-function chooseNames(cities, nomi, view, { id = 'italia', classes = [{ name: 'narrow', range: NAME_CLASSES.narrow }, { name: 'wide', range: NAME_CLASSES.wide }], wrap = [], ...opts } = {}) {
+function chooseNames(cities, nomi, view, { id = 'italia', classes = [{ name: 'narrow', range: NAME_CLASSES.narrow }, { name: 'wide', range: NAME_CLASSES.wide }, { name: 'large', range: NAME_CLASSES.large, keep: true, candidates: 'ampie' }], wrap = [], ...opts } = {}) {
   const byId = Object.fromEntries(cities.map((c) => [c.id, c]));
   const excluded = new Set(nomi.senzaNome ?? []);
   // A name turns its dot into a node (Ø 10 and its ring): it must not hide another city's dot.
   const hidesDot = (c, widths) => widths.some((W) => cities.some((d) => d !== c && Math.hypot(d.x - c.x, d.y - c.y) * (W / view.width) + LABEL.dot - 1.5 <= LABEL.node));
-  const grow = (start, widths, strict, wrapIds, label, areas) => {
+  const grow = (start, widths, strict, wrapIds, label, areas, fixed = {}, only = null) => {
     let named = [], placed = {};
     const add = (cid) => {
       const c = byId[cid];
       if (!c || excluded.has(cid) || named.includes(c)) return false;
       if (!nomi.obbligatori.includes(cid) && hidesDot(c, widths)) return false;
-      const r = placeNames([...named, c], cities, view, widths, { ...opts, wrap: wrapIds, areas });
+      const r = placeNames([...named, c], cities, view, widths, { ...opts, wrap: wrapIds, areas, fixed });
       if (r) { named = [...named, c]; placed = r; }
       return Boolean(r);
     };
@@ -377,15 +384,19 @@ function chooseNames(cities, nomi, view, { id = 'italia', classes = [{ name: 'na
       if (strict) throw new Error(`${id}: no room for the required name ${byId[cid].name}`);
       console.warn(`${id}: no room for ${byId[cid].name} on ${label} maps: name hidden there`);
     }
-    (nomi.solidi ?? []).forEach(add);
-    for (const group of nomi.gruppi) if (!group.some((gid) => named.some((n) => n.id === gid))) group.some(add);
-    nomi.poi.forEach(add);
+    if (only) only.forEach(add);
+    else {
+      (nomi.solidi ?? []).forEach(add);
+      for (const group of nomi.gruppi) if (!group.some((gid) => named.some((n) => n.id === gid))) group.some(add);
+      nomi.poi.forEach(add);
+    }
     return { ids: named.map((n) => n.id), placed };
   };
   const results = [];
   classes.forEach((c, i) => {
     const prev = results.at(-1);
-    results.push({ name: c.name, ...grow(prev?.ids ?? [], widthRange(c.range), i === classes.length - 1, c.wrap ? wrap : [], c.name, c.areas === false ? [] : (opts.areas ?? [])) });
+    const fixed = c.keep && prev ? prev.placed : {};
+    results.push({ name: c.name, ...grow(prev?.ids ?? [], widthRange(c.range), i === classes.length - 1, c.wrap ? wrap : [], c.name, c.areas === false ? [] : (opts.areas ?? []), fixed, c.candidates ? (nomi[c.candidates] ?? []) : null) });
     const lost = (prev?.ids ?? []).filter((cid) => !results.at(-1).ids.includes(cid));
     if (lost.length) console.warn(`${id}: ${lost.join(', ')} named on ${prev.name} maps but not on ${c.name} ones`);
   });

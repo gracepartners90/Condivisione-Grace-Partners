@@ -40,6 +40,7 @@
           "xPct": 81.23,
           "yPct": 59.24,
           "anchor": {
+            "large": "drop-l",
             "wide": "drop-l",
             "narrow": "drop-l"
           }
@@ -54,6 +55,7 @@
           "xPct": 83.71,
           "yPct": 56.26,
           "anchor": {
+            "large": "ne",
             "wide": "ne",
             "narrow": "none"
           }
@@ -68,6 +70,7 @@
           "xPct": 65.22,
           "yPct": 93.03,
           "anchor": {
+            "large": "e",
             "wide": "e",
             "narrow": "none"
           }
@@ -82,6 +85,7 @@
           "xPct": 61.23,
           "yPct": 90.77,
           "anchor": {
+            "large": "w",
             "wide": "w",
             "narrow": "w"
           }
@@ -96,6 +100,7 @@
           "xPct": 79.47,
           "yPct": 73.45,
           "anchor": {
+            "large": "w",
             "wide": "w",
             "narrow": "w"
           }
@@ -110,8 +115,24 @@
           "xPct": 56.11,
           "yPct": 55.59,
           "anchor": {
+            "large": "e",
             "wide": "e",
             "narrow": "nw"
+          }
+        },
+        {
+          "id": "lecce",
+          "name": "Lecce",
+          "lat": 40.35,
+          "lon": 18.17,
+          "x": 950,
+          "y": 743.4,
+          "xPct": 95,
+          "yPct": 62.96,
+          "anchor": {
+            "large": "drop2-l",
+            "wide": "none",
+            "narrow": "none"
           }
         },
         {
@@ -124,6 +145,7 @@
           "xPct": 19.5,
           "yPct": 12.92,
           "anchor": {
+            "large": "e",
             "wide": "e",
             "narrow": "e"
           }
@@ -339,13 +361,6 @@
           "y": 727.5,
           "xPct": 88.71,
           "yPct": 61.61
-        },
-        {
-          "id": "lecce",
-          "x": 950,
-          "y": 743.4,
-          "xPct": 95,
-          "yPct": 62.96
         },
         {
           "id": "copertino",

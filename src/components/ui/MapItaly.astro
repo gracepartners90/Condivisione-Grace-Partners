@@ -9,7 +9,7 @@
  */
 type MapPlace = { id: string; name: string; lat: number; lon: number };
 /** Position of a name per class of map width (scripts/generate-maps.mjs); 'none' where it is not shown. */
-type LabelAnchor = { wide: string; narrow: string; hero?: string };
+type LabelAnchor = { wide: string; narrow: string; hero?: string; large?: string };
 type PlacePoint = {
   id: string;
   name?: string;
@@ -39,10 +39,10 @@ interface Props {
   places?: MapPlace[];
   /**
    * Città Digitali: every city of src/data/citta-digitali.json, one dot each (visual direction §1.4).
-   * - `true` (Home chapter 03): names where they fit at every width (anchors computed by
-   *   scripts/generate-maps.mjs). No coordinates.
-   * - `'dots'` (/citta-digitali/): the cities in `places` are the nodes, named by the cards beside the
-   *   map; every other city is a dot. Use with `showLabels={false}`.
+   * - `true` (Home chapter 03; /citta-digitali/, with `large`): names where they fit at every width
+   *   (anchors computed by scripts/generate-maps.mjs). No coordinates.
+   * - `'dots'`: the cities in `places` are the nodes, named by the cards beside the map; every other
+   *   city is a dot. Use with `showLabels={false}` (/citta-digitali/ until 2026-10-08).
    */
   cities?: boolean | 'dots';
   showLabels?: boolean;
@@ -52,6 +52,12 @@ interface Props {
    * under 25rem.
    */
   nameClass?: 'hero';
+  /**
+   * Città Digitali on /citta-digitali/, the one map of Italy wider than 36rem: from that width it also
+   * draws the names of the large class (scripts/generate-maps.mjs), and the wide names stay where they
+   * are. Below 36rem those cities are dots. Use with `cities`.
+   */
+  large?: boolean;
   /** Id of the place drawn as the office (ring around the node). */
   home?: string;
   /**
@@ -62,7 +68,7 @@ interface Props {
   class?: string;
 }
 
-const { map, places = [], cities = false, nameClass, showLabels = true, home, label, class: className } = Astro.props;
+const { map, places = [], cities = false, nameClass, large = false, showLabels = true, home, label, class: className } = Astro.props;
 
 const files = import.meta.glob<{ default: Record<string, unknown> }>('../../data/maps.json', { eager: true });
 const raw = Object.values(files)[0]?.default as { maps?: Record<string, MapData> } & Record<string, MapData> | undefined;
@@ -97,7 +103,9 @@ const mapPlaces = Array.isArray(data?.places) ? data.places : [];
 // With `cities`, the name of each place in this element's class: the wide one (and the narrow one under
 // 25rem), or the hero one. A place without a name in the class is a dot here.
 const nameIn = (p: Partial<PlacePoint>) => (nameClass === 'hero' ? p.anchor?.hero : p.anchor?.wide);
-const namedHere = cities === true ? mapPlaces.filter((p) => nameIn(p) && nameIn(p) !== 'none') : [];
+// With `large`, the cities named only on large maps are places too: dots below 36rem, named nodes from 36rem.
+const largeOnly = (p: Partial<PlacePoint>) => large && !(nameIn(p) && nameIn(p) !== 'none') && Boolean(p.anchor?.large && p.anchor.large !== 'none');
+const namedHere = cities === true ? mapPlaces.filter((p) => (nameIn(p) && nameIn(p) !== 'none') || largeOnly(p)) : [];
 const placeList: MapPlace[] =
   cities === true && mapPlaces.length ? namedHere.map((p) => ({ id: p.id, name: p.name ?? p.id, lat: p.lat ?? 0, lon: p.lon ?? 0 })) : places;
 const points = placeList.map((p) => {
@@ -105,12 +113,13 @@ const points = placeList.map((p) => {
   const pos = pct(pt.x, pt.y);
   // Names placed at build time (Città Digitali) carry an anchor per class of width; without one,
   // labels of places in the eastern part of the map hang to the left, so they stay inside it.
-  const wide = cities === true ? nameIn(pt) : undefined;
-  const narrow = cities === true && nameClass !== 'hero' ? pt.anchor?.narrow : undefined;
+  const from = cities === true && largeOnly(pt) ? 'large' : undefined;
+  const wide = cities === true ? (from ? pt.anchor?.large : nameIn(pt)) : undefined;
+  const narrow = cities === true && nameClass !== 'hero' && !from ? pt.anchor?.narrow : undefined;
   // A long required name on two lines: always, or only on narrow or only on wide maps.
   const lines = nameClass === 'hero' ? undefined : (pt.lines?.narrow ?? pt.lines?.wide);
   const breakOn = pt.lines?.narrow && pt.lines?.wide ? 'always' : pt.lines?.narrow ? 'narrow' : pt.lines?.wide ? 'wide' : undefined;
-  return { ...p, ...pos, anchor: wide ? { wide, narrow: narrow ?? wide } : undefined, lines, breakOn, isHome: p.id === home, labelLeft: !wide && pos.left > 55 };
+  return { ...p, ...pos, anchor: wide ? { wide, narrow: narrow ?? wide } : undefined, from, lines, breakOn, isHome: p.id === home, labelLeft: !wide && pos.left > 55 };
 });
 // Dots: with `cities` the unnamed cities (and the cities named only in other classes); with
 // `cities="dots"` every city that is not a node here.
@@ -162,6 +171,7 @@ if (!data) {
         style={`left: ${p.left}%; top: ${p.top}%; --i: ${i}`}
         data-place={p.id}
         data-narrow={p.anchor?.narrow === 'none' ? 'dot' : undefined}
+        data-from={p.from}
       >
         <span class="map__node" />
         {showLabels && (
@@ -415,6 +425,15 @@ if (!data) {
 
     /* The whole of Puglia on a phone: no sea names, which would crowd the coast (design system §5.4). */
     .map--pugliaRegione .map__area { display: none; }
+  }
+
+  /* Names of the large class (`large`, /citta-digitali/): a dot below 36rem, a named node from 36rem. */
+  .map__place[data-from='large'] .map__node { left: -2.5px; top: -2.5px; width: 5px; height: 5px; }
+  .map__place[data-from='large'] .map__label { display: none; }
+
+  @container (min-width: 36rem) {
+    .map__place[data-from='large'] .map__node { left: -5px; top: -5px; width: 10px; height: 10px; }
+    .map__place[data-from='large'] .map__label { display: grid; }
   }
 
   /* Windows contrast themes (forced colors): the system paints every background in its canvas

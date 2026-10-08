@@ -7,7 +7,8 @@
  * - `italy` (Città Digitali): outline map of Italy on the right, cities on the left aligned
  *   to the latitude of their node; hovering or focusing a city lights its node. With
  *   `cityDots`, every other city of Città Digitali is a dot on the map (visual direction §1.4); with
- *   `cityDots.names`, the map also draws the names of the Home map, where they fit.
+ *   `cityDots.names`, the map also draws the names of the Home map, where they fit, and from 36rem
+ *   those of the large class (MapItaly `large`).
  * Every «Esplora ↗» opens the town portal in a new tab, announced to assistive technology.
  */
 import Media from '../ui/Media.astro';
@@ -54,7 +55,10 @@ interface Props {
    * is not in the text beside it; without it the map and its legend stay aria-hidden (the legend only
    * explains what is seen).
    */
-  /** `names`: the map draws the names of the Home map (chapter 03) instead of leaving them to the cards. */
+  /**
+   * `names`: the map draws the names of the Home map (chapter 03) instead of leaving them to the cards,
+   * and from 36rem those of the large class too (MapItaly `large`).
+   */
   cityDots?: { legend: string; label?: string; names?: boolean };
 }
 
@@ -168,7 +172,7 @@ const north = [...locations]
             {cityDots ? (
               <figure class="places__atlas" aria-hidden={cityDots.label ? undefined : 'true'}>
                 {cityDots.names ? (
-                  <MapItaly map="italia" cities label={cityDots.label} class="places__map-svg" />
+                  <MapItaly map="italia" cities large label={cityDots.label} class="places__map-svg" />
                 ) : (
                   <MapItaly map="italia" places={north} cities="dots" showLabels={false} label={cityDots.label} class="places__map-svg" />
                 )}
