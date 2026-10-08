@@ -217,3 +217,21 @@ Lezioni e preferenze. Fatti e decisioni ufficiali stanno in `docs/` (design syst
   - `lecce.mjs`;
   - le esplorazioni del generatore sono in `scratchpad/ui-cdn/explore/` (variabili `GROWFIXED`, `ORDER`, `ONLY`, `WHY`, `COAST`);
   - le patch sono in `scratchpad/ui-cdn/diff/`.
+
+## Patch B nella build e variante B2 (lezioni del 2026-10-08, pomeriggio)
+- **Esito:** ux-designer ha scelto la patch B al posto della soglia a 86em; il creative-director ha approvato la patch A. La sessione principale le ha applicate senza modifiche (B in 474e2df, A in a95b5c6). La verifica sulla build di B è conforme. Ho proposto la variante B2 (latitudini sull'altezza della carta in `cqw`), in attesa di ux-designer e del creative-director. Review `docs/review/2026-10-08-schede-citta-digitali-1412-in-build-ui-designer.md`, design system 0.15.
+- **Errore mio nella patch B:** le percentuali di un elemento stirato nella riga si calcolano sulla riga, e la riga cresce con il contenuto. Con le spaziature tutte le schede scendevano in proporzione, anche quelle che non ne avevano bisogno, e il contenuto usciva dall'elenco consumando l'aria della sezione (17 px). Per ogni posizionamento in % misurare anche la **discesa minima** (ogni blocco scende solo se il precedente è più alto) e la **tenuta**: allungare il testo nel DOM (`append`), non con `::after`, che i Range non vedono.
+- **Riferimento definito senza JavaScript:** `container-type: inline-size` sulla griglia e `--map-h: calc((50cqw - gutter/2) * ratio)`. Le query di contenitore di un componente figlio non cambiano se il suo contenitore più vicino resta lui stesso: controllarlo prima.
+- **Differenze al pixel di solo testo:** cercare lo spostamento intero migliore per banda (`shiftcmp.cjs`). (0, 0) con differenza media bassa vuol dire antialiasing; uno spostamento di 2 pixel del dispositivo a 2× vuol dire 1 px di arrotondamento.
+- **Chromium:** il punto in cui una parola si spezza con `overflow-wrap` e `letter-spacing` può variare di una lettera tra un calcolo e l'altro della stessa pagina. Non fidarsi di una sola cattura per dire dove va a capo. Il Chromium headless di Linux non ha dizionari di sillabazione: `hyphens: auto` non si prova qui.
+- **`astro check` nella cartella del progetto riscrive `.astro/content.d.ts`** (ignorato da git): farlo solo nelle copie.
+- **Server:** la build B2 è servita su 4381 da `scratchpad/ui-1412b/dist-b2`, lasciata accesa per chi deve valutarla.
+- **Script** in `scratchpad/ui-1412b/`:
+  - `probe.mjs`: schede, nodi, legenda, aria e discesa minima;
+  - `sens.mjs`: tenuta con testi più lunghi;
+  - `shots.mjs`, `sensshot.mjs`, `pair.cjs`, `sbs.cjs`;
+  - `pixcmp.cjs` e `shiftcmp.cjs`: confronti al pixel;
+  - `checks.mjs`: axe, scheda → nodo e colori forzati;
+  - `cmpfull.cjs` e `agg.cjs`;
+  - `breakat.mjs`, `fontrace.mjs` e `hyph.mjs`;
+  - copia del sito in `site/`; la patch è in `scratchpad/ui-cdn/diff/citta-digitali-schede-1412-b2.patch`.
