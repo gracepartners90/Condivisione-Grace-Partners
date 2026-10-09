@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.7
-aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e, 1112c93, 2178f47 ed e406ecb), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
+versione: 0.8
+aggiornato: 2026-10-09
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e, 1112c93, 2178f47 ed e406ecb) e al 2026-10-09 (commit e398f46), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -199,9 +199,16 @@ Si usa `src/components/ui/Media.astro`, già nel repository.
 1. ancoraggio e ritaglio (`mobileCrop`, §3.4), da scegliere con il creative-director;
 2. larghezze (`widths`, `mobileCrop.widths`) adeguate alla resa del §3.3;
 3. solo dopo, una qualità per formato per quella sola immagine.
-   - Il meccanismo è stato provato nel commit `7326a1e`, con la prop `quality` di `Media`, e tolto in `1112c93` perché la nuova immagine non ne aveva bisogno: si recupera dalla storia.
-   - Per il solo ritaglio dei telefoni esiste dal commit `e406ecb`: `mobileCrop.quality` (§3.4).
-   - Si sceglie il gradino più alto che rispetta i pesi del `budget.md` §4. In sharp l'AVIF va a gradini: qualità vicine danno lo stesso file (q40 = q41, q42 = q43, q45 = q46).
+   - **La prop `quality` di `Media`** (`{ avif?, webp?, jpg? }`, per tutte le sorgenti dell'immagine). Provata nel commit `7326a1e`, tolta in `1112c93` perché la nuova immagine non ne aveva bisogno, rimessa nel commit `e398f46` per la basilica di `/puglia-digitale/` (AVIF 40).
+     - Attiva il `<picture>` costruito a mano, come `mobileCrop` e `hiDpiAvifWidths`.
+     - Senza la prop l'HTML e i file delle altre immagini restano identici (verificato in `7326a1e` ed `e398f46`).
+   - **Per il solo ritaglio dei telefoni** c'è, dal commit `e406ecb`, `mobileCrop.quality` (§3.4). Se ci sono tutte e due, `mobileCrop.quality` vince per il ritaglio.
+   - **Quale gradino** (regola precisata il 2026-10-09).
+     - Si resta dentro i pesi del `budget.md` §4.
+     - Tra i gradini che ci stanno, se a 1:1 il più leggero non si distingue dai valori del sito (confronto visivo del creative-director o della sessione principale), si sceglie quello. Vale soprattutto se l'immagine entra nel caricamento.
+     - Altrimenti si sceglie il più alto che ci sta, con un margine.
+     - Applicazioni: capitolo 01 della Home, AVIF 40, l'unico gradino dentro i pesi con margine; basilica di `/puglia-digitale/`, AVIF 40, perché il 44, che ci starebbe, migliora solo in modo invisibile e costa l'8–15% in più (`budget.md` §4 e §7.6).
+   - **In sharp l'AVIF va a gradini:** qualità vicine danno lo stesso file (q40 = q41, q42 = q43, q45 = q46, q47 = q48).
    - In Astro 7.3.5 `getImage` passa a sharp un solo parametro per immagine, `quality`. Il servizio lo unisce alle opzioni di `astro.config.mjs` per formato, quindi `mozjpeg` resta. `chromaSubsampling` ed `effort` valgono invece per tutto il sito.
    - Il valore va accanto all'immagine in `src/data/media.ts`, e si rimisura a ogni cambio d'immagine.
    - Va controllato anche il WebP di ripiego, che con le trame fitte è il formato più vicino al controllo n. 8.
@@ -218,13 +225,15 @@ Misure:
 - Si sbaglia per eccesso di al massimo il 10%, mai per difetto.
 - Nell'attributo `sizes` le variabili CSS non sono ammesse.
 
-| Slot (direzione visiva) | `sizes` [IPOTESI: contenitore massimo di 1200 px, da confermare con ui-designer] |
-|---|---|
-| A filo, tutta la viewport (video, sezioni immersive) | `100vw` |
-| 12 colonne (foto «Panorama», showcase largo) | `(min-width: 80rem) 1200px, 100vw` |
-| 8 colonne (showcase a destra o a sinistra) | `(min-width: 80rem) 800px, (min-width: 64rem) 66vw, 100vw` |
-| 5 colonne (ritaglio 4:5 in soglia, luoghi) | `(min-width: 80rem) 500px, (min-width: 64rem) 40vw, 100vw` |
-| 4 colonne o meno (timeline, didascalie) | `(min-width: 64rem) 25vw, 50vw` |
+**Contenitore misurato** (2026-10-09, sostituisce l'ipotesi di 1200 px): la griglia cresce fino a 100rem (1600 px). Sotto 64em le immagini occupano il 92–94% della finestra, per i margini della pagina, quindi `100vw` sovrastima del 6–8%: va bene.
+
+| Slot (direzione visiva) | `sizes` | Fonte |
+|---|---|---|
+| A filo, tutta la viewport (video, sezioni immersive) | `100vw` | — |
+| 12 colonne (showcase largo) | `(min-width: 100rem) 1488px, 93vw` | primo esempio di `/siii/`, verificato il 2026-10-07: scarto da 0 a +6% |
+| Showcase a fianco del testo | `(min-width: 100rem) 983px, (min-width: 64em) 62vw, 92vw` | esempi 2 e 3 di `/siii/` e capitolo 01 della Home, verificati il 2026-10-07: da 0 a +5% |
+| 5 colonne (foto in «Il progetto», ritagli 4:5) | `(min-width: 100rem) 640px, (min-width: 64em) 40vw, 100vw` | `/puglia-digitale/`, misurato il 2026-10-09: da 0 a +6%. Con `36vw` sottostimava del 9–10% (patch nel `budget.md` §7.6) |
+| 4 colonne o meno (timeline, didascalie) | `(min-width: 64rem) 25vw, 50vw` | [IPOTESI: da misurare quando sarà usato] |
 
 **Verifica.** Nel report di Lighthouse, l'audit «Improve image delivery» (`image-delivery-insight`) non deve segnalare immagini sovradimensionate.
 
@@ -754,7 +763,7 @@ Stato letto il 2026-09-28 alle 09:35, compresa la build in `dist/` delle 09:33. 
 - [ ] **Verifica:** controlli di `budget.md` §6.3 verdi; mediana di Lighthouse entro il budget del template.
 
 ## Ipotesi da validare
-- [IPOTESI: contenitore massimo di 1200 px e cambio di griglia a 64rem, usati nel §3.3; da allineare con il design system di ui-designer.]
+- **Superata il 2026-10-09:** l'ipotesi del contenitore massimo di 1200 px. Misurato: la griglia cresce fino a 100rem (1600 px) e cambia a 64em (§3.3). Resta da allineare con il design system di ui-designer la riga «4 colonne o meno».
 - [IPOTESI: il video ha audio e dura più di 15 s, come suggeriscono i controlli audio e tempo della direzione visiva. Durata, audio e sottotitoli sono DA FORNIRE.]
 - [DA VERIFICARE: i portali (cassanodigitale.it, monopolidigitale.it, acquavivadigitale.com) consentono l'incorporamento in iframe.]
 - [DA VERIFICARE: il server attuale del video su railway.app risponde alle richieste `Range` (206).]

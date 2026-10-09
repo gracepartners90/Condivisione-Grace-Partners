@@ -3,9 +3,9 @@ titolo: Budget di performance
 owner: web-performance-specialist
 contributi: [seo-technical, cro-specialist, ui-designer]
 stato: bozza
-versione: 0.10
-aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md (§7.4), fonti web elencate nel §6.8]
+versione: 0.11
+aggiornato: 2026-10-09
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, prototipo di misura del 2026-09-28 (§7.2), docs/review/2026-09-28-sito-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md (§7.1), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.1, C08), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md (§7.3), docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md (§7.4 e §7.5), misure del 2026-10-09 su /puglia-digitale/ (§7.6, commit e398f46), fonti web elencate nel §6.8]
 ---
 
 # Budget di performance
@@ -156,7 +156,7 @@ Le soglie valgono per tutti i template:
 |---|---|
 | Immagine LCP (dal 2026-10-07: la porta della hero di `/siii/`; dal 2026-10-08 con la schermata del negozio YES) | Unica immagine con `priority` (`eager`, `fetchpriority="high"`, `decoding="sync"`), mai `lazy`: anche quando è in parte sotto la piega, se resta l'elemento LCP (dove non lo è: §2). Pesi in AVIF: ≤ 60 KB in **ogni variante che un telefono può scaricare**, densità 3x compresa (fino a 1200 px), e ≤ 150 KB nelle varianti desktop. Per i browser senza AVIF valgono il limite «Immagini» del §3 e il controllo n. 8. Se su mobile l'immagine si vede con un'altra proporzione, si ritaglia in build (`Media` con `mobileCrop`, dal commit `bae201c`). Se il desktop usa un derivato, i telefoni ritagliano l'originale (`mobileCrop.image`, dal commit `2178f47`). L'ancoraggio del ritaglio cambia il peso: ogni cambio si rimisura. Se l'immagine non sta nei pesi con i valori del sito, si seguono le leve dell'`architettura.md` §3.2. **Misurato con la schermata YES, dal commit `2178f47`** (telefoni: ritaglio 4:5 dell'originale, in alto; desktop: derivato 3:5 di 1014 × 1690). Telefoni: 27,3–54,0 KB (640w–1080w; margine di 6,0 KB a 1080w). Desktop: 22,2–60,4 KB (480w–1014w; con `1112c93` erano 24,7–83,7). Il derivato non supera i 1014 px e Astro non ingrandisce, quindi da 64em, oltre 2,44x, il desktop riceve meno pixel di quelli che chiede: 97% a 2,5x, 89% a 2,75x, 81% a 3x. Con la schermata intera, a 3x, si arrivava al 96%. WebP di ripiego fino a 76,8 KB sui telefoni e 82,4 KB su desktop (§7.4). Con la sala di Masseria Santella erano 21,4–40,7 e 18,0–51,4 KB (§7.3). |
 | Foto a tutta larghezza | ≤ 45 KB a 828 px, ≤ 70 KB a 1080 px, ≤ 150 KB a 1920 px (AVIF). Riferimento misurato: foto evento a 1080 px = 49,6 KB. Obiettivi: se si superano, serve una motivazione. **Eccezione motivata (2026-10-07), primo esempio di `/siii/`.** È una schermata ricca di dettagli d'interfaccia, in `lazy` sotto la piega. Ha 76,7 KB a 1080 px. Solo gli schermi da 1,5 dppx in su ricevono l'AVIF fino a 1920 px (173,7 KB), perché lì la variante da 1440 si vede più morbida. Gli schermi 1x restano a 1440 px, WebP e JPEG pure. Applicata in `d4511be` e verificata il 2026-10-07: varianti scelte come previsto in 10 casi su 10, controllo n. 8 vuoto. Dettaglio nella review del 2026-10-07, §8. **Home, capitolo 01, dal 2026-10-08** (schermata de La Tana di Aldo, `c11734b`, `lazy` sotto la piega): AVIF 37,8 KB a 768w, 63,0 a 1080w e 128,3 a 1920w, dentro gli obiettivi. Il WebP da 1920w pesava 195,3 KB, a 4,7 KB dal limite del controllo n. 8. Dal commit `e406ecb` vale la stessa regola del primo esempio: WebP e JPEG fino a 1440 (141,3 e 168,1 KB), AVIF fino a 1920 solo da 1,5 dppx (review del 2026-10-08, §7 e §8). **Sui telefoni in verticale** (sotto 40em, dal commit `e406ecb`) c'è un ritaglio 4:5 della vista da smartphone, con AVIF 40 solo per il ritaglio (`mobileCrop.quality`): 17,8 / 28,0 / 36,8 / 61,3 KB a 480 / 640 / 768 / 1080w, dentro gli obiettivi. Con i valori del sito sarebbero 55,7 KB a 768w e 91,4 KB a 1080w. AVIF 40 l'ha deciso web-performance-specialist il 2026-10-08: è il gradino più alto che resta dentro gli obiettivi a 828 e a 1080 px. Il WebP del ritaglio resta a 75, fino a 134,6 KB. |
-| Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. |
+| Foto a metà pagina o ritratto | ≤ 45 KB a 828 px (AVIF); i ritratti del fondatore misurano 32–40 KB. **`/puglia-digitale/`, «Il progetto», dal 2026-10-09** (basilica con i segni grafici del portale, `e398f46`, derivato 4:5 di 1200 × 1500, `lazy`). Con i valori del sito pesava 55,3 KB a 828 px; con AVIF 40 per tutte le sorgenti (prop `quality` di `Media`) pesa 35,2 KB a 828 px, e 14,7 / 31,4 / 52,0 / 60,1 KB a 480 / 768 / 1080 / 1200w. AVIF 40 confermato da web-performance-specialist il 2026-10-09: a 1:1 non si distingue dai valori del sito, e l'immagine entra nel caricamento su ogni dispositivo (§7.6). WebP fino a 131,5 KB, JPEG fino a 181,8 KB. |
 | SVG della hero (orizzonte) | Inline, ≤ 6 KB non compresso (limite fissato dalla direzione visiva). |
 | Carte (Puglia, Italia) | Inline, ≤ 20 KB non compresso ciascuna; tracciati semplificati con SVGO, precisione a 1 decimale. |
 | Copertina del video | `<picture>` lazy, non l'attributo `poster`. Pesi: ≤ 60 KB a 828 px, ≤ 150 KB a 1920 px. |
@@ -780,6 +780,28 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
   - Nessuna variante pesa più di prima.
 - **Controlli statici:** superati tutti, n. 8 vuoto. Il WebP più grande è il 1440w desktop, 141,3 KB; il WebP del ritaglio arriva a 134,6 KB.
 
+### 7.6 `/puglia-digitale/` con la basilica in «Il progetto» (2026-10-09, commit `e398f46`)
+
+**Condizioni.** Corse alternate con il controllo `2764e34`, con la foto della platea (438 × 548, una sola variante da 16,5 KB). Lighthouse 13.5.0, 08:29–08:36 UTC, `benchmarkIndex` 1155–1821.
+- **Carico della macchina alto:** 2,8–4,7 su 4 CPU, con altri membri al lavoro. I tempi con throttling applicato sono rumorosi: nella stessa variante l'FCP va da 1,27 a 1,48 s.
+
+| URL | Simulato: FCP / LCP (corse) | Applicato: FCP = LCP (corse) | TBT sim. / appl. | CLS | Peso e richieste: simulato; applicato | Immagini: simulato; applicato | Elemento LCP |
+|---|---|---|---|---|---|---|---|
+| `/puglia-digitale/` (T2) | 1,32 / 1,73 s (3) | 1,42 s (5; 1,27–1,48) | 0 / 204 ms | 0 | 130,8 KB, 8; 167,8 KB, 9 | 31,8 KB; 68,7 KB | descrittore dell'H1 |
+
+- **Controllo nella stessa tornata:** simulato 1,28 / 1,73 s; applicato 1,30 s (1,22–1,39), TBT 153 ms; 115,9 e 152,8 KB.
+- **L'immagine si scarica al caricamento su ogni dispositivo, anche senza throttling.** Sta a y 1600–2250 px, dentro la distanza di caricamento anticipato di Chromium. Pesa 31,4 KB al Moto G, da 52,0 a 60,1 KB sui telefoni a 3x e sui tablet a 2x.
+- **L'LCP non può dipendere dall'immagine.**
+  - L'LCP è il descrittore dell'H1 su 15 viewport su 15, con LCP = FCP.
+  - In ogni corsa con throttling applicato la richiesta dell'immagine parte insieme all'FCP (per esempio a 1478 ms con FCP 1484, a 1245 con FCP 1267).
+  - I +120 ms della mediana applicata (+9%, sotto la regola del +10%) e il TBT vengono dal carico della macchina: nel controllo il TBT va da 56 a 345 ms.
+- **Pesi dentro il T2:** 130,8 KB su 300 con il simulato, 167,8 KB con l'applicato; immagini 68,7 KB su 150. Con l'applicato al caricamento entra anche la porta di Gravina (36,9 KB), come nel controllo.
+- **`sizes` da correggere** (patch in `scratchpad/perf-nicola/puglia-digitale-sizes.patch`, verificata):
+  - `(min-width: 64em) 36vw, 100vw` sottostima del 9–10% tra 1024 e 1600 px (la colonna è il 40% della finestra) e sovrastima del 44% a 2560 px (la colonna si ferma a 640 px da 100rem);
+  - con `(min-width: 100rem) 640px, (min-width: 64em) 40vw, 100vw` lo scarto va da 0 a +6% su 15 dispositivi su 15;
+  - cambiano quattro casi: 1280 px a 1x 768w invece di 480w; 1440 px a 2x 1200w invece di 1080w; iPad Pro a 2x 1080w invece di 768w; 2560 px a 1x 768w invece di 1080w.
+- **Controlli statici:** superati tutti, n. 8 vuoto. Le altre pagine sono identiche al controllo.
+
 ## 8. Eccezioni e modifiche
 
 - **Owner.** Il budget lo modifica solo web-performance-specialist.
@@ -790,7 +812,7 @@ Dettaglio, varianti e profili di rete: `docs/review/2026-10-07-schermate-siii-we
 
 ## Ipotesi da validare
 - **Superata il 2026-10-07:** l'ipotesi «nessuna pagina avrà una foto come LCP». Dal commit `d06a3e9` l'LCP di `/siii/` è la porta della hero (§7.3), e valgono la riga «Immagine LCP» del §4 e le righe «Immagine LCP» del §2.
-- [IPOTESI: sulle altre pagine l'LCP resta testo. È verificato sulla Home il 2026-10-07, mentre Puglia Digitale e Città Digitali non sono state rimisurate dopo le foto e le carte del 2026-10-06. Va controllato al primo audit.]
+- [IPOTESI: sulle altre pagine l'LCP resta testo. È verificato sulla Home (2026-10-07 e 2026-10-08) e su `/puglia-digitale/` (2026-10-09: il descrittore dell'H1 su 15 viewport su 15, §7.6). Città Digitali non è stata rimisurata dopo le foto e le carte del 2026-10-06: va controllato al primo audit.]
 - [IPOTESI: su HTTP/2, all'host reale, `fetchpriority="high"` anticipa l'immagine LCP rispetto al font più di quanto si veda in laboratorio (HTTP/1.1). Da verificare sull'anteprima, per la finestra del ripiego (§3).]
 - [IPOTESI: il blocco del rendering dovuto al preload del font (§3, ADR 005) riguarda Chrome, quindi i dati CrUX. Su Safari per iOS l'effetto del preload non è misurato.]
 - [IPOTESI: le misure sull'anteprima fatte con le credenziali passano dall'edge di Railway ma non dalla sua CDN, perché le richieste con `Authorization` non vanno in cache (§6.8). Rappresentano quindi una produzione su Railway senza CDN.]

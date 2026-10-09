@@ -68,7 +68,14 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Pesano sul caricamento ma non su un LCP testuale, perché partono dopo il primo rendering.
   - Il caso da controllare è un'immagine pesante sotto la piega, con `profiles-home.mjs`, che segnala il capitolo 01 scaricato durante il caricamento.
 - **Base della Home da rifare** (budget §7.5): dal `920e497` la foto dell'evento entra nel caricamento. Rimisura dedicata da proporre, alternando `bae201c` e la build attuale.
-- **Qualità di un ritaglio (`mobileCrop.quality`, dal commit `e406ecb`).** Si sceglie il gradino AVIF più alto che resta dentro gli obiettivi del budget §4 alle larghezze di riferimento (828 e 1080 px). Capitolo 01 della Home: AVIF 40 (review del 2026-10-08, §8).
+- **Qualità per immagine** (`quality` di `Media`, rimessa in `e398f46`; `mobileCrop.quality` dal `e406ecb`). Regola precisata il 2026-10-09 (architettura §3.2):
+  - si resta dentro i pesi del §4;
+  - se a 1:1 il gradino più leggero non si distingue dai valori del sito, si sceglie quello, soprattutto se l'immagine entra nel caricamento;
+  - altrimenti il più alto, con un margine.
+  - Casi: Home capitolo 01 AVIF 40; basilica di `/puglia-digitale/` AVIF 40, anche se il 44 ci starebbe.
+- **Immagini `lazy` a y 1600–2250 px** (per esempio «Il progetto» di `/puglia-digitale/`) si scaricano al caricamento anche senza throttling: il loro peso conta per ogni visita. Che cosa entra nel caricamento si controlla sempre, con `devices.mjs` di `perf-nicola/`.
+- **Con più varianti `sizes` conta.** Un `sizes` sbagliato non si vede finché c'è una sola variante, poi sì (`36vw` invece di `40vw` su `/puglia-digitale/`). Si misura la colonna con `colwidth.mjs`. La griglia cresce fino a 100rem (1600 px).
+- **Con il carico della macchina sopra 3** (altri membri al lavoro) i tempi con throttling applicato non sono affidabili: nella stessa variante l'FCP oscillava di 200 ms. Si guarda il meccanismo nelle tracce, per esempio se la richiesta parte prima o dopo l'FCP, e si annota il carico.
 - **`pic-variants.mjs` e i marcatori:** il nome di una classe può comparire prima nel CSS inline. Si cerca l'attributo (`'class="worlds__screen'`), non il nome nudo: il 2026-10-08 il nome nudo ha restituito la foto dell'evento.
 - **Riavvio del contenitore** (2026-10-09): la scratchpad resta, lo staging su 4321 riparte con un altro PID. Prima di chiudere si confronta l'HTML dello staging con la build misurata.
 - **Prima di fermare un server** si guarda `/proc/<pid>/environ` (`DIST_DIR`, `PORT`): il 2026-10-08 sulla 4392 c'era un server del creative-director (`cd-tana-home`). Lo staging su 4321 cambia PID quando la sessione principale lo riavvia.
