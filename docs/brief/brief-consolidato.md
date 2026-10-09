@@ -3,9 +3,9 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.7
+versione: 0.8
 aggiornato: 2026-10-09
-fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md), richieste dell'utente del 2026-10-08 sulla hero di /siii/ e sul capitolo 01 della Home (parole esatte in A8), ricerche web del 2026-10-08 (sezione 8), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.5), docs/contenuti/alt-text.md (1.11)]
+fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md), richieste dell'utente del 2026-10-08 sulla hero di /siii/ e sul capitolo 01 della Home (parole esatte in A8), ricerche web del 2026-10-08 (sezione 8), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.6), docs/contenuti/alt-text.md (1.11), richiesta dell'utente del 2026-10-09 sull'immagine di «Il progetto» di /puglia-digitale/ (parole esatte in A9), ricerche web del 2026-10-09 (sezione 8)]
 ---
 
 # Brief consolidato · Nuovo sito ITnode
@@ -110,7 +110,7 @@ I testi tra «» sono delle LG. Le note rimandano al registro (sezione 5).
 | Livello | Messaggio | Note |
 |---|---|---|
 | H1 | «Puglia Digitale» · «Una piattaforma interattiva immersiva per la valorizzazione territoriale.» | Carattere più territoriale ed emozionale rispetto a SIII (§13) |
-| Concept | «Dalla costa all’entroterra. Un territorio da esplorare.» Progetto di destination marketing che digitalizza e valorizza città, borghi e imprese con esperienze immersive → «Visita il portale →» | Portale: lapugliadigitale.it, confermato dall'utente il 2026-10-05 (S7). Ruolo di ITnode `[DA VERIFICARE]` (D1) |
+| Concept | «Dalla costa all’entroterra. Un territorio da esplorare.» Progetto di destination marketing che digitalizza e valorizza città, borghi e imprese con esperienze immersive → «Visita il portale →» | Portale: lapugliadigitale.it, confermato dall'utente il 2026-10-05 (S7). Ruolo di ITnode `[DA VERIFICARE]` (D1). Visual di «Il progetto»: dal 2026-10-09 la facciata di una basilica con i segni grafici del portale, al posto della platea dell'evento (richiesta dell'utente). Luogo, provenienza, diritti e uso di AI da verificare (A9) |
 | Numeri | «30+ Città» · «~200.000 Partite IVA nei territori coinvolti» · «60% del tessuto produttivo pugliese» | Dati del cliente, con nota sulla fonte (N1–N3) |
 | Luoghi | «I luoghi»: Acquaviva delle Fonti, Gravina in Puglia, Monopoli → «Esplora →» | Foto `[DA FORNIRE]` |
 | Perché aderire | 01 «Aperti al mondo, 24/7» · 02 «Vendere attraverso l’esperienza» · 03 «La forza della rete» · 04 «Continuare la relazione oltre il viaggio» | Testi `[DA FORNIRE]` |
@@ -225,6 +225,7 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 | A6 | Payoff «Digital Innovation for the Territory» (foto dell'evento) e «La trasformazione digitale per città, imprese e persone» (immagini AI) | Asset | Da verificare | Sono payoff ufficiali? Finché non lo sappiamo, non si usano. |
 | A7 | Schermate e nomi delle imprese nel sito: Masseria Santella, Maison Miminà, D.L. Natura Dentro (esempi di `/siii/`); YES (hero di `/siii/`) e La Tana di Aldo (Home, capitolo 01), tutte e due dal 2026-10-08 | LG §12; utente, 2026-10-08 | Utilizzabile in anteprima; al go-live solo con il consenso | Serve il consenso scritto di ogni impresa a comparire con nome, logo e schermate, registrato nella tabella qui sotto con data e forma (ADR 002 §3.1; testo della richiesta nel §3.2). Vanno confermati anche i nomi ufficiali. Nome, luogo e link delle schede degli esempi restano anche senza consenso (LG §12). |
 | A8 | I SIII di YES e della Tana di Aldo li ha realizzati ITnode | Utente, 2026-10-08.<br>**YES:** «scusami usa questa non quella», dopo aver scritto, per un'altra schermata, «usa questa come immagine iniziale della sezione SIII».<br>**La Tana di Aldo**, con la vista desktop e quella da smartphone: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai» | Da verificare | Nessun testo visibile lo dice. Lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home; l'alt della Home lo scrive («Il SIII della Tana di Aldo», definitivo dal commit 6c6f501).<br>Si chiude impresa per impresa, con il consenso (il testo dell'ADR 002 §3.2 lo dichiara) o con una riga dell'utente.<br>«YES» e «La Tana di Aldo» sono le letture dei loghi; quello di YES dice anche «pure design 100% flowers». Per tutte e due: nome ufficiale, comune e provincia `[DA FORNIRE]`; indirizzo dell'esperienza `[DA FORNIRE, se è online]`.<br>In rete nessun riscontro (sezione 8). |
+| A9 | L'immagine di «Il progetto» di `/puglia-digitale/`: la facciata di una basilica romanica con i segni grafici del portale (`basilica-digitale.jpg`, commit e398f46) | Utente, 2026-10-09: «mentre questa è per la pagina puglia digitale dove si parla della piattaforma, al posto della platea tagliata che si vede», poi «questa» | Da verificare | **Luogo:** molto probabilmente la basilica di San Nicola a Bari. La facciata corrisponde alla descrizione pubblica in tutti gli elementi distintivi (sezione 8), ma è un confronto nostro: `[DA VERIFICARE]`. Bari è tra le città di Puglia Digitale (`docs/strategia/citta-digitali-elenco.md`, riga 5).<br>**Provenienza, autore, diritti, uso di AI:** `[DA FORNIRE]`. File senza metadati; sul portale non abbiamo trovato una pagina di Bari.<br>**Uso:** nota «Immagine elaborata digitalmente»; nessun nome del luogo finché non è confermato. Al go-live solo con provenienza o diritti confermati (ADR 002 §3.3). Bene culturale: art. 108 del D.Lgs. 42/2004, `[DA VERIFICARE con il consulente legale]` |
 
 **Consensi delle imprese (A7)**
 
@@ -291,7 +292,8 @@ P1 blocca le pagine; P2 incide sulla credibilità; P3 è un miglioramento.
 | P1 | Marchi Puglia Digitale e Città Digitali in vettoriale (SVG) con le regole d'uso | Tre mondi, pagine, footer | |
 | P1 | Logo ITnode in vettoriale (SVG), versione positiva e negativa | Header, footer, favicon, Open Graph | Quello attuale è un raster piccolo |
 | P1 | Ritratto reale del fondatore, oppure la conferma d'uso delle immagini attuali | Sezione fondatore, JSON-LD Person | DR3 |
-| P2 | Originale della foto dell'evento, senza cornice, logo e firma; data e luogo | Home, Puglia Digitale | A4 |
+| P2 | Originale della foto dell'evento, senza cornice, logo e firma; data e luogo | Home (su Puglia Digitale non c'è più dal 2026-10-09) | A4 |
+| P2 | Immagine della basilica di «Il progetto»: provenienza (portale e pagina, o autore), diritti, uso di AI, luogo; se c'è, l'originale senza grafica | /puglia-digitale | A9. Senza provenienza o diritti confermati non va in produzione (ADR 002 §3.3) |
 | P2 | File del video Città Digitali, fotogramma per il poster, sottotitoli se c'è parlato | /citta-digitali (VideoObject) | S8; i sottotitoli servono all'accessibilità |
 | P2 | Fonti dei numeri: data per «30+»; fonte, anno e definizione per «~200.000» e «60%». L'elenco delle città c'è (31 città pugliesi, conferma dell'utente del 2026-10-06) | Sezione numeri di /puglia-digitale | N1–N3 |
 | P2 | Atto di patrocinio e autorizzazione all'uso del logo | Eventuale fascia di fiducia | A2 |
@@ -345,6 +347,19 @@ Nessun risultato contiene il nome. Comune e indirizzo dell'esperienza restano `[
 
 Le due ricerche su Massafra seguivano una pagina del portale restituita dalla ricerca precedente, che però non contiene il nome: non è una pista. Nessun risultato contiene il nome. Comune e indirizzo dell'esperienza restano `[DA FORNIRE]`.
 
+**Ricerche del 2026-10-09 (A9, immagine della basilica).** Snippet di WebSearch, pagine non aperte; i dati restano `[DA VERIFICARE]`.
+
+| URL | Cosa riporta |
+|---|---|
+| https://it.wikipedia.org/wiki/Basilica_di_San_Nicola | Facciata tripartita tra due torri campanarie tronche, di costruzione diversa; tre portali, quello centrale con un protiro su colonne; sopra i portali tre grandi finestre; in alto cinque bifore e un piccolo rosone tondo |
+| https://www.famigliedellavisitazione.it/wp/wp-content/uploads/Chiese_paleocristiane_romaniche_in_Italia/PROVINCIA%20DI%20BARI/BARI-Basilica-di-S.Nicola.pdf | Facciata a salienti, chiusa ai lati da due torri incompiute; protiro poco aggettante; tre portali; archetti pensili; monofore, bifore e oculo centrale |
+| https://www.skuola.net/documenti/appunti-la-basilica-di-san-nicola-a-bari-11021 | Facciata «imprigionata» tra due torri di forma quadrata (fonte divulgativa) |
+| https://archiviodistatoprato.cultura.gov.it/fileadmin/user_upload/Codice-BBCC_Articolo-108.pdf | Testo dell'art. 108 del D.Lgs. 42/2004: canoni e corrispettivi per le riproduzioni dei beni culturali, fissati dall'autorità che li ha in consegna; nessun canone per gli usi senza scopo di lucro |
+| https://www.we-wealth.com/news/riprodurre-opera-arte-senza-diritti-autore-gratis | Le riproduzioni per promuovere la propria immagine, il marchio o l'attività sono considerate a scopo di lucro (articolo divulgativo) |
+
+- **Ricerca limitata ai portali del cliente** (`Bari basilica San Nicola`, su cittàdigitali.it e lapugliadigitale.it): restituisce solo «Tutte le città» e la pagina di Santeramo in Colle. Nessuna pagina di Bari, nessuna traccia dell'immagine.
+- **Confronto con l'immagine.** La facciata dell'immagine ha tutti gli elementi descritti: torri tronche e diverse, tre portali con protiro, tre monofore, cinque bifore e un oculo. È un confronto fatto da noi, non una fonte sull'immagine.
+
 ## Ipotesi da validare
 
 - I1. La conversione primaria è la richiesta tramite form; la visita ai portali è secondaria.
@@ -355,6 +370,7 @@ Le due ricerche su Massafra seguivano una pagina del portale restituita dalla ri
 - I6. «~200.000» e «60%» si riferiscono ai territori delle 31 città di Puglia Digitale. Per «30+ città» non è più un'ipotesi: sono le 31 città pugliesi dell'elenco di Città Digitali (conferma dell'utente del 2026-10-06).
 - I7. I quattro ritratti del fondatore sono generati o elaborati con AI. La foto dell'evento è reale, ma elaborata.
 - A8 (registro). I SIII di YES e della Tana di Aldo li ha realizzati ITnode: lo presuppongono le richieste dell'utente, che però non lo dicono.
+- A9 (registro). L'immagine di «Il progetto» mostra la basilica di San Nicola a Bari, ed è un'immagine del portale del cliente come quelle dell'ADR 007. La prima parte è molto probabile (sezione 8); la seconda la suggerisce solo lo stile.
 
 ## Domande aperte
 
@@ -377,6 +393,12 @@ Per il cliente, in ordine di priorità.
 - **D12. Imprese di cui il sito mostra le schermate (A7, A8).**
   - Masseria Santella, Maison Miminà, D.L. Natura Dentro, YES e La Tana di Aldo hanno dato il consenso scritto a comparire con nome, logo e schermate? Il testo della richiesta è pronto (ADR 002 §3.2). Oppure il contratto con ITnode prevede già l'uso nel portfolio?
   - YES e La Tana di Aldo, per ciascuna: il SIII l'ha realizzato ITnode? Qual è il nome ufficiale dell'impresa, e in quale comune e provincia si trova? L'esperienza è online, e a quale indirizzo?
+- **D13. Immagine della basilica in «Il progetto» di /puglia-digitale/ (A9).**
+  - Da dove viene: dal portale (da quale pagina) o da altro? Chi l'ha fatta?
+  - Chi ne ha i diritti, e si può usare sul sito di ITnode?
+  - Per la foto o per la grafica è stata usata l'intelligenza artificiale?
+  - È la basilica di San Nicola a Bari?
+  - Se c'è, ci mandate l'originale senza grafica o a risoluzione maggiore?
 
 ## Decisioni richieste
 

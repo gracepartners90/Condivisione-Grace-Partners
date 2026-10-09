@@ -63,3 +63,10 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Tenere stabili i numeri di sezione citati da altri (§4 degli input, citato dal creative-director): aggiornare in loco con «Stato» e aggiungere le novità in una sezione nuova, con versione 1.1.
 - Grafia dei nomi che iniziano con l'articolo: nel testo la preposizione si unisce all'articolo («della Tana di Aldo», come `alt-text.md` 1.11); il nome da solo resta «La Tana di Aldo». Applicarla in tutti i miei documenti insieme, lasciando le citazioni storiche marcate come tali.
 - Quando un alt passa da provvisorio a definitivo, o altri membri chiudono punti che avevo aperto, aggiornare subito gli stati e le «Decisioni richieste» di ADR, brief e review: le correzioni di stato arrivano spesso da chi legge l'ADR.
+
+## Lezioni dall'immagine della basilica (2026-10-09)
+- Identificare un luogo da un'immagine: tabella «elemento descritto / nell'immagine» contro descrizioni pubbliche (Wikipedia it via WebSearch con `allowed_domains`, schede storico-artistiche). Esito massimo: «molto probabile», mai «confermato». Conferma = una riga dell'utente o una fonte sull'immagine stessa. Il nome del file non è una fonte.
+- Immagini di monumenti usate da un'impresa: segnalare l'art. 108 del D.Lgs. 42/2004 (canone per le riproduzioni a scopo di lucro dei beni in consegna pubblica) come domanda per il consulente legale, ed estenderla alle immagini simili già nel sito.
+- Senza provenienza nota, la riserva minima è «fuori al go-live» (diritti, linee guida §31 sulle immagini stock). Con la provenienza dal portale del cliente vale lo stesso trattamento delle immagini dell'ADR 007.
+- Quando un'immagine sostituisce un'altra su una pagina, aggiornare le righe dell'ADR che citavano la vecchia (qui la foto dell'evento su Puglia Digitale) e verificare su `dist/` che anche la sua nota sia sparita.
+- Tabelle Markdown: se si inserisce una riga in fondo a una tabella seguita da un paragrafo, niente riga vuota tra l'ultima riga e quella nuova. Controllare con grep le righe `^| ID |`.
