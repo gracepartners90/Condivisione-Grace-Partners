@@ -3,9 +3,9 @@ titolo: Linee guida di architettura front-end e media
 owner: web-performance-specialist
 contributi: [ui-designer, creative-director, seo-technical, ux-designer]
 stato: bozza
-versione: 0.6
+versione: 0.7
 aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e, 1112c93 e 2178f47), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
+fonti: [docs/brief/linee-guida.md, docs/decisioni/001-stack-tecnologico.md, docs/decisioni/004-anteprima-su-railway.md, docs/decisioni/005-preload-del-font.md, docs/performance/budget.md, docs/creativa/direzione-visiva.md, docs/cro/piano-misurazione.md, codice in src/ e scripts/ al 2026-09-28 (commit c28dac1), al 2026-10-07 (commit d06a3e9) e al 2026-10-08 (commit 7326a1e, 1112c93, 2178f47 ed e406ecb), sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js) letto il 2026-10-08, prototipo di misura del 2026-09-28, docs/review/2026-09-28-sito-rimisura-performance-web-performance-specialist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, docs/review/2026-10-08-hero-siii-yes-web-performance-specialist.md]
 ---
 
 # Linee guida di architettura front-end e media
@@ -200,6 +200,8 @@ Si usa `src/components/ui/Media.astro`, già nel repository.
 2. larghezze (`widths`, `mobileCrop.widths`) adeguate alla resa del §3.3;
 3. solo dopo, una qualità per formato per quella sola immagine.
    - Il meccanismo è stato provato nel commit `7326a1e`, con la prop `quality` di `Media`, e tolto in `1112c93` perché la nuova immagine non ne aveva bisogno: si recupera dalla storia.
+   - Per il solo ritaglio dei telefoni esiste dal commit `e406ecb`: `mobileCrop.quality` (§3.4).
+   - Si sceglie il gradino più alto che rispetta i pesi del `budget.md` §4. In sharp l'AVIF va a gradini: qualità vicine danno lo stesso file (q40 = q41, q42 = q43, q45 = q46).
    - In Astro 7.3.5 `getImage` passa a sharp un solo parametro per immagine, `quality`. Il servizio lo unisce alle opzioni di `astro.config.mjs` per formato, quindi `mozjpeg` resta. `chromaSubsampling` ed `effort` valgono invece per tutto il sito.
    - Il valore va accanto all'immagine in `src/data/media.ts`, e si rimisura a ogni cambio d'immagine.
    - Va controllato anche il WebP di ripiego, che con le trame fitte è il formato più vicino al controllo n. 8.
@@ -240,6 +242,8 @@ Si usa solo quando cambia il ritaglio; altrimenti basta `Media`.
   - La larghezza del derivato è il massimo delle varianti desktop, perché Astro non ingrandisce. Oltre la densità «larghezza del derivato / larghezza resa» le varianti sono sotto risoluzione.
   - Con la schermata YES, 1014 px su 416 px di resa: sotto risoluzione oltre 2,44x, all'81% a 3x.
   - Il derivato si prepara in `scripts/prepare-assets.mjs`, senza ridimensionare, in JPEG di qualità 90 o più (§3.1).
+- **Dove vale il ritaglio** (`mobileCrop.media`, dal commit `e406ecb`): per default sotto 64em, oppure dove dice la media query. Per esempio `'(max-width: 39.99em)'` per i soli telefoni in verticale, come nel capitolo 01 della Home. La proporzione del box va cambiata in CSS con lo stesso breakpoint, e le sorgenti del ritaglio hanno `width` e `height` propri: nessuno spostamento del layout.
+- **Qualità del solo ritaglio** (`mobileCrop.quality: { avif?, webp? }`, dal commit `e406ecb`): le altre sorgenti restano ai valori del sito. Si usa con le regole del §3.2. Capitolo 01 della Home: AVIF 40, scelto da web-performance-specialist il 2026-10-08 (review del 2026-10-08, §8).
 
 ```astro
 <Media image={screen} alt="…" sizes="(min-width: 30rem) 26rem, 90vw" priority

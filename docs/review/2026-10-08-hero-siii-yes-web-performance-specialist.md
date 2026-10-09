@@ -3,9 +3,9 @@ titolo: Review di performance · Hero di /siii/ con la schermata del negozio YES
 owner: web-performance-specialist
 contributi: []
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-10-08
-fonti: [§7: commit c11734b (Home, capitolo 01 con src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg) e 6c6f501 (solo l'alt), dist/ dello staging delle 15:27 (identica alla build di c11734b fatta in un worktree), build di controllo 2178f47, misure Lighthouse e Playwright delle 15:32–15:45 UTC, patch scratchpad/perf-yes/home-ch01-1440.patch; §6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
+fonti: [§8: commit e406ecb (ritaglio 4:5 della vista da smartphone sotto 40em, src/assets/images/derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg, opzioni mobileCrop.media e mobileCrop.quality di Media), dist/ dello staging delle 15:55 (identica alla build di e406ecb fatta in un worktree), build di controllo 6c6f501, misure sharp, Lighthouse e Playwright delle 15:59–16:12 UTC; §7: commit c11734b (Home, capitolo 01 con src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg) e 6c6f501 (solo l'alt), dist/ dello staging delle 15:27 (identica alla build di c11734b fatta in un worktree), build di controllo 2178f47, misure Lighthouse e Playwright delle 15:32–15:45 UTC, patch scratchpad/perf-yes/home-ch01-1440.patch; §6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
 ---
 
 # Review di performance · Hero di `/siii/` con la schermata YES
@@ -26,6 +26,11 @@ Non ho modificato `src/`. Per la hero di `/siii/` non servono patch; per il capi
 - Desktop: 22,2–60,4 KB invece di 24,7–83,7. Controllo n. 8 vuoto.
 - Oltre 2,44x il desktop riceve meno pixel di quelli che chiede (81% a 3x), per un limite del derivato, non del codice.
 - Verdetto invariato: conforme, senza patch.
+
+**Aggiornamento dopo `e406ecb` (§8): Home, capitolo 01 con il ritaglio 4:5 sui telefoni.**
+- AVIF 40 per il solo ritaglio: confermato. È il gradino più alto dentro gli obiettivi del budget §4.
+- Nessuna variante pesa più di prima. La Home con la rete lenta di laboratorio pesa 167,7 KB invece di 168,6; LCP = FCP.
+- L'osservazione 3 è applicata. Controllo n. 8 vuoto. Nessuna patch.
 
 **Aggiornamento dopo `c11734b` (§7): Home, capitolo 01 con La Tana di Aldo.**
 - La schermata pesa il doppio, ma l'LCP della Home non cambia: resta il testo, con LCP = FCP. Anche la finestra del ripiego non cambia.
@@ -246,7 +251,7 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
   - Se un giorno servisse intervenire, la leva è il costo dello scambio di carattere, non l'immagine. Per esempio `content-visibility: auto` sulle sezioni lontane dalla piega senza reveal né aperture (`architettura.md` §7), da misurare prima.
 
 ### 3. [SUGGERIMENTO, consigliato prima del lancio] Home, capitolo 01: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx
-*Aggiunta il 2026-10-08 con `c11734b`; misure nel §7.*
+*Aggiunta il 2026-10-08 con `c11734b`; misure nel §7. **Applicata in `e406ecb`, dentro la patch del creative-director, e verificata (§8).***
 - **Dove:** `src/pages/index.astro`, `Media` del capitolo 01 (schermata de La Tana di Aldo).
 - **Problema.** Con le larghezze predefinite il WebP da 1920w pesa 195,3 KB: 4,7 KB dal limite di 200 KB del controllo n. 8. Il controllo oggi è superato, ma basta un piccolo cambio di ritaglio, di sorgente o di encoder per farlo fallire al prelancio. Il JPEG da 1920w pesa 249,8 KB, su 300.
 - **Motivazione.** `budget.md` §6.3, controllo n. 8. La stessa regola è già applicata al primo esempio di `/siii/`, una schermata dello stesso tipo (`d4511be`, review del 2026-10-07, §8): l'AVIF grande va solo dove serve, WebP e JPEG si fermano a 1440.
@@ -370,7 +375,78 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
 - **Consiglio la patch dell'osservazione 3**, prima del lancio, per il margine (da 4,7 a 58,7 KB) e per coerenza con il primo esempio di `/siii/`.
 - Le larghezze vengono prima della qualità per immagine (`architettura.md` §3.2), e qui bastano: l'AVIF grande resta agli schermi che lo usano.
 
+## 8. Home, capitolo 01: ritaglio 4:5 sui telefoni in verticale (`e406ecb`)
+
+**Cosa cambia.** È la patch del creative-director, che comprende anche l'osservazione 3.
+- Sotto 40em la porta del capitolo 01 mostra un ritaglio 4:5 della vista da smartphone: `src/assets/images/derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg`, 1080 × 1350, JPEG q92 da `scripts/prepare-assets.mjs`.
+  - Il box passa a 4:5 in CSS con lo stesso breakpoint.
+  - Le sorgenti del ritaglio hanno `width="1080" height="1350"`, quindi nessuno spostamento del layout.
+- Due nuove opzioni di `Media`: `mobileCrop.media`, che dice dove vale il ritaglio, e `mobileCrop.quality`, la qualità del solo ritaglio. Qui AVIF 40, da confermare da parte mia.
+- Da 40em resta la vista desktop: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx.
+
+**Condizioni.**
+- La build di `e406ecb`, fatta in un worktree, è identica allo staging delle 15:55.
+- Controllo: `6c6f501`, il sito subito prima. Cambiano solo `index.html` e i file de La Tana; `/siii/` e le altre pagine sono identiche byte per byte.
+- Misure:
+  - sharp del progetto, che riproduce la build al decimo di KB;
+  - Playwright su 20 dispositivi;
+  - Lighthouse con throttling applicato, 5 corse per variante, alternate (16:04–16:07 UTC);
+  - profili Playwright con 5 e 8 caricamenti.
+
+**Qualità del ritaglio (domanda 1): AVIF 40, confermato.**
+
+| AVIF | 480 / 640 / 768 / 1080w | SSIM Y a 768w / 1080w |
+|---|---|---|
+| **40** (= 41) | 17,8 / 28,0 / **36,8** / **61,3 KB** | 0,905 / 0,930 |
+| 42 (= 43) | 19,2 / 30,0 / 39,3 / 65,2 KB | 0,912 / 0,935 |
+| 44 | 20,5 / 31,9 / 41,7 / 69,2 KB | 0,917 / 0,939 |
+| 45 (= 46) | 23,0 / 35,5 / 46,2 / 76,2 KB | 0,928 / 0,946 |
+| 50 (valori del sito) | 27,7 / 43,2 / 55,7 / 91,4 KB | 0,943 / 0,958 |
+
+- **Perché 40.**
+  - Gli obiettivi del budget §4 per le foto a tutta larghezza sono ≤ 45 KB a 828 px e ≤ 70 KB a 1080 px. Il gradino 40 li rispetta tutti e due con margine: circa 43 KB a 828 px, per estrapolazione, e 61,3 KB a 1080 px.
+  - Il gradino 42 sarebbe al limite a 828 px (circa 45,7 KB) per 0,005–0,007 di SSIM in più. Il 44 e il 45 escono dall'obiettivo a 828 px, e il 45 anche a 1080 px.
+  - Il peso che la rete lenta fa scaricare in anticipo resta quello di prima: 36,8 KB al Moto G, contro i 37,8 della vista desktop.
+  - L'immagine è `lazy` e non è l'LCP. Per la direzione artistica il creative-director ha già dato il suo assenso al 40.
+- **WebP del ritaglio a 75:** fino a 134,6 KB, dentro il controllo n. 8. Riguarda solo i browser senza AVIF. Con il 65 scenderebbe a 118,4 KB: non ne vale la pena.
+- **Il meccanismo `mobileCrop.quality` va bene.** È la qualità per formato del §3, limitata al ritaglio. Il nome dei file cambia solo per le sorgenti del ritaglio: le altre immagini del sito sono identiche.
+
+**Varianti scelte (domanda 2).** AVIF, tra parentesi la build precedente.
+
+| Dispositivo | Variante | Peso |
+|---|---|---|
+| Telefoni in verticale a 1,75–2x (375, 412 px) | ritaglio 4:5, 768w | 36,8 KB (37,8, vista 16:10) |
+| Telefoni in verticale da 2,6x a 3x (360, 390, 412, 430 px) | ritaglio 4:5, 1080w | 61,3 KB (63,0; 90,6 a 430 px) |
+| 320 px a 2x | ritaglio 4:5, 640w | 28,0 KB (37,8) |
+| Tablet sotto 40em (600 px a 2x) | ritaglio 4:5, 1080w | 61,3 KB (90,6) |
+| Telefono in orizzontale (844 px a 3x) | vista 16:10, 1920w | 128,3 KB (uguale) |
+| Tablet da 40em a 2x (768, 820, 1024 px) | vista 16:10, 1440w o 1600w | 90,6 o 103,2 KB (90,6 o 128,3) |
+| Desktop a 1x (da 1280 a 2560 px) | vista 16:10, 1080w | 63,0 KB (uguale) |
+| Desktop a 2x | vista 16:10, 1440w a 1024 px, 1600w a 1280 px, 1920w da 1440 px | 90,6 / 103,2 / 128,3 KB (90,6 / 128,3 / 128,3) |
+
+- **Nessuna variante pesa più di prima.**
+- A 430 px a 3x il ritaglio dà il 91% dei pixel che servono (1080 su 1187): è il massimo del derivato, per un'immagine `lazy` su uno schermo a 3x.
+- **Controlli statici:** superati tutti, n. 8 vuoto. Il WebP più grande è il 1440w della vista desktop, 141,3 KB.
+
+**Peso della Home con la rete lenta di laboratorio.**
+
+| Misura | `e406ecb` | Controllo |
+|---|---|---|
+| Lighthouse, applicato (5 corse): FCP = LCP | 1,13 s (1,05–1,21) | 1,18 s (1,05–1,26) |
+| Lighthouse, applicato: peso e richieste | 167,7 KB, 8 | 168,6 KB, 8 |
+| Lighthouse, applicato: capitolo 01 scaricato in anticipo | 37,2 KB (ritaglio 4:5) | 38,2 KB (vista 16:10) |
+| Playwright, rete di laboratorio, 1,75x: immagini al caricamento, finestra del ripiego | 68,9 KB, 655 ms | 70,0 KB, 713 ms |
+| Playwright, rete di laboratorio, 3x: immagini al caricamento, finestra del ripiego | 93,4 KB, 680 ms | 95,2 KB, 706 ms |
+| Playwright, 4G lento, 8 caricamenti: FCP = LCP a 1,75x / 3x | 640 / 680 ms | 640 / 668 ms |
+
+- **Il peso con la rete lenta non cresce:** −0,9 KB con Lighthouse. L'LCP resta il testo, con LCP = FCP.
+- **Sul 4G lento** la schermata non si scarica durante il caricamento. Una prima tornata di 5 caricamenti dava 764 contro 668 ms a 1,75x; con 8 caricamenti l'FCP è uguale, quindi era rumore.
+
+**Esito: conforme, senza patch.** Aggiornati il `budget.md` 0.10 (§4 e §7.5) e l'`architettura.md` 0.7 (§3.2 e §3.4, `mobileCrop.media` e `mobileCrop.quality`).
+
 ## Verdetto di dominio
+
+**Aggiornamento dopo `e406ecb` (§8):** Home conforme, senza patch. AVIF 40 del ritaglio confermato, osservazione 3 applicata e verificata.
 
 **Aggiornamento dopo `c11734b` (§7):** Home conforme. LCP invariato, peso dentro il T1 e controllo n. 8 superato. Patch consigliata per il margine del WebP (osservazione 3).
 
