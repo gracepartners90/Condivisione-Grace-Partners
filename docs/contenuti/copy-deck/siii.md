@@ -3,14 +3,17 @@ titolo: Copy deck · SIII (Siti Interattivi Immersivi)
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer]
 stato: in revisione
-versione: 1.5
-aggiornato: 2026-10-08
-fonti: [commit d97aa29 (alt della hero nel sito), 2178f47 (derivato desktop della hero), docs/review/2026-10-08-hero-siii-yes-creative-director.md (ritaglio in alto confermato), docs/contenuti/alt-text.md (1.11), staging http://127.0.0.1:4321 del 2026-10-08 (build di c11734b), commit 1112c93 (schermata del negozio YES nella hero, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.10), staging http://127.0.0.1:4321 del 2026-10-08 (build di 1112c93), scripts/prelaunch-check.mjs (controllo A7, commit 58715c4), docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
+versione: 1.6
+aggiornato: 2026-10-09
+fonti: [docs/contenuti/copy-deck/home.md (1.8, §5: modello della riga con il nome, copywriter-brand, commit c112a4a), docs/contenuti/alt-text.md (1.12), commit d97aa29 (alt della hero nel sito), 2178f47 (derivato desktop della hero), docs/review/2026-10-08-hero-siii-yes-creative-director.md (ritaglio in alto confermato), docs/contenuti/alt-text.md (1.11), staging http://127.0.0.1:4321 del 2026-10-08 (build di c11734b), commit 1112c93 (schermata del negozio YES nella hero, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.10), staging http://127.0.0.1:4321 del 2026-10-08 (build di 1112c93), scripts/prelaunch-check.mjs (controllo A7, commit 58715c4), docs/brief/linee-guida.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md, docs/seo/mappa-keyword-url.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.4, §7.8), docs/review/2026-09-28-sito-bozze-copywriter-content.md (S1–S3), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), docs/review/2026-09-28-sito-verifica-accessibilita-ux-designer.md (A7), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (I7), docs/ux/struttura-pagine.md (0.9, SI-1, SI-6), docs/ux/accessibilita.md (0.9, §2.8), docs/contenuti/alt-text.md (1.6), docs/cro/piano-misurazione.md (0.5), docs/review/2026-10-07-schermate-siii-ux-designer.md, docs/review/2026-10-07-schermate-siii-cro-specialist.md, commit d06a3e9 (schermate), 88d7083 (schermata cliccabile, decisione dell'utente del 2026-10-07) e 9ddc8b2 (alt), src/pages/siii.astro, src/data/media.ts, src/lib/structured-data.ts, src/data/site.ts, src/data/asset-slots.ts, src/data/pages.ts, build di 326f354 con gli alt della v1.6 di alt-text.md, servita in locale il 2026-10-07 (scratchpad, non versionata)]
 ---
 
 # Copy deck · SIII
 
 Pagina `/siii/`. Copre le sezioni 10, 11 e 12 delle linee guida (LG), la chiusura e l'introduzione al form (§23). I testi sono pronti da impaginare.
+
+**Novità della v1.6 (2026-10-09)**
+- **Riga con il nome sotto la hero**, sul modello di copywriter-brand (copy deck della Home 1.8, §5). Oggi non è pubblicata: mancano nome confermato, comune e consenso. Quando arriva, l'alt passa alla variante senza il nome (sezione 1).
 
 **Novità della v1.5 (2026-10-08)**
 - **Hero.** Il creative-director ha confermato il ritaglio in alto per i telefoni (verdetto del 2026-10-08). Da 64em la hero usa un derivato 3:5 della schermata, senza il menu e senza le parti tagliate in basso (commit 2178f47). L'alt vale per tutti e due.
@@ -105,8 +108,17 @@ Note sulla schermata:
 - **Accessibilità.** È informativa, con alt. Sopra non ci sono nodi decorativi (`accessibilita.md` §2.8). Non è un link.
 - **Perché l'alt nomina l'impresa.** La hero non la nomina. «Il negozio» prima del nome evita che «YES», a inizio frase, si senta come una parola inglese. L'alt non ripete «Siti Interattivi Immersivi», che è nell'H1 (criterio 5 di `alt-text.md`).
 - **Perché «l’interfaccia dell’esperienza».** Il menu non si vede in tutti i ritagli, e «i contatti» nominerebbe dei comandi (criterio 12 di `alt-text.md`).
-- **Proposta di cro-specialist** (review del 2026-10-07, oss. 4): una riga con nome e luogo sotto la schermata, solo con il consenso A7. Era per Masseria Santella; per YES nome completo e luogo non sono noti. Il testo è di copywriter-brand e decide il creative-director. Se arriva, l'alt passa alla variante senza il nome (`alt-text.md`).
 - **Consenso.** La schermata mostra un'impresa reale: vale la riserva A7 della sezione 6.
+
+**Riga con il nome sotto la schermata** · decisa dal creative-director (verdetto del 2026-10-08 sulla hero, punto 2; direzione visiva 0.21, §4.8) · testo di copywriter-brand, modello del copy deck della Home 1.8, §5 · oggi non pubblicata
+
+La proponeva cro-specialist (review del 2026-10-07, oss. 4). La forma è `{nome dell’impresa} · {comune} ({sigla della provincia})`, come la riga del luogo nelle schede degli esempi. Per la hero, da completare con i dati: «YES · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia])». È un modello, non un testo da pubblicare: per questo non è in un blocco citato.
+- **Nel sorgente:** `YES&nbsp;· {comune con spazi unificatori}&nbsp;({sigla})`. L'unico punto d'a capo è lo spazio dopo «·». Misure degli a capo, spaziatura di WCAG 1.4.12 e lettura proposta per gli screen reader sono nel copy deck della Home (1.8, §5). Markup e lettura li decide ux-designer.
+- **Mai «pure design 100% flowers»:** è un payoff non confermato e contiene un numero (`alt-text.md`, sezione del file).
+- **Il nome.** «YES» è letto dal logo. [DA VERIFICARE] Se il nome confermato è diverso, cambia nella riga e nell'alt. A inizio riga uno screen reader può leggere «YES» come la parola inglese: da valutare con la lettura della riga.
+- **Va online solo con** il nome confermato, il comune, il consenso scritto (A7) e la conferma che il SIII l'ha realizzato ITnode (A8). Fino ad allora nessuna riga, e il nome resta solo nell'alt.
+- **Alt con la riga.** Il nome non si ripete: l'alt passa alla variante «Con il nome nel testo accanto» di `alt-text.md`, «Da smartphone: la parete verde del negozio, la scala che sale al soppalco, gli scaffali di legno e l’interfaccia dell’esperienza.» (129 caratteri).
+- **Non è un link.** Niente numeri né aggettivi: dice solo di chi è lo spazio e dove sta.
 
 ## 2. Cos’è un Sito Interattivo Immersivo
 
@@ -435,13 +447,13 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 3. Acquisto e prenotazione avvengono dentro il SIII o su sistemi esterni (N13)?
 4. Esistono dati documentati sul comportamento dei visitatori, per esempio il tempo di permanenza, con fonte e periodo (D7)?
 5. Il SIII vive sempre dentro un portale città o anche sul dominio dell'impresa (D4)? La risposta conferma o corregge lo statement «Un SIII è un sito».
-6. Il negozio della hero: si chiama solo «YES»? «pure design 100% flowers» è un payoff? Il SIII è di ITnode, e c'è il consenso a mostrarne la schermata (A7)?
+6. Il negozio della hero: si chiama solo «YES»? «pure design 100% flowers» è un payoff? In che comune si trova? Il SIII è di ITnode (A8), e c'è il consenso a mostrarne la schermata (A7)?
 
 ## Decisioni richieste
 
 - **brand-strategist**: forma della didascalia della figura se si applica la riserva I7 (proposta nella sezione 3).
 - **creative-director**: approvazione dello statement «Un tour 360° è una visita. Un SIII è un sito.» e della regola «H2 piccolo + statement grande»; allineamento della direzione visiva (V2).
-- **ux-designer**: togliere l'occhiello da `struttura-pagine.md` SI-1 (V1).
+- **ux-designer**: togliere l'occhiello da `struttura-pagine.md` SI-1 (V1); markup e lettura della riga con il nome sotto la hero, quando arriva (sezione 1).
 - **Utente, con brand-strategist** (owner dell'ADR 002): consenso scritto delle tre imprese degli esempi e del negozio YES per le schermate (A7).
 - **seo-content**: allineare l'ancora `#richiesta` e l'H2 della sezione 4 nella mappa (V3).
 

@@ -82,5 +82,9 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Nomi d'impresa con l'articolo: «Il SIII della Tana di Aldo», non «de La». Letto ad alta voce suona naturale.
 - Se per i telefoni è candidata un'altra vista dello stesso luogo, l'alt va provato sulla vista intera e sui ritagli verticali, a ogni ancoraggio. Va detto quali ritagli non reggono (qui una fascia orizzontale in alto o in basso).
 
+## Allineamenti di stato (lezione del 2026-10-09)
+- Quando una differenza si chiude (alt applicato, ritaglio deciso), cercare nel documento anche le frasi datate scritte al presente («Nel sito c'è l'alt provvisorio…») e volgerle al passato, con il commit che le chiude. Basta `grep` su «da applicare», «provvisorio», «valuta».
+- Un modello con segnaposto (riga con il nome, dati [DA FORNIRE]) nel mio copy deck va scritto in linea, non in un blocco citato: il blocco citato è testo da pubblicare, e lo script lo darebbe come mancante.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)
