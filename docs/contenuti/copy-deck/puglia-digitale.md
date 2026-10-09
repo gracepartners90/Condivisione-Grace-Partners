@@ -13,7 +13,8 @@ fonti: [commit e398f46 (immagine della chiesa nella sezione 2, richiesta dell'ut
 Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (LG), la chiusura e l'introduzione al form (§23). Rispetto a SIII il carattere è più territoriale ed emozionale (§13). I testi sono pronti da impaginare.
 
 **Novità della v1.6 (2026-10-09)**
-- **Sezione 2: la chiesa con la grafica del portale** al posto della foto dell'evento (commit e398f46, richiesta dell'utente). Alt e nota vengono da `alt-text.md` (1.13). Nel sito l'alt è ancora provvisorio (V4).
+- **Sezione 2: la chiesa con la grafica del portale** al posto della foto dell'evento (commit e398f46, richiesta dell'utente). Alt e nota vengono da `alt-text.md` (1.13). Nel sito l'alt è ancora provvisorio (V4). Con la conferma dell'utente, il luogo andrà nella didascalia, prima della nota: le varianti sono pronte.
+- **`evento-schermo.jpg` è tolto** dallo script e dal repository (verdetto del creative-director del 2026-10-09).
 - **Porte di Gravina in Puglia e Monopoli:** sono nel sito dal commit c0b3708. La tabella della sezione 4 ora riporta gli alt dei ritagli scelti.
 - Verifica sul sito del 2026-10-09 e nuove differenze aperte (V3, V4).
 
@@ -123,11 +124,15 @@ Note:
 - «destination marketing» in minuscolo nel testo corrente, come propone il brief (DR2).
 - Parola lunga nel titolo: «all’entroterra.» è un blocco di 15 caratteri. A 44 px su 390 px rischia di uscire dalla colonna: prevedere `hyphens: auto` con `lang="it"` o una scala minima più bassa per questo titolo.
 - **Immagine.** Le parole dell'utente: «mentre questa è per la pagina puglia digitale dove si parla della piattaforma, al posto della platea tagliata che si vede». È la facciata di una chiesa con sopra la grafica del portale, nello stile delle porte della sezione 4 (ADR 007): segnaposto, pannelli digitali, linee luminose. Illustra la piattaforma di cui parla il testo. Il ritaglio 4:5 è intero a ogni larghezza.
-- **Testo alternativo.** Non nomina il luogo. La facciata somiglia molto a quella della basilica di San Nicola a Bari, ma non c'è una fonte su questa immagine. [DA VERIFICARE] La regola è quella di Gravina, e il nome si usa solo con la conferma dell'utente (review di brand-strategist del 2026-10-09, §3). Le varianti con il nome, o con la sola città, sono in `alt-text.md`.
+- **Testo alternativo.** Non nomina il luogo. La facciata somiglia molto a quella della basilica di San Nicola a Bari, ma non c'è una fonte su questa immagine. [DA VERIFICARE] La regola è quella di Gravina: finché l'utente non conferma, nessun nome, da nessuna parte (review di brand-strategist del 2026-10-09, §3). Con la conferma il luogo va nella didascalia, e l'alt non cambia, perché il nome si sentirebbe due volte (verdetto del creative-director del 2026-10-09, §5).
 - **«Chiesa».** Né «basilica» né «romanica»: tipo e stile non si leggono con certezza. Come a Gravina, «una chiesa».
-- **Nota: «Immagine elaborata digitalmente»,** come per le porte. La grafica sovrapposta è un'elaborazione certa, l'uso di AI non è noto. Quando l'utente risponde, la nota cambia con le formule di `alt-text.md`. Con la conferma del luogo il creative-director valuta se aggiungere «Bari» alla nota (review di brand-strategist, B4).
+- **Nota: «Immagine elaborata digitalmente»,** come per le porte. La grafica sovrapposta è un'elaborazione certa, l'uso di AI non è noto. Quando l'utente risponde sull'AI, la nota cambia con le formule di `alt-text.md`.
+- **Didascalia con il luogo, dopo la conferma dell'utente** (verdetto del creative-director del 2026-10-09, §5). Il luogo va prima della nota: almeno la città, e il monumento se confermato. Così chi legge il testo accanto non attribuisce l'immagine a una delle tre città che nomina (B4).
+  - Con la basilica confermata: «Bari, basilica di San Nicola · Immagine elaborata digitalmente» (62 caratteri).
+  - Con la sola città: «Bari · Immagine elaborata digitalmente» (38 caratteri).
+  - Nel sorgente `San&nbsp;Nicola&nbsp;·`: si va a capo solo dopo «·». Come gli screen reader leggono «·» lo decide ux-designer; il testo con i dati lo verifica brand-strategist. Dettagli in `alt-text.md`.
 - **Va in produzione solo con provenienza e diritti confermati** (ADR 002 0.6, A9). [DA FORNIRE: provenienza, autore, diritti, uso di AI]
-- **Prima, la foto dell'evento.** Fino al 2026-10-09 qui c'era `derivate/evento-schermo.jpg`, la platea davanti al maxischermo, con la nota «Immagine elaborata con strumenti di intelligenza artificiale». Alt e note restano in `alt-text.md`, nel caso la foto torni: andrebbe ritagliata dalla versione pulita, quella della Home.
+- **Prima, la foto dell'evento.** Fino al 2026-10-09 qui c'era `derivate/evento-schermo.jpg`, la platea davanti al maxischermo, con la nota «Immagine elaborata con strumenti di intelligenza artificiale». Il ritaglio è stato tolto dallo script e dal repository (verdetto del creative-director del 2026-10-09, §4). Alt e note restano in `alt-text.md`, nel caso la foto torni: andrebbe ritagliata dalla versione pulita, quella della Home.
 
 ## 3. Numeri
 
@@ -320,14 +325,22 @@ Link esterni: «Visita il portale ↗» nella hero, «lapugliadigitale.it» nel 
 | Chiusura | «Contattaci» come titolo del form, senza link | Come le chiusure di SIII e Città Digitali (`struttura-pagine.md`). |
 | Ponte | Prima della chiusura | Come SIII (`struttura-pagine.md` SI-7). |
 
-## Verifica sul sito (2026-10-05)
+## Verifica sul sito (2026-10-05 e 2026-10-09)
 
 **Metodo.**
-- Staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit 5c4a6cb. Confronto con `src/pages/puglia-digitale.astro`, `src/data/site.ts`, `src/data/figures.ts`, `src/data/media.ts` e `src/data/pages.ts`.
+- **2026-10-09, per la v1.6.** Staging http://127.0.0.1:4321, build del commit e398f46. Stessi due script del 2026-10-05; nel primo ho aggiunto le tabelle «Immagine della piattaforma» e «Foto delle porte», che prima non controllava. Le misure dell'immagine della sezione 2 sono in `alt-text.md` 1.13.
+- **2026-10-05.** Staging http://localhost:4321, build del 2026-10-05 che corrisponde al commit 5c4a6cb. Confronto con `src/pages/puglia-digitale.astro`, `src/data/site.ts`, `src/data/figures.ts`, `src/data/media.ts` e `src/data/pages.ts`.
 - Testi letti dal DOM (`textContent`), nomi accessibili dall'albero di accessibilità di Chromium, a 1440 px.
 - Due script. Il primo controlla che ogni testo da pubblicare di questo documento compaia nella pagina, carattere per carattere. Il secondo cerca il contrario: i testi della pagina che il documento non riporta, fuori dal form, che è microcopy di copywriter-brand.
 
-**Esito.** I testi da pubblicare di questo documento sono tutti nel sito, identici (60 testi su 62 trovati dallo script; title e meta controllati a parte). Fanno eccezione, come previsto, l'H2 della variante di riserva, che non è applicata, e il Testo 1, che nel sito contiene dentro il link il testo nascosto « (si apre in una nuova scheda)»: a schermo è identico. Rispetto alla v1.2 ho allineato questi punti: in ognuno il sito seguiva una decisione registrata.
+**Esito del 2026-10-09.** Lo script trova nel sito 62 testi su 65. Mancano:
+- il Testo 1, che nel sito contiene dentro il link il testo nascosto « (si apre in una nuova scheda)», mentre a schermo è identico (verificato a parte);
+- l'H2 della variante di riserva, che non è applicata;
+- l'alt dell'immagine della sezione 2: nel sito c'è ancora il provvisorio del commit e398f46 (V4).
+
+Nel senso inverso il sito ha testi che questo documento non riporta. Sono la legenda e la descrizione della carta della hero, le coordinate delle porte (nascoste agli screen reader) e i nomi disegnati sulla carta (nascosti anch'essi): V3.
+
+**Esito del 2026-10-05.** I testi da pubblicare di questo documento sono tutti nel sito, identici (60 testi su 62 trovati dallo script; title e meta controllati a parte). Fanno eccezione, come previsto, l'H2 della variante di riserva, che non è applicata, e il Testo 1, che nel sito contiene dentro il link il testo nascosto « (si apre in una nuova scheda)»: a schermo è identico. Rispetto alla v1.2 ho allineato questi punti: in ognuno il sito seguiva una decisione registrata.
 
 | Punto | v1.2 | Sito, ora anche qui | Decisione |
 |---|---|---|---|
@@ -346,6 +359,8 @@ Link esterni: «Visita il portale ↗» nella hero, «lapugliadigitale.it» nel 
 |---|---|---|---|---|
 | V1 | `docs/creativa/direzione-visiva.md` §7.5 | Riga 1: «Visita il portale →», mentre il sito e il tone of voice hanno ↗. Riga 2: «didascalia solo con data e luogo», mentre il sito ha la nota di trasparenza (B4). Riga 6: CTA «Contattaci →» e un link secondario al portale, mentre il sito ha «Contattaci» come titolo del form e nessun link al portale | Allineare il documento al sito. Il sito non cambia | creative-director |
 | V2 | `docs/seo/mappa-keyword-url.md` §3.3 | Usa ancora `#aderisci` e l'H2 «Puglia Digitale in numeri» | Allineare il documento al sito. Il sito non cambia | seo-content |
+| V3 | Questo documento, hero e sezione 4 | Non riporta la legenda della carta («Ogni punto è una città di Puglia Digitale»), la sua descrizione (L7, in `alt-text.md`) e le coordinate delle porte. Il sito li ha da quando la hero mostra la carta della Puglia intera e le porte le coordinate | Riportarli in un prossimo allineamento, citando i testi di copywriter-brand. Il sito non cambia | copywriter-content |
+| V4 | `src/pages/puglia-digitale.astro`, alt dell'immagine della sezione 2 | Nel sito c'è l'alt provvisorio del commit e398f46, con «basilica romanica» | Applicare l'alt della sezione 2 (`alt-text.md` 1.13, V9) | Sessione principale |
 
 ## Testi originali mancanti
 
@@ -376,7 +391,8 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 1. Ruolo di ITnode in Puglia Digitale (brief D1). Dalla risposta dipendono l'attribuzione e il Blocco D. Il dominio del portale è invece chiuso: lapugliadigitale.it, confermato dall'utente il 2026-10-05.
 2. Numeri (D7): per «30+ città» solo la data, perché elenco e perimetro sono confermati; per «~200.000» e «60%», fonte, anno e definizione.
 3. Le imprese entrano nel portale con un SIII, con un tour virtuale o con entrambi (I3, D4)?
-4. Originale della foto dell'evento, con data e luogo, e informativa sulle riprese per le persone in platea (A4, B4, D9; condizione C07 del verdetto G4).
+4. Originale della foto dell'evento, con data e luogo, e informativa sulle riprese per le persone in platea (A4, B4, D9; condizione C07 del verdetto G4). Dal 2026-10-09 la foto non è più in questa pagina, ma resta nella Home.
+5. Immagine della sezione 2: è la basilica di San Nicola a Bari, o almeno Bari? Da dove viene, chi l'ha fatta, chi ne ha i diritti, ed è stata usata l'AI (ADR 002, A9)?
 
 ## Decisioni richieste
 
@@ -385,14 +401,20 @@ Obiettivo (tone of voice §3): almeno 60 per i testi rivolti a tutti, almeno 50 
 - **cro-specialist**: etichetta della CTA secondaria della hero.
 - **brand-strategist e creative-director**: variante di riserva a un numero (sezione 3). Il titolo proposto è «Puglia Digitale in un numero», l'alternativa «Il territorio di Puglia Digitale». Si applica solo alle condizioni di B3.
 - **creative-director**: allineamento della direzione visiva (V1).
+- **Sessione principale**: alt della sezione 2 in `src/pages/puglia-digitale.astro` (V4).
+- **Utente**: il luogo dell'immagine della sezione 2. Con la conferma si sceglie la didascalia (sezione 2).
 
 ## Rischi
 
-- **Omonimia e attribuzione.** «Puglia Digitale» è anche il nome dei programmi regionali e di un portale di tour virtuali di un'associazione. Un testo che attribuisse il progetto a ITnode, o che suggerisse un legame istituzionale, potrebbe risultare falso (soglia 1). La foto con la scritta «Evento regionale» sul fondale rafforza la lettura istituzionale: per questo gli alt e le didascalie non riprendono la parola «regionale». Il ritaglio della sezione 2 non mostra il fondale.
+- **Omonimia e attribuzione.** «Puglia Digitale» è anche il nome dei programmi regionali e di un portale di tour virtuali di un'associazione. Un testo che attribuisse il progetto a ITnode, o che suggerisse un legame istituzionale, potrebbe risultare falso (soglia 1). La foto dell'evento, con la scritta «Evento regionale» sul fondale, rafforza la lettura istituzionale: per questo gli alt e le didascalie non riprendono la parola «regionale». Dal 2026-10-09 la foto non è più in questa pagina.
+- **Immagine della sezione 2** (review di brand-strategist del 2026-10-09; ADR 002 0.6, A9).
+  - Provenienza e diritti non sono confermati, e senza conferma non va in produzione (B1; controllo A9 di `check:launch`).
+  - Se è un bene culturale, usarne l'immagine per promuovere può richiedere una concessione (B3). [DA VERIFICARE con il consulente legale]
+  - Il testo accanto nomina tre città, e l'immagine può essere attribuita a una di queste (B4). Con la conferma, il luogo nella didascalia lo risolve.
 
 ## Fonti consultate
 
-Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente. Il 2026-10-05 non ho consultato nuove fonti web.
+Consultate il 2026-09-28. I portali e itnode.it sono bloccati dall'ambiente. Il 2026-10-05 e il 2026-10-09 non ho consultato nuove fonti web. Il confronto con la basilica di San Nicola è di brand-strategist, con le sue fonti (review del 2026-10-09, §2).
 
 - Monopoli, costa adriatica, porto antico e centro storico: https://it.wikipedia.org/wiki/Monopoli_(Italia) · https://www.tuttitalia.it/puglia/60-monopoli/
 - Acquaviva delle Fonti, entroterra della provincia di Bari: https://www.italia.it/en/puglia/acquaviva-delle-fonti · https://en.wikipedia.org/wiki/Acquaviva_delle_Fonti

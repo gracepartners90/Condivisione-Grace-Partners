@@ -86,5 +86,11 @@ Solo lezioni e preferenze di lavoro. Fatti, claim e decisioni stanno in `docs/` 
 - Quando una differenza si chiude (alt applicato, ritaglio deciso), cercare nel documento anche le frasi datate scritte al presente («Nel sito c'è l'alt provvisorio…») e volgerle al passato, con il commit che le chiude. Basta `grep` su «da applicare», «provvisorio», «valuta».
 - Un modello con segnaposto (riga con il nome, dati [DA FORNIRE]) nel mio copy deck va scritto in linea, non in un blocco citato: il blocco citato è testo da pubblicare, e lo script lo darebbe come mancante.
 
+## Immagini con didascalia (lezione del 2026-10-09)
+- Una `figure` prende il nome dalla `figcaption`. Se il luogo va nella didascalia, l'alt non lo ripete (criterio 5): le varianti con il nome diventano varianti della didascalia, e l'alt resta lo stesso.
+- `verify-deck2.mjs` controlla solo le tabelle di copy con un nome noto (regex `COPY_TABLES`). Quando aggiungo o rinomino una tabella, aggiorno la regex, altrimenti il controllo salta la tabella senza dirlo.
+- Prima di dire che un avviso del checker è mio, lanciarlo sulla versione precedente al mio incarico (`git show <commit>:<file>`): l'avviso di «Numeri / 3» c'era già nella 1.5.
+- Per leggere righe lunghe di un file usare Python: `sed -n …p | rev` si è bloccato fino al timeout.
+
 ## Preferenze e correzioni ricevute
 - (nessuna correzione diretta dell'utente finora)
