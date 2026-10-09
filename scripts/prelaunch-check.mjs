@@ -19,15 +19,17 @@ const page = (rel) => pages.find((p) => p.path === join(dist, rel))?.html ?? '';
 
 // Veridicity reserves still open (ADR 002; veracity review B2, I2; G4 verdict N10). Set to true
 // only with the client's written confirmation, recorded in docs/.
-// basilicaProvenance: ADR 002 §3.3, A9, provenance or rights of the basilica image on /puglia-digitale/ (user's answer).
-const CONFIRMED = { highTraffic: false, clients10k: false, basilicaProvenance: false };
+// basilicaProvenance: ADR 002 §3.3, A9, provenance or rights of the basilica image on /puglia-digitale/: authorized by
+// the user on 2026-10-09 («tutto autorizzato, vai e carica»), recorded in docs/brief/brief-consolidato.md.
+const CONFIRMED = { highTraffic: false, clients10k: false, basilicaProvenance: true };
 const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.replace(dist, ''));
 
 // ADR 002 §3.1, A7: the written consent of each business whose SIII screenshots are in the build, recorded in
 // docs/brief/brief-consolidato.md §5 («Consensi delle imprese»). Keys are the file prefixes in src/assets/images/
 // (siii-<key>-desktop-… or siii-<key>-mobile-…). Set a key to true only when that consent is recorded.
 // A screenshot whose key is not listed here fails the check, so a new business cannot slip through.
-const SHOWCASE_CONSENT = { 'masseria-santella': false, 'maison-mimina': false, dielle: false, yes: false, 'la-tana-di-aldo': false };
+// All five authorized by the user on 2026-10-09 («tutto autorizzato, vai e carica»).
+const SHOWCASE_CONSENT = { 'masseria-santella': true, 'maison-mimina': true, dielle: true, yes: true, 'la-tana-di-aldo': true };
 const showcaseShots = pages.flatMap((p) =>
   [...p.html.matchAll(/_astro\/siii-([a-z0-9-]+?)-(?:desktop|mobile)-/g)].map((m) => ({ key: m[1], page: p.path.replace(dist, '') })),
 );
