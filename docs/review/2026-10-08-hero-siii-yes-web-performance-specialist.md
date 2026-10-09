@@ -4,7 +4,7 @@ owner: web-performance-specialist
 contributi: []
 stato: in revisione
 versione: 1.3
-aggiornato: 2026-10-08
+aggiornato: 2026-10-09
 fonti: [§8: commit e406ecb (ritaglio 4:5 della vista da smartphone sotto 40em, src/assets/images/derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg, opzioni mobileCrop.media e mobileCrop.quality di Media), dist/ dello staging delle 15:55 (identica alla build di e406ecb fatta in un worktree), build di controllo 6c6f501, misure sharp, Lighthouse e Playwright delle 15:59–16:12 UTC; §7: commit c11734b (Home, capitolo 01 con src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg) e 6c6f501 (solo l'alt), dist/ dello staging delle 15:27 (identica alla build di c11734b fatta in un worktree), build di controllo 2178f47, misure Lighthouse e Playwright delle 15:32–15:45 UTC, patch scratchpad/perf-yes/home-ch01-1440.patch; §6: commit 2178f47 (derivato desktop src/assets/images/derivate/siii-yes-desktop-negozio.jpg da scripts/prepare-assets.mjs, opzione mobileCrop.image di Media), dist/ dello staging delle 15:03 (identica alla build di 2178f47 fatta in un worktree), misure Playwright delle 15:05–15:06 UTC; commit 1112c93 (schermata YES nella hero di /siii/), commit 9118087 (solo memorie, nessun effetto sulla build), commit 7326a1e (prop quality di Media, poi tolta), docs/performance/budget.md (0.6, aggiornato a 0.7 e poi a 0.8), docs/performance/architettura.md (0.4, aggiornato a 0.5 e poi a 0.6), docs/decisioni/005-preload-del-font.md (1.3), docs/review/2026-10-07-schermate-siii-web-performance-specialist.md, dist/ dello staging del 2026-10-08 alle 14:34 (identica alla build di 1112c93 fatta in un worktree), build di controllo aaf4760, misure Lighthouse 13.5.0 e Playwright 1.56.1 del 2026-10-08 (14:37–14:54 UTC), sharp 0.35.5 del progetto, sorgente di Astro 7.3.5 (assets/services/sharp.js, assets/utils/hash.js)]
 ---
 
@@ -385,7 +385,7 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
 - Da 40em resta la vista desktop: WebP e JPEG fino a 1440, AVIF fino a 1920 solo da 1,5 dppx.
 
 **Condizioni.**
-- La build di `e406ecb`, fatta in un worktree, è identica allo staging delle 15:55.
+- La build di `e406ecb`, fatta in un worktree, è identica allo staging delle 15:55. Il 2026-10-09, dopo il riavvio del contenitore, lo staging serve ancora la stessa build: `/` e `/siii/` sono identiche byte per byte, e dopo `e406ecb` nessun commit tocca il sito.
 - Controllo: `6c6f501`, il sito subito prima. Cambiano solo `index.html` e i file de La Tana; `/siii/` e le altre pagine sono identiche byte per byte.
 - Misure:
   - sharp del progetto, che riproduce la build al decimo di KB;
@@ -478,9 +478,10 @@ Aggiunta in `7326a1e` e tolta in `1112c93`, perché la schermata YES sta nel bud
 
 - **creative-director:**
   - hero di `/siii/`: nessuna, se l'ancoraggio resta in alto. Altrimenti osservazione 1: qualità per formato (AVIF 48 o 46) solo per questa immagine, e nuova misura;
-  - Home: se il capitolo 01 passa alla vista mobile sui telefoni, ritaglio in build e nuova misura (osservazione 3).
+  - Home, capitolo 01: chiusa. La vista da smartphone, ritagliata 4:5 in build, è in `e406ecb` e verificata (§8). Ogni nuovo cambio d'immagine o di ritaglio si rimisura.
+- **web-performance-specialist (io):** chiusa. AVIF 40 per il ritaglio del capitolo 01 (`mobileCrop.quality`), decisa sulle misure del §8.
 - **cro-specialist:** la decisione sul RUM `web-vitals`, già richiesta nel `budget.md`, serve anche per sorvegliare l'osservazione 2 sul campo.
 - **Sessione principale:**
-  - per la hero di `/siii/`, nessuna patch da applicare. Resta la prova della finestra del ripiego sull'host (domanda 1);
-  - dal 2026-10-08, per la Home: applicare la patch dell'osservazione 3 (`scratchpad/perf-yes/home-ch01-1440.patch`), consigliata prima del lancio. Io ricontrollo varianti e controllo n. 8 in pochi minuti;
+  - nessuna patch da applicare: l'osservazione 3 è in `e406ecb`;
+  - resta la prova della finestra del ripiego sull'host (domanda 1);
   - programmare con me la rimisura dedicata della Home (budget §7.5, [DA VERIFICARE]).

@@ -68,6 +68,9 @@ Lezioni, vincoli di ambiente e compromessi. Fatti e decisioni ufficiali stanno i
   - Pesano sul caricamento ma non su un LCP testuale, perché partono dopo il primo rendering.
   - Il caso da controllare è un'immagine pesante sotto la piega, con `profiles-home.mjs`, che segnala il capitolo 01 scaricato durante il caricamento.
 - **Base della Home da rifare** (budget §7.5): dal `920e497` la foto dell'evento entra nel caricamento. Rimisura dedicata da proporre, alternando `bae201c` e la build attuale.
+- **Qualità di un ritaglio (`mobileCrop.quality`, dal commit `e406ecb`).** Si sceglie il gradino AVIF più alto che resta dentro gli obiettivi del budget §4 alle larghezze di riferimento (828 e 1080 px). Capitolo 01 della Home: AVIF 40 (review del 2026-10-08, §8).
+- **`pic-variants.mjs` e i marcatori:** il nome di una classe può comparire prima nel CSS inline. Si cerca l'attributo (`'class="worlds__screen'`), non il nome nudo: il 2026-10-08 il nome nudo ha restituito la foto dell'evento.
+- **Riavvio del contenitore** (2026-10-09): la scratchpad resta, lo staging su 4321 riparte con un altro PID. Prima di chiudere si confronta l'HTML dello staging con la build misurata.
 - **Prima di fermare un server** si guarda `/proc/<pid>/environ` (`DIST_DIR`, `PORT`): il 2026-10-08 sulla 4392 c'era un server del creative-director (`cd-tana-home`). Lo staging su 4321 cambia PID quando la sessione principale lo riavvia.
 - **La sessione principale committa i miei documenti mentre lavoro** (2026-10-08, `f0aecbb`, «in corso»). A fine incarico si controlla con `git diff HEAD` che cosa resta da committare.
 - **Incarico fermato dalla sessione principale.** Ordine di chiusura:
