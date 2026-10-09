@@ -61,3 +61,5 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Un alt che dice «Il SIII di [impresa]» è un'affermazione in parole: la paternità (A8) pesa più che per un'immagine muta. Segnalarlo.
 - Prima di riprendere un incarico dopo altri commit, leggere il log (`.git/logs/HEAD`) e le review nuove: qui patch già applicata, alt definitivo e verdetto del creative-director avevano cambiato i fatti da citare.
 - Tenere stabili i numeri di sezione citati da altri (§4 degli input, citato dal creative-director): aggiornare in loco con «Stato» e aggiungere le novità in una sezione nuova, con versione 1.1.
+- Grafia dei nomi che iniziano con l'articolo: nel testo la preposizione si unisce all'articolo («della Tana di Aldo», come `alt-text.md` 1.11); il nome da solo resta «La Tana di Aldo». Applicarla in tutti i miei documenti insieme, lasciando le citazioni storiche marcate come tali.
+- Quando un alt passa da provvisorio a definitivo, o altri membri chiudono punti che avevo aperto, aggiornare subito gli stati e le «Decisioni richieste» di ADR, brief e review: le correzioni di stato arrivano spesso da chi legge l'ADR.

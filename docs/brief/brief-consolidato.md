@@ -3,9 +3,9 @@ titolo: Brief consolidato
 owner: brand-strategist
 contributi: []
 stato: bozza
-versione: 0.6
-aggiornato: 2026-10-08
-fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md), richieste dell'utente del 2026-10-08 sulla hero di /siii/ e sul capitolo 01 della Home (parole esatte in A8), ricerche web del 2026-10-08 (sezione 8), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.4)]
+versione: 0.7
+aggiornato: 2026-10-09
+fonti: [docs/brief/linee-guida.md, src/assets/images/, ricerche web del 2026-09-28 (sezione 8), ricerche web e risposte dell'utente del 2026-10-05 e del 2026-10-06 (docs/strategia/citta-digitali-elenco.md), richieste dell'utente del 2026-10-08 sulla hero di /siii/ e sul capitolo 01 della Home (parole esatte in A8), ricerche web del 2026-10-08 (sezione 8), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.5), docs/contenuti/alt-text.md (1.11)]
 ---
 
 # Brief consolidato · Nuovo sito ITnode
@@ -88,7 +88,7 @@ I testi tra «» sono delle LG. Le note rimandano al registro (sezione 5).
 | H1 | «La tecnologia cambia. La curiosità ci accompagna da sempre.» | Hero che respira, senza paragrafi |
 | 2 | «ITnode nasce dall’idea di creare un nuovo modo di abitare il Web.» | Frase di massima importanza (§07) |
 | 3 | «ITnode ha creato Città Digitali e Puglia Digitale, due progetti di digitalizzazione territoriale che portano online luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.» → «Una nuova infrastruttura digitale per connettere imprese, cittadini e visitatori.» | «ha creato» `[DA VERIFICARE]` (A1). Versione provvisoria fino a D1: «Con Città Digitali e Puglia Digitale, ITnode porta online luoghi, imprese e attività attraverso Tour Virtuali Interattivi Immersivi.» |
-| 4 | I tre mondi: 01 SIII «Spazi reali. Esperienze digitali.» · 02 Puglia Digitale «Un territorio. Migliaia di storie.» · 03 Città Digitali «Le attività del territorio, online senza perdere radici.» | CTA: «Esplora SIII →», «Scopri Puglia Digitale →», «Esplora Città Digitali →». Capitolo 01: dal 2026-10-08 la schermata del SIII de La Tana di Aldo da desktop (richiesta dell'utente); il nome è solo nell'alt. A7, A8 |
+| 4 | I tre mondi: 01 SIII «Spazi reali. Esperienze digitali.» · 02 Puglia Digitale «Un territorio. Migliaia di storie.» · 03 Città Digitali «Le attività del territorio, online senza perdere radici.» | CTA: «Esplora SIII →», «Scopri Puglia Digitale →», «Esplora Città Digitali →». Capitolo 01: dal 2026-10-08 la schermata del SIII della Tana di Aldo, da desktop e, sui telefoni in verticale, da smartphone (richiesta dell'utente; commit c11734b ed e406ecb); il nome è solo nell'alt. A7, A8 |
 | 5 | Fondatore: «36 anni dentro l’innovazione. E ancora la stessa curiosità.» → timeline → «È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno.» | Testo di base `[DA FORNIRE]`; N4, N5, F1–F7, sezione 6 |
 | CTA | «Parliamone» oppure «Contattaci» | La scelta spetta a cro-specialist |
 
@@ -224,7 +224,7 @@ Le regole di riferimento sono la soglia 1 di CLAUDE.md e LG §11, §14, §20. Pe
 | A5 | Simbolo ® sui marchi Puglia Digitale e Città Digitali | Loghi nelle foto | Da verificare | Il ® si usa nei testi solo se abbiamo il numero di registrazione. |
 | A6 | Payoff «Digital Innovation for the Territory» (foto dell'evento) e «La trasformazione digitale per città, imprese e persone» (immagini AI) | Asset | Da verificare | Sono payoff ufficiali? Finché non lo sappiamo, non si usano. |
 | A7 | Schermate e nomi delle imprese nel sito: Masseria Santella, Maison Miminà, D.L. Natura Dentro (esempi di `/siii/`); YES (hero di `/siii/`) e La Tana di Aldo (Home, capitolo 01), tutte e due dal 2026-10-08 | LG §12; utente, 2026-10-08 | Utilizzabile in anteprima; al go-live solo con il consenso | Serve il consenso scritto di ogni impresa a comparire con nome, logo e schermate, registrato nella tabella qui sotto con data e forma (ADR 002 §3.1; testo della richiesta nel §3.2). Vanno confermati anche i nomi ufficiali. Nome, luogo e link delle schede degli esempi restano anche senza consenso (LG §12). |
-| A8 | I SIII di YES e de La Tana di Aldo li ha realizzati ITnode | Utente, 2026-10-08.<br>**YES:** «scusami usa questa non quella», dopo aver scritto, per un'altra schermata, «usa questa come immagine iniziale della sezione SIII».<br>**La Tana di Aldo**, con la vista desktop e quella da smartphone: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai» | Da verificare | Nessun testo visibile lo dice. Lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home; l'alt della Home lo scrive («Il SIII de La Tana di Aldo»).<br>Si chiude impresa per impresa, con il consenso (il testo dell'ADR 002 §3.2 lo dichiara) o con una riga dell'utente.<br>«YES» e «La Tana di Aldo» sono le letture dei loghi; quello di YES dice anche «pure design 100% flowers». Per tutte e due: nome ufficiale, comune e provincia `[DA FORNIRE]`; indirizzo dell'esperienza `[DA FORNIRE, se è online]`.<br>In rete nessun riscontro (sezione 8). |
+| A8 | I SIII di YES e della Tana di Aldo li ha realizzati ITnode | Utente, 2026-10-08.<br>**YES:** «scusami usa questa non quella», dopo aver scritto, per un'altra schermata, «usa questa come immagine iniziale della sezione SIII».<br>**La Tana di Aldo**, con la vista desktop e quella da smartphone: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai» | Da verificare | Nessun testo visibile lo dice. Lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home; l'alt della Home lo scrive («Il SIII della Tana di Aldo», definitivo dal commit 6c6f501).<br>Si chiude impresa per impresa, con il consenso (il testo dell'ADR 002 §3.2 lo dichiara) o con una riga dell'utente.<br>«YES» e «La Tana di Aldo» sono le letture dei loghi; quello di YES dice anche «pure design 100% flowers». Per tutte e due: nome ufficiale, comune e provincia `[DA FORNIRE]`; indirizzo dell'esperienza `[DA FORNIRE, se è online]`.<br>In rete nessun riscontro (sezione 8). |
 
 **Consensi delle imprese (A7)**
 
@@ -354,7 +354,7 @@ Le due ricerche su Massafra seguivano una pagina del portale restituita dalla ri
 - I5. «36 anni» significa un percorso iniziato nel 1990; «2002» è l'anno di MyComm.
 - I6. «~200.000» e «60%» si riferiscono ai territori delle 31 città di Puglia Digitale. Per «30+ città» non è più un'ipotesi: sono le 31 città pugliesi dell'elenco di Città Digitali (conferma dell'utente del 2026-10-06).
 - I7. I quattro ritratti del fondatore sono generati o elaborati con AI. La foto dell'evento è reale, ma elaborata.
-- A8 (registro). I SIII di YES e de La Tana di Aldo li ha realizzati ITnode: lo presuppongono le richieste dell'utente, che però non lo dicono.
+- A8 (registro). I SIII di YES e della Tana di Aldo li ha realizzati ITnode: lo presuppongono le richieste dell'utente, che però non lo dicono.
 
 ## Domande aperte
 

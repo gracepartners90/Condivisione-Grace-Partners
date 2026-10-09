@@ -3,16 +3,17 @@ titolo: Review di veridicità · hero di /siii/ (YES) e capitolo 01 della Home (
 owner: brand-strategist
 contributi: []
 stato: in revisione
-versione: 1.1
-aggiornato: 2026-10-08
-fonti: [src/assets/images/siii-yes-mobile-negozio.jpg, src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg, src/data/media.ts, src/pages/siii.astro (righe 71–84), src/pages/index.astro (righe 128–130), scripts/prelaunch-check.mjs, dist/ delle build di 1112c93 e c11734b, commit a5dac14, d97aa29 e c11734b, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.4), docs/brief/brief-consolidato.md (0.6), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md, docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20: §4.5, §4.8), docs/contenuti/alt-text.md (1.6, 1.10), ricerche web del 2026-10-08 (brief consolidato §8)]
+versione: 1.2
+aggiornato: 2026-10-09
+fonti: [src/assets/images/siii-yes-mobile-negozio.jpg, src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg, src/data/media.ts, src/pages/siii.astro (righe 71–84), src/pages/index.astro (righe 128–130), scripts/prelaunch-check.mjs, dist/ delle build di 1112c93 e c11734b, commit a5dac14, d97aa29 e c11734b, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.4), docs/brief/brief-consolidato.md (0.6), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md, docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20: §4.5, §4.8), docs/contenuti/alt-text.md (1.6, 1.10, 1.11), docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md, docs/contenuti/copy-deck/home.md (1.8), commit 6c6f501 ed e406ecb, ricerche web del 2026-10-08 (brief consolidato §8)]
 ---
 
 # Review · veridicità della hero di `/siii/` (YES) e del capitolo 01 della Home (La Tana di Aldo)
 
 Fase 5. Il verdetto di dominio è al §5; il verdetto di gate spetta al creative-director.
 - **Versione 1.0.** La hero di `/siii/` mostra da smartphone un negozio con il logo «YES» (commit 1112c93, in anteprima). Ne parlano i §1–§4.
-- **Versione 1.1.** Il capitolo 01 (SIII) della Home mostra da desktop la sala de La Tana di Aldo (commit c11734b, in anteprima). Ne parla il §6. Gli input per l'utente ora sono un solo elenco (§4).
+- **Versione 1.1.** Il capitolo 01 (SIII) della Home mostra da desktop la sala della Tana di Aldo (commit c11734b, in anteprima). Ne parla il §6. Gli input per l'utente ora sono un solo elenco (§4).
+- **Versione 1.2 (2026-10-09).** Correzione di stato: l'alt definitivo della Home, la grafia «della Tana di Aldo», la vista da smartphone del capitolo e gli esiti di T3, T4 e della riserva del capitolo 01.
 
 ## In sintesi
 
@@ -131,11 +132,11 @@ Un solo elenco per le due imprese che non vengono dalle linee guida, più il con
 
 | # | Domanda | Per chi | Segnaposto | Perché serve | Blocca il go-live? |
 |---|---|---|---|---|---|
-| 1 | Il SIII l'ha realizzato ITnode? | YES; La Tana di Aldo | `[DA VERIFICARE: realizzazione ITnode del SIII di YES (A8)]`; `[DA VERIFICARE: realizzazione ITnode del SIII de La Tana di Aldo (A8)]` | La hero di `/siii/` e il capitolo 01 della Home lo presuppongono; l'alt della Home lo scrive | Sì, se non arriva con il consenso |
-| 2 | Qual è il nome ufficiale dell'impresa (insegna e, se diversa, ragione sociale), con la grafia esatta? | YES; La Tana di Aldo | `[DA FORNIRE: nome ufficiale di YES]`; `[DA FORNIRE: nome ufficiale de La Tana di Aldo]` | Alt e righe con il nome | No: senza, restano le letture dei loghi e le righe non ci sono |
-| 3 | In quale comune e provincia si trova? | YES; La Tana di Aldo | `[DA FORNIRE: comune e provincia di YES]`; `[DA FORNIRE: comune e provincia de La Tana di Aldo]` | Righe con il nome (DV §4.8) | No: senza, le righe non ci sono |
-| 4 | L'esperienza è online? A quale indirizzo? | YES; La Tana di Aldo | `[DA FORNIRE: indirizzo dell'esperienza di YES, se è online]`; `[DA FORNIRE: indirizzo dell'esperienza de La Tana di Aldo, se è online]` | Controllo in QA (la vista deve corrispondere all'esperienza) ed eventuale link | No |
-| 5 | L'impresa ha dato il consenso scritto, oppure il contratto con ITnode prevede già l'uso nel portfolio? | YES; La Tana di Aldo | `[DA FORNIRE: consenso scritto di YES (A7)]`; `[DA FORNIRE: consenso scritto de La Tana di Aldo (A7)]` | Soglia 1 | Sì: senza, si applicano le riserve della hero e del capitolo 01 (ADR 002 §3.1) |
+| 1 | Il SIII l'ha realizzato ITnode? | YES; La Tana di Aldo | `[DA VERIFICARE: realizzazione ITnode del SIII di YES (A8)]`; `[DA VERIFICARE: realizzazione ITnode del SIII della Tana di Aldo (A8)]` | La hero di `/siii/` e il capitolo 01 della Home lo presuppongono; l'alt della Home lo scrive | Sì, se non arriva con il consenso |
+| 2 | Qual è il nome ufficiale dell'impresa (insegna e, se diversa, ragione sociale), con la grafia esatta? | YES; La Tana di Aldo | `[DA FORNIRE: nome ufficiale di YES]`; `[DA FORNIRE: nome ufficiale della Tana di Aldo]` | Alt e righe con il nome | No: senza, restano le letture dei loghi e le righe non ci sono |
+| 3 | In quale comune e provincia si trova? | YES; La Tana di Aldo | `[DA FORNIRE: comune e provincia di YES]`; `[DA FORNIRE: comune e provincia della Tana di Aldo]` | Righe con il nome (DV §4.8) | No: senza, le righe non ci sono |
+| 4 | L'esperienza è online? A quale indirizzo? | YES; La Tana di Aldo | `[DA FORNIRE: indirizzo dell'esperienza di YES, se è online]`; `[DA FORNIRE: indirizzo dell'esperienza della Tana di Aldo, se è online]` | Controllo in QA (la vista deve corrispondere all'esperienza) ed eventuale link | No |
+| 5 | L'impresa ha dato il consenso scritto, oppure il contratto con ITnode prevede già l'uso nel portfolio? | YES; La Tana di Aldo | `[DA FORNIRE: consenso scritto di YES (A7)]`; `[DA FORNIRE: consenso scritto della Tana di Aldo (A7)]` | Soglia 1 | Sì: senza, si applicano le riserve della hero e del capitolo 01 (ADR 002 §3.1) |
 | 6 | Lo stesso consenso | Masseria Santella, Maison Miminà, D.L. Natura Dentro | `[DA FORNIRE: consenso scritto delle imprese degli esempi (A7)]` | Domanda aperta dal 2026-10-07. Le viste di Masseria Santella sono anche la prima riserva della hero e del capitolo 01 | Sì, impresa per impresa |
 
 Le domande del creative-director su YES (una schermata pulita, YES tra gli esempi) sono nel suo verdetto del 2026-10-08 (Y4, Y5): qui non si duplicano.
@@ -155,14 +156,14 @@ Le domande del creative-director su YES (una schermata pulita, YES tra gli esemp
 - **Anteprima:** conforme alla soglia 1, per YES e per La Tana di Aldo.
 - **Go-live:** nessuna delle due è pubblicabile senza A7 e A8.
   - Il controllo di go-live le blocca già.
-  - Le riserve della hero e del capitolo 01 sono definite (ADR 002 §3.1). Quella della hero è confermata dal creative-director; quella del capitolo 01 è da confermare (T3).
+  - Le riserve della hero e del capitolo 01 sono definite (ADR 002 §3.1), e il creative-director le ha confermate tutte e due (verdetti del 2026-10-08).
 - **I nomi negli alt:** approvati alle stesse condizioni.
   - L'alt definitivo di YES risolve la cautela del §2.
-  - L'alt de La Tana di Aldo può restare com'è, se arriva A8 (§6).
+  - L'alt della Tana di Aldo, ora definitivo («Il SIII della Tana di Aldo: …», 6c6f501), va bene se arriva A8 (§6).
 
 ## 6. Aggiornamento (v1.1): La Tana di Aldo nel capitolo 01 della Home
 
-Dal commit c11734b il capitolo 01 (SIII) della Home mostra da desktop la sala de La Tana di Aldo, al posto di quella di Masseria Santella. L'utente l'ha mandata con la vista desktop e quella da smartphone, con queste parole: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai». Non ha detto altro: niente su chi ha realizzato il SIII, sul nome ufficiale, sul comune o sul consenso.
+Dal commit c11734b il capitolo 01 (SIII) della Home mostra da desktop la sala della Tana di Aldo, al posto di quella di Masseria Santella. L'utente l'ha mandata con la vista desktop e quella da smartphone, con queste parole: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai». Non ha detto altro: niente su chi ha realizzato il SIII, sul nome ufficiale, sul comune o sul consenso.
 
 ### 6.1 Che cosa ho guardato
 
@@ -177,6 +178,7 @@ Dal commit c11734b il capitolo 01 (SIII) della Home mostra da desktop la sala de
   - La Home non nomina più Masseria Santella, che resta solo negli esempi di `/siii/`.
 - **Il controllo A7:** elenca `la-tana-di-aldo (/index.html)`, con le altre quattro imprese.
 - **Otto ricerche web** del 2026-10-08 su La Tana di Aldo: nessun riscontro (brief §8).
+- **Stato al 2026-10-09 (v1.2).** Dal commit e406ecb, sui telefoni in verticale, il capitolo mostra un ritaglio 4:5 della vista da smartphone, `derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg`. Il controllo A7 lo riconosce, e in `dist/` il nome resta solo nell'alt.
 
 ### 6.2 Il nome nell'alt: parere
 
@@ -188,9 +190,11 @@ L'alt provvisorio è: «Il SIII de La Tana di Aldo: una sala con la volta in pie
 - **Una differenza rispetto a YES.** Qui l'alt scrive «Il SIII de…»: è un'affermazione in parole, non solo un'immagine. Per questo A8 pesa di più. Con la conferma l'alt va bene così; senza, al go-live la schermata esce insieme al suo alt (ADR 002 §3.1).
 - **Non nominare l'impresa nel testo del capitolo non riduce il bisogno del consenso**, per le stesse ragioni di YES (§2).
 
+**Stato al 2026-10-09 (v1.2).** L'alt definitivo (6c6f501, `alt-text.md` 1.11) è «Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.». Unisce l'articolo alla preposizione e vale per le due viste. Il parere non cambia.
+
 ### 6.3 Osservazioni
 
-#### T1 · [BLOCCANTE per il go-live] Consenso scritto de La Tana di Aldo (A7)
+#### T1 · [BLOCCANTE per il go-live] Consenso scritto della Tana di Aldo (A7)
 - **Dove:** Home, capitolo 01; `src/data/media.ts`, `siiiHomeScreen`.
 - **Problema:** la schermata mostra logo e nome di un'impresa reale che non è nelle linee guida, e il suo consenso non è registrato.
 - **Motivazione:** soglia 1; ADR 002 §3.1 (0.4).
@@ -199,10 +203,10 @@ L'alt provvisorio è: «Il SIII de La Tana di Aldo: una sala con la volta in pie
   - al go-live senza consenso, applicare la riserva del capitolo (ADR 002 §3.1). Prima l'interno di Masseria Santella da desktop, se Masseria Santella ha dato il consenso. Altrimenti la variante «in pubblicazione» del capitolo, senza il nome di un'impresa che non ha dato il consenso;
   - se l'impresa dice di no, togliere la schermata subito anche dall'anteprima (ADR 002 §1).
 
-#### T2 · [IMPORTANTE] Chi ha realizzato il SIII de La Tana di Aldo (A8)
+#### T2 · [IMPORTANTE] Chi ha realizzato il SIII della Tana di Aldo (A8)
 - **Dove:** Home, capitolo 01, e il suo alt.
 - **Problema:**
-  - l'utente non lo dice, ma l'alt sì: «Il SIII de La Tana di Aldo»;
+  - l'utente non lo dice, ma l'alt sì: «Il SIII della Tana di Aldo»;
   - il capitolo è quello che presenta il prodotto di ITnode.
 - **Riscontri:**
   - in rete, nessuno;
@@ -219,26 +223,26 @@ L'alt provvisorio è: «Il SIII de La Tana di Aldo: una sala con la volta in pie
 - **Proposta:**
   - nessuna riga finché non arrivano nome, comune e consenso;
   - il creative-director allinea la DV §4.8: vista del capitolo, riga, elenco delle cinque imprese e riserva del capitolo 01 (ADR 002 §3.1).
+- **Stato:** fatto nella DV 0.21 (verdetto del creative-director sul capitolo 01, decisioni 4 e 6). La riga è pronta nel copy deck della Home 1.8, ma non è pubblicata: «La Tana di Aldo · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia])». Con la riserva diventa «Masseria Santella · Cassano delle Murge (BA)».
 
 #### T4 · [SUGGERIMENTO] I nomi nelle schede degli esempi
 - **Dove:** DV §4.8, «Consenso (A7)»: «Nome, logo, riga e schermate di ogni impresa vanno online solo con il suo consenso scritto».
 - **Problema:** presa alla lettera, la frase toglierebbe anche nome e link delle schede degli esempi, se manca il consenso. L'ADR 002 invece li tiene, perché vengono dalle linee guida (LG §12).
 - **Proposta:** precisare nella DV che nome, luogo e link delle schede degli esempi restano anche senza consenso. Fuori dalle schede, il nome di un'impresa va online solo con il suo consenso (ADR 002 §3.1, «Nomi delle schede degli esempi»).
+- **Stato:** accolta nella DV 0.21 (verdetto del creative-director sul capitolo 01, decisione 5).
 
 ## Ipotesi da validare
 
 - `[IPOTESI: «YES» e «La Tana di Aldo» sono i nomi con cui le imprese si presentano.]` Sono le letture dei loghi.
 - `[IPOTESI: le misure dei loghi sono stimate.]`
   - Il riquadro di YES misura circa 175 px su 1200; la porta è larga 26rem da 64em e 90vw al telefono.
-  - Il logo de La Tana di Aldo misura circa 280 px su 2000; il capitolo è largo 62vw da 64em e 92vw al telefono.
+  - Il logo della Tana di Aldo misura circa 280 px su 2000; il capitolo è largo 62vw da 64em e 92vw al telefono.
 - `[IPOTESI: il testo dell'ADR 002 §3.2 basta come consenso.]` Lo verifica il consulente legale del cliente.
 
 ## Domande aperte
 
 - **Utente:** i sei punti del §4.
-- **creative-director:**
-  - T3, cioè DV §4.8 per il capitolo 01 e la riserva del capitolo;
-  - T4, i nomi nelle schede degli esempi.
+- **creative-director:** nessuna. T3 e T4 sono applicate nella DV 0.21, e la riserva del capitolo 01 è confermata.
 - **ux-designer:** nessuna. La domanda su «YES» a inizio alt è superata dall'alt definitivo.
 
 ## Decisioni richieste
@@ -247,6 +251,6 @@ L'alt provvisorio è: «Il SIII de La Tana di Aldo: una sala con la volta in pie
   - approvare l'ADR 002 §3.1 e §3.2 (versione 0.4);
   - inoltrare la richiesta di consenso alle cinque imprese.
 - **Sessione principale:** mettere a `true` la chiave di un'impresa solo dopo la registrazione del consenso nel brief.
-- **creative-director:** T3, T4 e la riserva del capitolo 01.
-- **copywriter-content:** rendere definitivo l'alt del capitolo 01 (§6.2). Per la veridicità va bene così, se arriva A8.
-- **copywriter-brand:** le righe con il nome sotto la hero e sotto il capitolo 01, quando arrivano nome e comune.
+- **creative-director:** fatto (verdetto sul capitolo 01, decisioni 4–6).
+- **copywriter-content:** fatto. L'alt del capitolo 01 è definitivo (6c6f501) e per la veridicità va bene, se arriva A8.
+- **copywriter-brand:** le righe con il nome sono pronte (copy deck della Home 1.8 per il capitolo 01; verdetto del creative-director del 2026-10-08 per la hero). Vanno completate quando arrivano nome e comune.
