@@ -3,16 +3,23 @@ titolo: Copy deck · Home
 owner: copywriter-brand
 contributi: [creative-director, seo-content, brand-strategist, cro-specialist, ux-designer, copywriter-content]
 stato: in revisione
-versione: 1.7
-aggiornato: 2026-10-08
-fonti: [commit c11734b (schermata della Tana di Aldo nel capitolo 01, richiesta dell'utente del 2026-10-08), docs/contenuti/alt-text.md (1.11), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.3, A7), docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/creativa/direzione-visiva.md (0.12), docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md (§2.8), docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/contenuti/tone-of-voice.md, docs/contenuti/alt-text.md (1.5), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (H5), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-05-legenda-mappa-copywriter-brand.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/pages/index.astro, src/data/site.ts, src/data/media.ts, src/data/maps.json, src/lib/citta-digitali.ts, src/components/ui/Horizon.astro, build di HEAD 326f354 del 2026-10-07 (copia nello scratchpad), prove Playwright del 2026-10-07]
+versione: 1.8
+aggiornato: 2026-10-09
+fonti: [staging http://127.0.0.1:4321 con la build di e406ecb (HTML della Home identico il 2026-10-08 e il 2026-10-09), prove Playwright del 2026-10-08 e del 2026-10-09 sullo staging (Chromium, scratchpad, non versionate), commit e406ecb (vista da smartphone della Tana di Aldo sui telefoni), 6c6f501 (copy deck 1.7 e alt definitivo), c11734b (schermata della Tana di Aldo nel capitolo 01, richiesta dell'utente del 2026-10-08), 3e25c42 (Puglia intera nel capitolo 02, P4), bae201c (carta della Terra di Bari tolta dal codice), 920e497 (foto dell'evento senza cornice), 3bfe9b2 (ritratto del fondatore centrato), docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md, docs/review/2026-10-08-hero-siii-yes-brand-strategist.md (1.1, §4 e §6), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.4: A7, A8, §3.1), docs/creativa/direzione-visiva.md (0.21: §1.4, §4.1, §4.2, §4.5, §4.8, §7.3), docs/contenuti/alt-text.md (1.11), docs/review/2026-10-05-legenda-mappa-copywriter-brand.md (1.4: L1, L4, L7, L8), docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/ux/sitemap.md, docs/ux/struttura-pagine.md, docs/ux/accessibilita.md (§2.8), docs/seo/mappa-keyword-url.md, docs/seo/dati-strutturati.md, docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md (§5), docs/contenuti/tone-of-voice.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (H5, T6), docs/review/2026-10-05-mappa-citta-digitali-ui-designer.md, docs/review/2026-10-05-mappa-citta-digitali-ux-designer.md, docs/review/2026-10-06-descrizione-carta-home-ux-designer.md, docs/strategia/coordinate-luoghi.md, docs/strategia/citta-digitali-elenco.md, src/pages/index.astro, src/pages/siii.astro, src/components/sections/ProjectShowcase.astro, src/components/sections/CTASection.astro, src/components/ui/Horizon.astro, src/data/site.ts, src/data/media.ts, src/data/maps.json, src/lib/citta-digitali.ts, src/styles/global.css (t-label)]
 ---
 
 # Copy deck · Home
 
 Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA verso i contatti, nell’ordine delle sette sezioni fissato dalla direzione visiva (`docs/creativa/direzione-visiva.md`, § 7.3). I testi sono pronti da impaginare. Le parti provvisorie sono elencate in fondo, in «Testi da sostituire con gli originali del cliente».
 
-**Versione 1.7 (2026-10-08).** Capitolo 01: la schermata del SIII della Tana di Aldo al posto di quella di Masseria Santella (commit c11734b, richiesta dell’utente), con il testo alternativo di `alt-text.md` 1.11. Aggiornamento di copywriter-content su richiesta della sessione principale, solo nella riga «Visual» e nella nota del capitolo 01: da rivedere per copywriter-brand. Nessun testo della Home cambia.
+**Versione 1.8 (2026-10-09): il copy deck descrive di nuovo la Home com’è, sulla build di e406ecb.** Nessun testo pubblicato cambia. Rispetto alla 1.7:
+- capitolo 01: la riga «Visual» di copywriter-content è rivista e accolta. In più ci sono la vista da smartphone sotto i 40em (commit e406ecb), la riserva confermata dal creative-director e il modello della riga con il nome, con i segnaposto e gli a capo misurati (blocco «Capitolo 01 con la schermata della Tana di Aldo»);
+- capitolo 02: la carta della Puglia intera con le città di Puglia Digitale, con legenda e descrizione L7, al posto della carta della Terra di Bari, che non è più nel sito (commit 3e25c42 e bae201c; blocco «Capitolo 02 con la carta della Puglia»);
+- documento: la didascalia decisa dal creative-director, «L’evento Puglia Digitale · {luogo}, {data}», e la foto senza cornice (commit 920e497);
+- allineamenti al codice: `data-cta-id` al posto di `data-track` nelle tabelle, i contatti della chiusura su due righe senza separatore, il numero del capitolo in un `p`, il separatore nascosto dell’H3 «SIII», «000° N» tra i gradi dell’orizzonte, il ritratto centrato;
+- Gulpease ricalcolato con la legenda del capitolo 02; Ipotesi, Domande aperte e Decisioni richieste aggiornate.
+
+**Versione 1.7 (2026-10-08).** Capitolo 01: la schermata del SIII della Tana di Aldo al posto di quella di Masseria Santella (commit c11734b, richiesta dell’utente), con il testo alternativo di `alt-text.md` 1.11. Aggiornamento di copywriter-content su richiesta della sessione principale, solo nella riga «Visual» e nella nota del capitolo 01: da rivedere per copywriter-brand (rivista e accolta nella 1.8). Nessun testo della Home cambia.
 
 **Versione 1.6 (2026-10-08).** Regola «Tra queste anche» per le carte la cui descrizione lascia fuori città già nominate accanto (sezione 5, capitolo 03). Nessun testo della Home cambia.
 
@@ -32,7 +39,7 @@ Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA
 - **verbatim**: frase del cliente. Non si modifica.
 - **A capo d’autore**: la barra rovesciata `\` a fine riga indica un a capo che sta nel contenuto (regola «Il Passaggio», direzione visiva § 1.5). Nel markup è un `<br>` oppure una riga separata.
 - **Frecce**: → ↓ ↗ indicano quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri: i font scelti non li contengono (direzione visiva, § 3).
-- **Gulpease**: calcolato con uno script con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Insieme dei testi: titoli, statement, riga di posizionamento, paragrafi, legenda dei nodi del documento, legenda della carta del capitolo 03, didascalie della timeline e citazione; esclusi occhielli, etichette mono, CTA e contatti. Ricalcolato il 2026-10-07 sui testi del sito: 72 nel complesso (356 parole). Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
+- **Gulpease**: calcolato con uno script con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Insieme dei testi: titoli (H1 e H2), statement, riga di posizionamento, paragrafi, legenda dei nodi del documento, legende delle carte dei capitoli 02 e 03, didascalie della timeline, compresa «10.000+ clienti, prima di ITnode», e citazione; esclusi occhielli, nomi e descrittori dei capitoli, etichette mono, CTA, contatti, testi alternativi e descrizioni delle carte. Ricalcolato il 2026-10-09 sui testi dello staging: 72 nel complesso (364 parole). Senza la legenda del capitolo 02, nel sito dal 2026-10-07, l’insieme è quello della versione 1.5: 356 parole e 71,9, cioè lo stesso 72. Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
 - **Riferimenti**: grafie, CTA e punteggiatura in `tone-of-voice.md`; testi alternativi in `alt-text.md` (copywriter-content); header, footer, form, marquee e 404 in `microcopy.md`; eventi `data-track` nella strategia di conversione, § 4.
 
 ## Metadati
@@ -97,7 +104,7 @@ Spazio unificatore (U+00A0) tra «per» e «imprese».
 **Etichette dei luoghi sull’orizzonte** · dentro l’orizzonte `aria-hidden` · generate da `Horizon.astro` con i dati di `src/data/site.ts`
 > Monopoli — 081° · 38 km
 
-Formato: nome, trattino lungo, rilevamento, distanza in linea d’aria. I luoghi a meno di 12° l’uno dall’altro si raggruppano, con i nomi brevi in ordine di rilevamento. Le quattro etichette di oggi: «Monopoli — 081° · 38 km», «Caltanissetta — 213° · 449 km», «Altamura · Cassano · Gravina — 251–256° · 7–37 km», «Varese — 313° · 848 km». Sotto i 700 px l’etichetta va su due righe, nome e rilevamento, senza distanza. Sull’orizzonte ci sono anche i gradi ogni 45°, con i punti cardinali: «090° E», «180° S», «270° O». Nel sorgente la maiuscola va solo all’iniziale; il maiuscolo lo applica il CSS.
+Formato: nome, trattino lungo, rilevamento, distanza in linea d’aria. I luoghi a meno di 12° l’uno dall’altro si raggruppano, con i nomi brevi in ordine di rilevamento. Le quattro etichette di oggi: «Monopoli — 081° · 38 km», «Caltanissetta — 213° · 449 km», «Altamura · Cassano · Gravina — 251–256° · 7–37 km», «Varese — 313° · 848 km». Sotto i 700 px l’etichetta va su due righe, nome e rilevamento, senza distanza. Sull’orizzonte ci sono anche i gradi ogni 45°, con i punti cardinali: «000° N», «090° E», «180° S», «270° O». Nel sorgente la maiuscola va solo all’iniziale; il maiuscolo lo applica il CSS.
 
 Note:
 - **Perché la riga di posizionamento sta in `lead`.** Il test dei cinque secondi si gioca su ciò che si legge subito dopo il titolo. Nell’occhiello, la frase che dice che cosa fa ITnode aveva il corpo più piccolo della pagina (12–13 px, mono) e a 1440 px stava 300 px sopra il titolo. In `lead` arriva dove l’occhio atterra dopo l’H1. Ha deciso il creative-director, sentiti copywriter-brand, cro-specialist (esperimento E1) e ui-designer. Il testo non cambia: cambia il suo posto nella gerarchia.
@@ -165,15 +172,16 @@ Nome accessibile dei nodi, che sono pulsanti numerati: il numero seguito dal tes
 **Nota sull’immagine** · `figcaption` · testo di `eventPhotoNote` in `src/data/media.ts`
 > Immagine elaborata con strumenti di intelligenza artificiale
 
-**Didascalia** · p · mono · solo con luogo e data confermati · oggi non pubblicata
-> Puglia Digitale, evento regionale · {luogo}, {data}
+**Didascalia** · p · mono · solo con l’originale dello scatto, luogo e data confermati · oggi non pubblicata
+> L’evento Puglia Digitale · {luogo}, {data}
 
 Note:
-- La didascalia si pubblica solo quando luogo e data sono confermati (brief, A4). Fino ad allora la foto resta accompagnata dalla legenda e dalla nota sull’immagine. `[DA FORNIRE: luogo, data e autore della foto]`
-- Nessun numero di partecipanti. In basso a destra dell’originale c’è la filigrana ✦ di Gemini: i ritagli la escludono, ma serve l’originale senza sovrimpressioni e la conferma che la scena non è stata alterata (direzione visiva, § 4.2).
+- **Quando si pubblica.** Servono tre conferme: l’originale dello scatto, cioè che la scena non è alterata, il luogo e la data (brief, A4; direzione visiva, § 4.2). Su un’immagine elaborata con strumenti di intelligenza artificiale non va nessuna didascalia con luogo e data: legherebbe a un evento preciso una scena che non è un documento (direzione visiva, § 4.1, regola 2). Fino ad allora la foto resta con la legenda e la nota sull’immagine. `[DA FORNIRE: originale dello scatto, con luogo, data e autore]`
+- **Testo deciso** dal creative-director nella direzione visiva 0.13 (§ 4.2), sulla proposta della versione 1.5 di questo documento. Senza «regionale», come il nodo 2: non deve suggerire un legame istituzionale (brief, A2). Comincia con il nome della sezione. Se l’autore è noto ed è d’accordo, si aggiunge «· foto {autore}».
+- Nessun numero di partecipanti, se non documentato.
+- **La foto.** Dal 2026-10-07 i due ritagli vengono dalla versione senza cornice, scritte e ✦ (commit 920e497). È un’altra elaborazione della stessa scena, non l’originale dello scatto: l’oratore ha un’altra posa (direzione visiva, § 4.2).
 - **Nota sull’immagine.** Resta finché non arrivano l’originale dello scatto e la conferma del cliente (review di veridicità, B4; ADR 002).
-- **«regionale» nella didascalia** `[DA DECIDERE]`. Il sito l’ha tolto dal nodo 2 per non suggerire un legame istituzionale (brief, A2), ma la didascalia di riserva lo contiene ancora, come la direzione visiva (§ 4.2). Propongo «L’evento Puglia Digitale · {luogo}, {data}», con lo stesso nome della sezione. Decide il creative-director; finché luogo e data non arrivano, in pagina non cambia nulla.
-- **Testo alternativo** (`alt-text.md`, `derivate/evento-panorama.jpg` da desktop e `derivate/evento-citta.jpg` su mobile, stesso testo): «La platea dell’evento Puglia Digitale; sul maxischermo a sinistra del palco, il tour virtuale di una città vista dall’alto.»
+- **Testo alternativo** (`alt-text.md`, `derivate/evento-panorama.jpg` da desktop e `derivate/evento-citta.jpg` sotto i 700 px, stesso testo): «La platea dell’evento Puglia Digitale; sul maxischermo a sinistra del palco, il tour virtuale di una città vista dall’alto.»
 
 ## 4. Infrastruttura
 
