@@ -3,9 +3,9 @@ titolo: "ADR 002 · Veridicità: testi del cliente in staging, conferma o riserv
 owner: brand-strategist
 contributi: [creative-director, sessione principale]
 stato: proposta
-versione: 0.7
+versione: 0.8
 aggiornato: 2026-10-09
-fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.7, §3.8, §5.2, §6), docs/creativa/direzione-visiva.md (0.2: §4.2, §4.3, §7.3, §7.5; dalla 0.13: §4.5, §4.8), docs/decisioni/004-anteprima-su-railway.md, docs/contenuti/copy-deck/ (home, puglia-digitale, citta-digitali), codice letto il 2026-09-28 in sola lettura (src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/citta-digitali.astro, src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/media.ts, src/data/figures.ts), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (decisione 5, S1), docs/contenuti/alt-text.md (1.6), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, codice letto il 2026-10-08 in sola lettura (src/data/media.ts, src/pages/siii.astro, src/data/asset-slots.ts, scripts/prelaunch-check.mjs, src/pages/index.astro; dist/ delle build di 1112c93 e c11734b), commit a5dac14 (controllo A7 per impresa) e c11734b (Home, capitolo 01), docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20 e 0.21, §4.8), docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md, docs/contenuti/alt-text.md (1.11), docs/contenuti/copy-deck/home.md (1.8), commit 6c6f501, e406ecb e c112a4a, dist/ ricostruita con e406ecb e 6c6f501 (letta il 2026-10-09), ricerche web del 2026-10-08 (brief consolidato §8), src/assets/images/basilica-digitale.jpg e derivate/basilica-piattaforma.jpg (commit e398f46), src/pages/puglia-digitale.astro (righe 147–161), dist/puglia-digitale/index.html (letta il 2026-10-09), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, docs/strategia/citta-digitali-elenco.md (riga 5), docs/review/2026-10-09-puglia-digitale-basilica-brand-strategist.md, docs/review/2026-10-09-puglia-digitale-basilica-creative-director.md (§3, §5), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.2), docs/contenuti/alt-text.md (1.13), commit fd4f004 e 13c97a8, ricerche web del 2026-10-09 (brief consolidato §8)]
+fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/2026-09-28-sito-veridicita-brand-strategist.md, docs/review/2026-09-28-sito-verdetto-g4-creative-director.md (§3.7, §3.8, §5.2, §6), docs/creativa/direzione-visiva.md (0.2: §4.2, §4.3, §7.3, §7.5; dalla 0.13: §4.5, §4.8), docs/decisioni/004-anteprima-su-railway.md, docs/contenuti/copy-deck/ (home, puglia-digitale, citta-digitali), codice letto il 2026-09-28 in sola lettura (src/pages/index.astro, src/pages/puglia-digitale.astro, src/pages/citta-digitali.astro, src/pages/siii.astro, src/lib/structured-data.ts, src/data/site.ts, src/data/media.ts, src/data/figures.ts), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md (decisione 5, S1), docs/contenuti/alt-text.md (1.6), docs/review/2026-10-08-hero-siii-yes-brand-strategist.md, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, codice letto il 2026-10-08 in sola lettura (src/data/media.ts, src/pages/siii.astro, src/data/asset-slots.ts, scripts/prelaunch-check.mjs, src/pages/index.astro; dist/ delle build di 1112c93 e c11734b), commit a5dac14 (controllo A7 per impresa) e c11734b (Home, capitolo 01), docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20 e 0.21, §4.8), docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md, docs/contenuti/alt-text.md (1.11), docs/contenuti/copy-deck/home.md (1.8), commit 6c6f501, e406ecb e c112a4a, dist/ ricostruita con e406ecb e 6c6f501 (letta il 2026-10-09), ricerche web del 2026-10-08 (brief consolidato §8), src/assets/images/basilica-digitale.jpg e derivate/basilica-piattaforma.jpg (commit e398f46), src/pages/puglia-digitale.astro (righe 147–161), dist/puglia-digitale/index.html (letta il 2026-10-09), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, docs/strategia/citta-digitali-elenco.md (riga 5), docs/review/2026-10-09-puglia-digitale-basilica-brand-strategist.md, docs/review/2026-10-09-puglia-digitale-basilica-creative-director.md (§3, §5), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.2), docs/contenuti/alt-text.md (1.13), commit fd4f004 e 13c97a8, ricerche web del 2026-10-09 (brief consolidato §8), risposta dell'utente del 2026-10-09 («tutto autorizzato, vai e carica») al messaggio della sessione principale su consensi, conferme e diritti, commit 878d288]
 ---
 
 # ADR 002 · Veridicità in staging e al go-live; immagini elaborate con AI
@@ -15,7 +15,7 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 | Stato | **Proposta, pronta per l'approvazione dell'utente.** Si approvano la regola (§1) e i testi di riserva (§3), cioè le parole esatte che vanno online se il cliente non conferma per iscritto entro il lancio. Dalla 0.3 anche le regole sul consenso delle imprese, la riserva della hero di `/siii/` (§3.1) e il testo della richiesta di consenso (§3.2). Dalla 0.4 anche la riserva del capitolo 01 della Home (§3.1). |
 | Data | 2026-09-28; aggiornato il 2026-10-08 e il 2026-10-09 |
 | Owner | brand-strategist (registro dei claim e scelta delle riserve, condizione C06); creative-director per le immagini |
-| Versioni | 0.1: prima stesura. 0.2: allineata al codice e con le riserve scritte per esteso (verdetto G4, §3.7). 0.3: A7 vale per ogni impresa di cui il sito mostra una schermata, compreso il negozio YES nella hero di `/siii/`; consenso impresa per impresa, anche nel controllo di go-live (proposta); riga con nome e comune sotto la hero; nuova voce A8 (chi ha realizzato il SIII di YES); contesto dell'anteprima aggiornato (aperta dal 2026-09-29). 0.4: La Tana di Aldo nel capitolo 01 della Home, quindi le imprese sono cinque; A8 vale anche per La Tana di Aldo; riserva del capitolo 01; controllo per impresa applicato (a5dac14). 0.5: correzione di stato. Alt definitivo della Home e grafia «della Tana di Aldo»; vista da smartphone del capitolo 01 (e406ecb); righe con il nome preparate nei copy deck; riserva del capitolo 01 confermata dal creative-director. 0.6: nuova voce A9, l'immagine della basilica in «Il progetto» di `/puglia-digitale/` (e398f46); la foto dell'evento resta solo in Home. 0.7: A9 allineata all'ADR 007 1.2: il luogo va nella didascalia e l'alt non cambia; sostituto della riserva; controllo di go-live (fd4f004) |
+| Versioni | 0.1: prima stesura. 0.2: allineata al codice e con le riserve scritte per esteso (verdetto G4, §3.7). 0.3: A7 vale per ogni impresa di cui il sito mostra una schermata, compreso il negozio YES nella hero di `/siii/`; consenso impresa per impresa, anche nel controllo di go-live (proposta); riga con nome e comune sotto la hero; nuova voce A8 (chi ha realizzato il SIII di YES); contesto dell'anteprima aggiornato (aperta dal 2026-09-29). 0.4: La Tana di Aldo nel capitolo 01 della Home, quindi le imprese sono cinque; A8 vale anche per La Tana di Aldo; riserva del capitolo 01; controllo per impresa applicato (a5dac14). 0.5: correzione di stato. Alt definitivo della Home e grafia «della Tana di Aldo»; vista da smartphone del capitolo 01 (e406ecb); righe con il nome preparate nei copy deck; riserva del capitolo 01 confermata dal creative-director. 0.6: nuova voce A9, l'immagine della basilica in «Il progetto» di `/puglia-digitale/` (e398f46); la foto dell'evento resta solo in Home. 0.7: A9 allineata all'ADR 007 1.2: il luogo va nella didascalia e l'alt non cambia; sostituto della riserva; controllo di go-live (fd4f004). 0.8: risposta dell'utente del 2026-10-09. A7 e i diritti di A9 sono registrati; A8 vale per conferma implicita; restano aperti i dati (nomi ufficiali, comuni, luogo, uso di AI); regole per conservare i consensi |
 
 ## Contesto
 
@@ -32,6 +32,12 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 - Dal 2026-10-08 il capitolo 01 (SIII) della Home mostra da desktop la sala della Tana di Aldo, al posto di quella di Masseria Santella (commit c11734b). Dal commit e406ecb, sui telefoni in verticale, mostra un ritaglio 4:5 della vista da smartphone della stessa esperienza. Le parole dell'utente, inviate con la vista desktop e quella da smartphone: «questo è per la home la sezione SII, quella orizzontale, poi nel caso avessi bisogno della versione mobile ce l hai». Anche qui l'utente non dice chi ha realizzato il SIII, né il nome ufficiale, né il comune, e non parla di consenso.
 - Masseria Santella ora compare solo tra gli esempi di `/siii/`. Le imprese del sito che non vengono dalle linee guida sono due: YES e La Tana di Aldo.
 - Dal 2026-10-09 la sezione «Il progetto» di `/puglia-digitale/` mostra la facciata di una basilica romanica con i segni grafici del portale, al posto della platea dell'evento (commit e398f46). Le parole dell'utente: «mentre questa è per la pagina puglia digitale dove si parla della piattaforma, al posto della platea tagliata che si vede», poi «questa». L'utente non ha detto niente su luogo, autore, diritti, uso di AI o provenienza. Il file non ha metadati.
+- Il 2026-10-09 l'utente ha risposto, con queste parole, al messaggio della sessione principale su consensi, conferme e diritti: «tutto autorizzato, vai e carica». Il messaggio chiedeva:
+  - per la basilica: se è San Nicola a Bari, da dove viene l'immagine, chi ne ha i diritti, se è stata fatta con l'AI;
+  - per YES e La Tana di Aldo: nome ufficiale, comune, conferma che i due SIII li ha realizzati ITnode, consenso scritto delle imprese;
+  - per Masseria Santella, Maison Miminà e D.L. Natura Dentro: il consenso.
+
+  La sessione principale ha messo a `true` le cinque chiavi A7 e `basilicaProvenance` (A9) nel controllo di go-live (commit 878d288). Che cosa la risposta chiude e che cosa no è al §3.4.
 
 ## Opzioni considerate
 
@@ -109,16 +115,22 @@ fonti: [docs/brief/linee-guida.md, docs/brief/brief-consolidato.md, docs/review/
 | I5 | Provenienza dei ritratti | Nota «Immagine generata o elaborata con strumenti di intelligenza artificiale». «Elaborata» da sola torna solo se il cliente conferma che sono foto reali ritoccate |
 | I7 | Funzioni del SIII (`/siii/` e capitolo 01 della Home) | «Nel tuo SIII, in base alle funzioni che scegli, chi ti visita può:». «Vendita diretta» diventa «Dalla visita alla vendita», a meno che il cliente confermi che prenotazione o vendita partono dall'esperienza. Nella Home, al posto di «…chiede informazioni e prenota.», proposta «…chiede informazioni e, dove previsto, prenota.» (rifinitura di copywriter-brand) |
 | I8 | «Tre Siti Interattivi Immersivi già online» | Un'esperienza che al lancio non risponde si toglie, e il numero nel testo si adegua |
-| A7 | Consenso scritto di ogni impresa di cui il sito mostra una schermata: le tre degli esempi (LG §12); YES, nella hero di `/siii/`; La Tana di Aldo, nel capitolo 01 della Home. Le ultime due dal 2026-10-08 | Impresa per impresa, come nel §3.1: senza il suo consenso escono le sue schermate e la sua riga con il nome |
-| A8 | I SIII di YES e della Tana di Aldo li ha realizzati ITnode. Nessun testo visibile lo dice, ma lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home. L'alt della Home lo scrive: «Il SIII della Tana di Aldo» | Come A7 senza consenso: la schermata esce e si applica la riserva del §3.1. Si chiude impresa per impresa, con il consenso del §3.2, che lo dichiara, oppure con una riga dell'utente |
-| A9 | L'immagine della basilica con i segni grafici del portale, in «Il progetto» di `/puglia-digitale/` (dal 2026-10-09). Provenienza, autore, diritti e uso di AI non sono noti; il luogo è `[DA VERIFICARE]` | Come nel §3.3: senza provenienza o diritti confermati non va in produzione. Con la provenienza confermata resta con la nota «Immagine elaborata digitalmente». Il luogo, solo se confermato, va nella didascalia prima della nota; l'alt non cambia |
+| A7 | Consenso scritto di ogni impresa di cui il sito mostra una schermata: le tre degli esempi (LG §12); YES, nella hero di `/siii/`; La Tana di Aldo, nel capitolo 01 della Home. Le ultime due dal 2026-10-08 | Impresa per impresa, come nel §3.1: senza il suo consenso escono le sue schermate e la sua riga con il nome. **Confermato dall'utente il 2026-10-09 per le cinque imprese** («tutto autorizzato, vai e carica»; §3.4). Le riserve valgono se un consenso viene revocato |
+| A8 | I SIII di YES e della Tana di Aldo li ha realizzati ITnode. Nessun testo visibile lo dice, ma lo presuppongono la hero della pagina che vende il SIII e il capitolo 01 della Home. L'alt della Home lo scrive: «Il SIII della Tana di Aldo» | Come A7 senza consenso: la schermata esce e si applica la riserva del §3.1. Si chiude impresa per impresa, con il consenso del §3.2, che lo dichiara, oppure con una riga dell'utente. **Dal 2026-10-09 vale per il go-live, per conferma implicita dell'utente** (§3.4); una conferma esplicita resta consigliata, non bloccante |
+| A9 | L'immagine della basilica con i segni grafici del portale, in «Il progetto» di `/puglia-digitale/` (dal 2026-10-09). Provenienza, autore, diritti e uso di AI non sono noti; il luogo è `[DA VERIFICARE]` | Come nel §3.3: senza provenienza o diritti confermati non va in produzione. Con la provenienza confermata resta con la nota «Immagine elaborata digitalmente». Il luogo, solo se confermato, va nella didascalia prima della nota; l'alt non cambia. **Diritti autorizzati dall'utente il 2026-10-09** (§3.4): la condizione di go-live è soddisfatta. Luogo, provenienza, autore e uso di AI restano aperti |
 
 ### 3.1 A7 · Consenso delle imprese di cui il sito mostra le schermate
 
 **Regole.**
 - **Impresa per impresa.** Il consenso di un'impresa copre solo le sue schermate e il suo nome. Se un consenso manca, le altre imprese non si fermano.
 - **Che cosa copre:** il nome, il comune, il logo e le schermate del SIII dell'impresa nel sito di ITnode (Home e `/siii/`) e, se l'esperienza è online, il link.
-- **Forma.** Basta la conferma scritta dell'utente, impresa per impresa, con la data e la forma del consenso: email dell'impresa, documento o clausola del contratto con ITnode. L'originale resta al cliente. La brand-strategist registra la conferma nel brief consolidato (§5, «Consensi delle imprese»).
+- **Forma.** Basta la conferma scritta dell'utente, impresa per impresa, con la data e la forma del consenso: email dell'impresa, documento o clausola del contratto con ITnode. L'originale resta al cliente. La brand-strategist registra la conferma nel brief consolidato (§5, «Consensi delle imprese»). Se l'utente non indica la forma, la conferma si registra lo stesso, con la forma `[DA FORNIRE]`, non bloccante.
+- **Conservazione** (dal 2026-10-09).
+  - **Chi tiene i consensi** e l'autorizzazione all'uso dell'immagine della basilica: il cliente. `[DA FORNIRE: nome e ruolo di chi li conserva]`.
+  - **Dove:** `[DA FORNIRE: archivio o cartella del cliente in cui sono conservati]`.
+  - **Che cosa deve restare, per ogni impresa:** chi ha autorizzato e con quale ruolo; che cosa è autorizzato (nome, logo, schermate, link); dove (Home, `/siii/`); da quando, e fino a revoca; come si revoca (info@itnode.it).
+  - **Nel repository va solo il registro:** impresa, data, forma, custode. Non le email né i documenti, che contengono dati personali e al sito non servono.
+  - **Revoca.** Vale il ritiro immediato del §1. La sessione principale mette a `false` la chiave dell'impresa, e il controllo blocca la pubblicazione finché la schermata è nel sito.
 - **Riga con il nome.** Sotto la hero di `/siii/` e sotto il capitolo 01 della Home va una riga con il nome e il comune (DV §4.8; verdetto del creative-director del 2026-10-07, decisione 5). Va online solo con il consenso dell'impresa e solo con nome ufficiale e comune confermati. Se il consenso manca, schermata e riga escono insieme. Per YES e La Tana di Aldo nome ufficiale e comune non ci sono: finché non arrivano, hero e capitolo 01 restano senza riga, e il nome sta solo nell'alt.
   - **Testi già pronti, non pubblicati:** hero, «YES · {comune} ({provincia})» (verdetto del creative-director del 2026-10-08, decisione 2); capitolo 01, «La Tana di Aldo · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia])» (copy deck della Home 1.8).
   - **Con le riserve** la riga è «Masseria Santella · Cassano delle Murge (BA)», alle stesse condizioni: consenso di Masseria Santella e comune confermato (`[DA VERIFICARE]` nel copy deck di `/siii/`).
@@ -184,6 +196,30 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
    Il testo esatto è di copywriter-content; la verifica, con la risposta dell'utente, è della brand-strategist. La didascalia chiude anche il rischio che l'immagine venga attribuita alle tre città nominate nel paragrafo accanto (review del 2026-10-09, B4). Senza conferma, nessun nome da nessuna parte, come oggi.
 4. **Bene culturale.** Se l'immagine riproduce un bene culturale in consegna a un'amministrazione pubblica, usarla per promuovere un'impresa può richiedere una concessione e un canone (D.Lgs. 42/2004, art. 108). Fonte: testo dell'articolo pubblicato dall'Archivio di Stato di Prato (cultura.gov.it), letto come snippet di ricerca il 2026-10-09. `[DA VERIFICARE con il consulente legale]`. La stessa domanda vale per le chiese delle immagini dell'ADR 007, come quella di Gravina in Puglia. Se serve una concessione e non c'è, vale il punto 1.
 
+### 3.4 La risposta dell'utente del 2026-10-09: che cosa chiude e che cosa no
+
+La risposta è: «tutto autorizzato, vai e carica». Chiude le **autorizzazioni**, ma **non dà i dati**.
+
+| Voce | Che cosa chiude | Che cosa resta aperto | Effetto sul sito |
+|---|---|---|---|
+| **A7**, consensi delle cinque imprese | Il consenso di Masseria Santella, Maison Miminà, D.L. Natura Dentro, YES e La Tana di Aldo, come conferma scritta dell'utente (§3.1) | Forma del consenso di ogni impresa e chi la conserva `[DA FORNIRE]`, non bloccante (§3.1, «Conservazione») | Le schermate e gli alt che nominano le imprese possono andare online. Le riserve del §3.1 valgono solo in caso di revoca |
+| **A8**, i SIII di YES e della Tana di Aldo sono di ITnode | Per il go-live, sì, come conferma implicita | Una conferma esplicita `[DA VERIFICARE, non bloccante: i SIII di YES e della Tana di Aldo li ha realizzati ITnode]` | Le schermate restano; nessun testo aggiunge altro sulla paternità |
+| **A9**, immagine della basilica | I diritti d'uso: l'utente dice che è autorizzata, quindi il punto 1 del §3.3 è soddisfatto | Da dove viene (portale o altro) e chi l'ha fatta `[DA FORNIRE]`; uso di AI `[DA FORNIRE]`; luogo `[DA VERIFICARE]`; art. 108 `[DA VERIFICARE con il consulente legale]`, perché la domanda non era nel messaggio all'utente | L'immagine resta. La nota resta «Immagine elaborata digitalmente». La didascalia resta senza luogo |
+| **Righe con il nome** (hero di `/siii/`, capitolo 01 della Home) | Niente: servono nome ufficiale e comune | Nomi ufficiali, comuni e province di YES e della Tana di Aldo `[DA FORNIRE]` | Restano spente. Il nome delle due imprese resta solo negli alt |
+| **Indirizzi delle esperienze** di YES e della Tana di Aldo | Niente: non erano nel messaggio | `[DA FORNIRE, se sono online]` | Nessun link; non blocca |
+
+**Perché A8 è chiusa solo come conferma implicita.**
+- **La regola del §3.2 non basta.** Vale per un sì dato al testo del §3.2, che dichiara «il SIII che ITnode ha realizzato per…». Non sappiamo con quale testo, né in quale forma, le imprese hanno dato il consenso.
+- **Ma vale la seconda strada dell'A8**, «una riga dell'utente».
+  - La risposta arriva a un messaggio che chiedeva esplicitamente la «conferma che i due SIII li ha realizzati ITnode».
+  - Le schermate le ha mandate l'utente stesso come SIII, cioè come prodotto di ITnode.
+  - Il rischio di sbagliare è basso.
+- **Il limite.** «Autorizzato» parla di permessi, non di chi ha fatto il lavoro. Per questo la registro come conferma implicita, e una riga esplicita resta consigliata.
+
+**La nota della basilica al go-live.** L'uso di AI resta senza risposta. Decisione provvisoria della brand-strategist, in attesa del consulente legale (punto 2 del §3.3): resta «Immagine elaborata digitalmente», che è vera. Se il cliente o il consulente indicano un uso di AI, si passa alla formula di `alt-text.md`. Vale anche per le tre immagini dell'ADR 007.
+
+**«Vai e carica».** Vale come via libera alle immagini e ai consensi di questo ADR. Le altre condizioni del G4 hanno le loro verifiche: per esempio i dati societari, la Privacy Policy e l'endpoint del modulo.
+
 ### 4. Immagini elaborate con AI (DR3)
 
 - **Ritratti del fondatore: opzione (b)**, scelta della sessione principale in attesa dell'utente.
@@ -216,8 +252,8 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
 - La nota proposta basta per l'art. 50 dell'AI Act `[DA VERIFICARE con il consulente legale]`.
 - `[IPOTESI: i testi di riserva rispettano la voce di marca. copywriter-brand li rivede, senza cambiarne il significato: «I tre mondi», «Porta la tua impresa in Puglia Digitale», il titolo al singolare dei numeri, la frase I7 della Home.]`
 - `[IPOTESI: il testo del §3.2 basta come consenso. Lo verifica il consulente legale del cliente.]`
-- `[DA VERIFICARE: i SIII di YES e della Tana di Aldo li ha realizzati ITnode (A8).]`
-  - Lo presuppongono le richieste dell'utente, che però non lo dicono.
+- `[DA VERIFICARE, non bloccante dal 2026-10-09: i SIII di YES e della Tana di Aldo li ha realizzati ITnode (A8).]`
+  - Lo presuppongono le richieste dell'utente. Il 2026-10-09 l'ha confermato in modo implicito, con «tutto autorizzato, vai e carica» (§3.4).
   - In rete non c'è traccia né delle imprese né delle esperienze (ricerche del 2026-10-08).
   - Le due interfacce si somigliano tra loro: l'etichetta «APRI QUI» con la freccia, le icone di contatto tonde con una foglia. Somigliano anche a quelle di Masseria Santella e Maison Miminà. È un indizio, non una prova.
 - `[IPOTESI: «YES» e «La Tana di Aldo» sono i nomi con cui le imprese si presentano.]` Sono le letture dei loghi; quello di YES dice anche «pure design 100% flowers».
@@ -234,14 +270,14 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
   - perimetro di «10.000+»;
   - originale e informativa della foto dell'evento;
   - provenienza dei ritratti;
-  - consenso scritto di ogni impresa di cui il sito mostra le schermate: Masseria Santella, Maison Miminà, D.L. Natura Dentro, YES e La Tana di Aldo (§3.1; testo nel §3.2);
-  - per YES e La Tana di Aldo: chi ha realizzato il SIII (A8); nome ufficiale, comune e provincia; indirizzo dell'esperienza, se è online (brief consolidato, D12);
-  - per l'immagine della basilica (A9): da dove viene, chi l'ha fatta e chi ne ha i diritti, se è stata usata l'AI, se è la basilica di San Nicola a Bari (brief consolidato, D13);
+  - consensi delle cinque imprese: **autorizzati dall'utente il 2026-10-09**. Restano la forma di ogni consenso e chi li conserva (§3.1, «Conservazione»);
+  - per YES e La Tana di Aldo: nome ufficiale, comune e provincia; indirizzo dell'esperienza, se è online; se possibile, una conferma esplicita di A8 (brief consolidato, D12);
+  - per l'immagine della basilica (A9): diritti **autorizzati il 2026-10-09**. Restano: da dove viene e chi l'ha fatta, se è stata usata l'AI, se è la basilica di San Nicola a Bari, l'originale (brief consolidato, D13);
   - funzioni del SIII;
   - video.
 - **Per l'utente:**
   - entro quale data il cliente deve rispondere, prima che si applichino le riserve?
-  - il contratto di ITnode con le imprese prevede già l'uso nel portfolio? Se sì, per A7 basta dirlo (§3.1, «Forma»).
+  - chi conserva i consensi e l'autorizzazione sulla basilica, e dove (§3.1, «Conservazione»)?
 
 ## Decisioni richieste
 
@@ -250,11 +286,11 @@ Il cliente o l'utente lo manda a ogni impresa. `[IPOTESI: il consulente legale d
   - approvazione dei testi di riserva del §3;
   - DR3: (b) per il lancio e (c) appena possibile, con budget e tempi dello shooting;
   - scadenza per le risposte del cliente;
-  - approvazione del §3.1 (consenso impresa per impresa, riserve della hero e del capitolo 01 della Home) e del testo del §3.2, da inoltrare alle cinque imprese;
-  - approvazione del §3.3 (A9) e risposta alle quattro domande sull'immagine della basilica.
+  - approvazione del §3.1 (consenso impresa per impresa, riserve della hero e del capitolo 01 della Home) e del §3.3 (A9). I consensi e i diritti sono autorizzati dal 2026-10-09 (§3.4);
+  - i dati ancora aperti del §3.4: nomi ufficiali e comuni di YES e della Tana di Aldo, il luogo e l'uso di AI della basilica, la custodia dei consensi.
 - **Sessione principale:**
   - alla scadenza, applicare le riserve rimaste senza conferma; estendere `check:launch` (C13);
-  - a ogni consenso registrato nel brief, mettere a `true` la chiave dell'impresa (controllo per impresa in a5dac14).
+  - le chiavi A7 e `basilicaProvenance` sono a `true` dal commit 878d288. Se un'impresa revoca il consenso, la sua chiave torna a `false` e vale il ritiro immediato (§1).
 - **creative-director:** il 2026-10-08 ha allineato la DV §4.8 (0.21) al capitolo 01, ha precisato i nomi delle schede degli esempi e ha confermato la riserva del capitolo 01 (verdetto sul capitolo 01, decisioni 4–6). Per A9 ha deciso il 2026-10-09, nell'ADR 007 1.2: il sostituto se l'immagine esce (§3.3, punto 1) e il luogo nella didascalia (punto 3).
 - **Consulente legale del cliente:** art. 108 del D.Lgs. 42/2004 per le immagini di beni culturali (§3.3, punto 4).
 - **copywriter-brand:** titolo al singolare per il solo «30+»; rifinitura della frase I7 della Home. Le righe con il nome sotto la hero e sotto il capitolo 01 sono pronte (§3.1): vanno completate quando arrivano nome e comune di YES e della Tana di Aldo.

@@ -3,7 +3,7 @@ titolo: Review di veridicità · immagine della basilica in «Il progetto» di /
 owner: brand-strategist
 contributi: []
 stato: in revisione
-versione: 1.1
+versione: 1.2
 aggiornato: 2026-10-09
 fonti: [src/assets/images/basilica-digitale.jpg, src/assets/images/derivate/basilica-piattaforma.jpg (commit e398f46), src/pages/puglia-digitale.astro (righe 147–161), dist/puglia-digitale/index.html (letta il 2026-10-09), parole esatte dell'utente del 2026-10-09 riportate dalla sessione principale, docs/strategia/citta-digitali-elenco.md (riga 5), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.6), docs/brief/brief-consolidato.md (0.8), docs/contenuti/alt-text.md (1.11), ricerche web del 2026-10-09 (brief consolidato §8)]
 ---
@@ -149,6 +149,16 @@ Il nome del file (`basilica-digitale.jpg`) non è una fonte.
 | 5 | C'è l'originale senza grafica, o a risoluzione maggiore? | `[DA FORNIRE: originale dell'immagine della basilica]` | No, è facoltativo |
 
 **Per il consulente legale del cliente:** l'art. 108 del D.Lgs. 42/2004 si applica a questa immagine e a quelle dell'ADR 007 con edifici storici? `[DA VERIFICARE]`
+
+**Stato al 2026-10-09 (v1.2).** L'utente ha risposto «tutto autorizzato, vai e carica» (ADR 002 §3.4).
+- **Diritti, chiusi:** il blocco di go-live (B1) cade, e il controllo `basilicaProvenance` è a `true` (878d288).
+- **Ancora senza risposta, non bloccanti:**
+  - da dove viene e chi l'ha fatta (punti 1–2, come informazione);
+  - l'uso di AI (punto 3): la nota resta «Immagine elaborata digitalmente»;
+  - il luogo (punto 4): la didascalia resta senza luogo;
+  - l'originale (punto 5);
+  - chi conserva l'autorizzazione.
+- **L'art. 108 resta al consulente:** non era nella domanda all'utente.
 
 **Testo pronto per l'utente:**
 

@@ -70,3 +70,10 @@ Fatti, claim e domande al cliente stanno in `docs/brief/brief-consolidato.md`: q
 - Senza provenienza nota, la riserva minima è «fuori al go-live» (diritti, linee guida §31 sulle immagini stock). Con la provenienza dal portale del cliente vale lo stesso trattamento delle immagini dell'ADR 007.
 - Quando un'immagine sostituisce un'altra su una pagina, aggiornare le righe dell'ADR che citavano la vecchia (qui la foto dell'evento su Puglia Digitale) e verificare su `dist/` che anche la sua nota sia sparita.
 - Tabelle Markdown: se si inserisce una riga in fondo a una tabella seguita da un paragrafo, niente riga vuota tra l'ultima riga e quella nuova. Controllare con grep le righe `^| ID |`.
+
+## Lezioni dalla risposta «tutto autorizzato» (2026-10-09)
+- Una risposta globale dell'utente chiude i permessi (consensi, diritti), non i dati (nomi ufficiali, comuni, luoghi, uso di AI). Registrarla con la citazione esatta e la data, e con una tabella «che cosa chiude / che cosa resta aperto / effetto sul sito».
+- Un fatto (chi ha realizzato un lavoro) non si deduce da un'autorizzazione. Si può accettare come conferma implicita solo se la risposta arriva a una domanda che lo chiedeva esplicitamente e il rischio di sbagliare è basso. Va marcato `[DA VERIFICARE, non bloccante]`, con una riga esplicita consigliata.
+- Una regola condizionata (il consenso conferma la paternità «se dato sul testo del §3.2») non si applica se non si conosce il testo usato. Dirlo, invece di applicarla per comodità.
+- Consensi: nel repository solo il registro (impresa, data, forma, custode), mai le email o i documenti, che contengono dati personali. Prevedere la revoca: la riga torna «Revocato», la chiave torna `false`, vale il ritiro immediato.
+- Un «vai» dell'utente su un tema non chiude le altre condizioni del gate: dirlo in una riga, senza allargare l'incarico.

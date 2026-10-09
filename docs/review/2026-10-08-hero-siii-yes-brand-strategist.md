@@ -3,7 +3,7 @@ titolo: Review di veridicità · hero di /siii/ (YES) e capitolo 01 della Home (
 owner: brand-strategist
 contributi: []
 stato: in revisione
-versione: 1.2
+versione: 1.3
 aggiornato: 2026-10-09
 fonti: [src/assets/images/siii-yes-mobile-negozio.jpg, src/assets/images/siii-la-tana-di-aldo-desktop-sala.jpg, src/data/media.ts, src/pages/siii.astro (righe 71–84), src/pages/index.astro (righe 128–130), scripts/prelaunch-check.mjs, dist/ delle build di 1112c93 e c11734b, commit a5dac14, d97aa29 e c11734b, parole esatte dell'utente del 2026-10-08 riportate dalla sessione principale, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.4), docs/brief/brief-consolidato.md (0.6), docs/review/2026-10-07-schermate-siii-p4-verdetto-creative-director.md, docs/review/2026-10-08-hero-siii-yes-creative-director.md, docs/creativa/direzione-visiva.md (0.20: §4.5, §4.8), docs/contenuti/alt-text.md (1.6, 1.10, 1.11), docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md, docs/contenuti/copy-deck/home.md (1.8), commit 6c6f501 ed e406ecb, ricerche web del 2026-10-08 (brief consolidato §8)]
 ---
@@ -140,6 +140,12 @@ Un solo elenco per le due imprese che non vengono dalle linee guida, più il con
 | 6 | Lo stesso consenso | Masseria Santella, Maison Miminà, D.L. Natura Dentro | `[DA FORNIRE: consenso scritto delle imprese degli esempi (A7)]` | Domanda aperta dal 2026-10-07. Le viste di Masseria Santella sono anche la prima riserva della hero e del capitolo 01 | Sì, impresa per impresa |
 
 Le domande del creative-director su YES (una schermata pulita, YES tra gli esempi) sono nel suo verdetto del 2026-10-08 (Y4, Y5): qui non si duplicano.
+
+**Stato al 2026-10-09 (v1.3).** L'utente ha risposto «tutto autorizzato, vai e carica» (ADR 002 §3.4).
+- **Chiusi** i punti 5 e 6, cioè i consensi delle cinque imprese.
+- **Punto 1, chiuso come conferma implicita:** basta per il go-live; una riga esplicita resta consigliata.
+- **Aperti, non bloccanti:** i punti 2, 3 e 4 (nomi ufficiali, comuni, indirizzi), più la forma e la custodia dei consensi.
+- **Le righe con il nome restano spente.**
 
 **Testo pronto per l'utente:**
 
