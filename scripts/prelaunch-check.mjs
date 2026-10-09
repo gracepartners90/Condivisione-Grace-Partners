@@ -19,7 +19,8 @@ const page = (rel) => pages.find((p) => p.path === join(dist, rel))?.html ?? '';
 
 // Veridicity reserves still open (ADR 002; veracity review B2, I2; G4 verdict N10). Set to true
 // only with the client's written confirmation, recorded in docs/.
-const CONFIRMED = { highTraffic: false, clients10k: false };
+// basilicaProvenance: ADR 002 §3.3, A9, provenance or rights of the basilica image on /puglia-digitale/ (user's answer).
+const CONFIRMED = { highTraffic: false, clients10k: false, basilicaProvenance: false };
 const anyPage = (re) => pages.filter((p) => re.test(p.html)).map((p) => p.path.replace(dist, ''));
 
 // ADR 002 §3.1, A7: the written consent of each business whose SIII screenshots are in the build, recorded in
@@ -66,6 +67,12 @@ const checks = [
     name: 'Schermate delle esperienze SIII con il consenso scritto di ogni impresa (A7)',
     ok: withoutConsent.length === 0,
     detail: withoutConsent,
+  },
+  {
+    // ADR 002 §3.3, A9: the basilica image with the portal's overlays only with its provenance or rights confirmed.
+    name: 'Immagine della basilica con provenienza o diritti confermati (A9)',
+    ok: CONFIRMED.basilicaProvenance || anyPage(/_astro\/basilica-piattaforma\./).length === 0,
+    detail: anyPage(/_astro\/basilica-piattaforma\./),
   },
   { name: 'Video di Città Digitali ospitato sul sito (non su railway.app)', ok: anyPage(/railway\.app/).length === 0, detail: anyPage(/railway\.app/) },
 ];
