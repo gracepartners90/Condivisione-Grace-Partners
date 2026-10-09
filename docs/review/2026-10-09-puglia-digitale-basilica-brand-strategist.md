@@ -3,7 +3,7 @@ titolo: Review di veridicità · immagine della basilica in «Il progetto» di /
 owner: brand-strategist
 contributi: []
 stato: in revisione
-versione: 1.0
+versione: 1.1
 aggiornato: 2026-10-09
 fonti: [src/assets/images/basilica-digitale.jpg, src/assets/images/derivate/basilica-piattaforma.jpg (commit e398f46), src/pages/puglia-digitale.astro (righe 147–161), dist/puglia-digitale/index.html (letta il 2026-10-09), parole esatte dell'utente del 2026-10-09 riportate dalla sessione principale, docs/strategia/citta-digitali-elenco.md (riga 5), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md (1.1), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.6), docs/brief/brief-consolidato.md (0.8), docs/contenuti/alt-text.md (1.11), ricerche web del 2026-10-09 (brief consolidato §8)]
 ---
@@ -85,6 +85,11 @@ Il nome del file (`basilica-digitale.jpg`) non è una fonte.
   - il creative-director valuta se mettere «Bari» nella nota sotto l'immagine. Aiuterebbe anche per B4.
 - **Se l'utente conferma solo la città:** «Bari» sì, il nome della basilica no, come per Gravina.
 - **Suggerimento per l'alt di oggi.** «Basilica» presuppone l'identificazione. Finché il luogo non è confermato, la descrizione neutra è «chiesa romanica», come nell'alt di Gravina («la facciata in pietra di una chiesa»). Decide copywriter-content. Il resto dell'alt corrisponde all'immagine.
+
+**Stato al 2026-10-09 (v1.1).** Il creative-director ha deciso diversamente sul posto del nome (verdetto del 2026-10-09, §5; ADR 007 1.2), e l'ADR 002 §3.3, punto 3, è allineato.
+- Con la conferma, il luogo va nella didascalia sotto l'immagine, prima della nota, non nell'alt: «Bari, basilica di San Nicola · Immagine elaborata digitalmente», oppure «Bari · Immagine elaborata digitalmente» con la sola città.
+- L'alt non cambia, perché il luogo si sentirebbe due volte. L'alt definitivo (13c97a8, `alt-text.md` 1.13) dice «chiesa».
+- Per la veridicità va bene: il nome resta subordinato alla conferma, e la didascalia chiude anche B4.
 
 ## 4. Osservazioni
 
