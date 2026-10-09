@@ -85,14 +85,21 @@ fonti: [docs/brief/linee-guida.md (§33), docs/creativa/direzione-visiva.md (0.9
   - **Colore intatto**, nessun ritocco. Derivato con lo script degli asset (`placeCrops`).
   - **Nota:** «Immagine elaborata digitalmente», nella `<figcaption>`, come le porte. Testo di copywriter-content con la regola dell'ADR 002.
   - **Testo alternativo** di copywriter-content: descrive la facciata e i segni, senza il nome del luogo finché non è verificato.
-  - **Compressione:** AVIF 40 solo per questa immagine. Ha la decisione di web-performance-specialist; per l'art direction va bene.
+  - **Compressione:** AVIF 40 solo per questa immagine. La decide web-performance-specialist; per l'art direction va bene.
 - **Perimetro.** Questa immagine, in questa sezione.
   - Con lei `/puglia-digitale/` ha quattro immagini con i segni del portale: la basilica e le tre porte. È il massimo. Su questa pagina e sulle altre ogni nuova immagine con segni grafici richiede una nuova decisione dell'utente.
   - Il resto del sito resta alle linee guida §33 e alla direzione visiva §4.6. L'eccezione non diventa uno stile: niente pannelli, «dashboard» o glow disegnati da noi, da nessuna parte.
 - **Conseguenze proprie.**
   - La foto dell'evento esce da `/puglia-digitale/` e resta solo nella Home. Il derivato `evento-schermo.jpg` non serve più e si toglie dallo script degli asset (verdetto del 2026-10-09). Non è la riserva di questa sezione: l'utente l'ha tolta.
-  - Se il luogo è confermato, la `<figcaption>` lo dice prima della nota, per esempio «Bari, basilica di San Nicola · Immagine elaborata digitalmente» `[IPOTESI]`. Così nessuno attribuisce la basilica ad Acquaviva, Gravina o Monopoli, le città nominate nel testo accanto. Testo di copywriter-content, verifica di brand-strategist.
-  - Se l'immagine esce, decide l'utente tra un'altra immagine e la sezione senza immagine, con un impaginato da rivedere con ui-designer.
+- **Il nome del luogo** (ADR 002 §3.3, punto 3; B4 di brand-strategist).
+  - Senza la conferma dell'utente non si usa da nessuna parte: né nell'alt, né nella nota, né nel testo. È la regola della chiesa di Gravina.
+  - **Con la conferma, il luogo va nella `<figcaption>`, prima della nota:** almeno la città, e il monumento se confermato. Per esempio «Bari, basilica di San Nicola · Immagine elaborata digitalmente» `[IPOTESI: testo di copywriter-content, verifica di brand-strategist]`. Stessa misura e stesso stile della nota delle porte. È il dispositivo delle Coordinate: dice dove sta il luogo, e chiude il rischio che la basilica sia attribuita ad Acquaviva, Gravina o Monopoli, le città nominate nel testo accanto.
+  - **Nel frattempo non serve altro.** Niente di falso è scritto. Ogni indizio sul luogo sarebbe un'affermazione non verificata, e le porte più in basso mostrano le tre città con le loro immagini e i loro nomi. Il rischio dura quanto la risposta dell'utente: la domanda va fatta subito.
+- **Riserva al go-live (A9 dell'ADR 002 §3.3).** Senza provenienza e diritti confermati, o senza la concessione se il consulente la ritiene necessaria (art. 108 del Codice dei beni culturali, B3), l'immagine esce.
+  - **Al suo posto, subito: la variante «in pubblicazione» nello stesso riquadro 4:5** (direzione visiva §4.5). È l'orizzonte graduato con i nodi, senza nome né luogo, cioè lo spazio esplorabile astratto. Non servono un'immagine né diritti, l'impaginato resta lo stesso e lo scambio non causa CLS.
+    - Oggi lo slot non esiste: se la riserva scatta, la sessione principale lo aggiunge in `src/data/asset-slots.ts`, in 4:5, e ui-designer controlla la variante a quella proporzione.
+  - **Poi, con l'utente:** una foto vera di un luogo pugliese con i diritti, tra quelle chieste al cliente (direzione visiva §4.6), oppure un'altra immagine del portale con provenienza confermata. La scelta la fa il creative-director con l'utente.
+  - **La foto dell'evento non torna:** l'utente l'ha tolta da qui.
 
 ## Conseguenze
 
