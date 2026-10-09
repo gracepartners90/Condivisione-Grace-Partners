@@ -31,6 +31,9 @@ const placeCrops = [
   { src: 'acquaviva-digitale.webp', out: 'acquaviva-porta.jpg', box: { left: 388, top: 36, width: 462, height: 770 } }, // 3:5
   { src: 'gravina-digitale.webp', out: 'gravina-porta.jpg', box: { left: 444, top: 30, width: 580, height: 967 } }, // 3:5, clean cut
   { src: 'monopoli-digitale.webp', out: 'monopoli-porta.jpg', box: { left: 154, top: 0, width: 614, height: 1023 } }, // 3:5, least-bad cut (§4.7)
+  // /puglia-digitale/, «Il progetto»: 4:5 like the event photo it replaces. Full width, so no panel is cut at the
+  // sides; from y 400 the horizon (foot of the façade) falls at 58%, like the doors, and no panel is cut at the top or bottom.
+  { src: 'basilica-digitale.jpg', out: 'basilica-piattaforma.jpg', box: { left: 0, top: 400, width: 1200, height: 1500 } }, // 4:5
 ];
 
 /**

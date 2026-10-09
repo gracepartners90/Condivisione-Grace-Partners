@@ -17,12 +17,11 @@ import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { portals, pugliaPlaces } from '../data/site';
 import { figures } from '../data/figures';
-import { eventPhotoNote } from '../data/media';
 import { placeSlot } from '../data/asset-slots';
 import { pageGraph } from '../lib/structured-data';
 import { describePugliaDigitale } from '../lib/citta-digitali';
 import maps from '../data/maps.json';
-import eventoSchermo from '../assets/images/derivate/evento-schermo.jpg';
+import basilicaPiattaforma from '../assets/images/derivate/basilica-piattaforma.jpg';
 import acquavivaPorta from '../assets/images/derivate/acquaviva-porta.jpg';
 import gravinaPorta from '../assets/images/derivate/gravina-porta.jpg';
 import monopoliPorta from '../assets/images/derivate/monopoli-porta.jpg';
@@ -147,13 +146,18 @@ const locations = pugliaPlaces.map((p) => ({
       </div>
       <figure class="project__photo">
         <div class="aperture">
+          {/* An image with the portal's digital overlays, sent by the user on 2026-10-09 for this section in place of
+              the event photo (ADR 007, to be extended): colour untouched, the same note as the doors. Alt
+              provisional, to be confirmed in docs/contenuti/alt-text.md; no place name until it is confirmed.
+              AVIF 40: at the site default the 828 px variant is 55.3 KB, over the 45 KB target (budget.md §4). */}
           <Media
-            image={eventoSchermo}
-            alt="La platea dell’evento Puglia Digitale davanti al maxischermo con il tour virtuale di una piazza storica."
+            image={basilicaPiattaforma}
+            alt="La facciata in pietra chiara di una basilica romanica tra due torri, su una piazza; intorno, segnaposto arancioni, pannelli digitali azzurri e linee luminose sul selciato."
             sizes="(min-width: 64em) 36vw, 100vw"
+            quality={{ avif: 40 }}
           />
         </div>
-        <figcaption class="project__note">{eventPhotoNote}</figcaption>
+        <figcaption class="project__note">Immagine elaborata digitalmente</figcaption>
       </figure>
     </div>
   </section>
