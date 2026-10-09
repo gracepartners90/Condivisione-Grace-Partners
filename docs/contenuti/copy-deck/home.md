@@ -16,7 +16,7 @@ Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA
 - capitolo 01: la riga «Visual» di copywriter-content è rivista e accolta. In più ci sono la vista da smartphone sotto i 40em (commit e406ecb), la riserva confermata dal creative-director e il modello della riga con il nome, con i segnaposto e gli a capo misurati (blocco «Capitolo 01 con la schermata della Tana di Aldo»);
 - capitolo 02: la carta della Puglia intera con le città di Puglia Digitale, con legenda e descrizione L7, al posto della carta della Terra di Bari, che non è più nel sito (commit 3e25c42 e bae201c; blocco «Capitolo 02 con la carta della Puglia»);
 - documento: la didascalia decisa dal creative-director, «L’evento Puglia Digitale · {luogo}, {data}», e la foto senza cornice (commit 920e497);
-- allineamenti al codice: `data-cta-id` al posto di `data-track` nelle tabelle, i contatti della chiusura su due righe senza separatore, il numero del capitolo in un `p`, il separatore nascosto dell’H3 «SIII», «000° N» tra i gradi dell’orizzonte, il ritratto centrato;
+- allineamenti al codice: `data-cta-id` al posto di `data-track` nelle tabelle, i contatti della chiusura su due righe senza separatore, i nomi della tappa «Oggi» in elenco, il numero del capitolo in un `p`, il separatore nascosto dell’H3 «SIII», «000° N» tra i gradi dell’orizzonte, il ritratto centrato;
 - Gulpease ricalcolato con la legenda del capitolo 02; Ipotesi, Domande aperte e Decisioni richieste aggiornate.
 
 **Versione 1.7 (2026-10-08).** Capitolo 01: la schermata del SIII della Tana di Aldo al posto di quella di Masseria Santella (commit c11734b, richiesta dell’utente), con il testo alternativo di `alt-text.md` 1.11. Aggiornamento di copywriter-content su richiesta della sessione principale, solo nella riga «Visual» e nella nota del capitolo 01: da rivedere per copywriter-brand (rivista e accolta nella 1.8). Nessun testo della Home cambia.
@@ -40,7 +40,7 @@ Pagina `/`. Copre le sezioni 07, 08 e 09 delle linee guida e la chiusura con CTA
 - **A capo d’autore**: la barra rovesciata `\` a fine riga indica un a capo che sta nel contenuto (regola «Il Passaggio», direzione visiva § 1.5). Nel markup è un `<br>` oppure una riga separata.
 - **Frecce**: → ↓ ↗ indicano quale icona usare. Nel sito sono SVG inline con `aria-hidden="true"`, mai caratteri: i font scelti non li contengono (direzione visiva, § 3).
 - **Gulpease**: calcolato con uno script con la formula 89 + (300 × frasi − 10 × lettere) / parole; ogni titolo o paragrafo conta almeno una frase. Insieme dei testi: titoli (H1 e H2), statement, riga di posizionamento, paragrafi, legenda dei nodi del documento, legende delle carte dei capitoli 02 e 03, didascalie della timeline, compresa «10.000+ clienti, prima di ITnode», e citazione; esclusi occhielli, nomi e descrittori dei capitoli, etichette mono, CTA, contatti, testi alternativi e descrizioni delle carte. Ricalcolato il 2026-10-09 sui testi dello staging: 72 nel complesso (364 parole). Senza la legenda del capitolo 02, nel sito dal 2026-10-07, l’insieme è quello della versione 1.5: 356 parole e 71,9, cioè lo stesso 72. Il 69 della versione 1.0 veniva da un insieme di testi non documentato e non è riproducibile; i valori dei singoli testi sono confermati.
-- **Riferimenti**: grafie, CTA e punteggiatura in `tone-of-voice.md`; testi alternativi in `alt-text.md` (copywriter-content); header, footer, form, marquee e 404 in `microcopy.md`; eventi `data-track` nella strategia di conversione, § 4.
+- **Riferimenti**: grafie, CTA e punteggiatura in `tone-of-voice.md`; testi alternativi in `alt-text.md` (copywriter-content); header, footer, form, marquee e 404 in `microcopy.md`; eventi (`data-track`) e chiavi delle CTA (`data-cta-id`) nella strategia di conversione, § 4, e nel piano di misurazione, § 5.
 
 ## Metadati
 
@@ -70,7 +70,7 @@ Scaletta degli heading, coerente con la mappa SEO (§ 3.1):
 H1  La tecnologia cambia. La curiosità ci accompagna da sempre.
 H2  ITnode nasce dall’idea di creare un nuovo modo di abitare il Web.
 H2  I tre mondi ITnode
-    H3  SIII · Siti Interattivi Immersivi
+    H3  SIII – Siti Interattivi Immersivi
     H3  Puglia Digitale
     H3  Città Digitali
 H2  36 anni dentro l’innovazione. E ancora la stessa curiosità.
@@ -213,17 +213,17 @@ Alternativa non adottata (nel sito l’H2 è «I tre mondi ITnode», in scala di
 
 | Elemento | Tag · max | 01 | 02 | 03 |
 |---|---|---|---|---|
-| Numero | span `aria-hidden="true"` · 2 | 01 | 02 | 03 |
+| Numero | p `aria-hidden="true"` · 2 | 01 | 02 | 03 |
 | Rilevamento | mono, `aria-hidden="true"` | 000° · N | 120° | 240° |
 | Nome | H3 · 16 | SIII | Puglia Digitale | Città Digitali |
-| Descrittore | seconda riga dell’H3, più piccola · 30 | Siti Interattivi Immersivi | — | — |
+| Descrittore | seconda riga dell’H3, più piccola, dopo un separatore nascosto alla vista (`<span class="sr-only"> – </span>`, T6): nome accessibile «SIII – Siti Interattivi Immersivi» · 30 | Siti Interattivi Immersivi | — | — |
 | Statement | p, due registri · 60 | Spazi reali.<br>Esperienze digitali. | Un territorio.<br>Migliaia di storie. | Le attività del territorio,<br>online senza perdere radici. |
 | Microdescrizione | p · 160 (struttura UX) | Il SIII replica digitalmente gli spazi della tua impresa. Chi entra li esplora da desktop e smartphone, guarda prodotti e video, chiede informazioni e prenota. | Un progetto di destination marketing che digitalizza città, borghi e imprese della Puglia. E li valorizza con esperienze immersive. | Tour virtuali, Siti Interattivi Immersivi e strumenti digitali per imprese e attività. Varese, Altamura, Caltanissetta: città diverse, un unico portale. |
 | Lunghezza e Gulpease | — | 159 · 61 | 131 · 63 | 152 · 56 |
 | CTA | a · verbatim · 28 | Esplora SIII → | Scopri Puglia Digitale → | Esplora Città Digitali → |
 | Destinazione | — | `/siii/` | `/puglia-digitale/` | `/citta-digitali/` |
-| `data-track` | — | `home-capitolo-siii` | `home-capitolo-puglia-digitale` | `home-capitolo-citta-digitali` |
-| Visual | — | Schermata reale del SIII della Tana di Aldo, vista dall’interno (`siii-la-tana-di-aldo-desktop-sala.jpg`, commit c11734b). Testo alternativo (`alt-text.md` 1.11): «Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.» Sopra la schermata non ci sono nodi decorativi: sono stati tolti dal markup (commit bae201c) | Carta compatta della Terra di Bari, `aria-hidden`: Acquaviva delle Fonti, con l’anello della sede, Gravina in Puglia e Monopoli, più «Mare Adriatico» e «Murgia». Nessuna coordinata sotto i nomi (direzione visiva 0.12, R3) | Carta d’Italia con le città del portale, un punto ciascuna. Nomi dove c’è spazio (regola 11 della direzione visiva 0.12): 7 sulle carte larghe (Varese, Itri, Bari, Altamura, Cosenza, Caltanissetta, Caltagirone), 5 su quelle strette (senza Bari e Caltagirone). Legenda e descrizione: blocco «Capitolo 03 con la carta di tutte le città», qui sotto |
+| `data-cta-id` | evento `cta_click`, `data-cta-location="capitolo"` | `home-capitolo-siii` | `home-capitolo-puglia-digitale` | `home-capitolo-citta-digitali` |
+| Visual | — | Schermata reale del SIII della Tana di Aldo, dall’interno della sala, in due viste della stessa esperienza: da 40em la vista desktop intera, 16:10 (`siii-la-tana-di-aldo-desktop-sala.jpg`, commit c11734b); sotto i 40em, sui telefoni in verticale, un ritaglio 4:5 della vista da smartphone (`derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg`, commit e406ecb). Un solo testo alternativo per le due viste (`alt-text.md` 1.11): «Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza.» Nessun nodo decorativo sopra la schermata (tolti dal markup nel commit bae201c). La riga con il nome non è pubblicata. Dettagli: blocco «Capitolo 01 con la schermata della Tana di Aldo», qui sotto | Carta della Puglia intera con le città di Puglia Digitale, compatta, la stessa della hero di `/puglia-digitale/` (P4, approvata dall’utente il 2026-10-07; commit 3e25c42). Un punto per città, l’anello della sede su Acquaviva delle Fonti, i nomi dove c’è spazio, nessuna coordinata. Legenda, descrizione e nomi: blocco «Capitolo 02 con la carta della Puglia», qui sotto | Carta d’Italia con le città del portale, un punto ciascuna. Nomi dove c’è spazio (regola 11 della direzione visiva 0.12): 7 sulle carte larghe (Varese, Itri, Bari, Altamura, Cosenza, Caltanissetta, Caltagirone), 5 su quelle strette (senza Bari e Caltagirone). Legenda e descrizione: blocco «Capitolo 03 con la carta di tutte le città», qui sotto |
 
 Note:
 - Gli statement sono gli esempi del § 08, invariati, con l’a capo d’autore dopo il primo punto (01 e 02) e dopo la virgola (03).
@@ -232,11 +232,72 @@ Note:
 - 01: le funzioni del SIII sono quelle del § 10. Il descrittore scioglie la sigla alla prima occorrenza, come l’hero della pagina SIII.
 - 02: nessuna attribuzione della creazione di Puglia Digitale (A1). «destination marketing» con `lang="en"`.
 - 03: ordine «Siti Interattivi Immersivi» uniformato (il § 17 scrive «Siti Immersivi Interattivi»: brief, DR2). «Imprese e attività» riassume il «tessuto imprenditoriale e commerciale italiano» del § 17; la scala nazionale la dicono le tre città del § 18, nominate come chiede N12 e coincidenti con i nodi della carta.
-- **Visual**, come nel sito al 2026-10-07: schermata reale nel capitolo 01, carta della Terra di Bari nel 02, carta d’Italia con tutte le città nel 03 (direzione visiva 0.12, § 7.3). La carta della Puglia intera è approvata per la hero di `/puglia-digitale/`; nel capitolo 02 arriva solo se l’utente approva la proposta P4 (direzione visiva, § 7.3). I testi dei capitoli non cambiano con i visual.
-- **01, schermata della Tana di Aldo** (dal 2026-10-08; prima, la vista interna di Masseria Santella). Il testo alternativo nomina l’impresa, perché il testo accanto non lo fa; la microdescrizione resta generale, sul SIII, e non cambia. Il nome è letto dal logo `[DA VERIFICARE]`.
-  - Il consenso dell’impresa a comparire con nome e immagini non è ancora registrato (brief, A7; ADR 002 0.3, impresa per impresa). Per cro-specialist è bloccante per il go-live (review del 2026-10-07, oss. 2): senza consenso, al lancio la schermata non si pubblica (ADR 002).
-  - Il creative-director valuta la vista da smartphone della stessa esperienza per i telefoni: l’alt vale anche per quella (`alt-text.md`, «Ritaglio della Home»).
+- **Visual**, come nel sito al 2026-10-09 (build di e406ecb): la schermata reale nel capitolo 01, con una vista apposta per i telefoni in verticale; la carta della Puglia intera nel 02; la carta d’Italia con tutte le città nel 03 (direzione visiva 0.21, § 7.3). Le carte dei capitoli 02 e 03 sono un unico gesto, dalla regione all’Italia. La carta della Terra di Bari, nel capitolo 02 fino al 2026-10-07, non è più nel sito né nel codice (commit 3e25c42 e bae201c). I testi dei capitoli non cambiano con i visual.
 - Niente link esterni nei capitoli: prima si approfondisce sul sito (cro-specialist). Le CTA hanno testi diversi tra loro, quindi non serve un nome accessibile aggiuntivo.
+
+**Capitolo 01 con la schermata della Tana di Aldo** · vista desktop nel sito dal commit c11734b (richiesta dell’utente del 2026-10-08); vista da smartphone sui telefoni in verticale dal commit e406ecb (verdetto del creative-director del 2026-10-08: `docs/review/2026-10-08-home-capitolo-siii-tana-di-aldo-creative-director.md`) · testo alternativo di copywriter-content (`alt-text.md` 1.11)
+
+| Elemento | Tag e stile | Testo o file | Note |
+|---|---|---|---|
+| Vista desktop | `<img>` nello Schermo 16:10, da 40em (640 px), quindi anche su tablet e telefoni in orizzontale | `siii-la-tana-di-aldo-desktop-sala.jpg`, intera | La sala con la volta in pietra vista dalla scala; sopra, l’interfaccia: il logo, «APRI QUI», le icone di WhatsApp, Facebook, Instagram e della posizione, il link alla privacy. «APRI QUI» tocca il logo: si lascia com’è, ed è chiesta all’utente una vista desktop senza la sovrapposizione (verdetto, decisione 3 e H4) |
+| Vista da smartphone | `<source>` dello stesso `<picture>`, sotto i 40em, 4:5 a tutta larghezza | `derivate/siii-la-tana-di-aldo-mobile-sala-4x5.jpg`, ritaglio della vista da smartphone (x 120, y 650, 1080 × 1350) | La sala, la ringhiera della scala e le icone di WhatsApp, Facebook e Instagram. Il logo non c’è: sui telefoni il nome lo dice il testo alternativo e, quando arriverà, la riga |
+| Testo alternativo | `alt` dell’unico `<img>`, per le due viste · 137 caratteri · Gulpease 55 | Il SIII della Tana di Aldo: una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, e l’interfaccia dell’esperienza. | Rivisto e approvato: note qui sotto |
+| Riga con il nome | `t-label`, `--fg-2`, sotto lo Schermo e fuori dall’apertura · oggi non pubblicata | La Tana di Aldo · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia]) | Modello, condizioni e a capo: «Riga con il nome sotto la schermata», qui sotto |
+| Nodi | — | Nessuno | Tolti dal markup nel commit bae201c: i punti li disegna già l’interfaccia (direzione visiva, § 4.8) |
+| Link | — | Solo la CTA del capitolo | La schermata non è un link, e la riga nemmeno (HM-5) |
+
+Note sul capitolo 01:
+- **Revisione della 1.7.** La riga «Visual» di copywriter-content corrispondeva al sito di allora: la tengo nella sostanza. Ho aggiunto la vista da smartphone, che il creative-director in quel momento stava valutando, e ho raccolto i dettagli in questo blocco.
+- **Testo alternativo: lo approvo, per tutte e due le viste.**
+  - Nel ritaglio per i telefoni si vedono la volta in pietra, i tavoli apparecchiati, la ringhiera della scala e tre icone dell’interfaccia: ogni parte dell’alt è vera anche lì. L’ho verificato sul derivato e sullo staging a 390 px.
+  - «Della Tana di Aldo»: quando un nome comincia con l’articolo, l’articolo si unisce alla preposizione, come si dice a voce.
+  - Nomina l’impresa perché il testo accanto non lo fa. La microdescrizione resta generale, sul SIII, e non cambia.
+  - «La Tana di Aldo» è letto dal logo `[DA VERIFICARE: nome con cui l’impresa si presenta, con la grafia esatta]`. Se il nome confermato è diverso, cambia solo il nome, nell’alt e nella riga.
+- **Consenso e realizzazione (A7, A8): bloccanti per il go-live** (verdetto del creative-director, H1; review di brand-strategist del 2026-10-08, T1 e T2).
+  - Il consenso dell’impresa a comparire con nome, logo e schermate non è registrato.
+  - Manca anche la conferma che il SIII l’ha realizzato ITnode: lo presuppone il capitolo e lo afferma l’alt («Il SIII della Tana di Aldo»).
+  - Senza consenso e conferma, al lancio vale la riserva dell’ADR 002 (§ 3.1), confermata dal creative-director:
+    1. escono le due viste della Tana di Aldo, con il loro alt;
+    2. torna l’interno di Masseria Santella da desktop, 16:10 a ogni larghezza, se Masseria Santella ha dato il consenso, con il suo alt (`alt-text.md`) e con la riga «Masseria Santella · Cassano delle Murge (BA)» alle stesse condizioni;
+    3. altrimenti la variante «in pubblicazione» del capitolo, senza nome né luogo (direzione visiva, § 4.5).
+  - In nessuno dei tre casi cambiano i testi del capitolo.
+
+**Riga con il nome sotto la schermata** · decisa dal creative-director (direzione visiva 0.21, § 4.8; verdetto del 2026-10-08, H3) · testo di copywriter-brand · oggi non pubblicata
+
+Forma: `{nome dell’impresa} · {comune} ({sigla della provincia})`. Per il capitolo 01, da completare con i dati dell’impresa:
+> La Tana di Aldo · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia])
+
+Nel sorgente: `La&nbsp;Tana&nbsp;di&nbsp;Aldo&nbsp;· {comune}&nbsp;({sigla})`, con spazi unificatori anche tra le parole del comune. L’unico spazio normale è quello dopo «·».
+
+- **Va online solo con i dati e il consenso:** il nome con cui l’impresa si presenta, nella grafia confermata, il comune e la sigla della provincia; il consenso scritto (A7) e la conferma che il SIII l’ha realizzato ITnode (A8), che valgono per la schermata. Fino ad allora nessuna riga, e il nome resta solo nell’alt (ADR 002, § 3.1).
+  - Le domande per l’utente sono già nella review di brand-strategist del 2026-10-08 (§ 4, punti 1, 2, 3 e 5): non si chiedono due volte.
+  - Nessun comune si ricava dalla schermata o da ricerche: sarebbe un dato inventato (soglia 1).
+- **Nome.** Quello dell’insegna, non la ragione sociale: senza forma giuridica (niente «S.r.l.» o «S.n.c.»), come i nomi delle schede degli esempi di `/siii/`. Nel sorgente la maiuscola sta solo dove la vuole il nome; il maiuscolo lo applica `t-label`.
+- **Luogo.** Il comune, non la frazione né l’indirizzo, con la sigla della provincia di due lettere tra parentesi, come nella riga del luogo delle schede degli esempi di `/siii/`.
+- **A capo.** Misurati sullo staging di e406ecb (il 2026-10-08 e il 2026-10-09), con lo stile di `t-label` e la larghezza dello Schermo, in Chromium. Il carattere è monospaziato, quindi conta il numero di caratteri: una riga ne tiene 36 a 320 px, 42 a 360, 46 a 390 e 72 a 1024.
+  - L’unico punto d’a capo è lo spazio dopo «·». Così il testo resta su una riga quando c’è spazio, altrimenti va su due: «La Tana di Aldo ·» / «{comune} ({sigla})».
+  - Su una riga da 320 px in su con un comune fino a 13 caratteri; da 390 px fino a 22; da 600 px con qualunque comune provato, fino a 39 caratteri.
+  - Senza spazi unificatori la sigla può restare da sola a capo (a 412 px, con un comune di 25 caratteri), e un comune di più parole si spezza dopo la preposizione: «Masseria Santella · Cassano delle / Murge (BA)», a 320 e 360 px.
+  - Con la spaziatura del testo di WCAG 1.4.12, a 320 px la seconda riga regge un comune fino a 28 caratteri, senza scorrimento orizzontale. Con un comune più lungo, gli spazi del comune tornano normali.
+- **Lettura per gli screen reader.** Markup e lettura li decide ux-designer (verdetto, H3). Propongo che si senta «La Tana di Aldo, {comune} ({sigla})»: il «·» in uno `<span aria-hidden="true">` e una virgola `sr-only`, come i separatori nascosti dei titoli (T6). Se il «·» resta leggibile, secondo lo screen reader e le sue impostazioni lo si sente per nome oppure non lo si sente affatto, e allora nome e comune arrivano attaccati `[DA VERIFICARE con gli screen reader in Fase 5, come la sigla SIII]`.
+- **Testo alternativo con la riga.** Quando la riga va online, il nome non va ripetuto: l’alt passa alla variante «Con il nome nel testo accanto» di `alt-text.md` (copywriter-content), «Una sala con la volta in pietra e i tavoli apparecchiati, vista dalla scala, con l’interfaccia dell’esperienza.» (111 caratteri).
+- **Riserva.** Con l’interno di Masseria Santella la riga è «Masseria Santella · Cassano delle Murge (BA)» (44 caratteri; direzione visiva, § 4.8), alle stesse condizioni.
+  - Nel sorgente: `Masseria&nbsp;Santella&nbsp;· Cassano&nbsp;delle&nbsp;Murge&nbsp;(BA)`. A 320 e 360 px va su due righe, «Masseria Santella ·» / «Cassano delle Murge (BA)»; da 390 px su una. Con la spaziatura di 1.4.12 resta su due righe fino a 390 px.
+  - L’alt è quello di Masseria Santella «Con il nome nel testo accanto» (`alt-text.md`, 120 caratteri).
+- **Non è un link** (HM-5). Nessun numero e nessun aggettivo: dice solo di chi è lo spazio e dove sta.
+
+**Capitolo 02 con la carta della Puglia** · nel sito dal commit 3e25c42 (2026-10-07; P4, approvata dall’utente: «sì, mettila») · la carta della hero di `/puglia-digitale/`, compatta · legenda e descrizione L7 (`docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`), adottate da ux-designer e dal creative-director (direzione visiva, § 1.4)
+
+| Elemento | Tag e stile | Testo | Note |
+|---|---|---|---|
+| Legenda | `figcaption` · `t-label` · max 41 (41) | Ogni punto è una città di Puglia Digitale | Forma di L1, la stessa del capitolo 03: in tutto il sito i punti si leggono in un modo solo. Spazi unificatori tra «di», «Puglia» e «Digitale» (`di&nbsp;Puglia&nbsp;Digitale`). Una riga da 360 px; a 320 px «Ogni punto è una città / di Puglia Digitale». Con la spaziatura di WCAG 1.4.12 va su due righe dove la carta è stretta, mai fuori dalla carta (misurato il 2026-10-09). Nessun numero |
+| Descrizione della carta | `aria-label` della carta con `role="img"` · costruita dai dati (`describePugliaDigitale`, `src/lib/citta-digitali.ts`) · 222 caratteri · Gulpease 64 | Carta della Puglia con le città di Puglia Digitale, più numerose nella provincia di Bari. Tra queste: Manfredonia, Barletta, Bari, Monopoli, Gravina in Puglia e Nardò. Un anello segna Acquaviva delle Fonti, sede di ITnode. | Uguale a quella della hero di `/puglia-digitale/`. Modello: «Carta della Puglia con le città di Puglia Digitale, {quota} nella provincia di {provincia}. Tra queste: {nomi}. Un anello segna {sede}, sede di ITnode.» «più numerose» per la provincia con più città, «la maggior parte» solo sopra la metà; con una parità la prima frase si ferma prima della virgola. I nomi sono quelli disegnati a ogni larghezza, da nord a sud, senza la sede, che ha la sua frase. Niente numeri, niente elenco delle province, mai «tutta la Puglia» (L7). Al go-live senza il testo della pagina «Tutte le città» del portale restano i nomi solidi: «… Tra queste: Monopoli e Gravina in Puglia. …» (186 caratteri) |
+| Nomi sulla carta | `aria-hidden`, dentro la carta | Sulle carte larghe, oltre i 400 px (25rem), 10 nomi: Manfredonia, Barletta, Bari, Monopoli, Acquaviva delle Fonti con l’anello, Gravina in Puglia, Ostuni, Massafra, Lecce e Nardò, più «Mare Adriatico» e «Mar Ionio». Su quelle strette, fino a 400 px (i telefoni e la finestra di 1024 px, misurati il 2026-10-09), 7: senza Ostuni, Massafra, Lecce e i due mari | Nessuna coordinata sotto i nomi (direzione visiva, § 1.4). I nomi delle carte strette sono quelli della descrizione, più la sede: ogni nome detto è sulla carta anche al telefono |
+| Link | — | Nessuno nel capitolo | Una sola CTA per capitolo (HM-5); i link al portale stanno su `/puglia-digitale/` |
+| Microdescrizione | p | Invariata | Resta vera con la carta della Puglia intera: dice «città, borghi e imprese della Puglia», non quante né tutte |
+
+- Chi usa uno screen reader sente «Puglia Digitale» nella descrizione e poi nella legenda. È la stessa ripetizione del capitolo 03, accettata come costo del nome del marchio (direzione visiva, § 1.4).
+- La frase della sede dice dove sta ITnode, non di chi è il progetto: nessuna attribuzione di Puglia Digitale a ITnode (A1, D1).
 
 **Capitolo 03 con la carta di tutte le città** · nel sito dal commit 0a61546 (2026-10-05), con la descrizione B dal commit 4b90180 (2026-10-06) · proposta di ui-designer, decisa nella direzione visiva; alternativa testuale di ux-designer · motivazioni e misure: `docs/review/2026-10-05-legenda-mappa-copywriter-brand.md`
 
@@ -271,7 +332,7 @@ Alternativa senza numero, che non invecchia: «Dagli anni ’90 dentro l’innov
 | 4 | Oggi | ITnode · Puglia Digitale · Città Digitali | La stessa curiosità, applicata a spazi, imprese e territori. |
 
 - Tappa 3: «10.000+» è il momento numerico in `display-l`. Testo accessibile: «Oltre 10.000 clienti, prima di ITnode».
-- Tappa 4: è l’unico nodo esplorabile. «Puglia Digitale» → `/puglia-digitale/`, «Città Digitali» → `/citta-digitali/`; «ITnode» resta testo, perché siamo già sulla sua home.
+- Tappa 4: è l’unico nodo esplorabile. Nel sito i tre nomi sono un elenco (`ul`), uno sotto l’altro e senza «·». «Puglia Digitale» → `/puglia-digitale/`, «Città Digitali» → `/citta-digitali/`; «ITnode» resta testo, perché siamo già sulla sua home.
 
 **Citazione** · `blockquote` dentro `figure` · verbatim · chiude la sezione, dopo il ritratto (§ 09) · nel sito tra virgolette basse («»)
 > È questo il futuro che mi appassiona e che stiamo costruendo giorno dopo giorno.
@@ -293,7 +354,7 @@ Note:
 - **iComm Lab**: grafia da confermare. Il § 09 scrive «IcommLab».
 - **Markup**: `<ol>`, con `<time datetime="2002">` solo sulle date complete; «Anni ’90» e «Oggi» restano testo semplice.
 - **Citazione**: «È questo il futuro» rimanda a ciò che la precede. Con i testi provvisori, il riferimento è la tappa «Oggi»; con il racconto originale del cliente sarà il suo ultimo paragrafo.
-- **Ritratto**: `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg`, nel trattamento «inchiostro», senza didascalia su luoghi, date o eventi (direzione visiva, § 4.3). Testo alternativo (`alt-text.md`): «Giacomo Lenoci a braccia conserte, in abito scuro.» La nota resta finché il cliente non chiarisce la provenienza dell’immagine. La scelta dell’immagine resta dell’utente (brief, DR3): il sito usa l’opzione (b), che l’ADR 002 propone per il lancio.
+- **Ritratto**: `derivate/fondatore-ritratto.jpg`, da `fondatore-braccia-conserte.jpg`, nel trattamento «inchiostro», con il ritaglio centrato dal 2026-10-07 (commit 3bfe9b2; direzione visiva 0.14, § 4.3), senza didascalia su luoghi, date o eventi. Testo alternativo (`alt-text.md`): «Giacomo Lenoci a braccia conserte, in abito scuro.» La nota resta finché il cliente non chiarisce la provenienza dell’immagine. La scelta dell’immagine resta dell’utente (brief, DR3): il sito usa l’opzione (b), che l’ADR 002 propone per il lancio.
 - Nessuna CTA dentro il racconto (cro-specialist).
 
 ## 7. Chiusura
@@ -310,11 +371,12 @@ Alternative: «Hai uno spazio / da far esplorare?» (32) · «Il prossimo spazio
 **Testo** · p · facoltativo · max 160 (153) · Gulpease 58
 > Un’impresa, un’attività, un territorio: raccontaci che cosa vuoi rendere esplorabile. Ti aiutiamo a scegliere tra SIII, Puglia Digitale e Città Digitali.
 
-**CTA** · a → `/contatti/` · max 28 (12) · `data-track="home-chiusura-parliamone"`
+**CTA** · a → `/contatti/` · max 28 (12) · `data-cta-id="home-chiusura-parliamone"` (evento `cta_click`, `data-cta-location="chiusura"`)
 > Parliamone →
 
-**Contatti rapidi** · mono · link `mailto:info@itnode.it` e `tel:+390802466520` · `data-track` `home-chiusura-email` e `home-chiusura-telefono`
-> Scrivi a info@itnode.it · Chiama +39 080 2466520
+**Contatti rapidi** · `ul` di due voci, una sotto l’altra, senza separatore · mono (`t-label`), con l’indirizzo email nella sua grafia (`t-as-is`) e il numero con spazi unificatori · link `mailto:info@itnode.it` e `tel:+390802466520` · `data-cta-id` `home-chiusura-email` e `home-chiusura-telefono` (evento `contact_click`)
+> Scrivi a info@itnode.it\
+> Chiama +39 080 2466520
 
 Note:
 - L’H2 chiude il cerchio aperto da «un nuovo modo di abitare il Web» e supera il test dello scambio, perché riprende l’idea fondativa di ITnode.
@@ -331,7 +393,8 @@ Note:
 | Fondatore, lead | «ITnode è stata fondata da Giacomo Lenoci…» | Solo gli elementi del § 09 e il blocco G | Il testo narrativo del fondatore citato dal § 09 `[DA FORNIRE]`; conferma di nome e ruolo (F7) |
 | Timeline, didascalie delle tappe 1, 2 e 4 | «L’inizio del percorso.», «Il primo passo da imprenditore.», «La stessa curiosità, applicata a spazi, imprese e territori.» | Scritte per la Home, senza fatti nuovi | Ruolo in IBM, nome e anno della prima azienda, anni e attività di MyComm, iComm Lab e Leadstone (F1–F6) |
 | Timeline, tappa 3 | «Dal 2002» e «10.000+ clienti, prima di ITnode» | § 09, nella lettura più prudente | A quale tappa appartiene il 2002; perimetro e fonte di «10.000+» (N5) |
-| Documento, legenda e didascalia | I tre nodi e «Puglia Digitale, evento regionale» | Direzione visiva, § 4.2 | Città e piazza sugli schermi, chi parla, luogo, data e autore della foto (A4) |
+| Documento, legenda e didascalia | I tre nodi; la didascalia «L’evento Puglia Digitale · {luogo}, {data}», non pubblicata | Direzione visiva, § 4.2 | Città e piazza sugli schermi, chi parla; l’originale dello scatto, con luogo, data e autore (A4) |
+| Capitolo 01, riga con il nome | Nessuna: «La Tana di Aldo · [DA FORNIRE: comune] ([DA FORNIRE: sigla della provincia])» è pronta ma non pubblicata | Direzione visiva, § 4.8 | Il nome con cui l’impresa si presenta, il comune e la provincia, il consenso scritto (A7) e la conferma che il SIII l’ha realizzato ITnode (A8): review di brand-strategist del 2026-10-08, § 4 |
 | Microdescrizioni dei capitoli | 01, 02 e 03 | §§ 10, 13, 17 e 18 | Le eventuali descrizioni originali dei tre progetti |
 | Testi scritti per la Home | Occhiello e riga di posizionamento della hero, altri occhielli, «Un’impresa. Un territorio. Una rete di città.», chiusura | Headline, microcopy e CTA consentiti dal § 25; l’occhiello della hero riprende il § 02 | Solo l’approvazione: non sostituiscono testi del cliente |
 
@@ -341,16 +404,23 @@ Note:
 - «Un’impresa. Un territorio. Una rete di città.» descrive bene la relazione tra i tre mondi (brief, 2.3 e I2).
 - Il 2002 appartiene a MyComm o alla prima azienda: in entrambi i casi «Dal 2002» sulla tappa 3 resta vero.
 - «10.000+ clienti» si riferisce alle aziende del percorso del fondatore prima di ITnode (brief, N5).
+- `[IPOTESI: «La Tana di Aldo» è il nome con cui l’impresa si presenta, con questa grafia.]` È la lettura del logo (ADR 002). Se il nome è diverso, cambiano l’alt e la riga del capitolo 01, non il resto.
+- `[DA VERIFICARE: il SIII della Tana di Aldo l’ha realizzato ITnode (A8).]` Lo presuppone il capitolo 01 e lo afferma l’alt.
+- Le misure della riga con il nome e delle legende valgono in Chromium, sullo staging di e406ecb; Safari e Firefox `[DA VERIFICARE]`.
 
 ## Domande aperte
 
-- **Per il cliente** (tramite la sessione principale): nome e ruolo del fondatore; il testo narrativo del § 09; ruolo in IBM e anno di inizio dei 36 anni; nome e anno della prima azienda; anni di MyComm, iComm Lab e Leadstone; perimetro e fonte di «10.000+ clienti»; ruolo di ITnode in Puglia Digitale (D1); luogo, data e autore della foto dell’evento, con le città sugli schermi.
+- **Per il cliente** (tramite la sessione principale): nome e ruolo del fondatore; il testo narrativo del § 09; ruolo in IBM e anno di inizio dei 36 anni; nome e anno della prima azienda; anni di MyComm, iComm Lab e Leadstone; perimetro e fonte di «10.000+ clienti»; ruolo di ITnode in Puglia Digitale (D1); l’originale della foto dell’evento, con luogo, data e autore, e le città sugli schermi.
+- **Per il cliente, sulla Tana di Aldo**: le domande della riga con il nome sono già nella review di brand-strategist del 2026-10-08 (§ 4, punti 1, 2, 3 e 5): nome, comune e provincia, consenso, chi ha realizzato il SIII. Non vanno ripetute.
 - **Per seo-content**: va bene l’accorciamento dei blocchi A, F e G? E la regola «un segnaposto aperto non si pubblica» applicata a «prima azienda · 2002»?
-- **Per ux-designer**: la carta della Terra di Bari del capitolo 02 è `aria-hidden` e disegna «Acquaviva delle Fonti», «Gravina in Puglia» e «Monopoli». La direzione visiva (§ 1.4) e `accessibilita.md` (§ 2.8) la danno per decorativa perché i suoi luoghi sarebbero «già scritti nel testo accanto», ma il testo del capitolo 02 non li nomina. Due strade: una descrizione della carta, per esempio «Carta della Terra di Bari con Gravina in Puglia e Monopoli. Un anello segna Acquaviva delle Fonti, sede di ITnode.» (da ovest a est, come le porte di `/puglia-digitale/`; stesso schema della L7, senza ripetere la sede), oppure i tre nomi nel testo, che però cambierebbe una microdescrizione approvata. Decide ux-designer.
-- **Per il creative-director**: «regionale» nella didascalia di riserva della foto dell’evento (sezione 3) e nella direzione visiva (§ 4.2). Il sito l’ha già tolto dal nodo 2.
+
+Chiuse nella 1.8:
+- **ux-designer, carta della Terra di Bari** del capitolo 02 senza descrizione: ha avuto la sua descrizione (commit 133e9a5), poi è uscita dal sito con la P4 (commit 3e25c42 e bae201c). La carta della Puglia intera ha la descrizione L7.
+- **creative-director, «regionale» nella didascalia** della foto dell’evento: tolto, con il testo «L’evento Puglia Digitale · {luogo}, {data}» (direzione visiva 0.13, § 4.2).
 
 ## Decisioni richieste
 
+- **Riga con il nome sotto il capitolo 01** (ux-designer, verdetto del creative-director, H3): markup e lettura, quando arrivano i dati. Il testo è pronto (sezione 5, «Riga con il nome sotto la schermata»). Da decidere: la riga come `figcaption` di una figura che contiene lo Schermo, e il «·» nascosto con una virgola per gli screen reader. La stessa scelta vale per la riga sotto la hero di `/siii/`.
 - **«10.000+ clienti» al lancio**: decisa al G4 (verdetto del creative-director, § 3.8). Con la conferma del perimetro vale l’opzione A, con l’etichetta confermata; senza, l’opzione B: il numero si toglie e la tappa resta.
 - **Varianti B e C della riga di posizionamento** (cro-specialist): se includerle nel test E1 dopo il lancio (sezione 1). Parere del creative-director (direzione visiva, § 5): si prova B come sfidante principale; C resta di riserva.
 - **Titolo del fondatore** (utente): «36 anni…», da aggiornare ogni anno, oppure l’alternativa senza numero.
