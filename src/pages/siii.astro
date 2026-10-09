@@ -17,6 +17,7 @@ import ContactForm from '../components/sections/ContactForm.astro';
 import Bridge from '../components/sections/Bridge.astro';
 import { siiiShowcase } from '../data/site';
 import { siiiHeroScreen, siiiExampleScreens } from '../data/media';
+import { SLOT_MODE } from '../data/asset-slots';
 import { pageGraph, siiiService, siiiDefinition, ids } from '../lib/structured-data';
 
 const schema = pageGraph('siii', [siiiService()], { about: ids.siiiService });
@@ -118,6 +119,19 @@ const phrases: Record<string, string> = {
             <span>SIII <span class="compare__verb">agisci</span></span>
           </label>
         </fieldset>
+        {
+          SLOT_MODE === 'staging' ? (
+            /* The two clips asked for on 2026-10-09, one per state of the switch; until they arrive, their declared
+               slots. A go-live without them (PUBLIC_SLOT_MODE=publish) keeps the drawn screen below. */
+            <div class="compare__clips">
+              <div class="compare__clip compare__clip--tour">
+                <Media asset="siii-video-tour" />
+              </div>
+              <div class="compare__clip compare__clip--siii">
+                <Media asset="siii-video-siii" />
+              </div>
+            </div>
+          ) : (
         <div class="compare__screen" aria-hidden="true">
           <span class="compare__horizon"></span>
           {
@@ -138,6 +152,8 @@ const phrases: Record<string, string> = {
           <span class="compare__mode t-label compare__mode--tour">Tour 360° · ti guardi intorno</span>
           <span class="compare__mode t-label compare__mode--siii">SIII · apri, esplori, chiedi, prenoti</span>
         </div>
+          )
+        }
         <figcaption class="compare__caption">
           <span class="compare__cap compare__cap--tour">Nel tour 360° chi visita si guarda intorno e passa da un punto di vista all’altro.</span>
           <span class="compare__cap compare__cap--siii"
@@ -556,6 +572,16 @@ const phrases: Record<string, string> = {
 
   .compare:has(input[value='tour']:checked) :is(.compare__mode--siii, .compare__cap--siii) {
     display: none;
+  }
+
+  /* The two clips (or their slots): the one of the checked state. */
+  .compare__clip--tour,
+  .compare:has(input[value='tour']:checked) .compare__clip--siii {
+    display: none;
+  }
+
+  .compare:has(input[value='tour']:checked) .compare__clip--tour {
+    display: block;
   }
 
   .compare__caption {

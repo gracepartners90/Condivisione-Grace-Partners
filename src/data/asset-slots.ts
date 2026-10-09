@@ -25,7 +25,7 @@ export type SlotPublish = {
 };
 
 export type AssetSlot = {
-  kind: 'foto' | 'screenshot' | 'poster video';
+  kind: 'foto' | 'screenshot' | 'poster video' | 'video';
   /** What the asset must show: a brief for whoever produces it, never a claim. */
   label: string;
   spec: string;
@@ -108,6 +108,28 @@ const slots = {
     alt: 'Copertina del video di Città Digitali',
     usedIn: '/citta-digitali/ (video)',
     // The video cover is already typographic (VideoSection): no slot is rendered for it.
+    publish: { kind: 'experience' },
+  },
+  // /siii/, «Tour 360° o Sito Interattivo Immersivo?»: one clip per state of the switch (user request of
+  // 2026-10-09). In `publish` mode the figure keeps its drawn screen, so no slot variant is rendered.
+  'siii-video-tour': {
+    kind: 'video',
+    label: 'Un tour 360° in uso: ci si guarda intorno e si passa da un punto di vista all’altro.',
+    spec: 'Registrazione dello schermo da desktop, 16:10 (1920 × 1200 px), 10–20 secondi, senza audio, MP4 H.264, più un fotogramma di copertina.',
+    format: '16:10',
+    ratio: '16 / 10',
+    alt: 'Video: un tour 360° in uso',
+    usedIn: '/siii/ (Tour 360° o SIII, «guardi»)',
+    publish: { kind: 'experience' },
+  },
+  'siii-video-siii': {
+    kind: 'video',
+    label: 'Un SIII in uso: si aprono gli hotspot, si guarda un prodotto o un video, si chiedono informazioni o si prenota.',
+    spec: 'Registrazione dello schermo da desktop, 16:10 (1920 × 1200 px), 10–20 secondi, senza audio, MP4 H.264, più un fotogramma di copertina.',
+    format: '16:10',
+    ratio: '16 / 10',
+    alt: 'Video: un SIII in uso',
+    usedIn: '/siii/ (Tour 360° o SIII, «agisci»)',
     publish: { kind: 'experience' },
   },
 } satisfies Record<string, AssetSlot>;
