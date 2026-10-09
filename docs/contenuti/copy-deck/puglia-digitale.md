@@ -3,14 +3,19 @@ titolo: Copy deck · Puglia Digitale
 owner: copywriter-content
 contributi: [copywriter-brand, seo-content, cro-specialist, ux-designer, brand-strategist, creative-director]
 stato: in revisione
-versione: 1.5
-aggiornato: 2026-10-06
-fonti: [docs/brief/linee-guida.md, src/assets/images/acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp (utente, 2026-10-06), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, docs/contenuti/alt-text.md (1.4), docs/strategia/citta-digitali-elenco.md (0.3), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
+versione: 1.6
+aggiornato: 2026-10-09
+fonti: [commit e398f46 (immagine della chiesa nella sezione 2, richiesta dell'utente del 2026-10-09), docs/contenuti/alt-text.md (1.13), docs/review/2026-10-09-puglia-digitale-basilica-brand-strategist.md, docs/decisioni/002-veridicita-staging-e-immagini-ai.md (0.6, A9), commit c0b3708 (porte di Gravina in Puglia e Monopoli nel sito), staging http://127.0.0.1:4321 del 2026-10-09 (build di e398f46), docs/brief/linee-guida.md, src/assets/images/acquaviva-digitale.webp, gravina-digitale.webp e monopoli-digitale.webp (utente, 2026-10-06), docs/decisioni/007-immagine-di-acquaviva-con-segni-grafici.md, docs/contenuti/alt-text.md (1.4), docs/strategia/citta-digitali-elenco.md (0.3), docs/decisioni/002-veridicita-staging-e-immagini-ai.md (riserve di go-live), docs/brief/brief-consolidato.md (D1, S7, omonimie), docs/seo/mappa-keyword-url.md, docs/seo/specifiche-tecniche.md (§5.4), docs/cro/strategia-conversione.md, docs/cro/piano-misurazione.md, docs/contenuti/tone-of-voice.md (§6), docs/contenuti/microcopy.md (§4), docs/creativa/direzione-visiva.md (§7.5, §7.8), docs/ux/struttura-pagine.md (0.5, §3), docs/review/2026-09-28-sito-veridicita-brand-strategist.md (B3, B4, I9), docs/review/2026-09-28-sito-verdetto-g4-creative-director.md, docs/review/2026-09-28-sito-bozze-copywriter-content.md (P1, P2), docs/review/2026-09-28-sito-accessibilita-ux-designer.md (§4: T6, T11), src/pages/puglia-digitale.astro, src/data/site.ts, src/data/asset-slots.ts, src/data/figures.ts, src/data/media.ts, src/data/pages.ts, staging http://localhost:4321 del 2026-10-05 (commit 5c4a6cb)]
 ---
 
 # Copy deck · Puglia Digitale
 
 Pagina `/puglia-digitale/`. Copre le sezioni 13, 14, 15 e 16 delle linee guida (LG), la chiusura e l'introduzione al form (§23). Rispetto a SIII il carattere è più territoriale ed emozionale (§13). I testi sono pronti da impaginare.
+
+**Novità della v1.6 (2026-10-09)**
+- **Sezione 2: la chiesa con la grafica del portale** al posto della foto dell'evento (commit e398f46, richiesta dell'utente). Alt e nota vengono da `alt-text.md` (1.13). Nel sito l'alt è ancora provvisorio (V4).
+- **Porte di Gravina in Puglia e Monopoli:** sono nel sito dal commit c0b3708. La tabella della sezione 4 ora riporta gli alt dei ritagli scelti.
+- Verifica sul sito del 2026-10-09 e nuove differenze aperte (V3, V4).
 
 **Novità della v1.5 (2026-10-06)**
 - **Foto di Gravina in Puglia e Monopoli** per le loro porte: testo alternativo per il ritaglio centrale e nota, in attesa dei ritagli del creative-director. La foto di Acquaviva è nel sito (commit d60b95f).
@@ -107,20 +112,22 @@ Note:
 | Destinazione | `https://www.lapugliadigitale.it`, nuova scheda, `rel="noopener"` |
 | Tracciamento | `cta_id` pd-progetto-portale, `cta_location` sezione, `outbound_type` portale (strategia di conversione §4) |
 
-**Fotografia dell'evento** · `figure` accanto al testo · immagine `src/assets/images/derivate/evento-schermo.jpg` (ritaglio 4:5 sul maxischermo)
+**Immagine della piattaforma** · `figure` accanto al testo · immagine `src/assets/images/derivate/basilica-piattaforma.jpg` (ritaglio 4:5 di `basilica-digitale.jpg`), dal commit e398f46
 | Elemento | Testo |
 |---|---|
-| Testo alternativo | La platea dell’evento Puglia Digitale davanti al maxischermo con il tour virtuale di una piazza storica. |
-| Nota di trasparenza · `figcaption` | Immagine elaborata con strumenti di intelligenza artificiale |
+| Testo alternativo | La facciata in pietra chiara di una chiesa tra due torri; sopra, segnaposto arancioni, pannelli digitali azzurri e linee luminose sulla piazza. |
+| Nota di trasparenza · `figcaption` | Immagine elaborata digitalmente |
 
 Note:
 - Il Testo 1 è il Blocco D della mappa SEO, con le stesse parole; una frase è spezzata in due per la leggibilità (Gulpease). È il primo paragrafo sotto l'H2, nell'HTML statico. Nel sito il dominio è un link al portale: il testo visibile non cambia, e il testo nascosto « (si apre in una nuova scheda)» sta dentro il link.
 - «destination marketing» in minuscolo nel testo corrente, come propone il brief (DR2).
 - Parola lunga nel titolo: «all’entroterra.» è un blocco di 15 caratteri. A 44 px su 390 px rischia di uscire dalla colonna: prevedere `hyphens: auto` con `lang="it"` o una scala minima più bassa per questo titolo.
-- **Foto.** È la composizione della direzione visiva (§7.5, riga 2): persone davanti al maxischermo con il tour virtuale di una piazza. In questo ritaglio il palco non si vede, quindi la didascalia della v1.2, con il fondatore sul palco, non vale più. Il testo alternativo è in `docs/contenuti/alt-text.md`.
-- **Didascalia: solo la nota di trasparenza** (review di veridicità, B4). Il file sorgente porta il segno di un editor generativo, quindi la foto ha una nota di trasparenza, come i ritratti. Niente data, luogo, numero di partecipanti né nome dell'oratore: le didascalie restano così finché il cliente non manda l'originale dello scatto.
-  - Con l'originale la nota si toglie (B4). Luogo e data si aggiungono solo se confermati (A4): «[DA FORNIRE: luogo], [DA FORNIRE: mese e anno]».
-  - In platea c'è almeno un volto riconoscibile di profilo (B4): servono l'informativa sulle riprese o un ritaglio più stretto (condizione C07 del verdetto G4).
+- **Immagine.** Le parole dell'utente: «mentre questa è per la pagina puglia digitale dove si parla della piattaforma, al posto della platea tagliata che si vede». È la facciata di una chiesa con sopra la grafica del portale, nello stile delle porte della sezione 4 (ADR 007): segnaposto, pannelli digitali, linee luminose. Illustra la piattaforma di cui parla il testo. Il ritaglio 4:5 è intero a ogni larghezza.
+- **Testo alternativo.** Non nomina il luogo. La facciata somiglia molto a quella della basilica di San Nicola a Bari, ma non c'è una fonte su questa immagine. [DA VERIFICARE] La regola è quella di Gravina, e il nome si usa solo con la conferma dell'utente (review di brand-strategist del 2026-10-09, §3). Le varianti con il nome, o con la sola città, sono in `alt-text.md`.
+- **«Chiesa».** Né «basilica» né «romanica»: tipo e stile non si leggono con certezza. Come a Gravina, «una chiesa».
+- **Nota: «Immagine elaborata digitalmente»,** come per le porte. La grafica sovrapposta è un'elaborazione certa, l'uso di AI non è noto. Quando l'utente risponde, la nota cambia con le formule di `alt-text.md`. Con la conferma del luogo il creative-director valuta se aggiungere «Bari» alla nota (review di brand-strategist, B4).
+- **Va in produzione solo con provenienza e diritti confermati** (ADR 002 0.6, A9). [DA FORNIRE: provenienza, autore, diritti, uso di AI]
+- **Prima, la foto dell'evento.** Fino al 2026-10-09 qui c'era `derivate/evento-schermo.jpg`, la platea davanti al maxischermo, con la nota «Immagine elaborata con strumenti di intelligenza artificiale». Alt e note restano in `alt-text.md`, nel caso la foto torni: andrebbe ritagliata dalla versione pulita, quella della Home.
 
 ## 3. Numeri
 
@@ -204,18 +211,18 @@ Note:
 - **Ordine da ovest a est**: Gravina, Acquaviva, Monopoli. È la decisione del G4 (direzione visiva §7.5, riga 4): le porte stanno sull'orizzonte secondo la longitudine reale, e l'ordine del DOM è lo stesso a ogni larghezza, quindi anche l'ordine del focus (WCAG 1.3.2 e 2.4.3). Sostituisce l'ordine «dalla costa all'entroterra» che proponevo nella v1.2: le righe valgono in qualunque ordine.
 - Ogni riga contiene un solo fatto geografico, verificato su fonti pubbliche (vedi Fonti). Per Acquaviva c'è anche il legame con ITnode, che lì ha la sede operativa (§22). Nessuna informazione sui contenuti dei portali, che non si possono consultare.
 - Nel sito, sotto il nome, le coordinate del comune in mono, e sotto la CTA il dominio: entrambi nascosti agli screen reader, perché il dominio è già nel nome accessibile di «Esplora».
-- **Immagini delle porte.** Acquaviva: `derivate/acquaviva-porta.jpg`, nel sito dal commit d60b95f. Gravina e Monopoli: le immagini del portale sono arrivate il 2026-10-06 e aspettano il ritaglio; fino ad allora restano gli slot `luogo-gravina` e `luogo-monopoli`, nascosti agli screen reader. Tutte e tre hanno i segni grafici del portale, per decisione dell'utente (ADR 007).
+- **Immagini delle porte.** Sono tutte e tre nel sito, nei ritagli scelti dal creative-director. Acquaviva c'è dal commit d60b95f (`derivate/acquaviva-porta.jpg`), Gravina in Puglia e Monopoli dal commit c0b3708 (`derivate/gravina-porta.jpg`, `derivate/monopoli-porta.jpg`). Tutte e tre hanno i segni grafici del portale, per decisione dell'utente (ADR 007).
 
 **Foto delle porte** · `figure` nella porta 3:5 · alt e nota; varianti per altri ritagli in `alt-text.md`
 | Porta | Testo alternativo | Nota sotto la foto (`label` mono) |
 |---|---|---|
-| Gravina in Puglia · `gravina-digitale.webp`, ritaglio centrale a tutta altezza, in arrivo | Una chiesa in pietra vista di scorcio, con una finestra tonda e un piccolo portale sormontato da una statua; sopra, pannelli digitali azzurri. | Immagine elaborata digitalmente |
+| Gravina in Puglia · `derivate/gravina-porta.jpg`, ritaglio spostato a destra, con il rosone, nel sito | La facciata in pietra di una chiesa con un grande rosone e una finestra tonda; sopra, pannelli digitali azzurri. | Immagine elaborata digitalmente |
 | Acquaviva delle Fonti · `derivate/acquaviva-porta.jpg`, nel sito | Una piazza con un palazzo sul fondo, oltre una ringhiera e uno spazio ribassato in pietra; sopra, segnaposto arancioni e pannelli digitali azzurri. | Immagine elaborata digitalmente |
-| Monopoli · `monopoli-digitale.webp`, ritaglio centrale a tutta altezza, in arrivo | Un muro imbiancato con un balconcino rosso e una bicicletta rossa con un cesto di fiori; sopra, una fascia di pannelli digitali azzurri e segnaposto. | Immagine elaborata digitalmente |
+| Monopoli · `derivate/monopoli-porta.jpg`, ritaglio a tutta altezza, nel sito | Un muro imbiancato con un balconcino rosso e una bicicletta rossa con un cesto di fiori; sopra, una fascia di pannelli digitali azzurri e segnaposto. | Immagine elaborata digitalmente |
 
 Note sulla foto:
 - **Che cosa sono.** Immagini del portale del cliente con una grafica digitale sovrapposta: pannelli trasparenti azzurri, segnaposto arancioni (non a Gravina), piccole luci. La grafica resta per decisione dell'utente (2026-10-06), perché «segna l'aspetto digitale della città». Per questo gli alt la descrivono. L'associazione delle immagini a Gravina e Monopoli l'ha confermata l'utente il 2026-10-06.
-- **Testo alternativo.** Non ripete il nome della città, che è nel titolo della porta, e non nomina luoghi non verificati: né la piazza di Acquaviva né la chiesa di Gravina, perché è confermata la città, non che sia la cattedrale. Per Gravina e Monopoli è scritto per il ritaglio centrale a tutta altezza; varianti e regole per qualunque riquadro sono in `alt-text.md`. I ritagli li sceglie il creative-director.
+- **Testo alternativo.** Non ripete il nome della città, che è nel titolo della porta, e non nomina luoghi non verificati: né la piazza di Acquaviva né la chiesa di Gravina, perché è confermata la città, non che sia la cattedrale. Per Gravina c'è l'alt del ritaglio spostato a destra, con il rosone. Per Monopoli c'è quello del ritaglio centrale, che vale anche per il ritaglio scelto. Varianti e regole per qualunque riquadro sono in `alt-text.md`.
 - **Nota.** Segue l'ADR 002: dice solo ciò che è certo, cioè che la grafica è un'elaborazione digitale, senza affermare né escludere l'AI. Quando l'utente risponde, la nota cambia con le formule di `alt-text.md`. Con l'AI: «Immagine elaborata con strumenti di intelligenza artificiale» (o «generata», o «generata o elaborata»). Senza AI: «Foto con grafica digitale aggiunta».
 - **Fonte: nessun credito sotto la foto.** È materiale del cliente; «cittàdigitali.it» su questa pagina legherebbe la foto a un altro progetto. Il credito serve solo se l'autore lo chiede. [DA FORNIRE: autore, data, diritti, uso di AI]
 - **Collegamento nel sito** (sessione principale): l'alt va preso da qui o da `alt-text.md`, non dal campo `alt` di `asset-slots.ts`, che contiene il solo nome della città.
